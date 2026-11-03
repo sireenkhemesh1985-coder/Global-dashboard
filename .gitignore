@@ -2,5 +2,6 @@ __pycache__/
 *.py[cod]
 *$py.class
 .streamlit/credentials.toml
+.streamlit/secrets.toml
 .venv/
 env/
