@@ -1,0 +1,1206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>ZGMI Executive Dashboard</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+.zg,.zg *{box-sizing:border-box}
+.zg{font-family:'Inter',system-ui,-apple-system,'Segoe UI',sans-serif;color:var(--tx);background:var(--bg);font-size:14px;line-height:1.45;-webkit-font-smoothing:antialiased;min-height:100vh}
+.zg button,.zg input,.zg select{font-family:inherit;font-size:inherit;color:inherit}
+.zg button{cursor:pointer;background:none;border:0;padding:0;text-align:inherit}
+.zg :focus-visible{outline:2px solid var(--ac);outline-offset:2px}
+.zg h1,.zg h2,.zg h3,.zg p{margin:0}
+.card{background:var(--panel);border:1px solid var(--bd);border-radius:16px;box-shadow:var(--sh)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 16px;border-radius:12px;border:1px solid var(--bd)!important;background:var(--panel)!important;font-weight:600;transition:transform .15s,background .15s,box-shadow .15s;white-space:nowrap}
+.btn:hover{background:var(--panel2)!important;transform:translateY(-1px)}
+.btnp{background:#13A6B5!important;color:#062029!important;border-color:#13A6B5!important}
+.btnp:hover{background:#2BB8C7!important}
+.btns{min-height:36px;padding:0 12px;font-size:13px;border-radius:10px}
+.ibtn{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;border-radius:12px;border:1px solid var(--bd)!important;background:var(--panel)!important;position:relative;transition:background .15s}
+.ibtn:hover{background:var(--panel2)!important}
+.fld{height:44px;border:1px solid var(--bd);border-radius:12px;background:var(--inbg);padding:0 12px;min-width:0;color:var(--tx)}
+.fld::placeholder{color:var(--mu)}
+.nav{display:flex;align-items:center;gap:12px;width:100%;min-height:44px;padding:0 12px;border-radius:12px;color:#C3CFE2;transition:background .15s,color .15s}
+.nav:hover{background:rgba(255,255,255,.07)}
+.navon{background:rgba(19,166,181,.2)!important;color:#fff!important}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:3px 10px;border-radius:999px;font-size:12px;font-weight:600;white-space:nowrap}
+.ok{background:var(--okbg);color:var(--okfg)}
+.wn{background:var(--wnbg);color:var(--wnfg)}
+.bdg{background:var(--bdbg);color:var(--bdfg)}
+.nt{background:var(--panel2);color:var(--mu)}
+.seg{display:inline-flex;border:1px solid var(--bd);border-radius:12px;padding:3px;background:var(--panel2)}
+.seg button{min-height:36px;padding:0 14px;border-radius:9px;font-weight:600;color:var(--mu)}
+.seg button.on{background:var(--panel);color:var(--tx);box-shadow:var(--sh)}
+.kpi{transition:transform .18s,box-shadow .18s}
+.kpi:hover{transform:translateY(-3px)}
+.kpib{display:block;width:100%;border-radius:10px;padding:2px 0}
+.kpib:hover .kv{color:var(--acx)}
+.tip{position:relative;display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:8px;color:var(--mu)}
+.tip:hover{background:var(--panel2)}
+.tip::after{content:attr(data-tip);position:absolute;right:0;top:calc(100% + 6px);width:230px;padding:10px 12px;border-radius:10px;background:#101B30;color:#EAF0F8;font-size:12px;font-weight:500;line-height:1.4;text-align:left;opacity:0;pointer-events:none;transition:opacity .15s;z-index:30;box-shadow:0 8px 24px rgba(0,0,0,.35)}
+.tip:hover::after,.tip:focus-visible::after{opacity:1}
+.tile{border-radius:7px;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;transition:transform .12s,box-shadow .12s;min-width:0;min-height:0;letter-spacing:.02em}
+.tile:hover{transform:scale(1.14);z-index:5;box-shadow:0 4px 14px rgba(0,0,0,.35)}
+.tbl{width:100%;border-collapse:collapse;min-width:980px}
+.tbl th{font-size:12px;font-weight:600;color:var(--mu);text-align:left;padding:10px 12px;border-bottom:1px solid var(--bd);white-space:nowrap}
+.tbl td{padding:12px;border-bottom:1px solid var(--bd);white-space:nowrap}
+.tbl tbody tr{transition:background .12s}
+.tbl tbody tr:hover{background:var(--panel2)}
+.lnk{font-weight:600;color:var(--tx);text-decoration:underline;text-decoration-color:transparent;transition:text-decoration-color .15s,color .15s}
+.lnk:hover{color:var(--acx);text-decoration-color:var(--acx)}
+.thb{display:inline-flex;align-items:center;gap:4px;font-weight:600;color:var(--mu);min-height:28px}
+.thb:hover{color:var(--tx)}
+.bar{transition:opacity .15s}
+.bar:hover{opacity:.8}
+.rowb{display:block;width:100%;border-radius:10px;padding:8px;transition:background .15s}
+.rowb:hover{background:var(--panel2)}
+.ovl{position:fixed;left:0;top:0;right:0;bottom:0;background:rgba(6,12,24,.62);backdrop-filter:blur(4px);display:flex;align-items:flex-start;justify-content:center;padding:32px 16px;overflow:auto;z-index:100}
+.modal{width:100%;margin:auto 0}
+.alrt{display:flex;gap:12px;align-items:flex-start;padding:14px;border-radius:12px;border:1px solid var(--bd);background:var(--panel2);transition:transform .15s}
+.alrt:hover{transform:translateX(2px)}
+.qt{display:block;text-align:left;padding:20px;border-radius:16px;border:1px solid var(--bd)!important;background:var(--panel)!important;box-shadow:var(--sh);transition:transform .18s,border-color .18s;width:100%}
+.qt:hover{transform:translateY(-3px);border-color:var(--ac)!important}
+.glass{background:linear-gradient(135deg,rgba(19,166,181,.18),rgba(19,166,181,.04));border:1px solid var(--bd);border-radius:16px}
+input[type=range]{width:100%;accent-color:#13A6B5;min-height:28px}
+.side{background:#101B30}
+@media (max-width:860px){.side{width:100%!important;flex:1 1 100%!important}.sidenav{flex-direction:row!important;flex-wrap:wrap}.sidenav .nav{width:auto!important}.sidesticky{position:static!important;height:auto!important}}
+</style>
+</helmet>
+<div class="zg" style="{{themeStyle}}">
+<div style="display:flex;flex-wrap:wrap;min-height:100vh">
+
+<!-- SIDEBAR -->
+<aside class="side" style="{{sideStyle}}">
+<div class="sidesticky" style="position:sticky;top:0;height:100vh;display:flex;flex-direction:column;gap:20px;padding:16px 12px;overflow:auto">
+<div style="display:flex;align-items:center;gap:12px;padding:4px 6px;min-height:48px">
+<div style="width:40px;height:40px;border-radius:12px;background:linear-gradient(135deg,#13A6B5,#0B6F85);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:20px;color:#fff;flex:none" aria-hidden="true">Z</div>
+<sc-if value="{{showLabels}}" hint-placeholder-val="{{true}}">
+<div style="min-width:0">
+<div style="font-weight:700;color:#fff;letter-spacing:.08em;font-size:15px">ZEUS</div>
+<div style="color:#8FA3C0;font-size:11px;white-space:nowrap">Global Market Intelligence</div>
+</div>
+</sc-if>
+</div>
+<nav class="sidenav" aria-label="Main navigation" style="display:flex;flex-direction:column;gap:4px;flex:1">
+<sc-for list="{{navItems}}" as="n" hint-placeholder-count="10">
+<button class="nav {{n.cls}}" onClick="{{n.go}}" aria-current="{{n.cur}}" title="{{n.label}}">
+<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none"><path d="{{n.icon}}"/></svg>
+<sc-if value="{{showLabels}}" hint-placeholder-val="{{true}}"><span style="font-weight:500;white-space:nowrap">{{n.label}}</span></sc-if>
+</button>
+</sc-for>
+</nav>
+<button class="nav" onClick="{{toggleSide}}" aria-label="Collapse or expand sidebar" style="color:#8FA3C0">
+<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="{{collapseIconStyle}}"><path d="M15 18l-6-6 6-6"/></svg>
+<sc-if value="{{showLabels}}" hint-placeholder-val="{{true}}"><span style="font-weight:500">Collapse</span></sc-if>
+</button>
+</div>
+</aside>
+
+<!-- MAIN -->
+<div style="flex:999 1 560px;min-width:0;display:flex;flex-direction:column">
+
+<!-- TOP TOOLBAR -->
+<header style="display:flex;flex-wrap:wrap;gap:10px;align-items:center;padding:12px 24px;border-bottom:1px solid var(--bd);background:var(--panel);position:relative;z-index:20">
+<label style="flex:1 1 240px;min-width:0;position:relative;display:block">
+<span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Search distributors, countries, agreements and products</span>
+<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="var(--mu)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="position:absolute;left:12px;top:13px"><path d="M11 19a8 8 0 1 0 0-16 8 8 0 0 0 0 16zM21 21l-4.3-4.3"/></svg>
+<input class="fld" style="width:100%;padding-left:38px" placeholder="Search distributors, countries, agreements, products" value="{{search}}" onInput="{{onSearch}}">
+</label>
+<label><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Country</span>
+<select class="fld" value="{{country}}" onChange="{{onCountry}}">
+<sc-for list="{{countryOpts}}" as="o" hint-placeholder-count="4"><option value="{{o.v}}">{{o.l}}</option></sc-for>
+</select></label>
+<label><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Year</span>
+<select class="fld" value="{{year}}" onChange="{{onYear}}">
+<option value="2026">2026</option><option value="2025">2025</option><option value="2024">2024</option>
+</select></label>
+<label><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Date range</span>
+<select class="fld" value="{{range}}" onChange="{{onRange}}">
+<option value="12m">Last 12 months</option><option value="ytd">Year to date</option><option value="6m">Last 6 months</option><option value="3m">Last 3 months</option>
+</select></label>
+<label><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Currency</span>
+<select class="fld" value="{{currency}}" onChange="{{onCurrency}}">
+<option value="USD">USD</option><option value="EUR">EUR</option><option value="TRY">TRY</option>
+</select></label>
+<div style="position:relative">
+<button class="ibtn" onClick="{{toggleBell}}" aria-label="Notifications" aria-expanded="{{bell}}">
+<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 8a6 6 0 0 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+<sc-if value="{{hasAlerts}}" hint-placeholder-val="{{true}}"><span style="position:absolute;top:-4px;right:-4px;min-width:20px;height:20px;border-radius:10px;background:#E5707B;color:#2B0A10;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;padding:0 4px">{{alertCount}}</span></sc-if>
+</button>
+<sc-if value="{{bell}}" hint-placeholder-val="{{false}}">
+<div class="card" style="position:absolute;right:0;top:52px;width:340px;max-width:calc(100vw - 32px);padding:12px;z-index:40">
+<div style="font-weight:600;padding:4px 8px 8px">Notifications</div>
+<sc-for list="{{bellItems}}" as="b" hint-placeholder-count="4">
+<button class="rowb" onClick="{{b.act}}"><div style="font-weight:600;font-size:13px">{{b.title}}</div><div style="color:var(--mu);font-size:12px">{{b.text}}</div></button>
+</sc-for>
+<sc-if value="{{noAlerts}}" hint-placeholder-val="{{false}}"><div style="padding:8px;color:var(--mu)">No open alerts.</div></sc-if>
+</div>
+</sc-if>
+</div>
+<button class="ibtn" onClick="{{toggleTheme}}" aria-label="Switch between light and dark mode">
+<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{themeIcon}}"/></svg>
+</button>
+<div style="display:flex;align-items:center;gap:10px;padding:0 4px">
+<div style="width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,#13A6B5,#0B6F85);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700" aria-hidden="true">Sk</div>
+<div style="line-height:1.25"><div style="font-weight:600;font-size:13px">Sk</div><div style="color:var(--mu);font-size:12px;white-space:nowrap">Intl. Relations Manager</div></div>
+</div>
+<button class="btn btnp" onClick="{{openNewA}}">
+<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M12 5v14M5 12h14"/></svg>New Analysis</button>
+</header>
+
+<main style="padding:24px;display:flex;flex-direction:column;gap:24px;min-width:0">
+
+<!-- ===== EXECUTIVE DASHBOARD ===== -->
+<sc-if value="{{isDash}}" hint-placeholder-val="{{true}}">
+
+<!-- A. Header -->
+<section style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-end;justify-content:space-between">
+<div style="min-width:0">
+<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:8px">
+<span class="chip nt">Executive Dashboard</span>
+<span class="chip wn" title="All figures are synthetic sample data for prototyping">Synthetic sample data — not actual ZEUS performance</span>
+</div>
+<h1 style="font-size:30px;font-weight:700;letter-spacing:-.02em">Global Distribution Overview</h1>
+<p style="color:var(--mu);margin-top:4px;font-size:15px">Monitor performance. Assess opportunities. Make evidence-based decisions.</p>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:10px">
+<button class="btn" onClick="{{openAdd}}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM19 8v6M22 11h-6"/></svg>Add Distributor</button>
+<button class="btn" onClick="{{openSim}}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>New Simulation</button>
+<button class="btn btnp" onClick="{{openRep}}"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg>Generate Report</button>
+</div>
+</section>
+
+<!-- B. KPI cards -->
+<section aria-label="Executive KPIs" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px">
+<sc-for list="{{kpis}}" as="k" hint-placeholder-count="6">
+<div class="card kpi" style="padding:18px;display:flex;flex-direction:column;gap:10px;min-width:0">
+<div style="display:flex;align-items:center;gap:10px">
+<div style="width:36px;height:36px;border-radius:10px;background:var(--acs);color:var(--acx);display:flex;align-items:center;justify-content:center;flex:none">
+<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{k.icon}}"/></svg>
+</div>
+<div style="font-size:13px;font-weight:600;color:var(--mu);flex:1;min-width:0">{{k.label}}</div>
+<button class="tip" data-tip="{{k.tip}}" aria-label="{{k.tip}}"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM12 16v-4M12 8h.01"/></svg></button>
+</div>
+<button class="kpib" onClick="{{k.go}}" aria-label="Open detailed analysis for {{k.label}}">
+<div class="kv" style="font-size:28px;font-weight:700;letter-spacing:-.02em;transition:color .15s">{{k.value}}</div>
+<div style="display:flex;align-items:center;gap:6px;margin-top:2px"><span class="chip {{k.chg}}">{{k.delta}}</span><span style="font-size:12px;color:var(--mu)">vs previous period</span></div>
+</button>
+<svg viewBox="0 0 100 28" preserveAspectRatio="none" style="width:100%;height:38px" aria-hidden="true"><path d="{{k.area}}" style="fill:var(--acs)"/><path d="{{k.line}}" fill="none" style="stroke:var(--ac)" stroke-width="1.8" vector-effect="non-scaling-stroke" stroke-linejoin="round"/></svg>
+</div>
+</sc-for>
+</section>
+
+<!-- C. Map -->
+<section class="card" style="padding:20px">
+<div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;margin-bottom:14px">
+<div><h2 style="font-size:18px;font-weight:700">Global Distribution Map</h2>
+<p style="color:var(--mu);font-size:13px">Tile map of tracked markets. Hover for details, select a country to open its Market Intelligence profile.</p></div>
+<div class="seg" role="group" aria-label="Map layer">
+<sc-for list="{{layerOpts}}" as="l" hint-placeholder-count="3"><button class="{{l.cls}}" onClick="{{l.go}}" aria-pressed="{{l.on}}">{{l.label}}</button></sc-for>
+</div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:20px;align-items:flex-start">
+<div style="flex:3 1 520px;min-width:0">
+<div style="display:grid;grid-template-columns:repeat(17,minmax(0,1fr));grid-template-rows:repeat(8,minmax(0,1fr));gap:4px;aspect-ratio:17/8;padding:12px;border-radius:14px;background:var(--panel2);border:1px solid var(--bd)">
+<sc-for list="{{tiles}}" as="t" hint-placeholder-count="50">
+<button class="tile" style="{{t.style}}" onClick="{{t.open}}" onMouseEnter="{{t.hover}}" onFocus="{{t.hover}}" aria-label="{{t.aria}}">{{t.code}}</button>
+</sc-for>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:16px;margin-top:12px;font-size:12px;color:var(--mu);align-items:center">
+<sc-for list="{{legend}}" as="g" hint-placeholder-count="3"><span style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:4px;{{g.style}}"></span>{{g.label}}</span></sc-for>
+<span style="margin-left:auto">{{mapSummary}}</span>
+</div>
+</div>
+<div class="glass" style="flex:1 1 260px;min-width:0;padding:18px;display:flex;flex-direction:column;gap:12px">
+<div style="display:flex;justify-content:space-between;gap:8px;align-items:flex-start">
+<div><div style="font-size:12px;color:var(--mu);font-weight:600">{{hc.region}}</div><div style="font-size:20px;font-weight:700">{{hc.name}}</div></div>
+<span class="chip {{hc.statusCls}}">{{hc.statusLabel}}</span>
+</div>
+<div style="font-size:13px"><span style="color:var(--mu)">Distributor</span><div style="font-weight:600">{{hc.dist}}</div></div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:13px">
+<div><span style="color:var(--mu)">IVF clinics</span><div style="font-weight:700;font-size:16px">{{hc.clinics}}</div></div>
+<div><span style="color:var(--mu)">Annual IVF/ICSI cycles</span><div style="font-weight:700;font-size:16px">{{hc.cycles}}</div></div>
+<div><span style="color:var(--mu)">ZEUS sales revenue</span><div style="font-weight:700;font-size:16px">{{hc.rev}}</div></div>
+<div><span style="color:var(--mu)">Opportunity score</span><div style="font-weight:700;font-size:16px">{{hc.score}}<span style="font-size:12px;color:var(--mu);font-weight:500"> / 100</span></div></div>
+</div>
+<div style="display:flex;align-items:center;gap:8px;font-size:13px"><span style="color:var(--mu)">Risk level</span><span class="chip {{hc.riskCls}}">{{hc.risk}}</span></div>
+<button class="btn btns" onClick="{{hc.open}}">Open market profile</button>
+</div>
+</div>
+</section>
+
+<!-- D. Sales analytics -->
+<section style="display:flex;flex-direction:column;gap:16px">
+<div style="display:flex;flex-wrap:wrap;gap:12px;align-items:center;justify-content:space-between">
+<div><h2 style="font-size:18px;font-weight:700">Sales Performance Analytics</h2>
+<p style="color:var(--mu);font-size:13px">Charts follow the country, year and date-range filters above. Select a region or product to filter further.</p></div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+<sc-if value="{{hasChartFilter}}" hint-placeholder-val="{{false}}">
+<button class="btn btns" onClick="{{clearChartFilters}}">Clear: {{chartFilterLabel}} ✕</button>
+</sc-if>
+<div class="seg" role="group" aria-label="Time grouping">
+<button class="{{modeM}}" onClick="{{setMonthly}}" aria-pressed="{{isMonthly}}">Monthly</button>
+<button class="{{modeQ}}" onClick="{{setQuarterly}}" aria-pressed="{{isQuarterly}}">Quarterly</button>
+</div>
+</div>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,460px),1fr));gap:16px">
+
+<div class="card" style="padding:18px;min-width:0">
+<div style="font-weight:600">Revenue trend</div>
+<div style="color:var(--mu);font-size:12px;margin-bottom:8px">{{c1.sub}}</div>
+<svg viewBox="0 0 620 240" style="width:100%;height:auto;display:block" role="img" aria-label="{{c1.aria}}">
+<sc-for list="{{c1.grid}}" as="g" hint-placeholder-count="5"><g><line x1="46" x2="610" y1="{{g.y}}" y2="{{g.y}}" style="stroke:var(--bd)" stroke-width="1"/><text x="40" y="{{g.ty}}" text-anchor="end" font-size="10" style="fill:var(--mu)">{{g.label}}</text></g></sc-for>
+<sc-if value="{{isMonthly}}" hint-placeholder-val="{{true}}">
+<path d="{{c1.area}}" style="fill:var(--acs)"/>
+<path d="{{c1.line}}" fill="none" style="stroke:var(--ac)" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+<sc-for list="{{c1.points}}" as="p" hint-placeholder-count="12"><circle cx="{{p.x}}" cy="{{p.y}}" r="4" style="fill:var(--panel);stroke:var(--ac)" stroke-width="2"><title>{{p.tip}}</title></circle></sc-for>
+</sc-if>
+<sc-if value="{{isQuarterly}}" hint-placeholder-val="{{false}}">
+<sc-for list="{{c1.bars}}" as="b" hint-placeholder-count="4"><rect class="bar" x="{{b.x}}" y="{{b.y}}" width="{{b.w}}" height="{{b.h}}" rx="5" style="fill:var(--ac)"><title>{{b.tip}}</title></rect></sc-for>
+</sc-if>
+<sc-for list="{{c1.xl}}" as="x" hint-placeholder-count="12"><text x="{{x.x}}" y="230" text-anchor="middle" font-size="10" style="fill:var(--mu)">{{x.label}}</text></sc-for>
+</svg>
+</div>
+
+<div class="card" style="padding:18px;min-width:0">
+<div style="display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap"><div><div style="font-weight:600">Device sales vs consumables revenue</div>
+<div style="color:var(--mu);font-size:12px;margin-bottom:8px">{{c2.sub}}</div></div>
+<div style="display:flex;gap:14px;font-size:12px;color:var(--mu);align-items:center"><span style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:4px;background:var(--ac)"></span>Devices</span><span style="display:inline-flex;align-items:center;gap:6px"><span style="width:12px;height:12px;border-radius:4px;background:var(--c2)"></span>Consumables</span></div></div>
+<svg viewBox="0 0 620 240" style="width:100%;height:auto;display:block" role="img" aria-label="{{c2.aria}}">
+<sc-for list="{{c2.grid}}" as="g" hint-placeholder-count="5"><g><line x1="46" x2="610" y1="{{g.y}}" y2="{{g.y}}" style="stroke:var(--bd)" stroke-width="1"/><text x="40" y="{{g.ty}}" text-anchor="end" font-size="10" style="fill:var(--mu)">{{g.label}}</text></g></sc-for>
+<sc-for list="{{c2.bars}}" as="b" hint-placeholder-count="12"><g><rect class="bar" x="{{b.x}}" y="{{b.y1}}" width="{{b.w}}" height="{{b.h1}}" rx="3" style="fill:var(--c2)"><title>{{b.tip}}</title></rect><rect class="bar" x="{{b.x}}" y="{{b.y2}}" width="{{b.w}}" height="{{b.h2}}" rx="3" style="fill:var(--ac)"><title>{{b.tip}}</title></rect></g></sc-for>
+<sc-for list="{{c2.xl}}" as="x" hint-placeholder-count="12"><text x="{{x.x}}" y="230" text-anchor="middle" font-size="10" style="fill:var(--mu)">{{x.label}}</text></sc-for>
+</svg>
+</div>
+
+<div class="card" style="padding:18px;min-width:0">
+<div style="font-weight:600">Revenue by geographical region</div>
+<div style="color:var(--mu);font-size:12px;margin-bottom:10px">Select a region to filter the table and other charts</div>
+<div style="display:flex;flex-direction:column;gap:4px">
+<sc-for list="{{regionBars}}" as="r" hint-placeholder-count="6">
+<button class="rowb" onClick="{{r.go}}" aria-pressed="{{r.on}}" style="{{r.rowStyle}}">
+<div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:5px"><span style="font-weight:600">{{r.name}}</span><span style="color:var(--mu)">{{r.label}} · {{r.share}}</span></div>
+<div style="height:10px;border-radius:6px;background:var(--panel2);overflow:hidden"><div style="{{r.barStyle}}"></div></div>
+</button>
+</sc-for>
+</div>
+</div>
+
+<div class="card" style="padding:18px;min-width:0">
+<div style="font-weight:600">Sales by ZEUS product</div>
+<div style="color:var(--mu);font-size:12px;margin-bottom:10px">Select a product to filter the trend charts (sample mix)</div>
+<div style="display:flex;flex-direction:column;gap:4px">
+<sc-for list="{{productBars}}" as="p" hint-placeholder-count="5">
+<button class="rowb" onClick="{{p.go}}" aria-pressed="{{p.on}}" style="{{p.rowStyle}}">
+<div style="display:flex;justify-content:space-between;gap:8px;font-size:13px;margin-bottom:5px"><span style="font-weight:600">{{p.name}}</span><span style="color:var(--mu);white-space:nowrap">{{p.label}} · {{p.share}}</span></div>
+<div style="height:10px;border-radius:6px;background:var(--panel2);overflow:hidden"><div style="{{p.barStyle}}"></div></div>
+</button>
+</sc-for>
+</div>
+</div>
+
+</div>
+</section>
+
+<!-- E. Distributor table -->
+<section class="card" style="padding:20px">
+<div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;margin-bottom:12px">
+<div><h2 style="font-size:18px;font-weight:700">Top Distributor Performance</h2>
+<p style="color:var(--mu);font-size:13px">{{tableSub}}</p></div>
+<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+<label><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Status filter</span>
+<select class="fld" value="{{statusF}}" onChange="{{onStatusF}}"><option value="active">Active distributors</option><option value="prospect">Prospects</option><option value="all">All statuses</option></select></label>
+<label><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Risk filter</span>
+<select class="fld" value="{{riskF}}" onChange="{{onRiskF}}"><option value="all">All risk levels</option><option value="Low">Low risk</option><option value="Medium">Medium risk</option><option value="High">High risk</option></select></label>
+</div>
+</div>
+<div style="overflow-x:auto;border-radius:12px">
+<table class="tbl">
+<thead><tr>
+<sc-for list="{{cols}}" as="c" hint-placeholder-count="10"><th aria-sort="{{c.aria}}"><button class="thb" onClick="{{c.go}}">{{c.label}}<span aria-hidden="true">{{c.arrow}}</span></button></th></sc-for>
+</tr></thead>
+<tbody>
+<sc-for list="{{rows}}" as="r" hint-placeholder-count="8">
+<tr>
+<td><button class="lnk" onClick="{{r.open}}">{{r.name}}</button></td>
+<td>{{r.country}}</td>
+<td style="font-weight:600">{{r.rev}}</td>
+<td>{{r.devices}}</td>
+<td>{{r.cons}}</td>
+<td style="min-width:150px"><div style="display:flex;align-items:center;gap:8px"><div style="flex:1;height:8px;border-radius:5px;background:var(--panel2);overflow:hidden"><div style="{{r.targetStyle}}"></div></div><span style="font-weight:600;min-width:42px">{{r.target}}</span></div></td>
+<td>{{r.margin}}</td>
+<td><span class="chip {{r.growthCls}}">{{r.growth}}</span></td>
+<td>{{r.pen}}</td>
+<td><span class="chip {{r.riskCls}}">{{r.risk}}</span></td>
+</tr>
+</sc-for>
+</tbody>
+</table>
+</div>
+<sc-if value="{{noRows}}" hint-placeholder-val="{{false}}"><div style="padding:24px;text-align:center;color:var(--mu)">No distributors match the current filters.</div></sc-if>
+<div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;margin-top:12px;color:var(--mu);font-size:13px">
+<span>{{rowCountText}}</span>
+<sc-if value="{{canToggleAll}}" hint-placeholder-val="{{true}}"><button class="btn btns" onClick="{{toggleAll}}">{{toggleAllLabel}}</button></sc-if>
+</div>
+</section>
+
+<!-- F. Alerts -->
+<section class="card" style="padding:20px">
+<div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center;margin-bottom:14px">
+<div><h2 style="font-size:18px;font-weight:700">Strategic Alerts &amp; Notifications</h2>
+<p style="color:var(--mu);font-size:13px">{{alertSub}}</p></div>
+<sc-if value="{{canRestoreAlerts}}" hint-placeholder-val="{{false}}"><button class="btn btns" onClick="{{restoreAlerts}}">Restore dismissed alerts</button></sc-if>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:12px">
+<sc-for list="{{alertList}}" as="a" hint-placeholder-count="8">
+<div class="alrt">
+<div style="width:36px;height:36px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex:none" class="{{a.sevCls}}">
+<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{a.icon}}"/></svg>
+</div>
+<div style="flex:1;min-width:0">
+<div style="font-weight:600">{{a.title}}</div>
+<div style="color:var(--mu);font-size:13px;margin-top:2px">{{a.text}}</div>
+<div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap">
+<button class="btn btns btnp" onClick="{{a.act}}">{{a.actLabel}}</button>
+<button class="btn btns" onClick="{{a.dismiss}}" aria-label="Dismiss alert: {{a.title}}">Dismiss</button>
+</div>
+</div>
+</div>
+</sc-for>
+</div>
+<sc-if value="{{noAlerts}}" hint-placeholder-val="{{false}}"><div style="padding:24px;text-align:center;color:var(--mu)">All alerts are cleared.</div></sc-if>
+</section>
+
+<!-- G. Quick decision tools -->
+<section>
+<div style="margin-bottom:12px"><h2 style="font-size:18px;font-weight:700">Quick Decision Tools</h2>
+<p style="color:var(--mu);font-size:13px">Decision support only. Outputs are indicative and never commit to contractual decisions.</p></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px">
+<sc-for list="{{tools}}" as="q" hint-placeholder-count="4">
+<button class="qt" onClick="{{q.go}}">
+<div style="width:44px;height:44px;border-radius:12px;background:var(--acs);color:var(--acx);display:flex;align-items:center;justify-content:center;margin-bottom:14px">
+<svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{q.icon}}"/></svg>
+</div>
+<div style="font-weight:700;font-size:16px;margin-bottom:6px">{{q.title}}</div>
+<div style="color:var(--mu);font-size:13px;margin-bottom:14px">{{q.text}}</div>
+<div style="color:var(--acx);font-weight:600;font-size:13px">Open tool →</div>
+</button>
+</sc-for>
+</div>
+</section>
+
+</sc-if>
+
+<!-- ===== OTHER MODULES ===== -->
+<sc-if value="{{notDash}}" hint-placeholder-val="{{false}}">
+<section style="display:flex;flex-direction:column;gap:16px;max-width:880px">
+<div><span class="chip nt">{{stub.crumb}}</span></div>
+<h1 style="font-size:30px;font-weight:700;letter-spacing:-.02em">{{stub.title}}</h1>
+<p style="color:var(--mu);font-size:15px">{{stub.blurb}}</p>
+<div class="card" style="padding:20px">
+<div style="font-weight:600;margin-bottom:10px">Planned scope for this module</div>
+<ul style="margin:0;padding-left:20px;display:flex;flex-direction:column;gap:6px;color:var(--mu)">
+<sc-for list="{{stub.bullets}}" as="s" hint-placeholder-count="4"><li>{{s.t}}</li></sc-for>
+</ul>
+</div>
+<div class="glass" style="padding:16px;font-size:13px"><b>Prototype status:</b> this page is a placeholder in the landing-page build. The Executive Dashboard and its decision tools are working with synthetic sample data.</div>
+<div style="display:flex;flex-wrap:wrap;gap:10px">
+<button class="btn btnp" onClick="{{stub.act}}">{{stub.actLabel}}</button>
+<button class="btn" onClick="{{goDash}}">Back to Executive Dashboard</button>
+</div>
+</section>
+</sc-if>
+
+</main>
+</div>
+</div>
+
+<!-- ===== MODALS ===== -->
+<sc-if value="{{m.open}}" hint-placeholder-val="{{false}}">
+<div class="ovl" onClick="{{closeM}}">
+<div class="modal card" style="{{m.style}};padding:22px" onClick="{{stop}}" role="dialog" aria-modal="true" aria-label="{{m.title}}">
+<div style="display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:16px">
+<div><h2 style="font-size:20px;font-weight:700">{{m.title}}</h2><p style="color:var(--mu);font-size:13px;margin-top:2px">{{m.sub}}</p></div>
+<button class="ibtn" onClick="{{closeM}}" aria-label="Close dialog"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+</div>
+
+<!-- New analysis chooser -->
+<sc-if value="{{m.newa}}" hint-placeholder-val="{{false}}">
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px">
+<sc-for list="{{tools}}" as="q" hint-placeholder-count="4">
+<button class="qt" onClick="{{q.go}}" style="padding:16px"><div style="font-weight:700;margin-bottom:4px">{{q.title}}</div><div style="color:var(--mu);font-size:13px">{{q.text}}</div></button>
+</sc-for>
+</div>
+</sc-if>
+
+<!-- Distributor detail -->
+<sc-if value="{{m.dist}}" hint-placeholder-val="{{false}}">
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px"><span class="chip {{dd.statusCls}}">{{dd.statusLabel}}</span><span class="chip {{dd.riskCls}}">Risk: {{dd.risk}}</span><span class="chip nt">{{dd.country}} · {{dd.region}}</span></div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-bottom:16px">
+<sc-for list="{{dd.stats}}" as="s" hint-placeholder-count="8"><div style="padding:12px;border-radius:12px;background:var(--panel2);border:1px solid var(--bd)"><div style="font-size:12px;color:var(--mu)">{{s.l}}</div><div style="font-weight:700;font-size:17px">{{s.v}}</div></div></sc-for>
+</div>
+<div class="glass" style="padding:16px;margin-bottom:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;font-size:13px">
+<div><div style="color:var(--mu)">Agreement</div><div style="font-weight:600">{{dd.agreement}}</div></div>
+<div><div style="color:var(--mu)">Expiry</div><div style="font-weight:600">{{dd.exp}}</div></div>
+<div><div style="color:var(--mu)">LOA / registration</div><div style="font-weight:600">{{dd.loa}}</div></div>
+<div><div style="color:var(--mu)">Exclusivity (effective authorization)</div><div style="font-weight:600">{{dd.excl}}</div></div>
+<div style="grid-column:1/-1;color:var(--mu)">Exclusivity is tracked separately from the signed agreement: it only takes effect once its prerequisites are confirmed.</div>
+<div style="grid-column:1/-1"><span style="color:var(--mu)">Authorized products: </span>{{dd.prods}}</div>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:10px">
+<button class="btn btnp" onClick="{{dd.calc}}">Calculate Discount</button>
+<button class="btn" onClick="{{dd.perf}}">Evaluate Performance</button>
+<button class="btn" onClick="{{dd.market}}">Market Profile</button>
+</div>
+</sc-if>
+
+<!-- Country profile -->
+<sc-if value="{{m.country}}" hint-placeholder-val="{{false}}">
+<div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:14px"><span class="chip {{cp.statusCls}}">{{cp.statusLabel}}</span><span class="chip {{cp.riskCls}}">Risk: {{cp.risk}}</span><span class="chip nt">Opportunity score {{cp.score}} / 100</span><span class="chip nt">Distributor: {{cp.dist}}</span></div>
+<div style="overflow-x:auto;border-radius:12px;border:1px solid var(--bd)">
+<table class="tbl" style="min-width:640px">
+<thead><tr><th>Metric</th><th>Value</th><th>Source</th><th>Year</th><th>Confidence</th></tr></thead>
+<tbody>
+<sc-for list="{{cp.rows}}" as="r" hint-placeholder-count="14"><tr><td style="font-weight:600">{{r.m}}</td><td>{{r.v}}</td><td style="color:var(--mu)">Synthetic sample</td><td>{{r.y}}</td><td><span class="chip {{r.cls}}">{{r.conf}}</span></td></tr></sc-for>
+</tbody></table></div>
+<p style="color:var(--mu);font-size:12px;margin-top:10px">All metrics are illustrative placeholders and are not verified market statistics. A live build would show the real source, reference year and data confidence for each metric.</p>
+<div style="display:flex;flex-wrap:wrap;gap:10px;margin-top:14px"><button class="btn" onClick="{{cp.compare}}">Compare with other markets</button></div>
+</sc-if>
+
+<!-- Discount calculator -->
+<sc-if value="{{m.calc}}" hint-placeholder-val="{{false}}">
+<div style="display:flex;flex-wrap:wrap;gap:20px">
+<div style="flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:12px">
+<label style="display:block"><span style="font-size:12px;color:var(--mu);font-weight:600">Distributor</span>
+<select class="fld" style="width:100%" value="{{calcDist}}" onChange="{{onCalcDist}}"><sc-for list="{{activeOpts}}" as="o" hint-placeholder-count="6"><option value="{{o.v}}">{{o.l}}</option></sc-for></select></label>
+<div style="font-size:12px;color:var(--mu)">{{calcContext}}</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+<sc-for list="{{calcFields}}" as="f" hint-placeholder-count="8"><label style="display:block"><span style="font-size:12px;color:var(--mu);font-weight:600">{{f.label}}</span><input class="fld" style="width:100%" inputmode="decimal" value="{{f.val}}" onInput="{{f.on}}"></label></sc-for>
+</div>
+</div>
+<div style="flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:12px">
+<div class="glass" style="padding:16px;display:flex;flex-direction:column;gap:10px">
+<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"><span class="chip {{cr.feasCls}}">{{cr.feas}}</span><span class="chip {{cr.apprCls}}">{{cr.approval}}</span></div>
+<div style="font-size:13px;color:var(--mu)">{{cr.reason}}</div>
+</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<sc-for list="{{cr.stats}}" as="s" hint-placeholder-count="9"><div style="padding:12px;border-radius:12px;background:var(--panel2);border:1px solid var(--bd)"><div style="font-size:12px;color:var(--mu)">{{s.l}}</div><div style="font-weight:700;font-size:16px">{{s.v}}</div></div></sc-for>
+</div>
+<div style="font-size:12px;color:var(--mu)">Volume tiers (sample rule): 10+ units up to 5%, 25+ up to 8%, 50+ up to 12%, plus the distributor-specific allowance. Discounts are never approved on GDP or population alone: margin and commercial performance drive the outcome. Monetary values use the selected currency, entered in USD.</div>
+</div>
+</div>
+</sc-if>
+
+<!-- Compare markets -->
+<sc-if value="{{m.cmp}}" hint-placeholder-val="{{false}}">
+<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:14px">
+<sc-for list="{{cmpChips}}" as="c" hint-placeholder-count="3"><button class="chip nt" onClick="{{c.rm}}" aria-label="Remove {{c.name}} from comparison" style="min-height:36px;border:1px solid var(--bd)">{{c.name}} ✕</button></sc-for>
+<sc-if value="{{canAddCmp}}" hint-placeholder-val="{{true}}"><label><span style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Add country</span>
+<select class="fld" style="height:36px" value="{{cmpAddVal}}" onChange="{{onCmpAdd}}"><option value="">+ Add country</option><sc-for list="{{cmpOpts}}" as="o" hint-placeholder-count="10"><option value="{{o.v}}">{{o.l}}</option></sc-for></select></label></sc-if>
+<span style="color:var(--mu);font-size:12px">Select 2 to 5 countries</span>
+</div>
+<div style="overflow-x:auto;border-radius:12px;border:1px solid var(--bd)">
+<table class="tbl" style="min-width:560px">
+<thead><tr><th>Metric</th><sc-for list="{{cmpHead}}" as="h" hint-placeholder-count="3"><th>{{h.name}}</th></sc-for></tr></thead>
+<tbody>
+<sc-for list="{{cmpRows}}" as="r" hint-placeholder-count="9"><tr><td style="font-weight:600">{{r.label}}</td><sc-for list="{{r.cells}}" as="c" hint-placeholder-count="3"><td>{{c.t}}</td></sc-for></tr></sc-for>
+</tbody></table></div>
+<p style="color:var(--mu);font-size:12px;margin-top:10px">Illustrative sample metrics, not verified statistics. Market potential alone does not justify a commercial decision; assess financial and regulatory constraints too.</p>
+</sc-if>
+
+<!-- Risk simulator -->
+<sc-if value="{{m.sim}}" hint-placeholder-val="{{false}}">
+<div class="seg" role="group" aria-label="Scenario" style="margin-bottom:16px">
+<sc-for list="{{simTabs}}" as="t" hint-placeholder-count="3"><button class="{{t.cls}}" onClick="{{t.go}}" aria-pressed="{{t.on}}">{{t.label}}</button></sc-for>
+</div>
+<div style="display:flex;flex-wrap:wrap;gap:24px">
+<div style="flex:1 1 300px;min-width:0;display:flex;flex-direction:column;gap:12px">
+<sc-for list="{{simFields}}" as="f" hint-placeholder-count="5"><label style="display:block"><div style="display:flex;justify-content:space-between;font-size:13px"><span style="font-weight:600">{{f.label}}</span><span style="color:var(--acx);font-weight:700">{{f.disp}}</span></div><input type="range" min="{{f.min}}" max="{{f.max}}" step="{{f.step}}" value="{{f.val}}" onInput="{{f.on}}"></label></sc-for>
+<div style="font-size:12px;color:var(--mu)">Baseline: current dashboard selection ({{simBaseLabel}}). Model assumptions are simplified and illustrative.</div>
+</div>
+<div style="flex:1 1 320px;min-width:0;display:flex;flex-direction:column;gap:12px">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
+<sc-for list="{{simStats}}" as="s" hint-placeholder-count="5"><div style="padding:12px;border-radius:12px;background:var(--panel2);border:1px solid var(--bd)"><div style="font-size:12px;color:var(--mu)">{{s.l}}</div><div style="font-weight:700;font-size:16px">{{s.v}}</div><div style="font-size:12px;color:var(--mu)">{{s.d}}</div></div></sc-for>
+</div>
+<div style="font-weight:600;margin-top:4px">Scenario comparison (projected revenue and gross profit)</div>
+<div style="display:flex;flex-direction:column;gap:10px">
+<sc-for list="{{simCompare}}" as="s" hint-placeholder-count="4"><div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:3px"><span style="font-weight:600">{{s.name}}</span><span style="color:var(--mu)">{{s.margin}} margin</span></div>
+<div style="height:10px;border-radius:6px;background:var(--panel2);overflow:hidden;margin-bottom:3px"><div style="{{s.revStyle}}"></div></div>
+<div style="height:10px;border-radius:6px;background:var(--panel2);overflow:hidden"><div style="{{s.gpStyle}}"></div></div>
+<div style="display:flex;justify-content:space-between;font-size:11px;color:var(--mu);margin-top:2px"><span>Revenue {{s.rev}}</span><span>Gross profit {{s.gp}}</span></div></div></sc-for>
+</div>
+</div>
+</div>
+</sc-if>
+
+<!-- Performance evaluation -->
+<sc-if value="{{m.perf}}" hint-placeholder-val="{{false}}">
+<label style="display:block;margin-bottom:14px"><span style="font-size:12px;color:var(--mu);font-weight:600">Distributor</span>
+<select class="fld" style="width:100%;max-width:420px" value="{{perfId}}" onChange="{{onPerf}}"><sc-for list="{{activeOpts}}" as="o" hint-placeholder-count="6"><option value="{{o.v}}">{{o.l}}</option></sc-for></select></label>
+<div class="glass" style="padding:16px;margin-bottom:16px"><div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center"><span class="chip {{pf.cls}}">{{pf.band}}</span><span style="font-weight:700;font-size:18px">{{pf.overall}} / 100</span></div>
+<div style="color:var(--mu);font-size:13px;margin-top:6px">Indicative assessment from sample data. It is not a guaranteed outcome and does not commit any contractual decision; confirm with source records before acting.</div></div>
+<div style="display:flex;flex-direction:column;gap:12px">
+<sc-for list="{{pf.items}}" as="i" hint-placeholder-count="5"><div><div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px"><span style="font-weight:600">{{i.l}}</span><span style="color:var(--mu)">{{i.note}} · {{i.s}}</span></div><div style="height:10px;border-radius:6px;background:var(--panel2);overflow:hidden"><div style="{{i.style}}"></div></div></div></sc-for>
+</div>
+</sc-if>
+
+<!-- Add distributor -->
+<sc-if value="{{m.add}}" hint-placeholder-val="{{false}}">
+<div style="display:flex;flex-direction:column;gap:12px">
+<label style="display:block"><span style="font-size:12px;color:var(--mu);font-weight:600">Company name</span><input class="fld" style="width:100%" placeholder="e.g. Example Fertility Supply" value="{{addName}}" onInput="{{onAddName}}"></label>
+<label style="display:block"><span style="font-size:12px;color:var(--mu);font-weight:600">Country</span>
+<select class="fld" style="width:100%" value="{{addCountry}}" onChange="{{onAddCountry}}"><sc-for list="{{addOpts}}" as="o" hint-placeholder-count="10"><option value="{{o.v}}">{{o.l}}</option></sc-for></select></label>
+<div style="font-size:12px;color:var(--mu)">New distributors are added as prospects with no sales history and are saved in this browser only (prototype persistence).</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btnp" onClick="{{addDist}}">Add distributor</button><button class="btn" onClick="{{closeM}}">Cancel</button></div>
+</div>
+</sc-if>
+
+<!-- Report -->
+<sc-if value="{{m.rep}}" hint-placeholder-val="{{false}}">
+<div style="display:flex;flex-direction:column;gap:12px">
+<div style="font-weight:600">Report preview ({{repScope}})</div>
+<div style="padding:14px;border-radius:12px;background:var(--panel2);border:1px solid var(--bd);display:flex;flex-direction:column;gap:6px;font-size:13px">
+<sc-for list="{{repLines}}" as="l" hint-placeholder-count="8"><div style="display:flex;justify-content:space-between;gap:12px"><span style="color:var(--mu)">{{l.l}}</span><span style="font-weight:600;text-align:right">{{l.v}}</span></div></sc-for>
+</div>
+<div style="font-size:12px;color:var(--mu)">Contains synthetic sample data only. The CSV export covers the distributor table with the current filters (values in USD).</div>
+<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn btnp" onClick="{{downloadCsv}}">Download CSV</button><button class="btn" onClick="{{closeM}}">Close</button></div>
+</div>
+</sc-if>
+
+</div>
+</div>
+</sc-if>
+
+<sc-if value="{{hasToast}}" hint-placeholder-val="{{false}}">
+<div role="status" style="position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:#101B30;color:#EAF0F8;padding:12px 18px;border-radius:12px;box-shadow:0 8px 28px rgba(0,0,0,.4);z-index:200;font-weight:500;max-width:calc(100vw - 32px)">{{toast}}</div>
+</sc-if>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":3200}}'>
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = {
+      dark: true, collapsed: false, page: 'dashboard',
+      country: 'all', year: '2026', range: '12m', currency: 'USD', search: '',
+      regionF: 'all', productF: 'all', chartMode: 'monthly',
+      sortKey: 'revenue', sortDir: -1, riskF: 'all', statusF: 'active', showAll: false,
+      layer: 'status', hover: 'TR',
+      modal: null, modalId: null, bell: false, dismissed: [], added: [], toast: '',
+      calc: { dist: 'TR', qty: '20', price: '4200', cost: '2300', disc: '8', ship: '900', comm: '3', minM: '35', extra: '0' },
+      sim: { tab: 'base', fx: 0, demand: 0, disc: 0, delay: 0, dflt: 1 },
+      cmp: ['TR', 'DE', 'IN'], perf: 'TR',
+      add: { name: '', country: '' }
+    };
+  }
+
+  componentDidMount() {
+    try {
+      const s = window.localStorage.getItem('zgmi_added');
+      if (s) { const a = JSON.parse(s); if (Array.isArray(a)) this.setState({ added: a }); }
+    } catch (e) {}
+  }
+
+  /* ---------- helpers ---------- */
+  hash(s) { let h = 2166136261; for (let i = 0; i < s.length; i++) { h ^= s.charCodeAt(i); h = Math.imul(h, 16777619); } return h >>> 0; }
+  rnd(s, k) {
+    let x = (this.hash(s) + Math.imul(k + 1, 2654435761)) >>> 0;
+    x = Math.imul(x ^ (x >>> 15), 2246822519) >>> 0;
+    x = Math.imul(x ^ (x >>> 13), 3266489917) >>> 0;
+    return ((x ^ (x >>> 16)) >>> 0) / 4294967296;
+  }
+  n0(v) { return Math.round(v).toLocaleString('en-US'); }
+  pc(v, d) { return (v >= 0 ? '+' : '') + v.toFixed(d === undefined ? 1 : d) + '%'; }
+  fm(usd) {
+    const cur = this.state.currency;
+    const rate = { USD: 1, EUR: 0.92, TRY: 41.2 }[cur];
+    const sym = { USD: '$', EUR: '€', TRY: '₺' }[cur];
+    const v = usd * rate, a = Math.abs(v);
+    let s;
+    if (a >= 1e9) s = (v / 1e9).toFixed(2) + 'B';
+    else if (a >= 1e6) s = (v / 1e6).toFixed(2) + 'M';
+    else if (a >= 1e3) s = (v / 1e3).toFixed(1) + 'K';
+    else s = v.toFixed(0);
+    return sym + s;
+  }
+  niceMax(v) {
+    if (v <= 0) return 1;
+    const e = Math.pow(10, Math.floor(Math.log10(v))), f = v / e;
+    const n = f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10;
+    return n * e;
+  }
+  spark(arr) {
+    const W = 100, H = 28, p = 3;
+    const mn = Math.min.apply(null, arr), mx = Math.max.apply(null, arr), span = (mx - mn) || 1;
+    const pts = arr.map((v, i) => [ (W * i) / (arr.length - 1), H - p - ((v - mn) / span) * (H - 2 * p) ]);
+    const line = pts.map((q, i) => (i ? 'L' : 'M') + q[0].toFixed(1) + ' ' + q[1].toFixed(1)).join(' ');
+    return { line: line, area: line + ' L' + W + ' ' + H + ' L0 ' + H + ' Z' };
+  }
+  toast(msg) {
+    this.setState({ toast: msg });
+    clearTimeout(this._t);
+    this._t = setTimeout(() => this.setState({ toast: '' }), 2800);
+  }
+
+  /* ---------- static sample data ---------- */
+  D() {
+    if (this._D) return this._D;
+    const C = [
+      ['CA','Canada',2,0,'North America'],['US','United States',2,1,'North America'],
+      ['MX','Mexico',2,2,'Latin America'],['CO','Colombia',3,3,'Latin America'],['PE','Peru',3,4,'Latin America'],
+      ['BR','Brazil',4,4,'Latin America'],['CL','Chile',3,5,'Latin America'],['AR','Argentina',4,5,'Latin America'],
+      ['IE','Ireland',5,0,'Europe'],['GB','United Kingdom',6,0,'Europe'],['NO','Norway',7,0,'Europe'],['SE','Sweden',8,0,'Europe'],
+      ['FI','Finland',9,0,'Europe'],['BE','Belgium',5,1,'Europe'],['NL','Netherlands',6,1,'Europe'],['DK','Denmark',7,1,'Europe'],
+      ['PL','Poland',8,1,'Europe'],['PT','Portugal',4,2,'Europe'],['ES','Spain',5,2,'Europe'],['FR','France',6,2,'Europe'],
+      ['DE','Germany',7,2,'Europe'],['CZ','Czechia',8,2,'Europe'],['RO','Romania',9,2,'Europe'],['CH','Switzerland',6,3,'Europe'],
+      ['IT','Italy',7,3,'Europe'],['AT','Austria',8,3,'Europe'],['GR','Greece',9,3,'Europe'],['TR','Türkiye',10,3,'Europe'],
+      ['MA','Morocco',6,4,'MENA'],['DZ','Algeria',7,4,'MENA'],['EG','Egypt',9,4,'MENA'],['SA','Saudi Arabia',10,4,'MENA'],['AE','UAE',11,4,'MENA'],
+      ['NG','Nigeria',7,5,'Africa'],['KE','Kenya',9,5,'Africa'],['ZA','South Africa',8,6,'Africa'],
+      ['PK','Pakistan',12,3,'Asia-Pacific'],['IN','India',12,4,'Asia-Pacific'],['BD','Bangladesh',13,4,'Asia-Pacific'],['CN','China',13,2,'Asia-Pacific'],
+      ['KR','South Korea',14,3,'Asia-Pacific'],['JP','Japan',15,2,'Asia-Pacific'],['TW','Taiwan',15,3,'Asia-Pacific'],['VN','Vietnam',14,4,'Asia-Pacific'],
+      ['TH','Thailand',13,5,'Asia-Pacific'],['PH','Philippines',15,4,'Asia-Pacific'],['MY','Malaysia',14,5,'Asia-Pacific'],['ID','Indonesia',14,6,'Asia-Pacific'],
+      ['AU','Australia',15,7,'Asia-Pacific'],['NZ','New Zealand',16,7,'Asia-Pacific']
+    ];
+    const lvl = (r, a, b) => r < a ? 'Low' : (r < b ? 'Medium' : 'High');
+    const countries = C.map((c) => {
+      const code = c[0], r = (k) => this.rnd(code, k);
+      const clinics = Math.round(18 + r(1) * 420);
+      const gdp = Math.round(60 + Math.pow(r(5), 2) * 9000);
+      const pop = Math.round(5 + Math.pow(r(6), 1.5) * 400);
+      return {
+        code: code, name: c[1], col: c[2], row: c[3], region: c[4],
+        clinics: clinics, cycles: Math.round(clinics * (280 + r(2) * 620) / 100) * 100,
+        score: Math.round(38 + r(3) * 54), risk: lvl(r(4), 0.4, 0.75),
+        gdp: gdp, pop: pop, gdpPc: Math.round(gdp / pop * 1000),
+        health: (3 + r(7) * 8).toFixed(1), infl: (1.5 + r(8) * 12).toFixed(1),
+        icsi: Math.round(55 + r(9) * 35), pgt: Math.round(3 + r(10) * 28), cryo: Math.round(20 + r(14) * 55),
+        comp: lvl(r(15), 0.33, 0.7), reg: ['Open','Moderate','Strict'][Math.min(2, Math.floor(r(16) * 3))],
+        fx: lvl(r(17), 0.4, 0.75), pay: lvl(r(18), 0.45, 0.8), imp: ['Open','Licensing required','Restricted'][Math.min(2, Math.floor(r(19) * 3))],
+        missPgt: r(11) < 0.25, missCryo: r(12) < 0.2, missHealth: r(13) < 0.15
+      };
+    });
+    const regions = ['Europe', 'MENA', 'Asia-Pacific', 'Latin America', 'Africa', 'North America'];
+    const products = [
+      { id: 'pulse', name: 'ZEUS Piezo Electric Pulse Stimulator', share: 0.34 },
+      { id: 'blackbox', name: 'BioPSafe Black-Box', share: 0.22 },
+      { id: 'mismatch', name: 'Mismatch Blocker', share: 0.14 },
+      { id: 'cryo', name: 'Smart Cryo-Tools', share: 0.17 },
+      { id: 'fusion', name: 'Electro-Fusion Device', share: 0.13 }
+    ];
+    // id, name, rev (USD thousand, 12 months), device share, target %, margin %, growth %, penetration %, risk, expiry, exclusivity, LOA
+    const B = [
+      ['TR','Anatolia Repro Systems',2480,0.52,108,46.2,18.4,14.2,'Low','2027-06-30','Effective','Valid'],
+      ['ES','Iberia BioLab Partners',1920,0.48,101,44.8,11.2,11.6,'Low','2027-02-28','Not granted','Valid'],
+      ['IT','Adriatica MedTech',1710,0.50,96,43.5,9.6,10.3,'Low','2027-09-15','Not granted','Valid'],
+      ['DE','Rhein Fertility Tech',1590,0.46,104,47.1,7.9,6.9,'Low','2028-01-31','Effective','Valid'],
+      ['AE','Gulf Reproductive Supply',1380,0.58,94,41.2,22.3,12.8,'Medium','2026-11-20','Not granted','In renewal'],
+      ['SA','Najd Clinical Distribution',1260,0.61,88,40.6,26.1,9.4,'Medium','2027-04-30','Not granted','Valid'],
+      ['EG','Nile Biomedical Trading',940,0.55,82,36.9,15.7,7.6,'High','2027-03-31','Not granted','Valid'],
+      ['IN','Deccan LifeSciences',1840,0.57,91,35.4,31.5,4.8,'Medium','2027-12-31','Not granted','Valid'],
+      ['BR','Atlântica Reprodução',1120,0.54,79,37.8,-3.4,5.1,'High','2027-05-31','Not granted','In renewal'],
+      ['MX','Azteca Fertility Solutions',870,0.51,92,39.0,8.8,6.3,'Medium','2027-08-31','Not granted','Valid'],
+      ['VN','Mekong MedTech',640,0.63,85,38.2,24.9,3.2,'Medium','2027-10-31','Not granted','Valid'],
+      ['TH','Siam Embryo Supplies',720,0.56,97,41.8,12.6,5.9,'Low','2027-07-31','Requested, prerequisites pending','Valid'],
+      ['NG','Lagos Biomed Partners',410,0.60,64,33.1,9.2,1.8,'High','2027-01-31','Not granted','Valid'],
+      ['PL','Vistula Lab Systems',980,0.47,103,45.3,13.4,8.7,'Low','2027-11-30','Not granted','Valid']
+    ];
+    const P = [
+      ['FR','Gaule Reproductive Partners'],['KR','Hanbit Lab Distribution'],['JP','Sakura Embryo Tech'],['ID','Nusantara Biomed'],
+      ['AR','Pampa Fertility Supply'],['ZA','Cape IVF Distribution'],['MY','Selangor Reproductive Supply'],['CO','Andes Clinical Supply'],['PK','Indus Medical Trading']
+    ];
+    const flat = Array(12).fill(1 / 12);
+    const weights = (id, g) => {
+      const w = []; let sum = 0;
+      for (let i = 0; i < 12; i++) {
+        const trend = 1 + (g / 100) * 0.5 * ((i - 5.5) / 5.5);
+        const seas = 1 + 0.09 * Math.sin(i * 0.85 + this.rnd(id, 7) * 6.28);
+        const v = Math.max(0.2, trend * seas); w.push(v); sum += v;
+      }
+      return w.map((v) => v / sum);
+    };
+    const prods = (id) => {
+      const out = products.filter((p, i) => this.rnd(id, 20 + i) > 0.35).map((p) => p.name);
+      return out.length ? out : [products[0].name];
+    };
+    const dists = B.map((b) => ({
+      id: b[0], name: b[1], status: 'active', rev: b[2], devShare: b[3], target: b[4], margin: b[5], growth: b[6], pen: b[7],
+      risk: b[8], exp: b[9], excl: b[10], loa: b[11], weights: weights(b[0], b[6]), prods: prods(b[0])
+    })).concat(P.map((p) => ({
+      id: p[0], name: p[1], status: 'prospect', rev: 0, devShare: 0.5, target: 0, margin: 0, growth: 0, pen: 0,
+      risk: 'Not rated', exp: '—', excl: 'Not granted', loa: 'Not submitted', weights: flat, prods: []
+    })));
+    const stubs = {
+      distributors: { title: 'Distributors & CRM', blurb: 'A searchable distributor directory with table and card views, and a full profile for every distributor.', bullets: ['Company information, contacts and communication records','Agreement status, exclusivity, authorized products and territory','Historical sales, orders, product-specific prices and consumables purchases','Commitments versus actual achievement, outstanding payments, linked clinics and opportunities','Training, technical support, uploaded agreements, LOAs and registration documents'], actLabel: 'Add distributor', act: 'add' },
+      agreements: { title: 'Agreements & Compliance', blurb: 'A contract overview that keeps signed agreements and effective authorization separate.', bullets: ['Start and expiry dates, automatic renewal rules and minimum purchase obligations','Exclusivity tracked separately from the signed contract, with prerequisites','Contracted prices, approved discounts, LOA and registration status','Payment and termination conditions, document uploads, compliance alerts','Contract timeline and status tracking'], actLabel: 'Back to alerts', act: 'dash' },
+      sales: { title: 'Sales Analytics', blurb: 'Detailed analysis behind the dashboard KPIs and charts.', bullets: ['Revenue, devices and consumables by distributor, country, region and product','Margin and growth drill-downs with period comparisons','Target achievement and repeat-order analysis'], actLabel: 'Back to dashboard charts', act: 'dash' },
+      market: { title: 'Global Market Intelligence', blurb: 'Country profiles combining economic, IVF market, commercial and risk indicators.', bullets: ['GDP, GDP per capita, population, healthcare expenditure, inflation and exchange rates','Clinics, treatment cycles, ICSI, PGT and cryopreservation activity','Competitor presence, installed base, penetration and forecast opportunities','Regulatory, shipping, currency, political, payment and import risks','Every metric with its source, reference year and data confidence'], actLabel: 'Compare country markets', act: 'cmp' },
+      pricing: { title: 'Pricing & Discount Calculator', blurb: 'Dedicated pricing module for ZEUS devices and consumables.', bullets: ['Quantity-based discount tiers and editable distributor-specific rules','Margin impact, break-even quantity, feasibility and approval requirement','Compare scenarios, save calculations, generate quotations and request approval','Discount history per distributor'], actLabel: 'Open discount calculator', act: 'calc' },
+      risk: { title: 'Risk & Scenario Simulator', blurb: 'Base, downside and upside scenarios across revenue, margin and receivables.', bullets: ['Exchange rates, demand, discounts, shipment and payment delays','Distributor default probability, regulatory delays and competitor pricing pressure','Projected revenue, gross profit, margin, receivables exposure and break-even sales'], actLabel: 'Open risk simulation', act: 'sim' },
+      decision: { title: 'Strategic Decision Center', blurb: 'Configurable weighted multi-criteria assessment for commercial decisions.', bullets: ['Discount approval, exclusivity, new distributor selection, market expansion, product prioritization, large consumables orders','Criteria: sales history, IVF market potential, profitability, operational capability, risks, strategic value','Score contributions, constraints, missing evidence, sensitivity analysis and recommended action','Scores are decision support only and never a guaranteed outcome'], actLabel: 'Evaluate distributor performance', act: 'perf' },
+      reports: { title: 'Reports & Exports', blurb: 'Executive reports and data exports.', bullets: ['Scheduled and on-demand reports for management and finance','CSV exports of distributor performance and sales data'], actLabel: 'Generate report', act: 'rep' },
+      settings: { title: 'Settings & Data Sources', blurb: 'Data connections, roles and preferences.', bullets: ['Data source connections (Supabase/PostgreSQL) and secure document storage','Role-based access control for sales, finance, management and executives','Currency rates, thresholds and discount rules'], actLabel: 'Back to dashboard', act: 'dash' }
+    };
+    this._D = { countries: countries, cMap: countries.reduce((m, c) => { m[c.code] = c; return m; }, {}), regions: regions, products: products, dists: dists, stubs: stubs };
+    return this._D;
+  }
+
+  /* ---------- simulation + calculator engines ---------- */
+  simCalc(baseRev, gm, s) {
+    const demand = 1 + s.demand / 100, price = 1 - s.disc / 100, fx = 1 - (s.fx / 100) * 0.45;
+    const rev = baseRev * demand * price * fx;
+    const cogs = baseRev * (1 - gm) * demand;
+    const logistics = rev * 0.0006 * s.delay;
+    const recv = rev * (60 + s.delay) / 365;
+    const loss = recv * s.dflt / 100;
+    const gp = rev - cogs - logistics - loss;
+    const margin = rev > 0 ? gp / rev * 100 : 0;
+    const cm = rev > 0 ? gp / rev : 0;
+    const be = cm > 0 ? (baseRev * 0.18) / cm : null;
+    return { rev: rev, gp: gp, margin: margin, recv: recv, be: be, loss: loss };
+  }
+
+  /* ---------- render values ---------- */
+  renderVals() {
+    const st = this.state, D = this.D(), self = this;
+    const set = (k, v) => () => this.setState({ [k]: v });
+    const ev = (k) => (e) => this.setState({ [k]: e.target.value });
+    const open = (m, id) => () => this.setState({ modal: m, modalId: id || null, bell: false });
+    const allD = D.dists.concat(st.added);
+    const distBy = {}; allD.forEach((d) => { distBy[d.id] = d; });
+    const cMap = D.cMap;
+    const yf = { '2026': 1, '2025': 0.86, '2024': 0.71 }[st.year];
+    const nM = { '12m': 12, ytd: 10, '6m': 6, '3m': 3 }[st.range];
+    const start = 12 - nM;
+    const pfac = st.productF === 'all' ? 1 : D.products.find((p) => p.id === st.productF).share;
+    const MON = ['Nov','Dec','Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct'];
+    const revOf = (d) => { let s = 0; for (let i = start; i < 12; i++) s += d.rev * 1000 * d.weights[i]; return s * yf; };
+    const monthly = (list, fn, from, mult) => {
+      const out = [];
+      for (let i = from; i < 12; i++) { let s = 0; list.forEach((d) => { s += d.rev * 1000 * d.weights[i] * fn(d); }); out.push(s * yf * mult); }
+      return out;
+    };
+    const sum = (a) => a.reduce((x, y) => x + y, 0);
+    const matchC = (d) => st.country === 'all' || d.id === st.country;
+    const matchR = (d) => st.regionF === 'all' || cMap[d.id].region === st.regionF;
+    const actives = allD.filter((d) => d.status === 'active');
+    const sel = actives.filter((d) => matchC(d) && matchR(d));
+    const selC = actives.filter(matchC);
+
+    /* KPIs */
+    const totRev = sum(sel.map(revOf));
+    const devRev = sum(sel.map((d) => revOf(d) * d.devShare));
+    const conRev = totRev - devRev;
+    const devices = devRev / 21000;
+    const wAvg = (fn) => totRev > 0 ? sum(sel.map((d) => fn(d) * revOf(d))) / totRev : 0;
+    const avgMargin = wAvg((d) => d.margin), avgGrowth = wAvg((d) => d.growth);
+    const m12 = monthly(sel, () => 1, 0, 1), d12 = monthly(sel, (d) => d.devShare, 0, 1), c12 = monthly(sel, (d) => 1 - d.devShare, 0, 1);
+    const nSel = sel.length, nCountries = new Set(sel.map((d) => d.id)).size;
+    const scale = (arr, n) => arr.map((v) => v * n);
+    const cntSeries = [0.62, 0.66, 0.7, 0.7, 0.74, 0.78, 0.8, 0.84, 0.88, 0.9, 0.94, 1].map((v) => Math.max(0, v * nSel));
+    const covSeries = [0.7, 0.72, 0.76, 0.78, 0.8, 0.84, 0.86, 0.9, 0.92, 0.94, 0.96, 1].map((v) => v * nCountries);
+    const mgSeries = [0.972, 0.975, 0.98, 0.982, 0.985, 0.988, 0.99, 0.992, 0.995, 0.997, 0.999, 1].map((v) => v * (avgMargin || 1));
+    const chg = (v) => v >= 0 ? 'ok' : 'bdg';
+    const kdef = [
+      { label: 'Total Distributor Revenue (USD)', icon: 'M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6', value: this.fm(totRev), d: avgGrowth, delta: this.pc(avgGrowth), s: m12, tip: 'Sum of net sales invoiced to distributors in the selected period, shown in the selected currency.', page: 'sales' },
+      { label: 'Active Distributors', icon: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75', value: String(nSel), d: 1, delta: nSel ? '+2' : '0', s: cntSeries, tip: 'Distributors with a signed agreement and current authorization to sell ZEUS products.', page: 'distributors' },
+      { label: 'Total Devices Sold', icon: 'M4 4h16v10H4zM8 20h8M12 14v6', value: this.n0(devices), d: avgGrowth, delta: this.pc(avgGrowth * 0.9), s: d12, tip: 'Units of ZEUS devices sold through distributors (estimated from device revenue and an average unit price).', page: 'sales' },
+      { label: 'Consumables Revenue', icon: 'M9 3h6M10 3v6L4 20a1 1 0 0 0 .9 1.5h14.2A1 1 0 0 0 20 20l-6-11V3', value: this.fm(conRev), d: avgGrowth, delta: this.pc(avgGrowth + 3.1), s: c12, tip: 'Recurring revenue from consumables and accessories, which tends to be more stable than device sales.', page: 'sales' },
+      { label: 'Average Gross Margin (%)', icon: 'M19 5L5 19M6.5 9a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5zM17.5 20a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5z', value: avgMargin.toFixed(1) + '%', d: 0.8, delta: '+0.8 pt', s: mgSeries, tip: 'Revenue-weighted gross margin across the selected distributors, before commissions and overheads.', page: 'sales' },
+      { label: 'Countries Covered', icon: 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20', value: String(nCountries), d: 1, delta: nCountries ? '+1' : '0', s: covSeries, tip: 'Countries with at least one active distributor out of the markets tracked in the map.', page: 'market' }
+    ];
+    const kpis = kdef.map((k) => {
+      const sp = this.spark(k.s.length > 1 && Math.max.apply(null, k.s) > 0 ? k.s : [1, 1, 1, 1]);
+      return { label: k.label, icon: k.icon, value: k.value, delta: k.delta, chg: chg(k.d), tip: k.tip, line: sp.line, area: sp.area, go: set('page', k.page) };
+    });
+
+    /* Map */
+    const status = (code) => { const d = distBy[code]; return d ? d.status : 'uncovered'; };
+    const dark = st.dark;
+    const COL = {
+      active: ['#13A6B5', '#06232A'], prospect: ['#E2B04A', '#2B1D00'],
+      uncovered: dark ? ['#243557', '#B5C3DA'] : ['#DCE4EE', '#3B4D68']
+    };
+    const riskCol = { Low: ['#13A6B5', '#06232A'], Medium: ['#E2B04A', '#2B1D00'], High: ['#E5707B', '#2B0A10'] };
+    const fillOf = (c) => {
+      if (st.layer === 'status') return COL[status(c.code)];
+      if (st.layer === 'risk') { const d = distBy[c.code]; const r = (d && d.status === 'active') ? d.risk : c.risk; return riskCol[r] || riskCol.Medium; }
+      const L = 20 + c.score * 0.25;
+      return ['hsl(188,78%,' + L.toFixed(0) + '%)', L >= 33 ? '#06232A' : '#EAF6F8'];
+    };
+    const statusLabel = { active: 'Active distributor', prospect: 'Prospect', uncovered: 'No ZEUS coverage' };
+    const statusCls = { active: 'ok', prospect: 'wn', uncovered: 'nt' };
+    const riskCls = { Low: 'ok', Medium: 'wn', High: 'bdg', 'Not rated': 'nt' };
+    const cRisk = (c) => { const d = distBy[c.code]; return (d && d.status === 'active') ? d.risk : c.risk; };
+    const cRev = (c) => { const d = distBy[c.code]; return (d && d.status === 'active') ? revOf(d) : 0; };
+    const tiles = D.countries.map((c) => {
+      const f = fillOf(c);
+      const hov = st.hover === c.code;
+      return {
+        code: c.code,
+        style: 'grid-column:' + (c.col + 1) + ';grid-row:' + (c.row + 1) + ';background:' + f[0] + ';color:' + f[1] + (hov ? ';outline:2px solid var(--tx);outline-offset:1px;z-index:6' : ''),
+        aria: c.name + ': ' + statusLabel[status(c.code)] + ', risk ' + cRisk(c) + ', opportunity score ' + c.score,
+        open: open('country', c.code), hover: set('hover', c.code)
+      };
+    });
+    const layerLabel = { status: 'Status', opp: 'Opportunity', risk: 'Risk' };
+    const layerOpts = ['status', 'opp', 'risk'].map((k) => ({ label: layerLabel[k], cls: st.layer === k ? 'on' : '', on: st.layer === k, go: set('layer', k) }));
+    const legendFor = {
+      status: [{ label: 'Active distributor', style: 'background:#13A6B5' }, { label: 'Prospective distributor', style: 'background:#E2B04A' }, { label: 'No ZEUS coverage', style: 'background:' + (dark ? '#243557' : '#DCE4EE') }],
+      opp: [{ label: 'Lower potential', style: 'background:hsl(188,78%,23%)' }, { label: 'Medium', style: 'background:hsl(188,78%,34%)' }, { label: 'Higher potential', style: 'background:hsl(188,78%,43%)' }],
+      risk: [{ label: 'Low risk', style: 'background:#13A6B5' }, { label: 'Medium risk', style: 'background:#E2B04A' }, { label: 'High risk', style: 'background:#E5707B' }]
+    };
+    const nActiveC = D.countries.filter((c) => status(c.code) === 'active').length, nProsC = D.countries.filter((c) => status(c.code) === 'prospect').length;
+    const hcC = cMap[st.hover] || cMap.TR, hcD = distBy[hcC.code];
+    const hcSt = status(hcC.code);
+    const hc = {
+      name: hcC.name, region: hcC.region, statusLabel: statusLabel[hcSt], statusCls: statusCls[hcSt],
+      dist: hcD ? hcD.name : 'None assigned', clinics: this.n0(hcC.clinics), cycles: this.n0(hcC.cycles),
+      rev: this.fm(cRev(hcC)), score: hcC.score, risk: cRisk(hcC), riskCls: riskCls[cRisk(hcC)], open: open('country', hcC.code)
+    };
+
+    /* Charts */
+    const grp = (arr, labels) => {
+      if (st.chartMode === 'monthly') return { v: arr, l: labels };
+      const v = [], l = [];
+      for (let i = 0; i < arr.length; i += 3) {
+        const sl = arr.slice(i, i + 3);
+        v.push(sum(sl)); l.push(labels[i] + (sl.length > 1 ? '–' + labels[i + sl.length - 1] : ''));
+      }
+      return { v: v, l: l };
+    };
+    const labelsR = MON.slice(start);
+    const mvals = monthly(sel, () => 1, start, pfac);
+    const g1 = grp(mvals, labelsR);
+    const W = 620, L0 = 46, R0 = 10, T0 = 14, B0 = 28, H = 240, iw = W - L0 - R0, ih = H - T0 - B0;
+    const mk = (max) => [0, 1, 2, 3, 4].map((i) => { const y = T0 + ih - ih * i / 4; return { y: y, ty: y + 3.5, label: this.fm(max * i / 4) }; });
+    const max1 = this.niceMax(Math.max.apply(null, g1.v.concat([1])) * 1.05);
+    const n1 = g1.v.length;
+    const px1 = (i) => n1 === 1 ? L0 + iw / 2 : L0 + iw * i / (n1 - 1);
+    const py1 = (v) => T0 + ih - (v / max1) * ih;
+    const pts1 = g1.v.map((v, i) => ({ x: px1(i).toFixed(1), y: py1(v).toFixed(1), tip: g1.l[i] + ': ' + this.fm(v) }));
+    const line1 = pts1.map((p, i) => (i ? 'L' : 'M') + p.x + ' ' + p.y).join(' ');
+    const area1 = line1 + ' L' + px1(n1 - 1).toFixed(1) + ' ' + (T0 + ih) + ' L' + px1(0).toFixed(1) + ' ' + (T0 + ih) + ' Z';
+    const slot1 = iw / n1;
+    const bars1 = g1.v.map((v, i) => ({ x: (L0 + slot1 * i + slot1 * 0.18).toFixed(1), w: (slot1 * 0.64).toFixed(1), y: py1(v).toFixed(1), h: Math.max(1, T0 + ih - py1(v)).toFixed(1), tip: g1.l[i] + ': ' + this.fm(v) }));
+    const xl1 = st.chartMode === 'monthly' ? g1.l.map((t, i) => ({ x: px1(i).toFixed(1), label: t })) : g1.l.map((t, i) => ({ x: (L0 + slot1 * i + slot1 / 2).toFixed(1), label: t }));
+    const sub1 = (st.chartMode === 'monthly' ? 'Monthly' : 'Quarterly') + ' net sales' + (st.productF === 'all' ? '' : ' · product mix share applied');
+    const c1 = { grid: mk(max1), points: pts1, line: line1, area: area1, bars: bars1, xl: xl1, sub: sub1, aria: sub1 + ' chart, total ' + this.fm(sum(g1.v)) };
+
+    const dv = grp(monthly(sel, (d) => d.devShare, start, pfac), labelsR), cv = grp(monthly(sel, (d) => 1 - d.devShare, start, pfac), labelsR);
+    const tot2 = dv.v.map((v, i) => v + cv.v[i]);
+    const max2 = this.niceMax(Math.max.apply(null, tot2.concat([1])) * 1.05);
+    const slot2 = iw / dv.v.length;
+    const py2 = (v) => T0 + ih - (v / max2) * ih;
+    const bars2 = dv.v.map((v, i) => {
+      const hc2 = (cv.v[i] / max2) * ih, hd2 = (v / max2) * ih;
+      return { x: (L0 + slot2 * i + slot2 * 0.18).toFixed(1), w: (slot2 * 0.64).toFixed(1), y1: (T0 + ih - hd2 - hc2).toFixed(1), h1: Math.max(0.5, hc2).toFixed(1), y2: (T0 + ih - hd2).toFixed(1), h2: Math.max(0.5, hd2).toFixed(1), tip: dv.l[i] + ' · devices ' + this.fm(v) + ' · consumables ' + this.fm(cv.v[i]) };
+    });
+    const c2 = { grid: mk(max2), bars: bars2, xl: dv.l.map((t, i) => ({ x: (L0 + slot2 * i + slot2 / 2).toFixed(1), label: t })), sub: 'Devices ' + this.fm(sum(dv.v)) + ' · consumables ' + this.fm(sum(cv.v)), aria: 'Stacked bars of device and consumables revenue' };
+
+    const regTot = D.regions.map((r) => ({ r: r, v: sum(selC.filter((d) => cMap[d.id].region === r).map(revOf)) }));
+    const regMax = Math.max.apply(null, regTot.map((x) => x.v).concat([1])), regSum = sum(regTot.map((x) => x.v)) || 1;
+    const regionBars = regTot.sort((a, b) => b.v - a.v).map((x) => {
+      const on = st.regionF === x.r;
+      return { name: x.r, label: this.fm(x.v), share: (x.v / regSum * 100).toFixed(0) + '%', on: on, go: set('regionF', on ? 'all' : x.r),
+        rowStyle: on ? 'background:var(--acs)' : '', barStyle: 'height:100%;border-radius:6px;background:var(--ac);width:' + (x.v / regMax * 100).toFixed(1) + '%;opacity:' + (st.regionF === 'all' || on ? 1 : 0.4) };
+    });
+    const prodMax = Math.max.apply(null, D.products.map((p) => p.share));
+    const productBars = D.products.map((p) => {
+      const on = st.productF === p.id;
+      return { name: p.name, label: this.fm(totRev * p.share), share: (p.share * 100).toFixed(0) + '%', on: on, go: set('productF', on ? 'all' : p.id),
+        rowStyle: on ? 'background:var(--acs)' : '', barStyle: 'height:100%;border-radius:6px;background:var(--c2);width:' + (p.share / prodMax * 100).toFixed(1) + '%;opacity:' + (st.productF === 'all' || on ? 1 : 0.4) };
+    });
+    const chartFilterLabel = [st.regionF !== 'all' ? st.regionF : '', st.productF !== 'all' ? D.products.find((p) => p.id === st.productF).name : ''].filter((x) => x).join(' + ');
+
+    /* Table */
+    const q = st.search.trim().toLowerCase();
+    const riskRank = { Low: 1, Medium: 2, High: 3, 'Not rated': 4 };
+    let rowsAll = allD.filter((d) => (st.statusF === 'all' || d.status === st.statusF) && matchC(d) && matchR(d) && (st.riskF === 'all' || d.risk === st.riskF) &&
+      (q === '' || (d.name + ' ' + cMap[d.id].name + ' ' + d.id + ' ' + d.risk + ' ' + d.prods.join(' ')).toLowerCase().indexOf(q) >= 0))
+      .map((d) => { const r = revOf(d); return { d: d, rev: r, devices: r * d.devShare / 21000, cons: r * (1 - d.devShare) }; });
+    const keyFn = { name: (r) => r.d.name.toLowerCase(), country: (r) => cMap[r.d.id].name, revenue: (r) => r.rev, devices: (r) => r.devices, consumables: (r) => r.cons, target: (r) => r.d.target, margin: (r) => r.d.margin, growth: (r) => r.d.growth, pen: (r) => r.d.pen, risk: (r) => riskRank[r.d.risk] }[st.sortKey];
+    rowsAll.sort((a, b) => { const x = keyFn(a), y = keyFn(b); return (x < y ? -1 : x > y ? 1 : 0) * st.sortDir; });
+    const shown = st.showAll ? rowsAll : rowsAll.slice(0, 8);
+    const rows = shown.map((r) => {
+      const d = r.d, hasData = d.status === 'active';
+      return {
+        name: d.name, country: cMap[d.id].name, rev: hasData ? this.fm(r.rev) : '—', devices: hasData ? this.n0(r.devices) : '—', cons: hasData ? this.fm(r.cons) : '—',
+        target: hasData ? d.target + '%' : '—', margin: hasData ? d.margin.toFixed(1) + '%' : '—', growth: hasData ? this.pc(d.growth) : '—', growthCls: hasData ? (d.growth >= 0 ? 'ok' : 'bdg') : 'nt',
+        pen: hasData ? d.pen.toFixed(1) + '%' : '—', risk: d.risk, riskCls: riskCls[d.risk],
+        targetStyle: 'height:100%;border-radius:5px;width:' + Math.min(100, d.target) + '%;background:' + (d.target >= 100 ? '#1E9E78' : (d.target >= 85 ? '#E2B04A' : '#E5707B')),
+        open: open('dist', d.id)
+      };
+    });
+    const colDefs = [['name', 'Distributor'], ['country', 'Country'], ['revenue', 'Sales Revenue'], ['devices', 'Devices Sold'], ['consumables', 'Consumables Revenue'], ['target', 'Target Achievement'], ['margin', 'Gross Margin'], ['growth', 'Growth'], ['pen', 'Market Penetration'], ['risk', 'Risk Status']];
+    const cols = colDefs.map((c) => ({
+      label: c[1], arrow: st.sortKey === c[0] ? (st.sortDir === 1 ? '▲' : '▼') : '', aria: st.sortKey === c[0] ? (st.sortDir === 1 ? 'ascending' : 'descending') : 'none',
+      go: () => this.setState({ sortKey: c[0], sortDir: st.sortKey === c[0] ? -st.sortDir : (c[0] === 'name' || c[0] === 'country' || c[0] === 'risk' ? 1 : -1) })
+    }));
+
+    /* Alerts */
+    const dn = (id) => distBy[id] ? distBy[id].name : id;
+    const IC = { warn: 'M12 9v4M12 17h.01M10.3 3.9L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z', info: 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM12 16v-4M12 8h.01', cash: 'M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6', cal: 'M3 5h18v16H3zM16 3v4M8 3v4M3 11h18', up: 'M23 6l-9.5 9.5-5-5L1 18M17 6h6v6' };
+    const alertsAll = [
+      { id: 'a1', sev: 'wn', icon: IC.cal, title: 'Agreement expires within 30 days', text: dn('AE') + ' (UAE): agreement ends 2026-11-20.', label: 'Open Agreement', act: open('dist', 'AE') },
+      { id: 'a2', sev: 'wn', icon: IC.warn, title: 'Minimum purchase obligation not met', text: dn('EG') + ' (Egypt) is at 82% of its period commitment.', label: 'Review', act: open('dist', 'EG') },
+      { id: 'a3', sev: 'bdg', icon: IC.cash, title: 'Payment overdue', text: dn('NG') + ' (Nigeria): invoice 38 days overdue.', label: 'Review', act: open('dist', 'NG') },
+      { id: 'a4', sev: 'ok', icon: IC.info, title: 'Volume-discount threshold reached', text: dn('TR') + ' (Türkiye) passed the Tier 3 consumables threshold.', label: 'Calculate', act: () => this.setState({ modal: 'calc', calc: { ...st.calc, dist: 'TR' }, bell: false }) },
+      { id: 'a5', sev: 'wn', icon: IC.warn, title: 'Exchange-rate risk changed', text: 'BRL volatility is above its 90-day average, affecting Brazil receivables.', label: 'Run simulation', act: open('sim') },
+      { id: 'a6', sev: 'ok', icon: IC.up, title: 'Market opportunity increased', text: 'New IVF clinic openings recorded in Vietnam (sample data).', label: 'Review', act: open('country', 'VN') },
+      { id: 'a7', sev: 'wn', icon: IC.info, title: 'Distributor requests exclusivity', text: dn('TH') + ' (Thailand) requested exclusivity; prerequisites are pending.', label: 'Review', act: open('dist', 'TH') },
+      { id: 'a8', sev: 'wn', icon: IC.cash, title: 'Discount request needs management approval', text: dn('IN') + ' (India) requests 14% on a consumables order.', label: 'Calculate', act: () => this.setState({ modal: 'calc', calc: { ...st.calc, dist: 'IN', disc: '14', qty: '60' }, bell: false }) }
+    ];
+    const openAlerts = alertsAll.filter((a) => st.dismissed.indexOf(a.id) < 0);
+    const alertList = openAlerts.map((a) => ({ title: a.title, text: a.text, icon: a.icon, sevCls: a.sev, actLabel: a.label, act: a.act, dismiss: () => this.setState({ dismissed: st.dismissed.concat([a.id]) }) }));
+    const bellItems = openAlerts.slice(0, 4).map((a) => ({ title: a.title, text: a.text, act: a.act }));
+
+    /* Quick tools */
+    const toolDefs = [
+      { title: 'Calculate Distributor Discount', text: 'Evaluate device and consumables discounts considering order volume, contractual pricing, margin, and distributor performance.', icon: 'M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zM8 6h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 19h8', m: 'calc' },
+      { title: 'Compare Country Markets', text: 'Compare countries by GDP, population, IVF clinics, estimated annual IVF cycles, competition, market penetration, and regulatory conditions.', icon: 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20', m: 'cmp' },
+      { title: 'Run Risk Simulation', text: 'Model changes in revenue, margin, logistics, exchange rates, and payment risks.', icon: 'M22 12h-4l-3 9L9 3l-3 9H2', m: 'sim' },
+      { title: 'Evaluate Distributor Performance', text: 'Assess target achievement, sales growth, repeat orders, clinic acquisition, and market-relative performance.', icon: 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12zM12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4z', m: 'perf' }
+    ];
+    const tools = toolDefs.map((t) => ({ title: t.title, text: t.text, icon: t.icon, go: open(t.m) }));
+
+    /* Nav */
+    const NAV = [
+      ['dashboard', 'Executive Dashboard', 'M3 3h8v8H3zM13 3h8v5h-8zM13 10h8v11h-8zM3 13h8v8H3z'],
+      ['distributors', 'Distributors & CRM', 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75'],
+      ['agreements', 'Agreements & Compliance', 'M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8zM14 2v6h6M9 15l2 2 4-4'],
+      ['sales', 'Sales Analytics', 'M3 3v18h18M8 17v-6M13 17V7M18 17v-3'],
+      ['market', 'Global Market Intelligence', 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM2 12h20M12 2a15 15 0 0 1 0 20M12 2a15 15 0 0 0 0 20'],
+      ['pricing', 'Pricing & Discount Calculator', 'M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zM8 6h8M8 11h.01M12 11h.01M16 11h.01M8 15h.01M12 15h.01M16 15h.01M8 19h8'],
+      ['risk', 'Risk & Scenario Simulator', 'M22 12h-4l-3 9L9 3l-3 9H2'],
+      ['decision', 'Strategic Decision Center', 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM12 18a6 6 0 1 0 0-12 6 6 0 0 0 0 12zM12 14a2 2 0 1 0 0-4 2 2 0 0 0 0 4z'],
+      ['reports', 'Reports & Exports', 'M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3'],
+      ['settings', 'Settings & Data Sources', 'M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6']
+    ];
+    const navItems = NAV.map((n) => ({ label: n[1], icon: n[2], cls: st.page === n[0] ? 'navon' : '', cur: st.page === n[0] ? 'page' : 'false', go: set('page', n[0]) }));
+    const stubRaw = D.stubs[st.page];
+    const actMap = { add: open('add'), cmp: open('cmp'), calc: open('calc'), sim: open('sim'), perf: open('perf'), rep: open('rep'), dash: set('page', 'dashboard') };
+    const stub = stubRaw ? { crumb: 'Module preview', title: stubRaw.title, blurb: stubRaw.blurb, bullets: stubRaw.bullets.map((t) => ({ t: t })), actLabel: stubRaw.actLabel, act: actMap[stubRaw.act] } : { crumb: '', title: '', blurb: '', bullets: [], actLabel: '', act: set('page', 'dashboard') };
+
+    /* Country options */
+    const withDist = D.countries.filter((c) => distBy[c.code]);
+    const countryOpts = [{ v: 'all', l: 'All countries' }].concat(withDist.slice().sort((a, b) => a.name.localeCompare(b.name)).map((c) => ({ v: c.code, l: c.name })));
+    const activeOpts = actives.map((d) => ({ v: d.id, l: d.name + ' (' + cMap[d.id].name + ')' }));
+
+    /* ===== Modals ===== */
+    const mo = st.modal;
+    const mm = { open: !!mo, newa: mo === 'newa', dist: mo === 'dist', country: mo === 'country', calc: mo === 'calc', cmp: mo === 'cmp', sim: mo === 'sim', perf: mo === 'perf', add: mo === 'add', rep: mo === 'rep', title: '', sub: '', style: 'max-width:720px' };
+    const titles = {
+      newa: ['New Analysis', 'Choose a decision-support tool.', 640], dist: ['Distributor profile', '', 760], country: ['Market Intelligence profile', 'Synthetic sample data for prototyping.', 820],
+      calc: ['Distributor Discount Calculator', 'Evaluate a discount against margin and tier rules.', 960], cmp: ['Compare Country Markets', 'Side-by-side view of 2 to 5 markets.', 860],
+      sim: ['Risk & Scenario Simulator', 'Adjust assumptions and compare scenarios.', 980], perf: ['Evaluate Distributor Performance', 'Indicative multi-factor assessment.', 720],
+      add: ['Add Distributor', 'Register a prospective distributor.', 520], rep: ['Generate Report', 'Executive summary and CSV export.', 620]
+    };
+    if (mo && titles[mo]) { mm.title = titles[mo][0]; mm.sub = titles[mo][1]; mm.style = 'max-width:' + titles[mo][2] + 'px'; }
+
+    /* distributor detail */
+    const ddD = (mo === 'dist' && distBy[st.modalId]) || actives[0];
+    const ddC = cMap[ddD.id], ddAct = ddD.status === 'active', ddRev = revOf(ddD);
+    if (mo === 'dist') mm.title = ddD.name;
+    if (mo === 'dist') mm.sub = ddC.name + ' · ' + (ddAct ? 'Active distributor' : 'Prospect');
+    const dd = {
+      statusCls: statusCls[ddD.status], statusLabel: statusLabel[ddD.status], risk: ddD.risk, riskCls: riskCls[ddD.risk], country: ddC.name, region: ddC.region,
+      stats: [
+        { l: 'Sales revenue', v: ddAct ? this.fm(ddRev) : '—' }, { l: 'Devices sold', v: ddAct ? this.n0(ddRev * ddD.devShare / 21000) : '—' },
+        { l: 'Consumables revenue', v: ddAct ? this.fm(ddRev * (1 - ddD.devShare)) : '—' }, { l: 'Target achievement', v: ddAct ? ddD.target + '%' : '—' },
+        { l: 'Gross margin', v: ddAct ? ddD.margin.toFixed(1) + '%' : '—' }, { l: 'Growth', v: ddAct ? this.pc(ddD.growth) : '—' },
+        { l: 'Market penetration', v: ddAct ? ddD.pen.toFixed(1) + '%' : '—' }, { l: 'Payment terms (sample)', v: ddAct ? 'Net 60' : '—' }
+      ],
+      agreement: ddAct ? 'Signed' : 'Not yet signed', exp: ddD.exp, loa: ddD.loa, excl: ddD.excl, prods: ddD.prods.length ? ddD.prods.join(', ') : 'None authorized yet',
+      calc: () => this.setState({ modal: 'calc', calc: { ...st.calc, dist: ddAct ? ddD.id : st.calc.dist } }),
+      perf: () => this.setState({ modal: 'perf', perf: ddAct ? ddD.id : st.perf }),
+      market: open('country', ddD.id)
+    };
+
+    /* country profile */
+    const cpC = (mo === 'country' && cMap[st.modalId]) || cMap.TR;
+    const cpD = distBy[cpC.code], cpSt = status(cpC.code);
+    if (mo === 'country') mm.title = cpC.name + ' · Market Intelligence';
+    const row = (m, v, miss, conf) => ({ m: m, v: miss ? 'Not available' : v, y: miss ? '—' : '2026', conf: miss ? 'Missing' : conf, cls: miss ? 'bdg' : (conf === 'Illustrative' ? 'wn' : 'nt') });
+    const cp = {
+      statusLabel: statusLabel[cpSt], statusCls: statusCls[cpSt], risk: cRisk(cpC), riskCls: riskCls[cRisk(cpC)], score: cpC.score, dist: cpD ? cpD.name : 'None',
+      rows: [
+        row('GDP', 'USD ' + this.n0(cpC.gdp) + ' bn', false, 'Illustrative'), row('GDP per capita', 'USD ' + this.n0(cpC.gdpPc), false, 'Illustrative'),
+        row('Population', this.n0(cpC.pop) + ' m', false, 'Illustrative'), row('Healthcare expenditure', cpC.health + '% of GDP', cpC.missHealth, 'Illustrative'),
+        row('Inflation', cpC.infl + '%', false, 'Illustrative'), row('Import conditions', cpC.imp, false, 'Illustrative'),
+        row('IVF clinics', this.n0(cpC.clinics), false, 'Illustrative'), row('Estimated annual treatment cycles', this.n0(cpC.cycles), false, 'Illustrative'),
+        row('ICSI share of cycles', cpC.icsi + '%', false, 'Illustrative'), row('PGT activity', cpC.pgt + '% of cycles', cpC.missPgt, 'Illustrative'),
+        row('Cryopreservation activity', cpC.cryo + '% of cycles', cpC.missCryo, 'Illustrative'), row('Competitor presence', cpC.comp, false, 'Illustrative'),
+        row('Estimated ZEUS market penetration', cpD && cpD.status === 'active' ? cpD.pen.toFixed(1) + '%' : '0% (no sales)', false, 'Illustrative'),
+        row('Regulatory requirements', cpC.reg, false, 'Illustrative'), row('Currency volatility', cpC.fx, false, 'Illustrative'), row('Payment risk', cpC.pay, false, 'Illustrative')
+      ],
+      compare: () => this.setState({ modal: 'cmp', cmp: st.cmp.indexOf(cpC.code) >= 0 ? st.cmp : (st.cmp.length < 5 ? st.cmp.concat([cpC.code]) : st.cmp) })
+    };
+
+    /* discount calculator */
+    const cs = st.calc, num = (x) => { const v = parseFloat(String(x).replace(',', '.')); return isFinite(v) ? v : 0; };
+    const qty = Math.max(0, num(cs.qty)), price = num(cs.price), cost = num(cs.cost), disc = Math.max(0, num(cs.disc)), ship = num(cs.ship), comm = num(cs.comm), minM = num(cs.minM), extra = num(cs.extra);
+    const tier = qty >= 50 ? { n: 'Tier 3', max: 12 } : qty >= 25 ? { n: 'Tier 2', max: 8 } : qty >= 10 ? { n: 'Tier 1', max: 5 } : { n: 'No tier', max: 0 };
+    const allow = tier.max + extra;
+    const orig = qty * price, dAmt = orig * disc / 100, net = orig - dAmt, unitF = price * (1 - disc / 100);
+    const costTot = qty * cost + ship + net * comm / 100, gp = net - costTot, gm = net > 0 ? gp / net * 100 : 0;
+    const stdGp = orig - (qty * cost + ship + orig * comm / 100), stdGm = orig > 0 ? stdGp / orig * 100 : 0;
+    const uc = unitF * (1 - comm / 100) - cost, be = uc > 0 ? Math.ceil(ship / uc) : null;
+    const reasons = [];
+    if (disc > allow) reasons.push('Requested discount (' + disc + '%) exceeds the ' + tier.n + ' allowance of ' + allow + '%.');
+    if (net > 0 && gm < minM) reasons.push('Gross margin (' + gm.toFixed(1) + '%) is below the minimum of ' + minM + '%.');
+    const calcD = distBy[cs.dist] || actives[0];
+    const feas = gp < 0 ? 'Not feasible: negative gross profit' : (gm < minM ? 'Below minimum margin' : 'Financially feasible');
+    const feasCls = gp < 0 ? 'bdg' : (gm < minM ? 'wn' : 'ok');
+    const needAppr = reasons.length > 0;
+    const fmU = (v) => this.fm(v);
+    const cr = {
+      feas: feas, feasCls: feasCls, approval: needAppr ? 'Management approval required' : 'Within delegated authority (sample rule)', apprCls: needAppr ? 'wn' : 'ok',
+      reason: needAppr ? reasons.join(' ') : 'Discount and margin are within the sample rules. Final pricing remains subject to commercial review.',
+      stats: [
+        { l: 'Original order value', v: fmU(orig) }, { l: 'Discount', v: disc.toFixed(1) + '% · ' + fmU(dAmt) }, { l: 'Final unit price', v: fmU(unitF) },
+        { l: 'Total net sales', v: fmU(net) }, { l: 'Gross profit', v: fmU(gp) }, { l: 'Gross margin', v: gm.toFixed(1) + '%' },
+        { l: 'Margin impact vs standard', v: (gm - stdGm >= 0 ? '+' : '') + (gm - stdGm).toFixed(1) + ' pt · ' + fmU(gp - stdGp) }, { l: 'Break-even quantity', v: be === null ? 'Not reachable' : this.n0(be) + ' units' },
+        { l: 'Volume tier / allowance', v: tier.n + ' · up to ' + allow + '%' }
+      ]
+    };
+    const setC = (k) => (e) => this.setState({ calc: { ...st.calc, [k]: e.target.value } });
+    const calcFields = [['qty', 'Order quantity (units)'], ['price', 'Contractual unit price (USD)'], ['cost', 'Product cost per unit (USD)'], ['disc', 'Requested discount (%)'], ['ship', 'Shipping and additional costs (USD)'], ['comm', 'Commission (%)'], ['minM', 'Minimum gross margin (%)'], ['extra', 'Distributor-specific extra allowance (%)']].map((f) => ({ label: f[1], val: cs[f[0]], on: setC(f[0]) }));
+    const calcContext = 'Performance context: target achievement ' + calcD.target + '%, gross margin ' + calcD.margin.toFixed(1) + '%, risk ' + calcD.risk + ' (' + cMap[calcD.id].name + ').';
+
+    /* compare */
+    const cmpC = st.cmp.map((c) => cMap[c]).filter((c) => c);
+    const cmpHead = cmpC.map((c) => ({ name: c.name }));
+    const cl = (f) => cmpC.map((c) => ({ t: f(c) }));
+    const penOf = (c) => { const d = distBy[c.code]; return d && d.status === 'active' ? d.pen.toFixed(1) + '%' : '0%'; };
+    const cmpRows = [
+      { label: 'GDP (USD bn)', cells: cl((c) => this.n0(c.gdp)) }, { label: 'Population (m)', cells: cl((c) => this.n0(c.pop)) },
+      { label: 'IVF clinics', cells: cl((c) => this.n0(c.clinics)) }, { label: 'Est. annual IVF cycles', cells: cl((c) => this.n0(c.cycles)) },
+      { label: 'Competition', cells: cl((c) => c.comp) }, { label: 'ZEUS market penetration', cells: cl(penOf) },
+      { label: 'Regulatory conditions', cells: cl((c) => c.reg) }, { label: 'Risk level', cells: cl((c) => cRisk(c)) }, { label: 'Opportunity score', cells: cl((c) => c.score + ' / 100') }
+    ];
+    const cmpChips = cmpC.map((c) => ({ name: c.name, rm: () => { if (st.cmp.length > 2) this.setState({ cmp: st.cmp.filter((x) => x !== c.code) }); else this.toast('Keep at least 2 countries to compare'); } }));
+    const cmpOpts = D.countries.filter((c) => st.cmp.indexOf(c.code) < 0).slice().sort((a, b) => a.name.localeCompare(b.name)).map((c) => ({ v: c.code, l: c.name }));
+
+    /* simulator */
+    const baseGm = (avgMargin || 40) / 100;
+    const presets = { base: { fx: 0, demand: 0, disc: 0, delay: 0, dflt: 1 }, down: { fx: 12, demand: -15, disc: 6, delay: 30, dflt: 5 }, up: { fx: -5, demand: 12, disc: 0, delay: 0, dflt: 0.5 } };
+    const sm = st.sim, cur = this.simCalc(totRev, baseGm, sm), basePr = this.simCalc(totRev, baseGm, presets.base);
+    const simTabs = [['base', 'Base'], ['down', 'Downside'], ['up', 'Upside']].map((t) => ({ label: t[1], cls: sm.tab === t[0] ? 'on' : '', on: sm.tab === t[0], go: () => this.setState({ sim: { tab: t[0], ...presets[t[0]] } }) }));
+    const setS = (k) => (e) => this.setState({ sim: { ...st.sim, tab: 'custom', [k]: parseFloat(e.target.value) } });
+    const simDefs = [['fx', 'USD vs local currencies', -15, 15, 1, (v) => (v > 0 ? '+' : '') + v + '%'], ['demand', 'Market demand change', -30, 30, 1, (v) => (v > 0 ? '+' : '') + v + '%'], ['disc', 'Discount / competitor price pressure', 0, 20, 1, (v) => v + '%'], ['delay', 'Shipment and payment delay', 0, 90, 5, (v) => v + ' days'], ['dflt', 'Distributor default probability', 0, 15, 0.5, (v) => v + '%']];
+    const simFields = simDefs.map((f) => ({ label: f[1], min: f[2], max: f[3], step: f[4], val: sm[f[0]], disp: f[5](sm[f[0]]), on: setS(f[0]) }));
+    const dlt = (a, b) => b ? ((a - b) / Math.abs(b) * 100) : 0;
+    const simStats = [
+      { l: 'Projected revenue', v: this.fm(cur.rev), d: this.pc(dlt(cur.rev, basePr.rev)) + ' vs base' }, { l: 'Gross profit', v: this.fm(cur.gp), d: this.pc(dlt(cur.gp, basePr.gp)) + ' vs base' },
+      { l: 'Gross margin', v: cur.margin.toFixed(1) + '%', d: (cur.margin - basePr.margin >= 0 ? '+' : '') + (cur.margin - basePr.margin).toFixed(1) + ' pt vs base' },
+      { l: 'Receivables exposure', v: this.fm(cur.recv), d: 'Expected credit loss ' + this.fm(cur.loss) }, { l: 'Break-even sales', v: cur.be === null ? 'Not reachable' : this.fm(cur.be), d: 'Fixed-cost assumption: 18% of baseline revenue' }
+    ];
+    const scenList = [['Base', presets.base], ['Downside', presets.down], ['Upside', presets.up]].map((s) => ({ name: s[0], r: this.simCalc(totRev, baseGm, s[1]) }));
+    if (sm.tab === 'custom') scenList.push({ name: 'Your assumptions', r: cur });
+    const scMax = Math.max.apply(null, scenList.map((s) => s.r.rev).concat([1]));
+    const simCompare = scenList.map((s) => ({ name: s.name, margin: s.r.margin.toFixed(1) + '%', rev: this.fm(s.r.rev), gp: this.fm(s.r.gp),
+      revStyle: 'height:100%;border-radius:6px;background:var(--c2);width:' + (Math.max(0, s.r.rev) / scMax * 100).toFixed(1) + '%',
+      gpStyle: 'height:100%;border-radius:6px;background:var(--ac);width:' + (Math.max(0, s.r.gp) / scMax * 100).toFixed(1) + '%' }));
+    const simBaseLabel = (st.country === 'all' ? 'all countries' : cMap[st.country].name) + ', ' + { '12m': 'last 12 months', ytd: 'year to date', '6m': 'last 6 months', '3m': 'last 3 months' }[st.range] + ' ' + st.year;
+
+    /* performance evaluation */
+    const pD = distBy[st.perf] && distBy[st.perf].status === 'active' ? distBy[st.perf] : actives[0];
+    const clamp = (v) => Math.max(0, Math.min(100, v));
+    const mktG = 6 + this.rnd(pD.id, 31) * 8;
+    const pItems = [
+      { l: 'Target achievement', s: clamp(pD.target), note: pD.target + '% of target' }, { l: 'Sales growth', s: clamp(50 + pD.growth * 1.6), note: this.pc(pD.growth) },
+      { l: 'Repeat orders', s: Math.round(55 + this.rnd(pD.id, 32) * 40), note: 'sample metric' }, { l: 'Clinic acquisition', s: Math.round(40 + this.rnd(pD.id, 33) * 50), note: 'sample metric' },
+      { l: 'Performance vs market', s: clamp(50 + (pD.growth - mktG) * 2.5), note: 'market growth ≈ ' + mktG.toFixed(1) + '%' }
+    ].map((i) => ({ l: i.l, s: Math.round(i.s), note: i.note }));
+    const overall = Math.round(sum(pItems.map((i) => i.s)) / pItems.length);
+    const band = overall >= 80 ? ['Strong performance', 'ok'] : overall >= 65 ? ['Solid performance', 'ok'] : overall >= 50 ? ['Mixed: review recommended', 'wn'] : ['Needs attention', 'bdg'];
+    const pf = { overall: overall, band: band[0], cls: band[1], items: pItems.map((i) => ({ l: i.l, s: i.s + ' / 100', note: i.note, style: 'height:100%;border-radius:6px;width:' + i.s + '%;background:' + (i.s >= 75 ? '#1E9E78' : (i.s >= 55 ? '#13A6B5' : (i.s >= 40 ? '#E2B04A' : '#E5707B'))) })) };
+
+    /* add distributor */
+    const addOpts = D.countries.filter((c) => !distBy[c.code]).slice().sort((a, b) => a.name.localeCompare(b.name)).map((c) => ({ v: c.code, l: c.name }));
+    const addCountry = addOpts.some((o) => o.v === st.add.country) ? st.add.country : (addOpts[0] ? addOpts[0].v : '');
+
+    /* report */
+    const repScope = (st.country === 'all' ? 'all countries' : cMap[st.country].name) + ' · ' + st.year + ' · ' + { '12m': 'last 12 months', ytd: 'year to date', '6m': 'last 6 months', '3m': 'last 3 months' }[st.range];
+    const top3 = rowsAll.filter((r) => r.d.status === 'active').slice(0, 3).map((r, i) => ({ l: 'Top distributor #' + (i + 1), v: r.d.name + ' · ' + this.fm(r.rev) }));
+    const repLines = [
+      { l: 'Total distributor revenue', v: this.fm(totRev) }, { l: 'Devices sold', v: this.n0(devices) }, { l: 'Consumables revenue', v: this.fm(conRev) },
+      { l: 'Average gross margin', v: avgMargin.toFixed(1) + '%' }, { l: 'Active distributors / countries', v: nSel + ' / ' + nCountries }
+    ].concat(top3).concat([{ l: 'Open alerts', v: String(openAlerts.length) }]);
+
+    /* theme */
+    const T = st.dark
+      ? { bg: '#0B1325', panel: '#131F38', panel2: '#182848', bd: '#243557', tx: '#EAF0F8', mu: '#9FB0C8', ac: '#13A6B5', acx: '#4FD1DE', acs: 'rgba(19,166,181,.16)', c2: '#7C93BD', sh: '0 6px 24px rgba(0,0,0,.28)', okbg: 'rgba(30,158,120,.16)', okfg: '#5FD3AE', wnbg: 'rgba(226,176,74,.16)', wnfg: '#F0BC57', bdbg: 'rgba(229,112,123,.16)', bdfg: '#FF8A96', inbg: '#0F1A31' }
+      : { bg: '#F2F5F9', panel: '#FFFFFF', panel2: '#F6F9FC', bd: '#E0E7F0', tx: '#101B30', mu: '#566680', ac: '#13A6B5', acx: '#0A7C89', acs: 'rgba(19,166,181,.12)', c2: '#1F3A63', sh: '0 4px 18px rgba(16,27,48,.07)', okbg: 'rgba(30,158,120,.13)', okfg: '#0E6B4F', wnbg: 'rgba(226,176,74,.2)', wnfg: '#7A5200', bdbg: 'rgba(229,112,123,.16)', bdfg: '#A02B39', inbg: '#F6F9FC' };
+    const themeStyle = '--bg:' + T.bg + ';--panel:' + T.panel + ';--panel2:' + T.panel2 + ';--bd:' + T.bd + ';--tx:' + T.tx + ';--mu:' + T.mu + ';--ac:' + T.ac + ';--acx:' + T.acx + ';--acs:' + T.acs + ';--c2:' + T.c2 + ';--sh:' + T.sh + ';--okbg:' + T.okbg + ';--okfg:' + T.okfg + ';--wnbg:' + T.wnbg + ';--wnfg:' + T.wnfg + ';--bdbg:' + T.bdbg + ';--bdfg:' + T.bdfg + ';--inbg:' + T.inbg;
+
+    const nRows = rowsAll.length;
+    return {
+      themeStyle: themeStyle, themeIcon: st.dark ? 'M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10zM12 1v2M12 21v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4' : 'M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z',
+      toggleTheme: () => this.setState({ dark: !st.dark }),
+      sideStyle: 'flex:0 0 ' + (st.collapsed ? 76 : 260) + 'px;width:' + (st.collapsed ? 76 : 260) + 'px;transition:width .2s,flex-basis .2s',
+      showLabels: !st.collapsed, collapseIconStyle: 'flex:none;transition:transform .2s;transform:rotate(' + (st.collapsed ? 180 : 0) + 'deg)',
+      toggleSide: () => this.setState({ collapsed: !st.collapsed }), navItems: navItems,
+      search: st.search, onSearch: ev('search'), country: st.country, onCountry: ev('country'), countryOpts: countryOpts,
+      year: st.year, onYear: ev('year'), range: st.range, onRange: ev('range'), currency: st.currency, onCurrency: ev('currency'),
+      bell: st.bell, toggleBell: () => this.setState({ bell: !st.bell }), hasAlerts: openAlerts.length > 0, noAlerts: openAlerts.length === 0, alertCount: openAlerts.length, bellItems: bellItems,
+      openNewA: open('newa'), openAdd: open('add'), openSim: open('sim'), openRep: open('rep'),
+      isDash: st.page === 'dashboard', notDash: st.page !== 'dashboard', stub: stub, goDash: set('page', 'dashboard'),
+      kpis: kpis, layerOpts: layerOpts, tiles: tiles, legend: legendFor[st.layer], hc: hc,
+      mapSummary: nActiveC + ' active · ' + nProsC + ' prospect · ' + (D.countries.length - nActiveC - nProsC) + ' uncovered',
+      hasChartFilter: st.regionF !== 'all' || st.productF !== 'all', chartFilterLabel: chartFilterLabel, clearChartFilters: () => this.setState({ regionF: 'all', productF: 'all' }),
+      modeM: st.chartMode === 'monthly' ? 'on' : '', modeQ: st.chartMode === 'quarterly' ? 'on' : '', isMonthly: st.chartMode === 'monthly', isQuarterly: st.chartMode === 'quarterly',
+      setMonthly: set('chartMode', 'monthly'), setQuarterly: set('chartMode', 'quarterly'),
+      c1: c1, c2: c2, regionBars: regionBars, productBars: productBars,
+      statusF: st.statusF, onStatusF: ev('statusF'), riskF: st.riskF, onRiskF: ev('riskF'), cols: cols, rows: rows, noRows: nRows === 0,
+      tableSub: 'Sortable and filterable. Revenue reflects the selected year and date range (synthetic sample data).',
+      rowCountText: nRows === 0 ? '' : 'Showing ' + shown.length + ' of ' + nRows + ' distributors', canToggleAll: nRows > 8, toggleAll: set('showAll', !st.showAll), toggleAllLabel: st.showAll ? 'Show top 8' : 'Show all ' + nRows,
+      alertList: alertList, alertSub: openAlerts.length + ' open alert' + (openAlerts.length === 1 ? '' : 's') + '. Actions open the related distributor, calculator or simulation.',
+      canRestoreAlerts: st.dismissed.length > 0, restoreAlerts: set('dismissed', []), tools: tools,
+      m: mm, closeM: () => this.setState({ modal: null, modalId: null }), stop: (e) => e.stopPropagation(),
+      dd: dd, cp: cp, calcDist: cs.dist, onCalcDist: (e) => this.setState({ calc: { ...st.calc, dist: e.target.value } }), activeOpts: activeOpts, calcFields: calcFields, cr: cr, calcContext: calcContext,
+      cmpChips: cmpChips, canAddCmp: st.cmp.length < 5, cmpAddVal: '', cmpOpts: cmpOpts, onCmpAdd: (e) => { const v = e.target.value; if (v && st.cmp.length < 5 && st.cmp.indexOf(v) < 0) this.setState({ cmp: st.cmp.concat([v]) }); },
+      cmpHead: cmpHead, cmpRows: cmpRows,
+      simTabs: simTabs, simFields: simFields, simStats: simStats, simCompare: simCompare, simBaseLabel: simBaseLabel,
+      perfId: pD.id, onPerf: ev('perf'), pf: pf,
+      addName: st.add.name, onAddName: (e) => this.setState({ add: { ...st.add, name: e.target.value } }), addCountry: addCountry, onAddCountry: (e) => this.setState({ add: { ...st.add, country: e.target.value } }), addOpts: addOpts,
+      addDist: () => {
+        const name = st.add.name.trim();
+        if (!name) { this.toast('Enter a company name first'); return; }
+        if (!addCountry) { this.toast('Every tracked country already has a distributor'); return; }
+        const nd = { id: addCountry, name: name, status: 'prospect', rev: 0, devShare: 0.5, target: 0, margin: 0, growth: 0, pen: 0, risk: 'Not rated', exp: '—', excl: 'Not granted', loa: 'Not submitted', weights: Array(12).fill(1 / 12), prods: [] };
+        const added = st.added.concat([nd]);
+        try { window.localStorage.setItem('zgmi_added', JSON.stringify(added)); } catch (e) {}
+        this.setState({ added: added, modal: null, add: { name: '', country: '' }, statusF: 'all', country: 'all', regionF: 'all', search: '' });
+        this.toast(name + ' added as a prospect in ' + cMap[addCountry].name);
+      },
+      repScope: repScope, repLines: repLines,
+      downloadCsv: () => {
+        try {
+          const head = 'Distributor,Country,Status,Revenue_USD,Devices,Consumables_USD,Target_pct,Margin_pct,Growth_pct,Penetration_pct,Risk';
+          const lines = rowsAll.map((r) => [ '"' + r.d.name + '"', cMap[r.d.id].name, r.d.status, Math.round(r.rev), Math.round(r.devices), Math.round(r.cons), r.d.target, r.d.margin, r.d.growth, r.d.pen, r.d.risk ].join(','));
+          const blob = new Blob([[head].concat(lines).join('\n')], { type: 'text/csv' });
+          const url = URL.createObjectURL(blob);
+          const a = document.createElement('a'); a.href = url; a.download = 'zgmi-sample-report.csv';
+          document.body.appendChild(a); a.click(); a.remove();
+          setTimeout(() => URL.revokeObjectURL(url), 600);
+          this.toast('CSV downloaded (synthetic sample data)');
+        } catch (e) { this.toast('Download is not available in this preview'); }
+      },
+      hasToast: !!st.toast, toast: st.toast
+    };
+  }
+}
+</script>
+</body>
+</html>
