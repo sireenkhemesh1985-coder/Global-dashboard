@@ -518,6 +518,7 @@ avg_margin = (sum(d['margin_pct'] * d['revenue'] for d in active_rows) / total_r
 avg_growth = (sum(d['growth_pct'] * d['revenue'] for d in active_rows) / total_rev) if total_rev > 0 else 0.0
 n_active_dists = len(active_rows)
 n_countries = len(set(d['id'] for d in active_rows))
+dist_by_code = {d['id']: d for d in dists_with_rev}
 
 
 # ==============================================================================
