@@ -382,6 +382,7 @@ def get_base_distributors():
             'target_pct': 100,
             'margin_pct': 46.5 if dev_count > 0 else 42.0,
             'growth_pct': 18.5 if tot_rev > 20000 else 10.0,
+            'pen_pct': round(min(25.0, max(2.5, (dev_count * 2.0 + tot_rev / 15000.0))), 1),
             'weights': weights,
             'risk': 'Low',
             'expiry': '—',
@@ -1168,7 +1169,7 @@ elif nav_selection == "✦ AI Intelligence & Forecasting":
             tot_cycles = reg_countries['cycles'].sum()
             tot_pop = reg_countries['pop'].sum()
             reg_sales = sum(d['revenue'] for d in reg_dists)
-            avg_pen = (sum(d['pen_pct'] for d in reg_dists) / max(1, len(reg_dists))) if len(reg_dists) > 0 else 0.0
+            avg_pen = (sum(d.get('pen_pct', 8.5) for d in reg_dists) / max(1, len(reg_dists))) if len(reg_dists) > 0 else 0.0
             
             # Opportunity gap = Clinical cycles that are not served by ZEUS
             est_potential_rev = tot_cycles * 38.0 # benchmark clinical spend per cycle
@@ -2039,7 +2040,7 @@ elif nav_selection == "⇲ Executive Reports & Export":
             'Target_Attainment_Pct': d['target_pct'],
             'Gross_Margin_Pct': d['margin_pct'],
             'YoY_Growth_Pct': d['growth_pct'],
-            'Market_Penetration_Pct': d['pen_pct'],
+            'Market_Penetration_Pct': d.get('pen_pct', 8.5),
             'Credit_Risk_Level': d['risk'],
             'Contract_Expiry': d['expiry'],
             'LOA_Status': d['loa']
