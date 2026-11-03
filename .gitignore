@@ -5,3 +5,6 @@ __pycache__/
 .streamlit/secrets.toml
 .venv/
 env/
+
+scratch/
+zeus_logo_white.png
