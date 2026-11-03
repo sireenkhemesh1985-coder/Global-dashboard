@@ -12,7 +12,7 @@ import google.generativeai as genai
 # ==============================================================================
 st.set_page_config(
     page_title="ZEUS Global Market Intelligence (ZGMI)",
-    page_icon="⚡",
+    page_icon="assets/zeus_logo.png",
     layout="wide",
     initial_sidebar_state="expanded"
 )
@@ -369,15 +369,13 @@ country_map = {row['code']: row for _, row in country_df.iterrows()}
 # 3. SIDEBAR NAVIGATION & GLOBAL CONTROLS
 # ==============================================================================
 with st.sidebar:
-    st.markdown("""
-    <div class="zg-brand">
-        <div class="zg-logo-box">Z</div>
-        <div>
-            <div class="zg-title">ZEUS</div>
-            <div class="zg-subtitle">Global Market Intelligence</div>
-        </div>
+    # Official ZEUS Bioscience Logo
+    st.image("assets/zeus_logo_white_bg.png")
+    st.markdown('''
+    <div style="margin-top: -6px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid rgba(19, 166, 181, 0.25); text-align: center;">
+        <span style="font-size: 11px; font-weight: 700; color: #00F5FF; letter-spacing: 0.08em; text-transform: uppercase;">Global Market Intelligence</span>
     </div>
-    """, unsafe_allow_html=True)
+    ''', unsafe_allow_html=True)
     
     nav_selection = st.radio(
         "Navigation",
