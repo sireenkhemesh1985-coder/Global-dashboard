@@ -1,9 +1,11 @@
 import streamlit as st
+import streamlit.components.v1 as components
 import pandas as pd
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
 import math
+import google.generativeai as genai
 
 # ==============================================================================
 # 1. PAGE SETUP & THEME CONFIGURATION
@@ -1172,62 +1174,78 @@ elif nav_selection == "✦ AI Intelligence & Forecasting":
 
         if st.button("🚀 AI Yönetici Notunu Oluştur", type="primary"):
             st.markdown("---")
+
             
-            if "acil promosyon" in active_prompt.lower() or "düşen" in active_prompt.lower():
-                st.markdown("""
-                ### 📋 AI Executive Memo: Acil Müdahale Gerektiren Ürünler & Kampanya Planı
-                **Tarih:** Kasım 2026 | **Öncelik:** Yüksek | **Muhatap:** Satış ve Uluslararası İlişkiler Direktörlüğü
+            # 1. Animasyon için boş bir placeholder alanı yaratıyoruz
+            loading_placeholder = st.empty()
+            
+            with loading_placeholder.container():
+                components.html("""
+                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 180px; font-family: sans-serif; background: #0b1426; border-radius: 12px; border: 1px solid #13A6B5; box-shadow: 0 0 20px rgba(19, 166, 181, 0.2);">
+                        <!-- Antigravity Parıldayan Küre -->
+                        <div id="ai-orb" style="width: 50px; height: 50px; background: radial-gradient(circle, #00F5FF 0%, #13A6B5 70%, #0B6F85 100%); border-radius: 50%; box-shadow: 0 0 30px #00F5FF; margin-bottom: 20px;"></div>
+                        
+                        <!-- Dinamik Metin -->
+                        <div id="ai-text" style="color: #4FD1DE; font-weight: bold; font-size: 15px; letter-spacing: 1px; text-transform: uppercase;">
+                            ZEUS AI ENGINE STRATEJİK ANALİZ YAPMAKTA...
+                        </div>
+                    </div>
+
+                    <!-- GSAP Animasyon Motorunu Yüklüyoruz -->
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+                    <script>
+                        // Küreye yerçekimsiz süzülme efekti veriyoruz
+                        gsap.to("#ai-orb", {
+                            y: -15,
+                            scale: 1.15,
+                            duration: 1.2,
+                            yoyo: true,
+                            repeat: -1,
+                            ease: "sine.inOut"
+                        });
+                        
+                        // Metne parıldama efekti veriyoruz
+                        gsap.to("#ai-text", {
+                            opacity: 0.3,
+                            duration: 0.8,
+                            yoyo: true,
+                            repeat: -1,
+                            ease: "power1.inOut"
+                        });
+                    </script>
+                """, height=200)
+
+            # 2. Gerçek Gemini API Bağlantısı ve Analiz Süreci
+            try:
+                # Streamlit Cloud üzerindeki Secrets kasasından anahtarı okur
+                api_key = st.secrets["GEMINI_API_KEY"]
+                genai.configure(api_key=api_key)
+                model = genai.GenerativeModel('models/gemini-1.5-flash')
                 
-                #### 1. Yönetici Özeti:
-                Analiz algoritmalarımız; **BioPSafe Black-Box** (Brezilya pazarında -%14.2) ve **Smart Cryo-Tools** (Mısır pazarında sipariş gecikmesi) ürünlerinde anormal bir satış ivmesi kaybı saptamıştır. Buna karşılık **Piezo Electric Pulse Stimulator** talebi Asya'da yükseliştedir.
-
-                #### 2. Kök Neden Teşhisi:
-                - **Klinik Eğitim Kopukluğu:** Smart Cryo sarflarındaki yavaşlama, hekimlerin eski protokollere dönmesinden kaynaklanmaktadır.
-                - **Sermaye Bütçesi Baskısı:** Cihaz alımlarında kliniklerin 60 gün vadeli akreditif bulmakta zorlandığı görülmektedir.
-
-                #### 3. Önerilen 30 Günlük Acil Eylem Planı:
-                1. **Bundle Kampanyası:** Her BioPSafe Black-Box cihaz alımına 6 aylık Smart Cryo-Tools sarf kiti %50 indirimle eklenmeli.
-                2. **Hands-on Workshop:** Mısır ve Brezilya'daki kilit 10 referans IVF merkezine yerel embriyolog webinarı ve sertifikasyon eğitimi açılmalı.
-                3. **Demo Tahsisatı:** Vietnam'daki 6 yeni kliniğe 30 günlük ücretsiz Piezo stimulator demo kiti gönderilmeli.
-                """)
-            elif "nakit akışı" in active_prompt.lower() or "risk" in active_prompt.lower():
-                st.markdown("""
-                ### 📋 AI Executive Memo: Gelecek Çeyrek Nakit Akışı ve Finansal Risk Haritası
-                **Tarih:** Kasım 2026 | **Öncelik:** Kritik | **Muhatap:** Finans ve Ticari Risk Komitesi
+                prompt_talimati = f"""
+                Sen kıdemli bir medikal pazar analiz uzmanı ve ZEUS Global Market Intelligence stratejistisin.
+                Senden kullanıcının sorduğu şu stratejik soruya yanıt üretmeni istiyorum:
+                Soru: "{active_prompt}"
                 
-                #### 1. En Kritik 3 Finansal Risk:
-                - **Vadesi Geçen Alacak Riski (Nijerya):** Lagos Biomed Partners üzerinde 38 gündür bekleyen $18,400 bakiye tahsil edilmeden yeni sevkiyat yapılmamalıdır.
-                - **Sözleşme Yenileme Riski (BAE):** Gulf Reproductive Supply sözleşmesi 2026-11-20 tarihinde dolmaktadır. Yıllık $1.38M hacimli bu pazarın sözleşmesi yenilenmeden sevkiyat planlanmamalıdır.
-                - **Kur Riski (BRL & TRY):** Türkiye ve Brezilya siparişlerinde yerel para birimi devalüasyonuna karşı tüm sözleşmeler USD/EUR bazlı sabitlenmelidir.
-
-                #### 2. AI Risk Azaltma Tavsiyesi:
-                - Tüm Tier-3 distribütörler için akreditif (LC) zorunluluğu esnetilmemeli, geciken ödemelerde otomatik sevkiyat blokajı uygulanmalıdır.
-                """)
-            elif "asya-pasifik" in active_prompt.lower() or "bölgesel" in active_prompt.lower():
-                st.markdown("""
-                ### 📋 AI Executive Memo: Asya-Pasifik Bölgesel Büyüme ve Zayıflık Raporu
-                **Tarih:** Kasım 2026 | **Öncelik:** Stratejik | **Muhatap:** Küresel İş Geliştirme Kurulu
+                Yorum yaparken şu küresel verileri ve pazar gerçeklerini arka planda dikkate al:
+                - Aktif Ciro Portföyü: {total_rev} USD, Ortalama Brüt Marj: %{avg_margin:.1f}
+                - Toplam Placed Ekipman: {total_devices} adet.
                 
-                #### 1. Pazar Durumu:
-                - Asya-Pasifik, bünyesindeki 900+ klinik ve yıllık 400,000+ tedavi siklusu ile en yüksek pazar potansiyeline sahiptir.
-                - Ancak mevcut ZEUS penetrasyonu sadece **%4.8** seviyesindedir. Hindistan ve Vietnam'da klinik sayısı artarken satışlarımız kapasitenin gerisinde kalmaktadır.
-
-                #### 2. Büyüme Stratejisi:
-                1. **Alt Bayilik (Sub-distribution) Yetkilendirmesi:** Hindistan'ın güney ve batı eyaletleri için Deccan LifeSciences'a bağlı alt temsilcilikler atanmalı.
-                2. **Akademik Referans Çalışması:** Piezo Stimulator'ün ICSI başarı oranını %14 artırdığına dair klinik çalışmanın Asya IVF kongresinde sunumu desteklenmeli.
-                """)
-            else:
-                st.markdown(f"""
-                ### 📋 AI Executive Memo: Stratejik Değerlendirme Raporu
-                **Sorgu Konusu:** *{active_prompt}*
+                Raporunu tamamen Türkçe, profesyonel bir tonda, maddeler halinde ve üst yönetime sunulacak bir 'Executive Memo' formatında yaz.
+                """
                 
-                #### 1. Veri Tabanlı Özet:
-                Mevcut küresel portföyümüzde **$18.4M** seviyesinde aktif ciro ve ortalama **%42.8** brüt marj gerçekleşmektedir. Konsinye sarf malzemeleri nakit akışının %48'ini oluşturarak en dirençli gelir kalemidir.
+                response = model.generate_content(prompt_talimati)
+                
+                # 3. Analiz bittiğinde animasyonu ekrandan kaldırıp gerçek AI raporunu yazdırıyoruz
+                loading_placeholder.empty()
+                st.markdown(f"### 📋 AI Executive Memo: {active_prompt}")
+                st.markdown(response.text)
+                
+            except Exception as e:
+                loading_placeholder.empty()
+                st.error("🤖 AI Bağlantı Hatası: Lütfen Streamlit Cloud Secrets paneline geçerli bir 'GEMINI_API_KEY' eklediğinizden emin olun.")
+                st.caption(f"Teknik Hata Detayı: {e}")
 
-                #### 2. Temel AI Tavsiyesi:
-                - Zayıf bölgelerde marj indirimi yerine klinik eğitim ve sarf malzeme kullanım taahhüdü karşılığı cihaz bedelsiz demo kiralama modeli uygulanmalıdır.
-                - Gelecek çeyrekte büyümenin %65'i Asia-Pacific ve Avrupa pazarlarından gelecektir; tedarik zinciri stokları bu rotalara önceliklendirilmelidir.
-                """)
 
 
 
@@ -1987,13 +2005,10 @@ elif nav_selection == "⇲ Executive Reports & Export":
     
     st.dataframe(export_df, use_container_width=True, hide_index=True)
 
-import streamlit as st
-import streamlit.components.v1 as components
-
 # GSAP Animasyonlu Karşılama Kartı
 components.html("""
     <!-- GSAP Kütüphanesini CDN üzerinden çekiyoruz -->
-    <script src="https://cloudflare.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     
     <div id="box" style="
         background: linear-gradient(135deg, #1e3a8a, #3b82f6); 
