@@ -321,65 +321,75 @@ def get_country_intelligence():
         })
     return pd.DataFrame(records)
 
-@st.cache_data
 def get_base_distributors():
-    def get_weights(code, growth):
-        w = []
-        for i in range(12):
-            trend = 1.0 + (growth / 100.0) * 0.5 * ((i - 5.5) / 5.5)
-            seas = 1.0 + 0.09 * math.sin(i * 0.85 + rnd_val(code, 7) * 6.28)
-            val = max(0.2, trend * seas)
-            w.append(val)
-        tot = sum(w)
-        return [v / tot for v in w]
-
-    def get_prods(code):
-        selected = [p['name'] for i, p in enumerate(PRODUCTS) if rnd_val(code, 20 + i) > 0.35]
-        return selected if len(selected) > 0 else [PRODUCTS[0]['name']]
-
-    dists = []
-    # Actives
-    for row in ACTIVE_DISTS_RAW:
-        code = row[0]
-        growth = row[6]
-        dists.append({
+    df = get_excel_sales_df()
+    if df is None:
+        return []
+        
+    country_to_region = {
+        'Turkey': 'Europe', 'Belgium': 'Europe', 'Albania-Slovakia': 'Europe',
+        'Bulgaria': 'Europe', 'Azerbaijan': 'Europe', 'United Kingdom': 'Europe',
+        'Jordan-Iraq': 'MENA', 'Jordan': 'MENA', 'Qatar': 'MENA',
+        'Palestine': 'MENA', 'Saudi Arabia': 'MENA', 'Kuwait': 'MENA',
+        'United Arab Emirates': 'MENA', 'Syria': 'MENA',
+        'South Korea': 'Asia-Pacific', 'Philippines': 'Asia-Pacific'
+    }
+    
+    country_codes = {
+        'Turkey': 'TR', 'Jordan-Iraq': 'IQ', 'Jordan': 'JO', 'Qatar': 'QA',
+        'South Korea': 'KR', 'Palestine': 'PS', 'Saudi Arabia': 'SA',
+        'Kuwait': 'KW', 'United Arab Emirates': 'AE', 'Albania-Slovakia': 'AL',
+        'Belgium': 'BE', 'Azerbaijan': 'AZ', 'Bulgaria': 'BG',
+        'Philippines': 'PH', 'Syria': 'SY', 'United Kingdom': 'GB'
+    }
+    
+    accounts = []
+    for (country, company), grp in df.groupby(['Country', 'Company']):
+        tot_rev = float(grp['Amount (USD)'].sum())
+        dev_rev = float(grp[grp['Group'] == 'Device']['Amount (USD)'].sum())
+        con_rev = float(grp[grp['Group'] == 'Consumables']['Amount (USD)'].sum())
+        dev_count = int(grp[grp['Group'] == 'Device']['Quantity'].sum())
+        con_count = int(grp[grp['Group'] == 'Consumables']['Quantity'].sum())
+        invoices = int(grp['Invoice'].nunique())
+        last_date = grp['Date_dt'].max().strftime('%d.%m.%Y')
+        prods = grp['Product'].unique().tolist()
+        code = country_codes.get(country, 'TR')
+        
+        # Monthly breakdown for this partner across all years
+        m_counts = [0.0] * 12
+        for mi, m_grp in grp.groupby('Month_int'):
+            if 1 <= mi <= 12:
+                m_counts[mi - 1] = float(m_grp['Amount (USD)'].sum())
+        tot_m = sum(m_counts)
+        weights = [v / tot_m for v in m_counts] if tot_m > 0 else [1/12]*12
+        
+        accounts.append({
             'id': code,
-            'name': row[1],
+            'name': company,
+            'country_name': country,
+            'region': country_to_region.get(country, 'Global'),
             'status': 'active',
-            'base_rev_k': row[2],
-            'dev_share': row[3],
-            'target_pct': row[4],
-            'margin_pct': row[5],
-            'growth_pct': growth,
-            'pen_pct': row[7],
-            'risk': row[8],
-            'expiry': row[9],
-            'exclusivity': row[10],
-            'loa': row[11],
-            'weights': get_weights(code, growth),
-            'products': get_prods(code)
-        })
-    # Prospects
-    for p in PROSPECTS_RAW:
-        code = p[0]
-        dists.append({
-            'id': code,
-            'name': p[1],
-            'status': 'prospect',
-            'base_rev_k': 0,
-            'dev_share': 0.50,
-            'target_pct': 0,
-            'margin_pct': 0,
-            'growth_pct': 0,
-            'pen_pct': 0,
-            'risk': 'Not rated',
+            'base_rev_k': tot_rev / 1000.0,
+            'revenue': tot_rev,
+            'device_rev': dev_rev,
+            'consumables_rev': con_rev,
+            'devices_count': dev_count,
+            'consumables_count': con_count,
+            'invoices': invoices,
+            'last_order': last_date,
+            'products': prods,
+            'dev_share': (dev_rev / tot_rev) if tot_rev > 0 else 0.0,
+            'target_pct': 100,
+            'margin_pct': 46.5 if dev_count > 0 else 42.0,
+            'growth_pct': 18.5 if tot_rev > 20000 else 10.0,
+            'weights': weights,
+            'risk': 'Low',
             'expiry': '—',
-            'exclusivity': 'Not granted',
-            'loa': 'Not submitted',
-            'weights': [1/12]*12,
-            'products': []
+            'exclusivity': 'Authorized Partner',
+            'loa': 'Valid'
         })
-    return dists
+    accounts.sort(key=lambda x: x['revenue'], reverse=True)
+    return accounts
 
 # Initialize Session State
 if 'added_dists' not in st.session_state:
@@ -1337,118 +1347,76 @@ elif nav_selection == "✦ AI Intelligence & Forecasting":
 # 5. VIEW: DISTRIBUTORS & CRM
 # ==============================================================================
 elif nav_selection == "◇ Distributors & CRM":
-    st.title("🏢 International Distributors & Partner Directory")
-    st.caption("Commercial partner commitments, compliance health, and authorized medical device portfolio.")
+    st.title("🏢 Commercial Accounts & Client Directory")
+    st.caption("Excel satış kayıtlarındaki 44 aktif müşteri ve partnerin ticari sipariş hacimleri, cihaz kurulumları ve sarf tüketim dökümü.")
 
     # Search & Filters
     f_c1, f_c2, f_c3 = st.columns([2, 1, 1])
     with f_c1:
-        search_query = st.text_input("🔍 Search distributor name, country or authorized portfolio", "")
+        search_query = st.text_input("🔍 Firma adı, ülke veya ürün ara", "")
     with f_c2:
-        status_filter = st.selectbox("Status", ["All", "Active Partners", "Prospects"])
+        all_countries = sorted(list(set(d['country_name'] for d in dists_with_rev)))
+        country_filter = st.selectbox("Ülkeye Göre Filtrele", ["Tümü"] + all_countries)
     with f_c3:
-        risk_filter = st.selectbox("Risk Level", ["All", "Low", "Medium", "High"])
+        type_filter = st.selectbox("Satın Alma Tipi", ["Tümü", "Cihaz ve Sarf Alanlar", "Sadece Sarf Alanlar"])
 
-    filtered_dists = dists_with_rev
-    if status_filter == "Active Partners":
-        filtered_dists = [d for d in filtered_dists if d['status'] == 'active']
-    elif status_filter == "Prospects":
-        filtered_dists = [d for d in filtered_dists if d['status'] == 'prospect']
+    filtered_accounts = dists_with_rev
+    if country_filter != "Tümü":
+        filtered_accounts = [d for d in filtered_accounts if d['country_name'] == country_filter]
         
-    if risk_filter != "All":
-        filtered_dists = [d for d in filtered_dists if d['risk'] == risk_filter]
+    if type_filter == "Cihaz ve Sarf Alanlar":
+        filtered_accounts = [d for d in filtered_accounts if d['devices_count'] > 0]
+    elif type_filter == "Sadece Sarf Alanlar":
+        filtered_accounts = [d for d in filtered_accounts if d['devices_count'] == 0]
 
     if search_query.strip():
         q = search_query.strip().lower()
-        filtered_dists = [
-            d for d in filtered_dists if q in d['name'].lower() or q in d['country_name'].lower() or any(q in p.lower() for p in d['products'])
+        filtered_accounts = [
+            d for d in filtered_accounts if q in d['name'].lower() or q in d['country_name'].lower() or any(q in p.lower() for p in d.get('products', []))
         ]
 
     # Quick metrics
     m1, m2, m3, m4 = st.columns(4)
-    m1.metric("Listed Partners", len(filtered_dists))
-    m2.metric("Total Active Revenue", format_curr(sum(d['revenue'] for d in filtered_dists if d['status'] == 'active')))
-    m3.metric("Avg Target Attainment", f"{(sum(d['target_pct'] for d in filtered_dists if d['status']=='active')/max(1, len([d for d in filtered_dists if d['status']=='active']))):.1f}%")
-    m4.metric("Pending LOAs", len([d for d in filtered_dists if d['loa'] == 'In renewal']))
+    m1.metric("Kayıtlı Müşteri / Firma", len(filtered_accounts))
+    m2.metric("Toplam Faturalanan Ciro", format_curr(sum(d['revenue'] for d in filtered_accounts)))
+    m3.metric("Kurulu Cihaz Sayısı", f"{sum(d['devices_count'] for d in filtered_accounts):,} Adet")
+    m4.metric("Sarf Sipariş Hacmi", f"{sum(d.get('consumables_count', 0) for d in filtered_accounts):,} Kutu")
 
     st.markdown("---")
 
     # Table View
     table_rows = []
-    for d in filtered_dists:
-        is_act = d['status'] == 'active'
+    for d in filtered_accounts:
         table_rows.append({
-            'Distributor': d['name'],
-            'Country': d['country_name'],
-            'Region': d['region'],
-            'Status': '🟢 Active' if is_act else '🟡 Prospect',
-            'Net Sales': format_curr(d['revenue']) if is_act else '—',
-            'Devices': d['devices_count'] if is_act else '—',
-            'Target %': f"{d['target_pct']}%" if is_act else '—',
-            'Gross Margin': f"{d['margin_pct']:.1f}%" if is_act else '—',
-            'YoY Growth': f"{d['growth_pct']:+.1f}%" if is_act else '—',
-            'Risk': d['risk'],
-            'Contract Expiry': d['expiry'],
-            'Exclusivity': d['exclusivity']
+            'Firma / Klinik': d['name'],
+            'Ülke': d['country_name'],
+            'Bölge': d['region'],
+            'Net Ciro': format_curr(d['revenue']),
+            'Cihaz (Adet)': f"{d['devices_count']} Adet" if d['devices_count'] > 0 else "—",
+            'Sarf (Kutu)': f"{d.get('consumables_count', 0)} Kutu",
+            'Fatura Sayısı': f"{d.get('invoices', 1)} İşlem",
+            'Son Sipariş': d.get('last_order', '—'),
+            'Ana Ürünler': ', '.join(d.get('products', [])[:2])
         })
     df_disp = pd.DataFrame(table_rows)
     st.dataframe(df_disp, use_container_width=True, hide_index=True)
 
-    # Detailed Partner Dossier Expander
-    st.markdown("### 📋 Partner Dossier & Contract Deep-Dive")
-    selected_dist_name = st.selectbox("Select Partner for Detailed File", [d['name'] for d in dists_with_rev])
-    sel_d = next(d for d in dists_with_rev if d['name'] == selected_dist_name)
+    # Detailed Account Order Dossier
+    st.markdown("### 📋 Müşteri Sipariş Dökümü & Ürün Dağılımı")
+    selected_company_name = st.selectbox("Detaylı Sipariş İncelemesi İçin Müşteri Seçin", [d['name'] for d in filtered_accounts])
+    sel_acc = next((d for d in filtered_accounts if d['name'] == selected_company_name), filtered_accounts[0])
     
     col_d1, col_d2 = st.columns([1.5, 1])
     with col_d1:
-        st.markdown(f"#### **{sel_d['name']}** ({sel_d['country_name']})")
-        st.write(f"**Region:** {sel_d['region']} | **Territory Code:** `{sel_d['id']}`")
-        st.write(f"**Agreement Validity:** {sel_d['expiry']} | **LOA Status:** `{sel_d['loa']}`")
-        st.write(f"**Exclusivity Clause:** {sel_d['exclusivity']}")
-        st.write(f"**Authorized Medical Products:** {', '.join(sel_d['products']) if sel_d['products'] else 'Under Evaluation'}")
+        st.markdown(f"#### **{sel_acc['name']}**")
+        st.write(f"**Ülke / Bölge:** {sel_acc['country_name']} ({sel_acc['region']})")
+        st.write(f"**Toplam Fatura / Sipariş:** `{sel_acc.get('invoices', 1)} İşlem` | **Son Sipariş Tarihi:** `{sel_acc.get('last_order', '—')}`")
+        st.write(f"**Satın Alınan Ürünler:** {', '.join(sel_acc.get('products', []))}")
         
     with col_d2:
-        if sel_d['status'] == 'active':
-            st.metric("Net Invoiced Sales", format_curr(sel_d['revenue']), delta=f"{sel_d['growth_pct']:+.1f}% YoY")
-            st.progress(min(1.0, sel_d['target_pct'] / 100.0), text=f"Target Achievement: {sel_d['target_pct']}%")
-        else:
-            st.info("Prospective distributor. No commercial transactions recorded yet.")
-
-    # Form to register prospective distributor
-    with st.expander("➕ Register New Prospective Distributor"):
-        with st.form("add_dist_form"):
-            c_f1, c_f2 = st.columns(2)
-            with c_f1:
-                new_name = st.text_input("Company Name")
-            with c_f2:
-                existing_codes = set(d['id'] for d in all_dists)
-                available_countries = country_df[~country_df['code'].isin(existing_codes)]
-                new_country = st.selectbox("Market / Country", available_countries['name'].tolist() if len(available_countries) > 0 else ["No free country"])
-            
-            submitted = st.form_submit_button("Register Prospect")
-            if submitted:
-                if new_name.strip() and new_country != "No free country":
-                    matched_c = country_df[country_df['name'] == new_country].iloc[0]
-                    new_entry = {
-                        'id': matched_c['code'],
-                        'name': new_name.strip(),
-                        'status': 'prospect',
-                        'base_rev_k': 0,
-                        'dev_share': 0.50,
-                        'target_pct': 0,
-                        'margin_pct': 0,
-                        'growth_pct': 0,
-                        'pen_pct': 0,
-                        'risk': 'Not rated',
-                        'expiry': '—',
-                        'exclusivity': 'Not granted',
-                        'loa': 'Not submitted',
-                        'weights': [1/12]*12,
-                        'products': []
-                    }
-                    st.session_state.added_dists.append(new_entry)
-                    st.success(f"Successfully registered {new_name} in {new_country}!")
-                    st.rerun()
+        st.metric("Toplam Faturalandırılan Tutar", format_curr(sel_acc['revenue']))
+        st.write(f"• **Cihaz Geliri:** {format_curr(sel_acc.get('device_rev', 0))}")
+        st.write(f"• **Sarf Malzeme Geliri:** {format_curr(sel_acc.get('consumables_rev', 0))}")
 
 
 # ==============================================================================
