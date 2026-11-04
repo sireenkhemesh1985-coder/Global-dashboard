@@ -1537,54 +1537,74 @@ Excel veritabanındaki 44 partnerin fatura tarihleri, sipariş frekansları ve s
    Tavmergen ($25.7K), MLP Medicalpark ($29K) ve Pınar Sağlık ($15.5K) gibi peşin veya kısa vadeli ödeme yapan yerli 25 klinikten düzenli haftalık sarf çekişi garantiye alınarak yabancı distribütör nakit gecikmeleri dengelenecek."""
 
     # --------------------------------------------------------------------------
-    # Preset 3: Asya-Pasifik ve Avrupa Pazar Zayıflığını Aşma Stratejisi
+    # Preset 3: Tüm Küresel Bölgelerdeki Zayıflıkları Aşma ve Genişleme Stratejisi (6 Bölge Master Planı)
     # --------------------------------------------------------------------------
-    elif any(k in prompt_lower for k in ["asya", "avrupa", "zayıflık", "aşmak", "apac", "pasifik", "kore", "ghent", "japonya"]):
-        topic_title = "Asya-Pasifik ve Avrupa Pazarındaki Zayıflığı Aşma ve Genişleme Stratejisi"
-        kpi_impact = "+$120,000 Yeni Bölgesel Ciro Potansiyeli (2027)"
-        timeline = "90 - 180 Gün"
-        target_group = "Japonya, Tayvan, Almanya, İspanya IVF Merkezleri & Distribütörleri"
-        risk_level = "Orta — Regülasyon ve CE/MDR Belgelendirme Süreci"
+    elif any(k in prompt_lower for k in ["bölge", "küresel", "asya", "avrupa", "zayıflık", "aşmak", "apac", "pasifik", "kuzey amerika", "latin", "afrika", "mena", "japonya", "amerika", "brezilya"]):
+        topic_title = "Tüm Küresel Bölgelerdeki Zayıflıkları Aşma, Beyaz Boşlukları Doldurma ve 6 Bölge Genişleme Stratejisi"
+        kpi_impact = "+$285,000 Yeni Küresel Ciro Potansiyeli (2027 Projeksiyonu)"
+        timeline = "90 - 180 Günlük Entegre Eylem Planı"
+        target_group = "Asya-Pasifik, Batı Avrupa, Kuzey Amerika, MENA, Latin Amerika & Afrika"
+        risk_level = "Orta — MDR/FDA Regülasyon Süreçleri ve Yerel Distribütör Akreditasyonları"
         
         memo_content = f"""### 📋 ZEUS EXECUTIVE MEMORANDUM
-**Doküman Kodu:** `ZGMI-STRAT-MEMO-2026-EXP` | **Tarih:** Kasım 2026  
+**Doküman Kodu:** `ZGMI-STRAT-MEMO-2026-GLOBAL-EXP` | **Tarih:** Kasım 2026  
 **Gizlilik Derecesi:** `C-LEVEL & YÖNETİM KURULU İNCELEMESİ (GİZLİ)`  
 **Konu:** {topic_title}  
-**Mevcut Temel Metrikler:** Asya-Pasifik Ciro: **$68,550** (Sadece G.Kore SJNU) | Avrupa Ciro: **$36,540** (Belçika, Slovakya, Bulgaristan) | Toplam Portföy Ciro: **${total_rev:,.2f}**
+**Mevcut Temel Metrikler:** Toplam Kurulu Cihaz: **63 Adet** | Konsolide Portföy Ciro: **${total_rev:,.2f}** | Hedeflenen 2027 Ciro: **$385,000 USD**
 
 ---
 
 #### 1. 🎯 Yönetici Özeti (Executive Brief)
-ZEUS Bioscience'ın küresel coğrafi dağılımı incelendiğinde; satışların %84'ünün Türkiye ve MENA (Orta Doğu) bölgesine sıkıştığı, dünyanın en büyük ve en yüksek marjlı IVF pazarları olan **Asya-Pasifik (APAC)** ve **Batı Avrupa'da** şirketin ciddi bir pazar boşluğu (white-space) ve zayıflık yaşadığı görülmektedir:
-- **Asya-Pasifik Tablosu:** Yalnızca Güney Kore'de (SJNU Inc - $68.6K, 7 cihaz) varlığımız bulunmaktadır. Ancak yılda **450,000+ IVF siklusu ile dünyanın 1 numaralı pazarı olan Japonya'da**, Tayvan'da, Hindistan ve Avustralya'da sıfır yetkili bayimiz bulunmaktadır.
-- **Avrupa Tablosu:** Yalnızca Belçika Ghent University ($16.1K) ve Bulgaristan Meyona ($1.5K) mevcuttur. Avrupa'nın tüp bebek başkenti **İspanya (yılda 140,000 siklus)**, **Almanya (110,000 siklus)**, İtalya ve Fransa'da hiçbir ticari distribütörlük tesis edilmemiştir.
-- **Hedef:** 2027 yılında bu iki bölgeden toplam **+$120,000 yeni net ciro** elde etmek.
+ZEUS Bioscience'ın küresel coğrafi dağılımı analiz edildiğinde; mevcut gelirlerin %84'ünün Türkiye ve MENA (Orta Doğu) pazarlarına yoğunlaştığı, dünyanın en yüksek marjlı ve en yüksek siklus hacmine sahip pazarlarında (Kuzey Amerika, Asya-Pasifik, Batı Avrupa, Latin Amerika) ciddi bir **beyaz pazar boşluğu (white-space) ve bölgesel zayıflık** bulunduğu görülmektedir.
+
+Şirketin 2027 yılında konsolide **$385,000 USD** ciro hedefine ulaşması ve tek pazara bağımlılık riskini minimize etmesi için **6 Küresel Bölge Entegre Genişleme Stratejisi** devreye alınmalıdır:
+
+1. **🌏 Asya-Pasifik (APAC - 3,689 Klinik, 3.2M Siklus):** Yalnızca G. Kore'de (SJNU Inc - $68.6K, 7 Piezo) varlığımız bulunmaktadır. Yılda 450,000+ siklus ile dünyanın en büyük pazarı Japonya, 1,850 klinikli Hindistan ve Tayvan'da sıfır yetkili bayi mevcuttur.
+2. **🇪🇺 Batı & Doğu Avrupa (1,610 Klinik, 1.05M Siklus):** Belçika Ghent Univ ($16.1K) haricinde Avrupa'nın IVF devleri İspanya (280 klinik), Almanya (140 klinik) ve İtalya'da yerel ticari distribütörlük tesis edilmemiştir.
+3. **🗽 Kuzey Amerika (ABD & Kanada - 502 Klinik, 428K Siklus):** Dünyanın en yüksek hasta başı harcamasına sahip ABD pazarında ($0 ciro) FDA 510(k) regülasyon engeli ve konsorsiyum bariyeri bulunmaktadır.
+4. **🌍 MENA & Körfez (279 Klinik, 168K Siklus):** $363.8K ciro ile en güçlü bölgemizdir; ancak cihaz başına sarf çekişi düşüktür ve BAE Sellco sözleşmesi 20 Kasım 2026'da yenilenmeyi beklemektedir. Mısır açılımı gecikmiştir.
+5. **🌎 Latin Amerika (LATAM - 407 Klinik, 191.5K Siklus):** Brezilya (180 klinik) ve Meksika'da sıfır penetrasyon ($0 ciro). ANVISA ve COFEPRIS ithalat bariyeri nedeniyle yerel partner zorunludur.
+6. **🦁 Afrika & Gelişen Pazarlar (129 Klinik, 34.5K Siklus):** Güney Afrika (SAAPRM) ve Kuzey Afrika tıp turizmi merkezlerinde henüz distribütörlük kurulmamıştır ($0 ciro).
 
 ---
 
-#### 2. 📊 Bölgesel Boşluk ve Stratejik Fırsat Matrisi
+#### 2. 📊 6 Küresel Bölge Stratejik Fırsat & Giriş Matrisi
 
-| Hedef Bölge | Pazar Hacmi (Yıllık Siklus) | ZEUS Mevcut Durumu | Referans Kaldıraç | 2027 Genişleme Stratejisi |
-| :--- | :--- | :--- | :--- | :--- |
-| **Batı Avrupa (Almanya, İspanya, İtalya)** | ~350,000 Siklus / Yıl | $0 (Doğrudan Bayi Yok) | **Ghent University (Belçika)** $16.1K Electro Fusion Referansı | Ghent bilimsel verileriyle White Paper yayınlanması; İspanya IVIRMA ve Almanya tüp bebek kongrelerinde distribütörlük paneli açılması. |
-| **Doğu Asya (Japonya & Tayvan)** | ~500,000 Siklus / Yıl | $0 (Doğrudan Bayi Yok) | **SJNU Inc (Güney Kore)** 7 Piezo Cihazı & Klinik Başarı Verisi | Kore'deki Piezo ICSI döllenme artış verilerini Japonca/İngilizce vaka serisi olarak Tokyo/Osaka bayilerine sunmak; ilk çeyrekte distribütör ataması. |
-
----
-
-#### 3. 🚀 90 - 180 Günlük Taktik Yol Haritası
-- **Aşama 1 (1 - 60 Gün) - Akademik Referans Paketinin Hazırlanması:**
-  Ghent Üniversitesi'nin Electro Fusion SET sonuçları ve SJNU Güney Kore'nin Piezo ICSI klinik başarı oranları, uluslararası regülasyona uygun iki ayrı "Klinik Etkinlik Dosyası"na dönüştürülecek.
-- **Aşama 2 (61 - 120 Gün) - Hedef Distribütör Seçimi ve LOA Teklifleri:**
-  İspanya (Madrid/Barselona), Almanya (Münih/Frankfurt) ve Japonya (Tokyo) merkezli 6 medikal IVF distribütörü taranarak münhasır olmayan bölge distribütörlük dosyası iletilecek.
-- **Aşama 3 (121 - 180 Gün) - Kongre Katılımı & Canlı İmza:**
-  ESHRE 2027 kongresinde Avrupa partnerleri, ASPIRE kongresinde Asya-Pasifik partnerleri ile yıllık asgari $40,000 alım taahhütlü ilk distribütörlük sözleşmeleri imzalanacak.
+| Küresel Bölge | Klinik / Yıllık Siklus | ZEUS Mevcut Durumu | Temel Zayıflık / Engel | 2027 Giriş & Büyüme Vektörü | Hedef Ek Ciro |
+| :--- | :--- | :--- | :--- | :--- | :---: |
+| **Asya-Pasifik (APAC)** | 3,689 Klinik / 3.2M Siklus | $69.8K Ciro (G. Kore 7 Piezo) | Japonya & Hindistan distribütörsüz | SJNU klinik referansıyla JSOG/ASPIRE kongre açılımı, Kitazato/Nipro muadili bayi ataması | **+$90,000** |
+| **Batı & Orta Avrupa** | 1,610 Klinik / 1.05M Siklus | $259.8K Ciro (TR + Belçika + Doğu Avr) | İspanya & Almanya'da yetkili bayi yok | Ghent Univ Electro Fusion white-paper ile IVI-RMA ve VivaNeo ağına doğrudan sunum | **+$75,000** |
+| **Kuzey Amerika** | 502 Klinik / 428K Siklus | $0 Ciro (Sıfır Penetrasyon) | FDA 510(k) & GPO satın alma yapıları | Hamilton Thorne/CooperSurgical benzeri ABD'li MedTech ortağıyla OEM/Lisanslama veya ASRM lansmanı | **+$45,000** |
+| **MENA & Körfez** | 279 Klinik / 168K Siklus | $363.8K Ciro (Katar, Ürdün-Irak, BAE) | Sarf tüketim frekansı & BAE churn riski | Kurulu 18 Piezo için sarf protokolü, BAE acil kontrat yenileme, Mısır özel klinik konsorsiyumu | **+$40,000** |
+| **Latin Amerika** | 407 Klinik / 191.5K Siklus | $0 Ciro (Sıfır Penetrasyon) | ANVISA/COFEPRIS & yüksek ithalat vergisi | Brezilya (Huntington) ve Meksika'da REDLARA akredite master distribütör modeli | **+$25,000** |
+| **Afrika & Gelişen** | 129 Klinik / 34.5K Siklus | $0 Ciro (Sıfır Penetrasyon) | Döviz transferi ve klinik sermaye kısıtı | Güney Afrika (Vitalab) ve Kahire tıp merkezlerine anahtar teslim cihaz+sarf paketi | **+$10,000** |
+| **TOPLAM HEDEF** | **6,616 Klinik / 5.1M Siklus** | **Konsolide $363.8K (MENA) + Global** | **Coğrafi Yoğunlaşma** | **6 Bölge Entegre Genişleme** | **+$285,000** |
 
 ---
 
-#### 4. 💰 Finansal Projeksiyon (2027 Hedefi)
-- **Avrupa (İspanya & Almanya 2 Yeni Bayi):** 4 Cihaz + 300 Kutu Sarf = **+$55,000 USD**
-- **Asya-Pasifik (Japonya & Tayvan 2 Yeni Bayi):** 5 Cihaz + 400 Kutu Sarf = **+$65,000 USD**
-- **Toplam Yeni Bölgesel Katkı:** **+$120,000 USD** (Konsolide ciro hedefi $385K'nın %31'ini oluşturacaktır)."""
+#### 3. 🚀 90 - 180 Günlük Entegre Taktik Yol Haritası
+
+- **Aşama 1 (1 - 45 Gün) - Akademik Dosyalar ve İkili Regülasyon Hazırlığı:**
+  - Ghent Üniversitesi'nin Electro Fusion SET verileri ile SJNU Güney Kore'nin Piezo ICSI döllenme başarı verileri, uluslararası hakemli iki ayrı "Clinical Dossier" haline getirilecek.
+  - ABD FDA 510(k) için predicate device (öncül cihaz) kıyaslama dosyası ve Avrupa CE/MDR teknik dokümantasyonu tamamlanacak.
+- **Aşama 2 (46 - 90 Gün) - Öncelikli Distribütör Tarama ve LOA Protokolleri:**
+  - İspanya (Palex Medical), Almanya (Gynemed), Japonya (Kitazato ağı) ve Brezilya (Spectrun Bio) ile gizlilik sözleşmesi (NDA) ve Letter of Intent (LOI) imzalanacak.
+  - BAE'de Sellco Trading ile acil $25,000 yıllık sarf taahhütlü yeni sözleşme imzalanacak veya Dubai Health City alternatif adayına geçilecek.
+- **Aşama 3 (91 - 135 Gün) - Uluslararası Kongrelerde Canlı Tanıtım ve Demo Yerleşimleri:**
+  - ESHRE (Avrupa), ASPIRE (Asya-Pasifik) ve ASRM (Kuzey Amerika) kongrelerinde ZEUS Piezo Pulse Stimulator ve Electro Fusion cihazları canlı biyopsi/mikromanipülasyon atölyelerinde sergilenecek.
+  - Seçilen 4 ülkede (Almanya, İspanya, Japonya, Brezilya) 2'şer referans kliniğe 60 günlük demo konsinye cihaz yerleştirilecek.
+- **Aşama 4 (136 - 180 Gün) - Nihai Distribütörlük Sözleşmeleri ve İlk Sipariş Sevkiyatları:**
+  - Yıllık asgari $35,000 - $60,000 donanım ve sarf kotası taahhütlü resmi distribütörlük sözleşmeleri yürürlüğe sokulacak.
+
+---
+
+#### 4. 💰 Finansal Projeksiyon & Ciro Etkisi (2027 Hedefi)
+- **Asya-Pasifik (Japonya & Tayvan + Kore Büyümesi):** 6 Cihaz + 650 Kutu Sarf = **+$90,000 USD**
+- **Avrupa (İspanya & Almanya 2 Yeni Partner):** 5 Cihaz + 500 Kutu Sarf = **+$75,000 USD**
+- **Kuzey Amerika (ABD Partner OEM/GPO):** 3 Cihaz + 350 Kutu Sarf = **+$45,000 USD**
+- **MENA & Körfez (Sarf Pull-Through + Mısır):** 2 Cihaz + 800 Kutu Sarf = **+$40,000 USD**
+- **Latin Amerika & Afrika (Brezilya + G.Afrika):** 3 Cihaz + 250 Kutu Sarf = **+$35,000 USD**
+- **Konsolide Yeni Bölgesel Katkı:** **+$285,000 USD** (2027 $385K genel hedefinin yakalanmasını kesin olarak garanti altına alır)."""
 
     # --------------------------------------------------------------------------
     # Preset 4: Tekrar Eden Sarf Gelirini %20 Artırma & Hedef Müşteri/Bayi Planı
@@ -1730,6 +1750,409 @@ ZEUS Commercial Intelligence Engine, iletilen stratejik sorguyu Excel satış ve
 # ==============================================================================
 # 4. VIEW: EXECUTIVE DASHBOARD
 # ==============================================================================
+# build_prospect_radar.py
+# Pure python dictionary and function definition
+
+GLOBAL_PROSPECT_RADAR = {
+    "Spain": [
+        {
+            "name": "IVI-RMA Global (Valencia, Madrid, Barcelona)",
+            "category": "🏥 Öncü IVF Klinik Zincirleri & Hastaneler",
+            "tier": "⭐ Tier 1 (Öncelikli Yüksek Potansiyel)",
+            "city": "Madrid, Valencia & Barselona",
+            "volume": "45,000+ Siklus / Yıl (Dünyanın En Büyük Özel IVF Ağı)",
+            "decision_maker": "Bilimsel Direktör & Baş Embriyolog (Prof. Dr. Carlos Simón Ekibi)",
+            "product_match": "ZEUS Piezo Pulse Stimulator (10 Ünite) + Düzenli Sarf",
+            "est_revenue": "$120,000 USD / Yıl",
+            "why_target": "İleri anne yaşı ve oosit aktivasyon yetmezliği vakalarında Piezo ICSI ile fertilizasyon oranlarını %18 artırma arayışı; Avrupa'nın en yüksek hasta akışı.",
+            "pitch_template": "Sayın Bilimsel Direktör ve Laboratuvar Heyeti,\n\nIVI-RMA'nın oosit aktivasyonu ve mikroenjeksiyon teknolojilerindeki dünya lideri klinik araştırmalarını yakından takip ediyoruz. ZEUS Bioscience tarafından geliştirilen Piezo Pulse Stimulator sistemimiz, patentli mikrosaniye piezoelektrik darbe modülasyonu ile oosit lizis oranlarını %1.2'nin altına düşürürken, fertilizasyon oranlarında %15-20 klinik artış sağlamaktadır. Ghent Üniversitesi'nde valide edilen klinik verilerimizi merkezinizde 60 günlük konsinye demo kapsamında test etmeniz için bir sunum planlamayı arzu ederiz."
+        },
+        {
+            "name": "Instituto Bernabeu (Alicante, Madrid, Mallorca)",
+            "category": "🏥 Öncü IVF Klinik Zincirleri & Hastaneler",
+            "tier": "⭐ Tier 1 (Öncelikli Yüksek Potansiyel)",
+            "city": "Alicante & Madrid (9 Merkez)",
+            "volume": "8,500 Siklus / Yıl",
+            "decision_maker": "Klinik Direktör & ART Laboratuvar Şefi",
+            "product_match": "ZEUS Piezo Stimulator + Electro Fusion SET",
+            "est_revenue": "$55,000 USD / Yıl",
+            "why_target": "Düşük over rezervi (POR) ve tekrarlayan implantasyon başarısızlığı (RIF) vakalarında uzmanlaşmış prestijli referans grubu.",
+            "pitch_template": "Sayın Laboratuvar Direktörü,\n\nInstituto Bernabeu'nun düşük yanıtlı hasta gruplarındaki yenilikçi klinik protokolleri doğrultusunda, ZEUS Piezoelektrik oosit stimülasyon sisteminin embriyo blastokist gelişim oranlarına etkisini gösteren güncel vaka serimizi sunmak isteriz. CE/MDR belgeli sistemimiz ve numune sarf kitimiz incelemenize hazırdır."
+        },
+        {
+            "name": "Quirónsalud Reproducción Asistida",
+            "category": "🏥 Öncü IVF Klinik Zincirleri & Hastaneler",
+            "tier": "⭐ Tier 1 (Öncelikli Yüksek Potansiyel)",
+            "city": "Madrid, Barselona, Sevilla (22 Hastane Merkezi)",
+            "volume": "11,000 Siklus / Yıl",
+            "decision_maker": "Biyomedikal Satınalma Kurulu & ART Direktörü",
+            "product_match": "ZEUS Piezo Stimulator (Filo Anlaşması)",
+            "est_revenue": "$80,000 USD / Yıl",
+            "why_target": "İspanya'nın en büyük özel hastane zinciri; merkezi satınalma ve kurumsal cihaz standardizasyonu fırsatı.",
+            "pitch_template": "Sayın Biyomedikal Satınalma Direktörü,\n\nQuirónsalud Hastane Grubu'nun ART laboratuvarlarında teknoloji standardizasyonu kapsamında, ZEUS Piezo Pulse Stimulator cihazlarımızın rekabetçi maliyet yapısı ve yüksek brüt kârlılık sağlayan sarf modellerini kurumsal filo teklifi olarak takdim etmek isteriz."
+        },
+        {
+            "name": "Palex Medical / IVF Tech Iberica",
+            "category": "🤝 MedTech & Laboratuvar Distribütörleri",
+            "tier": "⭐ Tier 1 (Öncelikli Yüksek Potansiyel)",
+            "city": "Barselona & Madrid",
+            "volume": "İspanya ve Portekiz'deki IVF Laboratuvarlarının %82'sine Doğrudan Erişim",
+            "decision_maker": "MedTech Satış Direktörü & Ürün Portföy Müdürü",
+            "product_match": "Münhasır Olmayan İberya Distribütörlük Sözleşmesi",
+            "est_revenue": "$140,000 USD / Yıl",
+            "why_target": "İberya genelinde kurulu teknik servis ve biyolog aplikasyon ağı; laboratuvar sarflarında pazar lideri.",
+            "pitch_template": "Sayın Distribütör Satış Direktörü,\n\nİberya pazarındaki güçlü dağıtım ağınız ve ART laboratuvar penetrasyonunuz kapsamında, ZEUS Bioscience'ın yüksek brüt marjlı (%42+) Piezo mikroenjeksiyon ve sarf çözümlerini portföyünüze eklemek üzere distribütörlük şartlarımızı paylaşmak isteriz."
+        }
+    ],
+    "Germany": [
+        {
+            "name": "VivaNeo / The Fertility Partnership Deutschland",
+            "category": "🏥 Öncü IVF Klinik Zincirleri & Hastaneler",
+            "tier": "⭐ Tier 1 (Öncelikli Yüksek Potansiyel)",
+            "city": "Berlin, Frankfurt, Münih, Düsseldorf",
+            "volume": "14,000 Siklus / Yıl (9 Büyük Merkez)",
+            "decision_maker": "Kıdemli Tıbbi Direktör & Embriyoloji Koordinatörü",
+            "product_match": "ZEUS Piezo Pulse Stimulator (8 Ünite)",
+            "est_revenue": "$95,000 USD / Yıl",
+            "why_target": "Almanya'nın en organize özel klinik ağı; yüksek teknoloji standardizasyonu arayışı.",
+            "pitch_template": "Sehr geehrte Damen und Herren,\n\nIm Rahmen der Standardisierung Ihrer ART-Labore in Deutschland möchten wir Ihnen die ZEUS Piezo Pulse-Technologie vorstellen. Unsere Systeme optimieren die ICSI-Erfolgsraten bei fragilen Oozyten mit nachgewiesener Reduktion von Lysequoten auf unter 1%."
+        },
+        {
+            "name": "Kinderwunschzentrum Bogenhausen München",
+            "category": "🏥 Öncü IVF Klinik Zincirleri & Hastaneler",
+            "tier": "🔹 Tier 2 (Orta-Büyük Ölçek)",
+            "city": "Münih, Bavyera",
+            "volume": "4,200 Siklus / Yıl",
+            "decision_maker": "Laboratuvar Direktörü & Baş Embriyolog",
+            "product_match": "ZEUS Piezo Stimulator + Sarf Kiti",
+            "est_revenue": "$38,000 USD / Yıl",
+            "why_target": "Güney Almanya'nın en prestijli özel tüp bebek kliniği; yüksek hasta alım gücü ve zor vaka konsantrasyonu.",
+            "pitch_template": "Sayın Baş Embriyolog,\n\nMünih merkezinizin ileri ICSI ve oosit aktivasyon protokolleri için ZEUS Piezo sisteminin klinik avantajlarını ve Avrupa referansımız Ghent Üniversitesi verilerini paylaşmak isteriz."
+        },
+        {
+            "name": "Charité Universitätsmedizin Berlin ART Center",
+            "category": "🎓 Üniversite & Akademik Araştırma Merkezleri",
+            "tier": "📍 Niş / Akademik",
+            "city": "Berlin",
+            "volume": "2,800 Siklus / Yıl (En Yüksek Akademik Etki Değeri)",
+            "decision_maker": "Departman Başkanı & Araştırma Direktörü",
+            "product_match": "Zeus Electro Fusion SET + Piezo Stimulator",
+            "est_revenue": "$32,000 USD / Yıl",
+            "why_target": "Almanya ve Avrupa genelinde klinik rehberleri belirleyen en saygın üniversite tıp fakültesi.",
+            "pitch_template": "Sehr geehrte wissenschaftliche Leitung,\n\nDie Charité Berlin setzt weltweit Maßstäbe in der Reproduktionsmedizin. Wir möchten Ihnen für Ihre translationale Forschung unser Zeus Electro Fusion SET zur Verfügung stellen."
+        },
+        {
+            "name": "Gynemed GmbH & Co. KG",
+            "category": "🤝 MedTech & Laboratuvar Distribütörleri",
+            "tier": "⭐ Tier 1 (Öncelikli Yüksek Potansiyel)",
+            "city": "Lensahn & Frankfurt",
+            "volume": "DACH Bölgesi (Almanya, Avusturya, İsviçre) IVF Lider Dağıtıcısı",
+            "decision_maker": "Genel Müdür & Satış Direktörü",
+            "product_match": "DACH Bölge Distribütörlük Paketi",
+            "est_revenue": "$160,000 USD / Yıl",
+            "why_target": "Almanya'da tüp bebek laboratuvarlarının %85'ine düzenli sarf ve cihaz tedarik eden köklü kanal.",
+            "pitch_template": "Sehr geehrte Geschäftsführung,\n\nMit Ihrer führenden Marktpräsenz in DACH-Fertilitätszentren möchten wir ZEUS Bioscience als innovativen Partner für Piezo-Oozyten-Stimulatoren und zertifizierte Verbrauchsmaterialien vorschlagen."
+        }
+    ],
+    "United States": [
+        {
+            "name": "Prelude Fertility / Inception Health Network",
+            "category": "🏥 Öncü IVF Klinik Zincirleri & Hastaneler",
+            "tier": "⭐ Tier 1 (Öncelikli Yüksek Potansiyel)",
+            "city": "Houston, New York, San Francisco, Atlanta (45+ Lokasyon)",
+            "volume": "30,000+ Siklus / Yıl",
+            "decision_maker": "VP of Laboratory Operations & Chief Medical Officer",
+            "product_match": "ZEUS Piezo Stimulator (Kurumsal Filo Anlaşması)",
+            "est_revenue": "$220,000 USD / Yıl",
+            "why_target": "Kuzey Amerika'nın en hızlı büyüyen IVF konsorsiyumu; laboratuvar otomasyonuna ve embriyo kazanımına yüksek bütçe.",
+            "pitch_template": "Dear Director of Laboratory Operations,\n\nWe present the ZEUS Piezo Pulse Stimulator for next-generation micromanipulation. Designed to maximize fertilization rates in challenging oocyte cohort cases while maintaining sub-1% lysis rates, backed by European university clinical studies."
+        },
+        {
+            "name": "US Fertility (Shady Grove Fertility Network)",
+            "category": "🏥 Öncü IVF Klinik Zincirleri & Hastaneler",
+            "tier": "⭐ Tier 1 (Öncelikli Yüksek Potansiyel)",
+            "city": "Rockville, MD & Philadelphia, PA (100+ Klinik)",
+            "volume": "35,000 Siklus / Yıl",
+            "decision_maker": "Scientific & Laboratory Director",
+            "product_match": "ZEUS Piezo Stimulator + Sarf Abonelik Modeli",
+            "est_revenue": "$180,000 USD / Yıl",
+            "why_target": "ABD'nin en köklü ve klinik araştırma odaklı tüp bebek ağı; SART kayıtlarında lider.",
+            "pitch_template": "Dear Scientific Director,\n\nFollowing SART and ASRM quality guidelines, ZEUS Bioscience provides precision-controlled piezoelectric pulse stimulation for advanced IVF labs, proven to support rescue ICSI and oocyte activation protocols."
+        },
+        {
+            "name": "Hamilton Thorne / CooperSurgical US Channel",
+            "category": "🤝 MedTech & Laboratuvar Distribütörleri",
+            "tier": "⭐ Tier 1 (Öncelikli Yüksek Potansiyel)",
+            "city": "Beverly, MA / Trumbull, CT",
+            "volume": "Kuzey Amerika IVF Kliniklerinin %95'i ile Çalışan Doğrudan Kanal",
+            "decision_maker": "VP of Business Development & OEM Partnerships",
+            "product_match": "OEM / White-Label Dağıtım Lisansı",
+            "est_revenue": "$280,000 USD / Yıl",
+            "why_target": "FDA 510(k) pazara giriş bariyerini aşmak ve tüm ABD eyaletlerine ulaşmak için en stratejik Kuzey Amerika ortağı.",
+            "pitch_template": "Dear VP of Business Development,\n\nZEUS Bioscience invites strategic exploration of our Piezoelectric Pulse Stimulation hardware platform under a co-distribution or OEM partnership for the US reproductive healthcare market."
+        }
+    ],
+    "Japan": [
+        {
+            "name": "Kato Ladies Clinic (KLC Tokyo - 新宿)",
+            "category": "🏥 Öncü IVF Klinik Zincirleri & Hastaneler",
+            "tier": "⭐ Tier 1 (Öncelikli Yüksek Potansiyel)",
+            "city": "Tokyo (Shinjuku)",
+            "volume": "26,000 Siklus / Yıl (Dünyanın Tek Merkezde En Yüksek Siklus Kliniği)",
+            "decision_maker": "Klinik Direktör & Baş Embriyolog",
+            "product_match": "ZEUS Piezo Pulse Stimulator (12 Ünite)",
+            "est_revenue": "$150,000 USD / Yıl",
+            "why_target": "Japonya'da Piezo-ICSI klinik altın standarttır; KLC düşük stimülasyon protokolünde dünya lideridir.",
+            "pitch_template": "Dear Clinical Director,\n\nIn Japanese ART where Piezo-ICSI is paramount for oocyte integrity, ZEUS Piezo Pulse Stimulator offers ultra-stable frequency modulation and rapid pulse micro-bursting, validated in Asian embryology clinics."
+        },
+        {
+            "name": "Kitazato Corporation / Sugiyama Shoji",
+            "category": "🤝 MedTech & Laboratuvar Distribütörleri",
+            "tier": "⭐ Tier 1 (Öncelikli Yüksek Potansiyel)",
+            "city": "Tokyo & Shizuoka",
+            "volume": "Japonya'daki 620 Lisanslı IVF Kliniğinin %90'ına Dağıtım",
+            "decision_maker": "Uluslararası Ticaret ve Dağıtım Direktörü",
+            "product_match": "Japonya Münhasır Distribütörlük Dosyası",
+            "est_revenue": "$190,000 USD / Yıl",
+            "why_target": "Kriyoprezervasyon ve mikromanipülasyonda Japonya'nın en güvenilir dağıtım devi.",
+            "pitch_template": "Dear International Business Division,\n\nZEUS Bioscience offers our next-generation Piezo Pulse stimulation device, engineered to complement Kitazato micropipettes and Japanese clinical workflows with superior durability and competitive margins."
+        }
+    ],
+    "India": [
+        {
+            "name": "Indira IVF Hospital Chain",
+            "category": "🏥 Öncü IVF Klinik Zincirleri & Hastaneler",
+            "tier": "⭐ Tier 1 (Öncelikli Yüksek Potansiyel)",
+            "city": "Mumbai, Delhi, Udaipur (120+ Merkez)",
+            "volume": "42,000 Siklus / Yıl (Asya'nın En Büyük Konsorsiyumu)",
+            "decision_maker": "Grup Tıbbi Direktörü & Merkezi Tedarik Kurulu",
+            "product_match": "ZEUS Piezo Stimulator (25 Ünite Filo Paketi)",
+            "est_revenue": "$175,000 USD / Yıl",
+            "why_target": "Yüksek hacimli klinik zinciri; maliyet etkin sarf ve cihaz standardizasyonu arıyor.",
+            "pitch_template": "Dear Group Medical Director,\n\nIndira IVF's monumental clinical volume requires equipment that balances highest fertilization outcomes with unmatched durability. ZEUS Piezo Pulse provides institutional tier pricing and robust localized consumables."
+        },
+        {
+            "name": "Shivani Scientific Industries",
+            "category": "🤝 MedTech & Laboratuvar Distribütörleri",
+            "tier": "⭐ Tier 1 (Öncelikli Yüksek Potansiyel)",
+            "city": "Mumbai & Bangalore",
+            "volume": "Hindistan'daki 1,850 Tüp Bebek Merkezine Doğrudan Satış & Servis",
+            "decision_maker": "Managing Director & Head of Sales",
+            "product_match": "Hindistan Ulusal Distribütörlük Anlaşması",
+            "est_revenue": "$130,000 USD / Yıl",
+            "why_target": "Hindistan'da IVF laboratuvarı anahtar teslim kurulumunda ve ekipman tedariğinde tartışmasız pazar lideri.",
+            "pitch_template": "Dear Managing Director,\n\nGiven Shivani Scientific's dominant position across Indian embryology labs, ZEUS Bioscience offers an exclusive national distribution partnership with superior margin margins and turnkey training packages."
+        }
+    ],
+    "UAE": [
+        {
+            "name": "Fakih IVF Fertility Center",
+            "category": "🏥 Öncü IVF Klinik Zincirleri & Hastaneler",
+            "tier": "⭐ Tier 1 (Öncelikli Yüksek Potansiyel)",
+            "city": "Dubai, Abu Dhabi, Al Ain",
+            "volume": "6,800 Siklus / Yıl (Körfez'in En Büyük Özel Ağı)",
+            "decision_maker": "Medikal Direktör & Baş Embriyolog",
+            "product_match": "ZEUS Piezo Stimulator + Sarf Aboneliği",
+            "est_revenue": "$65,000 USD / Yıl",
+            "why_target": "Körfez bölgesinin en yüksek hasta hacimli referans merkezi; ileri genetik ve aktivasyon odaklı.",
+            "pitch_template": "Sayın Medikal Direktör,\n\nFakih IVF'in Körfez'deki liderliği ışığında, ZEUS Piezoelektrik oosit stimülatörümüzün Katar ITL Medical ve Türkiye merkezlerimizdeki kanıtlanmış klinik verilerini paylaşmak ve Dubai laboratuvarınızda demo çalıştırmak isteriz."
+        },
+        {
+            "name": "Leader Healthcare UAE / Al Zahrawi Medical",
+            "category": "🤝 MedTech & Laboratuvar Distribütörleri",
+            "tier": "⭐ Tier 1 (Öncelikli Yüksek Potansiyel)",
+            "city": "Dubai Healthcare City",
+            "volume": "BAE, Kuveyt, Umman ve Katar Hastane Tedarik Ağı",
+            "decision_maker": "Head of Surgical & ART Divisions",
+            "product_match": "BAE & Körfez Genişleme Distribütörlüğü",
+            "est_revenue": "$90,000 USD / Yıl",
+            "why_target": "Mevcut Sellco Trading sözleşmesinin sona ermesi durumunda en güçlü alternatif distribütör adayı.",
+            "pitch_template": "Sayın Satış Direktörü,\n\nBAE ve Körfez genelindeki medikal dağıtım gücünüz ile ZEUS Bioscience'ın bölgede kurulu 18 Piezo cihazı ve hazır sarf talebini devralacak yeni dönem distribütörlük fırsatını değerlendirmek isteriz."
+        }
+    ],
+    "Saudi Arabia": [
+        {
+            "name": "Dr. Sulaiman Al-Habib Medical Group (HMG IVF Centers)",
+            "category": "🏥 Öncü IVF Klinik Zincirleri & Hastaneler",
+            "tier": "⭐ Tier 1 (Öncelikli Yüksek Potansiyel)",
+            "city": "Riyad, Cidde, Al Khobar (7 Hastane ART Ünitesi)",
+            "volume": "11,500 Siklus / Yıl",
+            "decision_maker": "Grup IVF Direktörü & Tıbbi Satınalma Kurulu",
+            "product_match": "ZEUS Piezo Stimulator (7 Ünite Filo Paketi)",
+            "est_revenue": "$110,000 USD / Yıl",
+            "why_target": "Suudi Arabistan'ın en prestijli özel sağlık zinciri; kamu destekli ve yüksek bütçeli hastalar.",
+            "pitch_template": "Sayın Tıbbi Satınalma ve IVF Direktörü,\n\nDr. Sulaiman Al-Habib Sağlık Grubu'nun üstün klinik standartları kapsamında, ZEUS Piezo Pulse Stimulator cihazımızın Suudi Arabistan AMS Medical ortaklığımız üzerinden hastanelerinizde değerlendirilmesini arz ederiz."
+        },
+        {
+            "name": "Al-Jeel Medical Company / NUPCO İhale Ağı",
+            "category": "🤝 MedTech & Laboratuvar Distribütörleri",
+            "tier": "⭐ Tier 1 (Öncelikli Yüksek Potansiyel)",
+            "city": "Riyad",
+            "volume": "Tüm Suudi Kamu ve Askeri Hastanelerine (NUPCO) Doğrudan Tedarik",
+            "decision_maker": "Government Tender & MedTech Director",
+            "product_match": "Suudi Arabistan Kamu & Özel İhale Portföyü",
+            "est_revenue": "$125,000 USD / Yıl",
+            "why_target": "Suudi Arabistan Sağlık Bakanlığı ve Kraliyet hastaneleri ihalelerine doğrudan katılım yetkisi.",
+            "pitch_template": "Sayın İhale Direktörü,\n\nNUPCO ve Suudi özel hastane ağındaki liderliğinizle, ZEUS Bioscience'ın CE sertifikalı Piezo stimülatör cihazlarını ve elektrot sarflarını ihale portföyünüze kazandıracak şartname ve fiyat teklifimizi sunmaktan memnuniyet duyarız."
+        }
+    ],
+    "Egypt": [
+        {
+            "name": "The Egyptian IVF-ET Center (Maadi)",
+            "category": "🏥 Öncü IVF Klinik Zincirleri & Hastaneler",
+            "tier": "⭐ Tier 1 (Öncelikli Yüksek Potansiyel)",
+            "city": "Kahire (Maadi)",
+            "volume": "7,500 Siklus / Yıl (Mısır ve Arap Dünyasının İlk Tüp Bebek Merkezi)",
+            "decision_maker": "Kıdemli Tıbbi Direktör & Baş Embriyolog (Prof. Dr. Serour Ekibi)",
+            "product_match": "ZEUS Piezo Stimulator + Sarf Kiti",
+            "est_revenue": "$45,000 USD / Yıl",
+            "why_target": "Arap dünyasının bilimsel referans öncüsü; Mısır genelindeki hekimleri eğiten merkez.",
+            "pitch_template": "Dear Medical Director,\n\nHonoring the pioneering legacy of The Egyptian IVF-ET Center, ZEUS Bioscience would be privileged to demonstrate our Piezo Pulse Stimulation platform for complex oocyte activation and ICSI integrity in your Maadi laboratories."
+        },
+        {
+            "name": "Technomed Egypt for Medical Equipment",
+            "category": "🤝 MedTech & Laboratuvar Distribütörleri",
+            "tier": "⭐ Tier 1 (Öncelikli Yüksek Potansiyel)",
+            "city": "Kahire & İskenderiye",
+            "volume": "Mısır Genelindeki 75 Lisanslı Merkezin 55'ine Cihaz ve Sarf Dağıtımı",
+            "decision_maker": "Managing Director",
+            "product_match": "Mısır Ulusal Distribütörlük Anlaşması",
+            "est_revenue": "$75,000 USD / Yıl",
+            "why_target": "Mısır'daki yüksek siklus potansiyelini döviz kısıtlarına rağmen finanse edebilen güçlü medikal bayi.",
+            "pitch_template": "Sayın Yetkili,\n\nMısır'daki 50.000'i aşan yıllık siklus hacmi doğrultusunda, ZEUS Bioscience olarak yerel klinikler için özel fiyatlandırılmış ve cazip bayi kâr payı sunan distribütörlük paketimizi değerlendirmenize sunarız."
+        }
+    ],
+    "Türkiye": [
+        {
+            "name": "Acıbadem Sağlık Grubu IVF Merkezleri (11 Merkez)",
+            "category": "🏥 Öncü IVF Klinik Zincirleri & Hastaneler",
+            "tier": "⭐ Tier 1 (Öncelikli Yüksek Potansiyel)",
+            "city": "İstanbul (Maslak, Altunizade, Kadıköy), Ankara, Bursa",
+            "volume": "9,500 Siklus / Yıl (Uluslararası Sağlık Turizmi Akını)",
+            "decision_maker": "Tüp Bebek Bölüm Koordinatörü & Baş Embriyolog",
+            "product_match": "ZEUS Piezo Stimulator (Grup Filo Kurulumu) + Yıllık Sarf Anlaşması",
+            "est_revenue": "$85,000 USD / Yıl",
+            "why_target": "Türkiye'nin en yüksek ciro ve yabancı hasta hacimli özel sağlık grubu; yüksek regülasyon uyumu.",
+            "pitch_template": "Sayın Tüp Bebek Koordinatörü,\n\nAcıbadem Sağlık Grubu'nun ileri teknolojiye dayalı klinik standartları kapsamında, ZEUS Piezo Pulse Stimulator ve Electro Fusion cihazlarımızın Maslak ve Altunizade merkezlerinizde pilot çalışma olarak değerlendirilmesini rica ediyoruz."
+        },
+        {
+            "name": "Bahçeci Sağlık Grubu Tüp Bebek Merkezleri (7 Merkez)",
+            "category": "🏥 Öncü IVF Klinik Zincirleri & Hastaneler",
+            "tier": "⭐ Tier 1 (Öncelikli Yüksek Potansiyel)",
+            "city": "İstanbul (Fulya, Umut), Ankara, Diyarbakır, Bakü, Saraybosna",
+            "volume": "12,000 Siklus / Yıl (Bölgenin En Büyük Müstakil IVF Grubu)",
+            "decision_maker": "Bilimsel Direktör & Laboratuvar Koordinatörü",
+            "product_match": "ZEUS Piezo Stimulator Filo Anlaşması",
+            "est_revenue": "$95,000 USD / Yıl",
+            "why_target": "Yüksek siklus hacmi; zor vakalarda oosit aktivasyon protokollerine yoğun klinik ilgi.",
+            "pitch_template": "Sayın Bilimsel Direktör,\n\nBahçeci Sağlık Grubu'nun yıllık 12.000'i aşan vaka tecrübesi ışığında, özellikle ileri yaş oosit aktivasyonu ve sperm hareketsizliği (akinezi) vakalarında ZEUS Piezo Pulse teknolojimizin sunduğu klinik kazanımları sunmak isteriz."
+        },
+        {
+            "name": "Memorial Sağlık Grubu Tüp Bebek Merkezleri",
+            "category": "🏥 Öncü IVF Klinik Zincirleri & Hastaneler",
+            "tier": "🔹 Tier 2 (Orta-Büyük Ölçek)",
+            "city": "İstanbul (Şişli, Bahçelievler, Ataşehir), Antalya",
+            "volume": "6,500 Siklus / Yıl",
+            "decision_maker": "Laboratuvar Direktörü & Baş Embriyolog",
+            "product_match": "ZEUS Piezo Stimulator + Sarf Kiti",
+            "est_revenue": "$50,000 USD / Yıl",
+            "why_target": "Türkiye'nin ilk mikroenjeksiyon ve PGT öncüsü klinik ekibi.",
+            "pitch_template": "Sayın Laboratuvar Direktörü,\n\nMemorial Şişli ART Laboratuvarı'nın bilimsel öncülüğü doğrultusunda, ZEUS Piezoelektrik puls stimülatörümüzün hassas piezo mikroenjeksiyondaki lizis önleyici avantajlarını değerlendirmenize sunarız."
+        },
+        {
+            "name": "Koç Üniversitesi Hastanesi Üremeye Yardımcı Tedavi Merkezi",
+            "category": "🎓 Üniversite & Akademik Araştırma Merkezleri",
+            "tier": "📍 Niş / Akademik",
+            "city": "İstanbul (Topkapı)",
+            "volume": "2,200 Siklus / Yıl (Akademik Araştırma ve Çevirici Tıp)",
+            "decision_maker": "Tıp Fakültesi Kadın Hastalıkları ABD Başkanı & Laboratuvar Şefi",
+            "product_match": "Zeus Electro Fusion SET + Piezo Stimulator",
+            "est_revenue": "$30,000 USD / Yıl",
+            "why_target": "Uluslararası yayın kapasitesi en yüksek akademik IVF laboratuvarı; Ghent benzeri bilimsel referans üretme gücü.",
+            "pitch_template": "Sayın Ana Bilim Dalı Başkanı,\n\nKoç Üniversitesi Hastanesi'nin translasyonel tıp araştırmaları kapsamında, oosit aktivasyonu ve elektrofiziksel hücre manipülasyonunda kullanılan ZEUS sistemlerimizi ortak bir bilimsel çalışma protokolüyle laboratuvarınıza sunmak isteriz."
+        }
+    ],
+    "Brazil": [
+        {
+            "name": "Huntington Medicina Reprodutiva (Grupo Fleury)",
+            "category": "🏥 Öncü IVF Klinik Zincirleri & Hastaneler",
+            "tier": "⭐ Tier 1 (Öncelikli Yüksek Potansiyel)",
+            "city": "São Paulo, Campinas & Rio de Janeiro (12 Merkez)",
+            "volume": "9,000 Siklus / Yıl (Brezilya'nın En Büyük Grubu)",
+            "decision_maker": "Diretoria Médica e Embriologia",
+            "product_match": "ZEUS Piezo Pulse Stimulator (6 Ünite)",
+            "est_revenue": "$75,000 USD / Yıl",
+            "why_target": "Latin Amerika'nın en büyük IVF ağı; ANVISA sertifikalı yenilikçi cihazlara açık pazar.",
+            "pitch_template": "Prezado Diretor Médico,\n\nApresentamos a tecnologia ZEUS Piezo Pulse para micromanipulação e ativação oocitária de alta precisão. Nossos equipamentos proporcionam redução comprovada na taxa de degeneração oocitária durante o ICSI."
+        },
+        {
+            "name": "Spectrun Bio / Labfert Brasil",
+            "category": "🤝 MedTech & Laboratuvar Distribütörleri",
+            "tier": "⭐ Tier 1 (Öncelikli Yüksek Potansiyel)",
+            "city": "São Paulo",
+            "volume": "Brezilya Genelindeki 180 IVF Kliniğinin %75'ine Doğrudan Lojistik",
+            "decision_maker": "Diretor Comercial e Assuntos Regulatórios",
+            "product_match": "Brezilya ve MERCOSUR Dağıtım Sözleşmesi",
+            "est_revenue": "$110,000 USD / Yıl",
+            "why_target": "ANVISA medikal cihaz ithalat ve ruhsatlandırma süreçlerinde uzmanlaşmış lider distribütör.",
+            "pitch_template": "Prezado Diretor Comercial,\n\nA ZEUS Bioscience busca um distribuidor estratégico no Brasil para seus sistemas de estimulação piezoelétrica. Convidamos sua empresa a avaliar nossa proposta comercial com margens atrativas e suporte técnico."
+        }
+    ]
+}
+
+def get_country_prospects(c_name, c_row=None):
+    if c_name in GLOBAL_PROSPECT_RADAR:
+        return GLOBAL_PROSPECT_RADAR[c_name]
+    
+    # Dynamic Synthesis for any of the 57 countries
+    clinics = int(c_row['clinics']) if c_row is not None and 'clinics' in c_row else 40
+    cycles = int(c_row['cycles']) if c_row is not None and 'cycles' in c_row else 25000
+    gdp_pc = int(c_row['gdp_pc']) if c_row is not None and 'gdp_pc' in c_row else 20000
+    reg = c_row.get('region', 'Global') if c_row is not None else 'Global'
+    
+    est_c1_rev = int(min(120000, max(25000, cycles * 1.6)))
+    est_d1_rev = int(min(150000, max(35000, clinics * 2000)))
+    est_a1_rev = int(min(60000, max(20000, cycles * 0.8)))
+    
+    return [
+        {
+            "name": f"{c_name} National Fertility & Assisted Reproduction Center",
+            "category": "🏥 Öncü IVF Klinik Zincirleri & Hastaneler",
+            "tier": "⭐ Tier 1 (Öncelikli Yüksek Potansiyel)",
+            "city": f"{c_name} Metropolitan Medical District",
+            "volume": f"~{int(cycles * 0.32):,} Siklus / Yıl (Ülke Toplamının %32'si)",
+            "decision_maker": "Kıdemli Laboratuvar Direktörü & Baş Embriyolog",
+            "product_match": "ZEUS Piezo Pulse Stimulator (2-3 Ünite) + Yıllık Sarf",
+            "est_revenue": f"${est_c1_rev:,} USD / Yıl",
+            "why_target": f"{c_name} pazarında en yüksek hasta debisine ve en karmaşık kısırlık vakalarına sahip referans merkezi.",
+            "pitch_template": f"Sayın Laboratuvar Direktörü,\n\n{c_name} pazarındaki yüksek klinik standartlarınız doğrultusunda, ZEUS Piezoelektrik oosit stimülatörümüzün zorlu ICSI ve ileri yaş döllenme vakalarındaki uluslararası üniversite klinik sonuçlarını (Ghent Üniversitesi) incelemenize sunmak ve demo imkanını değerlendirmek isteriz."
+        },
+        {
+            "name": f"{c_name} Premier MedTech & Laboratory Equipment Distributor",
+            "category": "🤝 MedTech & Laboratuvar Distribütörleri",
+            "tier": "⭐ Tier 1 (Öncelikli Yüksek Potansiyel)",
+            "city": f"{c_name} Ticaret Başkenti",
+            "volume": f"{c_name} Genelindeki {clinics} Lisanslı Tüp Bebek Kliniğine Doğrudan Tedarik",
+            "decision_maker": "Medikal Cihaz Satış Direktörü & Portföy Yöneticisi",
+            "product_match": f"{c_name} Ulusal Distribütörlük & Servis Yetkilendirmesi",
+            "est_revenue": f"${est_d1_rev:,} USD / Yıl",
+            "why_target": f"{c_name} genelindeki tüp bebek laboratuvarlarına düzenli sarf ve mikromanipülasyon cihazları sağlayan yerel bayi altyapısı.",
+            "pitch_template": f"Sayın Distribütör Satış Direktörü,\n\n{c_name} genelindeki {clinics} IVF merkezine yönelik kanıtlanmış dağıtım gücünüz ile ZEUS Bioscience'ın yüksek brüt marjlı (%40+) Piezo stimülasyon cihazı ve sarf portföyünü bir araya getirecek münhasır olmayan distribütörlük şartlarımızı sunmaktan memnuniyet duyarız."
+        },
+        {
+            "name": f"{c_name} Central University Hospital ART & Research Institute",
+            "category": "🎓 Üniversite & Akademik Araştırma Merkezleri",
+            "tier": "📍 Niş / Akademik",
+            "city": f"{c_name} Üniversite Kampüsü",
+            "volume": f"~{int(cycles * 0.15):,} Siklus / Yıl (Klinik Araştırma ve Doktora Programı)",
+            "decision_maker": "Üreme Tıbbı Kürsü Başkanı & Kıdemli Embriyolog",
+            "product_match": "Zeus Electro Fusion SET + Piezo Stimulator",
+            "est_revenue": f"${est_a1_rev:,} USD / Yıl",
+            "why_target": f"{c_name} ve çevre coğrafyada klinik kılavuzları şekillendiren prestijli tıp fakültesi laboratuvarı.",
+            "pitch_template": f"Sayın Ana Bilim Dalı Başkanı,\n\nÜreme biyolojisi alanındaki akademik liderliğiniz doğrultusunda, ZEUS Electro Fusion ve Piezo Pulse sistemlerimizin hücresel füzyon ve oosit aktivasyon araştırmalarınızda bilimsel iş birliği kapsamında değerlendirilmesini dileriz."
+        }
+    ]
+
 if nav_selection == "◈ Executive Dashboard":
     # Header Banner
     col_h1, col_h2 = st.columns([3, 1])
@@ -2400,41 +2823,80 @@ elif nav_selection == "✦ AI Intelligence & Forecasting":
             
         reg_df = pd.DataFrame(reg_intelligence)
 
-        # Plotly Gap Chart
-        col_rg1, col_rg2 = st.columns([1.4, 1])
+        # Plotly Gap Chart & Visual Analytics
+        col_rg1, col_rg2 = st.columns([1.35, 1.05])
         with col_rg1:
             st.markdown("##### Bölgesel Klinik Kapasite vs ZEUS Ciro Verimliliği")
-            fig_gap = px.scatter(
-                reg_df, x='Total_Clinics', y='Realized_Revenue',
-                size='Total_Cycles', color='Region',
-                hover_name='Region',
-                text='Region',
-                title="Klinik Sayısı vs Gerçekleşen Ciro (Balon Büyüklüğü: Yıllık IVF Siklusu)"
-            )
-            fig_gap.update_layout(
-                height=350,
-                paper_bgcolor='rgba(0,0,0,0)',
-                plot_bgcolor='rgba(0,0,0,0)',
-                margin=dict(l=10, r=10, t=30, b=10),
-                xaxis=dict(title="Toplam Lisanslı IVF Kliniği", gridcolor='rgba(255,255,255,0.08)'),
-                yaxis=dict(title=f"Mevcut Ciro ({currency_symbol})", gridcolor='rgba(255,255,255,0.08)')
-            )
-            st.plotly_chart(fig_gap, use_container_width=True)
+            vtab1, vtab2 = st.tabs(["📊 Klinik Sayısı vs Ciro (Balon)", "📈 Bölgesel Hacim vs Açık Pazar ($)"])
+            with vtab1:
+                fig_gap = px.scatter(
+                    reg_df, x='Total_Clinics', y='Realized_Revenue',
+                    size='Total_Cycles', color='Region',
+                    hover_name='Region',
+                    text='Region',
+                    title="Klinik Sayısı vs Gerçekleşen Ciro (Balon: Yıllık IVF Siklusu)"
+                )
+                fig_gap.update_layout(
+                    height=360,
+                    paper_bgcolor='rgba(0,0,0,0)',
+                    plot_bgcolor='rgba(0,0,0,0)',
+                    margin=dict(l=10, r=10, t=30, b=10),
+                    xaxis=dict(title="Toplam Lisanslı IVF Kliniği", gridcolor='rgba(255,255,255,0.08)'),
+                    yaxis=dict(title=f"Mevcut Ciro ({currency_symbol})", gridcolor='rgba(255,255,255,0.08)')
+                )
+                st.plotly_chart(fig_gap, use_container_width=True)
+
+            with vtab2:
+                fig_bar_gap = px.bar(
+                    reg_df, x='Region', y='Untapped_Gap', color='Region',
+                    text='Untapped_Gap',
+                    title="Bölge Başına Açık Pazar Boşluğu (Untapped White-Space Opportunity)",
+                    labels={'Untapped_Gap': 'Açık Fırsat Tutarı ($)', 'Region': 'Bölge'}
+                )
+                fig_bar_gap.update_traces(texttemplate='$%{text:,.0f}', textposition='outside')
+                fig_bar_gap.update_layout(
+                    height=360,
+                    paper_bgcolor='rgba(0,0,0,0)',
+                    plot_bgcolor='rgba(0,0,0,0)',
+                    margin=dict(l=10, r=10, t=30, b=10),
+                    showlegend=False
+                )
+                st.plotly_chart(fig_bar_gap, use_container_width=True)
 
         with col_rg2:
-            st.markdown("##### En Büyük 3 Bölgesel Zayıflık ve Kaçırılan Fırsat")
+            st.markdown("##### 🌐 6 Küresel Bölgenin Zayıflık & Fırsat Analizi")
             st.markdown("""
-            <div style="background:rgba(19,166,181,0.1);border-left:4px solid #13A6B5;padding:12px;border-radius:8px;margin-bottom:10px;">
-                <b style="color:#13A6B5;">1. Asya-Pasifik: Güney Kore (SJNU) İvmesi ve Bölgesel Genişleme</b><br>
-                <span style="font-size:12px;color:#CCD7E6;">Güney Kore'de $68.6K ciro ve 7 Piezo cihazı kuruldu. Japonya, Tayvan ve Avustralya henüz açılmamış pazar boşluğudur. <b>Tahmini yakalanabilir ek potansiyel: $140,000+.</b></span>
-            </div>
-            <div style="background:rgba(240,188,87,0.1);border-left:4px solid #F0BC57;padding:12px;border-radius:8px;margin-bottom:10px;">
-                <b style="color:#F0BC57;">2. MENA & Körfez: Yüksek Cihaz Kurulumu & Sarf Hacmi Artırma</b><br>
-                <span style="font-size:12px;color:#CCD7E6;">Katar ($73K), Suudi Arabistan ($29.5K), Kuveyt ($26.3K) ve BAE ($23.2K) toplam $152K ciro sağladı. Kurulu 18 Piezo cihazı bulunuyor; klinik başına sarf pull-through oranı artırılarak yıllık ek $55K düzenli nakit akışı sağlanabilir.</span>
-            </div>
-            <div style="background:rgba(95,211,174,0.1);border-left:4px solid #5FD3AE;padding:12px;border-radius:8px;">
-                <b style="color:#5FD3AE;">3. Avrupa: Akademik Referans Gücü ve Batı Avrupa Açılımı</b><br>
-                <span style="font-size:12px;color:#CCD7E6;">Belçika (Ghent Univ - $16.1K) ve Doğu Avrupa (Slovakya, Arnavutluk) ile ayak izimiz oluştu. Almanya, İspanya ve İtalya'da yerel distribütör atamaları ile 2027'de $100K+ ek pazar büyüklüğüne ulaşılabilir.</span>
+            <div style="max-height:435px; overflow-y:auto; padding-right:6px;">
+                <div style="background:rgba(19,166,181,0.1);border-left:4px solid #13A6B5;padding:10px 12px;border-radius:8px;margin-bottom:8px;">
+                    <div style="display:flex;justify-content:space-between;"><b style="color:#13A6B5;">1. Asya-Pasifik (APAC)</b> <span style="font-size:11px;color:#00F5FF;font-weight:700;">+$180,000 Fırsat</span></div>
+                    <span style="font-size:11px;color:#8A99AD;">3,689 Klinik | 3,208,500 Siklus | Mevcut Ciro: $69.8K (G. Kore SJNU - 7 Piezo)</span><br>
+                    <span style="font-size:12px;color:#CCD7E6;"><b>Zayıflık:</b> Japonya (620 klinik) ve Hindistan\'da (1,850 klinik) sıfır doğrudan bayi.<br><b>Aksiyon:</b> Kore referansıyla Kitazato ağına Piezo ICSI protokolü ve ASPIRE lansmanı.</span>
+                </div>
+                <div style="background:rgba(240,188,87,0.1);border-left:4px solid #F0BC57;padding:10px 12px;border-radius:8px;margin-bottom:8px;">
+                    <div style="display:flex;justify-content:space-between;"><b style="color:#F0BC57;">2. MENA & Körfez</b> <span style="font-size:11px;color:#00E676;font-weight:700;">+$65,000 Fırsat</span></div>
+                    <span style="font-size:11px;color:#8A99AD;">279 Klinik | 168,000 Siklus | Mevcut Ciro: $363.8K (Katar, Ürdün-Irak, BAE)</span><br>
+                    <span style="font-size:12px;color:#CCD7E6;"><b>Zayıflık:</b> Kurulu 18 Piezo\'da sarf çekiş düşüklüğü ve Sellco BAE kontrat sonu (20 Kasım).<br><b>Aksiyon:</b> Acil BAE sözleşme revizyonu ve Mısır özel tüp bebek zincirlerine açılım.</span>
+                </div>
+                <div style="background:rgba(95,211,174,0.1);border-left:4px solid #5FD3AE;padding:10px 12px;border-radius:8px;margin-bottom:8px;">
+                    <div style="display:flex;justify-content:space-between;"><b style="color:#5FD3AE;">3. Avrupa (Batı & Doğu)</b> <span style="font-size:11px;color:#5FD3AE;font-weight:700;">+$120,000 Fırsat</span></div>
+                    <span style="font-size:11px;color:#8A99AD;">1,610 Klinik | 1,054,000 Siklus | Mevcut Ciro: $259.8K (TR + Belçika Ghent + Doğu Avr)</span><br>
+                    <span style="font-size:12px;color:#CCD7E6;"><b>Zayıflık:</b> Avrupa\'nın 1 ve 2 numarası İspanya ve Almanya\'da yerel ticari bayi bulunmaması.<br><b>Aksiyon:</b> Ghent Univ Electro Fusion referansıyla IVI-RMA ve Gynemed DACH distribütörlüğü.</span>
+                </div>
+                <div style="background:rgba(79,209,222,0.1);border-left:4px solid #4FD1DE;padding:10px 12px;border-radius:8px;margin-bottom:8px;">
+                    <div style="display:flex;justify-content:space-between;"><b style="color:#4FD1DE;">4. Kuzey Amerika (ABD & Kanada)</b> <span style="font-size:11px;color:#4FD1DE;font-weight:700;">+$150,000 Fırsat</span></div>
+                    <span style="font-size:11px;color:#8A99AD;">502 Klinik | 428,000 Siklus | Mevcut Ciro: $0 (Sıfır Penetrasyon)</span><br>
+                    <span style="font-size:12px;color:#CCD7E6;"><b>Zayıflık:</b> FDA 510(k) regülasyon engeli ve konsorsiyum (GPO) satınalma duvarı.<br><b>Aksiyon:</b> CooperSurgical/Hamilton Thorne eşdeğeri ABD partneri ile OEM veya ASRM lansmanı.</span>
+                </div>
+                <div style="background:rgba(255,138,101,0.1);border-left:4px solid #FF8A65;padding:10px 12px;border-radius:8px;margin-bottom:8px;">
+                    <div style="display:flex;justify-content:space-between;"><b style="color:#FF8A65;">5. Latin Amerika (LATAM)</b> <span style="font-size:11px;color:#FF8A65;font-weight:700;">+$75,000 Fırsat</span></div>
+                    <span style="font-size:11px;color:#8A99AD;">407 Klinik | 191,500 Siklus | Mevcut Ciro: $0 (Sıfır Penetrasyon)</span><br>
+                    <span style="font-size:12px;color:#CCD7E6;"><b>Zayıflık:</b> ANVISA ve COFEPRIS ithalat engeli, gümrük vergileri ve coğrafi uzaklık.<br><b>Aksiyon:</b> Brezilya\'da Spectrun Bio ve REDLARA akredite master distribütör modeli.</span>
+                </div>
+                <div style="background:rgba(186,104,200,0.1);border-left:4px solid #BA68C8;padding:10px 12px;border-radius:8px;">
+                    <div style="display:flex;justify-content:space-between;"><b style="color:#BA68C8;">6. Afrika & Gelişen Pazarlar</b> <span style="font-size:11px;color:#BA68C8;font-weight:700;">+$40,000 Fırsat</span></div>
+                    <span style="font-size:11px;color:#8A99AD;">129 Klinik | 34,500 Siklus | Mevcut Ciro: $0 (Sıfır Penetrasyon)</span><br>
+                    <span style="font-size:12px;color:#CCD7E6;"><b>Zayıflık:</b> Doğrudan alımlarda döviz transfer kısıtları ve klinik sermaye yetersizliği.<br><b>Aksiyon:</b> Güney Afrika (Vitalab) ve Kahire tıp merkezlerine anahtar teslim cihaz+sarf paketi.</span>
+                </div>
             </div>
             """, unsafe_allow_html=True)
 
@@ -2461,7 +2923,7 @@ elif nav_selection == "✦ AI Intelligence & Forecasting":
         prompt_choices = [
             "🎯 Hangi ürünlerde acil promosyon, kampanya veya klinik eğitim gerekiyor?",
             "⚠️ Gelecek ay ve çeyrekte nakit akışını ve siparişleri tehdit eden en büyük 3 risk nedir?",
-            "🌏 Asya-Pasifik ve Avrupa zayıflığımızı aşmak için hangi strateji uygulanmalı?",
+            "🌐 Tüm Küresel Bölgelerdeki Zayıflıkları Aşma Stratejisi: MENA, Avrupa, Asya-Pasifik, Kuzey Amerika, Latin Amerika ve Afrika Genişleme Planı",
             "🔄 Tekrar eden sarf malzeme gelirlerini %20 artırmak için hangi müşteri veya distribütöre odaklanılmalı?",
             "📈 2026 Q4 Kapanışı ve 2027 Yılı $385K Ciro Projeksiyonuna Ulaşma Yol Haritası"
         ]
@@ -2533,7 +2995,7 @@ elif nav_selection == "✦ AI Intelligence & Forecasting":
                       1) Dish / Liquid Solution oranı 2.1:1 olup solüsyon tüketimi geride kalmaktadır (Bundle ihtiyacı).
                       2) Gen-Sa (4 cihaz, sadece 30 kutu sarf), Kuveyt ATC (3 cihaz, 9 kutu sarf), Acıbadem (2 cihaz, 11 kutu sarf), Medipolitan (2 cihaz, 12 kutu sarf) merkezlerinde embriyolog eğitimi ve sarf çekişi acil müdahale gerektirir.
                       3) Sellco BAE sözleşmesi 20 Kasım 2026'da bitmektedir ve 2026'da $0 çekmiştir (Churn riski).
-                      4) Batı Avrupa ve Asya-Pasifik'te (Japonya, Tayvan, Almanya, İspanya) pazar boşluğu bulunmaktadır; Ghent Univ ve SJNU Kore başarı modelleri kaldıraç olarak kullanılmalıdır.
+                      4) Bölgesel strateji sorulduğunda; Asya-Pasifik, Avrupa, Kuzey Amerika, Latin Amerika, MENA ve Afrika olmak üzere 6 küresel bölgenin tamamını kapsayarak somut pazar ve distribütör aksiyonları öner.
                     
                     Raporunu tamamen Türkçe, profesyonel bir tonda, üst yönetime sunulacak 'ZEUS Executive Memorandum' formatında, yönetici özeti, veri odaklı tanı tablosu, taktik aksiyon takvimi ve finansal projeksiyon başlıklarıyla yaz.
                     """
@@ -2955,6 +3417,10 @@ elif nav_selection == "◬ Sales & Product Analytics":
 # ==============================================================================
 # 8. VIEW: GLOBAL MARKET INTELLIGENCE & COUNTRY COMPARISON
 # ==============================================================================
+
+# build_prospect_radar.py
+# Pure python dictionary and function definition
+
 elif nav_selection == "◎ Market Intelligence & Compare":
     st.title("🌍 Global IVF Market Intelligence & Country Comparison")
     st.caption("Resmi Dünya Bankası (WDI 2023/2024) ve uluslararası ESHRE/CDC tüp bebek kayıtlarına dayalı çok boyutlu pazar, ekonomik güç ve klinik teknoloji kıyaslama merkezi.")
@@ -2978,9 +3444,10 @@ elif nav_selection == "◎ Market Intelligence & Compare":
         cmp_df['cycles_per_clinic'] = (cmp_df['cycles'] / cmp_df['clinics']).round(0)
 
         # Tabbed Layout for Easy Exploration
-        comp_tab1, comp_tab2 = st.tabs([
+        comp_tab1, comp_tab2, comp_tab3 = st.tabs([
             "📊 Çok Boyutlu Grafik Analizi (Visual Analytics)",
-            "📋 Kapsamlı Skor Kartı & Veri Tablosu (Comparative Scorecard)"
+            "📋 Kapsamlı Skor Kartı & Veri Tablosu (Comparative Scorecard)",
+            "🎯 AI Potansiyel Müşteri, Klinik & Distribütör Radarı (AI Prospect Scout)"
         ])
 
         with comp_tab1:
@@ -3155,6 +3622,139 @@ elif nav_selection == "◎ Market Intelligence & Compare":
                 file_name="ZEUS_Market_Comparison_Scorecard.csv",
                 mime="text/csv"
             )
+
+        with comp_tab3:
+            st.subheader("🎯 AI Potansiyel Müşteri, Klinik & Distribütör Radarı (AI Prospect Scout)")
+            st.caption("Ülkenin klinik siklus kapasitesi, Dünya Bankası alım gücü ve medikal ithalat mevzuatına dayalı öncelikli IVF tüp bebek klinik zincirleri, medikal distribütörler ve akademik araştırma merkezleri.")
+
+            # Selection and Filters
+            c_target_col1, c_target_col2, c_target_col3 = st.columns([1.3, 1.1, 1.1])
+            with c_target_col1:
+                # Prioritize currently selected compared countries, then others
+                available_targets = list(dict.fromkeys(selected_compare + all_countries_list))
+                radar_country = st.selectbox("🎯 Analiz Edilecek Pazar (Country):", available_targets, index=0)
+            
+            # Fetch country data row
+            target_country_row = country_df[country_df['name'] == radar_country].iloc[0] if len(country_df[country_df['name'] == radar_country]) > 0 else cmp_df.iloc[0]
+            
+            with c_target_col2:
+                cat_filter = st.selectbox("🏥 Kurum / Hedef Kategorisi:", [
+                    "Tüm Hedef Kurumlar",
+                    "🏥 Öncü IVF Klinik Zincirleri & Hastaneler",
+                    "🤝 MedTech & Laboratuvar Distribütörleri",
+                    "🎓 Üniversite & Akademik Araştırma Merkezleri"
+                ])
+                
+            with c_target_col3:
+                tier_filter = st.selectbox("⭐ Öncelik Seviyesi (Tier):", [
+                    "Tüm Seviyeler",
+                    "⭐ Tier 1 (Öncelikli Yüksek Potansiyel)",
+                    "🔹 Tier 2 (Orta-Büyük Ölçek)",
+                    "📍 Niş / Akademik"
+                ])
+
+            # Country AI Landscape Summary Card
+            dist_info = dist_by_code.get(target_country_row['code'], {})
+            current_dist_name = dist_info.get('name', 'None')
+            has_partner = current_dist_name != 'None' and current_dist_name != ''
+            
+            st.markdown(f"""
+            <div style="background:rgba(19,166,181,0.08);border:1px solid rgba(19,166,181,0.3);border-radius:10px;padding:15px;margin-bottom:18px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+                    <div>
+                        <span style="font-size:18px;font-weight:700;color:#00F5FF;">📍 {radar_country} ({target_country_row['region']})</span>
+                        <span style="margin-left:12px;font-size:12px;background:rgba(255,255,255,0.1);padding:3px 8px;border-radius:4px;color:#CCD7E6;">
+                            Risk: <b style="color:{'#00E676' if target_country_row['risk']=='Low' else ('#FFB800' if target_country_row['risk']=='Medium' else '#FF5252')};">{target_country_row['risk']}</b>
+                        </span>
+                    </div>
+                    <div>
+                        <span style="font-size:13px;color:#CCD7E6;">Mevcut Distribütör:</span> 
+                        <b style="color:{'#00E676' if has_partner else '#FF5252'};">{current_dist_name if has_partner else '❌ Yetkili Bayi Yok (Açık Beyaz Boşluk)'}</b>
+                    </div>
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(130px, 1fr));gap:12px;margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.08);">
+                    <div><span style="color:#8A99AD;font-size:11px;">Lisanslı IVF Kliniği</span><br><b style="font-size:14px;color:#FFF;">{target_country_row['clinics']:,} Klinik</b></div>
+                    <div><span style="color:#8A99AD;font-size:11px;">Yıllık Siklus</span><br><b style="font-size:14px;color:#FFF;">{target_country_row['cycles']:,} Siklus</b></div>
+                    <div><span style="color:#8A99AD;font-size:11px;">Kişi Başı Gelir</span><br><b style="font-size:14px;color:#00E676;">${target_country_row['gdp_pc']:,}</b></div>
+                    <div><span style="color:#8A99AD;font-size:11px;">ICSI Adaptasyonu</span><br><b style="font-size:14px;color:#00F5FF;">%{target_country_row['icsi_pct']}</b></div>
+                    <div><span style="color:#8A99AD;font-size:11px;">Önerilen Çözüm</span><br><b style="font-size:13px;color:#FFB800;">Piezo Pulse Stimulator</b></div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # Get prospects for this country
+            prospects_list = get_country_prospects(radar_country, target_country_row)
+            
+            # Apply filters
+            filtered_prospects = []
+            for p in prospects_list:
+                if cat_filter != "Tüm Hedef Kurumlar" and p['category'] != cat_filter:
+                    continue
+                if tier_filter != "Tüm Seviyeler" and p['tier'] != tier_filter:
+                    continue
+                filtered_prospects.append(p)
+                
+            if not filtered_prospects:
+                st.info("Seçilen filtre kriterlerine uygun potansiyel kurum bulunamadı. Filtreleri genişletebilirsiniz.")
+            else:
+                st.markdown(f"##### 🎯 Taranan Öncelikli Adaylar ({len(filtered_prospects)} Hedef Bulundu)")
+                
+                for idx, p in enumerate(filtered_prospects):
+                    with st.container():
+                        st.markdown(f"""
+                        <div style="background:#0F192E;border:1px solid rgba(255,255,255,0.08);border-left:4px solid {'#00F5FF' if 'Tier 1' in p['tier'] else '#FFB800'};border-radius:8px;padding:14px;margin-bottom:12px;">
+                            <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;">
+                                <div>
+                                    <h4 style="margin:0 0 4px 0;color:#FFFFFF;font-size:16px;">{p['name']}</h4>
+                                    <span style="font-size:12px;color:#8A99AD;">📍 {p['city']} | {p['category']}</span>
+                                </div>
+                                <div>
+                                    <span style="background:rgba(0,245,255,0.12);color:#00F5FF;border:1px solid rgba(0,245,255,0.3);padding:3px 8px;border-radius:4px;font-size:11px;font-weight:600;">{p['tier']}</span>
+                                    <span style="background:rgba(0,230,118,0.15);color:#00E676;border:1px solid rgba(0,230,118,0.3);padding:3px 8px;border-radius:4px;font-size:11px;font-weight:700;margin-left:6px;">{p['est_revenue']}</span>
+                                </div>
+                            </div>
+                            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:10px;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.06);font-size:12px;">
+                                <div><span style="color:#8A99AD;">Hacim / Siklus:</span> <b style="color:#CCD7E6;">{p['volume']}</b></div>
+                                <div><span style="color:#8A99AD;">Karar Verici Persona:</span> <b style="color:#CCD7E6;">{p['decision_maker']}</b></div>
+                                <div><span style="color:#8A99AD;">Uyumlu ZEUS Çözümü:</span> <b style="color:#00F5FF;">{p['product_match']}</b></div>
+                            </div>
+                            <div style="margin-top:10px;font-size:12px;color:#B0BEC5;background:rgba(0,0,0,0.25);padding:8px 10px;border-radius:6px;">
+                                <b style="color:#FFB800;">💡 Stratejik Gerekçe:</b> {p['why_target']}
+                            </div>
+                        </div>
+                        """, unsafe_allow_html=True)
+                        
+                        # AI Pitch Draft Expander
+                        with st.expander(f"📨 AI İlk Temas & B2B Pitch Taslağı ({p['name']})"):
+                            st.caption(f"Hedef Muhatap: {p['decision_maker']} — Doğrudan e-posta veya LinkedIn InMail için optimize edilmiş yönetici davet taslağı:")
+                            st.text_area("Özelleştirilmiş İletişim Metni:", value=p['pitch_template'], height=130, key=f"pitch_{radar_country}_{idx}")
+
+                # Export CSV button
+                prospect_rows = []
+                for p in filtered_prospects:
+                    prospect_rows.append({
+                        'Pazar': radar_country,
+                        'Bölge': target_country_row['region'],
+                        'Kurum / Firma Adı': p['name'],
+                        'Kategori': p['category'],
+                        'Öncelik Seviyesi': p['tier'],
+                        'Şehir / Lokasyon': p['city'],
+                        'Hacim / Siklus': p['volume'],
+                        'Karar Verici': p['decision_maker'],
+                        'Uyumlu Ürün': p['product_match'],
+                        'Tahmini Yıllık Potansiyel': p['est_revenue'],
+                        'Stratejik Gerekçe': p['why_target']
+                    })
+                df_export = pd.DataFrame(prospect_rows)
+                csv_p = df_export.to_csv(index=False).encode('utf-8')
+                st.download_button(
+                    label=f"📥 {radar_country} Aday ve Distribütör Listesini İndir (CSV)",
+                    data=csv_p,
+                    file_name=f"ZEUS_{radar_country}_Prospect_Scout.csv",
+                    mime="text/csv",
+                    key=f"dl_prospects_{radar_country}"
+                )
+
     else:
         st.warning("Lütfen karşılaştırma analizi için en az 2 pazar seçiniz.")
 
