@@ -268,6 +268,8 @@ def get_excel_sales_df():
             df_sales["Date_dt"] = pd.to_datetime(df_sales["Date"], format="%d.%m.%Y", errors="coerce")
             df_sales["Year_int"] = df_sales["Date_dt"].dt.year
             df_sales["Month_int"] = df_sales["Date_dt"].dt.month
+            # Unify SIRIUS PHARM COMPANY country records under 'Jordan-Iraq'
+            df_sales.loc[df_sales['Company'] == 'SIRIUS PHARM COMPANY', 'Country'] = 'Jordan-Iraq'
             return df_sales
         except Exception:
             pass
@@ -372,9 +374,7 @@ def get_base_distributors():
             'CONSULTANT MEDICAL COMPANY (CMC)',
             'ASSISTED MEDICAL SOLUTION EST',
             'ADVANCED TECHNOLOGY COMPANY K.S.C.P.',
-            'SELLCO TRADING INTL',
-            'MEYONA OOD',
-            'BISAN COMPANY FOR EXPORT AND IMPORT'
+            'SELLCO TRADING INTL'
         }
         
         if company in DISTRIBUTOR_COMPANIES:
