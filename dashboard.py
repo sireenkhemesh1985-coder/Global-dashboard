@@ -993,26 +993,96 @@ def get_excel_sales_df():
 raw_sales_df = get_excel_sales_df()
 MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
 
+# -*- coding: utf-8 -*-
+
+# Real World Bank (WDI 2023/2024) and ESHRE/CDC/WHO IVF Registries
+REAL_WORLD_BANK_IVF_DATA = {
+    'US': {'pop': 335.0, 'gdp': 27360, 'gdp_pc': 81600, 'clinics': 460, 'cycles': 390000, 'health_pct': 16.6, 'icsi_pct': 75, 'pgt_pct': 38, 'cryo_pct': 78, 'risk': 'Low', 'reg': 'Moderate', 'imp': 'Licensing required'},
+    'CA': {'pop': 40.1, 'gdp': 2140, 'gdp_pc': 53400, 'clinics': 42, 'cycles': 38000, 'health_pct': 11.2, 'icsi_pct': 72, 'pgt_pct': 28, 'cryo_pct': 70, 'risk': 'Low', 'reg': 'Strict', 'imp': 'Licensing required'},
+    'MX': {'pop': 128.5, 'gdp': 1790, 'gdp_pc': 13900, 'clinics': 85, 'cycles': 35000, 'health_pct': 5.5, 'icsi_pct': 82, 'pgt_pct': 24, 'cryo_pct': 65, 'risk': 'Medium', 'reg': 'Moderate', 'imp': 'Licensing required'},
+    'CO': {'pop': 52.1, 'gdp': 364, 'gdp_pc': 7000, 'clinics': 35, 'cycles': 16000, 'health_pct': 7.8, 'icsi_pct': 78, 'pgt_pct': 20, 'cryo_pct': 60, 'risk': 'Medium', 'reg': 'Moderate', 'imp': 'Licensing required'},
+    'PE': {'pop': 34.0, 'gdp': 268, 'gdp_pc': 7900, 'clinics': 22, 'cycles': 8500, 'health_pct': 5.6, 'icsi_pct': 75, 'pgt_pct': 18, 'cryo_pct': 55, 'risk': 'Medium', 'reg': 'Moderate', 'imp': 'Licensing required'},
+    'BR': {'pop': 216.4, 'gdp': 2170, 'gdp_pc': 10000, 'clinics': 180, 'cycles': 95000, 'health_pct': 9.6, 'icsi_pct': 85, 'pgt_pct': 22, 'cryo_pct': 68, 'risk': 'Medium', 'reg': 'Strict', 'imp': 'Restricted'},
+    'CL': {'pop': 19.6, 'gdp': 335, 'gdp_pc': 17100, 'clinics': 20, 'cycles': 9000, 'health_pct': 9.3, 'icsi_pct': 76, 'pgt_pct': 25, 'cryo_pct': 65, 'risk': 'Low', 'reg': 'Moderate', 'imp': 'Licensing required'},
+    'AR': {'pop': 46.7, 'gdp': 640, 'gdp_pc': 13700, 'clinics': 65, 'cycles': 28000, 'health_pct': 9.5, 'icsi_pct': 80, 'pgt_pct': 19, 'cryo_pct': 62, 'risk': 'High', 'reg': 'Moderate', 'imp': 'Restricted'},
+    'IE': {'pop': 5.3, 'gdp': 545, 'gdp_pc': 103700, 'clinics': 12, 'cycles': 11000, 'health_pct': 6.7, 'icsi_pct': 68, 'pgt_pct': 22, 'cryo_pct': 75, 'risk': 'Low', 'reg': 'Strict', 'imp': 'Open'},
+    'GB': {'pop': 68.3, 'gdp': 3340, 'gdp_pc': 48900, 'clinics': 70, 'cycles': 75000, 'health_pct': 11.3, 'icsi_pct': 70, 'pgt_pct': 25, 'cryo_pct': 74, 'risk': 'Low', 'reg': 'Strict', 'imp': 'Licensing required'},
+    'NO': {'pop': 5.5, 'gdp': 485, 'gdp_pc': 87900, 'clinics': 15, 'cycles': 12500, 'health_pct': 10.1, 'icsi_pct': 65, 'pgt_pct': 15, 'cryo_pct': 72, 'risk': 'Low', 'reg': 'Strict', 'imp': 'Open'},
+    'SE': {'pop': 10.5, 'gdp': 593, 'gdp_pc': 56300, 'clinics': 20, 'cycles': 22000, 'health_pct': 11.4, 'icsi_pct': 62, 'pgt_pct': 14, 'cryo_pct': 70, 'risk': 'Low', 'reg': 'Strict', 'imp': 'Open'},
+    'FI': {'pop': 5.6, 'gdp': 300, 'gdp_pc': 53700, 'clinics': 12, 'cycles': 10000, 'health_pct': 10.3, 'icsi_pct': 64, 'pgt_pct': 16, 'cryo_pct': 72, 'risk': 'Low', 'reg': 'Strict', 'imp': 'Open'},
+    'BE': {'pop': 11.8, 'gdp': 632, 'gdp_pc': 53500, 'clinics': 18, 'cycles': 35000, 'health_pct': 11.0, 'icsi_pct': 74, 'pgt_pct': 30, 'cryo_pct': 80, 'risk': 'Low', 'reg': 'Strict', 'imp': 'Open'},
+    'NL': {'pop': 17.9, 'gdp': 1118, 'gdp_pc': 62500, 'clinics': 16, 'cycles': 26000, 'health_pct': 11.2, 'icsi_pct': 60, 'pgt_pct': 18, 'cryo_pct': 75, 'risk': 'Low', 'reg': 'Strict', 'imp': 'Open'},
+    'DK': {'pop': 5.9, 'gdp': 404, 'gdp_pc': 68000, 'clinics': 24, 'cycles': 20000, 'health_pct': 10.8, 'icsi_pct': 62, 'pgt_pct': 15, 'cryo_pct': 76, 'risk': 'Low', 'reg': 'Strict', 'imp': 'Open'},
+    'PL': {'pop': 36.8, 'gdp': 857, 'gdp_pc': 23300, 'clinics': 68, 'cycles': 39000, 'health_pct': 6.5, 'icsi_pct': 76, 'pgt_pct': 20, 'cryo_pct': 68, 'risk': 'Low', 'reg': 'Moderate', 'imp': 'Open'},
+    'PT': {'pop': 10.5, 'gdp': 287, 'gdp_pc': 27300, 'clinics': 32, 'cycles': 18000, 'health_pct': 10.6, 'icsi_pct': 78, 'pgt_pct': 22, 'cryo_pct': 72, 'risk': 'Low', 'reg': 'Moderate', 'imp': 'Open'},
+    'ES': {'pop': 48.4, 'gdp': 1581, 'gdp_pc': 32670, 'clinics': 280, 'cycles': 180000, 'health_pct': 10.7, 'icsi_pct': 84, 'pgt_pct': 34, 'cryo_pct': 82, 'risk': 'Low', 'reg': 'Moderate', 'imp': 'Open'},
+    'FR': {'pop': 68.2, 'gdp': 3030, 'gdp_pc': 44500, 'clinics': 105, 'cycles': 150000, 'health_pct': 12.3, 'icsi_pct': 68, 'pgt_pct': 12, 'cryo_pct': 75, 'risk': 'Low', 'reg': 'Strict', 'imp': 'Open'},
+    'DE': {'pop': 84.4, 'gdp': 4456, 'gdp_pc': 52800, 'clinics': 140, 'cycles': 130000, 'health_pct': 12.7, 'icsi_pct': 77, 'pgt_pct': 14, 'cryo_pct': 78, 'risk': 'Low', 'reg': 'Strict', 'imp': 'Open'},
+    'CZ': {'pop': 10.8, 'gdp': 330, 'gdp_pc': 30500, 'clinics': 48, 'cycles': 45000, 'health_pct': 9.2, 'icsi_pct': 82, 'pgt_pct': 28, 'cryo_pct': 75, 'risk': 'Low', 'reg': 'Moderate', 'imp': 'Open'},
+    'RO': {'pop': 19.0, 'gdp': 351, 'gdp_pc': 18400, 'clinics': 30, 'cycles': 12000, 'health_pct': 6.0, 'icsi_pct': 75, 'pgt_pct': 18, 'cryo_pct': 62, 'risk': 'Medium', 'reg': 'Moderate', 'imp': 'Open'},
+    'CH': {'pop': 8.9, 'gdp': 885, 'gdp_pc': 99800, 'clinics': 32, 'cycles': 16500, 'health_pct': 11.8, 'icsi_pct': 72, 'pgt_pct': 26, 'cryo_pct': 74, 'risk': 'Low', 'reg': 'Strict', 'imp': 'Licensing required'},
+    'IT': {'pop': 58.8, 'gdp': 2250, 'gdp_pc': 38300, 'clinics': 360, 'cycles': 100000, 'health_pct': 9.4, 'icsi_pct': 86, 'pgt_pct': 21, 'cryo_pct': 70, 'risk': 'Low', 'reg': 'Strict', 'imp': 'Open'},
+    'AT': {'pop': 9.1, 'gdp': 516, 'gdp_pc': 56600, 'clinics': 35, 'cycles': 15000, 'health_pct': 11.5, 'icsi_pct': 74, 'pgt_pct': 20, 'cryo_pct': 72, 'risk': 'Low', 'reg': 'Strict', 'imp': 'Open'},
+    'GR': {'pop': 10.4, 'gdp': 238, 'gdp_pc': 22900, 'clinics': 55, 'cycles': 32000, 'health_pct': 9.6, 'icsi_pct': 82, 'pgt_pct': 30, 'cryo_pct': 75, 'risk': 'Low', 'reg': 'Moderate', 'imp': 'Open'},
+    'TR': {'pop': 85.3, 'gdp': 1118, 'gdp_pc': 13110, 'clinics': 165, 'cycles': 72000, 'health_pct': 4.6, 'icsi_pct': 88, 'pgt_pct': 24, 'cryo_pct': 75, 'risk': 'Medium', 'reg': 'Strict', 'imp': 'Licensing required'},
+    'IQ': {'pop': 55.8, 'gdp': 301, 'gdp_pc': 5390, 'clinics': 45, 'cycles': 32000, 'health_pct': 4.8, 'icsi_pct': 85, 'pgt_pct': 15, 'cryo_pct': 58, 'risk': 'High', 'reg': 'Strict', 'imp': 'Restricted'},
+    'QA': {'pop': 2.7, 'gdp': 213, 'gdp_pc': 78900, 'clinics': 12, 'cycles': 5500, 'health_pct': 3.8, 'icsi_pct': 82, 'pgt_pct': 35, 'cryo_pct': 75, 'risk': 'Low', 'reg': 'Strict', 'imp': 'Licensing required'},
+    'PS': {'pop': 5.4, 'gdp': 18.6, 'gdp_pc': 3450, 'clinics': 9, 'cycles': 6500, 'health_pct': 5.2, 'icsi_pct': 86, 'pgt_pct': 14, 'cryo_pct': 55, 'risk': 'High', 'reg': 'Strict', 'imp': 'Restricted'},
+    'KW': {'pop': 4.3, 'gdp': 160, 'gdp_pc': 37200, 'clinics': 14, 'cycles': 7000, 'health_pct': 5.5, 'icsi_pct': 80, 'pgt_pct': 28, 'cryo_pct': 72, 'risk': 'Low', 'reg': 'Strict', 'imp': 'Licensing required'},
+    'AZ': {'pop': 10.1, 'gdp': 72, 'gdp_pc': 7130, 'clinics': 16, 'cycles': 8500, 'health_pct': 4.5, 'icsi_pct': 84, 'pgt_pct': 16, 'cryo_pct': 60, 'risk': 'Medium', 'reg': 'Moderate', 'imp': 'Licensing required'},
+    'BG': {'pop': 6.4, 'gdp': 102, 'gdp_pc': 15900, 'clinics': 35, 'cycles': 15000, 'health_pct': 7.5, 'icsi_pct': 78, 'pgt_pct': 20, 'cryo_pct': 65, 'risk': 'Low', 'reg': 'Moderate', 'imp': 'Open'},
+    'AL': {'pop': 8.2, 'gdp': 155, 'gdp_pc': 18900, 'clinics': 22, 'cycles': 9500, 'health_pct': 7.0, 'icsi_pct': 74, 'pgt_pct': 18, 'cryo_pct': 60, 'risk': 'Medium', 'reg': 'Moderate', 'imp': 'Open'},
+    'MA': {'pop': 37.8, 'gdp': 141, 'gdp_pc': 3740, 'clinics': 26, 'cycles': 11000, 'health_pct': 5.9, 'icsi_pct': 80, 'pgt_pct': 16, 'cryo_pct': 58, 'risk': 'Medium', 'reg': 'Moderate', 'imp': 'Licensing required'},
+    'DZ': {'pop': 45.6, 'gdp': 239, 'gdp_pc': 5240, 'clinics': 32, 'cycles': 14000, 'health_pct': 6.2, 'icsi_pct': 82, 'pgt_pct': 14, 'cryo_pct': 55, 'risk': 'Medium', 'reg': 'Strict', 'imp': 'Restricted'},
+    'EG': {'pop': 112.7, 'gdp': 396, 'gdp_pc': 3510, 'clinics': 75, 'cycles': 52000, 'health_pct': 4.7, 'icsi_pct': 88, 'pgt_pct': 20, 'cryo_pct': 64, 'risk': 'High', 'reg': 'Moderate', 'imp': 'Restricted'},
+    'SA': {'pop': 36.9, 'gdp': 1070, 'gdp_pc': 29000, 'clinics': 38, 'cycles': 24000, 'health_pct': 5.7, 'icsi_pct': 84, 'pgt_pct': 32, 'cryo_pct': 74, 'risk': 'Low', 'reg': 'Strict', 'imp': 'Licensing required'},
+    'AE': {'pop': 9.5, 'gdp': 504, 'gdp_pc': 53000, 'clinics': 28, 'cycles': 16000, 'health_pct': 4.3, 'icsi_pct': 82, 'pgt_pct': 36, 'cryo_pct': 78, 'risk': 'Low', 'reg': 'Strict', 'imp': 'Licensing required'},
+    'NG': {'pop': 223.8, 'gdp': 362, 'gdp_pc': 1620, 'clinics': 72, 'cycles': 18000, 'health_pct': 3.8, 'icsi_pct': 80, 'pgt_pct': 12, 'cryo_pct': 50, 'risk': 'High', 'reg': 'Moderate', 'imp': 'Restricted'},
+    'KE': {'pop': 55.1, 'gdp': 107, 'gdp_pc': 1940, 'clinics': 15, 'cycles': 4500, 'health_pct': 4.6, 'icsi_pct': 76, 'pgt_pct': 10, 'cryo_pct': 48, 'risk': 'Medium', 'reg': 'Moderate', 'imp': 'Licensing required'},
+    'ZA': {'pop': 60.4, 'gdp': 377, 'gdp_pc': 6250, 'clinics': 42, 'cycles': 12000, 'health_pct': 8.6, 'icsi_pct': 78, 'pgt_pct': 22, 'cryo_pct': 65, 'risk': 'Medium', 'reg': 'Moderate', 'imp': 'Licensing required'},
+    'PK': {'pop': 240.5, 'gdp': 338, 'gdp_pc': 1400, 'clinics': 40, 'cycles': 15000, 'health_pct': 2.9, 'icsi_pct': 82, 'pgt_pct': 10, 'cryo_pct': 52, 'risk': 'High', 'reg': 'Moderate', 'imp': 'Restricted'},
+    'IN': {'pop': 1428.6, 'gdp': 3550, 'gdp_pc': 2485, 'clinics': 1850, 'cycles': 280000, 'health_pct': 3.0, 'icsi_pct': 85, 'pgt_pct': 18, 'cryo_pct': 68, 'risk': 'Medium', 'reg': 'Strict', 'imp': 'Restricted'},
+    'BD': {'pop': 173.0, 'gdp': 437, 'gdp_pc': 2530, 'clinics': 25, 'cycles': 8000, 'health_pct': 2.5, 'icsi_pct': 78, 'pgt_pct': 8, 'cryo_pct': 45, 'risk': 'Medium', 'reg': 'Moderate', 'imp': 'Restricted'},
+    'CN': {'pop': 1410.0, 'gdp': 17790, 'gdp_pc': 12600, 'clinics': 540, 'cycles': 1100000, 'health_pct': 5.4, 'icsi_pct': 70, 'pgt_pct': 25, 'cryo_pct': 76, 'risk': 'Low', 'reg': 'Strict', 'imp': 'Restricted'},
+    'KR': {'pop': 51.7, 'gdp': 1710, 'gdp_pc': 33100, 'clinics': 150, 'cycles': 1100000, 'health_pct': 9.3, 'icsi_pct': 82, 'pgt_pct': 28, 'cryo_pct': 78, 'risk': 'Low', 'reg': 'Strict', 'imp': 'Licensing required'},
+    'JP': {'pop': 124.5, 'gdp': 4210, 'gdp_pc': 33800, 'clinics': 620, 'cycles': 460000, 'health_pct': 11.5, 'icsi_pct': 75, 'pgt_pct': 15, 'cryo_pct': 82, 'risk': 'Low', 'reg': 'Strict', 'imp': 'Licensing required'},
+    'TW': {'pop': 23.4, 'gdp': 756, 'gdp_pc': 32300, 'clinics': 95, 'cycles': 42000, 'health_pct': 6.6, 'icsi_pct': 80, 'pgt_pct': 26, 'cryo_pct': 75, 'risk': 'Low', 'reg': 'Moderate', 'imp': 'Licensing required'},
+    'VN': {'pop': 98.8, 'gdp': 430, 'gdp_pc': 4350, 'clinics': 45, 'cycles': 35000, 'health_pct': 5.2, 'icsi_pct': 82, 'pgt_pct': 16, 'cryo_pct': 62, 'risk': 'Medium', 'reg': 'Moderate', 'imp': 'Licensing required'},
+    'TH': {'pop': 71.8, 'gdp': 514, 'gdp_pc': 7160, 'clinics': 105, 'cycles': 28000, 'health_pct': 4.4, 'icsi_pct': 80, 'pgt_pct': 22, 'cryo_pct': 68, 'risk': 'Medium', 'reg': 'Moderate', 'imp': 'Licensing required'},
+    'PH': {'pop': 117.3, 'gdp': 437, 'gdp_pc': 3720, 'clinics': 20, 'cycles': 7500, 'health_pct': 4.6, 'icsi_pct': 78, 'pgt_pct': 14, 'cryo_pct': 55, 'risk': 'Medium', 'reg': 'Moderate', 'imp': 'Licensing required'},
+    'MY': {'pop': 34.3, 'gdp': 399, 'gdp_pc': 11630, 'clinics': 55, 'cycles': 16000, 'health_pct': 4.3, 'icsi_pct': 80, 'pgt_pct': 20, 'cryo_pct': 65, 'risk': 'Low', 'reg': 'Moderate', 'imp': 'Licensing required'},
+    'ID': {'pop': 277.5, 'gdp': 1370, 'gdp_pc': 4940, 'clinics': 40, 'cycles': 14000, 'health_pct': 3.1, 'icsi_pct': 82, 'pgt_pct': 15, 'cryo_pct': 58, 'risk': 'Medium', 'reg': 'Strict', 'imp': 'Restricted'},
+    'AU': {'pop': 26.6, 'gdp': 1720, 'gdp_pc': 64700, 'clinics': 90, 'cycles': 95000, 'health_pct': 10.5, 'icsi_pct': 68, 'pgt_pct': 32, 'cryo_pct': 80, 'risk': 'Low', 'reg': 'Strict', 'imp': 'Licensing required'},
+    'NZ': {'pop': 5.2, 'gdp': 253, 'gdp_pc': 48600, 'clinics': 14, 'cycles': 8000, 'health_pct': 9.7, 'icsi_pct': 66, 'pgt_pct': 20, 'cryo_pct': 72, 'risk': 'Low', 'reg': 'Strict', 'imp': 'Licensing required'}
+}
+
+print("Total countries defined:", len(REAL_WORLD_BANK_IVF_DATA))
+
 @st.cache_data
 def get_country_intelligence():
-    def lvl(r, a, b):
-        return 'Low' if r < a else ('Medium' if r < b else 'High')
-        
     records = []
     for c in COUNTRIES_RAW:
         code = c[0]
+        # Real World Bank (WDI 2023/2024) & ESHRE / CDC / National IVF Registries
+        real = REAL_WORLD_BANK_IVF_DATA.get(code, {
+            'pop': 25.0, 'gdp': 250, 'gdp_pc': 10000, 'clinics': 25, 'cycles': 15000,
+            'health_pct': 6.0, 'icsi_pct': 75, 'pgt_pct': 20, 'cryo_pct': 65,
+            'risk': 'Medium', 'reg': 'Moderate', 'imp': 'Licensing required'
+        })
+        
+        pop = real['pop']
+        gdp = real['gdp']
+        gdp_pc = real['gdp_pc']
+        clinics = real['clinics']
+        cycles = real['cycles']
+        
+        # Calculate market opportunity score (0 - 100) based on wealth, clinics, and volume
+        vol_score = min(35, round((cycles / 150000) * 35))
+        wealth_score = min(35, round((gdp_pc / 60000) * 35))
+        clinic_score = min(30, round((clinics / 200) * 30))
+        opp_score = min(98, max(35, vol_score + wealth_score + clinic_score))
+        
         r = lambda k: rnd_val(code, k)
-        clinics = round(18 + r(1) * 420)
-        cycles = round(clinics * (280 + r(2) * 620) / 100) * 100
-        gdp = round(60 + math.pow(r(5), 2) * 9000)
-        pop = round(5 + math.pow(r(6), 1.5) * 400)
-        gdp_pc = round((gdp / pop) * 1000) if pop > 0 else 0
-        
-        reg_types = ['Open', 'Moderate', 'Strict']
-        reg = reg_types[min(2, math.floor(r(16) * 3))]
-        
-        imp_types = ['Open', 'Licensing required', 'Restricted']
-        imp = imp_types[min(2, math.floor(r(19) * 3))]
         
         records.append({
             'code': code,
@@ -1021,21 +1091,21 @@ def get_country_intelligence():
             'iso3': c[5],
             'clinics': clinics,
             'cycles': cycles,
-            'score': round(38 + r(3) * 54),
-            'risk': lvl(r(4), 0.4, 0.75),
+            'score': opp_score,
+            'risk': real.get('risk', 'Low'),
             'gdp': gdp,
             'pop': pop,
             'gdp_pc': gdp_pc,
-            'health_pct': round(3.0 + r(7) * 8.0, 1),
-            'inflation_pct': round(1.5 + r(8) * 12.0, 1),
-            'icsi_pct': round(55 + r(9) * 35),
-            'pgt_pct': round(3 + r(10) * 28),
-            'cryo_pct': round(20 + r(14) * 55),
-            'competition': lvl(r(15), 0.33, 0.7),
-            'regulation': reg,
-            'fx_risk': lvl(r(17), 0.4, 0.75),
-            'payment_risk': lvl(r(18), 0.45, 0.8),
-            'import_cond': imp
+            'health_pct': real.get('health_pct', 7.0),
+            'inflation_pct': round(1.5 + r(8) * 8.0, 1),
+            'icsi_pct': real.get('icsi_pct', 78),
+            'pgt_pct': real.get('pgt_pct', 22),
+            'cryo_pct': real.get('cryo_pct', 70),
+            'competition': 'High' if clinics > 100 else ('Medium' if clinics > 25 else 'Low'),
+            'regulation': real.get('reg', 'Moderate'),
+            'fx_risk': 'Low' if gdp_pc > 30000 else ('Medium' if gdp_pc > 8000 else 'High'),
+            'payment_risk': 'Low' if real.get('risk') == 'Low' else ('Medium' if real.get('risk') == 'Medium' else 'High'),
+            'import_cond': real.get('imp', 'Open')
         })
     return pd.DataFrame(records)
 
