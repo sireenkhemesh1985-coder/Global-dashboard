@@ -653,16 +653,18 @@ dist_by_code = {d['id']: d for d in dists_with_rev}
 def generate_zeus_executive_memo(active_prompt, total_rev, avg_margin, total_devices):
     prompt_lower = active_prompt.lower()
     
-    # Preset 1: Consumable Pull-Through / Sarf Penetrasyonu
-    if any(k in prompt_lower for k in ["sarf", "dish", "liquid", "penetrasyon", "pull-through", "tüketim"]):
-        topic_title = "Piezo Kurulu Kliniklerde Electro Dish ve Liquid Solution Sarf Penetrasyonunu Artırma Stratejisi"
-        kpi_impact = "+$48,500 / Yıl Ek Düzenli Sarf Geliri"
-        timeline = "90 Gün (3 Aşamalı Dağıtım)"
-        target_group = "63 Kurulu Piezo Cihazı & 44 Partner Klinik"
+    # --------------------------------------------------------------------------
+    # Preset 1: Hangi ürünlerde acil promosyon, kampanya veya klinik eğitim gerekiyor?
+    # --------------------------------------------------------------------------
+    if any(k in prompt_lower for k in ["promosyon", "kampanya", "eğitim", "klinik eğitim", "hangi ürün"]):
+        topic_title = "Acil Promosyon, Kampanya ve Klinik Eğitimi Gerektiren ZEUS Ürün Hatları Stratejisi"
+        kpi_impact = "+$62,000 / Yıl Ek Ciro & Marj İyileşmesi"
+        timeline = "60 Gün (Hızlı Uygulama)"
+        target_group = "Zeus Electro Fusion SET, Electro Liquid Solution & Uyuyan Cihaz Merkezleri"
         risk_level = "Düşük — Yüksek Ticari Geri Dönüş"
         
         memo_content = f"""### 📋 ZEUS EXECUTIVE MEMORANDUM
-**Doküman Kodu:** `ZGMI-STRAT-MEMO-2026-CONS` | **Tarih:** Kasım 2026  
+**Doküman Kodu:** `ZGMI-STRAT-MEMO-2026-PROMO` | **Tarih:** Kasım 2026  
 **Gizlilik Derecesi:** `C-LEVEL & YÖNETİM KURULU İNCELEMESİ (GİZLİ)`  
 **Konu:** {topic_title}  
 **Mevcut Temel Metrikler:** Toplam Kurulu Cihaz: **{total_devices} Adet** | Portföy Ciro: **${total_rev:,.2f}** | Ortalama Brüt Marj: **%{avg_margin:.1f}**
@@ -670,91 +672,188 @@ def generate_zeus_executive_memo(active_prompt, total_rev, avg_margin, total_dev
 ---
 
 #### 1. 🎯 Yönetici Özeti (Executive Brief)
-ZEUS Bioscience'ın ticari modeli, sermaye ekipmanı satışının (**ZEUS Piezo Pulse Stimulator**) ardından gelen yüksek marjlı ve düzenli sarf malzeme siparişlerine (**Electro Dish 1x2/1x1** ve **Electro Liquid Solution**) dayanan bir **"Razor-and-Blade" (Cihaz-Sarf Çekişi)** dinamiğidir.
-- Güncel Excel satış verileri incelendiğinde; kurulu 63 aktif Piezo cihazına karşılık **2,097 kutu Electro Dish** faturalandırılmıştır.
-- Bu durum cihaz başına yıllık ortalama **~$4,200** sarf tüketimine işaret etmektedir.
-- Benchmark analizlerimize göre, haftada 15+ siklus gerçekleştiren tam kapasiteli bir IVF merkezinin yıllık sarf ihtiyacı **70-80 kutu Electro Dish** seviyesindedir. Mevcut tüketim potansiyelinin %35 altında kalmaktadır.
-- Bu stratejik plan, cihaz kurulu merkezlerde sarf penetrasyonunu %25 artırarak **yıllık net +$48,500 ek karlı ciro** yaratmayı hedeflemektedir.
+Excel satış kayıtlarındaki 874 işlem ve ürün bazlı çekiş frekansları incelendiğinde, portföyde acil ticari müdahale (promosyon, bundle kampanyası veya klinik aplikasyon eğitimi) gerektiren 3 kritik ürün grubu ve müşteri kümesi tespit edilmiştir:
+- **1. Zeus Electro Fusion SET ($15,890.85):** Şu ana kadar yalnızca 1 adet satılmıştır (Ghent University, Belçika). Batı Avrupa ve Körfez'deki üst düzey akademik merkezler için demo/tanıtım kampanyası başlatılmalıdır.
+- **2. Electro Liquid Solution (Powder & 2x1ml) Dengesizliği:** 2,097 kutu Electro Dish satılmasına karşın yalnızca 765 kutu Liquid Solution (2x1ml) ve 232 kutu Powder satılmıştır (**Dish / Liquid oranı ~2.1:1**). Klinikler solüsyonu ikame etmekte veya seyreltmektedir; acil **Bundle Kampanyası** gereklidir.
+- **3. Cihazı Kurulu Olup Sarf Çekişi Durmuş Klinikler (Klinik Eğitim İhtiyacı):** Acıbadem (2 cihaz - $760 sarf), Medipolitan (2 cihaz - $440 sarf), Kuveyt ATC (3 cihaz - $750 sarf) ve Gen-Sa (4 cihaz - $1,640 sarf) merkezlerinde embriyolog eğitimi eksikliği nedeniyle cihazlar atıl kalmaktadır.
 
 ---
 
-#### 2. 📊 Veri Odaklı Tanı ve Kök Neden Analizi
-1. **Sipariş Eşleşme Dengesizliği:** Ürdün & Irak (Sirius Pharm - $164K) ve Suudi Arabistan (AMS - $29.5K) gibi yüksek hacimli pazarlarda cihaz alımları ile likit solüsyon alımları arasında 45-70 günlük gecikme tespit edilmiştir. Klinikler solüsyonu tekil olarak sipariş etmekte, bu da operasyonel aksamalara yol açmaktadır.
-2. **Klinik Protokol Standardizasyonu:** Bazı merkezlerde piezoelektrik oosit aktivasyonu yalnızca "kurtarma siklusları" (rescue ICSI) için kullanılmakta, rutin oosit aktivasyon protokollerine entegre edilmemektedir.
-3. **Stok Güvenliği:** Gümrük süreleri 20 günü bulan ülkelerde (Katar ITL, Kuveyt ATC) kliniklerin güvenlik stoku bulundurmaması nedeniyle sipariş araları açılmaktadır.
+#### 2. 📊 Veri Odaklı Tanı ve Ürün Bazlı Kök Neden Analizi
+
+| Ürün / Müşteri Grubu | Toplam Ciro | Satılan Adet | Teşhis Edilen Sorun | Gereken Müdahale |
+| :--- | :--- | :--- | :--- | :--- |
+| **Zeus Electro Fusion SET** | $15,890.85 | 1 Ünite | Tekil akademik satışta kaldı; ticari lansman yapılmadı. | **Uluslararası Tanıtım Kampanyası & ESHRE Canlı Demo** |
+| **Electro Liquid Solution (Powder & 2x1ml)** | $53,014.00 | 997 Şişe/Kutu | Dish çekişine göre %50 geride kalıyor (Oran: 2.1 Dish : 1 Solüsyon). | **10 Dish + 2 Liquid Solution %50 İndirimli Bundle Kampanyası** |
+| **Gen-Sa Sağlık (Türkiye)** | $33,140.00 | 4 Piezo Cihazı | Cihaz başı yıllık sarf çekişi yalnızca $410 (Beklenen: $3,500+). | **Yerinde Klinik Embriyolog Protokol Eğitimi** |
+| **Advanced Tech Co (Kuveyt - ATC)** | $26,250.00 | 3 Piezo Cihazı | Cihaz başı sarf çekişi yalnızca $250 (Toplam 9 kutu). | **Körfez Bölge Aplikasyon Ziyareti & Sertifikasyon** |
+| **Acıbadem & Medipolitan (Türkiye)** | $20,200.00 | 4 Piezo Cihazı | Türkiye'nin dev zincirleri, sarf alımında tekil ve düzensiz kalmış. | **Özel Kurumsal Fiyat Anlaşması + Baş Embriyolog Eğitimi** |
 
 ---
 
-#### 3. 🚀 30 - 60 - 90 Günlük Taktik Yol Haritası
-
-| Aşama | Zaman Çizelgesi | Sorumlu | Somut Aksiyon & Çıktı |
-| :--- | :--- | :--- | :--- |
-| **Aşama 1: Teşhis & Envanter** | Gün 1 - 30 | Satış & Müşteri Operasyonları | 63 Piezo cihazının kurulu olduğu tüm kliniklerin son 6 aylık Dish/Cihaz tüketim rasyoları taranacak. Cihaz başı tüketimi 30 kutunun altında kalan 18 klinik listelenecek. |
-| **Aşama 2: Bundle Sipariş Protokolü** | Gün 31 - 60 | Ticari Pazarlama & Finans | **"ZEUS Stimulation Starter Pack"** paketi devreye alınacak: 10 Kutu Electro Dish + 2 Şişe Electro Liquid Solution alan kliniklere %8 bundle avantajı tanımlanacak. |
-| **Aşama 3: Embriyolog Eğitim Döngüsü** | Gün 61 - 90 | Klinik Aplikasyon Ekibi | En büyük 8 merkezde (Eurofertil, Acıbadem, Sirius Irak partnerleri, SJNU Kore partnerleri) "Standart Oosit Aktivasyon Protokolü" webinar ve yerinde çalıştayı tamamlanacak. |
-
----
-
-#### 4. 💰 Finansal Projeksiyon & ROI Modeli
-- **Mevcut Yıllık Sarf Hacmi:** 2,097 Kutu x Ortalama $100 = **~$209,700**
-- **Hedeflenen %25 Penetrasyon Artışı:** +524 Kutu Dish & +120 Şişe Liquid Solution
-- **Öngörülen Net Ek Gelir:** **+$48,500 USD**
-- **Brüt Marj Katkısı:** Sarf malzemelerinde brüt marj %68+ olduğu için ilave cironun **~$33,000'ı doğrudan brüt operasyonel kara** yansıyacaktır.
+#### 3. 🚀 60 Günlük Acil Eylem ve Kampanya Takvimi
+- **Aşama 1 (İlk 15 Gün) - "Piezo Aktivasyon Paketi" (Bundle) Lansmanı:**
+  Tüm distribütörlere ve doğrudan müşterilere duyuru yapılacak: 10 Kutu Electro Dish (1x2) siparişine 2 Şişe Electro Liquid Solution %50 indirimli tanımlanacak.
+- **Aşama 2 (Gün 16 - 45) - VIP Klinik Eğitim Seferi:**
+  Klinik Aplikasyon Uzmanımız; İstanbul'da Acıbadem Maslak & Medipolitan, Kuveyt'te ATC klinik partnerlerine yerinde ziyaret gerçekleştirerek *Piezo Oosit Aktivasyon Rutini* protokolünü standardize edecek.
+- **Aşama 3 (Gün 46 - 60) - Electro Fusion SET Avrupa/Körfez Webinar Serisi:**
+  Ghent Üniversitesi Baş Araştırmacısı ile birlikte Körfez ve Avrupa'daki 25 referans tüp bebek direktörüne özel online canlı vaka çalıştayı düzenlenecek.
 
 ---
 
-#### 5. 🛡️ Risk Yönetimi ve Önleyici Tedbirler
-- **Raf Ömrü Riski:** Sıvı solüsyonların son kullanma tarihi 12 ay olduğu için distribütörlere konsinye değil, 60 günlük rotasyonlu mini partiler halinde sevkiyat yapılacaktır.
-- **Döviz / Gümrük Riski:** Körfez distribütörlerine (AMS, ITL) gümrük gecikmelerini önlemek üzere 30 günlük emniyet stoku bulundurma zorunluluğu sözleşme ekine konulacaktır."""
+#### 4. 💰 Finansal Etki & Getiri Modeli
+- **Bundle Kampanyasından Ek Sarf Geliri:** +350 Şişe Liquid Solution = **+$18,500 USD**
+- **4 Merkezde Eğitimin Tetikleyeceği Sarf Siparişleri:** (Gen-Sa, ATC, Acıbadem, Medipolitan) = **+$27,500 USD**
+- **1 Yeni Electro Fusion SET Satışı (Körfez / Avrupa):** = **+$16,000 USD**
+- **Toplam Öngörülen Kısa Vadeli Gelir Katkısı:** **+$62,000 USD** (Brüt Kar Katkısı: ~$42,000 USD)"""
 
-    # Preset 2: APAC & South Korea Expansion / Asya-Pasifik Büyümesi
-    elif any(k in prompt_lower for k in ["asya", "kore", "sjnu", "apac", "pasifik", "kore"]):
-        topic_title = "Güney Kore (SJNU) Başarısını Körfez ve Asya-Pasifik'e Ölçekleme Stratejisi"
-        kpi_impact = "+$75,000 Yeni Pazar Ciro Katkısı"
-        timeline = "120 Gün (Bölgesel Genişleme)"
-        target_group = "SJNU Inc, ITL Qatar, AMS Saudi, BAE Sellco"
-        risk_level = "Orta — Düzenleyici Kurul Onayları"
+    # --------------------------------------------------------------------------
+    # Preset 2: Gelecek Ay ve Çeyrekte Nakit Akışını Tehdit Eden En Büyük 3 Risk
+    # --------------------------------------------------------------------------
+    elif any(k in prompt_lower for k in ["3 risk", "en büyük 3 risk", "nakit akış", "tehdit", "vade", "aksama", "konsantrasyon", "sellco"]):
+        topic_title = "Gelecek Çeyrekte Nakit Akışını ve Siparişleri Tehdit Eden En Büyük 3 Risk & Korunma Planı"
+        kpi_impact = "$85,000 Nakit Akışı Risk Azaltımı & Gelir Güvencesi"
+        timeline = "30 - 45 Gün (Acil Yönetici Müdahalesi)"
+        target_group = "Sirius Pharm, Sellco BAE, Üretim & Tahsilat Boru Hattı"
+        risk_level = "Yüksek — C-Level Müdahale Gerektirir"
         
         memo_content = f"""### 📋 ZEUS EXECUTIVE MEMORANDUM
-**Doküman Kodu:** `ZGMI-STRAT-MEMO-2026-APAC` | **Tarih:** Kasım 2026  
+**Doküman Kodu:** `ZGMI-STRAT-MEMO-2026-RISK3` | **Tarih:** Kasım 2026  
 **Gizlilik Derecesi:** `C-LEVEL & YÖNETİM KURULU İNCELEMESİ (GİZLİ)`  
 **Konu:** {topic_title}  
-**Mevcut Temel Metrikler:** Toplam Kurulu Cihaz: **{total_devices} Adet** | Portföy Ciro: **${total_rev:,.2f}** | Asya-Pasifik Payı: **$68,600 (SJNU Inc)**
+**Mevcut Temel Metrikler:** Toplam Küresel Ciro: **${total_rev:,.2f}** | Risk Altındaki Sipariş Hacmi: **$85,000** | Ortalama Tahsilat Süresi: **42 Gün**
 
 ---
 
 #### 1. 🎯 Yönetici Özeti (Executive Brief)
-Güney Kore distribütörümüz **SJNU Inc**, 2026 yılında **$68,600 ciro** ve **7 aktif Piezo Pulse Stimulator kurulumu** gerçekleştirerek ZEUS Bioscience'ın küresel ölçekte en hızlı büyüyen teknoloji partneri olmuştur.
-- Kore pazarındaki başarı; Seul ve Busan'daki akademik IVF merkezlerinde Piezo ICSI oosit aktivasyonu başarı oranlarının bağımsız embriyologlarca teyit edilmesinden kaynaklanmaktadır.
-- Bu vaka serisi ve bilimsel kabul; benzer demografik ve yüksek satın alma gücüne sahip **Körfez Bölgesi (Katar, BAE, Suudi Arabistan)** ve henüz girilmemiş **Japonya, Tayvan ve Singapur** pazarları için kusursuz bir sıçrama tahtasıdır.
-- Hedef; SJNU modelini referans göstererek 2027 yılında Asya-Pasifik ve GCC pazarından toplam **+$75,000 ek büyüme** elde etmektir.
+Excel veritabanındaki 44 partnerin fatura tarihleri, sipariş frekansları ve sözleşme bitiş vadeleri çapraz sorgulandığında, 2026 Q4 ve 2027 Q1 döneminde ZEUS Bioscience nakit akışını ve sipariş sürekliliğini doğrudan tehdit eden **en kritik 3 risk** belirlenmiştir:
+- **Risk 1: Aşırı Müşteri / Distribütör Yoğunlaşması (Top-3 Partner Concentration):** Cironun %58'i yalnızca 3 partnerde toplanmıştır (Sirius $164K, ITL Qatar $73K, SJNU Kore $68.5K).
+- **Risk 2: SELLCO TRADING INTL (BAE) Sözleşme Bitişi & Müşteri Kaybı (Sözleşme Bitişi: 20 Kasım 2026):** BAE distribütörünün sözleşmesi 20 Kasım 2026'da dolmakta olup, firma 2026'da $0 sipariş vermiştir.
+- **Risk 3: Cihaz (Capex) Satışlarının Düzensizliği ve Tedarik-Tahsilat Vade Uyuşmazlığı:** Cironun %58'i sermaye ekipmanı satışlarından gelmektedir; üretim maliyetleri peşin ödenirken tahsilatlar 45-60 güne uzadığında işletme sermayesi açığı oluşmaktadır.
 
 ---
 
-#### 2. 📊 Veri Odaklı Tanı ve Kök Neden Analizi
-1. **Kore Başarısının Sırrı:** SJNU yalnızca cihaz satışı yapmamış, "Piezo ICSI Protokol Sertifikasyonu" sunarak her cihaz satışını 12 aylık düzenli sarf taahhüdüne bağlamıştır.
-2. **Körfez ile Benzerlik:** Katar (ITL - $73K) ve Suudi Arabistan (AMS - $29.5K) klinik altyapısı Kore gibi son teknolojiye odaklıdır. Ancak Körfez'de eğitim sertifikasyonu eksikliği nedeniyle cihaz başı verimlilik Kore'nin gerisindedir.
-3. **Açık Pazar Boşluğu:** Japonya (dünyanın en yüksek IVF siklus hacmine sahip ülkesi) ve Tayvan'da ZEUS'un henüz aktif bayisi bulunmamaktadır.
+#### 2. 📊 En Büyük 3 Riskin Ayrıntılı Değerlendirmesi ve Kök Nedenleri
+
+| # | Risk Başlığı | Risk Seviyesi | Finansal Maruziyet | Kök Neden & Potansiyel Etki |
+| :-: | :--- | :-: | :-: | :--- |
+| **1** | **Distribütör Yoğunlaşma Riski (Sirius & ITL)** | 🔴 **Kritik** | **$45,000 / Ay** | Sirius Pharm (Ürdün/Irak) tek başına cironun %24'ünü oluşturmaktadır. Irak gümrüklerinde veya banka transferlerinde 30 günlük bir aksama, şirketin tüm aylık nakit akış dengesini sarsabilir. |
+| **2** | **Sellco BAE Sözleşme Bitişi & Churn** | 🟠 **Yüksek** | **$25,000 Ciro Kaybı** | Sellco'nun sözleşmesi **20 Kasım 2026**'da sona eriyor. 2026'da hiç sipariş vermedi. 4 kurulu cihazın sarf geliri sıfırlanmış durumda. Acil müdahale edilmezse BAE pazarı tamamen kaybedilecek. |
+| **3** | **Cihaz Sipariş Dalgalanması & Vade Uçurumu** | 🟡 **Orta-Yüksek** | **$40,000 - $60,000 İşletme Sermayesi Açığı** | Cihaz satışları parti partidir (lumpy). Bileşen tedarikçilerine avans ödenirken, distribütör vadeleri 60 güne sarktığında nakit akışında geçici açıklar meydana gelmektedir. |
 
 ---
 
-#### 3. 🚀 30 - 60 - 90 Günlük Taktik Yol Haritası
+#### 3. 🛡️ 30 - 45 Günlük Acil Korunma ve Eylem Planı
+1. **Aksiyon 1 (Hemen) - BAE Pazarının Kurtarılması:**
+   Sellco Trading ile bu hafta acil online toplantı yapılarak ya asgari 2027 yıllık $25,000 sarf taahhüdü ile sözleşme yenilenecek ya da Dubai Health City merkezli alternatif distribütör adayına geçiş protokolü işletilecek.
+2. **Aksiyon 2 (15 Gün) - Sirius Pharm & ITL İçin Çift Kanallı Nakit Güvencesi:**
+   Sirius ve ITL siparişlerinde %40 sipariş anında peşin, %40 konşimento tesliminde (BL), %20 ise 30 gün vadeli ödeme kuralı zorunlu tutulacak. Peşin ödemeyi tercih edenlere %3 erken ödeme teşviki tanımlanacak.
+3. **Aksiyon 3 (30 Gün) - Türkiye Lokal Klinik Ağının Nakit Motoru Olarak Kullanılması:**
+   Tavmergen ($25.7K), MLP Medicalpark ($29K) ve Pınar Sağlık ($15.5K) gibi peşin veya kısa vadeli ödeme yapan yerli 25 klinikten düzenli haftalık sarf çekişi garantiye alınarak yabancı distribütör nakit gecikmeleri dengelenecek."""
 
-| Aşama | Zaman Çizelgesi | Sorumlu | Somut Aksiyon & Çıktı |
-| :--- | :--- | :--- | :--- |
-| **Aşama 1: Kore Vaka Kiti Hazırlığı** | Gün 1 - 30 | Medikal Direktörlük & SJNU | Kore klinik sonuçları, döllenme oranları ve Piezo parametreleri İngilizce ve Arapça yönetici özetine dönüştürülecek. |
-| **Aşama 2: GCC - Körfez Turu** | Gün 31 - 60 | Global Satış Direktörü | ITL (Katar), AMS (Suudi) ve Sellco (BAE) ile üst düzey klinik direktörleri toplantıları düzenlenecek; Kore modeli klinik leasing şartları sunulacak. |
-| **Aşama 3: Asya Distribütör Adayları** | Gün 61 - 90 | Uluslararası İş Geliştirme | Tokyo ve Taipei merkezli 3 tıbbi cihaz distribütörü ile LOA ön görüşmeleri başlatılacak; 2027 Asya distribütörlük kotası belirlenecek. |
+    # --------------------------------------------------------------------------
+    # Preset 3: Asya-Pasifik ve Avrupa Pazar Zayıflığını Aşma Stratejisi
+    # --------------------------------------------------------------------------
+    elif any(k in prompt_lower for k in ["asya", "avrupa", "zayıflık", "aşmak", "apac", "pasifik", "kore", "ghent", "japonya"]):
+        topic_title = "Asya-Pasifik ve Avrupa Pazarındaki Zayıflığı Aşma ve Genişleme Stratejisi"
+        kpi_impact = "+$120,000 Yeni Bölgesel Ciro Potansiyeli (2027)"
+        timeline = "90 - 180 Gün"
+        target_group = "Japonya, Tayvan, Almanya, İspanya IVF Merkezleri & Distribütörleri"
+        risk_level = "Orta — Regülasyon ve CE/MDR Belgelendirme Süreci"
+        
+        memo_content = f"""### 📋 ZEUS EXECUTIVE MEMORANDUM
+**Doküman Kodu:** `ZGMI-STRAT-MEMO-2026-EXP` | **Tarih:** Kasım 2026  
+**Gizlilik Derecesi:** `C-LEVEL & YÖNETİM KURULU İNCELEMESİ (GİZLİ)`  
+**Konu:** {topic_title}  
+**Mevcut Temel Metrikler:** Asya-Pasifik Ciro: **$68,550** (Sadece G.Kore SJNU) | Avrupa Ciro: **$36,540** (Belçika, Slovakya, Bulgaristan) | Toplam Portföy Ciro: **${total_rev:,.2f}**
 
 ---
 
-#### 4. 💰 Finansal Projeksiyon & ROI Modeli
-- **Kore Büyümesi (SJNU):** 2027 yılında 10 yeni cihaz + 800 kutu sarf = **$95,000 Ciro**
-- **Körfez Ek Ciro Katkısı:** +6 Cihaz ve Sarf Artışı = **+$55,000 USD**
-- **Yeni Asya Pazarları (Japonya/Tayvan Demo):** **+$20,000 USD**
-- **Toplam Projeksiyon Artışı:** **+$75,000 USD**"""
+#### 1. 🎯 Yönetici Özeti (Executive Brief)
+ZEUS Bioscience'ın küresel coğrafi dağılımı incelendiğinde; satışların %84'ünün Türkiye ve MENA (Orta Doğu) bölgesine sıkıştığı, dünyanın en büyük ve en yüksek marjlı IVF pazarları olan **Asya-Pasifik (APAC)** ve **Batı Avrupa'da** şirketin ciddi bir pazar boşluğu (white-space) ve zayıflık yaşadığı görülmektedir:
+- **Asya-Pasifik Tablosu:** Yalnızca Güney Kore'de (SJNU Inc - $68.6K, 7 cihaz) varlığımız bulunmaktadır. Ancak yılda **450,000+ IVF siklusu ile dünyanın 1 numaralı pazarı olan Japonya'da**, Tayvan'da, Hindistan ve Avustralya'da sıfır yetkili bayimiz bulunmaktadır.
+- **Avrupa Tablosu:** Yalnızca Belçika Ghent University ($16.1K) ve Bulgaristan Meyona ($1.5K) mevcuttur. Avrupa'nın tüp bebek başkenti **İspanya (yılda 140,000 siklus)**, **Almanya (110,000 siklus)**, İtalya ve Fransa'da hiçbir ticari distribütörlük tesis edilmemiştir.
+- **Hedef:** 2027 yılında bu iki bölgeden toplam **+$120,000 yeni net ciro** elde etmek.
 
-    # Preset 3: 2026 Q4 & 2027 Strategic Forecast / Ciro Hedefi ve Yol Haritası
+---
+
+#### 2. 📊 Bölgesel Boşluk ve Stratejik Fırsat Matrisi
+
+| Hedef Bölge | Pazar Hacmi (Yıllık Siklus) | ZEUS Mevcut Durumu | Referans Kaldıraç | 2027 Genişleme Stratejisi |
+| :--- | :--- | :--- | :--- | :--- |
+| **Batı Avrupa (Almanya, İspanya, İtalya)** | ~350,000 Siklus / Yıl | $0 (Doğrudan Bayi Yok) | **Ghent University (Belçika)** $16.1K Electro Fusion Referansı | Ghent bilimsel verileriyle White Paper yayınlanması; İspanya IVIRMA ve Almanya tüp bebek kongrelerinde distribütörlük paneli açılması. |
+| **Doğu Asya (Japonya & Tayvan)** | ~500,000 Siklus / Yıl | $0 (Doğrudan Bayi Yok) | **SJNU Inc (Güney Kore)** 7 Piezo Cihazı & Klinik Başarı Verisi | Kore'deki Piezo ICSI döllenme artış verilerini Japonca/İngilizce vaka serisi olarak Tokyo/Osaka bayilerine sunmak; ilk çeyrekte distribütör ataması. |
+
+---
+
+#### 3. 🚀 90 - 180 Günlük Taktik Yol Haritası
+- **Aşama 1 (1 - 60 Gün) - Akademik Referans Paketinin Hazırlanması:**
+  Ghent Üniversitesi'nin Electro Fusion SET sonuçları ve SJNU Güney Kore'nin Piezo ICSI klinik başarı oranları, uluslararası regülasyona uygun iki ayrı "Klinik Etkinlik Dosyası"na dönüştürülecek.
+- **Aşama 2 (61 - 120 Gün) - Hedef Distribütör Seçimi ve LOA Teklifleri:**
+  İspanya (Madrid/Barselona), Almanya (Münih/Frankfurt) ve Japonya (Tokyo) merkezli 6 medikal IVF distribütörü taranarak münhasır olmayan bölge distribütörlük dosyası iletilecek.
+- **Aşama 3 (121 - 180 Gün) - Kongre Katılımı & Canlı İmza:**
+  ESHRE 2027 kongresinde Avrupa partnerleri, ASPIRE kongresinde Asya-Pasifik partnerleri ile yıllık asgari $40,000 alım taahhütlü ilk distribütörlük sözleşmeleri imzalanacak.
+
+---
+
+#### 4. 💰 Finansal Projeksiyon (2027 Hedefi)
+- **Avrupa (İspanya & Almanya 2 Yeni Bayi):** 4 Cihaz + 300 Kutu Sarf = **+$55,000 USD**
+- **Asya-Pasifik (Japonya & Tayvan 2 Yeni Bayi):** 5 Cihaz + 400 Kutu Sarf = **+$65,000 USD**
+- **Toplam Yeni Bölgesel Katkı:** **+$120,000 USD** (Konsolide ciro hedefi $385K'nın %31'ini oluşturacaktır)."""
+
+    # --------------------------------------------------------------------------
+    # Preset 4: Tekrar Eden Sarf Gelirini %20 Artırma & Hedef Müşteri/Bayi Planı
+    # --------------------------------------------------------------------------
+    elif any(k in prompt_lower for k in ["%20", "tekrar eden", "sarf", "odaklanmalı", "hangi müşteri", "hangi distribütör"]):
+        topic_title = "Tekrar Eden Sarf Malzeme Gelirlerini %20+ Artırmak İçin Hedef Müşteri & Distribütör Odak Planı"
+        kpi_impact = "+$42,500 / Yıl Net Düzenli Sarf Geliri (+%25.5 Artış)"
+        timeline = "60 Gün (Hemen Başlatılabilir)"
+        target_group = "Gen-Sa, ATC Kuwait, Acıbadem, Medipolitan, Sirius Jordan-Iraq"
+        risk_level = "Çok Düşük — Kurulu Cihaz Altyapısı Zaten Mevcut"
+        
+        memo_content = f"""### 📋 ZEUS EXECUTIVE MEMORANDUM
+**Doküman Kodu:** `ZGMI-STRAT-MEMO-2026-RECUR` | **Tarih:** Kasım 2026  
+**Gizlilik Derecesi:** `C-LEVEL & YÖNETİM KURULU İNCELEMESİ (GİZLİ)`  
+**Konu:** {topic_title}  
+**Mevcut Temel Metrikler:** Toplam Kurulu Cihaz: **{total_devices} Adet** | Mevcut Yıllık Sarf Satışı: **~$83,435 - $116,307** | Hedeflenen +%20 Ek Sarf: **+$17,000 - $23,000**
+
+---
+
+#### 1. 🎯 Yönetici Özeti (Executive Brief)
+Excel veri tabanındaki 44 kurum tek tek incelendiğinde, şirketin sarf gelirini %20 artırmak için **yeni bir cihaz satmasına veya yeni bir ülkeye girmesine gerek olmadığı** açıkça görülmektedir.
+- Kurulu 63 Piezo cihazının bulunduğu kliniklerin bir bölümü yüksek frekansta sarf çekerken (Örn: Tavmergen 352 kutu, Pınar Sağlık 130 kutu, ITL Katar 449 kutu);
+- Belirli partnerlerde cihaz kurulu olmasına rağmen sarf alımının **"uyuyan hesap" (dormant account)** düzeyinde kaldığı tespit edilmiştir.
+- Sadece **aşağıdaki 5 partnerin sarf çekişini normalize ederek**, sarf gelirini %20 değil, **+%40'tan fazla (+$42,500/yıl)** artırmak mümkündür.
+
+---
+
+#### 2. 📊 Odaklanılması Gereken 5 Öncelikli Partner ve Hesap Bazlı Potansiyel
+
+| Öncelik | Partner / Müşteri | Ülke | Kurulu Cihaz | Mevcut Sarf Hacmi | Cihaz Başı Tüketim | Hedeflenen Ek Sarf Geliri | Somut Uygulanacak Taktik |
+| :-: | :--- | :--- | :-: | :--- | :-: | :-: | :--- |
+| **#1** | **GEN-SA GENEL SAĞLIK A.Ş.** | Türkiye | 4 Cihaz | $1,640 (30 Kutu) | $410 / Cihaz | **+$13,000** | Cihazların kurulu olduğu 4 kliniğe yerinde oosit protokol eğitimi verilerek aylık 15 kutu kotası tanımlanacak. |
+| **#2** | **ADVANCED TECH CO (ATC)** | Kuveyt | 3 Cihaz | $750 (9 Kutu) | $250 / Cihaz | **+$10,000** | Kuveyt Sağlık Bakanlığı ve özel tüp bebek hastanelerine aplikasyon ziyareti ile çeyreklik 25 kutu sipariş şartı. |
+| **#3** | **ACIBADEM SAĞLIK GRUBU** | Türkiye | 2 Cihaz | $760 (11 Kutu) | $380 / Cihaz | **+$7,500** | Türkiye'nin lider hastane zincirinde Piezo kullanımını kurtarma sikluslarından rutin sikluslara geçirme protokolü. |
+| **#4** | **MEDİPOLİTAN SAĞLIK A.Ş.** | Türkiye | 2 Cihaz | $440 (12 Kutu) | $220 / Cihaz | **+$5,000** | Kurumsal laboratuvar şefleri ile görüşülerek aylık konsinye sarf deposu anlaşması imzalanacak. |
+| **#5** | **SIRIUS PHARM COMPANY** | Ürdün-Irak | 18 Cihaz | $52,113 (642 Kutu) | $2,895 / Cihaz | **+$12,000** | 18 cihazlık devasa parkta cihaz başı sarfı $2,895'ten $3,500'e çıkarmak (Katar seviyesi $9,341'dir) bile tek başına $12K üretir. |
+
+---
+
+#### 3. 🚀 30 - 60 Günlük Uygulama Planı
+1. **Gün 1 - 15 (Müşteri Teması):** Gen-Sa, ATC Kuveyt, Acıbadem ve Medipolitan sorumlu hekim ve embriyologlarıyla görüşme planlanacak.
+2. **Gün 16 - 35 (Eğitim ve Bundle Teşviki):** Bu 5 merkeze özel "Yıllık Sarf Abonelik Modeli" (Monthly Consumable Subscription) sunularak %10 fiyat güvencesi verilecek.
+3. **Gün 36 - 60 (İlk Sevkiyatlar):** Çeyreklik toplu sevkiyatlar faturalandırılarak nakit akışına dahil edilecek.
+
+---
+
+#### 4. 💰 ROI & Finansal Sonuç
+- **Hedeflenen %20 Büyüme Barajı:** +$16,700 USD
+- **Bu 5 Hesaptan Sağlanacak Toplam Katkı:** **+$47,500 USD** (Hedefin 2.8 katı!)
+- **Brüt Kar Marjı Katkısı:** Sarf malzemelerinde brüt marj %68+ olduğu için ilave cironun **~$32,000'ı doğrudan net operasyonel kara** dönüşecektir."""
+
+    # --------------------------------------------------------------------------
+    # Preset 5: 2026 Q4 Kapanışı ve 2027 Projeksiyonu
+    # --------------------------------------------------------------------------
     elif any(k in prompt_lower for k in ["2027", "q4", "hedef", "tahmin", "projeksiyon", "yol haritası"]):
         topic_title = "2026 Q4 Kapanışı ve 2027 Yılı $385,000 Ciro Hedefine Ulaşma Yol Haritası"
         kpi_impact = "$303.4K (2026) ➔ $385.0K (2027) (+%27 Büyüme)"
@@ -793,73 +892,11 @@ Güney Kore distribütörümüz **SJNU Inc**, 2026 yılında **$68,600 ciro** ve
 | **2027 Q1** | $82,000 | Yıllık bakım ve sarf yenileme sözleşmelerinin aktivasyonu; Kore ve Körfez ilk çeyrek cihaz parti sevkiyatı. |
 | **2027 Q2** | $98,000 | ESHRE Kongresi öncesi Avrupa akademik merkezlerine Electro Fusion SET ve Piezo Stimulator tanıtım kampanyası. |
 | **2027 Q3** | $92,000 | Yaz dönemi sarf stoku takviyesi; Doğu Asya yeni distribütör deneme sevkiyatları. |
-| **2027 Q4** | $113,000 | Yıl sonu bütçe kapanışları, 2028 sözleşme uzatmaları ve toplam $385K hedefine ulaşılması. |
+| **2027 Q4** | $113,000 | Yıl sonu bütçe kapanışları, 2028 sözleşme uzatmaları ve toplam $385K hedefine ulaşılması. |"""
 
----
-
-#### 4. 🛡️ Kritik Başarı Faktörleri
-- Cihaz üretim bandında teslimat süresinin 14 günü aşmaması.
-- Her yeni Piezo kurulumunda en az 30 kutu Electro Dish ön siparişi alınması kuralının tavizsiz uygulanması."""
-
-    # Preset 4: Europe & Ghent University / Avrupa ve Akademik Pazar
-    elif any(k in prompt_lower for k in ["avrupa", "ghent", "belçika", "fusion", "akademik"]):
-        topic_title = "Ghent University Referans Merkezi Üzerinden Avrupa ve Electro Fusion SET Stratejisi"
-        kpi_impact = "+$45,000 Avrupa Yeni Pazar Ciro Katkısı"
-        timeline = "90 Gün"
-        target_group = "Ghent University, Benelüks & DACH Üreme Merkezleri"
-        risk_level = "Düşük — Yüksek Bilimsel Prestij"
-        
-        memo_content = f"""### 📋 ZEUS EXECUTIVE MEMORANDUM
-**Doküman Kodu:** `ZGMI-STRAT-MEMO-2026-EU` | **Tarih:** Kasım 2026  
-**Gizlilik Derecesi:** `C-LEVEL & YÖNETİM KURULU İNCELEMESİ (GİZLİ)`  
-**Konu:** {topic_title}  
-**Mevcut Temel Metrikler:** Belçika (Ghent Univ) Satışı: **$16,100** | Ürün: **Zeus Electro Fusion SET** | Toplam Ciro: **${total_rev:,.2f}**
-
----
-
-#### 1. 🎯 Yönetici Özeti (Executive Brief)
-Belçika'da **Ghent University**'ye yapılan $16,100 tutarındaki **Zeus Electro Fusion SET** satışı, ZEUS Bioscience için yalnızca bir ihracat işlemi değil, Batı Avrupa'nın en prestijli üreme tıbbı enstitülerinden birinde **resmi klinik referans merkezi** kazanımıdır.
-- Avrupa IVF regülasyonları son derece sıkı olup, kliniklerin yeni bir teknolojiye geçişinde üniversite hastanelerinin hakemli çalışmaları birincil karar kriteridir.
-- Ghent Üniversitesi'nin ZEUS Electro Fusion teknolojisiyle elde ettiği mikroenjeksiyon ve hücre füzyonu canlılık verileri, Almanya, Fransa ve Hollanda pazarlarına doğrudan giriş anahtarımızdır.
-- Bu plan, akademik referansı kaldıraç olarak kullanarak 2027'de Avrupa'dan **+$45,000 ek ciro** elde etmeyi amaçlamaktadır.
-
----
-
-#### 2. 🚀 30 - 60 - 90 Günlük Eylem Planı
-1. **İlk 30 Gün (Bilimsel İletişim):** Ghent Üniversitesi ekibi ile görüşülerek teknolojiye ilişkin gözlem ve vaka protokolleri bir "White Paper" haline getirilecek.
-2. **60 Gün (Klinik Davetleri):** Almanya ve Benelüks bölgesindeki 15 referans tüp bebek merkezine "Ghent University Deneyimiyle Hücre Aktivasyonu" özel bülteni gönderilecek.
-3. **90 Gün (Distribütörlük Görüşmeleri):** Almanya ve Fransa'da yerleşik tüp bebek ekipmanı distribütörlerine Ghent referansıyla bayilik teklif dosyası sunulacak."""
-
-    # Preset 5: Anomaly & Cash Flow / Sipariş Döngüsü ve Nakit Akışı
-    elif any(k in prompt_lower for k in ["risk", "nakit", "döngü", "vade", "anomali", "aksama"]):
-        topic_title = "Distribütör Sipariş Döngüsü Anomalilerini Önleme ve Nakit Akışı Koruma Raporu"
-        kpi_impact = "$35,000 Nakit Akışı Risk Azaltımı"
-        timeline = "45 Gün"
-        target_group = "Sözleşmeli Distribütörler (Sirius, ITL, AMS, Sellco)"
-        risk_level = "Orta — Tahsilat ve Lojistik Odaklı"
-        
-        memo_content = f"""### 📋 ZEUS EXECUTIVE MEMORANDUM
-**Doküman Kodu:** `ZGMI-STRAT-MEMO-2026-CASH` | **Tarih:** Kasım 2026  
-**Gizlilik Derecesi:** `C-LEVEL & YÖNETİM KURULU İNCELEMESİ (GİZLİ)`  
-**Konu:** {topic_title}  
-**Mevcut Temel Metrikler:** Toplam Küresel Ciro: **${total_rev:,.2f}** | Risk Altındaki Sipariş Hacmi: **$24,000** | Ortalama Tahsilat Süresi: **42 Gün**
-
----
-
-#### 1. 🎯 Yönetici Özeti (Executive Brief)
-Excel verilerindeki sipariş tarihleri ve fatura frekansları taranmış; Sirius Pharm ($164K), AMS ($29.5K) ve Sellco ($23.2K) işlemlerinde sipariş döngülerinin 45 günden 70 güne kadar uzama eğiliminde olduğu gözlenmiştir.
-- Bu uzamanın temel nedeni; distribütörlerin kliniklerden tahsilat yapmadan yeni parti siparişi açmaması ve konsinye güvenlik stoku tutmaktan çekinmesidir.
-- Bu durum ZEUS Bioscience üretim hattında dalgalanmalara yol açmakta ve nakit akışını tehdit etmektedir.
-- Çözüm; sipariş döngüsünü 45 güne sabitleyen ve peşin ödemeyi teşvik eden "Dinamik Avans & Erken Ödeme İskonto Protokolü"dür.
-
----
-
-#### 2. 🚀 Acil Eylem Protokolü
-1. **15 Gün İçinde:** Vadesi 45 günü aşan faturalar için otomatik sevkiyat bekletme (hold) kuralı devreye alınacak.
-2. **30 Gün İçinde:** Erken peşin ödemelerde +%3 ek iskonto tanımlanarak distribütörlerin nakit ödemeye yönlendirilmesi sağlanacak.
-3. **45 Gün İçinde:** ITL (Katar) ve AMS (Suudi) ile akreditifli (Letter of Credit) sipariş altyapısına geçilecek."""
-
+    # --------------------------------------------------------------------------
     # Default / Custom Prompt Fallback
+    # --------------------------------------------------------------------------
     else:
         topic_title = f"Özel Stratejik Değerlendirme: {active_prompt}"
         kpi_impact = "+%18.5 Operasyonel Verimlilik Artışı"
@@ -884,7 +921,7 @@ ZEUS Commercial Intelligence Engine, iletilen stratejik sorguyu Excel satış ve
 ---
 
 #### 2. 📊 Veri Odaklı Tanı ve Kök Neden Analizi
-1. **Pazar Ayak İzi:** Türkiye ($219K), Ürdün & Irak (Sirius Pharm - $164K), Katar (ITL - $73K), Güney Kore (SJNU - $68.6K), Suudi Arabistan (AMS - $29.5K), Kuveyt ($26.3K) ve BAE ($23.2K) portföyün %88'ini oluşturmaktadır.
+1. **Pazar Ayak İzi:** Türkiye ($219K), Ürdün & Irak (Sirius Pharm - $164K), Katar (ITL - $73K), Güney Kore (SJNU - $68.6K), Suudi Arabistan ($29.5K), Kuveyt ($26.3K) ve BAE ($23.2K) portföyün %88'ini oluşturmaktadır.
 2. **Sipariş Frekansı:** Müşteri sipariş frekansları incelendiğinde; çeyreklik düzenli sipariş veren kliniklerin cihaz başına karlılığı, tekil sipariş verenlere göre %34 daha yüksektir.
 3. **Marj Koruması:** Yüksek enflasyonist ve kur oynaklığı olan pazarlarda döviz bazlı liste fiyatı korunmalı, indirimler yalnızca peşin ödeme veya yüksek kutu taahhütlerinde uygulanmalıdır.
 
@@ -903,6 +940,7 @@ ZEUS Commercial Intelligence Engine, iletilen stratejik sorguyu Excel satış ve
         'risk_level': risk_level,
         'memo_md': memo_content
     }
+
 
 # ==============================================================================
 # 4. VIEW: EXECUTIVE DASHBOARD
@@ -1636,11 +1674,11 @@ elif nav_selection == "✦ AI Intelligence & Forecasting":
         st.caption("Pazar ve satış verilerini gerçek zamanlı çapraz sorgulayarak üst yönetime özel stratejik notlar üretir.")
 
         prompt_choices = [
-            "🔬 Piezo kurulu kliniklerde Electro Dish ve Liquid Solution sarf penetrasyonunu nasıl %25 artırabiliriz?",
-            "🌏 Güney Kore (SJNU) ve Asya-Pasifik'teki başarı modelini Körfez pazarına (Katar, BAE, Suudi) nasıl uyarlarız?",
-            "📈 2026 Q4 ve 2027 Projeksiyonu: 38+ yeni Piezo kurulumu ve $385K ciro hedefine ulaşma yol haritası",
-            "🏛️ Avrupa pazarında Ghent University referans merkezi üzerinden yeni klinik kazanımı ve Electro Fusion SET stratejisi",
-            "⚠️ Sipariş döngüsü yavaşlayan distribütörlerde anomali ve nakit akışı riskini önleme"
+            "🎯 Hangi ürünlerde acil promosyon, kampanya veya klinik eğitim gerekiyor?",
+            "⚠️ Gelecek ay ve çeyrekte nakit akışını ve siparişleri tehdit eden en büyük 3 risk nedir?",
+            "🌏 Asya-Pasifik ve Avrupa zayıflığımızı aşmak için hangi strateji uygulanmalı?",
+            "🔄 Tekrar eden sarf malzeme gelirlerini %20 artırmak için hangi müşteri veya distribütöre odaklanılmalı?",
+            "📈 2026 Q4 Kapanışı ve 2027 Yılı $385K Ciro Projeksiyonuna Ulaşma Yol Haritası"
         ]
         
         selected_q = st.radio("Hızlı Stratejik Sorgular:", prompt_choices, horizontal=False)
@@ -1696,19 +1734,23 @@ elif nav_selection == "✦ AI Intelligence & Forecasting":
                     from google import genai
                     client = genai.Client(api_key=api_key)
                     prompt_talimati = f"""
-                    Sen kıdemli bir medikal pazar analiz uzmanı ve ZEUS Global Market Intelligence stratejistisin.
-                    Senden kullanıcının sorduğu şu stratejik soruya yanıt üretmeni istiyorum:
+                    Sen kıdemli bir medikal pazar analiz uzmanı ve ZEUS Global Market Intelligence baş stratejistisin.
+                    Senden kullanıcının sorduğu şu stratejik soruya derinlemesine, somut Excel satış verileri ve rasyonel IVF pazar gerçekleriyle yanıt üretmeni istiyorum:
                     Soru: "{active_prompt}"
                     
-                    Yorum yaparken şu küresel verileri ve pazar gerçeklerini arka planda dikkate al:
-                    - Toplam Küresel Ciro Portföyü: {total_rev} USD
-                    - Ortalama Brüt Marj: %{avg_margin:.1f}
-                    - Toplam Placed Ekipman: {total_devices} adet ZEUS Piezo Pulse Stimulator
-                    - 2026 YTD Gerçekleşen: 214,967 USD, FY26 Beklenen: 303,467 USD, 2027 Projeksiyon Hedefi: 385,000 USD (+%27 YoY)
-                    - Kilit Pazarlar: Türkiye ($219K), Ürdün-Irak ($164K - Sirius), Katar ($73K - ITL), Güney Kore ($68.6K - SJNU), Suudi Arabistan ($29.5K - AMS), Kuveyt ($26.3K - ATC), BAE ($23.2K - Sellco), Belçika ($16.1K - Ghent Univ).
-                    - İş Modeli: Razor-and-blade (Piezo cihazı yerleşimi ardından gelen Electro Dish ve Electro Liquid Solution sarf çekişi).
+                    Yorum yaparken şu küresel verileri ve pazar gerçeklerini arka planda mutlaka dikkate al:
+                    - Toplam Küresel Ciro Portföyü: ${total_rev:,.2f} USD | Ortalama Brüt Marj: %{avg_margin:.1f}
+                    - Toplam Kurulu Cihaz Tabanı: {total_devices} adet ZEUS Piezo Pulse Stimulator (63 aktif cihaz).
+                    - 2026 YTD Gerçekleşen: 214,967 USD, FY26 Beklenen: 303,467 USD, 2027 Projeksiyon Hedefi: 385,000 USD (+%27 YoY).
+                    - Kilit Pazarlar: Türkiye ($219K, 25 yerli klinik), Ürdün-Irak ($164.2K - Sirius Pharm, 18 cihaz), Katar ($72.9K - ITL, 4 cihaz), Güney Kore ($68.6K - SJNU, 7 cihaz), Filistin ($46.7K - CMC, 5 cihaz), Suudi Arabistan ($29.5K - AMS, 3 cihaz), Kuveyt ($26.3K - ATC, 3 cihaz), BAE ($23.2K - Sellco, 4 cihaz - Sözleşme Bitişi: 20 Kasım 2026!), Belçika ($16.1K - Ghent University, 1 Electro Fusion SET).
+                    - Ürün Dağılımı: Piezo Stimulator ($411K - 63 adet), Electro Dish 1x2 ($207.6K - 2,097 kutu), Electro Liquid Solution 2x1ml ($40.3K - 765 kutu), Zeus Electro Fusion SET ($15.9K - 1 adet), Liquid Solution Powder ($12.7K - 232 kutu).
+                    - Kilit Sorunlar: 
+                      1) Dish / Liquid Solution oranı 2.1:1 olup solüsyon tüketimi geride kalmaktadır (Bundle ihtiyacı).
+                      2) Gen-Sa (4 cihaz, sadece 30 kutu sarf), Kuveyt ATC (3 cihaz, 9 kutu sarf), Acıbadem (2 cihaz, 11 kutu sarf), Medipolitan (2 cihaz, 12 kutu sarf) merkezlerinde embriyolog eğitimi ve sarf çekişi acil müdahale gerektirir.
+                      3) Sellco BAE sözleşmesi 20 Kasım 2026'da bitmektedir ve 2026'da $0 çekmiştir (Churn riski).
+                      4) Batı Avrupa ve Asya-Pasifik'te (Japonya, Tayvan, Almanya, İspanya) pazar boşluğu bulunmaktadır; Ghent Univ ve SJNU Kore başarı modelleri kaldıraç olarak kullanılmalıdır.
                     
-                    Raporunu tamamen Türkçe, profesyonel bir tonda, maddeler halinde ve üst yönetime sunulacak bir 'Executive Memo' formatında yaz.
+                    Raporunu tamamen Türkçe, profesyonel bir tonda, üst yönetime sunulacak 'ZEUS Executive Memorandum' formatında, yönetici özeti, veri odaklı tanı tablosu, taktik aksiyon takvimi ve finansal projeksiyon başlıklarıyla yaz.
                     """
                     response = client.models.generate_content(
                         model='gemini-2.5-flash',
