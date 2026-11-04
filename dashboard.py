@@ -2957,51 +2957,207 @@ elif nav_selection == "◬ Sales & Product Analytics":
 # ==============================================================================
 elif nav_selection == "◎ Market Intelligence & Compare":
     st.title("🌍 Global IVF Market Intelligence & Country Comparison")
-    st.caption("Deep-dive benchmark of reproductive clinical capacity, treatment volume, economic health, and regulatory frameworks.")
+    st.caption("Resmi Dünya Bankası (WDI 2023/2024) ve uluslararası ESHRE/CDC tüp bebek kayıtlarına dayalı çok boyutlu pazar, ekonomik güç ve klinik teknoloji kıyaslama merkezi.")
 
-    st.subheader("Side-by-Side Market Comparison")
     all_countries_list = country_df['name'].tolist()
-    default_selected = ["Türkiye", "Germany", "India", "Spain"]
-    selected_compare = st.multiselect("Select Markets to Compare (2 to 5)", all_countries_list, default=default_selected)
+    default_selected = ["Türkiye", "Germany", "India", "Spain", "Egypt", "UAE"]
+    # Filter default_selected to ensure countries exist
+    valid_defaults = [c for c in default_selected if c in all_countries_list]
+    if len(valid_defaults) < 2:
+        valid_defaults = all_countries_list[:4]
+
+    selected_compare = st.multiselect("Karşılaştırılacak Pazarları Seçin (En az 2, en fazla 6 pazar):", all_countries_list, default=valid_defaults)
     
     if len(selected_compare) >= 2:
         cmp_df = country_df[country_df['name'].isin(selected_compare)].copy()
         
-        # Add active partner info
+        # Add active partner info & derived metrics
         cmp_df['Distributor'] = cmp_df['code'].apply(lambda c: dist_by_code.get(c, {}).get('name', 'None'))
         cmp_df['Penetration %'] = cmp_df['code'].apply(lambda c: f"{dist_by_code.get(c, {}).get('pen_pct', 0.0):.1f}%")
+        cmp_df['clinics_per_m'] = (cmp_df['clinics'] / cmp_df['pop']).round(2)
+        cmp_df['cycles_per_clinic'] = (cmp_df['cycles'] / cmp_df['clinics']).round(0)
 
-        c_g1, c_g2 = st.columns(2)
-        with c_g1:
-            fig_cycles = px.bar(cmp_df, x='name', y='cycles', text='cycles', color='name', color_discrete_sequence=['#13A6B5', '#7C93BD', '#1E9E78', '#F0BC57', '#FF8A96'], title="Estimated Annual IVF Treatment Cycles")
-            fig_cycles.update_layout(showlegend=False, height=300)
-            st.plotly_chart(fig_cycles, use_container_width=True)
-        with c_g2:
-            fig_clinics = px.bar(cmp_df, x='name', y='clinics', text='clinics', color='name', color_discrete_sequence=['#13A6B5', '#7C93BD', '#1E9E78', '#F0BC57', '#FF8A96'], title="Licensed IVF Clinics")
-            fig_clinics.update_layout(showlegend=False, height=300)
-            st.plotly_chart(fig_clinics, use_container_width=True)
+        # Tabbed Layout for Easy Exploration
+        comp_tab1, comp_tab2 = st.tabs([
+            "📊 Çok Boyutlu Grafik Analizi (Visual Analytics)",
+            "📋 Kapsamlı Skor Kartı & Veri Tablosu (Comparative Scorecard)"
+        ])
 
-        st.markdown("#### Comprehensive Comparative Scorecard")
-        transposed_data = {
-            'Metric': [
-                'Active Distributor', 'Estimated ZEUS Penetration', 'Opportunity Score', 'Commercial Risk',
-                'GDP (USD Bn)', 'GDP Per Capita (USD)', 'Population (Millions)',
-                'Licensed IVF Clinics', 'Annual IVF Cycles', 'ICSI Cycle Adoption %',
-                'PGT Activity %', 'Cryopreservation %', 'Healthcare Expenditure (% GDP)',
-                'Medical Import Condition', 'Regulatory Complexity'
-            ]
-        }
-        for _, r in cmp_df.iterrows():
-            transposed_data[r['name']] = [
-                r['Distributor'], r['Penetration %'], f"{r['score']} / 100", r['risk'],
-                f"${r['gdp']:,} B", f"${r['gdp_pc']:,}", f"{r['pop']:,} M",
-                f"{r['clinics']:,}", f"{r['cycles']:,}", f"{r['icsi_pct']}%",
-                f"{r['pgt_pct']}%", f"{r['cryo_pct']}%", f"{r['health_pct']}%",
-                r['import_cond'], r['regulation']
-            ]
-        st.dataframe(pd.DataFrame(transposed_data), use_container_width=True, hide_index=True)
+        with comp_tab1:
+            # ------------------------------------------------------------------
+            # 1. KLİNİK KAPASİTE & TEDAVİ HACMİ GRAFİKLERİ
+            # ------------------------------------------------------------------
+            st.markdown("#### 🏥 1. Klinik Kapasitesi & Yıllık Tedavi Hacmi")
+            cg1, cg2 = st.columns(2)
+            with cg1:
+                fig_cycles = px.bar(
+                    cmp_df, x='name', y='cycles', text='cycles', color='name',
+                    color_discrete_sequence=['#00F5FF', '#13A6B5', '#7C93BD', '#FFB800', '#00E676', '#FF5252'],
+                    title="Yıllık Tahmini IVF Tedavi Siklus Hacmi (Cycles)",
+                    labels={'cycles': 'Yıllık Siklus', 'name': 'Ülke'}
+                )
+                fig_cycles.update_traces(texttemplate='%{text:,.0f}', textposition='outside')
+                fig_cycles.update_layout(template='plotly_dark', showlegend=False, height=330, margin=dict(t=40, b=20, l=10, r=10))
+                st.plotly_chart(fig_cycles, use_container_width=True)
+
+            with cg2:
+                fig_clinics = px.bar(
+                    cmp_df, x='name', y='clinics', text='clinics', color='name',
+                    color_discrete_sequence=['#00F5FF', '#13A6B5', '#7C93BD', '#FFB800', '#00E676', '#FF5252'],
+                    title="Lisanslı Aktif IVF Klinik Sayısı",
+                    labels={'clinics': 'Klinik Sayısı', 'name': 'Ülke'}
+                )
+                fig_clinics.update_traces(texttemplate='%{text:,} Klinik', textposition='outside')
+                fig_clinics.update_layout(template='plotly_dark', showlegend=False, height=330, margin=dict(t=40, b=20, l=10, r=10))
+                st.plotly_chart(fig_clinics, use_container_width=True)
+
+            # ------------------------------------------------------------------
+            # 2. DÜNYA BANKASI MAKROEKONOMİK GÖSTERGELERİ
+            # ------------------------------------------------------------------
+            st.markdown("#### 💰 2. Dünya Bankası Makroekonomik Alım Gücü & Nüfus")
+            eg1, eg2 = st.columns(2)
+            with eg1:
+                fig_econ = px.bar(
+                    cmp_df, x='name', y='gdp_pc', text='gdp_pc', color='name',
+                    color_discrete_sequence=['#00E676', '#00F5FF', '#13A6B5', '#FFB800', '#7C93BD', '#FF5252'],
+                    title="Kişi Başı GSYİH (GDP Per Capita - USD)",
+                    labels={'gdp_pc': 'Kişi Başı Gelir (USD)', 'name': 'Ülke'}
+                )
+                fig_econ.update_traces(texttemplate='$%{text:,.0f}', textposition='outside')
+                fig_econ.update_layout(template='plotly_dark', showlegend=False, height=330, margin=dict(t=40, b=20, l=10, r=10))
+                st.plotly_chart(fig_econ, use_container_width=True)
+
+            with eg2:
+                fig_pop_gdp = px.bar(
+                    cmp_df, x='name', y='pop', text='pop', color='name',
+                    color_discrete_sequence=['#7C93BD', '#13A6B5', '#00F5FF', '#FFB800', '#00E676', '#FF5252'],
+                    title="Ülke Nüfusu (Milyon Kişi - World Bank)",
+                    labels={'pop': 'Nüfus (Milyon)', 'name': 'Ülke'}
+                )
+                fig_pop_gdp.update_traces(texttemplate='%{text:.1f} Milyon', textposition='outside')
+                fig_pop_gdp.update_layout(template='plotly_dark', showlegend=False, height=330, margin=dict(t=40, b=20, l=10, r=10))
+                st.plotly_chart(fig_pop_gdp, use_container_width=True)
+
+            # ------------------------------------------------------------------
+            # 3. KLİNİK TEKNOLOJİ & PAZAR DOYGUNLUĞU
+            # ------------------------------------------------------------------
+            st.markdown("#### 🧬 3. Klinik Laboratuvar Teknolojileri & Pazar Doygunluğu")
+            tg1, tg2 = st.columns(2)
+            with tg1:
+                melted_tech = cmp_df.melt(
+                    id_vars=['name'],
+                    value_vars=['icsi_pct', 'pgt_pct', 'cryo_pct'],
+                    var_name='Technology',
+                    value_name='Rate'
+                )
+                tech_map = {'icsi_pct': '🔬 ICSI Adaptasyonu %', 'pgt_pct': '🧬 PGT Genetik %', 'cryo_pct': '❄️ Kriyoprezervasyon %'}
+                melted_tech['Technology'] = melted_tech['Technology'].map(tech_map)
+
+                fig_tech = px.bar(
+                    melted_tech, x='name', y='Rate', color='Technology', barmode='group',
+                    title="Klinik Teknoloji & Yöntem Adaptasyon Oranları (%)",
+                    labels={'Rate': 'Oran (%)', 'name': 'Ülke'},
+                    color_discrete_sequence=['#00F5FF', '#FFB800', '#00E676']
+                )
+                fig_tech.update_layout(
+                    template='plotly_dark', height=330,
+                    margin=dict(t=40, b=20, l=10, r=10),
+                    legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
+                )
+                st.plotly_chart(fig_tech, use_container_width=True)
+
+            with tg2:
+                fig_dens = px.bar(
+                    cmp_df, x='name', y='clinics_per_m', text='clinics_per_m', color='name',
+                    color_discrete_sequence=['#13A6B5', '#00F5FF', '#7C93BD', '#FFB800', '#00E676', '#FF5252'],
+                    title="Pazar Doygunluğu (Milyon Nüfus Başına Lisanslı Klinik Sayısı)",
+                    labels={'clinics_per_m': 'Klinik / Milyon Nüfus', 'name': 'Ülke'}
+                )
+                fig_dens.update_traces(texttemplate='%{text:.2f} klinik/M', textposition='outside')
+                fig_dens.update_layout(template='plotly_dark', showlegend=False, height=330, margin=dict(t=40, b=20, l=10, r=10))
+                st.plotly_chart(fig_dens, use_container_width=True)
+
+            # ------------------------------------------------------------------
+            # 4. STRATEJİK FIRSAT & RİSK DAĞILIM MATRİSİ (BUBBLE PLOT)
+            # ------------------------------------------------------------------
+            st.markdown("#### 🎯 4. Stratejik Pazar Fırsatı vs Alım Gücü Matrisi")
+            risk_color_map = {'Low': '#00E676', 'Medium': '#FFB800', 'High': '#FF5252'}
+            
+            fig_bubble = px.scatter(
+                cmp_df, x='score', y='gdp_pc', size='cycles', color='risk',
+                color_discrete_map=risk_color_map,
+                text='name',
+                title="Pazar Fırsat Skoru vs Kişi Başı Gelir (Balon Büyüklüğü: Yıllık IVF Siklus Hacmi, Renk: Ticari Risk)",
+                labels={
+                    'score': 'Fırsat Skoru (Opportunity Score 0–100)',
+                    'gdp_pc': 'Kişi Başı GSYİH (USD)',
+                    'cycles': 'Yıllık Siklus',
+                    'risk': 'Ticari Risk Seviyesi'
+                }
+            )
+            max_c = max(cmp_df['cycles']) if len(cmp_df) > 0 and max(cmp_df['cycles']) > 0 else 100000
+            fig_bubble.update_traces(textposition='top center', marker=dict(sizeref=2.*max_c/(45.**2), sizemin=10))
+            fig_bubble.update_layout(template='plotly_dark', height=400, margin=dict(t=40, b=20, l=10, r=10))
+            st.plotly_chart(fig_bubble, use_container_width=True)
+
+        with comp_tab2:
+            st.markdown("#### 📋 Detaylı Çok Boyutlu Karşılaştırmalı Skor Kartı")
+            transposed_data = {
+                'Metrik / Gösterge': [
+                    'Yetkili Partner / Distribütör',
+                    'Tahmini ZEUS Penetrasyonu %',
+                    'Pazar Fırsat Skoru',
+                    'Ticari Risk Düzeyi',
+                    'Toplam GSYİH (GDP - USD Bn)',
+                    'Kişi Başı GSYİH (GDP Per Capita)',
+                    'Ülke Nüfusu (Milyon Kişi)',
+                    'Lisanslı IVF Klinik Sayısı',
+                    'Yıllık Tedavi Siklus Hacmi',
+                    'Milyon Başına Klinik Yoğunluğu',
+                    'Klinik Başına Yıllık Ortalama Siklus',
+                    'ICSI Mikroenjeksiyon Adaptasyonu %',
+                    'PGT Genetik Tanı Oranı %',
+                    'Kriyoprezervasyon (Dondurma) %',
+                    'Sağlık Harcaması / GSYİH %',
+                    'Medikal İthalat Rejimi',
+                    'Regülasyon Zorluk Derecesi'
+                ]
+            }
+            for _, r in cmp_df.iterrows():
+                transposed_data[r['name']] = [
+                    r['Distributor'],
+                    r['Penetration %'],
+                    f"{r['score']} / 100",
+                    r['risk'],
+                    f"${r['gdp']:,.1f} B",
+                    f"${r['gdp_pc']:,}",
+                    f"{r['pop']:.1f} M",
+                    f"{r['clinics']:,} Klinik",
+                    f"{r['cycles']:,} Siklus",
+                    f"{r['clinics_per_m']:.2f} klinik/M",
+                    f"{r['cycles_per_clinic']:,.0f} siklus/kl.",
+                    f"%{r['icsi_pct']}",
+                    f"%{r['pgt_pct']}",
+                    f"%{r['cryo_pct']}",
+                    f"%{r['health_pct']}",
+                    r['import_cond'],
+                    r['regulation']
+                ]
+            
+            scorecard_df = pd.DataFrame(transposed_data)
+            st.dataframe(scorecard_df, use_container_width=True, hide_index=True)
+            
+            # Export CSV button
+            csv_scorecard = scorecard_df.to_csv(index=False).encode('utf-8')
+            st.download_button(
+                label="📥 Karşılaştırma Skor Kartını CSV Olarak İndir",
+                data=csv_scorecard,
+                file_name="ZEUS_Market_Comparison_Scorecard.csv",
+                mime="text/csv"
+            )
     else:
-        st.warning("Please select at least 2 countries to run the side-by-side comparison.")
+        st.warning("Lütfen karşılaştırma analizi için en az 2 pazar seçiniz.")
+
 
 
 # ==============================================================================
