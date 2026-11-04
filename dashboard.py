@@ -409,7 +409,7 @@ country_map = {row['code']: row for _, row in country_df.iterrows()}
 # ==============================================================================
 with st.sidebar:
     # Official ZEUS Bioscience Logo
-    st.image("assets/zeus_logo_white_bg.png")
+    st.image("assets/zeus_logo_white.png")
     st.markdown('''
     <div style="margin-top: -6px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid rgba(19, 166, 181, 0.25); text-align: center;">
         <span style="font-size: 11px; font-weight: 700; color: #00F5FF; letter-spacing: 0.08em; text-transform: uppercase;">Global Market Intelligence</span>
