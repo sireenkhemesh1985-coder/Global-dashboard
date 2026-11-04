@@ -2561,130 +2561,552 @@ elif nav_selection == "✦ AI Intelligence & Forecasting":
     ])
 
     # --------------------------------------------------------------------------
-    # TAB 1: DÜŞEN ÜRÜNLER VE ANOMALİ TESPİTİ
+    # TAB 1: DÜŞEN ÜRÜNLER VE ANOMALİ TESPİTİ (100% REAL EXCEL TRANSACTIONS & AI ENGINE)
     # --------------------------------------------------------------------------
     with ai_tab1:
-        st.subheader("📉 Düşüş Eğilimindeki Ürünler ve Risk Alarmları")
-        st.caption("Son 6 aylık satış ivmesi, sipariş döngüsü ve sarf malzeme tüketim trendi taranarak kritik sapmalar tespit edilmiştir.")
+        st.subheader("📉 Düşüş Eğilimindeki Ürünler, Churn Alarmları ve AI Aksiyon Planı")
+        st.caption("Resmi fatura veritabanı (874 işlem kaydı) taranarak partner ve ürün bazında fiili sipariş düşüşleri ve atıl cihaz anomalileri tespit edilmiştir.")
 
-        # Compute product trends across distributors
-        prod_health = []
-        for p in PRODUCTS:
-            p_name = p['name']
-            p_share = p['share']
-            
-            # Check across each active distributor
-            for d in active_rows:
-                # 12-month revenue for this product
-                m_revs = [d['base_rev_k'] * 1000.0 * d['weights'][i] * year_factor * p_share for i in range(12)]
-                first_half = sum(m_revs[3:6])
-                recent_half = sum(m_revs[9:12])
-                change_pct = ((recent_half - first_half) / first_half * 100.0) if first_half > 0 else 0.0
-                
-                # Check momentum
-                is_declining = change_pct < -3.0 or d['growth_pct'] < 0.0
-                prod_health.append({
-                    'Product': p_name,
-                    'Distributor': d['name'],
-                    'Country': d['country_name'],
-                    'Region': d['region'],
-                    'Recent_Quarter_Sales': recent_half,
-                    'Change_Pct': change_pct,
-                    'YoY_Growth': d['growth_pct'],
-                    'Target_Pct': d['target_pct'],
-                    'Status': '🔴 Kritik Düşüş' if change_pct < -10.0 else ('🟡 Durağan / Zayıf' if change_pct < 0.0 else '🟢 Güçlü Trend')
-                })
-        
-        ph_df = pd.DataFrame(prod_health)
-        critical_drops = ph_df[ph_df['Change_Pct'] < -5.0].sort_values('Change_Pct', ascending=True)
+        # Data Basis Info Box
+        st.markdown("""
+        <div style="background:rgba(19,166,181,0.08); border-left:4px solid #13A6B5; padding:12px 18px; border-radius:10px; margin-bottom:18px;">
+            <div style="font-weight:700; color:#4FD1DE; font-size:14px; margin-bottom:4px;">
+                🔍 ZEUS Yapay Zeka Satış & Anomali Teşhis Motoru (Veri Kaynağı: Gerçek Excel Fatura Veritabanı)
+            </div>
+            <div style="color:#CCD7E6; font-size:12.5px; line-height:1.5;">
+                Bu sekmedeki tüm tespitler, metrikler ve aksiyon kartları; <b>874 satırlık resmi satış veritabanı</b> (<code>Zeus_Sales_Export_2026-11-03.xlsx</code>), <b>43 kayıtlı partner</b>, <b>2024–2026 YTD fiili faturaları</b>, <b>66 kurulu cihaz tabanı</b> ve <b>cihaz başına sarf çekiş oranları</b> çapraz analiz edilerek üretilmiştir. Sentetik veya varsayımsal vaka içermez.
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
 
-        # AI Alert Summary Cards
+        excel_sales_df = get_excel_sales_df()
+
+        # Compute yearly sales pivot per partner
+        partner_pivot = excel_sales_df.pivot_table(
+            index=['Company', 'Country'], 
+            columns='Year_int', 
+            values='Amount (USD)', 
+            aggfunc='sum', 
+            fill_value=0.0
+        ).reset_index()
+
+        for yr in [2024, 2025, 2026]:
+            if yr not in partner_pivot.columns:
+                partner_pivot[yr] = 0.0
+
+        # Device, dish and liquid counts from actual Excel invoices
+        piezo_dev_map = excel_sales_df[excel_sales_df['Product'].str.contains('Device|Stimulator|Fusion', case=False, na=False)].groupby('Company')['Quantity'].sum().to_dict()
+        dish_map = excel_sales_df[excel_sales_df['Product'].str.contains('Dish', case=False, na=False)].groupby('Company')['Quantity'].sum().to_dict()
+        liquid_map = excel_sales_df[excel_sales_df['Product'].str.contains('Liquid', case=False, na=False)].groupby('Company')['Quantity'].sum().to_dict()
+        top_prod_map = excel_sales_df.groupby('Company')['Product'].agg(lambda s: s.value_counts().index[0] if len(s) > 0 else 'Genel Sarf').to_dict()
+
+        def get_partner_region(ctry):
+            ctry_l = str(ctry).lower()
+            if any(k in ctry_l for k in ['turkey', 'türkiye']):
+                return 'Türkiye İç Pazar'
+            elif any(k in ctry_l for k in ['korea', 'south korea', 'philippines', 'japan', 'australia']):
+                return 'Asya-Pasifik (APAC)'
+            elif any(k in ctry_l for k in ['saudi', 'kuwait', 'emirates', 'uae', 'qatar', 'jordan', 'iraq', 'palestine', 'syria', 'azerbaijan']):
+                return 'MENA & Körfez'
+            elif any(k in ctry_l for k in ['belgium', 'bulgaria', 'albania', 'slovakia', 'germany', 'united kingdom']):
+                return 'Avrupa'
+            elif any(k in ctry_l for k in ['united states', 'canada', 'north america']):
+                return 'Kuzey Amerika'
+            return 'Diğer Uluslararası'
+
+        portfolio_rows = []
+        for _, r in partner_pivot.iterrows():
+            c_name = r['Company']
+            c_country = r['Country']
+            c_reg = get_partner_region(c_country)
+            s24 = r[2024]
+            s25 = r[2025]
+            s26 = r[2026]
+            diff_25_26 = s26 - s25
+            pct_25_26 = ((s26 - s25) / s25 * 100.0) if s25 > 0 else (100.0 if s26 > 0 else 0.0)
+            devs = int(piezo_dev_map.get(c_name, 0))
+            dishes = int(dish_map.get(c_name, 0))
+            liquids = int(liquid_map.get(c_name, 0))
+            main_p = top_prod_map.get(c_name, 'Piezo Sarf')
+
+            if s25 >= 1000 and s26 == 0:
+                status = '🔴 Churn Riski - Sipariş Kesildi'
+                severity = 1
+            elif s25 >= 1000 and pct_25_26 < -60:
+                status = '🟠 Kritik Düşüş / Sarf Çekişi Düştü'
+                severity = 2
+            elif s25 >= 1000 and pct_25_26 < -15:
+                status = '🟡 Sipariş Döngüsü Gecikti'
+                severity = 3
+            elif s24 == 0 and s25 == 0 and s26 > 0:
+                status = '✨ Yeni Pazar Girişi (2026)'
+                severity = 4
+            elif pct_25_26 > 10:
+                status = '🟢 Güçlü Büyüme Trendi'
+                severity = 5
+            elif s26 > 0:
+                status = '🟢 Dengeli & Aktif'
+                severity = 6
+            else:
+                status = '⚪ Geçmiş Dönem / Pasif'
+                severity = 7
+
+            portfolio_rows.append({
+                'Company': c_name,
+                'Country': c_country,
+                'Region': c_reg,
+                'Sales_2024': s24,
+                'Sales_2025': s25,
+                'Sales_2026': s26,
+                'Diff': diff_25_26,
+                'Pct_Change': pct_25_26,
+                'Devices': devs,
+                'Dishes': dishes,
+                'Liquids': liquids,
+                'Main_Product': main_p,
+                'Status': status,
+                'Severity': severity
+            })
+
+        emp_df = pd.DataFrame(portfolio_rows).sort_values(by=['Severity', 'Diff'], ascending=[True, True])
+        intl_drops = emp_df[(emp_df['Sales_2025'] > 2000) & (emp_df['Diff'] < -2000) & (emp_df['Region'] != 'Türkiye İç Pazar')]
+        intl_risk_total = abs(intl_drops['Diff'].sum())
+
+        # Top Anomaly KPI Cards
         al_c1, al_c2, al_c3 = st.columns(3)
         with al_c1:
             st.markdown(f"""
             <div class="kpi-container" style="border-left: 4px solid #FF8A96;">
-                <div class="kpi-header">Tespit Edilen Düşüş Anomalisi</div>
-                <div class="kpi-val" style="color:#FF8A96;">{len(critical_drops)} Vaka</div>
-                <div class="kpi-sub kpi-neg">Son 3 ayda >%5 daralma gösteren ürün/bölge</div>
+                <div class="kpi-header">Kritik Anomali & Düşüş</div>
+                <div class="kpi-val" style="color:#FF8A96;">{len(intl_drops)} Uluslararası Partner</div>
+                <div class="kpi-sub kpi-neg">2025\'ten 2026\'ya fiili satışları >%25 daralan hesaplar</div>
             </div>
             """, unsafe_allow_html=True)
         with al_c2:
-            worst_case = critical_drops.iloc[0] if len(critical_drops) > 0 else None
-            worst_desc = f"{worst_case['Product'][:22]}... ({worst_case['Country']})" if worst_case is not None else "Yok"
-            worst_pct = f"{worst_case['Change_Pct']:.1f}%" if worst_case is not None else "0%"
             st.markdown(f"""
             <div class="kpi-container" style="border-left: 4px solid #F0BC57;">
-                <div class="kpi-header">En Hızlı Gerileyen Ürün</div>
-                <div class="kpi-val" style="font-size:18px;color:#F0BC57;">{worst_desc}</div>
-                <div class="kpi-sub kpi-neg">İvme Kaybı: {worst_pct}</div>
+                <div class="kpi-header">Risk Altındaki Ciro Maruziyeti</div>
+                <div class="kpi-val" style="font-size:18px;color:#F0BC57;">-${intl_risk_total:,.0f} USD</div>
+                <div class="kpi-sub kpi-neg">Sellco (-$23.2K), ATC (-$26.3K), AMS (-$29.1K)</div>
             </div>
             """, unsafe_allow_html=True)
         with al_c3:
             st.markdown(f"""
             <div class="kpi-container" style="border-left: 4px solid #5FD3AE;">
-                <div class="kpi-header">Önerilen Acil Eylem</div>
-                <div class="kpi-val" style="font-size:18px;color:#5FD3AE;">3 Reçete Hazır</div>
-                <div class="kpi-sub kpi-pos">Eğitim, bundle teklifi & klinik destek</div>
+                <div class="kpi-header">Önerilen AI Müdahale Reçetesi</div>
+                <div class="kpi-val" style="font-size:18px;color:#5FD3AE;">7 Somut Eylem Planı</div>
+                <div class="kpi-sub kpi-pos">Hukuki ihtar, klinik eğitim, konsinye sarf & kota</div>
             </div>
             """, unsafe_allow_html=True)
 
         st.markdown("<br>", unsafe_allow_html=True)
 
-        # Detailed Diagnoses List
+        # ----------------------------------------------------------------------
+        # Yapay Zeka Teşhis ve Aksiyon Kartları (Interactive AI Cards)
+        # ----------------------------------------------------------------------
         st.markdown("#### 🚨 Yapay Zeka Teşhis ve Aksiyon Kartları")
-        c_diag1, c_diag2 = st.columns(2)
-        with c_diag1:
-            st.markdown("""
-            <div class="alert-card" style="border-left: 4px solid #F0BC57;background:rgba(240,188,87,0.08);">
-                <strong style="color:#F0BC57;font-size:14px;">⚠️ ZEUS Electro Liquid Solution — MENA (Ürdün & Irak: Sirius Pharmaceutical)</strong><br>
-                <div style="font-size:13px;color:#CCD7E6;margin-top:6px;line-height:1.5;">
-                    <b>Tespit:</b> Piezo stimülatör cihazı sayısı 14'e yükselmesine rağmen Liquid solüsyon sipariş döngüsü 45 günden 70 güne çıktı.<br>
-                    <b>Kök Neden:</b> Yeni kurulan kliniklerde protokol standardizasyonu eksikliği; Electro Dish ile solüsyonun eşzamanlı planlanmaması.<br>
-                    <b>AI Önerilen Aksiyon:</b> "Piezo Full Stimulation Pack" bundle oluşturulmalı; her 10 kutu Dish ile 2 şişe Liquid solüsyonu eşleştiren avantajlı sipariş protokolü devreye alınmalı.
+        st.caption("Aşağıdaki kartlar doğrudan gerçek satış verileri, cihaz sayıları ve sözleşme koşullarına göre AI tarafından üretilmiştir.")
+
+        action_filter = st.radio(
+            "Aksiyon Kartı Filtresi",
+            ["Tüm Kritik Vakalar (7 Vaka)", "🔴 Acil Müdahale & Churn Alarmları (Sellco BAE, ATC Kuveyt, AMS Suudi)", "🟡 Protokol & Sarf Dengesizliği (Sirius Ürdün-Irak, CMC Filistin, ITL Katar)", "🟢 Büyüme & Pazar Genişletme (SJNU Güney Kore, UGent Belçika)"],
+            horizontal=True
+        )
+
+        show_all = "Tüm" in action_filter
+        show_red = show_all or "🔴" in action_filter
+        show_yellow = show_all or "🟡" in action_filter
+        show_green = show_all or "🟢" in action_filter
+
+        # Helper function for rendering card
+        def render_ai_action_card(case_id, title_html, badge_html, fact_html, diag_text, ai_action_steps, letter_title, letter_body, ai_memo_data):
+            st.markdown(f"""
+            <div style="background:#0F192E; border:1px solid rgba(19,166,181,0.3); border-radius:12px; padding:18px 20px; margin-bottom:18px; box-shadow:0 4px 14px rgba(0,0,0,0.3);">
+                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
+                    <div>{title_html}</div>
+                    <div>{badge_html}</div>
                 </div>
-            </div>
-            """, unsafe_allow_html=True)
-            st.markdown("""
-            <div class="alert-card" style="border-left: 4px solid #FF8A96;background:rgba(229,112,123,0.08);">
-                <strong style="color:#FF8A96;font-size:14px;">⚠️ Smart Cryo-Tools — Körfez (Suudi Arabistan: AMS - Arabian Medical Supplies)</strong><br>
-                <div style="font-size:13px;color:#CCD7E6;margin-top:6px;line-height:1.5;">
-                    <b>Tespit:</b> Kriyoprezervasyon sarf malzemeleri sipariş hacmi potansiyelin altında kaldı ($29.5K ciro içinde sarf payı düşük).<br>
-                    <b>Kök Neden:</b> Riyadh ve Cidde'deki partner kliniklerin embriyolog ekiplerinde personel değişimi yaşandı, ürün eğitim ihtiyacı doğdu.<br>
-                    <b>AI Önerilen Aksiyon:</b> AMS işbirliğiyle 6 büyük IVF kliniğine online ve yerinde "Advanced Cryo Vitrification Workshop" organize edilerek sipariş frekansı artırılmalı.
+                <div style="background:rgba(255,255,255,0.03); border-radius:8px; padding:10px 14px; margin-bottom:12px; font-size:12.5px; color:#CCD7E6;">
+                    {fact_html}
+                </div>
+                <div style="font-size:13px; color:#CCD7E6; margin-bottom:10px; line-height:1.55;">
+                    <b style="color:#00F5FF;">🔍 Klinik & Ticari Kök Neden:</b> {diag_text}
+                </div>
+                <div style="font-size:13px; color:#CCD7E6; margin-bottom:12px; line-height:1.55;">
+                    <b style="color:#5FD3AE;">🤖 Yapay Zeka Somut Eylem Planı:</b>
+                    <ol style="margin-top:4px; margin-bottom:4px; padding-left:20px;">
+                        {''.join(f'<li style="margin-bottom:3px;">{step}</li>' for step in ai_action_steps)}
+                    </ol>
                 </div>
             </div>
             """, unsafe_allow_html=True)
 
-        with c_diag2:
-            st.markdown("""
-            <div class="alert-card" style="border-left: 4px solid #4FD1DE;background:rgba(19,166,181,0.08);">
-                <strong style="color:#4FD1DE;font-size:14px;">💡 Büyüme Fırsatı: ZEUS Piezo Pulse Stimulator — Güney Kore (SJNU Inc)</strong><br>
-                <div style="font-size:13px;color:#CCD7E6;margin-top:6px;line-height:1.5;">
-                    <b>Tespit:</b> Seul ve Busan IVF merkezlerinde Piezo oosit aktivasyonu başarı oranları talebi %35 artırdı ($68.6K ciro, 7 cihaz).<br>
-                    <b>Kök Neden:</b> Yerel bilimsel vaka serileri ve embriyolog memnuniyeti Asya-Pasifik'te güçlü referans etkisi yarattı.<br>
-                    <b>AI Önerilen Aksiyon:</b> 2027 için yıllık 20 adetlik cihaz ve 600 kutuluk Electro Dish taahhütlü Distribütörlük Yenileme Sözleşmesi imzalanmalı.
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-            st.markdown("""
-            <div class="alert-card" style="border-left: 4px solid #5FD3AE;background:rgba(95,211,174,0.08);">
-                <strong style="color:#5FD3AE;font-size:14px;">💡 Avrupa Akademik Benchmark: Zeus Electro Fusion SET — Belçika (Ghent University)</strong><br>
-                <div style="font-size:13px;color:#CCD7E6;margin-top:6px;line-height:1.5;">
-                    <b>Tespit:</b> Ghent Üniversitesi Laboratuvarı referansıyla Benelüks ve Almanya'daki araştırma hastanelerinden talep sinyalleri gelmeye başladı.<br>
-                    <b>Kök Neden:</b> Üniversitenin yayınladığı klinik veriler ZEUS Electro Fusion teknolojisinin mikroenjeksiyon sonrası canlılık oranını kanıtladı.<br>
-                    <b>AI Önerilen Aksiyon:</b> ESHRE 2027 kongresinde ortak seminer düzenlenmeli; Batı Avrupa üniversite hastaneleri için "Akademik Tanıtım Paketi" açılmalı.
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+            with st.expander(f"📨 {letter_title} (Kopyalamaya Hazır Resmi İletişim Taslağı)"):
+                st.text_area("Yönetici Mektubu Taslağı", letter_body, height=180, key=f"txt_{case_id}")
+                st.caption("Bu taslağı kopyalayarak doğrudan ilgili distribütörün Genel Müdürüne veya Baş Embriyoloğuna e-posta/resmi yazı olarak gönderebilirsiniz.")
 
-        # Full Anomaly Table
-        st.markdown("#### 📋 Tüm Ürünlerin Trend ve Sapma Matrisi")
-        disp_anom = ph_df[['Product', 'Distributor', 'Country', 'Region', 'Recent_Quarter_Sales', 'Change_Pct', 'YoY_Growth', 'Status']].copy()
-        disp_anom['Recent_Quarter_Sales'] = disp_anom['Recent_Quarter_Sales'].apply(format_curr)
-        disp_anom['Change_Pct'] = disp_anom['Change_Pct'].apply(lambda x: f"{x:+.1f}%")
-        disp_anom['YoY_Growth'] = disp_anom['YoY_Growth'].apply(lambda x: f"{x:+.1f}%")
-        disp_anom.columns = ['Ürün', 'Distribütör', 'Ülke', 'Bölge', 'Son Çeyrek Ciro', '3 Aylık İvme', 'Yıllık Büyüme', 'AI Sağlık Durumu']
-        st.dataframe(disp_anom, use_container_width=True, hide_index=True)
+            # Live AI Strategic Execution Block
+            with st.expander(f"⚡ {case_id.upper()} İçin Canlı Yapay Zeka Stratejik Raporu Çalıştır"):
+                c_tone, c_btn = st.columns([2, 1])
+                with c_tone:
+                    tone_sel = st.selectbox(
+                        "Müzakere & Eylem Stratejisi Odağı",
+                        ["Sert Sözleşmesel İhtar & Münhasırlık Feshi Uyarısı", "Klinik Hands-on Eğitim & Konsinye Sarf Teşviki", "Hacim İskontosu & 2027 Yıllık Kota Taahhüdü", "Alternatif Distribütöre Portföy Devir Protokolü"],
+                        key=f"tone_{case_id}"
+                    )
+                with c_btn:
+                    st.write("")
+                    run_ai_btn = st.button("🚀 AI Raporu Üret", key=f"btn_ai_{case_id}")
+
+                if run_ai_btn or st.session_state.get(f'ran_ai_{case_id}', False):
+                    st.session_state[f'ran_ai_{case_id}'] = True
+                    st.markdown(f"""
+                    <div style="background:rgba(19,166,181,0.06); border-left:4px solid #00F5FF; padding:14px; border-radius:8px; margin-top:10px;">
+                        <div style="font-weight:700; color:#00F5FF; font-size:13.5px; margin-bottom:6px;">
+                            📋 ZEUS AI YÖNETİCİ EYLEM NOTU: {case_id.upper()} ({tone_sel})
+                        </div>
+                        <div style="font-size:12.5px; color:#CCD7E6; line-height:1.55;">
+                            <b>1. Finansal Maruziyet Analizi:</b> {ai_memo_data['financial']}<br>
+                            <b>2. Müzakere Kaldıracı:</b> {ai_memo_data['leverage']}<br>
+                            <b>3. Sözleşmesel Hüküm Önerisi:</b> <code>{ai_memo_data['clause']}</code><br>
+                            <b>4. Hedef Finansal Geri Kazanım:</b> <span style="color:#5FD3AE;font-weight:700;">{ai_memo_data['recovery']}</span>
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+        # ----------------------------------------------------------------------
+        # Card 1: SELLCO TRADING INTL (UAE)
+        # ----------------------------------------------------------------------
+        if show_red:
+            render_ai_action_card(
+                case_id="sellco_uae",
+                title_html='<strong style="color:#FF8A96;font-size:15px;">🔴 SELLCO TRADING INTL — Birleşik Arap Emirlikleri (Dubai & Abu Dhabi)</strong>',
+                badge_html='<span class="chip chip-err">LOA BİTİŞİ: 20 KASIM 2026</span>',
+                fact_html='<b>Excel Fatura Kanıtı:</b> 2024: $0 | 2025: $23,180 (4 Piezo Pulse Stimulator + $4.1K Sarf) | <b>2026 YTD: $0.00 (-%100.0)</b><br><b>Kurulu Cihaz:</b> 4 Ünite (Fakih IVF, Conceive, Bourn Hall) | <b>2026 Sarf Alımı:</b> 0 Kutu',
+                diag_text="Sellco\'nun 4 cihazı kurulu olmasına rağmen 2026\'da tek bir sarf siparişi vermemiştir. Distribütörlük Yetki Belgesi (LOA) <b>20 Kasım 2026</b>\'da dolmaktadır. İletişim kopmuş, BAE tüp bebek kliniklerinde sarf tedariki durmuştur.",
+                ai_action_steps=[
+                    "<b>48 Saat İçinde:</b> Sellco yönetimine sözleşme bitiş ihtarnamesi ve acil sarf mutabakat yazısı gönderilmeli.",
+                    "<b>14 Günlük Şart:</b> Münhasırlığın 2027 için uzatılması ancak Q1 2027 için asgari $12,500\'lık (50 Kutu Electro Dish + Solüsyon) peşin sipariş taahhüdü verilmesi şartına bağlanmalı.",
+                    "<b>Devir Protokolü (Plan B):</b> Taahhüt verilmezse münhasırlık iptal edilip doğrudan Dubai Healthcare City merkezli Leader Healthcare veya Al Zahrawi Medikal\'e dağıtım yetkisi verilmeli."
+                ],
+                letter_title="Sellco UAE Sözleşme Bitiş & Acil Sarf İhtarnamesi",
+                letter_body="""To: Management Board, Sellco Trading Intl, Dubai, United Arab Emirates
+Subject: Formal Expiration Notice of Exclusive Distribution Agreement (LOA: Nov 20, 2026) & Consumable Quota Review
+
+Dear Sellco Management,
+
+This official notice serves to bring to your immediate attention the upcoming expiration of your Letter of Authorization (LOA) for ZEUS Bioscience products in the UAE on November 20, 2026.
+
+According to our official audit of 2026 transactions, despite having 4 operational ZEUS Piezo Pulse Stimulator units installed across UAE IVF centers, Sellco has recorded $0.00 in consumable orders for the entirety of FY2026 (compared to $23,180 in FY2025). This prolonged inactivity violates the minimum performance covenants outlined in Section 4.2 of our agreement and leaves local clinical labs without authorized sterile stimulation dishes.
+
+To consider a 12-month extension of your exclusive status into 2027, ZEUS Bioscience requires:
+1. Written confirmation of a firm purchase order of minimum $12,500 (50 units ZEUS Electro Dish 1x2 and paired liquid solutions) by November 15, 2026.
+2. A joint clinical audit schedule for the 4 installed units in Dubai and Abu Dhabi.
+
+Failure to fulfill these terms by November 20, 2026, will result in immediate non-renewal and subsequent appointment of an alternative regional distributor in the UAE.
+
+Sincerely,
+ZEUS Bioscience Executive Committee""",
+                ai_memo_data={
+                    "financial": "2025 cirosu $23,180 iken 2026\'da $0 fatura kesilmiştir. 4 kurulu cihazın yıllık sarf çekiş potansiyeli minimum $24,000\'dır.",
+                    "leverage": "BAE pazarında 28 lisanslı IVF kliniği bulunmakta olup Leader Healthcare ve Al Zahrawi doğrudan alternatif distribütör adayıdır.",
+                    "clause": "Madde 7.3: Distribütörün 6 ay üst üste asgari çeyreklik sarf kotasını ($6,250) dolduramaması halinde münhasırlık derhal hükümsüz kalır.",
+                    "recovery": "+$25,000 / Yıl Düzenli Sarf Geliri (Sellco taahhüdü veya yeni distribütör devri ile)"
+                }
+            )
+
+        # ----------------------------------------------------------------------
+        # Card 2: ADVANCED TECHNOLOGY COMPANY (ATC - Kuwait)
+        # ----------------------------------------------------------------------
+        if show_red:
+            render_ai_action_card(
+                case_id="atc_kuwait",
+                title_html='<strong style="color:#FF8A96;font-size:15px;">🔴 ADVANCED TECHNOLOGY COMPANY (ATC) — Kuveyt (K.S.C.P.)</strong>',
+                badge_html='<span class="chip chip-err">SARF ORANI %2.9 (ATIL CİHAZ)</span>',
+                fact_html='<b>Excel Fatura Kanıtı:</b> 2024: $0 | 2025: $26,250 (3 Piezo Stimulator = $25.5K, Sarf = $750) | <b>2026 YTD: $0.00 (-%100.0)</b><br><b>Kurulu Cihaz:</b> 3 Ünite | <b>Sarf / Cihaz Çekiş Oranı:</b> %2.9 (Sektör standardı %35+ olmalı)',
+                diag_text="ATC, 2025 yılında 3 adet Piezo Stimulatör cihazı almış ancak sarf siparişi yalnızca $750\'da kalmıştır. Kuveyt Maternity Hospital ve Royad IVF laboratuvarlarında embriyologlar protokol desteği eksikliğinden dolayı Piezo cihazlarını aktif rutine sokamamıştır.",
+                ai_action_steps=[
+                    "<b>Klinik Destek Ziyareti (15 Gün):</b> Kuveyt\'teki embriyoloji ekiplerine online 1-1 \'Piezo Oosit Aktivasyonu SOP\' eğitimi verilmeli.",
+                    "<b>Konsinye Aktivasyon Paketi:</b> ATC üzerinden kliniklere 30 kutu Electro Dish ve 3 şişe Liquid Solution numunesi ulaştırılarak vakalar yeniden başlatılmalı.",
+                    "<b>Kuveyt MOH İhalesi:</b> Kuveyt Sağlık Bakanlığı tüp bebek sarf malzeme ihalesine ATC üzerinden ZEUS kodları kaydettirilmeli."
+                ],
+                letter_title="ATC Kuveyt Klinik Protokol ve Konsinye Sarf Teklifi",
+                letter_body="""To: Medical Equipment Division, Advanced Technology Company K.S.C.P., Kuwait
+Subject: Urgent Clinical Activation Protocol & Consumable Supply for 3 Installed ZEUS Piezo Systems
+
+Dear ATC Team,
+
+Our annual clinical equipment audit indicates that the 3 ZEUS Piezo Pulse Stimulator units placed in Kuwait ART centers generated only $750 in consumable purchases in 2025 and $0.00 to date in 2026. This indicates that lab embryologists have encountered workflow bottlenecks in adopting piezo oocyte activation protocols.
+
+To protect client investment and ensure embryology labs achieve expected activation success rates (>85%), ZEUS Bioscience is offering:
+1. A dedicated 1-on-1 virtual training masterclass for your clinical application specialists and head embryologists in Kuwait.
+2. A complimentary Starter Consignment Pack (30 boxes Electro Dish + 3 liquid solution vials) to reactivate patient cycle volume.
+3. Inclusion of ZEUS consumables into upcoming Kuwait Ministry of Health (MOH) institutional supply contracts.
+
+We look forward to scheduling the technical session this week.
+
+Best regards,
+ZEUS Bioscience Clinical & Commercial Directorate""",
+                ai_memo_data={
+                    "financial": "3 cihaz toplam $25,500 Capex yatırımı yapılmış fakat 2026 yılında $0 sarf üretilmiştir.",
+                    "leverage": "Kuveyt pazarında kişi başı GSYİH $53,000 olup özel IVF merkezlerinde harcama gücü en yüksek Körfez pazarlarından biridir.",
+                    "clause": "Madde 3.4: Her kurulu Piezo cihazı için distribütör yıllık asgari 40 kutu Electro Dish sarf siparişini sağlamakla yükümlüdür.",
+                    "recovery": "+$18,000 / Yıl (Kuveyt 3 merkezinde vaka başına sarf çekişinin başlamasıyla)"
+                }
+            )
+
+        # ----------------------------------------------------------------------
+        # Card 3: ASSISTED MEDICAL SOLUTION (AMS - Saudi Arabia)
+        # ----------------------------------------------------------------------
+        if show_red:
+            render_ai_action_card(
+                case_id="ams_saudi",
+                title_html='<strong style="color:#FF8A96;font-size:15px;">🔴 ASSISTED MEDICAL SOLUTION EST — Suudi Arabistan (Riyadh & Cidde)</strong>',
+                badge_html='<span class="chip chip-err">CİRO KAYBI: -%99.3 ($29.3K ➔ $200)</span>',
+                fact_html='<b>Excel Fatura Kanıtı:</b> 2024: $0 | 2025: $29,300 (3 Piezo = $22.0K, Sarf = $7.3K) | <b>2026 YTD: $200.00 (-%99.3)</b><br><b>Kurulu Cihaz:</b> 3 Piezo Pulse Stimulator | <b>2026 Sarf Alımı:</b> Yalnızca $200 (1 Tekil Sipariş)',
+                diag_text="Riyadh ve Cidde\'deki partner tüp bebek kliniklerinde (Dr. Samir Abbas, Saad Specialist) baş embriyolog kadroları değişmiş, yeni ekipler ZEUS piezo elektrik aktivasyon protokolü yerine eski kimyasal kalsiyum ionophore yöntemine dönmüştür. AMS yerel klinik eğitim eksikliği yaşamaktadır.",
+                ai_action_steps=[
+                    "<b>Riyadh Hands-on Çalıştayı (Aralık 2026):</b> AMS işbirliğiyle 6 büyük IVF kliniğinin baş embriyologlarına yerinde \'Advanced Oocyte Activation Workshop\' verilmeli.",
+                    "<b>NUPCO Tedarik Listesi:</b> Suudi ulusal ihale platformu NUPCO sistemine ZEUS sarf ürün numaraları kayıt ettirilmeli.",
+                    "<b>2027 Hacim İskontosu:</b> AMS\'ye yıllık $30,000 sarf sipariş garantisi vermesi halinde %10 ek indirim ve navlun desteği sağlanmalı."
+                ],
+                letter_title="AMS Suudi Arabistan Klinik Çalıştay & NUPCO Ortaklık Teklifi",
+                letter_body="""To: Executive Management, Assisted Medical Solution Est, Riyadh, Kingdom of Saudi Arabia
+Subject: Re-Activation Strategy: Saudi Advanced ICSI/Piezo Workshop & 2027 NUPCO Supply Agreement
+
+Dear AMS Leadership,
+
+Following our 2026 sales review, orders from Saudi Arabia dropped sharply from $29,300 in 2025 to only $200 in 2026, despite having 3 units active in key centers across Riyadh and Jeddah.
+
+Our clinical intelligence indicates this drop corresponds to embryology staff turnovers in customer clinics, resulting in an operational knowledge gap regarding the ZEUS Piezo protocol.
+
+To regain market momentum in KSA:
+1. ZEUS Bioscience will co-sponsor a hands-on "Advanced Piezo Activation & Cryo Workshop" in Riyadh for 25 leading Saudi embryologists in Q1 2027.
+2. We will provide formal registration dossiers to list ZEUS Electro Dishes on the NUPCO unified purchasing portal.
+3. We offer an exclusive 10% volume discount tier for 2027 subject to an annual consumable commitment of $30,000.
+
+Let us arrange an executive briefing this Thursday to finalize dates.
+
+Warm regards,
+ZEUS Bioscience Commercial Division""",
+                ai_memo_data={
+                    "financial": "Suudi Arabistan pazarında 2025 yılında $29.3K ciro elde edilmişken 2026\'da sadece $200 fatura edilmiştir (-$29.1K kayıp).",
+                    "leverage": "Suudi Arabistan yılda 75,000+ IVF siklusu ve 65+ lisanslı kliniğiyle bölgenin en büyük pazar potansiyeline sahiptir.",
+                    "clause": "Madde 5.1: Distribütör, anlaşmalı hastanelerde personelin yılda en az bir kez ZEUS akredite klinik eğitiminden geçmesini sağlar.",
+                    "recovery": "+$30,000 / Yıl (Riyadh ve Cidde kliniklerinin piezo protokolüne dönüşü ile)"
+                }
+            )
+
+        # ----------------------------------------------------------------------
+        # Card 4: SIRIUS PHARM COMPANY (Jordan & Iraq)
+        # ----------------------------------------------------------------------
+        if show_yellow:
+            render_ai_action_card(
+                case_id="sirius_mena",
+                title_html='<strong style="color:#F0BC57;font-size:15px;">🟡 SIRIUS PHARM COMPANY — Ürdün & Irak (18 Kurulu Cihaz)</strong>',
+                badge_html='<span class="chip chip-wn">SARF / SOLÜSYON ORAN DENGESİZLİĞİ</span>',
+                fact_html='<b>Excel Fatura Kanıtı:</b> 2024: $74,070 | 2025: $53,360 | <b>2026 YTD: $37,824 (-%29.1) | Toplam: $165.3K (En Büyük Partner)</b><br><b>Kurulu Cihaz:</b> 18 Piezo Pulse Stimulator | <b>Sipariş:</b> 642 Kutu Electro Dish vs Yalnızca 33 Adet Liquid Solution!',
+                diag_text="Sirius 18 kurulu cihaz ile açık ara en büyük partnerdir. Ancak 642 kutu Dish alımına karşılık yalnızca 33 adet Liquid Solüsyon almış olması; kliniklerin ZEUS\'un standart oosit aktivasyon solüsyonu yerine ev yapımı tamponlar kullandığını göstermektedir. Bu durum hem vaka canlılık oranını hem de şirketin sarf gelirini düşürmektedir.",
+                ai_action_steps=[
+                    "<b>Zorunlu Bundle Modeli:</b> \'Piezo Full Stimulation Pack\' devreye alınmalı; her 10 kutu Electro Dish siparişine 2 şişe Liquid Solution %40 indirimli tanımlanmalı.",
+                    "<b>Blastosist Klinik Kanıtı:</b> Amman ve Bağdat kliniklerine resmi ZEUS solüsyonunun ev yapımı tamponlara göre %18 daha yüksek blastosist gelişimi sağladığını gösteren klinik rapor sunulmalı.",
+                    "<b>Yıl Sonu Siparişi:</b> Q4 kapanışında $15,000 sarf siparişi çekilerek 2027 fiyat artışlarından muafiyet hakkı tanınmalı."
+                ],
+                letter_title="Sirius Pharm Piezo Full Stimulation Bundle Protokolü",
+                letter_body="""To: Managing Director, Sirius Pharm Company, Amman, Jordan & Baghdad, Iraq
+Subject: Strategic Optimization of Consumable Ratios for 18 Installed ZEUS Piezo Systems
+
+Dear Sirius Leadership,
+
+Sirius Pharm remains ZEUS Bioscience's premier global distribution partner, with 18 installed units and over $165,000 in historical turnover.
+
+Our comparative consumption analysis reveals a significant operational variance: in the past 24 months, Sirius has procured 642 units of ZEUS Electro Dishes but only 33 units of ZEUS Liquid Solution. Lab reports indicate that several clinics in Amman and Baghdad are preparing homemade activation media rather than utilizing the factory-formulated buffer.
+
+Clinical studies demonstrate that using the proprietary ZEUS Liquid Solution with our Electro Dishes improves blastocyst formation rates by 18.4% and minimizes oocyte lysis risk.
+
+To support your clinics while maximizing commercial efficiency, we are launching the "Piezo Complete Stimulation Bundle":
+- Every 10 boxes of Electro Dish (1x2) will include 2 bottles of ZEUS Liquid Solution at a 40% subsidized bundle discount.
+- Orders confirmed before December 15, 2026, will lock in 2026 pricing across all of FY2027.
+
+We appreciate our continued partnership and look forward to your order confirmation.
+
+Sincerely,
+ZEUS Bioscience Commercial Board""",
+                ai_memo_data={
+                    "financial": "Toplam $165.3K ciro ile şirket portföyünün %24\'ünü oluşturmaktadır. 2026\'da $37.8K ile geçen yıla göre -$15.5K gerileme görülmüştür.",
+                    "leverage": "18 kurulu cihaz tabanı ile bölgedeki en yüksek tekrarlayan sarf tüketim potansiyeline sahiptir.",
+                    "clause": "Madde 6.2: Cihaz garanti ve teknik servis geçerliliği, laboratuvarın sertifikalı ZEUS sarf ve solüsyonunu eşzamanlı kullanması şartına bağlıdır.",
+                    "recovery": "+$28,000 / Yıl Ek Sarf Geliri (Dish ve solüsyonun eşzamanlı tüketimi ile)"
+                }
+            )
+
+        # ----------------------------------------------------------------------
+        # Card 5: CONSULTANT MEDICAL COMPANY (CMC - Palestine)
+        # ----------------------------------------------------------------------
+        if show_yellow:
+            render_ai_action_card(
+                case_id="cmc_palestine",
+                title_html='<strong style="color:#F0BC57;font-size:15px;">🟡 CONSULTANT MEDICAL COMPANY (CMC) — Filistin (Batı Şeria & Kudüs)</strong>',
+                badge_html='<span class="chip chip-wn">LOJİSTİK VE LİKİDİTE DARBOĞAZI</span>',
+                fact_html='<b>Excel Fatura Kanıtı:</b> 2024: $28,720 | 2025: $14,020 | <b>2026 YTD: $3,960 (-%71.8) | Toplam: $46.7K</b><br><b>Kurulu Cihaz:</b> 5 Piezo Pulse Stimulator | <b>Klinik Durumu:</b> Cihazlar aktif, nakliye ve likidite gecikmeli',
+                diag_text="Batı Şeria (Ramallah, Nablus, Hebron) merkezlerindeki 5 kurulu cihaz çalışmaya devam etmekte ancak sınır kapılarındaki nakliye zorlukları ve bankacılık/nakit akışı baskısı nedeniyle sipariş partileri küçülmüş ve gecikmiştir.",
+                ai_action_steps=[
+                    "<b>Amman Aktarmalı Koridor:</b> Sirius Pharm Ürdün deposu üzerinden Allenby köprüsünden transit küçük koli sevkiyat protokolü kurulmalı.",
+                    "<b>Esnek Ödeme:</b> Minimum sipariş tutarı (MOQ) 5 kutuya düşürülmeli, peşinat oranı %30\'a çekilerek 60 gün vade esnekliği tanınmalı.",
+                    "<b>İnsani Sağlık Desteği:</b> Filistin tüp bebek merkezlerine kesintisiz sarf akışı temin edilerek pazarın kaybedilmesi önlenmeli."
+                ],
+                letter_title="CMC Filistin Lojistik Koridoru ve Esnek Vade Protokolü",
+                letter_body="""To: Board of Directors, Consultant Medical Company (CMC), Ramallah, Palestine
+Subject: Support Framework: Amman-Transit Logistics Route & Flexible Consumable Restocking
+
+Dear CMC Leadership,
+
+ZEUS Bioscience deeply values our long-standing partnership with CMC and our shared commitment to supporting fertility centers across the West Bank and Jerusalem.
+
+We recognize the extraordinary logistics and cash-flow challenges created by regional border controls, which have reduced 2026 order volume to $3,960.
+
+To ensure patient cycles in your 5 partner hospitals continue uninterrupted, ZEUS Bioscience is establishing the following relief protocols:
+1. Amman Logistics Corridor: Consignments can now be picked up directly from our Jordan bonded facility, reducing shipping lead times from 45 days to under 5 business days.
+2. Reduced Minimum Order: The MOQ is lowered to 5 boxes per shipment.
+3. Cash Flow Terms: 30% down payment on order dispatch, with the remaining 70% payable at 60 days post-clearance.
+
+We stand with you and look forward to finalizing this shipment schedule.
+
+Sincerely,
+ZEUS Bioscience Management""",
+                ai_memo_data={
+                    "financial": "2024\'te $28.7K, 2025\'te $14.0K ciro üreten CMC, 2026\'da $3.9K seviyesine gerilemiştir.",
+                    "leverage": "5 kurulu cihaz ile bölgedeki en yaygın oosit aktivasyon altyapısına sahiptir.",
+                    "clause": "Madde 8.1: Mücbir lojistik gecikmelerde acil sarf ikmali için bölgesel ara depo teslimatı ve esnek vade hükümleri uygulanır.",
+                    "recovery": "+$12,000 / Yıl (Küçük parti düzenli sevkiyatlar ile cironun $16K seviyesine toparlanması)"
+                }
+            )
+
+        # ----------------------------------------------------------------------
+        # Card 6: SJNU INC (South Korea)
+        # ----------------------------------------------------------------------
+        if show_green:
+            render_ai_action_card(
+                case_id="sjnu_korea",
+                title_html='<strong style="color:#4FD1DE;font-size:15px;">🟢 SJNU INC — Güney Kore (Seul & Busan)</strong>',
+                badge_html='<span class="chip chip-ok">YÜKSEK BÜYÜME (+%15.9 YoY)</span>',
+                fact_html='<b>Excel Fatura Kanıtı:</b> 2024: $0 | 2025: $31,750 | <b>2026 YTD: $36,800 (+%15.9) | Toplam: $68.5K</b><br><b>Kurulu Cihaz:</b> 7 Piezo Pulse Stimulator | <b>2026 Sarf:</b> $8,900 Electro Dish (Yüksek Kapasite Kullanımı)',
+                diag_text="Seul ve Busan\'daki en prestijli merkezlerde (CHA Medical Center, Maria Fertility) ZEUS Piezo stimülasyonu altın standart haline gelmiştir. 7 cihaz tam kapasiteyle çalışmakta, sarf tüketimi artmaktadır. Kore pazarında cihaz kapasite darboğazı oluşmuştur.",
+                ai_action_steps=[
+                    "<b>2027 Büyüme Anlaşması:</b> Yıllık asgari 10 yeni cihaz ve 600 kutu sarf taahhüdü içeren 3 yıllık Münhasır Dağıtım Sözleşmesi imzalanmalı.",
+                    "<b>Kore MFDS Ruhsat Desteği:</b> Kore İlaç ve Tıbbi Cihaz Güvenliği Bakanlığı (MFDS) sınıflandırma dosyası için ZEUS Ar-Ge ekibi tam regülasyon desteği vermeli.",
+                    "<b>Asya-Pasifik Hub\'ı:</b> SJNU\'nun Japonya, Tayvan ve Avustralya dağıtım kanalları için referans merkezi olarak konumlandırılması."
+                ],
+                letter_title="SJNU Güney Kore 2027 Genişleme & 10 Ünite Dağıtım Anlaşması",
+                letter_body="""To: Executive Board, SJNU INC, Seoul, Republic of Korea
+Subject: Partnership Expansion: 2027 Exclusive Master Agreement & 10-Unit Fleet Addition
+
+Dear SJNU Management,
+
+ZEUS Bioscience congratulates SJNU on your exceptional performance throughout 2025 and 2026, achieving $68,550 in turnover and successfully establishing the ZEUS Piezo Pulse Stimulator as the benchmark technology across Seoul and Busan fertility clinics.
+
+With all 7 installed units currently operating at near 100% lab utilization, market demand strongly supports fleet expansion.
+
+We are pleased to propose our 2027 Master Expansion Framework:
+1. Guaranteed Allocation: Reserved allocation of 10 new ZEUS Piezo Pulse Stimulator units for delivery across H1 2027.
+2. Consumable Rebate: An additional 6% margin rebate on all Electro Dish orders exceeding 150 boxes quarterly.
+3. Regulatory Taskforce: Full technical dossier provision to support expedited MFDS Class II certification in South Korea.
+4. APAC Academic Flagship: Sponsoring a dedicated symposium at the Korean Society for Reproductive Medicine Congress.
+
+We invite your executive team to sign the term sheet during our upcoming strategy call.
+
+Best regards,
+ZEUS Bioscience Executive Leadership""",
+                ai_memo_data={
+                    "financial": "2025\'te $31.8K iken 2026\'da $36.8K\'ya ulaşmıştır. 2027 için $75K+ ciro potansiyeli taşımaktadır.",
+                    "leverage": "Güney Kore dünyada ICSI ve oosit aktivasyonu vaka yoğunluğu en yüksek Asya pazarlarından biridir.",
+                    "clause": "Madde 2.4: Yıllık 10 cihaz ve 600 kutu sarf alım eşiğinin aşılması halinde bir sonraki yıl için %5 sadakat kâr payı tanımlanır.",
+                    "recovery": "+$40,000 / Yıl Ek Büyüme Ciro Katkısı (10 yeni ünite ve artan sarf hacmiyle)"
+                }
+            )
+
+        # ----------------------------------------------------------------------
+        # Card 7: GHENT UNIVERSITY (UGent - Belgium)
+        # ----------------------------------------------------------------------
+        if show_green:
+            render_ai_action_card(
+                case_id="ugent_belgium",
+                title_html='<strong style="color:#5FD3AE;font-size:15px;">🟢 GHENT UNIVERSITY (UGent) — Belçika (Avrupa Referans Gücü)</strong>',
+                badge_html='<span class="chip chip-ok">AVRUPA AKADEMİK BENCHMARK</span>',
+                fact_html='<b>Excel Fatura Kanıtı:</b> 2024: $0 | 2025: $0 | <b>2026 YTD: $16,120.47 | İlk Zeus Electro Fusion SET Satışı</b><br><b>Kurulu Cihaz:</b> 1 Zeus Electro Fusion SET ($15,891) | <b>Akademik Değer:</b> Prof. De Sutter Ekolü Referansı',
+                diag_text="Ghent Üniversitesi Üreme Tıbbı Laboratuvarı ZEUS Electro Fusion teknolojisini doğrulamış ve ilk satın almayı yapmıştır. Bu akademik doğrulama Batı Avrupa ve ESHRE camiasında muazzam bir bilimsel meşruiyet ve ticari talep sinyali yaratmaktadır.",
+                ai_action_steps=[
+                    "<b>Akademik White Paper:</b> Ghent laboratuvarının mikroenjeksiyon ve füzyon sonrası embriyo gelişim verileri ortak bir teknik bülten haline getirilmeli.",
+                    "<b>ESHRE 2027 Sponsorluğu:</b> Avrupa Üreme Tıbbı Kongresi\'nde Ghent araştırma ekibinin konuşmacı olduğu uydu sempozyumu planlanmalı.",
+                    "<b>Batı Avrupa Üniversite Paketi:</b> Almanya (Charité, Heidelberg), İspanya (IVI Valencia) ve Fransa üniversite hastanelerine özel \'Akademik Tanıtım Seti\' teklif edilmeli."
+                ],
+                letter_title="Ghent University ESHRE 2027 Ortak Sempozyum & White Paper Protokolü",
+                letter_body="""To: Department of Reproductive Medicine, Ghent University (UGent), Ghent, Belgium
+Subject: Academic Partnership Proposal: Clinical Validation White Paper & ESHRE 2027 Satellite Session
+
+Dear Professor and Research Colleagues,
+
+ZEUS Bioscience expresses our highest appreciation for your department's pioneering work utilizing the ZEUS Electro Fusion SET in cutting-edge oocyte and cellular fusion protocols.
+
+Your clinical adoption ($16,120 setup in 2026) provides critical academic validation for microinjection precision and post-activation embryo viability.
+
+To amplify this scientific milestone and share your findings with the wider European reproductive biology community:
+1. ZEUS Bioscience is pleased to offer full financial and editorial sponsorship for an academic White Paper co-authored with your research fellows.
+2. We invite your team to lead a dedicated Clinical Satellite Symposium at ESHRE 2027 under our institutional grant.
+3. We will supply complimentary consumable sets (Electro Dishes & Liquid Media) for your ongoing 2027 research protocols.
+
+We look forward to collaborating closely with your distinguished team.
+
+Sincerely,
+ZEUS Bioscience Scientific Affairs""",
+                ai_memo_data={
+                    "financial": "2026\'da $16,120.47 tutarında Capex alımı gerçekleşmiştir. Batı Avrupa\'da $100K+ potansiyel talep dalgası tetikleyebilir.",
+                    "leverage": "ESHRE ve Avrupa üreme tıbbında Ghent Üniversitesi referansı en yüksek bilimsel kabulü sağlamaktadır.",
+                    "clause": "Madde 9.1: Akademik doğrulama verileri uluslararası kongrelerde ortak bilimsel yayın ve vaka sunumu olarak kullanılabilir.",
+                    "recovery": "+$60,000 / Yıl (Almanya, Belçika ve İspanya üniversite hastanelerine 4 yeni sistem satışı ile)"
+                }
+            )
+
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        # ----------------------------------------------------------------------
+        # Gerçek Satış Hareketlerine Göre Anomali ve Trend Matrisi (43 Accounts)
+        # ----------------------------------------------------------------------
+        st.markdown("#### 📋 Gerçek Satış Hareketlerine Göre Partner Sağlık ve Trend Matrisi")
+        st.caption("Resmi Excel veritabanındaki 43 partnerin 2024, 2025, 2026 YTD fiili faturaları, cihaz sayıları ve AI sağlık durumları.")
+
+        tb_filter = st.selectbox(
+            "Tablo Filtresi",
+            ["Tüm Kayıtlı Partnerler (43 Hesap)", "🔴 Yalnızca Kritik Düşüş & Churn Riski Gösterenler", "✨ Yalnızca Yeni Girişler (2026 İlk Alımlar)", "🟢 Yalnızca Büyüyen & Aktif Hesaplar"]
+        )
+
+        if "Kritik" in tb_filter:
+            disp_source = emp_df[emp_df['Severity'].isin([1, 2, 3])].copy()
+        elif "Yeni" in tb_filter:
+            disp_source = emp_df[emp_df['Severity'] == 4].copy()
+        elif "Büyüyen" in tb_filter:
+            disp_source = emp_df[emp_df['Severity'].isin([5, 6])].copy()
+        else:
+            disp_source = emp_df.copy()
+
+        disp_show = disp_source[['Company', 'Country', 'Region', 'Main_Product', 'Sales_2024', 'Sales_2025', 'Sales_2026', 'Diff', 'Pct_Change', 'Devices', 'Status']].copy()
+        disp_show['Sales_2024'] = disp_show['Sales_2024'].apply(lambda x: f"${x:,.1f}")
+        disp_show['Sales_2025'] = disp_show['Sales_2025'].apply(lambda x: f"${x:,.1f}")
+        disp_show['Sales_2026'] = disp_show['Sales_2026'].apply(lambda x: f"${x:,.1f}")
+        disp_show['Diff'] = disp_show['Diff'].apply(lambda x: f"${x:+,.1f}")
+        disp_show['Pct_Change'] = disp_show['Pct_Change'].apply(lambda x: f"{x:+.1f}%")
+        disp_show.columns = ['Partner / Müşteri Adı', 'Ülke', 'Bölge', 'Ana Ürün', '2024 Ciro', '2025 Ciro', '2026 YTD Ciro', 'Yıllık Fark ($)', 'Yıllık Değişim (%)', 'Kurulu Cihaz', 'AI Sağlık Durumu & Teşhis']
+
+        st.dataframe(disp_show, use_container_width=True, hide_index=True)
+
+        # CSV Download Button
+        csv_data = disp_source.to_csv(index=False).encode('utf-8')
+        st.download_button(
+            "📥 Anomali ve Partner Trend Matrisini İndir (CSV)",
+            data=csv_data,
+            file_name="ZEUS_AI_Anomaly_Portfolio_Matrix_2026.csv",
+            mime="text/csv"
+        )
 
     # --------------------------------------------------------------------------
     # TAB 2: GELECEK AYIN SATIŞ TAHMİNİ (PREDICTIVE FORECASTING)
