@@ -2270,15 +2270,15 @@ if nav_selection == "◈ Executive Dashboard":
         'North America': '#3B82F6'   # Bright Royal Blue
     }
     status_color_map = {
-        'Active': '#00F5FF',      # Glowing Electric Cyan
-        'Prospect': '#FFB800',    # Radiant Warm Gold
-        'Uncovered': '#1B2947'    # Sleek High-Contrast Deep Navy
+        'Active': '#00E676',      # Vivid Emerald Green (Aktif Distribütör/Müşteri)
+        'Prospect': '#00F5FF',    # Radiant Electric Cyan (Hedef Pipeline)
+        'Uncovered': '#3A4B6E'    # Clean High-Contrast Slate Gray (Açık Beyaz Boşluk)
     }
     risk_color_map = {
-        'Low': '#00E676',         # Vivid Electric Emerald
-        'Medium': '#FFB300',      # Bright Amber
-        'High': '#FF3366',        # Vivid Coral Red
-        'Not rated': '#4A5D7E'
+        'Low': '#00E676',         # Vivid Green (Düşük Risk)
+        'Medium': '#FFB800',      # Bright Amber (Orta Risk)
+        'High': '#FF3366',        # Vivid Coral Red (Yüksek Risk)
+        'Not rated': '#64748B'
     }
 
     dist_by_code = {d['id']: d for d in dists_with_rev}
@@ -2319,11 +2319,28 @@ if nav_selection == "◈ Executive Dashboard":
             hover_data={"iso3": False, "Coverage": True, "Distributor": True, "Net Revenue": True, "Clinics": True, "Annual Cycles": True, "Opportunity Score": True}
         )
     elif map_layer == "🎯 Pazar Fırsat Skoru":
+        # Multi-hue chromatic spectrum with sharp visual separation across score tiers
         fig_map = px.choropleth(
             m_df, locations="iso3", color="Opportunity Score",
-            color_continuous_scale=[[0, "#08132B"], [0.2, "#093856"], [0.45, "#008EAA"], [0.75, "#00E5FF"], [1.0, "#7DF9FF"]],
+            color_continuous_scale=[
+                [0.0, "#2D3748"],   # 35: Baz Seviye (Deep Slate)
+                [0.2, "#7C3AED"],   # 47: Canlı Mor / Violet (Orta-Düşük)
+                [0.4, "#2563EB"],   # 59: Parlak Kobalt Mavi (Orta)
+                [0.6, "#EA580C"],   # 71: Sıcak Turuncu / Amber (Orta-Yüksek)
+                [0.8, "#16A34A"],   # 83: Zümrüt Yeşili (Yüksek)
+                [1.0, "#00F5FF"]    # 95+: Parlak Neon Cyan (En Yüksek / Elit)
+            ],
+            range_color=[35, 95],
             hover_name="Country",
             hover_data={"iso3": False, "Coverage": True, "Distributor": True, "Clinics": True, "Annual Cycles": True, "Opportunity Score": True}
+        )
+        fig_map.update_coloraxes(
+            colorbar_title="Fırsat Skoru",
+            colorbar_title_side="top",
+            colorbar_tickvals=[35, 50, 65, 80, 95],
+            colorbar_ticktext=["35 (Baz)", "50 (Orta)", "65 (Önemli)", "80 (Yüksek)", "95+ (Elit)"],
+            colorbar_len=0.75,
+            colorbar_thickness=18
         )
     else:
         fig_map = px.choropleth(
@@ -2343,11 +2360,11 @@ if nav_selection == "◈ Executive Dashboard":
         showlakes=True,
         lakecolor='#060C18',
         showcountries=True,
-        countrycolor='rgba(160, 195, 240, 0.45)',
-        countrywidth=0.8,
+        countrycolor='rgba(255, 255, 255, 0.35)',
+        countrywidth=1.0,
         showcoastlines=True,
-        coastlinecolor='rgba(0, 245, 255, 0.75)',
-        coastlinewidth=1.2,
+        coastlinecolor='rgba(0, 245, 255, 0.85)',
+        coastlinewidth=1.4,
         bgcolor='rgba(0,0,0,0)'
     )
 
@@ -2449,8 +2466,8 @@ if nav_selection == "◈ Executive Dashboard":
             x_ax, y_dev, y_con = sel_months, m_dev, m_con
 
         fig_trend = go.Figure()
-        fig_trend.add_trace(go.Bar(name='Capital Devices', x=x_ax, y=y_dev, marker_color='#13A6B5'))
-        fig_trend.add_trace(go.Bar(name='Consumables & Reagents', x=x_ax, y=y_con, marker_color='#7C93BD'))
+        fig_trend.add_trace(go.Bar(name='Cihaz / Donanım (Capital Devices)', x=x_ax, y=y_dev, marker_color='#00F5FF'))
+        fig_trend.add_trace(go.Bar(name='Tekrar Eden Sarf (Consumables)', x=x_ax, y=y_con, marker_color='#FFB800'))
         fig_trend.update_layout(
             barmode='stack',
             height=320,
@@ -2474,13 +2491,15 @@ if nav_selection == "◈ Executive Dashboard":
         fig_reg = px.bar(
             reg_df, x='Revenue', y='Region', orientation='h',
             text='Formatted',
-            color_discrete_sequence=['#13A6B5']
+            color='Region',
+            color_discrete_map=region_color_map
         )
         fig_reg.update_layout(
             height=320,
             paper_bgcolor='rgba(0,0,0,0)',
             plot_bgcolor='rgba(0,0,0,0)',
-            margin=dict(l=10, r=10, t=10, b=10),
+            margin=dict(l=10, r=20, t=10, b=10),
+            showlegend=False,
             xaxis=dict(showgrid=False, showticklabels=False),
             yaxis=dict(title="")
         )
