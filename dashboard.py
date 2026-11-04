@@ -2654,6 +2654,18 @@ elif nav_selection == "⌘ Pricing & Discount Calculator":
     st.title("💰 Commercial Discount & Margin Impact Calculator")
     st.caption("Çok Boyutlu Fiyatlandırma ve İskonto Karar Motoru: Ülke GSYİH (GDP), Yaşam Standardı, Ulusal IVF Destek Rejimi ve Partner Satış Performansına göre dinamik iskonto değerlendirmesi.")
 
+    # Order: Official distributors first, then international, then local
+    dist_names = [d['name'] for d in dist_rows]
+    intl_names = [d['name'] for d in intl_rows]
+    local_names = [d['name'] for d in local_rows]
+    all_ordered_names = dist_names + intl_names + local_names
+    if not all_ordered_names:
+        all_ordered_names = [d['name'] for d in active_rows]
+
+    sirius_idx = next((i for i, n in enumerate(all_ordered_names) if "SIRIUS" in n), 0)
+    # Use session state partner if set by AI tab
+    def_partner_idx = next((i for i, n in enumerate(all_ordered_names) if n == st.session_state.get('sim_calc_partner')), sirius_idx)
+
     calc_tab1, calc_tab2 = st.tabs([
         "🧮 Manuel İskonto & Marj Simülatörü",
         "🤖 AI Dinamik İskonto & Paket Önerisi (AI Pricing & Bundle Advisor)"
@@ -2667,19 +2679,6 @@ elif nav_selection == "⌘ Pricing & Discount Calculator":
         with c_calc1:
             st.markdown("#### 📋 Sipariş & Partner Parametreleri")
             
-            # Order: Official distributors first, then international, then local
-            dist_names = [d['name'] for d in dist_rows]
-            intl_names = [d['name'] for d in intl_rows]
-            local_names = [d['name'] for d in local_rows]
-            all_ordered_names = dist_names + intl_names + local_names
-            if not all_ordered_names:
-                all_ordered_names = [d['name'] for d in active_rows]
-
-            # Use session state partner if set by AI tab
-            def_partner_idx = next((i for i, n in enumerate(all_ordered_names) if n == st.session_state.get('sim_calc_partner')), None)
-            if def_partner_idx is None:
-                def_partner_idx = next((i for i, n in enumerate(all_ordered_names) if "SIRIUS" in n), 0)
-
             calc_dist_name = st.selectbox("İskonto Talep Eden Müşteri / Distribütör", all_ordered_names, index=def_partner_idx, key="calc_select_dist")
             calc_d = next((d for d in active_rows if d['name'] == calc_dist_name), active_rows[0])
             
