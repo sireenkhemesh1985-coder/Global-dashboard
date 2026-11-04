@@ -2615,60 +2615,365 @@ Modellenen senaryoda; **%{sim_fx} kur baskısı**, **%{sim_demand} talep dalgala
 # 11. VIEW: DISTRIBUTOR PERFORMANCE EVALUATOR
 # ==============================================================================
 elif nav_selection == "▲ Performance Evaluator":
-    st.title("📈 Distributor Operational & Strategic Performance Scorecard")
-    st.caption("Quantitative weighted assessment across sales commitments, clinical expansion, and market capture.")
+    st.title("📈 Partner Operational & Strategic Performance Scorecard")
+    st.caption("Excel satış kayıtlarındaki gerçek yıllık cihaz/sarf dökümleri, gerçek YoY büyüme oranları ve çeyreklik sipariş düşüş analizi.")
 
-    active_names = [d['name'] for d in active_rows]
-    eval_dist_name = st.selectbox("Select Partner to Evaluate", active_names)
-    eval_d = next(d for d in active_rows if d['name'] == eval_dist_name)
-
-    # Synthetic performance factors
-    def clamp(v):
-        return max(0, min(100, v))
-        
-    mkt_g = 6.0 + rnd_val(eval_d['id'], 31) * 8.0
-    s_target = clamp(eval_d['target_pct'])
-    s_growth = clamp(50.0 + eval_d['growth_pct'] * 1.6)
-    s_repeat = round(55.0 + rnd_val(eval_d['id'], 32) * 40.0)
-    s_clinic = round(40.0 + rnd_val(eval_d['id'], 33) * 50.0)
-    s_mkt = clamp(50.0 + (eval_d['growth_pct'] - mkt_g) * 2.5)
-
-    scores = [
-        {"Factor": "Target Commitment Attainment", "Score": s_target, "Weight": "25%", "Detail": f"{eval_d['target_pct']}% of agreed minimum"},
-        {"Factor": "Annual Sales Growth Rate", "Score": s_growth, "Weight": "20%", "Detail": f"{eval_d['growth_pct']:+.1f}% YoY net change"},
-        {"Factor": "Repeat Consumables Reorders", "Score": s_repeat, "Weight": "20%", "Detail": "Clinical consumable reorder frequency"},
-        {"Factor": "New IVF Clinic Acquisition", "Score": s_clinic, "Weight": "20%", "Detail": "Customer conversion & installed base"},
-        {"Factor": "Outperformance vs Local Market", "Score": s_mkt, "Weight": "15%", "Detail": f"Local market baseline ≈ {mkt_g:.1f}%"}
-    ]
-    overall_score = round(sum(s['Score'] for s in scores) / len(scores))
+    # --------------------------------------------------------------------------
+    # 1. PARTNER SEÇİMİ (DİSTRİBÜTÖRLER ÖNCELİKLİ)
+    # --------------------------------------------------------------------------
+    # Order: Official distributors first, then international, then local
+    dist_names = [d['name'] for d in dist_rows]
+    intl_names = [d['name'] for d in intl_rows]
+    local_names = [d['name'] for d in local_rows]
+    all_ordered_names = dist_names + intl_names + local_names
     
-    if overall_score >= 80:
-        band = "Strong Commercial Performer (Tier A)"
-        band_color = "#5FD3AE"
-    elif overall_score >= 65:
-        band = "Solid & Stable Partner (Tier B)"
-        band_color = "#4FD1DE"
-    elif overall_score >= 50:
-        band = "Mixed Performance – Review Recommended (Tier C)"
-        band_color = "#F0BC57"
+    # Default to CMC if present, else first
+    cmc_idx = next((i for i, n in enumerate(all_ordered_names) if "CONSULTANT MEDICAL" in n or "CMC" in n), 0)
+    
+    sel_col1, sel_col2 = st.columns([2, 1])
+    with sel_col1:
+        eval_dist_name = st.selectbox("İncelenecek Partner / Müşteriyi Seçin", all_ordered_names, index=cmc_idx)
+    with sel_col2:
+        eval_d = next((d for d in active_rows if d['name'] == eval_dist_name), active_rows[0])
+        st.markdown(f"""
+        <div style="background:rgba(19,166,181,0.08);border:1px solid #13A6B5;border-radius:8px;padding:8px 12px;font-size:12px;margin-top:20px;">
+            <b>Ülke / Pazar:</b> {eval_d['country_name']} ({eval_d['region']})<br>
+            <b>Sınıf:</b> {eval_d.get('account_type_tr', 'Distribütör')} &nbsp;|&nbsp; <b>LOA:</b> {eval_d.get('loa', 'N/A')}
+        </div>
+        """, unsafe_allow_html=True)
+
+    # --------------------------------------------------------------------------
+    # 2. GERÇEK EXCEL VERİLERİNDEN YILLIK & ÇEYREKLİK ANALİZ
+    # --------------------------------------------------------------------------
+    partner_sales = pd.DataFrame()
+    if raw_sales_df is not None:
+        partner_sales = raw_sales_df[raw_sales_df['Company'] == eval_dist_name].copy()
+        partner_sales = partner_sales.sort_values('Date_dt')
+
+    # Build annual breakdown
+    years_list = [2024, 2025, 2026]
+    y_stats = []
+    for yr in years_list:
+        ydf = partner_sales[partner_sales['Year_int'] == yr] if len(partner_sales) > 0 else pd.DataFrame()
+        tot = float(ydf['Amount (USD)'].sum()) if len(ydf) > 0 else 0.0
+        dev_amt = float(ydf[ydf['Group'] == 'Device']['Amount (USD)'].sum()) if len(ydf) > 0 else 0.0
+        con_amt = float(ydf[ydf['Group'] == 'Consumables']['Amount (USD)'].sum()) if len(ydf) > 0 else 0.0
+        dev_q = int(ydf[ydf['Group'] == 'Device']['Quantity'].sum()) if len(ydf) > 0 else 0
+        con_q = int(ydf[ydf['Group'] == 'Consumables']['Quantity'].sum()) if len(ydf) > 0 else 0
+        invs = int(ydf['Invoice'].nunique()) if len(ydf) > 0 else 0
+        
+        y_stats.append({
+            'Yıl': f"{yr} (YTD)" if yr == 2026 else str(yr),
+            'Toplam Ciro': tot,
+            'Cihaz Geliri': dev_amt,
+            'Cihaz (Adet)': dev_q,
+            'Sarf Geliri': con_amt,
+            'Sarf (Kutu)': con_q,
+            'Sarf Payı (%)': (con_amt / tot * 100.0) if tot > 0 else 0.0,
+            'Fatura': invs
+        })
+
+    y_df = pd.DataFrame(y_stats)
+    
+    # Real YoY Growth
+    v24 = y_df['Toplam Ciro'].iloc[0]
+    v25 = y_df['Toplam Ciro'].iloc[1]
+    v26 = y_df['Toplam Ciro'].iloc[2]
+    
+    yoy_25 = ((v25 - v24) / v24 * 100.0) if v24 > 0 else (100.0 if v25 > 0 else 0.0)
+    yoy_26 = ((v26 - v25) / v25 * 100.0) if v25 > 0 else (100.0 if v26 > 0 else 0.0)
+
+    # Device YoY
+    d24 = y_df['Cihaz Geliri'].iloc[0]
+    d25 = y_df['Cihaz Geliri'].iloc[1]
+    d26 = y_df['Cihaz Geliri'].iloc[2]
+    dev_yoy_25 = ((d25 - d24) / d24 * 100.0) if d24 > 0 else (100.0 if d25 > 0 else 0.0)
+    dev_yoy_26 = ((d26 - d25) / d25 * 100.0) if d25 > 0 else (100.0 if d26 > 0 else 0.0)
+
+    # Consumables YoY
+    c24 = y_df['Sarf Geliri'].iloc[0]
+    c25 = y_df['Sarf Geliri'].iloc[1]
+    c26 = y_df['Sarf Geliri'].iloc[2]
+    con_yoy_25 = ((c25 - c24) / c24 * 100.0) if c24 > 0 else (100.0 if c25 > 0 else 0.0)
+    con_yoy_26 = ((c26 - c25) / c25 * 100.0) if c25 > 0 else (100.0 if c26 > 0 else 0.0)
+
+    tot_all_rev = sum(y_df['Toplam Ciro'])
+    tot_all_dev = sum(y_df['Cihaz (Adet)'])
+    tot_all_con = sum(y_df['Sarf (Kutu)'])
+    last_order_str = eval_d.get('last_order', '—')
+
+    # Quick KPI Cards
+    k1, k2, k3, k4 = st.columns(4)
+    k1.metric("Toplam Faturalanan Ciro", format_curr(tot_all_rev), delta=f"{yoy_26:+.1f}% 2026 YoY" if v25 > 0 else "Yeni Partner")
+    k2.metric("Kurulu Cihaz Sayısı", f"{tot_all_dev} Adet", delta=f"{dev_yoy_26:+.0f}% Cihaz İvmesi" if d25 > 0 else "Stabil")
+    k3.metric("Sarf Sipariş Hacmi", f"{tot_all_con} Kutu", delta=f"{con_yoy_26:+.1f}% Sarf İvmesi" if c25 > 0 else "Stabil")
+    k4.metric("Son Sipariş Tarihi", last_order_str, delta="Aktif Müşteri")
+
+    st.markdown("---")
+
+    # --------------------------------------------------------------------------
+    # 3. YILLIK CİHAZ VE SARF MALZEME GERÇEKLEŞME TABLOSU
+    # --------------------------------------------------------------------------
+    st.subheader("📋 Yıllık Cihaz ve Sarf Malzeme Gerçekleşme Tablosu")
+    st.caption("Firma bazında sermaye ekipmanı satışları ile tekrar eden sarf malzeme tüketiminin yıl bazında resmi dökümü.")
+
+    disp_y_df = y_df.copy()
+    disp_y_df['YoY Net Değişim'] = [
+        "—",
+        f"{yoy_25:+.1f}% (Cihaz: {dev_yoy_25:+.0f}%, Sarf: {con_yoy_25:+.1f}%)",
+        f"{yoy_26:+.1f}% (Cihaz: {dev_yoy_26:+.0f}%, Sarf: {con_yoy_26:+.1f}%)"
+    ]
+    disp_y_df['Toplam Ciro'] = disp_y_df['Toplam Ciro'].apply(format_curr)
+    disp_y_df['Cihaz Geliri'] = disp_y_df['Cihaz Geliri'].apply(format_curr)
+    disp_y_df['Sarf Geliri'] = disp_y_df['Sarf Geliri'].apply(format_curr)
+    disp_y_df['Cihaz (Adet)'] = disp_y_df['Cihaz (Adet)'].apply(lambda x: f"{x} Adet" if x > 0 else "—")
+    disp_y_df['Sarf (Kutu)'] = disp_y_df['Sarf (Kutu)'].apply(lambda x: f"{x} Kutu" if x > 0 else "—")
+    disp_y_df['Sarf Payı (%)'] = disp_y_df['Sarf Payı (%)'].apply(lambda x: f"%{x:.1f}")
+    disp_y_df['Fatura'] = disp_y_df['Fatura'].apply(lambda x: f"{x} İşlem")
+
+    st.dataframe(disp_y_df, use_container_width=True, hide_index=True)
+
+    st.markdown("---")
+
+    # --------------------------------------------------------------------------
+    # 4. ÇEYREKLİK SİPARİŞ TRENDİ VE TESPİT EDİLEN SİPARİŞ DÜŞÜŞLERİ GRAFİĞİ
+    # --------------------------------------------------------------------------
+    st.subheader("📉 Çeyreklik Sipariş Trendi ve Sipariş Düşüşleri (Order Drop Tracking)")
+    st.caption("Zaman çizelgesi üzerinde gerçekleşen siparişler, sermaye ekipmanı ve sarf ayrımı ile tespit edilen kritik hacim düşüşleri.")
+
+    all_quarters = ['2024Q1', '2024Q2', '2024Q3', '2024Q4', '2025Q1', '2025Q2', '2025Q3', '2025Q4', '2026Q1', '2026Q2', '2026Q3', '2026Q4']
+    partner_sales['Quarter'] = partner_sales['Date_dt'].dt.to_period('Q').astype(str) if len(partner_sales) > 0 else pd.Series()
+    
+    q_dict = {}
+    if len(partner_sales) > 0:
+        for q, grp in partner_sales.groupby('Quarter'):
+            q_dict[q] = {
+                'Quarter': q,
+                'Amount': float(grp['Amount (USD)'].sum()),
+                'Device_Amt': float(grp[grp['Group'] == 'Device']['Amount (USD)'].sum()),
+                'Consumables_Amt': float(grp[grp['Group'] == 'Consumables']['Amount (USD)'].sum()),
+                'Device_Qty': int(grp[grp['Group'] == 'Device']['Quantity'].sum()),
+                'Consumables_Qty': int(grp[grp['Group'] == 'Consumables']['Quantity'].sum())
+            }
+
+    active_qs = sorted(list(q_dict.keys())) if len(q_dict) > 0 else ['2026Q1', '2026Q2', '2026Q3']
+    first_q_idx = all_quarters.index(active_qs[0]) if active_qs[0] in all_quarters else 0
+    last_q_idx = all_quarters.index(active_qs[-1]) if active_qs[-1] in all_quarters else len(all_quarters) - 1
+
+    q_series = []
+    prev_amt = None
+    detected_drops = []
+    for q_idx in range(first_q_idx, last_q_idx + 1):
+        q_str = all_quarters[q_idx]
+        data = q_dict.get(q_str, {
+            'Quarter': q_str, 'Amount': 0.0, 'Device_Amt': 0.0, 'Consumables_Amt': 0.0, 'Device_Qty': 0, 'Consumables_Qty': 0
+        })
+        
+        is_drop = False
+        drop_pct = 0.0
+        if prev_amt is not None and prev_amt > 0:
+            if data['Amount'] < prev_amt:
+                is_drop = True
+                drop_pct = ((data['Amount'] - prev_amt) / prev_amt) * 100.0
+                detected_drops.append({
+                    'Quarter': q_str,
+                    'Drop_Pct': drop_pct,
+                    'Current_Amt': data['Amount'],
+                    'Prior_Amt': prev_amt,
+                    'Is_Zero_Gap': data['Amount'] == 0.0
+                })
+        data['Is_Drop'] = is_drop
+        data['Drop_Pct'] = drop_pct
+        q_series.append(data)
+        prev_amt = data['Amount']
+
+    q_df = pd.DataFrame(q_series)
+
+    # Plotly Stacked Bar + Line with Drop Markers
+    fig_ord = go.Figure()
+
+    # Device bar
+    fig_ord.add_trace(go.Bar(
+        x=q_df['Quarter'], y=q_df['Device_Amt'] * currency_rate,
+        name='Cihaz Geliri (Capital Equipment)',
+        marker_color='#13A6B5'
+    ))
+
+    # Consumables bar
+    fig_ord.add_trace(go.Bar(
+        x=q_df['Quarter'], y=q_df['Consumables_Amt'] * currency_rate,
+        name='Sarf Geliri (Consumables & Solution)',
+        marker_color='#4FD1DE'
+    ))
+
+    # Total line
+    fig_ord.add_trace(go.Scatter(
+        x=q_df['Quarter'], y=q_df['Amount'] * currency_rate,
+        mode='lines+markers',
+        name='Toplam Sipariş Hacmi',
+        line=dict(color='#CCD7E6', width=2),
+        marker=dict(size=6, color='#CCD7E6')
+    ))
+
+    # Drop annotations
+    for drop in detected_drops:
+        fig_ord.add_annotation(
+            x=drop['Quarter'],
+            y=drop['Current_Amt'] * currency_rate,
+            text=f"📉 Düşüş {drop['Drop_Pct']:.0f}%" if not drop['Is_Zero_Gap'] else "⚠️ Sipariş Boşluğu ($0)",
+            showarrow=True,
+            arrowhead=2,
+            arrowcolor='#FF8A96',
+            font=dict(color='#FF8A96', size=11, family='sans-serif'),
+            bgcolor="rgba(229,112,123,0.18)",
+            bordercolor="#FF8A96",
+            borderwidth=1,
+            borderpad=3
+        )
+
+    fig_ord.update_layout(
+        barmode='stack',
+        height=380,
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)',
+        margin=dict(l=10, r=10, t=30, b=10),
+        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+        yaxis=dict(gridcolor='rgba(255,255,255,0.08)', title=f"Sipariş Tutarı ({currency_symbol})"),
+        xaxis=dict(title="Dönem (Çeyrekler)")
+    )
+    st.plotly_chart(fig_ord, use_container_width=True)
+
+    # Detailed Drop Insights Box
+    c_dr1, c_dr2 = st.columns([1.5, 1])
+    with c_dr1:
+        st.markdown("##### 🚨 Tespit Edilen Sipariş Düşüşleri ve Kritik Sapmalar")
+        if len(detected_drops) > 0:
+            for drop in detected_drops:
+                if drop['Is_Zero_Gap']:
+                    st.markdown(f"""
+                    <div style="background:rgba(229,112,123,0.08);border-left:4px solid #FF8A96;padding:10px 14px;border-radius:6px;margin-bottom:8px;font-size:13px;">
+                        <b style="color:#FF8A96;">⚠️ {drop['Quarter']}: Sipariş Kesintisi (Gap Dönemi)</b><br>
+                        <span style="color:#CCD7E6;">Bir önceki çeyrekte {format_curr(drop['Prior_Amt'])} sipariş verilmişken, bu çeyrekte hiç sipariş açılmamıştır (%100 dönemsel düşüş).</span>
+                    </div>
+                    """, unsafe_allow_html=True)
+                else:
+                    st.markdown(f"""
+                    <div style="background:rgba(240,188,87,0.08);border-left:4px solid #F0BC57;padding:10px 14px;border-radius:6px;margin-bottom:8px;font-size:13px;">
+                        <b style="color:#F0BC57;">📉 {drop['Quarter']}: {drop['Drop_Pct']:.1f}% Sipariş Gerilemesi</b><br>
+                        <span style="color:#CCD7E6;">Önceki çeyrekteki {format_curr(drop['Prior_Amt'])} hacim, {format_curr(drop['Current_Amt'])} seviyesine gerilemiştir.</span>
+                    </div>
+                    """, unsafe_allow_html=True)
+        else:
+            st.success("✅ Bu partner için çeyrekler arası keskin bir sipariş düşüşü tespit edilmemiştir; sipariş hacmi düzenli veya artış trendindedir.")
+
+    with c_dr2:
+        st.markdown("##### 💡 Analitik Değerlendirme & Yorum")
+        if tot_all_dev > 0 and y_df['Cihaz (Adet)'].iloc[-1] == 0:
+            st.info(f"ℹ️ **Cihaz vs Sarf Dönüşümü:** {eval_dist_name}, geçmiş yıllarda {tot_all_dev} adet Piezo cihazı alarak altyapısını kurmuştur. 2026'da cihaz alımının durması normal bir sermaye ekipmanı doyumudur; asıl takip edilmesi gereken metrik kurulu 5 cihazın oosit sarf tüketim sürekliliğidir.")
+        elif tot_all_dev == 0:
+            st.info(f"ℹ️ **Sadece Sarf Alan Müşteri:** Bu partner henüz Piezo sermaye cihazı almamış olup yalnızca Electro Dish veya Solüsyon sarfı tüketmektedir.")
+        else:
+            st.success(f"ℹ️ **Aktif Büyüme:** Partner hem yeni cihaz kurulumu yapmakta hem de sarf malzeme hacmini büyütmektedir.")
+
+    st.markdown("---")
+
+    # --------------------------------------------------------------------------
+    # 5. GERÇEK VERİYE DAYALI AĞIRLIKLI PERFORMANS SKORU
+    # --------------------------------------------------------------------------
+    st.subheader("🎯 Ağırlıklı Performans ve Sağlık Karnesi")
+    st.caption("Partnerin gerçek büyüme rasyoları, kurulu cihaz tabanı, sarf sürekliliği ve sipariş düşüş sıklığına göre hesaplanmıştır.")
+
+    # Objective scores based on actual data
+    # 1. Device base score (0 to 100)
+    s_device = min(100, tot_all_dev * 20)  # 5 devices = 100
+    
+    # 2. Consumables velocity score
+    s_consumable = min(100, tot_all_con * 2) # 50 boxes = 100
+    
+    # 3. Growth score (penalizes sharp contraction, rewards positive growth)
+    if yoy_26 > 15.0:
+        s_growth = 95
+    elif yoy_26 > 0.0:
+        s_growth = 80
+    elif yoy_26 > -30.0:
+        s_growth = 60
+    elif yoy_26 > -60.0:
+        s_growth = 45
     else:
-        band = "Critical Attention Required (Tier D)"
-        band_color = "#FF8A96"
+        s_growth = 35
+        
+    # 4. Regularity score (penalized by number of drop quarters)
+    num_drops = len([d for d in detected_drops if d['Is_Zero_Gap']])
+    s_regularity = max(30, 95 - num_drops * 20)
+    
+    # 5. Compliance score
+    s_comp = 95 if eval_d.get('loa') == 'Valid' else (65 if eval_d.get('loa') == 'In renewal' else 80)
+
+    perf_factors = [
+        {"Factor": "Kurulu Cihaz Tabanı & Penetrasyon", "Score": s_device, "Weight": "25%", "Detail": f"{tot_all_dev} Adet Placed Piezo Pulse"},
+        {"Factor": "Tekrar Eden Sarf Tüketim Hacmi", "Score": s_consumable, "Weight": "25%", "Detail": f"{tot_all_con} Kutu Electro Dish & Solüsyon"},
+        {"Factor": "Yıllık Satış Büyüme İvmesi (YoY)", "Score": s_growth, "Weight": "20%", "Detail": f"{yoy_26:+.1f}% 2026 Net Değişim"},
+        {"Factor": "Sipariş Düzenliliği & Düşüş Direnci", "Score": s_regularity, "Weight": "15%", "Detail": f"{num_drops} Sıfır Çeyrek Boşluğu"},
+        {"Factor": "Hukuki Uyum & Sözleşme Sağlığı", "Score": s_comp, "Weight": "15%", "Detail": f"Statü: {eval_d.get('compliance', 'Uyumlu')}"}
+    ]
+
+    total_weighted_score = round(
+        s_device * 0.25 + s_consumable * 0.25 + s_growth * 0.20 + s_regularity * 0.15 + s_comp * 0.15
+    )
+
+    if total_weighted_score >= 80:
+        band_title = "Strong Commercial Performer (Tier A)"
+        band_col = "#5FD3AE"
+    elif total_weighted_score >= 65:
+        band_title = "Solid & Stable Partner (Tier B)"
+        band_col = "#4FD1DE"
+    elif total_weighted_score >= 50:
+        band_title = "Mixed Performance – Action Required (Tier C)"
+        band_col = "#F0BC57"
+    else:
+        band_title = "Critical Attention Required (Tier D)"
+        band_col = "#FF8A96"
 
     ev1, ev2 = st.columns([1, 2])
     with ev1:
         st.markdown(f"""
         <div class="kpi-container" style="text-align:center;padding:24px;">
-            <div class="kpi-header">Overall Rating Score</div>
-            <div style="font-size:48px;font-weight:800;color:{band_color};">{overall_score}</div>
-            <div style="font-size:14px;color:#CCD7E6;font-weight:600;margin-top:6px;">{band}</div>
+            <div class="kpi-header">Genel Partner Sağlık Skoru</div>
+            <div style="font-size:52px;font-weight:800;color:{band_col};">{total_weighted_score}</div>
+            <div style="font-size:14px;color:#CCD7E6;font-weight:600;margin-top:6px;">{band_title}</div>
+            <div style="font-size:11px;color:#7C93BD;margin-top:4px;">Gerçek Satış ve Sipariş İvmesine Dayalı</div>
         </div>
         """, unsafe_allow_html=True)
     with ev2:
-        for item in scores:
+        for item in perf_factors:
             st.write(f"**{item['Factor']}** ({item['Weight']}) — `{item['Detail']}`")
             st.progress(item['Score'] / 100.0, text=f"{item['Score']} / 100")
 
+    # --------------------------------------------------------------------------
+    # 6. YÖNETİCİ EYLEM REÇETESİ
+    # --------------------------------------------------------------------------
+    st.markdown("#### 💊 Yönetici Teşhisi ve Eylem Reçetesi")
+    if "CMC" in eval_dist_name or "CONSULTANT" in eval_dist_name:
+        st.markdown("""
+        <div style="background:rgba(19,166,181,0.08);border:1px solid #13A6B5;border-radius:10px;padding:16px;">
+            <b style="color:#00F5FF;font-size:15px;">📋 CMC (Filistin Pazarı) Özel Yönetici Özeti:</b><br>
+            <div style="color:#CCD7E6;font-size:13px;line-height:1.6;margin-top:6px;">
+                <b>Teşhis:</b> CMC, 2024 ve 2025 yıllarında toplam <b>5 adet ZEUS Piezo Pulse</b> cihazı alarak Filistin'deki referans klinik altyapısını tamamlamıştır. 2026 yılında yeni cihaz alımı yapılmaması toplam ciroda %71.8 düşüş gibi görünse de, <b>46 kutuluk sarf alımı</b> cihazların tam kapasite çalıştığını teyit etmektedir.<br>
+                <b>Kritik Risk:</b> Siparişlerin çeyreklik düzenli açılmaması (2025Q2 ve 2026Q2'de sıfır sipariş); kliniklerin sarf stoku tükenene kadar beklediğini göstermektedir.<br>
+                <b>Eylem Reçetesi:</b> CMC ile 6 aylık toplu sipariş yerine <b>çeyreklik otomatik yenilenen sarf sevkiyat protokolü</b> imzalanmalı; 2027 başında Batı Şeria'daki yeni bir merkez için 6. Piezo cihazı demo teklifi sunulmalıdır.
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+    else:
+        st.markdown(f"""
+        <div style="background:rgba(19,166,181,0.08);border:1px solid #13A6B5;border-radius:10px;padding:16px;">
+            <b style="color:#00F5FF;font-size:15px;">📋 {eval_dist_name} Yönetici Aksiyon Notu:</b><br>
+            <div style="color:#CCD7E6;font-size:13px;line-height:1.6;margin-top:6px;">
+                <b>Stratejik Durum:</b> Toplam {format_curr(tot_all_rev)} ciro, {tot_all_dev} kurulu cihaz ve {tot_all_con} kutu sarf malzemesi kaydı bulunmaktadır.<br>
+                <b>Öneri:</b> Çeyreklik sipariş dalgalanmalarını gidermek amacıyla yıllık minimum sarf sipariş taahhüdü ve indirim kademeleri devreye alınmalıdır.
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
 
 
 # ==============================================================================
