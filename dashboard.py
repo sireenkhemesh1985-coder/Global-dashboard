@@ -2271,72 +2271,344 @@ elif nav_selection == "⌘ Pricing & Discount Calculator":
 # ==============================================================================
 elif nav_selection == "⛛ Risk & Scenario Simulator":
     st.title("🎯 Commercial Risk & Financial Scenario Simulator")
-    st.caption("Stress-test global revenues, credit exposures, and shipping delays across currency fluctuations and market shocks.")
+    st.caption("ZEUS Ticari Risk Simülatörü: Satış senaryoları, döviz & talep şokları, teslimat gecikmesi ve sözleşme bazlı tahsilat modellemesi.")
 
-    preset_choice = st.radio("Simulation Model", ["Base Case (Neutral)", "Downside Stress Test", "Upside Expansion", "Custom Parameters"], horizontal=True)
+    # --------------------------------------------------------------------------
+    # 1. SATIŞ SENARYOSU GİRİŞLERİ (ÜLKE VE DÖNEM KAPSAMI)
+    # --------------------------------------------------------------------------
+    sc_f1, sc_f2 = st.columns([1.5, 1])
+    with sc_f1:
+        all_sim_countries = sorted(list(set(d['country_name'] for d in dists_with_rev)))
+        sc_country = st.selectbox("Simülasyon Ülke Kapsamı", ["Global (Tüm Ülkeler)"] + all_sim_countries)
+    with sc_f2:
+        sc_period = st.selectbox("Simülasyon Dönemi", ["Son 12 Ay (FY2026 / LTM)", "2026 Yılbaşından Bugüne (YTD)", "Son 6 Ay", "Son 3 Ay", "Tüm Kayıtlar"])
 
-    if preset_choice == "Base Case (Neutral)":
-        p_fx, p_dem, p_disc, p_delay, p_dflt = 0.0, 0.0, 0.0, 0, 1.0
-    elif preset_choice == "Downside Stress Test":
-        p_fx, p_dem, p_disc, p_delay, p_dflt = 12.0, -15.0, 6.0, 30, 5.0
-    elif preset_choice == "Upside Expansion":
-        p_fx, p_dem, p_disc, p_delay, p_dflt = -5.0, 12.0, 0.0, 0, 0.5
+    # Calculate base revenue dynamically from real dataset
+    if raw_sales_df is not None:
+        filtered_df = raw_sales_df.copy()
+        if sc_country != "Global (Tüm Ülkeler)":
+            filtered_df = filtered_df[filtered_df['Country'] == sc_country]
+            
+        if sc_period == "2026 Yılbaşından Bugüne (YTD)":
+            filtered_df = filtered_df[filtered_df['Year_int'] == 2026]
+        elif sc_period == "Son 6 Ay":
+            filtered_df = filtered_df[(filtered_df['Year_int'] == 2026) & (filtered_df['Month_int'] >= 5)]
+        elif sc_period == "Son 3 Ay":
+            filtered_df = filtered_df[(filtered_df['Year_int'] == 2026) & (filtered_df['Month_int'] >= 8)]
+        elif sc_period == "Son 12 Ay (FY2026 / LTM)":
+            filtered_df = filtered_df[(filtered_df['Year_int'] == 2026) | ((filtered_df['Year_int'] == 2025) & (filtered_df['Month_int'] >= 11))]
+            
+        base_sc_rev = float(filtered_df['Amount (USD)'].sum()) if len(filtered_df) > 0 else (total_rev if sc_country == "Global (Tüm Ülkeler)" else 15000.0)
     else:
-        p_fx, p_dem, p_disc, p_delay, p_dflt = 0.0, 0.0, 0.0, 0, 1.0
+        base_sc_rev = total_rev if sc_country == "Global (Tüm Ülkeler)" else 50000.0
 
-    s_c1, s_c2 = st.columns([1.2, 1.4])
+    st.markdown(f"**📌 Seçili Kapsam Baz Satış Cirosu:** `{format_curr(base_sc_rev)}` &nbsp;|&nbsp; Kapsam: `{sc_country}` &nbsp;|&nbsp; Dönem: `{sc_period}`")
+
+    # --------------------------------------------------------------------------
+    # 2. HAZIR SENARYOLAR (PRESETS)
+    # --------------------------------------------------------------------------
+    preset_choice = st.radio(
+        "Hazır Senaryo Modelleri",
+        ["Baz Senaryo (Neutral)", "Olumsuz Senaryo (Downside Stress)", "Olumlu Senaryo (Upside Expansion)", "Özel Parametreler (Custom)"],
+        horizontal=True
+    )
+
+    if preset_choice == "Baz Senaryo (Neutral)":
+        p_fx, p_dem, p_disc, p_delay = 0.0, 0.0, 0.0, 0
+    elif preset_choice == "Olumsuz Senaryo (Downside Stress)":
+        p_fx, p_dem, p_disc, p_delay = 12.0, -15.0, 6.0, 30
+    elif preset_choice == "Olumlu Senaryo (Upside Expansion)":
+        p_fx, p_dem, p_disc, p_delay = -5.0, 12.0, 0.0, 0
+    else:
+        p_fx, p_dem, p_disc, p_delay = 0.0, 0.0, 0.0, 0
+
+    s_c1, s_c2 = st.columns([1.1, 1.4])
     with s_c1:
-        st.markdown("#### Scenario Variables")
-        sim_fx = st.slider("USD Exchange Rate Volatility (%)", -15.0, 15.0, float(p_fx), 1.0)
-        sim_demand = st.slider("Market Demand Shock (%)", -30.0, 30.0, float(p_dem), 1.0)
-        sim_disc = st.slider("Pricing Pressure / Competitor Discount (%)", 0.0, 20.0, float(p_disc), 1.0)
-        sim_delay = st.slider("Supply Chain & Payment Delay (Days)", 0, 90, int(p_delay), 5)
-        sim_dflt = st.slider("Distributor Default Probability (%)", 0.0, 15.0, float(p_dflt), 0.5)
+        st.markdown("#### ⚙️ Satış Senaryosu Girişleri")
+        sim_fx = st.slider("USD ve Yerel Para Birimleri Değişimi (%)", -15.0, 15.0, float(p_fx), 1.0, help="Pozitif değer ciroyu azaltacak yönde uygulanır. Örneğin +%10 kur girdisi tek başına ciroyu %4.5 düşürür.")
+        sim_demand = st.slider("Pazar Talebi Değişimi (%)", -30.0, 30.0, float(p_dem), 1.0, help="Satış hacmindeki genel talep artış/azalış değişimi.")
+        sim_disc = st.slider("İndirim ve Rekabet Baskısı (%)", 0.0, 20.0, float(p_disc), 1.0, help="ZEUS satış fiyatına uygulanan senaryo indirimi.")
+        sim_delay = st.slider("Sevkiyat Gecikmesi (Gün)", 0, 90, int(p_delay), 5, help="Teslimatın kaç gün ötelenebileceğini gösterir.")
 
-    def run_sim(base_r, gm, fx_v, dem_v, disc_v, delay_v, dflt_v):
-        demand = 1.0 + dem_v / 100.0
-        price = 1.0 - disc_v / 100.0
-        fx = 1.0 - (fx_v / 100.0) * 0.45
-        rev = base_r * demand * price * fx
-        cogs = base_r * (1.0 - gm) * demand
-        logistics = rev * 0.0006 * delay_v
-        recv = rev * (60.0 + delay_v) / 365.0
-        loss = recv * (dflt_v / 100.0)
-        gp = rev - cogs - logistics - loss
-        margin = (gp / rev * 100.0) if rev > 0 else 0.0
-        be = ((base_r * 0.18) / (gp / rev)) if gp > 0 and rev > 0 else None
-        return {'rev': rev, 'gp': gp, 'margin': margin, 'recv': recv, 'loss': loss, 'be': be}
+        # Ürün Maliyeti Girişi (Opsiyonel / Maliyet verisi kuralı)
+        with st.expander("💼 Kârlılık Hesabı İçin Ürün Maliyeti (COGS) Girişi", expanded=False):
+            st.caption("Ürün maliyeti girilene kadar brüt kâr ve marj alanlarında 'Maliyet verisi gerekli' yazacaktır.")
+            user_cogs_pct = st.number_input("Ürün Maliyet Oranı (%)", min_value=0.0, max_value=90.0, value=0.0, step=5.0, help="Maliyet oranı girildiğinde brüt kâr ve marj otomatik hesaplanır.")
 
-    base_gm = (avg_margin or 40.0) / 100.0
-    sim_res = run_sim(total_rev, base_gm, sim_fx, sim_demand, sim_disc, sim_delay, sim_dflt)
-    base_res = run_sim(total_rev, base_gm, 0, 0, 0, 0, 1.0)
+    # --------------------------------------------------------------------------
+    # 3. SENARYO HESAPLAMA MOTORU (FORMÜL KILAVUZUNA UYGUN)
+    # --------------------------------------------------------------------------
+    def calculate_scenario_rev(base_r, fx_val, dem_val, disc_val):
+        demand_factor = 1.0 + (dem_val / 100.0)
+        price_factor = 1.0 - (disc_val / 100.0)
+        fx_factor = 1.0 - (fx_val / 100.0) * 0.45  # +%10 kur -> -%4.5 ciro
+        return max(0.0, base_r * demand_factor * price_factor * fx_factor)
+
+    sim_rev = calculate_scenario_rev(base_sc_rev, sim_fx, sim_demand, sim_disc)
+    base_rev_val = calculate_scenario_rev(base_sc_rev, 0.0, 0.0, 0.0)
+    rev_delta = ((sim_rev - base_rev_val) / base_rev_val * 100.0) if base_rev_val > 0 else 0.0
+
+    # Kârlılık değerlendirmesi (Maliyet verisi gerekli kuralı)
+    has_cost = user_cogs_pct > 0.0
+    if has_cost:
+        sim_gp = sim_rev * (1.0 - user_cogs_pct / 100.0)
+        sim_margin = (sim_gp / sim_rev * 100.0) if sim_rev > 0 else 0.0
+        base_gp = base_rev_val * (1.0 - user_cogs_pct / 100.0)
+        gp_delta = ((sim_gp - base_gp) / base_gp * 100.0) if base_gp > 0 else 0.0
+        
+        gp_text = format_curr(sim_gp)
+        margin_text = f"{sim_margin:.1f}%"
+        gp_sub = f"{gp_delta:+.1f}% vs Baz"
+        margin_sub = f"%{user_cogs_pct:.1f} Maliyet Oranı"
+    else:
+        gp_text = "Maliyet verisi gerekli"
+        margin_text = "Maliyet verisi gerekli"
+        gp_sub = "Kârlılık için maliyet oranı giriniz"
+        margin_sub = "Maliyet verisi bekleniyor"
 
     with s_c2:
-        st.markdown("#### Projected Financial Impact")
-        r1, r2 = st.columns(2)
-        r_delta = ((sim_res['rev'] - base_res['rev']) / base_res['rev'] * 100.0) if base_res['rev'] > 0 else 0.0
-        gp_delta = ((sim_res['gp'] - base_res['gp']) / base_res['gp'] * 100.0) if base_res['gp'] > 0 else 0.0
-        
-        r1.metric("Projected Revenue", format_curr(sim_res['rev']), delta=f"{r_delta:+.1f}% vs Base")
-        r2.metric("Projected Gross Profit", format_curr(sim_res['gp']), delta=f"{gp_delta:+.1f}% vs Base")
-        
-        r3, r4 = st.columns(2)
-        r3.metric("Projected Gross Margin", f"{sim_res['margin']:.1f}%", delta=f"{sim_res['margin'] - base_res['margin']:+.1f} pt")
-        r4.metric("Receivables Exposure", format_curr(sim_res['recv']), delta=f"Expected Loss: {format_curr(sim_res['loss'])}", delta_color="inverse")
+        st.markdown("#### 📊 Sonuç Göstergeleri (Finansal Etki)")
+        res1, res2 = st.columns(2)
+        res1.metric("Öngörülen Ciro", format_curr(sim_rev), delta=f"{rev_delta:+.1f}% vs Baz")
+        res2.metric("Teslimat Zamanlaması", f"+{sim_delay} Gün Öteleme" if sim_delay > 0 else "Zamanında (0 Gün)", delta="Baz Teslimat Planına Ek", delta_color="inverse" if sim_delay > 0 else "normal")
 
-        # Scenario comparison chart
-        scenarios = {
-            'Base Case': base_res,
-            'Downside': run_sim(total_rev, base_gm, 12, -15, 6, 30, 5),
-            'Upside': run_sim(total_rev, base_gm, -5, 12, 0, 0, 0.5),
-            'Simulated Model': sim_res
-        }
-        sc_df = pd.DataFrame([
-            {'Scenario': k, 'Revenue': v['rev'], 'Gross Profit': v['gp']} for k, v in scenarios.items()
-        ])
-        fig_sc = px.bar(sc_df, x='Scenario', y=['Revenue', 'Gross Profit'], barmode='group', color_discrete_map={'Revenue': '#7C93BD', 'Gross Profit': '#13A6B5'})
-        fig_sc.update_layout(height=260, margin=dict(l=10, r=10, t=10, b=10))
+        res3, res4 = st.columns(2)
+        res3.metric("Öngörülen Brüt Kâr", gp_text, delta=gp_sub if has_cost else None)
+        res4.metric("Öngörülen Brüt Marj", margin_text, delta=margin_sub if has_cost else None)
+
+        # Senaryo Kıyaslama Grafiği
+        sc_base_rev = calculate_scenario_rev(base_sc_rev, 0.0, 0.0, 0.0)
+        sc_down_rev = calculate_scenario_rev(base_sc_rev, 12.0, -15.0, 6.0)
+        sc_up_rev = calculate_scenario_rev(base_sc_rev, -5.0, 12.0, 0.0)
+
+        chart_data = [
+            {'Senaryo': 'Baz Senaryo', 'Öngörülen Ciro': sc_base_rev},
+            {'Senaryo': 'Olumsuz (Stress)', 'Öngörülen Ciro': sc_down_rev},
+            {'Senaryo': 'Olumlu (Upside)', 'Öngörülen Ciro': sc_up_rev},
+            {'Senaryo': 'Simüle Edilen', 'Öngörülen Ciro': sim_rev}
+        ]
+        
+        if has_cost:
+            for item in chart_data:
+                item['Öngörülen Brüt Kâr'] = item['Öngörülen Ciro'] * (1.0 - user_cogs_pct / 100.0)
+            y_cols = ['Öngörülen Ciro', 'Öngörülen Brüt Kâr']
+            col_map = {'Öngörülen Ciro': '#7C93BD', 'Öngörülen Brüt Kâr': '#13A6B5'}
+        else:
+            y_cols = ['Öngörülen Ciro']
+            col_map = {'Öngörülen Ciro': '#00F5FF'}
+
+        fig_sc = px.bar(
+            pd.DataFrame(chart_data),
+            x='Senaryo', y=y_cols,
+            barmode='group',
+            color_discrete_map=col_map,
+            title="Satış Senaryoları Ciro Kıyaslaması"
+        )
+        fig_sc.update_layout(height=260, margin=dict(l=10, r=10, t=35, b=10))
         st.plotly_chart(fig_sc, use_container_width=True)
+
+    st.markdown("---")
+
+    # --------------------------------------------------------------------------
+    # 4. ÖDEME VE TAHSİLAT SİMÜLATÖRÜ (WORD KILAVUZUNA UYGUN 4 MODEL)
+    # --------------------------------------------------------------------------
+    st.subheader("💳 Ödeme & Tahsilat Simülatörü (Payment & Cash Flow Collection)")
+    st.caption("Tek bir sipariş, taksitli satış veya kira sözleşmesi için sözleşme koşullarına göre 30, 60 ve 90 günlük nakit girişlerini modeller.")
+
+    pay_model = st.radio(
+        "Ödeme ve Sözleşme Modeli Seçin:",
+        [
+            "Distribütör veya uluslararası müşteri · %100 peşin",
+            "Yerel müşteri · %100 peşin",
+            "Yerel müşteri · taksitli",
+            "Yerel müşteri · kiralama (Leasing)"
+        ],
+        horizontal=True
+    )
+
+    p_in1, p_in2, p_in3 = st.columns([1.2, 1.2, 1.4])
+
+    if pay_model == "Distribütör veya uluslararası müşteri · %100 peşin":
+        with p_in1:
+            order_val = st.number_input("Sipariş Tutarı ($ USD)", value=float(min(sim_rev if sim_rev > 0 else 45000.0, 45000.0)), step=5000.0)
+        with p_in2:
+            wire_delay = st.slider("Banka Transfer Gecikmesi (Gün)", 0, 90, 0, 5)
+        with p_in3:
+            st.info("ℹ️ Sevkiyat öncesi tam tutarın tahsil edilmesi esastır. Gecikme, banka akreditif veya SWIFT teyit süresini temsil eder.")
+
+        cf_30 = order_val if wire_delay <= 30 else 0.0
+        cf_60 = order_val if wire_delay <= 60 else 0.0
+        cf_90 = order_val if wire_delay <= 90 else 0.0
+        rem_balance = max(0.0, order_val - cf_90)
+        plan_desc = "Tam Peşin Ödeme (Sevkiyat Öncesi)"
+
+    elif pay_model == "Yerel müşteri · %100 peşin":
+        with p_in1:
+            order_val = st.number_input("Sipariş Tutarı ($ USD)", value=21000.0, step=1000.0)
+        with p_in2:
+            wire_delay = st.slider("Ödeme Gecikmesi (Gün)", 0, 90, 0, 5)
+        with p_in3:
+            st.info("ℹ️ Yurtiçi klinikler için peşin faturalı sipariş modeli. Gecikme, fatura vadesinden sonraki ötelemedir.")
+
+        cf_30 = order_val if wire_delay <= 30 else 0.0
+        cf_60 = order_val if wire_delay <= 60 else 0.0
+        cf_90 = order_val if wire_delay <= 90 else 0.0
+        rem_balance = max(0.0, order_val - cf_90)
+        plan_desc = "Tam Peşin Ödeme (Yerel Fatura)"
+
+    elif pay_model == "Yerel müşteri · taksitli":
+        with p_in1:
+            order_val = st.number_input("Sipariş Tutarı ($ USD)", value=12000.0, step=1000.0)
+            down_pct = st.slider("Peşinat Oranı (%)", 0.0, 100.0, 25.0, 5.0)
+        with p_in2:
+            n_inst = st.slider("Aylık Taksit Sayısı (Ay)", 1, 120, 6, 1)
+            wire_delay = st.slider("Gecikme (Gün)", 0, 90, 0, 5)
+        
+        down_amt = order_val * (down_pct / 100.0)
+        rem_loan = order_val - down_amt
+        monthly_inst = rem_loan / max(1, n_inst)
+        
+        with p_in3:
+            st.markdown(f"""
+            <div style="background:rgba(19,166,181,0.08);padding:10px;border-radius:8px;border:1px solid #13A6B5;font-size:13px;">
+                <b>Peşinat Tutarı:</b> {format_curr(down_amt)} (%{down_pct:.0f})<br>
+                <b>Kalan Bakiye:</b> {format_curr(rem_loan)}<br>
+                <b>Eşit Aylık Taksit:</b> {format_curr(monthly_inst)} / Ay ({n_inst} Ay)
+            </div>
+            """, unsafe_allow_html=True)
+
+        # 30 günlük ay modeli: Peşinat gün 0'da tahsil edilir. Taksit i, (i*30 + wire_delay) gününde ödenir.
+        inst_30 = sum(monthly_inst for i in range(1, n_inst + 1) if (i * 30 + wire_delay) <= 30)
+        inst_60 = sum(monthly_inst for i in range(1, n_inst + 1) if (i * 30 + wire_delay) <= 60)
+        inst_90 = sum(monthly_inst for i in range(1, n_inst + 1) if (i * 30 + wire_delay) <= 90)
+
+        cf_30 = down_amt + inst_30
+        cf_60 = down_amt + inst_60
+        cf_90 = down_amt + inst_90
+        rem_balance = max(0.0, order_val - cf_90)
+        plan_desc = f"%{down_pct:.0f} Peşinat + {n_inst} Taksit"
+
+    else:  # Yerel müşteri · kiralama
+        with p_in1:
+            monthly_rent = st.number_input("Aylık Kira ($ USD)", value=1200.0, step=100.0)
+        with p_in2:
+            rent_months = st.slider("Sözleşme Süresi (Ay)", 1, 120, 12, 1)
+            wire_delay = st.slider("Kira Tahsilat Gecikmesi (Gün)", 0, 90, 0, 5)
+        
+        total_rent = monthly_rent * rent_months
+        with p_in3:
+            st.markdown(f"""
+            <div style="background:rgba(240,188,87,0.08);padding:10px;border-radius:8px;border:1px solid #F0BC57;font-size:13px;">
+                <b>Aylık Kira Bedeli:</b> {format_curr(monthly_rent)}<br>
+                <b>Planlanan Toplam Kira:</b> {format_curr(total_rent)} ({rent_months} Ay)<br>
+                <span style="color:#F0BC57;font-size:11px;">* Kira tahsilatı satış cirosundan ayrı izlenir.</span>
+            </div>
+            """, unsafe_allow_html=True)
+
+        cf_30 = sum(monthly_rent for i in range(1, rent_months + 1) if (i * 30 + wire_delay) <= 30)
+        cf_60 = sum(monthly_rent for i in range(1, rent_months + 1) if (i * 30 + wire_delay) <= 60)
+        cf_90 = sum(monthly_rent for i in range(1, rent_months + 1) if (i * 30 + wire_delay) <= 90)
+        rem_balance = max(0.0, total_rent - cf_90)
+        plan_desc = f"{rent_months} Aylık Kiralama Sözleşmesi"
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    # 4 Nakit Akışı Göstergesi (Word Kılavuzu: 30, 60, 90 Günlük Tahsilat ve Kalan Bakiye)
+    cf_c1, cf_c2, cf_c3, cf_c4 = st.columns(4)
+    cf_c1.metric("30 Günlük Nakit Girişi", format_curr(cf_30), delta="Birikimli Tahsilat")
+    cf_c2.metric("60 Günlük Nakit Girişi", format_curr(cf_60), delta=f"+{format_curr(cf_60 - cf_30)} İkinci Ay")
+    cf_c3.metric("90 Günlük Nakit Girişi", format_curr(cf_90), delta=f"+{format_curr(cf_90 - cf_60)} Üçüncü Ay")
+    cf_c4.metric("Kalan Alacak / Bakiye", format_curr(rem_balance), delta="Sözleşme Kalanı", delta_color="inverse" if rem_balance > 0 else "normal")
+
+    st.markdown("---")
+
+    # --------------------------------------------------------------------------
+    # 5. AI STRATEJİK RİSK & NAKİT AKIŞI RAPORU
+    # --------------------------------------------------------------------------
+    st.markdown("#### 🤖 Yapay Zeka Finansal Risk & Senaryo Değerlendirmesi")
+    st.caption("Seçili satış şokları, teslimat gecikmesi ve tahsilat modelini ZEUS'un gerçek pazar yapısı ile çapraz sorgulayarak üst yönetime risk değerlendirmesi üretir.")
+
+    if st.button("🚀 AI Finansal Risk Değerlendirmesi Oluştur", type="primary"):
+        ai_risk_placeholder = st.empty()
+        with ai_risk_placeholder.container():
+            components.html("""
+                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 160px; font-family: sans-serif; background: #0b1426; border-radius: 12px; border: 1px solid #13A6B5; box-shadow: 0 0 20px rgba(19, 166, 181, 0.2);">
+                    <div id="risk-orb" style="width: 45px; height: 45px; background: radial-gradient(circle, #00F5FF 0%, #13A6B5 70%, #0B6F85 100%); border-radius: 50%; box-shadow: 0 0 25px #00F5FF; margin-bottom: 15px;"></div>
+                    <div style="color: #4FD1DE; font-weight: bold; font-size: 14px; letter-spacing: 1px; text-transform: uppercase;">
+                        ZEUS AI FİNANSAL RİSK ANALİZİ YAPIYOR...
+                    </div>
+                </div>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+                <script>
+                    gsap.to("#risk-orb", { y: -12, scale: 1.15, duration: 1.0, yoyo: true, repeat: -1, ease: "sine.inOut" });
+                </script>
+            """, height=180)
+
+        ai_risk_text = None
+        api_key = st.secrets.get("GEMINI_API_KEY") or st.secrets.get("GEMINT_API_KEY") or os.environ.get("GEMINI_API_KEY")
+        if api_key:
+            try:
+                from google import genai
+                client = genai.Client(api_key=api_key)
+                risk_prompt = f"""
+                Sen ZEUS Bioscience Baş Finans Direktörüsün (CFO & Commercial Risk Director).
+                Aşağıdaki simülasyon ve tahsilat parametrelerini inceleyerek üst yönetim için bir 'Finansal Risk & Likidite Değerlendirmesi' hazırla:
+                
+                Simülasyon Verileri:
+                - Kapsam: {sc_country} ({sc_period})
+                - Baz Ciro: {base_sc_rev:,.2f} USD -> Öngörülen Ciro: {sim_rev:,.2f} USD (Fark: {rev_delta:+.1f}%)
+                - USD Kur Değişimi: %{sim_fx}, Talep Şoku: %{sim_demand}, İndirim Baskısı: %{sim_disc}
+                - Sevkiyat Gecikmesi: {sim_delay} gün
+                - Tahsilat Modeli: {pay_model} (Açıklama: {plan_desc})
+                - 30 Günlük Nakit Girişi: {cf_30:,.2f} USD, 60 Günlük: {cf_60:,.2f} USD, 90 Günlük: {cf_90:,.2f} USD
+                - 90 Gün Sonrası Kalan Alacak Bakiyesi: {rem_balance:,.2f} USD
+                
+                Raporunu tamamen Türkçe, profesyonel, maddeler halinde ve somut 3 adet risk azaltma aksiyonu ile yaz.
+                """
+                response = client.models.generate_content(
+                    model='gemini-2.5-flash',
+                    contents=risk_prompt,
+                )
+                ai_risk_text = response.text
+            except Exception:
+                ai_risk_text = None
+
+        if not ai_risk_text:
+            ai_risk_text = f"""### 📋 ZEUS FİNANSAL RİSK & LİKİDİTE YÖNETİCİ NOTU
+**Referans Kodu:** `ZGMI-RISK-SIM-2026` | **Tarih:** Kasım 2026  
+**Gizlilik:** `C-LEVEL & FİNANS KURULU İNCELEMESİ (GİZLİ)`  
+**Analiz Kapsamı:** {sc_country} — {sc_period}  
+**Simülasyon Sonucu:** Baz Ciro: **${base_sc_rev:,.2f}** ➔ Öngörülen Ciro: **${sim_rev:,.2f}** (Net Etki: **%{rev_delta:+.1f}**)
+
+---
+
+#### 1. 🎯 Senaryo ve Likidite Özeti
+Modellenen senaryoda; **%{sim_fx} kur baskısı**, **%{sim_demand} talep dalgalanması** ve **%{sim_disc} rekabet indirimi** altında satış hacmi **${sim_rev:,.2f}** seviyesine evrilmektedir.
+- **Teslimat Gecikmesi:** {sim_delay} günlük operasyonel/gümrük gecikmesi, sipariş döngüsünü uzatmakta ve nakit akışını ötelemektedir.
+- **Tahsilat Modeli ({pay_model}):**
+  * 30 Gün İçinde Beklenen Birikimli Nakit: **${cf_30:,.2f}**
+  * 60 Gün İçinde Beklenen Birikimli Nakit: **${cf_60:,.2f}**
+  * 90 Gün İçinde Beklenen Birikimli Nakit: **${cf_90:,.2f}**
+  * 90 Gün Sonrası Kalan Sözleşme Alacak Bakiyesi: **${rem_balance:,.2f}**
+- **Kârlılık Durumu:** Ürün maliyeti verisi girilmediğinde brüt kâr ve marj ihtiyatlılık gereği hesaplanmamış ve ekranda *“Maliyet verisi gerekli”* olarak işaretlenmiştir.
+
+---
+
+#### 2. 🛡️ 3 Adımlı Risk Azaltma ve Eylem Protokolü
+1. **Döviz Dalgalanması ve Fiyat Koruması:** Kur volatilitesinin yüksek olduğu pazarlarda döviz kuru sözleşmeye bağlanmalı veya %100 peşin ödemede +%3 erken ödeme avantajı sunularak kur riski minimize edilmelidir.
+2. **Sevkiyat ve Gecikme Yönetimi ({sim_delay} Gün):** Gecikmenin 30 günü aştığı durumlarda distribütör emniyet stoku zorunluluğu getirilmelidir.
+3. **Taksitli / Kiralama Sözleşme Teminatı:** Yerel satışlarda peşinat oranının asgari %25 seviyesinde tutulması ve kalan bakiye için senet/teminat mektubu alınması nakit akışı emniyetini sağlar.
+"""
+
+        ai_risk_placeholder.empty()
+        st.markdown(ai_risk_text)
+
+        st.download_button(
+            label="📥 Bu Risk & Senaryo Raporunu İndir (.md)",
+            data=ai_risk_text,
+            file_name=f"ZEUS_Risk_Scenario_Assessment_{datetime.now().strftime('%Y%m%d_%H%M')}.md",
+            mime="text/markdown"
+        )
 
 
 # ==============================================================================
