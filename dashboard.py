@@ -146,6 +146,17 @@ st.markdown("""
 # ==============================================================================
 # 2. SEED DATA & DETERMINISTIC ENGINE
 # ==============================================================================
+def get_gemini_api_key():
+    api_key = None
+    try:
+        if hasattr(st, 'secrets'):
+            api_key = st.secrets.get('GEMINI_API_KEY') or st.secrets.get('GEMINT_API_KEY')
+    except Exception:
+        pass
+    if not api_key:
+        api_key = os.environ.get('GEMINI_API_KEY') or os.environ.get('GEMINT_API_KEY')
+    return api_key
+
 def hash_code(s):
     h = 2166136261
     for ch in s:
@@ -1727,7 +1738,7 @@ elif nav_selection == "✦ AI Intelligence & Forecasting":
 
             # 2. Canlı Gemini API veya Yerleşik ZEUS Biyo-Strateji Motoru
             ai_generated_text = None
-            api_key = st.secrets.get("GEMINI_API_KEY") or st.secrets.get("GEMINT_API_KEY") or os.environ.get("GEMINI_API_KEY")
+            api_key = get_gemini_api_key()
             
             if api_key:
                 try:
@@ -2590,7 +2601,7 @@ elif nav_selection == "⛛ Risk & Scenario Simulator":
             """, height=180)
 
         ai_risk_text = None
-        api_key = st.secrets.get("GEMINI_API_KEY") or st.secrets.get("GEMINT_API_KEY") or os.environ.get("GEMINI_API_KEY")
+        api_key = get_gemini_api_key()
         if api_key:
             try:
                 from google import genai
