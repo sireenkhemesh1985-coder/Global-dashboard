@@ -633,6 +633,9 @@ for d in all_dists:
     dists_with_rev.append(item)
 
 active_rows = [d for d in dists_with_rev if d['status'] == 'active']
+dist_rows = [d for d in active_rows if d.get('account_type') == 'Distributor']
+local_rows = [d for d in active_rows if d.get('account_type') == 'Local Customer']
+intl_rows = [d for d in active_rows if d.get('account_type') == 'International Customer']
 total_rev = sum(d['revenue'] for d in active_rows)
 total_dev_rev = sum(d['device_rev'] for d in active_rows)
 total_con_rev = total_rev - total_dev_rev
@@ -2622,10 +2625,15 @@ elif nav_selection == "▲ Performance Evaluator":
     # 1. PARTNER SEÇİMİ (DİSTRİBÜTÖRLER ÖNCELİKLİ)
     # --------------------------------------------------------------------------
     # Order: Official distributors first, then international, then local
+    dist_rows = [d for d in active_rows if d.get('account_type') == 'Distributor']
+    intl_rows = [d for d in active_rows if d.get('account_type') == 'International Customer']
+    local_rows = [d for d in active_rows if d.get('account_type') == 'Local Customer']
     dist_names = [d['name'] for d in dist_rows]
     intl_names = [d['name'] for d in intl_rows]
     local_names = [d['name'] for d in local_rows]
     all_ordered_names = dist_names + intl_names + local_names
+    if not all_ordered_names:
+        all_ordered_names = [d['name'] for d in active_rows]
     
     # Default to CMC if present, else first
     cmc_idx = next((i for i, n in enumerate(all_ordered_names) if "CONSULTANT MEDICAL" in n or "CMC" in n), 0)
