@@ -163,6 +163,11 @@ COUNTRY_MACRO_IVF = {
         'gdp_tier': 'Upper-Middle Income',
         'living_standard': 'Orta-Yüksek (HDI: 0.838)',
         'living_standard_code': 'Medium-High',
+        'clinics': 165,
+        'pop_m': 85.3,
+        'customs_tariff_pct': 8.0,
+        'customs_clearance_days': 5,
+        'import_difficulty': 'Orta (Gümrük Birliği & Yerli İthalat Lisansı)',
         'ivf_support': 'Kısmi SGK Desteği (3 Siklus)',
         'ivf_support_code': 'Partial State Reimbursement',
         'ivf_support_desc': 'SGK belirli tıbbi kriterlerde 3 denemeye kadar kısmi katkı sağlar; özel kliniklerde fark ücreti ödenir.',
@@ -175,6 +180,11 @@ COUNTRY_MACRO_IVF = {
         'gdp_tier': 'Lower-Middle Income',
         'living_standard': 'Orta-Düşük (HDI: ~0.686)',
         'living_standard_code': 'Medium-Low',
+        'clinics': 45,
+        'pop_m': 55.0,
+        'customs_tariff_pct': 6.5,
+        'customs_clearance_days': 30,
+        'import_difficulty': 'Yüksek (Sınır Geçişleri, Döviz & Bankacılık Kısıtı)',
         'ivf_support': '%100 Cepten Ödeme (Destek Yok)',
         'ivf_support_code': 'Self-Pay / Out-of-Pocket',
         'ivf_support_desc': 'Devlet IVF tedavilerini karşılamaz; hastalar tüm klinik ve sarf maliyetini kendi cebinden öder.',
@@ -187,6 +197,11 @@ COUNTRY_MACRO_IVF = {
         'gdp_tier': 'Lower-Middle Income',
         'living_standard': 'Orta (HDI: 0.720)',
         'living_standard_code': 'Medium',
+        'clinics': 22,
+        'pop_m': 11.3,
+        'customs_tariff_pct': 6.0,
+        'customs_clearance_days': 14,
+        'import_difficulty': 'Orta (JFDA Medikal Onayı)',
         'ivf_support': '%100 Cepten Ödeme (Destek Yok)',
         'ivf_support_code': 'Self-Pay / Out-of-Pocket',
         'ivf_support_desc': 'Özel tüp bebek merkezleri ağırlıklı; cepten ödeme hakim.',
@@ -199,6 +214,11 @@ COUNTRY_MACRO_IVF = {
         'gdp_tier': 'High Income (Ultra High)',
         'living_standard': 'Çok Yüksek (HDI: 0.855)',
         'living_standard_code': 'Very High',
+        'clinics': 6,
+        'pop_m': 2.9,
+        'customs_tariff_pct': 5.0,
+        'customs_clearance_days': 10,
+        'import_difficulty': 'Düşük-Orta (MOPH İthalat İzni)',
         'ivf_support': 'Vatandaşlara Tam Devlet Desteği (Hamad MC)',
         'ivf_support_code': 'Full Public Coverage (Citizens)',
         'ivf_support_desc': 'Katar vatandaşlarına kamu hastanelerinde ücretsiz; yabancı nüfusa özel sigorta / self-pay.',
@@ -211,6 +231,11 @@ COUNTRY_MACRO_IVF = {
         'gdp_tier': 'High Income (OECD)',
         'living_standard': 'Çok Yüksek (HDI: 0.925)',
         'living_standard_code': 'Very High',
+        'clinics': 150,
+        'pop_m': 51.7,
+        'customs_tariff_pct': 8.0,
+        'customs_clearance_days': 7,
+        'import_difficulty': 'Orta-Yüksek (MFDS Tıbbi Cihaz Sertifikasyon Şartı)',
         'ivf_support': 'Kapsamlı Ulusal Doğurganlık Desteği',
         'ivf_support_code': 'National Fertility Subsidy',
         'ivf_support_desc': 'Güney Kore hükümeti düşük doğum oranını aşmak için siklus başına cömert devlet sübvansiyonu ve SGK desteği sunar.',
@@ -223,6 +248,11 @@ COUNTRY_MACRO_IVF = {
         'gdp_tier': 'Low-Middle Income',
         'living_standard': 'Düşük-Orta (Zorlu Koşullar)',
         'living_standard_code': 'Low-Medium',
+        'clinics': 14,
+        'pop_m': 5.2,
+        'customs_tariff_pct': 12.0,
+        'customs_clearance_days': 35,
+        'import_difficulty': 'Kritik Derecede Yüksek (İsrail Liman Geçişi & Güvenlik Beklemesi)',
         'ivf_support': '%100 Cepten Ödeme (Destek Yok)',
         'ivf_support_code': 'Self-Pay / Out-of-Pocket',
         'ivf_support_desc': 'Kamu güvencesi bulunmamaktadır; kliniklerin malzeme maliyeti doğrudan hasta ücretine yansır.',
@@ -235,6 +265,11 @@ COUNTRY_MACRO_IVF = {
         'gdp_tier': 'High Income',
         'living_standard': 'Yüksek (HDI: 0.875)',
         'living_standard_code': 'High',
+        'clinics': 38,
+        'pop_m': 36.4,
+        'customs_tariff_pct': 5.0,
+        'customs_clearance_days': 15,
+        'import_difficulty': 'Orta (SFDA Tıbbi Cihaz Kaydı & MDMA Lisansı)',
         'ivf_support': 'Kamu Hastanelerinde Destekli / Özelde Self-Pay',
         'ivf_support_code': 'Public Funded / Private Self-Pay',
         'ivf_support_desc': 'Vatandaşlara askeri ve bakanlık hastanelerinde ücretsiz; özel tüp bebek hastanelerinde özel sigorta/self-pay.',
@@ -247,6 +282,11 @@ COUNTRY_MACRO_IVF = {
         'gdp_tier': 'High Income',
         'living_standard': 'Yüksek (HDI: 0.831)',
         'living_standard_code': 'High',
+        'clinics': 12,
+        'pop_m': 4.3,
+        'customs_tariff_pct': 5.0,
+        'customs_clearance_days': 12,
+        'import_difficulty': 'Orta (MOH Medikal Kaydı)',
         'ivf_support': 'Kuveyt Vatandaşlarına Bakanlık Destekli',
         'ivf_support_code': 'Full Public Coverage (Citizens)',
         'ivf_support_desc': 'MOH Kuveyt vatandaşlarının IVF tedavilerini tam karşılar; yüksek cihaz bütçesi mevcuttur.',
@@ -259,6 +299,11 @@ COUNTRY_MACRO_IVF = {
         'gdp_tier': 'High Income',
         'living_standard': 'Çok Yüksek (HDI: 0.911)',
         'living_standard_code': 'Very High',
+        'clinics': 22,
+        'pop_m': 9.9,
+        'customs_tariff_pct': 5.0,
+        'customs_clearance_days': 8,
+        'import_difficulty': 'Düşük-Orta (MOHAP Medikal Tescili)',
         'ivf_support': 'Vatandaşlara Tam Destek (Thiqa / Enaya) / Expats Self-Pay',
         'ivf_support_code': 'Public Funded (Citizens) / Private',
         'ivf_support_desc': 'BAE vatandaşlarına özel programlarla karşılanır; yabancı nüfusta özel harcama hakimdir.',
@@ -271,6 +316,11 @@ COUNTRY_MACRO_IVF = {
         'gdp_tier': 'High Income (EU Core)',
         'living_standard': 'Çok Yüksek (HDI: 0.937)',
         'living_standard_code': 'Very High',
+        'clinics': 18,
+        'pop_m': 11.6,
+        'customs_tariff_pct': 0.0,
+        'customs_clearance_days': 3,
+        'import_difficulty': 'Düşük (AB İçi Serbest Dolaşım / CE/MDR Uyumu)',
         'ivf_support': 'Geniş Kapsamlı Kamu Geri Ödemesi (6 Siklus)',
         'ivf_support_code': 'Comprehensive Public Reimbursement (6 Cycles)',
         'ivf_support_desc': 'Belçika Ulusal Sağlık Enstitüsü (INAMI/RIZIV) kadınlar için 6 siklusa kadar tedavi masraflarını tam geri öder.',
@@ -283,6 +333,11 @@ COUNTRY_MACRO_IVF = {
         'gdp_tier': 'Upper-Middle Income (EU)',
         'living_standard': 'Orta-Yüksek (HDI: 0.795)',
         'living_standard_code': 'Medium-High',
+        'clinics': 32,
+        'pop_m': 6.5,
+        'customs_tariff_pct': 0.0,
+        'customs_clearance_days': 4,
+        'import_difficulty': 'Düşük (AB İçi Serbest Dolaşım)',
         'ivf_support': 'Ulusal Üreme Fonu Destekli (4 Siklus)',
         'ivf_support_code': 'National Assisted Reproduction Fund (4 Cycles)',
         'ivf_support_desc': 'Bulgaristan hükümeti Ulusal Üreme Fonu aracılığıyla 4 siklusa kadar finansman sağlar.',
@@ -295,6 +350,11 @@ COUNTRY_MACRO_IVF = {
         'gdp_tier': 'Middle Income',
         'living_standard': 'Orta (HDI: 0.745)',
         'living_standard_code': 'Medium',
+        'clinics': 12,
+        'pop_m': 10.1,
+        'customs_tariff_pct': 10.0,
+        'customs_clearance_days': 16,
+        'import_difficulty': 'Orta-Yüksek (Sağlık Bakanlığı İthalat Vizesi)',
         'ivf_support': '%100 Cepten Ödeme (Destek Yok)',
         'ivf_support_code': 'Self-Pay / Out-of-Pocket',
         'ivf_support_desc': 'Kamu sigortası IVF masraflarını karşılamaz, hastalar cepten öder.',
@@ -307,6 +367,11 @@ COUNTRY_MACRO_IVF = {
         'gdp_tier': 'Upper-Middle Income',
         'living_standard': 'Orta-Yüksek',
         'living_standard_code': 'Medium-High',
+        'clinics': 16,
+        'pop_m': 8.2,
+        'customs_tariff_pct': 3.5,
+        'customs_clearance_days': 8,
+        'import_difficulty': 'Orta (Balkan & Orta Avrupa Geçişi)',
         'ivf_support': 'Slovakya Sigorta Destekli / Arnavutluk Self-Pay',
         'ivf_support_code': 'Mixed Reimbursement',
         'ivf_support_desc': 'Slovakya sağlık sigortası ilk 3 siklusu kısmen karşılar; Arnavutluk tarafı cepten ödemelidir.',
@@ -319,6 +384,11 @@ COUNTRY_MACRO_IVF = {
         'gdp_tier': 'Lower-Middle Income',
         'living_standard': 'Orta-Düşük (HDI: 0.699)',
         'living_standard_code': 'Medium-Low',
+        'clinics': 8,
+        'pop_m': 115.0,
+        'customs_tariff_pct': 7.0,
+        'customs_clearance_days': 20,
+        'import_difficulty': 'Yüksek (FDA Filipinler İthal İzin Şartı)',
         'ivf_support': '%100 Cepten Ödeme (Destek Yok)',
         'ivf_support_code': 'Self-Pay / Out-of-Pocket',
         'ivf_support_desc': 'PhilHealth IVF tedavilerini kapsamaz; lüks özel kliniklerde cepten ödenir.',
@@ -331,6 +401,11 @@ COUNTRY_MACRO_IVF = {
         'gdp_tier': 'Low Income',
         'living_standard': 'Düşük',
         'living_standard_code': 'Low',
+        'clinics': 6,
+        'pop_m': 22.0,
+        'customs_tariff_pct': 15.0,
+        'customs_clearance_days': 40,
+        'import_difficulty': 'Aşırı Yüksek (Yaptırımlar, Sınır & Banka Blokajı)',
         'ivf_support': '%100 Cepten Ödeme (Destek Yok)',
         'ivf_support_code': 'Self-Pay / Out-of-Pocket',
         'ivf_support_desc': 'Sağlık altyapısı zorlu; tüm giderler cepten karşılanır.',
@@ -343,6 +418,11 @@ COUNTRY_MACRO_IVF = {
         'gdp_tier': 'High Income',
         'living_standard': 'Çok Yüksek (HDI: 0.929)',
         'living_standard_code': 'Very High',
+        'clinics': 75,
+        'pop_m': 67.5,
+        'customs_tariff_pct': 2.5,
+        'customs_clearance_days': 5,
+        'import_difficulty': 'Düşük-Orta (MHRA Tıbbi Cihaz Kaydı)',
         'ivf_support': 'NHS Kısmi Kriter Destekli (1-3 Siklus)',
         'ivf_support_code': 'NHS Criteria Based',
         'ivf_support_desc': 'NHS kriterlerine göre 1 ila 3 siklus karşılanır; %60+ özel sektöre kayar.',
@@ -375,6 +455,11 @@ def resolve_country_macro(c_name):
         'gdp_tier': 'Middle Income',
         'living_standard': 'Orta Seviye',
         'living_standard_code': 'Medium',
+        'clinics': 20,
+        'pop_m': 20.0,
+        'customs_tariff_pct': 6.0,
+        'customs_clearance_days': 10,
+        'import_difficulty': 'Orta Seviye Gümrük & İthalat',
         'ivf_support': 'Kısmi / Özel Ödeme',
         'ivf_support_code': 'Mixed/Partial',
         'ivf_support_desc': 'Bölgesel karma geri ödeme ve cepten ödeme.',
@@ -383,6 +468,111 @@ def resolve_country_macro(c_name):
         'ivf_discount_allowance': 1.0
     })
 
+def generate_ai_pricing_bundle_recommendation(calc_d, macro, strategic_goal):
+    country = calc_d.get('country_name', 'Turkey')
+    partner_name = calc_d.get('name', 'Partner')
+    partner_rev = calc_d.get('revenue', 0.0)
+    partner_growth = calc_d.get('growth_pct', 0.0)
+    
+    gdp_pc = macro.get('gdp_pc', 12000)
+    clinics = macro.get('clinics', 20)
+    pop_m = macro.get('pop_m', 20.0)
+    customs_pct = macro.get('customs_tariff_pct', 5.0)
+    clearance_days = macro.get('customs_clearance_days', 10)
+    ivf_support = macro.get('ivf_support', 'Kısmi / Özel Ödeme')
+    
+    # 1. Base AI Device Discount Recommendation
+    if gdp_pc < 10000:
+        if "Pazar Payı" in strategic_goal:
+            rec_dev_disc = 12.0
+            rec_con_disc = 15.0
+            bundle_desc = "1 Cihaz + 15 Kutu Electro Dish siparişinde 3 Kutu Liquid Solution (%100 Bedelsiz) ve $500 Navlun Katkısı"
+            rec_freight = 500.0
+        elif "Sarf" in strategic_goal:
+            rec_dev_disc = 8.5
+            rec_con_disc = 18.0
+            bundle_desc = "20 Kutu Electro Dish alımına 4 Kutu Liquid Solution Hediye + Yıllık Sabit Fiyat Garantisi"
+            rec_freight = 400.0
+        elif "Gümrük" in strategic_goal:
+            rec_dev_disc = 7.0
+            rec_con_disc = 12.0
+            bundle_desc = f"Cihaz liste fiyatı korunur; gümrükteki %{customs_pct:.1f} vergi yükü için $600 Lojistik Katılımı ve 2 Kutu Ek Sarf Desteği"
+            rec_freight = 600.0
+        else:
+            rec_dev_disc = 9.0
+            rec_con_disc = 10.0
+            bundle_desc = "Standart 10 Dish + 2 Liquid Solution %50 İndirimli Aktivasyon Paketi"
+            rec_freight = 450.0
+    elif gdp_pc < 25000:
+        if "Pazar Payı" in strategic_goal:
+            rec_dev_disc = 9.0
+            rec_con_disc = 12.0
+            bundle_desc = "1 Cihaz + 12 Kutu Electro Dish alımında 2 Kutu Liquid Solution Ücretsiz + Ücretsiz Klinik Eğitim"
+            rec_freight = 350.0
+        elif "Sarf" in strategic_goal:
+            rec_dev_disc = 6.5
+            rec_con_disc = 15.0
+            bundle_desc = "Çeyreklik 25 Kutu Sarf Sözleşmesine %12.5 İskonto + 2 Şişe Konsinye Solüsyon"
+            rec_freight = 300.0
+        elif "Gümrük" in strategic_goal:
+            rec_dev_disc = 6.0
+            rec_con_disc = 10.0
+            bundle_desc = f"Liste fiyatından %6.0 iskonto + $400 Yurtiçi Dağıtım ve Gümrük Masrafı Katkısı"
+            rec_freight = 400.0
+        else:
+            rec_dev_disc = 7.0
+            rec_con_disc = 8.0
+            bundle_desc = "10 Dish + 2 Liquid Solution %50 İndirimli Bundle"
+            rec_freight = 300.0
+    else:
+        if "Pazar Payı" in strategic_goal:
+            rec_dev_disc = 6.5
+            rec_con_disc = 8.0
+            bundle_desc = "Liste fiyatı korunur; VIP Laboratuvar Kurulumu + 10 Kutu Dish alımına 1 Kutu Liquid Hediye"
+            rec_freight = 250.0
+        elif "Sarf" in strategic_goal:
+            rec_dev_disc = 4.0
+            rec_con_disc = 10.0
+            bundle_desc = "Yıllık 60 Kutu Dish Taahhüdüne %10 İskonto + Konsinye Emniyet Stoku Depolama Desteği"
+            rec_freight = 200.0
+        elif "Gümrük" in strategic_goal:
+            rec_dev_disc = 5.0
+            rec_con_disc = 6.0
+            bundle_desc = "Hızlı Hava Kargo (Air Express) navlun sübvansiyonu ($400) + CE/MOH Dokümantasyon Desteği"
+            rec_freight = 400.0
+        else:
+            rec_dev_disc = 5.0
+            rec_con_disc = 5.0
+            bundle_desc = "Standart Körfez VIP Paket: Cihaz + 10 Dish + Yerinde Embriyolog Sertifikasyonu"
+            rec_freight = 250.0
+
+    # Partner performance modifier
+    if partner_rev >= 100000:
+        rec_dev_disc = min(18.0, rec_dev_disc + 2.0)
+        partner_note = "🌟 Platin Partner hacmi (Ciro > $100K) sebebiyle önerilen tavan %2.0 artırılmıştır."
+    elif partner_rev >= 30000:
+        rec_dev_disc = min(15.0, rec_dev_disc + 1.0)
+        partner_note = "🥇 Altın Partner büyüme hacmi sebebiyle önerilen tavan %1.0 artırılmıştır."
+    else:
+        partner_note = "🥉 Yeni / Gelişen hesap; temel hacim baremleri korunmuştur."
+
+    # Customs recommendation
+    if customs_pct >= 8.0 or clearance_days >= 20:
+        customs_strategy = f"{country} pazarında gümrük tarifesi (%{customs_pct:.1f}) ve çekim süresi ({clearance_days} gün) yüksektir. Doğrudan cihaz fiyatını düşürmek yerine, gümrük beyannamesini etkilemeyecek 'Bedelsiz Sarf / Yedek Parça Desteği' ve fatura altı 'Navlun Katkı Payı' (${rec_freight:,.0f}) tanımlanmalıdır."
+    else:
+        customs_strategy = f"{country} pazarında gümrük süreci hızlı ({clearance_days} gün) ve tarife düşüktür (%{customs_pct:.1f}). Gümrük bariyeri minimum düzeyde olduğundan, indirimler doğrudan brüt kâr disiplini korunarak sarf çekiş taahhütlerine endekslenmelidir."
+
+    return {
+        'rec_device_discount': rec_dev_disc,
+        'rec_consumable_discount': rec_con_disc,
+        'bundle_desc': bundle_desc,
+        'customs_strategy': customs_strategy,
+        'partner_note': partner_note,
+        'rec_freight': rec_freight,
+        'expected_margin': round(48.5 - rec_dev_disc * 0.8, 1),
+        'win_probability': min(96, 75 + int(rec_dev_disc * 1.5)),
+        'annual_sarf_potential': f"+${round(clinics * 1800):,} USD"
+    }
 
 def hash_code(s):
     h = 2166136261
@@ -2464,217 +2654,303 @@ elif nav_selection == "⌘ Pricing & Discount Calculator":
     st.title("💰 Commercial Discount & Margin Impact Calculator")
     st.caption("Çok Boyutlu Fiyatlandırma ve İskonto Karar Motoru: Ülke GSYİH (GDP), Yaşam Standardı, Ulusal IVF Destek Rejimi ve Partner Satış Performansına göre dinamik iskonto değerlendirmesi.")
 
-    c_calc1, c_calc2 = st.columns([1.15, 1.35])
-    with c_calc1:
-        st.markdown("#### 📋 Sipariş & Partner Parametreleri")
-        
-        # Order: Official distributors first, then international, then local
-        dist_names = [d['name'] for d in dist_rows]
-        intl_names = [d['name'] for d in intl_rows]
-        local_names = [d['name'] for d in local_rows]
-        all_ordered_names = dist_names + intl_names + local_names
-        if not all_ordered_names:
-            all_ordered_names = [d['name'] for d in active_rows]
+    calc_tab1, calc_tab2 = st.tabs([
+        "🧮 Manuel İskonto & Marj Simülatörü",
+        "🤖 AI Dinamik İskonto & Paket Önerisi (AI Pricing & Bundle Advisor)"
+    ])
 
-        sirius_idx = next((i for i, n in enumerate(all_ordered_names) if "SIRIUS" in n), 0)
-        calc_dist_name = st.selectbox("İskonto Talep Eden Müşteri / Distribütör", all_ordered_names, index=sirius_idx)
-        calc_d = next((d for d in active_rows if d['name'] == calc_dist_name), active_rows[0])
-        
-        # Retrieve country macro & IVF intelligence
-        calc_country = calc_d.get('country_name', 'Turkey')
-        macro = resolve_country_macro(calc_country)
-        
-        # Partner Historical Sales Performance
-        partner_rev = calc_d.get('revenue', 0.0)
-        partner_devs = calc_d.get('devices_count', 0)
-        partner_cons = calc_d.get('consumables_count', 0)
-        partner_growth = calc_d.get('growth_pct', 0.0)
-        partner_type_tr = calc_d.get('account_type_tr', 'Partner')
-        
-        if partner_rev >= 100000:
-            perf_tier_name = "Tier 1: Platin Stratejik Partner (Ciro > $100K)"
-            perf_bonus = 3.5
-            perf_badge = "🌟 Platin Partner"
-            perf_badge_color = "#00F5FF"
-        elif partner_rev >= 30000:
-            perf_tier_name = "Tier 2: Altın Büyüyen Partner (Ciro $30K–$100K)"
-            perf_bonus = 2.5
-            perf_badge = "🥇 Altın Partner"
-            perf_badge_color = "#FFD700"
-        elif partner_rev >= 10000:
-            perf_tier_name = "Tier 3: Gümüş Standart Hesap (Ciro $10K–$30K)"
-            perf_bonus = 1.0
-            perf_badge = "🥈 Gümüş Partner"
-            perf_badge_color = "#C0C0C0"
-        else:
-            perf_tier_name = "Tier 4: Bronz / Yeni Hesap (Ciro < $10K)"
-            perf_bonus = 0.0
-            perf_badge = "🥉 Bronz / Yeni"
-            perf_badge_color = "#CD7F32"
+    # --------------------------------------------------------------------------
+    # TAB 1: MANUEL İSKONTO & MARJ SİMÜLATÖRÜ
+    # --------------------------------------------------------------------------
+    with calc_tab1:
+        c_calc1, c_calc2 = st.columns([1.15, 1.35])
+        with c_calc1:
+            st.markdown("#### 📋 Sipariş & Partner Parametreleri")
             
-        growth_bonus = 1.0 if partner_growth >= 15.0 else 0.0
-        total_perf_bonus = perf_bonus + growth_bonus
+            # Order: Official distributors first, then international, then local
+            dist_names = [d['name'] for d in dist_rows]
+            intl_names = [d['name'] for d in intl_rows]
+            local_names = [d['name'] for d in local_rows]
+            all_ordered_names = dist_names + intl_names + local_names
+            if not all_ordered_names:
+                all_ordered_names = [d['name'] for d in active_rows]
 
-        # Macro & IVF Context Card
-        st.markdown(f"""
-        <div style="background:rgba(19,166,181,0.06);border:1px solid rgba(19,166,181,0.28);border-radius:10px;padding:12px;margin:10px 0 16px 0;font-size:12px;line-height:1.6;">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                <span style="font-weight:700;color:#00F5FF;font-size:13px;">🌍 {calc_country} Makro & IVF Ekosistemi</span>
-                <span style="background:rgba(19,166,181,0.2);color:#4FD1DE;font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600;border:1px solid rgba(19,166,181,0.4);">{macro['living_standard_code']}</span>
+            # Use session state partner if set by AI tab
+            def_partner_idx = next((i for i, n in enumerate(all_ordered_names) if n == st.session_state.get('sim_calc_partner')), None)
+            if def_partner_idx is None:
+                def_partner_idx = next((i for i, n in enumerate(all_ordered_names) if "SIRIUS" in n), 0)
+
+            calc_dist_name = st.selectbox("İskonto Talep Eden Müşteri / Distribütör", all_ordered_names, index=def_partner_idx, key="calc_select_dist")
+            calc_d = next((d for d in active_rows if d['name'] == calc_dist_name), active_rows[0])
+            
+            # Retrieve country macro & IVF intelligence
+            calc_country = calc_d.get('country_name', 'Turkey')
+            macro = resolve_country_macro(calc_country)
+            
+            # Partner Historical Sales Performance
+            partner_rev = calc_d.get('revenue', 0.0)
+            partner_devs = calc_d.get('devices_count', 0)
+            partner_cons = calc_d.get('consumables_count', 0)
+            partner_growth = calc_d.get('growth_pct', 0.0)
+            partner_type_tr = calc_d.get('account_type_tr', 'Partner')
+            
+            if partner_rev >= 100000:
+                perf_tier_name = "Tier 1: Platin Stratejik Partner (Ciro > $100K)"
+                perf_bonus = 3.5
+                perf_badge = "🌟 Platin Partner"
+                perf_badge_color = "#00F5FF"
+            elif partner_rev >= 30000:
+                perf_tier_name = "Tier 2: Altın Büyüyen Partner (Ciro $30K–$100K)"
+                perf_bonus = 2.5
+                perf_badge = "🥇 Altın Partner"
+                perf_badge_color = "#FFD700"
+            elif partner_rev >= 10000:
+                perf_tier_name = "Tier 3: Gümüş Standart Hesap (Ciro $10K–$30K)"
+                perf_bonus = 1.0
+                perf_badge = "🥈 Gümüş Partner"
+                perf_badge_color = "#C0C0C0"
+            else:
+                perf_tier_name = "Tier 4: Bronz / Yeni Hesap (Ciro < $10K)"
+                perf_bonus = 0.0
+                perf_badge = "🥉 Bronz / Yeni"
+                perf_badge_color = "#CD7F32"
+                
+            growth_bonus = 1.0 if partner_growth >= 15.0 else 0.0
+            total_perf_bonus = perf_bonus + growth_bonus
+
+            # Macro & IVF Context Card
+            st.markdown(f"""
+            <div style="background:rgba(19,166,181,0.06);border:1px solid rgba(19,166,181,0.28);border-radius:10px;padding:12px;margin:10px 0 16px 0;font-size:12px;line-height:1.6;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                    <span style="font-weight:700;color:#00F5FF;font-size:13px;">🌍 {calc_country} Makro & IVF Ekosistemi</span>
+                    <span style="background:rgba(19,166,181,0.2);color:#4FD1DE;font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600;border:1px solid rgba(19,166,181,0.4);">{macro['living_standard_code']}</span>
+                </div>
+                <b>Kişi Başı GSYİH (GDP pc):</b> ${macro['gdp_pc']:,} USD <span style="color:#8FA3C0;">({macro['gdp_tier']})</span><br>
+                <b>Yaşam Standardı & Refah:</b> {macro['living_standard']}<br>
+                <b>Aktif IVF Klinik Sayısı:</b> {macro['clinics']} Merkez &nbsp;|&nbsp; <b>Nüfus:</b> {macro['pop_m']}M<br>
+                <b>Gümrük Vergisi & Süresi:</b> %{macro['customs_tariff_pct']:.1f} ({macro['customs_clearance_days']} Gün Bekleme)<br>
+                <b>Devlet IVF Desteği / Geri Ödeme:</b> <span style="color:#00E676;font-weight:600;">{macro['ivf_support']}</span><br>
+                <span style="color:#8FA3C0;font-size:11px;">{macro['ivf_support_desc']}</span>
+                <div style="margin-top:4px;color:#FFB800;font-size:11px;"><b>Pazar Fiyat Hassasiyeti:</b> {macro['price_sensitivity']}</div>
+                <hr style="border-color:rgba(19,166,181,0.18);margin:8px 0;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                    <span style="font-weight:700;color:#00F5FF;font-size:13px;">📊 Partner Satış & Büyüme Performansı</span>
+                    <span style="color:{perf_badge_color};font-weight:700;">{perf_badge}</span>
+                </div>
+                <b>Excel Kayıtlı Ciro:</b> {format_curr(partner_rev)} &nbsp;|&nbsp; <b>Kurulu Cihaz:</b> {partner_devs} Adet &nbsp;|&nbsp; <b>Sarf:</b> {partner_cons} Kutu<br>
+                <b>Yıllık YoY Büyüme:</b> <span style="color:{'#00E676' if partner_growth >= 0 else '#FF5252'};font-weight:600;">%{partner_growth:+.1f}</span> &nbsp;|&nbsp; <b>Sınıf:</b> {partner_type_tr}
             </div>
-            <b>Kişi Başı GSYİH (GDP pc):</b> ${macro['gdp_pc']:,} USD <span style="color:#8FA3C0;">({macro['gdp_tier']})</span><br>
-            <b>Yaşam Standardı & Refah:</b> {macro['living_standard']}<br>
-            <b>Devlet IVF Desteği / Geri Ödeme:</b> <span style="color:#00E676;font-weight:600;">{macro['ivf_support']}</span><br>
-            <span style="color:#8FA3C0;font-size:11px;">{macro['ivf_support_desc']}</span>
-            <div style="margin-top:4px;color:#FFB800;font-size:11px;"><b>Pazar Fiyat Hassasiyeti:</b> {macro['price_sensitivity']}</div>
-            <hr style="border-color:rgba(19,166,181,0.18);margin:8px 0;">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-                <span style="font-weight:700;color:#00F5FF;font-size:13px;">📊 Partner Satış & Büyüme Performansı</span>
-                <span style="color:{perf_badge_color};font-weight:700;">{perf_badge}</span>
-            </div>
-            <b>Excel Kayıtlı Ciro:</b> {format_curr(partner_rev)} &nbsp;|&nbsp; <b>Kurulu Cihaz:</b> {partner_devs} Adet &nbsp;|&nbsp; <b>Sarf:</b> {partner_cons} Kutu<br>
-            <b>Yıllık YoY Büyüme:</b> <span style="color:{'#00E676' if partner_growth >= 0 else '#FF5252'};font-weight:600;">%{partner_growth:+.1f}</span> &nbsp;|&nbsp; <b>Sınıf:</b> {partner_type_tr}
-        </div>
-        """, unsafe_allow_html=True)
-        
-        calc_qty = st.number_input("Sipariş Adedi / Hacmi (Order Quantity - Units)", min_value=1, value=25, step=1)
-        calc_price = st.number_input("Sözleşme Liste Fiyatı (Contractual List Price - USD)", min_value=100.0, value=4200.0, step=100.0)
-        calc_cost = st.number_input("Birim Üretim Maliyeti (Unit COGS - USD)", min_value=10.0, value=2300.0, step=50.0)
-        calc_disc = st.slider("Talep Edilen İskonto (Requested Discount - %)", min_value=0.0, max_value=35.0, value=8.0, step=0.5)
-        calc_ship = st.number_input("Navlun & Lojistik Payı (Freight Allowance - USD)", min_value=0.0, value=900.0, step=50.0)
-        calc_comm = st.slider("Distribütör Temsilci Primi (Rep Commission - %)", min_value=0.0, max_value=10.0, value=3.0, step=0.5)
-        calc_min_m = st.slider("Kurumsal Taban Brüt Marj Eşiği (Min Gross Margin - %)", min_value=20.0, max_value=60.0, value=35.0, step=1.0)
-        calc_extra_tier = st.slider("Özel Stratejik Esneklik Payı (Board/CEO Strategic Override - %)", min_value=0.0, max_value=10.0, value=0.0, step=0.5, help="Yönetim Kurulu veya CEO yetkisiyle tanımlanan ek tolerans.")
-
-    with c_calc2:
-        st.markdown("#### ⚖️ Çok Boyutlu İskonto ve Yetki Değerlendirmesi")
-        
-        # 1. Base volume tier
-        if calc_qty >= 50:
-            vol_tier_name = "Volume Tier 3 (50+ Adet)"
-            base_max = 12.0
-        elif calc_qty >= 25:
-            vol_tier_name = "Volume Tier 2 (25–49 Adet)"
-            base_max = 8.0
-        elif calc_qty >= 10:
-            vol_tier_name = "Volume Tier 1 (10–24 Adet)"
-            base_max = 5.0
-        else:
-            vol_tier_name = "Standart Sipariş (<10 Adet)"
-            base_max = 2.0
+            """, unsafe_allow_html=True)
             
-        macro_allowance = macro['macro_discount_allowance']
-        ivf_allowance = macro['ivf_discount_allowance']
-        
-        # Total dynamically authorized discount ceiling
-        allowed_disc = round(base_max + macro_allowance + ivf_allowance + total_perf_bonus + calc_extra_tier, 1)
-        
-        orig_val = calc_qty * calc_price
-        disc_amt = orig_val * (calc_disc / 100.0)
-        net_val = orig_val - disc_amt
-        unit_final = calc_price * (1.0 - calc_disc / 100.0)
-        
-        tot_cogs = calc_qty * calc_cost + calc_ship + (net_val * calc_comm / 100.0)
-        gross_profit = net_val - tot_cogs
-        gross_margin = (gross_profit / net_val * 100.0) if net_val > 0 else 0.0
-        
-        # Standard benchmark without discount
-        std_tot_cogs = calc_qty * calc_cost + calc_ship + (orig_val * calc_comm / 100.0)
-        std_gp = orig_val - std_tot_cogs
-        std_gm = (std_gp / orig_val * 100.0) if orig_val > 0 else 0.0
-        
-        # Unit contribution & break-even
-        unit_contrib = unit_final * (1.0 - calc_comm / 100.0) - calc_cost
-        be_qty = math.ceil(calc_ship / unit_contrib) if unit_contrib > 0 else None
+            # Check if values prefilled from AI Tab
+            init_disc = float(st.session_state.get('applied_ai_disc', 8.0))
+            init_ship = float(st.session_state.get('applied_ai_ship', 900.0))
 
-        # Multi-factor approval logic
-        reasons = []
-        positive_factors = []
-        
-        if calc_disc > allowed_disc:
-            reasons.append(f"Talep edilen %{calc_disc:.1f} iskonto; {calc_country} pazarının makro satın alma gücü, IVF destek statüsü ve partner performansının hak ettiği dinamik tavan olan %{allowed_disc:.1f}'i {calc_disc - allowed_disc:+.1f} puan aşmaktadır.")
-        else:
-            positive_factors.append(f"Talep edilen %{calc_disc:.1f} iskonto, çok boyutlu dinamik tavan olan %{allowed_disc:.1f} sınırları içerisindedir.")
-            
-        if gross_margin < calc_min_m:
-            reasons.append(f"Net brüt kâr marjı (%{gross_margin:.1f}), şirket taban eşiği olan %{calc_min_m:.1f}'in {calc_min_m - gross_margin:.1f} puan altındadır.")
-        else:
-            positive_factors.append(f"Brüt kâr marjı (%{gross_margin:.1f}), şirket taban marjı %{calc_min_m:.1f}'i başarıyla sağlamaktadır.")
-            
-        # Macro context checks
-        if macro['gdp_pc'] >= 30000 and calc_disc > 10.0:
-            reasons.append(f"{calc_country} yüksek gelirli (Kişi başı GSYİH: ${macro['gdp_pc']:,}) bir pazardır; kamu veya özel IVF satın alma gücü yüksek olduğundan çift haneli iskonto marj erozyonu yaratır.")
-        elif macro['gdp_pc'] < 10000:
-            positive_factors.append(f"{calc_country} pazarında kişi başı GSYİH (${macro['gdp_pc']:,}) düşüktür ve hastalar %100 cepten ödeme yapmaktadır; adil pazar payı korumak için esneklik desteklenir.")
-            
-        if partner_rev >= 30000:
-            positive_factors.append(f"Partner {format_curr(partner_rev)} kayıtlı ciro ve %{partner_growth:+.1f} YoY büyüme ile {perf_tier_name} statüsündedir; ek performans iskontosu hak etmektedir.")
+            calc_qty = st.number_input("Sipariş Adedi / Hacmi (Order Quantity - Units)", min_value=1, value=25, step=1)
+            calc_price = st.number_input("Sözleşme Liste Fiyatı (Contractual List Price - USD)", min_value=100.0, value=4200.0, step=100.0)
+            calc_cost = st.number_input("Birim Üretim Maliyeti (Unit COGS - USD)", min_value=10.0, value=2300.0, step=50.0)
+            calc_disc = st.slider("Talep Edilen İskonto (Requested Discount - %)", min_value=0.0, max_value=35.0, value=init_disc, step=0.5)
+            calc_ship = st.number_input("Navlun & Lojistik Payı (Freight Allowance - USD)", min_value=0.0, value=init_ship, step=50.0)
+            calc_comm = st.slider("Distribütör Temsilci Primi (Rep Commission - %)", min_value=0.0, max_value=10.0, value=3.0, step=0.5)
+            calc_min_m = st.slider("Kurumsal Taban Brüt Marj Eşiği (Min Gross Margin - %)", min_value=20.0, max_value=60.0, value=35.0, step=1.0)
+            calc_extra_tier = st.slider("Özel Stratejik Esneklik Payı (Board/CEO Strategic Override - %)", min_value=0.0, max_value=10.0, value=0.0, step=0.5, help="Yönetim Kurulu veya CEO yetkisiyle tanımlanan ek tolerans.")
 
-        requires_approval = len(reasons) > 0
+        with c_calc2:
+            st.markdown("#### ⚖️ Çok Boyutlu İskonto ve Yetki Değerlendirmesi")
+            
+            # 1. Base volume tier
+            if calc_qty >= 50:
+                vol_tier_name = "Volume Tier 3 (50+ Adet)"
+                base_max = 12.0
+            elif calc_qty >= 25:
+                vol_tier_name = "Volume Tier 2 (25–49 Adet)"
+                base_max = 8.0
+            elif calc_qty >= 10:
+                vol_tier_name = "Volume Tier 1 (10–24 Adet)"
+                base_max = 5.0
+            else:
+                vol_tier_name = "Standart Sipariş (<10 Adet)"
+                base_max = 2.0
+                
+            macro_allowance = macro['macro_discount_allowance']
+            ivf_allowance = macro['ivf_discount_allowance']
+            
+            # Total dynamically authorized discount ceiling
+            allowed_disc = round(base_max + macro_allowance + ivf_allowance + total_perf_bonus + calc_extra_tier, 1)
+            
+            orig_val = calc_qty * calc_price
+            disc_amt = orig_val * (calc_disc / 100.0)
+            net_val = orig_val - disc_amt
+            unit_final = calc_price * (1.0 - calc_disc / 100.0)
+            
+            tot_cogs = calc_qty * calc_cost + calc_ship + (net_val * calc_comm / 100.0)
+            gross_profit = net_val - tot_cogs
+            gross_margin = (gross_profit / net_val * 100.0) if net_val > 0 else 0.0
+            
+            # Standard benchmark without discount
+            std_tot_cogs = calc_qty * calc_cost + calc_ship + (orig_val * calc_comm / 100.0)
+            std_gp = orig_val - std_tot_cogs
+            std_gm = (std_gp / orig_val * 100.0) if orig_val > 0 else 0.0
+            
+            # Unit contribution & break-even
+            unit_contrib = unit_final * (1.0 - calc_comm / 100.0) - calc_cost
+            be_qty = math.ceil(calc_ship / unit_contrib) if unit_contrib > 0 else None
 
-        # Decision Card
-        if gross_profit < 0:
-            st.error("🛑 İŞLEM UYGULANAMAZ: Sipariş negatif brüt kâr (zarar) üretmektedir!")
-        elif requires_approval:
-            st.warning("⚠️ ÜST YÖNETİM ONAYI GEREKLİ (CFO / CEO ESCALATION)")
-            for r in reasons:
-                st.write(f"• {r}")
-            with st.expander("Göz Önüne Alınan Pozitif Faktörler", expanded=False):
+            # Multi-factor approval logic
+            reasons = []
+            positive_factors = []
+            
+            if calc_disc > allowed_disc:
+                reasons.append(f"Talep edilen %{calc_disc:.1f} iskonto; {calc_country} pazarının makro satın alma gücü, IVF destek statüsü ve partner performansının hak ettiği dinamik tavan olan %{allowed_disc:.1f}'i {calc_disc - allowed_disc:+.1f} puan aşmaktadır.")
+            else:
+                positive_factors.append(f"Talep edilen %{calc_disc:.1f} iskonto, çok boyutlu dinamik tavan olan %{allowed_disc:.1f} sınırları içerisindedir.")
+                
+            if gross_margin < calc_min_m:
+                reasons.append(f"Net brüt kâr marjı (%{gross_margin:.1f}), şirket taban eşiği olan %{calc_min_m:.1f}'in {calc_min_m - gross_margin:.1f} puan altındadır.")
+            else:
+                positive_factors.append(f"Brüt kâr marjı (%{gross_margin:.1f}), şirket taban marjı %{calc_min_m:.1f}'i başarıyla sağlamaktadır.")
+                
+            # Macro context checks
+            if macro['gdp_pc'] >= 30000 and calc_disc > 10.0:
+                reasons.append(f"{calc_country} yüksek gelirli (Kişi başı GSYİH: ${macro['gdp_pc']:,}) bir pazardır; kamu veya özel IVF satın alma gücü yüksek olduğundan çift haneli iskonto marj erozyonu yaratır.")
+            elif macro['gdp_pc'] < 10000:
+                positive_factors.append(f"{calc_country} pazarında kişi başı GSYİH (${macro['gdp_pc']:,}) düşüktür ve hastalar %100 cepten ödeme yapmaktadır; adil pazar payı korumak için esneklik desteklenir.")
+                
+            if partner_rev >= 30000:
+                positive_factors.append(f"Partner {format_curr(partner_rev)} kayıtlı ciro ve %{partner_growth:+.1f} YoY büyüme ile {perf_tier_name} statüsündedir; ek performans iskontosu hak etmektedir.")
+
+            requires_approval = len(reasons) > 0
+
+            # Decision Card
+            if gross_profit < 0:
+                st.error("🛑 İŞLEM UYGULANAMAZ: Sipariş negatif brüt kâr (zarar) üretmektedir!")
+            elif requires_approval:
+                st.warning("⚠️ ÜST YÖNETİM ONAYI GEREKLİ (CFO / CEO ESCALATION)")
+                for r in reasons:
+                    st.write(f"• {r}")
+                with st.expander("Göz Önüne Alınan Pozitif Faktörler", expanded=False):
+                    for p in positive_factors:
+                        st.write(f"✓ {p}")
+            else:
+                st.success(f"✅ İŞLEM ONAYLANDI: Çok Boyutlu Makro & Performans Yetkisi Dahilindedir.")
                 for p in positive_factors:
-                    st.write(f"✓ {p}")
-        else:
-            st.success(f"✅ İŞLEM ONAYLANDI: Çok Boyutlu Makro & Performans Yetkisi Dahilindedir.")
-            for p in positive_factors:
-                st.caption(f"✓ {p}")
+                    st.caption(f"✓ {p}")
 
-        # Metrics
-        res_k1, res_k2 = st.columns(2)
-        res_k1.metric("İndirimli Net Hasılat", format_curr(net_val), delta=f"-{format_curr(disc_amt)} İskonto Bedeli", delta_color="inverse")
-        res_k2.metric("Brüt Kâr & Marj", format_curr(gross_profit), delta=f"%{gross_margin:.1f} Brüt Marj")
+            # Metrics
+            res_k1, res_k2 = st.columns(2)
+            res_k1.metric("İndirimli Net Hasılat", format_curr(net_val), delta=f"-{format_curr(disc_amt)} İskonto Bedeli", delta_color="inverse")
+            res_k2.metric("Brüt Kâr & Marj", format_curr(gross_profit), delta=f"%{gross_margin:.1f} Brüt Marj")
 
-        # 4-Factor Dynamic Breakdown Card
-        st.markdown(f"""
-        <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08);padding:14px;border-radius:10px;font-size:12px;margin:12px 0;">
-            <div style="font-weight:700;color:#00F5FF;margin-bottom:8px;font-size:13px;">🧩 Çok Boyutlu İskonto Tavanı Analiz Matrisi</div>
-            <table style="width:100%;font-size:12px;border-collapse:collapse;color:#E0E6ED;">
-                <tr style="border-bottom:1px solid rgba(255,255,255,0.08);">
-                    <td style="padding:4px 0;">📦 <b>Sipariş Hacmi Skalası:</b></td>
-                    <td style="padding:4px 0;text-align:right;">{vol_tier_name}</td>
-                    <td style="padding:4px 0;text-align:right;color:#00F5FF;font-weight:700;">+%{base_max:.1f}</td>
-                </tr>
-                <tr style="border-bottom:1px solid rgba(255,255,255,0.08);">
-                    <td style="padding:4px 0;">🌐 <b>Ülke GSYİH & Yaşam Standardı:</b></td>
-                    <td style="padding:4px 0;text-align:right;">${macro['gdp_pc']:,} ({macro['gdp_tier']})</td>
-                    <td style="padding:4px 0;text-align:right;color:#00F5FF;font-weight:700;">+%{macro_allowance:.1f}</td>
-                </tr>
-                <tr style="border-bottom:1px solid rgba(255,255,255,0.08);">
-                    <td style="padding:4px 0;">🏛️ <b>Ulusal IVF Destek Rejimi:</b></td>
-                    <td style="padding:4px 0;text-align:right;">{macro['ivf_support']}</td>
-                    <td style="padding:4px 0;text-align:right;color:#00F5FF;font-weight:700;">+%{ivf_allowance:.1f}</td>
-                </tr>
-                <tr style="border-bottom:1px solid rgba(255,255,255,0.08);">
-                    <td style="padding:4px 0;">📈 <b>Partner Satış & Büyüme Performansı:</b></td>
-                    <td style="padding:4px 0;text-align:right;">{perf_badge} ({format_curr(partner_rev)})</td>
-                    <td style="padding:4px 0;text-align:right;color:#00F5FF;font-weight:700;">+%{total_perf_bonus:.1f}</td>
-                </tr>
-                {'<tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><td style="padding:4px 0;">🎯 <b>Stratejik Esneklik Payı:</b></td><td style="padding:4px 0;text-align:right;">Yönetim Kurulu Onaylı</td><td style="padding:4px 0;text-align:right;color:#00F5FF;font-weight:700;">+%' + f'{calc_extra_tier:.1f}</td></tr>' if calc_extra_tier > 0 else ''}
-                <tr style="border-top:2px solid #13A6B5;font-weight:700;color:#00F5FF;">
-                    <td style="padding:8px 0;">🏁 <b>TOPLAM YETKİLİ DİNAMİK TAVAN:</b></td>
-                    <td style="padding:8px 0;text-align:right;">İzin Verilen Azami İskonto</td>
-                    <td style="padding:8px 0;text-align:right;font-size:14px;color:#00E676;">%{allowed_disc:.1f}</td>
-                </tr>
-            </table>
-        </div>
-        """, unsafe_allow_html=True)
+            # 4-Factor Dynamic Breakdown Card without any leading markdown indentation
+            extra_tr = f"""<tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><td style="padding:5px 0;">🎯 <b>Stratejik Esneklik Payı:</b></td><td style="padding:5px 0;text-align:right;">Yönetim Kurulu Onaylı</td><td style="padding:5px 0;text-align:right;color:#00F5FF;font-weight:700;">+%{calc_extra_tier:.1f}</td></tr>""" if calc_extra_tier > 0 else ""
+            
+            clean_matrix_html = f"""<div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08);padding:14px;border-radius:10px;font-size:12px;margin:12px 0;">
+<div style="font-weight:700;color:#00F5FF;margin-bottom:8px;font-size:13px;">🧩 Çok Boyutlu İskonto Tavanı Analiz Matrisi</div>
+<table style="width:100%;font-size:12px;border-collapse:collapse;color:#E0E6ED;">
+<tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><td style="padding:5px 0;">📦 <b>Sipariş Hacmi Skalası:</b></td><td style="padding:5px 0;text-align:right;">{vol_tier_name}</td><td style="padding:5px 0;text-align:right;color:#00F5FF;font-weight:700;">+%{base_max:.1f}</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><td style="padding:5px 0;">🌐 <b>Ülke GSYİH & Yaşam Standardı:</b></td><td style="padding:5px 0;text-align:right;">${macro['gdp_pc']:,} ({macro['gdp_tier']})</td><td style="padding:5px 0;text-align:right;color:#00F5FF;font-weight:700;">+%{macro_allowance:.1f}</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><td style="padding:5px 0;">🏛️ <b>Ulusal IVF Destek Rejimi:</b></td><td style="padding:5px 0;text-align:right;">{macro['ivf_support']}</td><td style="padding:5px 0;text-align:right;color:#00F5FF;font-weight:700;">+%{ivf_allowance:.1f}</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><td style="padding:5px 0;">📈 <b>Partner Satış & Büyüme Performansı:</b></td><td style="padding:5px 0;text-align:right;">{perf_badge} ({format_curr(partner_rev)})</td><td style="padding:5px 0;text-align:right;color:#00F5FF;font-weight:700;">+%{total_perf_bonus:.1f}</td></tr>
+{extra_tr}
+<tr style="border-top:2px solid #13A6B5;font-weight:700;color:#00F5FF;"><td style="padding:8px 0;">🏁 <b>TOPLAM YETKİLİ DİNAMİK TAVAN:</b></td><td style="padding:8px 0;text-align:right;">İzin Verilen Azami İskonto</td><td style="padding:8px 0;text-align:right;font-size:14px;color:#00E676;">%{allowed_disc:.1f}</td></tr>
+</table>
+</div>"""
+            st.markdown(clean_matrix_html, unsafe_allow_html=True)
 
-        st.markdown(f"""
-        <div style="background:rgba(255,255,255,0.03);padding:14px;border-radius:10px;font-size:13px;line-height:1.8;">
-            <b>Standart Liste Fiyatına Göre Kâr Değişimi:</b> {gross_margin - std_gm:+.1f} pt ({format_curr(gross_profit - std_gp)})<br>
-            <b>Birim Efektif Realize Fiyat:</b> {format_curr(unit_final)} / adet (Liste: {format_curr(calc_price)})<br>
-            <b>İskonto Güvenlik Farkı:</b> <span style="color:{'#00E676' if allowed_disc >= calc_disc else '#FF5252'};font-weight:700;">{allowed_disc - calc_disc:+.1f} puan</span> (Tavan: %{allowed_disc:.1f} vs Talep: %{calc_disc:.1f})<br>
-            <b>Navlun Başabaş Sipariş Hacmi:</b> {be_qty if be_qty else 'N/A'} adet
-        </div>
-        """, unsafe_allow_html=True)
+            clean_kpi_html = f"""<div style="background:rgba(255,255,255,0.03);padding:14px;border-radius:10px;font-size:13px;line-height:1.8;">
+<b>Standart Liste Fiyatına Göre Kâr Değişimi:</b> {gross_margin - std_gm:+.1f} pt ({format_curr(gross_profit - std_gp)})<br>
+<b>Birim Efektif Realize Fiyat:</b> {format_curr(unit_final)} / adet (Liste: {format_curr(calc_price)})<br>
+<b>İskonto Güvenlik Farkı:</b> <span style="color:{'#00E676' if allowed_disc >= calc_disc else '#FF5252'};font-weight:700;">{allowed_disc - calc_disc:+.1f} puan</span> (Tavan: %{allowed_disc:.1f} vs Talep: %{calc_disc:.1f})<br>
+<b>Navlun Başabaş Sipariş Hacmi:</b> {be_qty if be_qty else 'N/A'} adet
+</div>"""
+            st.markdown(clean_kpi_html, unsafe_allow_html=True)
+
+    # --------------------------------------------------------------------------
+    # TAB 2: AI DİNAMİK İSKONTO & PAKET ÖNERİSİ (AI PRICING & BUNDLE ADVISOR)
+    # --------------------------------------------------------------------------
+    with calc_tab2:
+        st.markdown("### 🤖 ZEUS AI Makro, Gümrük ve Performans Odaklı İskonto & Paket Önerisi")
+        st.caption("Yapay zeka motoru; ülkenin GSYİH (GDP) seviyesini, yaşam kalitesini, IVF klinik sayısını, nüfusunu, gümrük tarifesini ve distribütörün satış geçmişini sentezleyerek optimum cihaz/malzeme indirim paketini önerir.")
+
+        ai_col1, ai_col2 = st.columns([1.1, 1.3])
+        with ai_col1:
+            st.markdown("#### 🎯 Analiz Edilecek Partner ve Stratejik Amaç")
+            ai_dist_name = st.selectbox("Partner / Distribütör Seçimi", all_ordered_names, index=sirius_idx, key="ai_dist_select")
+            ai_d = next((d for d in active_rows if d['name'] == ai_dist_name), active_rows[0])
+            ai_country = ai_d.get('country_name', 'Turkey')
+            ai_macro = resolve_country_macro(ai_country)
+
+            ai_goal = st.radio(
+                "Ticari Optimizasyon Hedefi:",
+                [
+                    "🎯 Pazar Payı Kazanma & Hızlı Cihaz Penetrasyonu (Aggressive Expansion)",
+                    "🧪 Tekrar Eden Sarf Tüketimini Maksimize Etme (Razor-and-Blade Consumable)",
+                    "🛡️ Yüksek Gümrük & Navlun Bariyerini Dengeleme (Customs Tariff Offset)",
+                    "⚖️ Dengeli Kârlılık ve Marj Koruma (Balanced Corporate Profitability)"
+                ],
+                key="ai_goal_select"
+            )
+
+            # 4 macro indicator badges
+            st.markdown(f"""
+            <div style="background:rgba(19,166,181,0.06);border:1px solid rgba(19,166,181,0.25);border-radius:10px;padding:12px;margin-top:14px;font-size:12px;line-height:1.7;">
+                <div style="font-weight:700;color:#00F5FF;margin-bottom:6px;font-size:13px;">📌 {ai_country} Pazar ve Gümrük Parametreleri</div>
+                • <b>Kişi Başı GSYİH:</b> ${ai_macro['gdp_pc']:,} USD ({ai_macro['gdp_tier']})<br>
+                • <b>Yaşam Standardı:</b> {ai_macro['living_standard']}<br>
+                • <b>Lisanslı IVF Klinik Sayısı:</b> {ai_macro['clinics']} Merkez<br>
+                • <b>Ülke Nüfusu:</b> {ai_macro['pop_m']} Milyon<br>
+                • <b>Gümrük Vergisi:</b> %{ai_macro['customs_tariff_pct']:.1f} (Ortalama {ai_macro['customs_clearance_days']} Gün Bekleme)<br>
+                • <b>İthalat Zorluğu:</b> {ai_macro['import_difficulty']}<br>
+                • <b>Devlet Desteği:</b> {ai_macro['ivf_support']}<br>
+                • <b>Partner Kayıtlı Satışı:</b> {format_curr(ai_d.get('revenue', 0.0))} ({ai_d.get('devices_count', 0)} Cihaz / {ai_d.get('consumables_count', 0)} Sarf)
+            </div>
+            """, unsafe_allow_html=True)
+
+        with ai_col2:
+            st.markdown("#### 💡 AI Tavsiye Edilen Fiyatlandırma & Paket Modeli")
+            
+            # Generate AI recommendation
+            ai_rec = generate_ai_pricing_bundle_recommendation(ai_d, ai_macro, ai_goal)
+            
+            rec_c1, rec_c2 = st.columns(2)
+            rec_c1.metric(
+                "Önerilen Cihaz İskontosu",
+                f"%{ai_rec['rec_device_discount']:.1f}",
+                delta=f"Hedef Marj: %{ai_rec['expected_margin']:.1f}",
+                delta_color="normal"
+            )
+            rec_c2.metric(
+                "Önerilen Sarf / Malzeme İndirimi",
+                f"%{ai_rec['rec_consumable_discount']:.1f}",
+                delta=f"Kazanma Olasılığı: %{ai_rec['win_probability']}",
+                delta_color="normal"
+            )
+
+            # Executive recommendation card
+            st.markdown(f"""
+            <div style="background:rgba(0,245,255,0.04);border:1px solid #13A6B5;border-radius:10px;padding:14px;margin:12px 0;font-size:13px;line-height:1.7;">
+                <div style="font-weight:700;color:#00F5FF;font-size:14px;margin-bottom:8px;">🎁 AI Tavsiye Edilen Malzeme & Bundle Formülü</div>
+                <div style="background:rgba(19,166,181,0.12);padding:10px;border-radius:8px;font-weight:600;color:#FFFFFF;margin-bottom:10px;">
+                    {ai_rec['bundle_desc']}
+                </div>
+                <div style="font-weight:700;color:#4FD1DE;margin-top:6px;">🚢 Gümrük & Lojistik Dengeleme Taktiği:</div>
+                <div style="color:#C4D1D9;font-size:12px;">{ai_rec['customs_strategy']}</div>
+                <div style="font-weight:700;color:#4FD1DE;margin-top:8px;">📊 Partner Satış Performans Değerlendirmesi:</div>
+                <div style="color:#C4D1D9;font-size:12px;">{ai_rec['partner_note']}</div>
+                <hr style="border-color:rgba(19,166,181,0.2);margin:10px 0;">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <span style="color:#8FA3C0;font-size:12px;">1 Yıllık Tahmini Ek Sarf Hacmi:</span>
+                    <span style="color:#00E676;font-weight:700;font-size:14px;">{ai_rec['annual_sarf_potential']}</span>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # Action button to apply AI recommendation into simulator
+            if st.button("⚡ Bu AI Önerisini Manuel Simülatöre Aktar", type="primary", key="btn_apply_ai_pricing"):
+                st.session_state['applied_ai_disc'] = ai_rec['rec_device_discount']
+                st.session_state['applied_ai_ship'] = ai_rec['rec_freight']
+                st.session_state['sim_calc_partner'] = ai_dist_name
+                st.success(f"✓ AI önerisi (%{ai_rec['rec_device_discount']:.1f} iskonto, ${ai_rec['rec_freight']:.0f} lojistik) başarıyla simülatöre aktarıldı! 'Manuel İskonto & Marj Simülatörü' sekmesinden sonucu inceleyebilirsiniz.")
 
 
 
