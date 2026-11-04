@@ -364,12 +364,58 @@ def get_base_distributors():
         tot_m = sum(m_counts)
         weights = [v / tot_m for v in m_counts] if tot_m > 0 else [1/12]*12
         
+        # Classification: Distributor vs Local (Turkey) vs International Customer
+        DISTRIBUTOR_COMPANIES = {
+            'SIRIUS PHARM COMPANY',
+            'INTERNATIONAL TECHNICAL LEGACY (ITL)',
+            'SJNU INC',
+            'CONSULTANT MEDICAL COMPANY (CMC)',
+            'ASSISTED MEDICAL SOLUTION EST',
+            'ADVANCED TECHNOLOGY COMPANY K.S.C.P.',
+            'SELLCO TRADING INTL',
+            'MEYONA OOD',
+            'BISAN COMPANY FOR EXPORT AND IMPORT'
+        }
+        
+        if company in DISTRIBUTOR_COMPANIES:
+            acc_type = 'Distributor'
+            acc_type_tr = 'Yetkili Distribütör'
+            is_dist = True
+            loa_val = 'In renewal' if company == 'SELLCO TRADING INTL' else 'Valid'
+            exp_val = '2026-11-20' if company == 'SELLCO TRADING INTL' else ('2027-12-31' if company in ['SIRIUS PHARM COMPANY', 'INTERNATIONAL TECHNICAL LEGACY (ITL)', 'SJNU INC'] else '2027-06-30')
+            excl_val = 'Exclusive' if company in ['SIRIUS PHARM COMPANY', 'INTERNATIONAL TECHNICAL LEGACY (ITL)', 'SJNU INC'] else 'Non-Exclusive'
+            ag_type_val = 'Münhasır Distribütörlük Sözleşmesi' if excl_val == 'Exclusive' else 'Yetkili Distribütörlük Sözleşmesi'
+            comp_status = '✅ Tam Uyumlu' if loa_val == 'Valid' else '⚠️ Yenileme Bekleniyor'
+        elif country == 'Turkey':
+            acc_type = 'Local Customer'
+            acc_type_tr = 'Local Müşteri (Türkiye)'
+            is_dist = False
+            loa_val = 'N/A (Local Client)'
+            exp_val = 'Yıllık Tedarik Protokolü'
+            excl_val = 'N/A'
+            ag_type_val = 'Yurtiçi Cihaz & Sarf Tedarik Protokolü'
+            comp_status = '✅ Standart Müşteri Kaydı'
+        else:
+            acc_type = 'International Customer'
+            acc_type_tr = 'International Müşteri'
+            is_dist = False
+            loa_val = 'N/A (Direct Hospital/Clinic)'
+            exp_val = 'Kurumsal Tedarik Sözleşmesi'
+            excl_val = 'N/A'
+            ag_type_val = 'Akademik Protokol & Cihaz Devri' if 'Ghent' in company else 'Uluslararası Doğrudan Satın Alma Protokolü'
+            comp_status = '✅ Onaylı Uluslararası Müşteri'
+
         accounts.append({
             'id': code,
             'name': company,
             'country_name': country,
             'region': country_to_region.get(country, 'Global'),
             'status': 'active',
+            'account_type': acc_type,
+            'account_type_tr': acc_type_tr,
+            'is_distributor': is_dist,
+            'agreement_type': ag_type_val,
+            'compliance': comp_status,
             'base_rev_k': tot_rev / 1000.0,
             'revenue': tot_rev,
             'device_rev': dev_rev,
@@ -380,15 +426,15 @@ def get_base_distributors():
             'last_order': last_date,
             'products': prods,
             'dev_share': (dev_rev / tot_rev) if tot_rev > 0 else 0.0,
-            'target_pct': 100,
+            'target_pct': 100 if tot_rev > 0 else 85,
             'margin_pct': 46.5 if dev_count > 0 else 42.0,
             'growth_pct': 18.5 if tot_rev > 20000 else 10.0,
             'pen_pct': round(min(25.0, max(2.5, (dev_count * 2.0 + tot_rev / 15000.0))), 1),
             'weights': weights,
             'risk': 'Low',
-            'expiry': '—',
-            'exclusivity': 'Authorized Partner',
-            'loa': 'Valid'
+            'expiry': exp_val,
+            'exclusivity': excl_val,
+            'loa': loa_val
         })
     accounts.sort(key=lambda x: x['revenue'], reverse=True)
     return accounts
@@ -396,6 +442,82 @@ def get_base_distributors():
 # Initialize Session State
 if 'added_dists' not in st.session_state:
     st.session_state.added_dists = []
+
+if 'custom_documents' not in st.session_state:
+    st.session_state.custom_documents = [
+        {
+            'doc_id': 'ZEUS-LOA-SIRIUS-2026',
+            'company': 'SIRIUS PHARM COMPANY',
+            'category': 'Distributor',
+            'doc_type': 'LOA (Letter of Authorization)',
+            'territory': 'Jordan & Iraq',
+            'start_date': '2026-01-01',
+            'end_date': '2027-12-31',
+            'status': '✅ Geçerli (Valid)',
+            'notes': 'Resmi Ürdün ve Irak münhasır distribütörlük yetki belgesi.',
+            'filename': 'ZEUS_LOA_Sirius_Pharm_2026_2027.pdf'
+        },
+        {
+            'doc_id': 'ZEUS-AGR-ITL-2026',
+            'company': 'INTERNATIONAL TECHNICAL LEGACY (ITL)',
+            'category': 'Distributor',
+            'doc_type': 'Distribütörlük Sözleşmesi',
+            'territory': 'Qatar',
+            'start_date': '2026-01-01',
+            'end_date': '2027-12-31',
+            'status': '✅ Geçerli (Valid)',
+            'notes': 'Katar Devleti münhasır IVF klinik ekipman dağıtım protokolü.',
+            'filename': 'ZEUS_Exclusive_Distribution_ITL_Qatar.pdf'
+        },
+        {
+            'doc_id': 'ZEUS-LOA-SJNU-2026',
+            'company': 'SJNU INC',
+            'category': 'Distributor',
+            'doc_type': 'LOA (Letter of Authorization)',
+            'territory': 'South Korea',
+            'start_date': '2026-03-15',
+            'end_date': '2027-12-31',
+            'status': '✅ Geçerli (Valid)',
+            'notes': 'Kore MFDS regülasyonlarına uygun münhasır Piezo Pulse dağıtım yetkisi.',
+            'filename': 'ZEUS_LOA_SJNU_Korea_MFDS.pdf'
+        },
+        {
+            'doc_id': 'ZEUS-AGR-SELLCO-2025',
+            'company': 'SELLCO TRADING INTL',
+            'category': 'Distributor',
+            'doc_type': 'Distribütörlük Sözleşmesi',
+            'territory': 'United Arab Emirates',
+            'start_date': '2025-11-20',
+            'end_date': '2026-11-20',
+            'status': '⚠️ Yenilemede (In Renewal)',
+            'notes': 'Sözleşme süresi 20 Kasım 2026 tarihinde dolmaktadır; yenileme protokolü hazırlanmıştır.',
+            'filename': 'ZEUS_UAE_Sellco_Agreement_2026.pdf'
+        },
+        {
+            'doc_id': 'ZEUS-ACAD-GHENT-2026',
+            'company': 'Ghent University (UGent)',
+            'category': 'International Customer',
+            'doc_type': 'Akademik Cihaz & Araştırma Protokolü',
+            'territory': 'Belgium',
+            'start_date': '2026-05-10',
+            'end_date': '2028-05-10',
+            'status': '✅ Aktif Protokol',
+            'notes': 'Electro Fusion SET cihazının akademik oosit aktivasyonu araştırmalarında kullanımı.',
+            'filename': 'ZEUS_UGent_Academic_Transfer_Agreement.pdf'
+        },
+        {
+            'doc_id': 'ZEUS-LOC-TAVMERGEN-2026',
+            'company': 'TAVMERGEN ÖZEL TÜP BEBEK MERKEZİ VE SAĞLIK HİZMETLERİ ANONİM ŞİRKETİ',
+            'category': 'Local Customer',
+            'doc_type': 'Yurtiçi Cihaz & Sarf Tedarik Protokolü',
+            'territory': 'Türkiye',
+            'start_date': '2026-02-01',
+            'end_date': '2027-02-01',
+            'status': '✅ Yıllık Sipariş Kaydı',
+            'notes': 'İzmir merkezli klinik için 1 adet Piezo Pulse cihazı ve yıllık Electro Dish sipariş protokolü.',
+            'filename': 'ZEUS_Tavmergen_Yurtici_Tedarik_Sozlesmesi.pdf'
+        }
+    ]
 
 country_df = get_country_intelligence()
 base_dists = get_base_distributors()
@@ -1631,16 +1753,25 @@ elif nav_selection == "◇ Distributors & CRM":
     st.caption("Excel satış kayıtlarındaki 44 aktif müşteri ve partnerin ticari sipariş hacimleri, cihaz kurulumları ve sarf tüketim dökümü.")
 
     # Search & Filters
-    f_c1, f_c2, f_c3 = st.columns([2, 1, 1])
+    f_c1, f_c2, f_c3, f_c4 = st.columns([1.5, 1, 1, 1])
     with f_c1:
         search_query = st.text_input("🔍 Firma adı, ülke veya ürün ara", "")
     with f_c2:
+        cat_crm_filter = st.selectbox("Müşteri / Bayi Sınıfı", ["Tümü", "🏢 Distribütörler", "🇹🇷 Local Müşteriler (Türkiye)", "🌍 International Müşteriler"])
+    with f_c3:
         all_countries = sorted(list(set(d['country_name'] for d in dists_with_rev)))
         country_filter = st.selectbox("Ülkeye Göre Filtrele", ["Tümü"] + all_countries)
-    with f_c3:
+    with f_c4:
         type_filter = st.selectbox("Satın Alma Tipi", ["Tümü", "Cihaz ve Sarf Alanlar", "Sadece Sarf Alanlar"])
 
     filtered_accounts = dists_with_rev
+    if cat_crm_filter == "🏢 Distribütörler":
+        filtered_accounts = [d for d in filtered_accounts if d.get('account_type') == 'Distributor']
+    elif cat_crm_filter == "🇹🇷 Local Müşteriler (Türkiye)":
+        filtered_accounts = [d for d in filtered_accounts if d.get('account_type') == 'Local Customer']
+    elif cat_crm_filter == "🌍 International Müşteriler":
+        filtered_accounts = [d for d in filtered_accounts if d.get('account_type') == 'International Customer']
+
     if country_filter != "Tümü":
         filtered_accounts = [d for d in filtered_accounts if d['country_name'] == country_filter]
         
@@ -1669,6 +1800,7 @@ elif nav_selection == "◇ Distributors & CRM":
     for d in filtered_accounts:
         table_rows.append({
             'Firma / Klinik': d['name'],
+            'Sınıf': '🏢 Distribütör' if d.get('account_type') == 'Distributor' else ('🇹🇷 Local' if d.get('account_type') == 'Local Customer' else '🌍 International'),
             'Ülke': d['country_name'],
             'Bölge': d['region'],
             'Net Ciro': format_curr(d['revenue']),
@@ -1704,33 +1836,252 @@ elif nav_selection == "◇ Distributors & CRM":
 # ==============================================================================
 elif nav_selection == "▤ Agreements & Compliance":
     st.title("📑 International Agreements, LOA & Regulatory Compliance")
-    st.caption("Legal validity, Letter of Authorization (LOA) renewals, and territorial exclusivity management.")
+    st.caption("Distribütörlük sözleşmeleri, LOA yetki belgeleri, yerel (Türkiye) ve uluslararası müşteri tedarik protokolleri yönetimi.")
 
+    # Categorize accounts
+    dist_rows = [d for d in active_rows if d.get('account_type') == 'Distributor']
+    local_rows = [d for d in active_rows if d.get('account_type') == 'Local Customer']
+    intl_rows = [d for d in active_rows if d.get('account_type') == 'International Customer']
+
+    # Distributor-only LOA metrics
+    valid_loas = len([d for d in dist_rows if d.get('loa') == 'Valid'])
+    renew_loas = len([d for d in dist_rows if d.get('loa') == 'In renewal'])
+    excl_count = len([d for d in dist_rows if 'exclusive' in str(d.get('exclusivity', '')).lower()])
+
+    # Top KPI Metrics Cards
     ac1, ac2, ac3, ac4 = st.columns(4)
-    valid_loas = len([d for d in active_rows if d['loa'] == 'Valid'])
-    renew_loas = len([d for d in active_rows if d['loa'] == 'In renewal'])
-    excl_effective = len([d for d in active_rows if d['exclusivity'] == 'Effective'])
-    excl_pending = len([d for d in active_rows if 'pending' in d['exclusivity'].lower()])
-    
-    ac1.metric("LOA Certificates Valid", f"{valid_loas} / {len(active_rows)}")
-    ac2.metric("LOA In Renewal", renew_loas, delta="-2 Action Required", delta_color="inverse")
-    ac3.metric("Exclusive Territories", excl_effective)
-    ac4.metric("Exclusivity Requests Pending", excl_pending)
+    ac1.metric("🏢 Yetkili Distribütörler", f"{len(dist_rows)} Partner", delta=f"{excl_count} Münhasır Bölge")
+    ac2.metric("📜 Geçerli LOA Belgeleri", f"{valid_loas} / {len(dist_rows)}", delta=f"{renew_loas} Yenilemede" if renew_loas > 0 else "Tamamı Geçerli", delta_color="inverse" if renew_loas > 0 else "normal")
+    ac3.metric("🇹🇷 Local Müşteriler (Türkiye)", f"{len(local_rows)} Klinik", delta=f"{format_curr(sum(d['revenue'] for d in local_rows))} Yurtiçi Hacim")
+    ac4.metric("🌍 International Müşteriler", f"{len(intl_rows)} Kurum", delta=f"{format_curr(sum(d['revenue'] for d in intl_rows))} Doğrudan İhracat")
 
-    st.markdown("### Contract Master Status")
-    agr_rows = []
-    for d in active_rows:
-        agr_rows.append({
-            'Distributor': d['name'],
-            'Territory': d['country_name'],
-            'Region': d['region'],
-            'Contract Expiry Date': d['expiry'],
-            'LOA Status': d['loa'],
-            'Exclusivity Rights': d['exclusivity'],
-            'Minimum Target': f"{d['target_pct']}% met",
-            'Compliance Status': '✅ Fully Compliant' if d['loa'] == 'Valid' and d['target_pct'] >= 85 else '⚠️ Review Required'
-        })
-    st.dataframe(pd.DataFrame(agr_rows), use_container_width=True, hide_index=True)
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    # --------------------------------------------------------------------------
+    # ACTION: YENİ SÖZLEŞME VE DOKÜMAN EKLEME FORMU
+    # --------------------------------------------------------------------------
+    with st.expander("➕ Yeni Sözleşme / Doküman Ekle (Add Agreement & Document)", expanded=False):
+        st.markdown("##### 📝 Yeni Sözleşme, LOA veya Tedarik Protokolü Tanımlama")
+        
+        f_c1, f_c2 = st.columns(2)
+        with f_c1:
+            cat_choice = st.radio(
+                "Müşteri / Partner Sınıfı Seçin:",
+                [
+                    "🏢 Distributor (Yetkili Bayi — Sözleşme & LOA Zorunlu)",
+                    "🇹🇷 Local Müşteri (Türkiye İçi Klinik / Hastane)",
+                    "🌍 International Müşteri (Uluslararası Doğrudan Klinik / Kurum)"
+                ],
+                index=0
+            )
+            
+            if "Distributor" in cat_choice:
+                cat_key = "Distributor"
+                company_pool = sorted(list(set(d['name'] for d in dist_rows)))
+                doc_types = [
+                    "Distribütörlük Sözleşmesi (Distribution Agreement)",
+                    "LOA (Letter of Authorization / Yetki Belgesi)",
+                    "Münhasırlık Protokolü (Territorial Exclusivity Addendum)",
+                    "Yıllık Asgari Satış Taahhütnamesi (Minimum Target Commitment)",
+                    "NDA (Gizlilik Anlaşması)"
+                ]
+            elif "Local Müşteri" in cat_choice:
+                cat_key = "Local Customer"
+                company_pool = sorted(list(set(d['name'] for d in local_rows)))
+                doc_types = [
+                    "Yurtiçi Cihaz Satın Alma Sözleşmesi",
+                    "Yurtiçi Sarf Malzeme Tedarik Protokolü",
+                    "Klinik Cihaz Kurulum ve Devreye Alma Tutanağı",
+                    "Yıllık Periyodik Bakım Sözleşmesi",
+                    "NDA (Gizlilik Anlaşması)"
+                ]
+            else:
+                cat_key = "International Customer"
+                company_pool = sorted(list(set(d['name'] for d in intl_rows)))
+                doc_types = [
+                    "Uluslararası Doğrudan İhracat & Tedarik Sözleşmesi",
+                    "Akademik İşbirliği ve Araştırma Protokolü",
+                    "Konsinye / Demo Cihaz Devir Sözleşmesi",
+                    "CE / ISO Kalite Uygunluk Sertifikası",
+                    "NDA (Gizlilik Anlaşması)"
+                ]
+                
+            selected_company = st.selectbox("İlgili Firma / Kurum", company_pool + ["[+] Yeni Firma / Kurum Ekle..."])
+            if selected_company == "[+] Yeni Firma / Kurum Ekle...":
+                new_comp_name = st.text_input("Yeni Firma / Kurum Adı")
+                new_comp_country = st.text_input("Ülke")
+                final_company = new_comp_name.strip() if new_comp_name.strip() else "Yeni Firma"
+                final_country = new_comp_country.strip() if new_comp_country.strip() else "Global"
+            else:
+                final_company = selected_company
+                c_d = next((d for d in active_rows if d['name'] == final_company), None)
+                final_country = c_d['country_name'] if c_d else "Global"
+                
+            selected_doc_type = st.selectbox("Belge Türü", doc_types)
+            doc_ref_no = st.text_input("Sözleşme / Belge Referans No", value=f"ZEUS-DOC-2026-{len(st.session_state.custom_documents)+1:03d}")
+
+        with f_c2:
+            dt_c1, dt_c2 = st.columns(2)
+            with dt_c1:
+                start_date = st.date_input("Sözleşme Başlangıç Tarihi")
+            with dt_c2:
+                end_date = st.date_input("Sözleşme Bitiş Tarihi")
+                
+            if cat_key == "Distributor":
+                excl_sel = st.selectbox("Münhasırlık (Exclusivity Hakları)", ["Münhasır (Exclusive Territory)", "Non-Exclusive (Genel Yetkili)", "Bölgesel Öncelikli"])
+                loa_sel = st.selectbox("LOA Yetki Belgesi Durumu", ["✅ Geçerli (Valid)", "⚠️ Yenilemede (In Renewal)", "📝 Taslak / Hazırlanıyor (Draft)"])
+                min_commitment = st.number_input("Yıllık Asgari Satış Taahhüdü ($ USD)", min_value=0, value=50000, step=5000)
+            else:
+                st.info("ℹ️ Local ve International doğrudan müşteriler için LOA ve Münhasırlık aranmaz; standart müşteri tedarik sözleşmesi uygulanır.")
+                excl_sel = "N/A (Müşteri)"
+                loa_sel = "N/A"
+                min_commitment = 0
+
+            uploaded_file = st.file_uploader("Sözleşme / Belge Dosyası Yükle (PDF, DOCX, PNG)", type=["pdf", "docx", "png", "jpg"])
+
+        notes_text = st.text_area("Hukuki Notlar veya Özel Maddeler", placeholder="Örn: Yıllık en az 500 kutu Electro Dish siparişi taahhüt edilmiştir. Ödeme vadesi 45 gündür.")
+        
+        if st.button("💾 Dokümanı Kaydet ve Arşive Ekle", type="primary"):
+            new_doc_entry = {
+                'doc_id': doc_ref_no,
+                'company': final_company,
+                'category': cat_key,
+                'doc_type': selected_doc_type,
+                'territory': final_country,
+                'start_date': str(start_date),
+                'end_date': str(end_date),
+                'status': loa_sel if cat_key == "Distributor" else "✅ Aktif Sözleşme",
+                'notes': notes_text,
+                'filename': uploaded_file.name if uploaded_file else f"{doc_ref_no}.pdf"
+            }
+            st.session_state.custom_documents.insert(0, new_doc_entry)
+            st.success(f"✅ '{final_company}' için '{selected_doc_type}' başarıyla kaydedildi ve arşive eklendi!")
+
+    st.markdown("---")
+
+    # --------------------------------------------------------------------------
+    # CATEGORIZED TABS (DISTRIBUTORS vs LOCAL vs INTERNATIONAL vs ARCHIVE)
+    # --------------------------------------------------------------------------
+    tab_dist, tab_local, tab_intl, tab_archive = st.tabs([
+        f"🏢 Yetkili Distribütörler ({len(dist_rows)})",
+        f"🇹🇷 Local Müşteriler - Türkiye ({len(local_rows)})",
+        f"🌍 International Müşteriler ({len(intl_rows)})",
+        f"📁 Sözleşme & Doküman Arşivi ({len(st.session_state.custom_documents)})"
+    ])
+
+    # --------------------------------------------------------------------------
+    # TAB 1: YETKİLİ DİSTRİBÜTÖRLER (SÖZLEŞME & LOA MASTER)
+    # --------------------------------------------------------------------------
+    with tab_dist:
+        st.markdown("""
+        <div style="background:rgba(19,166,181,0.08);border-left:4px solid #13A6B5;padding:12px;border-radius:6px;margin-bottom:15px;">
+            <span style="color:#4FD1DE;font-weight:600;">Resmi Dağıtım Ağı Sözleşme ve Yetki Belgesi (LOA) Yönetimi</span><br>
+            <span style="font-size:12px;color:#CCD7E6;">Bu sekmede yalnızca ZEUS Bioscience'ın uluslararası yetkili ticari distribütörleri yer almaktadır. Yalnızca distribütörler için LOA (Letter of Authorization), bölge münhasırlığı ve yıllık asgari satış kotaları tanımlanır.</span>
+        </div>
+        """, unsafe_allow_html=True)
+
+        agr_rows = []
+        for d in dist_rows:
+            agr_rows.append({
+                'Distribütör Firma': d['name'],
+                'Yetkili Ülke / Pazar': d['country_name'],
+                'Bölge': d['region'],
+                'Sözleşme Bitiş': d['expiry'],
+                'LOA Statüsü': d['loa'],
+                'Münhasırlık Hakları': d['exclusivity'],
+                'Yıllık Taahhüt Gerçekleşmesi': f"{d['target_pct']}% met",
+                'Uyumluluk Durumu': d.get('compliance', '✅ Tam Uyumlu')
+            })
+        st.dataframe(pd.DataFrame(agr_rows), use_container_width=True, hide_index=True)
+
+        st.caption("ℹ️ Sellco Trading Intl (BAE) distribütörlük sözleşmesi 20 Kasım 2026 tarihinde dolmaktadır; yenileme taslağı hazırlanmıştır.")
+
+    # --------------------------------------------------------------------------
+    # TAB 2: LOCAL MÜŞTERİLER (TÜRKİYE İÇİ KLİNİKLER)
+    # --------------------------------------------------------------------------
+    with tab_local:
+        st.markdown("""
+        <div style="background:rgba(95,211,174,0.08);border-left:4px solid #5FD3AE;padding:12px;border-radius:6px;margin-bottom:15px;">
+            <span style="color:#5FD3AE;font-weight:600;">Türkiye İçi Doğrudan Klinik ve Hastane Sözleşmeleri</span><br>
+            <span style="font-size:12px;color:#CCD7E6;">Türkiye'deki tüp bebek merkezleri ve üniversite hastaneleri <b>Local Müşteri</b> statüsündedir. Bu merkezler için distribütörlük LOA'sı aranmaz; yurtiçi cihaz satın alma ve sarf tedarik sözleşmeleri esastır.</span>
+        </div>
+        """, unsafe_allow_html=True)
+
+        local_search = st.text_input("🔍 Yerel klinik veya hastane ara:", "", key="search_local_clients")
+        
+        filtered_locals = local_rows
+        if local_search.strip():
+            q_loc = local_search.strip().lower()
+            filtered_locals = [d for d in filtered_locals if q_loc in d['name'].lower()]
+
+        local_table = []
+        for d in filtered_locals:
+            local_table.append({
+                'Klinik / Firma Adı': d['name'],
+                'Kategori': 'Local Müşteri (Türkiye)',
+                'Sözleşme Protokolü': d.get('agreement_type', 'Yurtiçi Cihaz & Sarf Tedarik Protokolü'),
+                'Net Faturalanan Ciro': format_curr(d['revenue']),
+                'Kurulu Cihaz': f"{d['devices_count']} Adet" if d['devices_count'] > 0 else "—",
+                'Sarf Sipariş Hacmi': f"{d.get('consumables_count', 0)} Kutu",
+                'Son Sipariş': d.get('last_order', '—'),
+                'Müşteri Statüsü': '✅ Aktif Yerel Müşteri'
+            })
+        st.dataframe(pd.DataFrame(local_table), use_container_width=True, hide_index=True)
+
+    # --------------------------------------------------------------------------
+    # TAB 3: INTERNATIONAL MÜŞTERİLER (DOĞRUDAN İHRACAT)
+    # --------------------------------------------------------------------------
+    with tab_intl:
+        st.markdown("""
+        <div style="background:rgba(240,188,87,0.08);border-left:4px solid #F0BC57;padding:12px;border-radius:6px;margin-bottom:15px;">
+            <span style="color:#F0BC57;font-weight:600;">Uluslararası Doğrudan Müşteri ve Akademik Merkezler</span><br>
+            <span style="font-size:12px;color:#CCD7E6;">Yurtdışındaki doğrudan tüp bebek klinikleri ve üniversite araştırma merkezleridir. Distribütörlük LOA'sı yerine doğrudan kurumsal ihracat tedarik sözleşmeleri ve akademik protokoller ile çalışılmaktadır.</span>
+        </div>
+        """, unsafe_allow_html=True)
+
+        intl_table = []
+        for d in intl_rows:
+            intl_table.append({
+                'Kurum / Klinik Adı': d['name'],
+                'Ülke': d['country_name'],
+                'Bölge': d['region'],
+                'Kategori': 'International Müşteri',
+                'Sözleşme Tipi': d.get('agreement_type', 'Uluslararası Doğrudan Satın Alma Protokolü'),
+                'Net İhracat Cirosu': format_curr(d['revenue']),
+                'Kurulu Cihaz': f"{d['devices_count']} Adet" if d['devices_count'] > 0 else "—",
+                'Son Sipariş': d.get('last_order', '—'),
+                'Hukuki Statü': '✅ Onaylı Uluslararası Müşteri'
+            })
+        st.dataframe(pd.DataFrame(intl_table), use_container_width=True, hide_index=True)
+
+    # --------------------------------------------------------------------------
+    # TAB 4: SÖZLEŞME VE DOKÜMAN ARŞİVİ
+    # --------------------------------------------------------------------------
+    with tab_archive:
+        st.markdown("##### 📁 Resmi Sözleşmeler, LOA ve Regülasyon Sertifikaları Arşivi")
+        st.caption("Sistemde kayıtlı ve yeni yüklenen tüm dijital sözleşme ve yetki belgeleri dökümü.")
+
+        doc_disp = []
+        for doc in st.session_state.custom_documents:
+            doc_disp.append({
+                'Belge No': doc['doc_id'],
+                'Firma / Kurum': doc['company'],
+                'Sınıf': '🏢 Distribütör' if doc['category'] == 'Distributor' else ('🇹🇷 Local' if doc['category'] == 'Local Customer' else '🌍 International'),
+                'Belge Türü': doc['doc_type'],
+                'Ülke / Bölge': doc['territory'],
+                'Bitiş Tarihi': doc['end_date'],
+                'Durum': doc['status'],
+                'Dosya': doc['filename']
+            })
+        st.dataframe(pd.DataFrame(doc_disp), use_container_width=True, hide_index=True)
+
+        # Download sample certified list
+        st.download_button(
+            label="📥 Tüm Sözleşme & LOA Kayıtlarını İndir (CSV)",
+            data=pd.DataFrame(doc_disp).to_csv(index=False).encode('utf-8'),
+            file_name="ZEUS_Agreements_LOA_Master_Export.csv",
+            mime="text/csv"
+        )
 
 
 # ==============================================================================
