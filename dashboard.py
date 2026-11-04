@@ -574,6 +574,293 @@ def generate_ai_pricing_bundle_recommendation(calc_d, macro, strategic_goal):
         'annual_sarf_potential': f"+${round(clinics * 1800):,} USD"
     }
 
+
+
+# ==============================================================================
+# GLOBAL IVF & COMMERCIAL MARKET KNOWLEDGE BASE & DUAL DECISION ENGINE
+# ==============================================================================
+MARKET_KNOWLEDGE_BASE = {
+    'Turkey': {
+        'specialist_name': 'Prof. Dr. Erol Aydın (Kıdemli IVF Medikal Direktörü)',
+        'expert_stance': 'Dengeli Onay (Kademeli Sarf & Yerinde Eğitim Modeli)',
+        'expert_max_discount': 7.0,
+        'expert_rec_sarf_disc': 8.0,
+        'clinical_dynamics': '165 aktif merkezle Avrupa ve Orta Doğu’nun en büyük klinik havuzu. Özel IVF zincirleri (Bahçeci, Acıbadem, Memorial) ve üniversite klinikleri fiyattan çok gebelik oranı tutarlılığına, embriyotoksisite analizine ve parti bazlı CoA sertifikalarına bakar.',
+        'regulatory_watch': 'Sağlık Bakanlığı ÜTS (Ürün Takip Sistemi) kaydı, MDR (Tıbbi Cihaz Regülasyonu) ve CE belgesi zorunludur. Doğrudan hastane satışlarında karekodsuz/barkodsuz ürün kabul edilmez.',
+        'competitor_threat': 'Vitrolife ve CooperSurgical yerel depolardan 24 saatte teslimat avantajına sahiptir. Cook Medical iğne ve kateterlerde köklüdür.',
+        'commercial_guardrails': 'Cihaz indirimini %7.0 ile sınırlayın; kur dalgalanmalarına karşı liste fiyatlarını USD bazında koruyun. 100+ kutu sarf taahhüdüne kademeli prim tanımlayın.',
+        'knowledge_profile': {
+            'clinic_type': 'Özel IVF Zincirleri (%65), Üniversite & Kamu Hastaneleri (%35)',
+            'customs_code': 'GTIP 9018.90 (Cihaz - %8 Gümrük) / 3822.00 (Sarf - KDV %10)',
+            'cold_chain': '+2°C / +8°C medya transferinde veri kaydedicili (data-logger) yerli frigo kargo.',
+            'payment_norms': 'Özel kliniklerde 30–60 gün açık hesap, kamu ihalelerinde 90–120 gün.',
+            'dos': 'Klinik embriyologlarına deneme dish numunesi ve yerinde aplikasyon demonstrasyonu sunun.',
+            'donts': 'TL vadeli açık hesap açmayın; döviz parite riskini şirket üzerinde tutmayın.'
+        }
+    },
+    'Jordan-Iraq': {
+        'specialist_name': 'Dr. Selim Yılmaz (MENA Bölgesi Ticari Direktörü)',
+        'expert_stance': 'Şartlı Onay (Teminat & Aplikasyon Eğitimi Şartı)',
+        'expert_max_discount': 8.0,
+        'expert_rec_sarf_disc': 10.0,
+        'clinical_dynamics': 'Irak ve Ürdün’de embriyologlar geleneksel markalara yüksek sadakat gösterir. Fiyat indirimi tek başına klinikleri ikna etmez; sahada güven oluşturmak için aplikasyon desteği şarttır.',
+        'regulatory_watch': 'Ürdün JFDA ve Irak Kimadia/Sağlık Bakanlığı onay süreçleri 3–6 ay sürebilir. İthalat için Menşe Şahadetnamesi (COO) ve Free Sales Certificate (FSC) gereklidir.',
+        'competitor_threat': 'CooperSurgical ve Esco bölgede güçlü distribütör ağına sahip. Ancak artan navlun maliyetleri ZEUS için pazar payı fırsatı yaratmaktadır.',
+        'commercial_guardrails': 'Cihaz iskonto tavanı %8 olmalı; aradaki fark yerine 2 haftalık yerinde klinik embriyoloji eğitimi verilmeli. Minimum %35 peşinat ve bakiye için onaylı Akreditif (LC) istenmelidir.',
+        'knowledge_profile': {
+            'clinic_type': 'Amman ve Bağdat merkezli özel tüp bebek hastaneleri (%90).',
+            'customs_code': 'Tarife %6.5, ortalama 30 gün çekim süresi. Bağdat gümrüğünde ek güvenlik denetimi.',
+            'cold_chain': 'Beyrut/Dubai aktarmalı uçuşlarda kuru buz veya VIP soğuk zincir ambalajı zorunludur.',
+            'payment_norms': 'Akreditif (Irrevocable LC) veya sevkiyat öncesi nakit TT transferi.',
+            'dos': 'Yıllık sözleşmeye en az 60 kutu sarf çekiş kuralı ve 45 günlük tampon stok şartı ekleyin.',
+            'donts': 'Akreditif veya peşinat teyidi alınmadan cihaz sevkiyatı başlatmayın.'
+        }
+    },
+    'Qatar': {
+        'specialist_name': 'Eng. Tarık El-Mansoor (Körfez Bölge Direktörü)',
+        'expert_stance': 'Konservatif Onay (Yüksek Marj & Prestij Koruma)',
+        'expert_max_discount': 4.0,
+        'expert_rec_sarf_disc': 5.0,
+        'clinical_dynamics': 'Katar kişi başı GSYİH ($84K) ile dünyanın en varlıklı sağlık pazarlarındandır. Hamad Medical Corporation (HMC) tüm vatandaşlara ücretsiz IVF sağlar. Düşük fiyat kalitesiz algısı yaratır.',
+        'regulatory_watch': 'MoPH (Ministry of Public Health) medikal cihaz tescili ve ISO 13485 sertifikasyonu zorunludur.',
+        'competitor_threat': 'Esco Medical ve Vitrolife kamu hastanelerinde yerleşik; ihalelerde fiyat değil teknik yeterlilik puanı belirleyicidir.',
+        'commercial_guardrails': 'Cihaz indirimi azami %4–5 olmalı. İndirim yerine 2 yıllık genişletilmiş garanti, konsinye yedek parça ve VIP embriyolog kongre katılım desteği sunulmalıdır.',
+        'knowledge_profile': {
+            'clinic_type': 'Kamu HMC (%60), Özel Elit Hastaneler - Al-Ahli, The View (%40).',
+            'customs_code': 'Tarife %5.0, gümrük çekimi 3–5 gün (Hamad Port & Doha Cargo).',
+            'cold_chain': 'Doha Havalimanı sıcaklık kontrollü medikal kargo terminali (+2°C / +8°C).',
+            'payment_norms': 'Devlet alımlarında 60 gün, özelde 30 gün içinde %100 tahsilat garantili.',
+            'dos': 'Üst düzey VIP servis sözleşmesi ve yıllık koruyucu bakım taahhüdü verin.',
+            'donts': 'Agresif fiyat indirimi yapmayın; Katar pazarında liste fiyatı prestij unsurudur.'
+        }
+    },
+    'Palestine': {
+        'specialist_name': 'Ayşe Kaya (Regülasyon ve Saha Direktörü)',
+        'expert_stance': 'Stratejik Giriş Onayı (Reagent Rental / Sarf Bağlama)',
+        'expert_max_discount': 12.0,
+        'expert_rec_sarf_disc': 14.0,
+        'clinical_dynamics': '9 aktif merkez. Gümrük vergisi (%12) ve Ashdod Limanı güvenlik beklemeleri (45 gün) klinikleri çok zorlar. Hastalar tüm tedaviyi cepten öder; sarf maliyeti kritik hassasiyettedir.',
+        'regulatory_watch': 'İsrail MOH ve Filistin Sağlık Bakanlığı çift tescili. Aşdod limanında güvenlik onay kodları gereklidir.',
+        'competitor_threat': 'İkinci el cihazlar ve yerel kaçak ithalat riski mevcuttur. Orijinal ZEUS garantisi önemli bir satış avantajıdır.',
+        'commercial_guardrails': 'Doğrudan cihaz satışında %12 iskonto verilebilir veya 150 kutu sarf taahhüdüne karşılık cihaz sembolik bedelle verilebilir. $800 navlun sübvansiyonu sağlanmalıdır.',
+        'knowledge_profile': {
+            'clinic_type': 'Ramallah, Nablus, Gazze ve Doğu Kudüs özel klinikleri.',
+            'customs_code': 'Gümrük %12.0, liman bekleme süresi 40–50 gün. Yüksek demuraj riski.',
+            'cold_chain': 'Liman beklemelerinde veri kaydedicili özel ısı yalıtımlı kutular kullanılmalı.',
+            'payment_norms': '%30 peşin, kalan teslimatta veya 3 eşit taksit.',
+            'dos': 'Ashdod limanına varmadan en az 20 gün önce tüm gümrük konşimentosunu onaylatın.',
+            'donts': 'Tek seferde yüksek hacimli cihaz göndermeyin; lojistik riskini partilere bölün.'
+        }
+    },
+    'South Korea': {
+        'specialist_name': 'Dr. Park Jin-Woo (APAC Bölge Direktörü)',
+        'expert_stance': 'Yüksek Teknoloji Onayı (KFDA / Validasyon Şartı)',
+        'expert_max_discount': 6.0,
+        'expert_rec_sarf_disc': 6.0,
+        'clinical_dynamics': '150 merkez ve dünyanın en düşük doğum oranı. Hükümet sübvansiyonları çok yüksek. Embriyologlar uluslararası klinik yayın ve bilimsel makale verilerine göre karar verir.',
+        'regulatory_watch': 'MFDS (KFDA) medikal cihaz kaydı ve Korece etiketleme zorunludur.',
+        'competitor_threat': 'Japon Kitazato ve Vitrolife çok güçlü. ZEUS’un zaman kazandıran ergonomisi ve embriyo güvenliği öne çıkarılmalı.',
+        'commercial_guardrails': 'İskonto %6 ile sınırlanmalı; Korece yazılım arayüzü ve yerel validasyon raporu sağlanmalıdır.',
+        'knowledge_profile': {
+            'clinic_type': 'Büyük Zincir IVF Merkezleri (CHA, Maria Hastaneleri) ve Üniversiteler.',
+            'customs_code': 'Serbest Ticaret Anlaşması (FTA) ile %0–%3 gümrük; 3 gün gümrük çekimi.',
+            'cold_chain': 'Incheon Havalimanı yüksek hızlı medikal soğuk zincir standardı.',
+            'payment_norms': 'Akreditif veya 30 gün vadeli banka garantili transfer.',
+            'dos': 'Seul IVF Kongrelerinde bilimsel poster ve klinik vaka sunumu organize edin.',
+            'donts': 'MFDS sertifikasyonu tamamlanmadan ticari parti sevkiyatı yapmayın.'
+        }
+    },
+    'Saudi Arabia': {
+        'specialist_name': 'Eng. Tarık El-Mansoor (Körfez Bölge Direktörü)',
+        'expert_stance': 'Kamu & Özel Ortak Onayı (SFDA Tescil Şartı)',
+        'expert_max_discount': 5.0,
+        'expert_rec_sarf_disc': 6.0,
+        'clinical_dynamics': '38 aktif merkez. NUPCO kamu ihaleleri ve Dr. Sulaiman Al Habib gibi dev özel sağlık grupları pazarı domine eder. Kalite sertifikaları birincil önceliktir.',
+        'regulatory_watch': 'SFDA (Saudi FDA) MDMA medikal cihaz onayı ve GHAD sistemi kaydı zorunludur. Tescilsiz ürün gümrükten geçemez.',
+        'competitor_threat': 'CooperSurgical ve Cook Medical NUPCO ihalelerinde güçlü. ZEUS sarf maliyet avantajıyla özel klinikleri hedeflemelidir.',
+        'commercial_guardrails': 'Cihaz iskontosu %5 ile sınırlı tutulmalı; yerel teknik servis taahhüdü ve SFDA regülasyon desteği sağlanmalıdır.',
+        'knowledge_profile': {
+            'clinic_type': 'Büyük Özel Sağlık Zincirleri (%60) ve NUPCO / Askeri Hastaneler (%40).',
+            'customs_code': 'Tarife %5.0, gümrük çekimi 7–10 gün (Cidde / Riyad).',
+            'cold_chain': 'Riyad/Cidde kargo terminallerinde sıcaklık kontrollü antrepo zorunlu.',
+            'payment_norms': 'Özel gruplarda 45 gün, kamu alımlarında 90–120 gün.',
+            'dos': 'Distribütörün SFDA tescil yetkisini resmi LOA ile güvence altına alın.',
+            'donts': 'SFDA onayı olmadan doğrudan hastaneye teslimat taahhüt etmeyin.'
+        }
+    },
+    'United Arab Emirates': {
+        'specialist_name': 'Dr. Selim Yılmaz (MENA Bölgesi Ticari Direktörü)',
+        'expert_stance': 'Prestij & Hızlı Döngü Onayı (Dubai Sağlık Hub)',
+        'expert_max_discount': 5.0,
+        'expert_rec_sarf_disc': 7.0,
+        'clinical_dynamics': '28 aktif merkez (Dubai Healthcare City, Abu Dabi). Uluslararası medikal turizm hastaları yoğunluktadır. En gelişmiş sarf ve cihazları talep ederler.',
+        'regulatory_watch': 'MOHAP (Ministry of Health and Prevention) medikal tescil ve DHA/DoH onayları.',
+        'competitor_threat': 'Vitrolife ve Esco yerel ofisleriyle temsil edilmektedir.',
+        'commercial_guardrails': 'Cihaz indirimi azami %5; yanında lüks klinik tanıtım materyali ve hızlı hava kargo desteği sunulmalıdır.',
+        'knowledge_profile': {
+            'clinic_type': 'Medikal Turizm Odaklı Özel IVF Merkezleri (%85).',
+            'customs_code': 'Tarife %5.0, gümrük çekimi 2–4 gün (Dubai Logistics City).',
+            'cold_chain': 'Emirates SkyCargo medikal soğuk zincir koridoru.',
+            'payment_norms': '%50 peşin, %50 teslimattan sonra 30 gün.',
+            'dos': 'Yıllık Arap Sağlık (Arab Health) Fuarı sırasında ortak lansman yapın.',
+            'donts': 'Düşük kaliteli ambalaj veya yavaş servis sunmayın.'
+        }
+    },
+    'Kuwait': {
+        'specialist_name': 'Eng. Tarık El-Mansoor (Körfez Bölge Direktörü)',
+        'expert_stance': 'Yüksek Alım Gücü Onayı (İhale & Özel Klinik Dengesi)',
+        'expert_max_discount': 4.5,
+        'expert_rec_sarf_disc': 6.0,
+        'clinical_dynamics': '14 aktif merkez. Vatandaşlar için devlet tam destek sağlar, özel kliniklerde ise en üst düzey sarflar tercih edilir.',
+        'regulatory_watch': 'Kuveyt Sağlık Bakanlığı (MOH) İlaç ve Tıbbi Cihaz Kontrol İdaresi tescili gereklidir.',
+        'competitor_threat': 'CooperSurgical ve Cook Medical köklü yerel acentelere sahiptir.',
+        'commercial_guardrails': 'Cihaz indirimi %4.5’i geçmemeli; 2 yıl ücretsiz koruyucu bakım kiti pakete eklenmelidir.',
+        'knowledge_profile': {
+            'clinic_type': 'MOH Tüp Bebek Merkezleri ve Özel Hastaneler (Royale Hayat vb.).',
+            'customs_code': 'Tarife %5.0, gümrük çekimi 4–6 gün.',
+            'cold_chain': 'Kuveyt Havalimanı kargo soğuk hava depoları.',
+            'payment_norms': 'Akreditif veya 30 gün içinde peşin banka havalesi.',
+            'dos': 'Kuveyt Embriyoloji Derneği seminerlerine sponsorluk sağlayın.',
+            'donts': 'Gereksiz iskonto vererek yerel bayi marjını zedelemeyin.'
+        }
+    },
+    'Bulgaria': {
+        'specialist_name': 'Dr. Elena Petrova (Doğu Avrupa Medikal Direktörü)',
+        'expert_stance': 'Pazar Payı Kazanma Onayı (Meyona OOD Doğrudan Satış)',
+        'expert_max_discount': 8.5,
+        'expert_rec_sarf_disc': 10.0,
+        'clinical_dynamics': '35 merkez. Sofya, Varna ve Plovdiv merkezli klinikler Avrupa standartlarında ancak bütçe kısıtlıdır. Devlet 4 siklusa kadar kısmi destek verir.',
+        'regulatory_watch': 'AB CE Belgesi ve BDA (Bulgarian Drug Agency) bildirimi yeterlidir. Gümrük birliği nedeniyle sıfır tarife uygulanır.',
+        'competitor_threat': 'Gynemed ve Vitrolife pazarda etkindir. ZEUS uygun maliyetli kaliteli sarfıyla ciddi hacim yakalayabilir.',
+        'commercial_guardrails': 'Meyona OOD doğrudan müşteri statüsünde olduğu için %8.5 iskonto ve her 15 kutu sarfa 2 kutu test solüsyonu verilmelidir.',
+        'knowledge_profile': {
+            'clinic_type': 'Özel Tüp Bebek Hastaneleri (%80), Üniversite Klinikleri (%20).',
+            'customs_code': 'AB İçi Dolaşım (%0 Gümrük Vergisi, 2–3 gün karayolu teslimatı).',
+            'cold_chain': 'İstanbul-Sofya arası sıcaklık kontrollü karayolu frigo taşımacılığı.',
+            'payment_norms': '30 gün vadeli banka transferi (EUR bazında).',
+            'dos': 'Sofya’daki lider kliniklere deneme kiti göndererek klinik referans oluşturun.',
+            'donts': 'Yüksek navlun maliyeti çıkarmayın; karayolu lojistiği avantajını kullanın.'
+        }
+    },
+    'Belgium': {
+        'specialist_name': 'Prof. Dr. Marc De Vos (Batı Avrupa Klinik Direktörü)',
+        'expert_stance': 'Akademik & Klinik Araştırma Onayı (UGent Ortaklığı)',
+        'expert_max_discount': 6.0,
+        'expert_rec_sarf_disc': 8.0,
+        'clinical_dynamics': '18 merkez. Ghent Üniversitesi (UGent) ve Brüksel VUB dünya IVF öncülerindendir. Satın almalar akademik yayın kalitesi ve embriyo canlılığı odaklıdır.',
+        'regulatory_watch': 'AB MDR ve FAMHP (Federal İlaç ve Sağlık Ürünleri Ajansı) tam uyumluluğu zorunludur.',
+        'competitor_threat': 'Vitrolife ve Cook Medical üniversite kürsüleriyle doğrudan bağlara sahiptir.',
+        'commercial_guardrails': 'UGent gibi üniversitelere cihaz iskontosu yerine ortak Ar-Ge bütçesi ve bilimsel yayın amaçlı sarf hibesi önerilmelidir.',
+        'knowledge_profile': {
+            'clinic_type': 'Üniversite Araştırma Hastaneleri (%70), Genel Hastane IVF Üniteleri (%30).',
+            'customs_code': 'AB İçi Teslimat (%0 Gümrük Vergisi).',
+            'cold_chain': 'Doğrudan kurye ile +4°C kontrollü teslimat.',
+            'payment_norms': 'Üniversite satın alma prosedürü ile 60 gün vadeli.',
+            'dos': 'ESHRE kongresi öncesinde klinik validasyon verilerini paylaşın.',
+            'donts': 'MDR ve ISO 13485 teknik dosyası eksik ürün teklif etmeyin.'
+        }
+    },
+    'Azerbaijan': {
+        'specialist_name': 'Prof. Dr. Erol Aydın (Bölge Medikal Direktörü)',
+        'expert_stance': 'Genişleme Onayı (Klinik Transferi & Bakü Pazar Girişi)',
+        'expert_max_discount': 7.5,
+        'expert_rec_sarf_disc': 9.0,
+        'clinical_dynamics': '16 aktif merkez (Bakü). Türk hekim ve embriyologlarının klinik etkisi çok güçlüdür. Türkiye referansları doğrudan satış getirir.',
+        'regulatory_watch': 'Azerbaycan Sağlık Bakanlığı Analitik Ekspertiz Merkezi tescili gereklidir.',
+        'competitor_threat': 'Türkiye üzerinden yapılan re-export satışlar ve Vitrolife.',
+        'commercial_guardrails': 'Cihazda %7.5 iskonto; Türkiye’deki başarılı kliniklerin referans mektupları ve ortak eğitim programı eklenmelidir.',
+        'knowledge_profile': {
+            'clinic_type': 'Bakü Özel IVF Merkezleri ve Medikal Plaza Klinikleri.',
+            'customs_code': 'Tarife %5.0, gümrük çekimi 5–7 gün (Bakü Haydar Aliyev Kargo).',
+            'cold_chain': 'İstanbul-Bakü direkt uçuşlu medikal kargo.',
+            'payment_norms': '%40 peşin, kalan teslimattan önce TT.',
+            'dos': 'Türkiye’de eğitim almış Azeri embriyologlarla doğrudan temasa geçin.',
+            'donts': 'Gümrük tescil belgesi olmadan yüksek partili sevkiyat yapmayın.'
+        }
+    },
+    'United Kingdom': {
+        'specialist_name': 'Dr. Richard Campbell (İngiltere Pazar Danışmanı)',
+        'expert_stance': 'HFEA & NHS Uyumlu Konservatif Onay',
+        'expert_max_discount': 5.0,
+        'expert_rec_sarf_disc': 6.5,
+        'clinical_dynamics': '70 merkez. HFEA (Human Fertilisation and Embryology Authority) denetimleri dünyanın en katı kurallarıdır. Hata payı sıfırdır.',
+        'regulatory_watch': 'UKCA ve MHRA tıbbi cihaz kayıtları zorunludur (Brexit sonrası CE geçiş süreci).',
+        'competitor_threat': 'CooperSurgical ve Vitrolife özel IVF zincirlerini (CARE Fertility vb.) domine eder.',
+        'commercial_guardrails': 'İskonto %5 ile sınırlandırılmalı; parti bazlı HFEA uyumluluk sertifikaları ve UKCA teknik dosyası sunulmalıdır.',
+        'knowledge_profile': {
+            'clinic_type': 'Özel IVF Zincirleri (%75), NHS Hastaneleri (%25).',
+            'customs_code': 'UK Global Tariff (Tıbbi sarf %0, Cihaz %2–4).',
+            'cold_chain': 'Londra Heathrow medikal antrepo (+2°C / +8°C).',
+            'payment_norms': 'NHS alımlarında 30–60 gün, özelde 30 gün.',
+            'dos': 'İngiltere Embriyologlar Birliği (ARCS) onaylı laboratuvar verilerini sunun.',
+            'donts': 'UKCA tescil belgesi olmadan İngiltere sınırına mal göndermeyin.'
+        }
+    }
+}
+
+def resolve_market_knowledge(country_name):
+    if country_name in MARKET_KNOWLEDGE_BASE:
+        return MARKET_KNOWLEDGE_BASE[country_name]
+    
+    # Generic fallback
+    return {
+        'specialist_name': 'Dr. Selim Yılmaz & Ayşe Kaya (Global Ticari & Regülasyon Komitesi)',
+        'expert_stance': 'Standart Değerlendirme (Marj Koruma & Teminat Şartı)',
+        'expert_max_discount': 6.0,
+        'expert_rec_sarf_disc': 7.5,
+        'clinical_dynamics': f'{country_name} pazarında klinik satın alma komiteleri cihaz kalitesi, garanti süresi ve yerel teknik destek kabiliyetini önceliklendirir.',
+        'regulatory_watch': 'Yerel Sağlık Bakanlığı medikal cihaz ithalat lisansı, CE/ISO 13485 sertifikası ve Menşe Şahadetnamesi gereklidir.',
+        'competitor_threat': 'Küresel IVF markaları yerel distribütörler üzerinden pazar payını korumaya çalışmaktadır.',
+        'commercial_guardrails': 'Cihaz iskontosunu %6 seviyesinde tutun; peşinat veya akreditif güvencesi olmadan sevkiyat onaylamayın.',
+        'knowledge_profile': {
+            'clinic_type': 'Özel ve Kamu Sağlık Merkezleri Karması.',
+            'customs_code': 'Standart medikal GTIP 9018.90 / 3822.00.',
+            'cold_chain': 'Medya solüsyonlarında +2°C ile +8°C aralığında sıcaklık kontrollü transfer.',
+            'payment_norms': 'Sevkiyat öncesi nakit TT transferi veya onaylı Akreditif.',
+            'dos': 'Klinik embriyologlarına deneme numunesi vererek karar sürecini hızlandırın.',
+            'donts': 'Açık hesap ve vadeli satış riskini şirket üzerine almayın.'
+        }
+    }
+
+def generate_dual_consensus_decision(ai_rec, expert, partner_data):
+    ai_disc = float(ai_rec['rec_device_discount'])
+    expert_max = float(expert['expert_max_discount'])
+    diff = ai_disc - expert_max
+    
+    if abs(diff) <= 1.0:
+        consensus_status = "✅ TAM MUTABAKAT (AI & Uzman Uyumlu)"
+        badge_color = "#00E676"
+        final_discount = round((ai_disc + expert_max) / 2.0, 1)
+        rationale = f"AI analitiği (%{ai_disc:.1f}) ile Uzman saha görüşü (%{expert_max:.1f}) tam mutabakat halindedir. Pazar alım gücü ve şirket kârlılık hedefleriyle dengeli, düşük riskli onay."
+        conditions = "Standart sözleşme taahhütleri, 30 günlük sipariş avansı ve olağan lojistik planlaması yeterlidir."
+    elif diff > 1.0:
+        consensus_status = "⚠️ ŞARTLI ONAY (Uzman Koruma Şartlarıyla Onay)"
+        badge_color = "#FFB800"
+        final_discount = round(expert_max + 0.5, 1)
+        rationale = f"AI modeli pazar genişlemesi için %{ai_disc:.1f} önermiş, ancak Uzman saha riskleri ve liste fiyat disiplini nedeniyle tavanı %{expert_max:.1f} olarak belirlemiştir. Uzman ağırlıklı uzlaşma sağlandı."
+        conditions = f"Zorunlu Koruma Şartı: {expert['commercial_guardrails']} Ayrıca yıllık minimum sarf çekiş kuralı sözleşmeye eklenmelidir."
+    else:
+        consensus_status = "🛡️ STRATEJİK İSTİSNA (Pazar Penetrasyonu Önceliği)"
+        badge_color = "#00F5FF"
+        final_discount = round(expert_max, 1)
+        rationale = f"Uzman, rakip baskısını kırmak ve kritik klinikleri bağlamak için stratejik esneklik (%{expert_max:.1f}) tavsiye etmiştir."
+        conditions = f"Bağlayıcı Şart: {expert['commercial_guardrails']}"
+        
+    final_sarf_disc = round(max(ai_rec['rec_consumable_discount'], expert['expert_rec_sarf_disc']), 1)
+    
+    return {
+        'consensus_status': consensus_status,
+        'badge_color': badge_color,
+        'final_device_discount': final_discount,
+        'final_sarf_discount': final_sarf_disc,
+        'ai_discount': ai_disc,
+        'expert_max_discount': expert_max,
+        'rationale': rationale,
+        'conditions': conditions,
+        'final_bundle': f"{ai_rec['bundle_desc']} | 👨‍⚕️ Uzman Şartı: {expert['expert_stance']}",
+        'rec_freight': ai_rec['rec_freight']
+    }
+
 def hash_code(s):
     h = 2166136261
     for ch in s:
@@ -2652,7 +2939,7 @@ elif nav_selection == "◎ Market Intelligence & Compare":
 # ==============================================================================
 elif nav_selection == "⌘ Pricing & Discount Calculator":
     st.title("💰 Commercial Discount & Margin Impact Calculator")
-    st.caption("Çok Boyutlu Fiyatlandırma ve İskonto Karar Motoru: Ülke GSYİH (GDP), Yaşam Standardı, Ulusal IVF Destek Rejimi ve Partner Satış Performansına göre dinamik iskonto değerlendirmesi.")
+    st.caption("Çok Boyutlu Fiyatlandırma ve İskonto Karar Motoru: Ülke GSYİH (GDP), Yaşam Standardı, Ulusal IVF Destek Rejimi, AI Algoritmik Analitiği ve Uzman Görüşü / Bilgi Bankası (Knowledge Base) ile sentezlenmiş stratejik karar merkezi.")
 
     # Order: Official distributors first, then international, then local
     dist_names = [d['name'] for d in dist_rows]
@@ -2663,12 +2950,13 @@ elif nav_selection == "⌘ Pricing & Discount Calculator":
         all_ordered_names = [d['name'] for d in active_rows]
 
     sirius_idx = next((i for i, n in enumerate(all_ordered_names) if "SIRIUS" in n), 0)
-    # Use session state partner if set by AI tab
+    # Use session state partner if set by AI/Consensus tab
     def_partner_idx = next((i for i, n in enumerate(all_ordered_names) if n == st.session_state.get('sim_calc_partner')), sirius_idx)
 
-    calc_tab1, calc_tab2 = st.tabs([
+    calc_tab1, calc_tab2, calc_tab3 = st.tabs([
         "🧮 Manuel İskonto & Marj Simülatörü",
-        "🤖 AI Dinamik İskonto & Paket Önerisi (AI Pricing & Bundle Advisor)"
+        "⚖️ AI Support & Uzman Görüşü Karar Motoru (Dual Decision Engine)",
+        "📚 Global IVF & Ticari Knowledge Base (Pazar & Regülasyon Kütüphanesi)"
     ])
 
     # --------------------------------------------------------------------------
@@ -2741,112 +3029,137 @@ elif nav_selection == "⌘ Pricing & Discount Calculator":
             </div>
             """, unsafe_allow_html=True)
             
-            # Check if values prefilled from AI Tab
+            # Check if values prefilled from AI / Consensus Tab
             init_disc = float(st.session_state.get('applied_ai_disc', 8.0))
             init_ship = float(st.session_state.get('applied_ai_ship', 900.0))
 
             calc_qty = st.number_input("Sipariş Adedi / Hacmi (Order Quantity - Units)", min_value=1, value=25, step=1)
             calc_price = st.number_input("Sözleşme Liste Fiyatı (Contractual List Price - USD)", min_value=100.0, value=4200.0, step=100.0)
-            calc_cost = st.number_input("Birim Üretim Maliyeti (Unit COGS - USD)", min_value=10.0, value=2300.0, step=50.0)
-            calc_disc = st.slider("Talep Edilen İskonto (Requested Discount - %)", min_value=0.0, max_value=35.0, value=init_disc, step=0.5)
-            calc_ship = st.number_input("Navlun & Lojistik Payı (Freight Allowance - USD)", min_value=0.0, value=init_ship, step=50.0)
-            calc_comm = st.slider("Distribütör Temsilci Primi (Rep Commission - %)", min_value=0.0, max_value=10.0, value=3.0, step=0.5)
-            calc_min_m = st.slider("Kurumsal Taban Brüt Marj Eşiği (Min Gross Margin - %)", min_value=20.0, max_value=60.0, value=35.0, step=1.0)
-            calc_extra_tier = st.slider("Özel Stratejik Esneklik Payı (Board/CEO Strategic Override - %)", min_value=0.0, max_value=10.0, value=0.0, step=0.5, help="Yönetim Kurulu veya CEO yetkisiyle tanımlanan ek tolerans.")
+            calc_cogs = st.number_input("Birim Üretim Maliyeti (Unit COGS - USD)", min_value=0.0, value=2300.0, step=50.0)
+            calc_disc = st.slider("Talep Edilen İskonto (Requested Discount - %)", min_value=0.0, max_value=40.0, value=init_disc, step=0.5)
+            calc_freight = st.number_input("Navlun & Lojistik Payı (Freight Allowance - USD)", min_value=0.0, value=init_ship, step=50.0)
+            calc_rep = st.slider("Distribütör Temsilci Primi (Rep Commission - %)", min_value=0.0, max_value=15.0, value=3.0, step=0.5)
+            calc_min_gm = st.slider("Kurumsal Taban Brüt Marj Eşiği (Min Gross Margin - %)", min_value=20.0, max_value=60.0, value=35.0, step=1.0)
+            
+            with st.expander("⚙️ Yönetim Özel Yetki & İhale İstisna Esnekliği"):
+                exec_override = st.slider("Özel Stratejik Esneklik Payı (Board/CEO Strategic Override - %)", min_value=0.0, max_value=10.0, value=0.0, step=0.5,
+                                         help="Pazara giriş, kamu ihalesi veya rakip blokajı durumunda yönetim kurulu tarafından tanınan ek iskonto tavanı.")
 
         with c_calc2:
-            st.markdown("#### ⚖️ Çok Boyutlu İskonto ve Yetki Değerlendirmesi")
+            st.markdown("#### ⚖️ Kârlılık, Yetki ve Konsensüs Analizi")
+
+            # Dual benchmark snapshot
+            snap_macro = resolve_country_macro(calc_country)
+            snap_expert = resolve_market_knowledge(calc_country)
+            snap_ai = generate_ai_pricing_bundle_recommendation(calc_d, snap_macro, "⚖️ Dengeli Kârlılık ve Marj Koruma (Balanced Corporate Profitability)")
+            snap_cons = generate_dual_consensus_decision(snap_ai, snap_expert, calc_d)
+
+            st.markdown(f"""
+            <div style="background:rgba(19,166,181,0.08);border:1px solid rgba(19,166,181,0.3);border-radius:10px;padding:8px 12px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;font-size:12px;">
+                <span>🤖 <b>AI Tavsiyesi:</b> <span style="color:#00F5FF;font-weight:700;">%{snap_ai['rec_device_discount']:.1f}</span></span>
+                <span>👨‍⚕️ <b>Uzman Tavanı:</b> <span style="color:#FFB800;font-weight:700;">%{snap_expert['expert_max_discount']:.1f}</span></span>
+                <span>⚖️ <b>Ortak Konsensüs:</b> <span style="color:#00E676;font-weight:700;">%{snap_cons['final_device_discount']:.1f}</span></span>
+                <span style="background:rgba(255,255,255,0.08);color:{snap_cons['badge_color']};padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600;">{snap_cons['consensus_status'].split(' ')[0]} {snap_cons['consensus_status'].split(' ')[1]}</span>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # Core Financial Calculations
+            gross_rev_raw = calc_qty * calc_price
+            disc_amt = gross_rev_raw * (calc_disc / 100.0)
+            rep_amt = (gross_rev_raw - disc_amt) * (calc_rep / 100.0)
+            net_revenue = gross_rev_raw - disc_amt - calc_freight - rep_amt
+            total_cogs = calc_qty * calc_cogs
+            gross_profit = net_revenue - total_cogs
+            gross_margin = (gross_profit / net_revenue * 100.0) if net_revenue > 0 else 0.0
+
+            std_gp = (gross_rev_raw - (gross_rev_raw * 0.03)) - total_cogs
+            std_gm = (std_gp / (gross_rev_raw * 0.97) * 100.0) if gross_rev_raw > 0 else 0.0
+            unit_final = net_revenue / calc_qty if calc_qty > 0 else 0.0
             
-            # 1. Base volume tier
-            if calc_qty >= 50:
-                vol_tier_name = "Volume Tier 3 (50+ Adet)"
-                base_max = 12.0
+            # Baseline volume allowance
+            if calc_qty >= 100:
+                base_allowed_disc = 12.0
+                vol_tier_name = "Volume Tier 4 (100+ Adet)"
+            elif calc_qty >= 50:
+                base_allowed_disc = 10.0
+                vol_tier_name = "Volume Tier 3 (50–99 Adet)"
             elif calc_qty >= 25:
+                base_allowed_disc = 8.0
                 vol_tier_name = "Volume Tier 2 (25–49 Adet)"
-                base_max = 8.0
             elif calc_qty >= 10:
+                base_allowed_disc = 5.0
                 vol_tier_name = "Volume Tier 1 (10–24 Adet)"
-                base_max = 5.0
             else:
-                vol_tier_name = "Standart Sipariş (<10 Adet)"
-                base_max = 2.0
-                
+                base_allowed_disc = 3.0
+                vol_tier_name = "Standart Perakende / Küçük Sipariş (<10 Adet)"
+
             macro_allowance = macro['macro_discount_allowance']
             ivf_allowance = macro['ivf_discount_allowance']
-            
-            # Total dynamically authorized discount ceiling
-            allowed_disc = round(base_max + macro_allowance + ivf_allowance + total_perf_bonus + calc_extra_tier, 1)
-            
-            orig_val = calc_qty * calc_price
-            disc_amt = orig_val * (calc_disc / 100.0)
-            net_val = orig_val - disc_amt
-            unit_final = calc_price * (1.0 - calc_disc / 100.0)
-            
-            tot_cogs = calc_qty * calc_cost + calc_ship + (net_val * calc_comm / 100.0)
-            gross_profit = net_val - tot_cogs
-            gross_margin = (gross_profit / net_val * 100.0) if net_val > 0 else 0.0
-            
-            # Standard benchmark without discount
-            std_tot_cogs = calc_qty * calc_cost + calc_ship + (orig_val * calc_comm / 100.0)
-            std_gp = orig_val - std_tot_cogs
-            std_gm = (std_gp / orig_val * 100.0) if orig_val > 0 else 0.0
-            
-            # Unit contribution & break-even
-            unit_contrib = unit_final * (1.0 - calc_comm / 100.0) - calc_cost
-            be_qty = math.ceil(calc_ship / unit_contrib) if unit_contrib > 0 else None
+            allowed_disc = base_allowed_disc + macro_allowance + ivf_allowance + total_perf_bonus + exec_override
 
-            # Multi-factor approval logic
-            reasons = []
-            positive_factors = []
-            
-            if calc_disc > allowed_disc:
-                reasons.append(f"Talep edilen %{calc_disc:.1f} iskonto; {calc_country} pazarının makro satın alma gücü, IVF destek statüsü ve partner performansının hak ettiği dinamik tavan olan %{allowed_disc:.1f}'i {calc_disc - allowed_disc:+.1f} puan aşmaktadır.")
+            is_authorized = (calc_disc <= allowed_disc) and (gross_margin >= calc_min_gm)
+            is_margin_violation = gross_margin < calc_min_gm
+            is_disc_violation = calc_disc > allowed_disc
+
+            if is_authorized:
+                st.markdown(f"""
+                <div style="background:rgba(0,230,118,0.12);border:1px solid #00E676;border-radius:10px;padding:14px;margin-bottom:12px;">
+                    <div style="color:#00E676;font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px;">
+                        <span>✅</span> <span>İŞLEM ONAYLANDI: Yetki Limitleri Dahilinde</span>
+                    </div>
+                    <div style="color:#C4D1D9;font-size:12px;margin-top:4px;">
+                        Talep edilen iskonto (%{calc_disc:.1f}) izin verilen çok boyutlu tavan olan %{allowed_disc:.1f}'in altındadır ve brüt marj (%{gross_margin:.1f}) şirket taban eşiği (%{calc_min_gm:.1f}) üzerindedir.
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+            elif is_margin_violation and is_disc_violation:
+                st.markdown(f"""
+                <div style="background:rgba(255,82,82,0.12);border:1px solid #FF5252;border-radius:10px;padding:14px;margin-bottom:12px;">
+                    <div style="color:#FF5252;font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px;">
+                        <span>🚨</span> <span>ÇİFTE İHLAL: İskonto Tavanı ve Taban Marj Aşıldı</span>
+                    </div>
+                    <div style="color:#C4D1D9;font-size:12px;margin-top:4px;">
+                        Talep edilen %{calc_disc:.1f} iskonto, yetkili tavan olan %{allowed_disc:.1f}'i {calc_disc - allowed_disc:.1f} puan aşmaktadır. Ayrıca brüt marj (%{gross_margin:.1f}) şirket kırmızı çizgisi olan %{calc_min_gm:.1f}'in altındadır. CEO / İcra Kurulu onayı zorunludur.
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+            elif is_margin_violation:
+                st.markdown(f"""
+                <div style="background:rgba(255,184,0,0.12);border:1px solid #FFB800;border-radius:10px;padding:14px;margin-bottom:12px;">
+                    <div style="color:#FFB800;font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px;">
+                        <span>⚠️</span> <span>MARJ UYARISI: Taban Brüt Marj Eşiğinin Altında</span>
+                    </div>
+                    <div style="color:#C4D1D9;font-size:12px;margin-top:4px;">
+                        İskonto tavanı yetki dahilinde olsa da navlun (${calc_freight:,.0f}) ve temsilci primi (%{calc_rep:.1f}) neticesinde brüt marj (%{gross_margin:.1f}) şirket taban marjı (%{calc_min_gm:.1f}) altına inmiştir. CFO onayı gerekir.
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
             else:
-                positive_factors.append(f"Talep edilen %{calc_disc:.1f} iskonto, çok boyutlu dinamik tavan olan %{allowed_disc:.1f} sınırları içerisindedir.")
-                
-            if gross_margin < calc_min_m:
-                reasons.append(f"Net brüt kâr marjı (%{gross_margin:.1f}), şirket taban eşiği olan %{calc_min_m:.1f}'in {calc_min_m - gross_margin:.1f} puan altındadır.")
-            else:
-                positive_factors.append(f"Brüt kâr marjı (%{gross_margin:.1f}), şirket taban marjı %{calc_min_m:.1f}'i başarıyla sağlamaktadır.")
-                
-            # Macro context checks
-            if macro['gdp_pc'] >= 30000 and calc_disc > 10.0:
-                reasons.append(f"{calc_country} yüksek gelirli (Kişi başı GSYİH: ${macro['gdp_pc']:,}) bir pazardır; kamu veya özel IVF satın alma gücü yüksek olduğundan çift haneli iskonto marj erozyonu yaratır.")
-            elif macro['gdp_pc'] < 10000:
-                positive_factors.append(f"{calc_country} pazarında kişi başı GSYİH (${macro['gdp_pc']:,}) düşüktür ve hastalar %100 cepten ödeme yapmaktadır; adil pazar payı korumak için esneklik desteklenir.")
-                
-            if partner_rev >= 30000:
-                positive_factors.append(f"Partner {format_curr(partner_rev)} kayıtlı ciro ve %{partner_growth:+.1f} YoY büyüme ile {perf_tier_name} statüsündedir; ek performans iskontosu hak etmektedir.")
+                st.markdown(f"""
+                <div style="background:rgba(255,184,0,0.12);border:1px solid #FFB800;border-radius:10px;padding:14px;margin-bottom:12px;">
+                    <div style="color:#FFB800;font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px;">
+                        <span>⚠️</span> <span>YETKİ AŞIMI: İskonto Tavanı Aşıldı (Özel Onay Gerekir)</span>
+                    </div>
+                    <div style="color:#C4D1D9;font-size:12px;margin-top:4px;">
+                        Brüt marj korunmuş olsa da (%{gross_margin:.1f}), talep edilen %{calc_disc:.1f} iskonto yetkili tavanı (%{allowed_disc:.1f}) aşmaktadır. Ticari Direktör (VP Sales) istisna onayı gereklidir.
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
 
-            requires_approval = len(reasons) > 0
+            kpi_c1, kpi_c2 = st.columns(2)
+            kpi_c1.metric("İndirimli Net Hasılat", format_curr(net_revenue), delta=f"-{format_curr(disc_amt)} İskonto Bedeli", delta_color="inverse")
+            kpi_c2.metric("Brüt Kâr & Marj", format_curr(gross_profit), delta=f"%{gross_margin:.1f} Brüt Marj", delta_color="normal")
 
-            # Decision Card
-            if gross_profit < 0:
-                st.error("🛑 İŞLEM UYGULANAMAZ: Sipariş negatif brüt kâr (zarar) üretmektedir!")
-            elif requires_approval:
-                st.warning("⚠️ ÜST YÖNETİM ONAYI GEREKLİ (CFO / CEO ESCALATION)")
-                for r in reasons:
-                    st.write(f"• {r}")
-                with st.expander("Göz Önüne Alınan Pozitif Faktörler", expanded=False):
-                    for p in positive_factors:
-                        st.write(f"✓ {p}")
-            else:
-                st.success(f"✅ İŞLEM ONAYLANDI: Çok Boyutlu Makro & Performans Yetkisi Dahilindedir.")
-                for p in positive_factors:
-                    st.caption(f"✓ {p}")
+            # Clean unindented matrix HTML
+            extra_tr = f'''<tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><td style="padding:5px 0;">🛡️ <b>Yönetim Özel Stratejik Esneklik:</b></td><td style="padding:5px 0;text-align:right;">Board / CEO İstisna Yetkisi</td><td style="padding:5px 0;text-align:right;color:#FFB800;font-weight:700;">+%{exec_override:.1f}</td></tr>''' if exec_override > 0 else ""
 
-            # Metrics
-            res_k1, res_k2 = st.columns(2)
-            res_k1.metric("İndirimli Net Hasılat", format_curr(net_val), delta=f"-{format_curr(disc_amt)} İskonto Bedeli", delta_color="inverse")
-            res_k2.metric("Brüt Kâr & Marj", format_curr(gross_profit), delta=f"%{gross_margin:.1f} Brüt Marj")
+            unit_margin_contrib = (unit_final - calc_cogs) if (unit_final - calc_cogs) > 0 else 1.0
+            be_qty = int(math.ceil(calc_freight / unit_margin_contrib)) if unit_margin_contrib > 0 else None
 
-            # 4-Factor Dynamic Breakdown Card without any leading markdown indentation
-            extra_tr = f"""<tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><td style="padding:5px 0;">🎯 <b>Stratejik Esneklik Payı:</b></td><td style="padding:5px 0;text-align:right;">Yönetim Kurulu Onaylı</td><td style="padding:5px 0;text-align:right;color:#00F5FF;font-weight:700;">+%{calc_extra_tier:.1f}</td></tr>""" if calc_extra_tier > 0 else ""
-            
-            clean_matrix_html = f"""<div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08);padding:14px;border-radius:10px;font-size:12px;margin:12px 0;">
+            clean_matrix_html = f"""<div style="background:rgba(19,166,181,0.04);border:1px solid rgba(19,166,181,0.3);border-radius:10px;padding:12px;margin:12px 0;font-size:12px;">
 <div style="font-weight:700;color:#00F5FF;margin-bottom:8px;font-size:13px;">🧩 Çok Boyutlu İskonto Tavanı Analiz Matrisi</div>
-<table style="width:100%;font-size:12px;border-collapse:collapse;color:#E0E6ED;">
-<tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><td style="padding:5px 0;">📦 <b>Sipariş Hacmi Skalası:</b></td><td style="padding:5px 0;text-align:right;">{vol_tier_name}</td><td style="padding:5px 0;text-align:right;color:#00F5FF;font-weight:700;">+%{base_max:.1f}</td></tr>
+<table style="width:100%;border-collapse:collapse;color:#E1E7EC;line-height:1.6;">
+<tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><td style="padding:5px 0;">📦 <b>Sipariş Hacmi Skalası:</b></td><td style="padding:5px 0;text-align:right;">{vol_tier_name}</td><td style="padding:5px 0;text-align:right;color:#00F5FF;font-weight:700;">+%{base_allowed_disc:.1f}</td></tr>
 <tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><td style="padding:5px 0;">🌐 <b>Ülke GSYİH & Yaşam Standardı:</b></td><td style="padding:5px 0;text-align:right;">${macro['gdp_pc']:,} ({macro['gdp_tier']})</td><td style="padding:5px 0;text-align:right;color:#00F5FF;font-weight:700;">+%{macro_allowance:.1f}</td></tr>
 <tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><td style="padding:5px 0;">🏛️ <b>Ulusal IVF Destek Rejimi:</b></td><td style="padding:5px 0;text-align:right;">{macro['ivf_support']}</td><td style="padding:5px 0;text-align:right;color:#00F5FF;font-weight:700;">+%{ivf_allowance:.1f}</td></tr>
 <tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><td style="padding:5px 0;">📈 <b>Partner Satış & Büyüme Performansı:</b></td><td style="padding:5px 0;text-align:right;">{perf_badge} ({format_curr(partner_rev)})</td><td style="padding:5px 0;text-align:right;color:#00F5FF;font-weight:700;">+%{total_perf_bonus:.1f}</td></tr>
@@ -2865,19 +3178,20 @@ elif nav_selection == "⌘ Pricing & Discount Calculator":
             st.markdown(clean_kpi_html, unsafe_allow_html=True)
 
     # --------------------------------------------------------------------------
-    # TAB 2: AI DİNAMİK İSKONTO & PAKET ÖNERİSİ (AI PRICING & BUNDLE ADVISOR)
+    # TAB 2: AI SUPPORT & UZMAN GÖRÜŞÜ KARAR MOTORU (DUAL DECISION ENGINE)
     # --------------------------------------------------------------------------
     with calc_tab2:
-        st.markdown("### 🤖 ZEUS AI Makro, Gümrük ve Performans Odaklı İskonto & Paket Önerisi")
-        st.caption("Yapay zeka motoru; ülkenin GSYİH (GDP) seviyesini, yaşam kalitesini, IVF klinik sayısını, nüfusunu, gümrük tarifesini ve distribütörün satış geçmişini sentezleyerek optimum cihaz/malzeme indirim paketini önerir.")
+        st.markdown("### ⚖️ ZEUS AI Support & Kıdemli Uzman Görüşü Karar Motoru")
+        st.caption("Veriye dayalı yapay zeka analitiği (AI Support) ile sahadaki kıdemli medikal ve ticari direktör uzmanlığını sentezleyen hibrit karar destek merkezi.")
 
-        ai_col1, ai_col2 = st.columns([1.1, 1.3])
+        ai_col1, ai_col2 = st.columns([1.05, 1.35])
         with ai_col1:
-            st.markdown("#### 🎯 Analiz Edilecek Partner ve Stratejik Amaç")
+            st.markdown("#### 🎯 Değerlendirilecek Partner & Stratejik Amaç")
             ai_dist_name = st.selectbox("Partner / Distribütör Seçimi", all_ordered_names, index=sirius_idx, key="ai_dist_select")
             ai_d = next((d for d in active_rows if d['name'] == ai_dist_name), active_rows[0])
             ai_country = ai_d.get('country_name', 'Turkey')
             ai_macro = resolve_country_macro(ai_country)
+            ai_expert = resolve_market_knowledge(ai_country)
 
             ai_goal = st.radio(
                 "Ticari Optimizasyon Hedefi:",
@@ -2890,14 +3204,13 @@ elif nav_selection == "⌘ Pricing & Discount Calculator":
                 key="ai_goal_select"
             )
 
-            # 4 macro indicator badges
+            # Macro indicator badge
             st.markdown(f"""
             <div style="background:rgba(19,166,181,0.06);border:1px solid rgba(19,166,181,0.25);border-radius:10px;padding:12px;margin-top:14px;font-size:12px;line-height:1.7;">
                 <div style="font-weight:700;color:#00F5FF;margin-bottom:6px;font-size:13px;">📌 {ai_country} Pazar ve Gümrük Parametreleri</div>
                 • <b>Kişi Başı GSYİH:</b> ${ai_macro['gdp_pc']:,} USD ({ai_macro['gdp_tier']})<br>
                 • <b>Yaşam Standardı:</b> {ai_macro['living_standard']}<br>
-                • <b>Lisanslı IVF Klinik Sayısı:</b> {ai_macro['clinics']} Merkez<br>
-                • <b>Ülke Nüfusu:</b> {ai_macro['pop_m']} Milyon<br>
+                • <b>Lisanslı IVF Klinik Sayısı:</b> {ai_macro['clinics']} Merkez &nbsp;|&nbsp; <b>Nüfus:</b> {ai_macro['pop_m']}M<br>
                 • <b>Gümrük Vergisi:</b> %{ai_macro['customs_tariff_pct']:.1f} (Ortalama {ai_macro['customs_clearance_days']} Gün Bekleme)<br>
                 • <b>İthalat Zorluğu:</b> {ai_macro['import_difficulty']}<br>
                 • <b>Devlet Desteği:</b> {ai_macro['ivf_support']}<br>
@@ -2906,50 +3219,231 @@ elif nav_selection == "⌘ Pricing & Discount Calculator":
             """, unsafe_allow_html=True)
 
         with ai_col2:
-            st.markdown("#### 💡 AI Tavsiye Edilen Fiyatlandırma & Paket Modeli")
-            
-            # Generate AI recommendation
+            # Generate AI recommendation & Dual consensus
             ai_rec = generate_ai_pricing_bundle_recommendation(ai_d, ai_macro, ai_goal)
-            
+            cons = generate_dual_consensus_decision(ai_rec, ai_expert, ai_d)
+
+            # 1. AI Support Section
+            st.markdown("#### 🤖 1. AI Support (Algoritmik Veri Modeli)")
             rec_c1, rec_c2 = st.columns(2)
             rec_c1.metric(
-                "Önerilen Cihaz İskontosu",
+                "AI Cihaz İskontosu",
                 f"%{ai_rec['rec_device_discount']:.1f}",
                 delta=f"Hedef Marj: %{ai_rec['expected_margin']:.1f}",
                 delta_color="normal"
             )
             rec_c2.metric(
-                "Önerilen Sarf / Malzeme İndirimi",
+                "AI Sarf / Malzeme İndirimi",
                 f"%{ai_rec['rec_consumable_discount']:.1f}",
                 delta=f"Kazanma Olasılığı: %{ai_rec['win_probability']}",
                 delta_color="normal"
             )
 
-            # Executive recommendation card
             st.markdown(f"""
-            <div style="background:rgba(0,245,255,0.04);border:1px solid #13A6B5;border-radius:10px;padding:14px;margin:12px 0;font-size:13px;line-height:1.7;">
-                <div style="font-weight:700;color:#00F5FF;font-size:14px;margin-bottom:8px;">🎁 AI Tavsiye Edilen Malzeme & Bundle Formülü</div>
-                <div style="background:rgba(19,166,181,0.12);padding:10px;border-radius:8px;font-weight:600;color:#FFFFFF;margin-bottom:10px;">
+            <div style="background:rgba(0,245,255,0.04);border:1px solid rgba(0,245,255,0.3);border-radius:10px;padding:12px;margin:8px 0 14px 0;font-size:12px;line-height:1.6;">
+                <div style="font-weight:700;color:#00F5FF;margin-bottom:4px;">🎁 AI Bundle Modeli:</div>
+                <div style="background:rgba(19,166,181,0.12);padding:8px;border-radius:6px;font-weight:600;color:#FFFFFF;margin-bottom:6px;">
                     {ai_rec['bundle_desc']}
                 </div>
-                <div style="font-weight:700;color:#4FD1DE;margin-top:6px;">🚢 Gümrük & Lojistik Dengeleme Taktiği:</div>
-                <div style="color:#C4D1D9;font-size:12px;">{ai_rec['customs_strategy']}</div>
-                <div style="font-weight:700;color:#4FD1DE;margin-top:8px;">📊 Partner Satış Performans Değerlendirmesi:</div>
-                <div style="color:#C4D1D9;font-size:12px;">{ai_rec['partner_note']}</div>
-                <hr style="border-color:rgba(19,166,181,0.2);margin:10px 0;">
-                <div style="display:flex;justify-content:space-between;align-items:center;">
-                    <span style="color:#8FA3C0;font-size:12px;">1 Yıllık Tahmini Ek Sarf Hacmi:</span>
-                    <span style="color:#00E676;font-weight:700;font-size:14px;">{ai_rec['annual_sarf_potential']}</span>
+                <b>🚢 Gümrük Dengeleme:</b> {ai_rec['customs_strategy']}<br>
+                <b>📈 1 Yıllık Tahmini Ek Sarf Potansiyeli:</b> <span style="color:#00E676;font-weight:700;">{ai_rec['annual_sarf_potential']}</span>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # 2. Expert Opinion Section
+            st.markdown("#### 👨‍⚕️ 2. Kıdemli Uzman Görüşü (Clinical & Commercial Specialist)")
+            st.markdown(f"""
+            <div style="background:rgba(255,184,0,0.04);border:1px solid rgba(255,184,0,0.35);border-radius:10px;padding:12px;margin:8px 0 14px 0;font-size:12px;line-height:1.6;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                    <span style="font-weight:700;color:#FFD700;font-size:13px;">👤 {ai_expert['specialist_name']}</span>
+                    <span style="background:rgba(255,184,0,0.15);color:#FFB800;padding:2px 8px;border-radius:6px;font-weight:600;">{ai_expert['expert_stance']}</span>
+                </div>
+                • <b>Uzman Tavan İskonto Tavsiyesi:</b> Azami <span style="color:#FFD700;font-weight:700;">%{ai_expert['expert_max_discount']:.1f}</span> (Sarf: %{ai_expert['expert_rec_sarf_disc']:.1f})<br>
+                • <b>Klinik ve Embriyoloji Dinamiği:</b> {ai_expert['clinical_dynamics']}<br>
+                • <b>Mevzuat, Tescil & Gümrük Denetimi:</b> {ai_expert['regulatory_watch']}<br>
+                • <b>Bölgesel Rakip Tehdidi:</b> {ai_expert['competitor_threat']}<br>
+                • <b>🛡️ Uzman Ticari Koruma Şartları:</b> <span style="color:#00E676;font-weight:600;">{ai_expert['commercial_guardrails']}</span>
+            </div>
+            """, unsafe_allow_html=True)
+
+            # 3. Dual Decision Consensus Matrix
+            st.markdown("#### ⚖️ 3. İcra Kurulu Ortak Konsensüs Kararı (Dual-Consensus Matrix)")
+            st.markdown(f"""
+            <div style="background:rgba(0,230,118,0.06);border:1.5px solid {cons['badge_color']};border-radius:12px;padding:14px;margin-bottom:14px;font-size:13px;line-height:1.7;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                    <span style="font-weight:800;color:{cons['badge_color']};font-size:14px;">{cons['consensus_status']}</span>
+                    <span style="background:rgba(0,0,0,0.3);color:#FFFFFF;padding:3px 10px;border-radius:8px;font-weight:700;">Nihai Konsensüs Cihaz İskontosu: %{cons['final_device_discount']:.1f}</span>
+                </div>
+                <div style="color:#E1E7EC;margin-bottom:6px;">
+                    <b>💡 Karar Gerekçesi (Rationale):</b> {cons['rationale']}
+                </div>
+                <div style="color:#E1E7EC;margin-bottom:6px;">
+                    <b>🎁 Konsensüs Paket Formülü:</b> {cons['final_bundle']}
+                </div>
+                <div style="background:rgba(0,0,0,0.25);padding:8px 10px;border-radius:6px;border-left:3px solid {cons['badge_color']};color:#C4D1D9;font-size:12px;">
+                    <b>🔒 Sözleşmeye Eklenecek Zorunlu Şartlar:</b> {cons['conditions']}
                 </div>
             </div>
             """, unsafe_allow_html=True)
 
-            # Action button to apply AI recommendation into simulator
-            if st.button("⚡ Bu AI Önerisini Manuel Simülatöre Aktar", type="primary", key="btn_apply_ai_pricing"):
-                st.session_state['applied_ai_disc'] = ai_rec['rec_device_discount']
-                st.session_state['applied_ai_ship'] = ai_rec['rec_freight']
+            # Action button to apply consensus to simulator
+            if st.button("⚡ Bu Konsensüs Kararını Manuel Simülatöre Aktar", type="primary", key="btn_apply_consensus"):
+                st.session_state['applied_ai_disc'] = cons['final_device_discount']
+                st.session_state['applied_ai_ship'] = cons['rec_freight']
                 st.session_state['sim_calc_partner'] = ai_dist_name
-                st.success(f"✓ AI önerisi (%{ai_rec['rec_device_discount']:.1f} iskonto, ${ai_rec['rec_freight']:.0f} lojistik) başarıyla simülatöre aktarıldı! 'Manuel İskonto & Marj Simülatörü' sekmesinden sonucu inceleyebilirsiniz.")
+                st.success(f"✓ AI & Uzman Konsensüs Kararı (%{cons['final_device_discount']:.1f} iskonto, ${cons['rec_freight']:.0f} lojistik) simülatöre başarıyla aktarıldı! 'Manuel İskonto & Marj Simülatörü' sekmesinden sonucu inceleyebilirsiniz.")
+
+    # --------------------------------------------------------------------------
+    # TAB 3: GLOBAL IVF & TİCARİ KNOWLEDGE BASE (PAZAR & REGÜLASYON KÜTÜPHANESİ)
+    # --------------------------------------------------------------------------
+    with calc_tab3:
+        st.markdown("### 📚 ZEUS Global IVF Pazar, Klinik & Regülasyon Knowledge Base")
+        st.caption("Uluslararası IVF pazarları, Sağlık Bakanlığı (MOH) onay süreçleri, gümrük GTIP kodları, soğuk zincir gereksinimleri ve saha uzman görüşleri kütüphanesi.")
+
+        kb_country = st.selectbox(
+            "İncelenecek Pazar / Ülke Seçin:",
+            list(MARKET_KNOWLEDGE_BASE.keys()),
+            index=0,
+            key="kb_country_select"
+        )
+        
+        kb_info = resolve_market_knowledge(kb_country)
+        kb_macro = resolve_country_macro(kb_country)
+        prof = kb_info.get('knowledge_profile', {})
+
+        # Top Executive Header for Country
+        st.markdown(f"""
+        <div style="background:linear-gradient(135deg, rgba(19,166,181,0.12) 0%, rgba(11,20,38,0.7) 100%);border:1px solid #13A6B5;border-radius:12px;padding:16px;margin-bottom:18px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div>
+                    <h3 style="margin:0;color:#00F5FF;font-size:18px;">🏛️ {kb_country} Stratejik Pazar Profili & İstihbaratı</h3>
+                    <div style="color:#8FA3C0;font-size:12px;margin-top:4px;">Atanmış Bölge Uzmanı: <b style="color:#FFFFFF;">{kb_info['specialist_name']}</b></div>
+                </div>
+                <div style="text-align:right;">
+                    <span style="background:rgba(0,245,255,0.15);color:#00F5FF;padding:4px 12px;border-radius:12px;font-weight:700;font-size:12px;">{kb_macro['gdp_tier']}</span>
+                    <div style="color:#8FA3C0;font-size:11px;margin-top:4px;">Aktif Klinik: <b>{kb_macro['clinics']}</b> &nbsp;|&nbsp; Gümrük: <b>%{kb_macro['customs_tariff_pct']:.1f}</b></div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # 4 Core Knowledge Pillars
+        kp1, kp2 = st.columns(2)
+        with kp1:
+            st.markdown(f"""
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:14px;margin-bottom:12px;font-size:12px;line-height:1.7;">
+                <div style="font-weight:700;color:#00F5FF;font-size:14px;margin-bottom:6px;">🏥 1. Klinik Ekosistemi & Karar Verici Profili</div>
+                • <b>Klinik Dağılımı:</b> {prof.get('clinic_type', 'Karma Klinik Yapısı')}<br>
+                • <b>Klinik Satın Alma Dinamikleri:</b> {kb_info['clinical_dynamics']}<br>
+                • <b>Devlet Desteği:</b> {kb_macro['ivf_support']}<br>
+                • <b>Hasta Fiyat Hassasiyeti:</b> {kb_macro['price_sensitivity']}
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown(f"""
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:14px;margin-bottom:12px;font-size:12px;line-height:1.7;">
+                <div style="font-weight:700;color:#00F5FF;font-size:14px;margin-bottom:6px;">❄️ 2. Soğuk Zincir & Medikal Lojistik Standartları</div>
+                • <b>Medya & Solüsyon Isı Rejimi:</b> {prof.get('cold_chain', '+2°C / +8°C aktif sıcaklık takibi')}<br>
+                • <b>Cihaz & Hardware Nakliyesi:</b> Şok ve nem göstergeli özel ahşap paletleme.<br>
+                • <b>Lojistik Bekleme / Transit Süresi:</b> Ortalama {kb_macro['customs_clearance_days']} Gün gümrük tamponu.
+            </div>
+            """, unsafe_allow_html=True)
+
+        with kp2:
+            st.markdown(f"""
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:14px;margin-bottom:12px;font-size:12px;line-height:1.7;">
+                <div style="font-weight:700;color:#00F5FF;font-size:14px;margin-bottom:6px;">📜 3. Sağlık Bakanlığı (MOH), GTIP & Gümrük Mevzuatı</div>
+                • <b>GTIP / Tarife Kodu:</b> {prof.get('customs_code', 'GTIP 9018.90 / 3822.00')}<br>
+                • <b>Tescil & Regülasyon Kılavuzu:</b> {kb_info['regulatory_watch']}<br>
+                • <b>İthalat Zorluk Seviyesi:</b> {kb_macro['import_difficulty']}
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown(f"""
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:14px;margin-bottom:12px;font-size:12px;line-height:1.7;">
+                <div style="font-weight:700;color:#00F5FF;font-size:14px;margin-bottom:6px;">💳 4. İhale, Ödeme ve Finansal Güvence Teamülleri</div>
+                • <b>Ödeme Standartları:</b> {prof.get('payment_norms', 'Nakit TT veya Akreditif')}<br>
+                • <b>Bölgesel Rakip Baskısı:</b> {kb_info['competitor_threat']}<br>
+                • <b>Tavsiye Edilen Ticari Koruma:</b> {kb_info['commercial_guardrails']}
+            </div>
+            """, unsafe_allow_html=True)
+
+        # Do's and Don'ts Card
+        st.markdown(f"""
+        <div style="background:rgba(19,166,181,0.05);border:1px solid rgba(19,166,181,0.25);border-radius:10px;padding:14px;margin-bottom:18px;font-size:12px;line-height:1.7;">
+            <div style="font-weight:700;color:#00F5FF;font-size:14px;margin-bottom:6px;">💡 Executive Do's & Don'ts ({kb_country} İçin Yönetici İlkeleri)</div>
+            <div style="display:flex;gap:20px;">
+                <div style="flex:1;background:rgba(0,230,118,0.06);padding:10px;border-radius:8px;border-left:3px solid #00E676;">
+                    <b style="color:#00E676;">✅ YAPILMASI GEREKENLER (DO's):</b><br>
+                    {prof.get('dos', 'Klinik embriyologlarına deneme numunesi ve yerinde eğitim sunun.')}
+                </div>
+                <div style="flex:1;background:rgba(255,82,82,0.06);padding:10px;border-radius:8px;border-left:3px solid #FF5252;">
+                    <b style="color:#FF5252;">❌ ASLA YAPILMAMASI GEREKENLER (DON'Ts):</b><br>
+                    {prof.get('donts', 'Teminatsız ve vadeli açık hesap riskini şirket üzerine almayın.')}
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # Interactive Field Intelligence Note Adder
+        st.markdown("#### ✍️ Sahadan Yeni Uzman Görüşü & İstihbarat Notu Ekle")
+        st.caption("Bölge müdürleri veya klinik uzmanları tarafından sahadan edinilen yeni regülasyon, rakip veya klinik notunu bilgi bankasına ekleyin.")
+
+        if 'custom_knowledge_notes' not in st.session_state:
+            st.session_state['custom_knowledge_notes'] = [
+                {
+                    'country': 'Jordan-Iraq',
+                    'author': 'Dr. Selim Yılmaz (MENA Direktörü)',
+                    'topic': 'Irak Kimadia İhale Şartnamesi',
+                    'note': 'Bağdat Merkez IVF kliniği ihalesinde cihazın menşe belgesinin (COO) yerel ticaret odası tasdikli olması şart koşuldu. İskonto yerine 50 kutu bedelsiz test dish desteği teklifi öne çıkarıldı.',
+                    'date': '2026-10-28'
+                },
+                {
+                    'country': 'Palestine',
+                    'author': 'Ayşe Kaya (Saha Direktörü)',
+                    'topic': 'Aşdod Liman Gecikmesi ve Konsinye Stok',
+                    'note': 'Ramallah kliniğinde sıvı medya stokları tükendiği için acil konsinye teslimat yapıldı. Yeni siparişlerde en az 45 gün önceden konşimento açılması gerekiyor.',
+                    'date': '2026-10-15'
+                }
+            ]
+
+        with st.form("form_add_field_note", clear_on_submit=True):
+            f_col1, f_col2 = st.columns(2)
+            with f_col1:
+                f_author = st.text_input("Notu Ekleyen Uzman / Unvan:", value="Kıdemli Ticari Danışman")
+                f_topic = st.text_input("Konu Başlığı:", placeholder="Örn: Rakip Fiyat Kırması / Yerel MOH Uyarısı")
+            with f_col2:
+                f_country = st.selectbox("İlgili Ülke / Pazar:", list(MARKET_KNOWLEDGE_BASE.keys()), index=list(MARKET_KNOWLEDGE_BASE.keys()).index(kb_country) if kb_country in MARKET_KNOWLEDGE_BASE else 0)
+                f_date = "2026-11-04"
+            f_content = st.text_area("Uzman Saha Gözlemi & İstihbarat Detayı:", placeholder="Sahadan elde edilen kritik klinik, lojistik veya ticari gözleminizi buraya yazın...")
+            
+            submit_btn = st.form_submit_button("💾 Uzman Notunu Bilgi Bankasına Kaydet", type="primary")
+            if submit_btn and f_content.strip():
+                st.session_state['custom_knowledge_notes'].insert(0, {
+                    'country': f_country,
+                    'author': f_author,
+                    'topic': f_topic if f_topic.strip() else "Saha İstihbarat Notu",
+                    'note': f_content.strip(),
+                    'date': f_date
+                })
+                st.success("✓ Uzman notu bilgi bankasına başarıyla eklendi!")
+
+        # Display Custom Notes Feed
+        st.markdown("##### 📌 Sahadan Eklenen Canlı Uzman Notları Akışı")
+        relevant_notes = [n for n in st.session_state['custom_knowledge_notes'] if n['country'] == kb_country or kb_country == "Tümü"]
+        if not relevant_notes:
+            relevant_notes = st.session_state['custom_knowledge_notes']
+
+        for note in relevant_notes[:5]:
+            st.markdown(f"""
+            <div style="background:rgba(255,255,255,0.02);border-left:3px solid #00F5FF;padding:10px 14px;border-radius:6px;margin-bottom:8px;font-size:12px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                    <span style="font-weight:700;color:#00F5FF;">{note['topic']} ({note['country']})</span>
+                    <span style="color:#8FA3C0;font-size:11px;">{note['date']} | {note['author']}</span>
+                </div>
+                <div style="color:#C4D1D9;">{note['note']}</div>
+            </div>
+            """, unsafe_allow_html=True)
 
 
 
