@@ -945,7 +945,6 @@ ACTIVE_DISTS_RAW = [
     ['TR', 'GEN-SA GENEL SAĞLIK A.Ş. (Türkiye)', 33.1, 0.72, 104, 45.3, 16.8, 12.0, 'Low', '2027-10-31', 'Not granted', 'Valid'],
     ['SA', 'ASSISTED MEDICAL SOLUTION EST (Saudi Arabia)', 29.5, 0.65, 92, 43.4, 21.0, 7.8, 'Low', '2027-05-31', 'Not granted', 'Valid'],
     ['KW', 'ADVANCED TECHNOLOGY CO - ATC (Kuwait)', 26.3, 0.70, 95, 44.0, 19.4, 9.2, 'Low', '2027-09-30', 'Not granted', 'Valid'],
-    ['AE', 'SELLCO TRADING INTL (UAE)', 23.2, 0.66, 89, 41.2, 15.3, 8.5, 'Medium', '2026-11-20', 'Not granted', 'In renewal'],
     ['BE', 'Ghent University - UGent (Belgium)', 16.1, 0.90, 100, 50.2, 28.0, 4.2, 'Low', '2028-06-30', 'Academic Partner', 'Valid'],
     ['AL', 'STEM GENE ART CLINIC & FERTICENT (Albania/Slovakia)', 18.8, 0.52, 94, 45.0, 10.8, 6.4, 'Low', '2027-04-30', 'Not granted', 'Valid'],
     ['AZ', 'RSM BAKÜ & Maternal Fetal Care (Azerbaijan)', 4.3, 0.10, 88, 40.5, 15.0, 5.2, 'Low', '2027-01-31', 'Not granted', 'Valid'],
@@ -1332,10 +1331,10 @@ def get_base_distributors():
             is_dist = False
             loa_val = 'N/A (Direct Hospital/Clinic/Client)'
             if company == 'SELLCO TRADING INTL':
-                exp_val = '2026-11-20'
-                excl_val = 'Not granted'
-                ag_type_val = 'Uluslararası Cihaz & Sarf Tedarik Sözleşmesi'
-                comp_status = '⚠️ Sözleşme Yenileme Bekleniyor'
+                exp_val = 'Sözleşme Yok (Spot Müşteri)'
+                excl_val = 'Yok (Serbest Spot Alıcı)'
+                ag_type_val = 'Sözleşmesiz Spot Müşteri Alımı (No Agreement)'
+                comp_status = 'ℹ️ Sözleşmesiz Spot Müşteri (Distribütör Değildir)'
             else:
                 exp_val = 'Kurumsal Tedarik Sözleşmesi'
                 excl_val = 'N/A'
@@ -1423,18 +1422,6 @@ if 'custom_documents' not in st.session_state:
             'status': '✅ Geçerli (Valid)',
             'notes': 'Kore MFDS regülasyonlarına uygun münhasır Piezo Pulse dağıtım yetkisi.',
             'filename': 'ZEUS_LOA_SJNU_Korea_MFDS.pdf'
-        },
-        {
-            'doc_id': 'ZEUS-AGR-SELLCO-2025',
-            'company': 'SELLCO TRADING INTL',
-            'category': 'International Customer',
-            'doc_type': 'Uluslararası Cihaz & Sarf Tedarik Sözleşmesi',
-            'territory': 'United Arab Emirates',
-            'start_date': '2025-11-20',
-            'end_date': '2026-11-20',
-            'status': '⚠️ Yenilemede (In Renewal)',
-            'notes': 'BAE doğrudan kurumsal ticari müşteri tedarik sözleşmesi; süresi 20 Kasım 2026 tarihinde dolmaktadır.',
-            'filename': 'ZEUS_UAE_Sellco_Agreement_2026.pdf'
         },
         {
             'doc_id': 'ZEUS-ACAD-GHENT-2026',
@@ -1699,7 +1686,7 @@ Excel satış kayıtlarındaki 874 işlem ve ürün bazlı çekiş frekansları 
 #### 1. 🎯 Yönetici Özeti (Executive Brief)
 Excel veritabanındaki 44 partnerin fatura tarihleri, sipariş frekansları ve sözleşme bitiş vadeleri çapraz sorgulandığında, 2026 Q4 ve 2027 Q1 döneminde ZEUS Bioscience nakit akışını ve sipariş sürekliliğini doğrudan tehdit eden **en kritik 3 risk** belirlenmiştir:
 - **Risk 1: Aşırı Müşteri / Distribütör Yoğunlaşması (Top-3 Partner Concentration):** Cironun %58'i yalnızca 3 partnerde toplanmıştır (Sirius $164K, ITL Qatar $73K, SJNU Kore $68.5K).
-- **Risk 2: SELLCO TRADING INTL (BAE) Sözleşme Bitişi & Müşteri Kaybı (Sözleşme Bitişi: 20 Kasım 2026):** BAE doğrudan kurumsal müşterisinin (Sellco) sözleşmesi 20 Kasım 2026'da dolmakta olup, firma 2026'da $0 sipariş vermiştir.
+- **Risk 2: BAE Pazarında Distribütör Yokluğu & Sellco Atıl Cihazları (Sözleşmesiz Spot Müşteri):** BAE'de resmi yetkili bir distribütör bulunmamaktadır. 2025'te 4 cihaz alan Sellco sözleşmesiz spot bir müşteri olup 2026'da sarf alımı durmuştur ($0). 28 lisanslı klinik sahipsiz durmaktadır.
 - **Risk 3: Cihaz (Capex) Satışlarının Düzensizliği ve Tedarik-Tahsilat Vade Uyuşmazlığı:** Cironun %58'i sermaye ekipmanı satışlarından gelmektedir; üretim maliyetleri peşin ödenirken tahsilatlar 45-60 güne uzadığında işletme sermayesi açığı oluşmaktadır.
 
 ---
@@ -1709,14 +1696,14 @@ Excel veritabanındaki 44 partnerin fatura tarihleri, sipariş frekansları ve s
 | # | Risk Başlığı | Risk Seviyesi | Finansal Maruziyet | Kök Neden & Potansiyel Etki |
 | :-: | :--- | :-: | :-: | :--- |
 | **1** | **Distribütör Yoğunlaşma Riski (Sirius & ITL)** | 🔴 **Kritik** | **$45,000 / Ay** | Sirius Pharm (Ürdün/Irak) tek başına cironun %24'ünü oluşturmaktadır. Irak gümrüklerinde veya banka transferlerinde 30 günlük bir aksama, şirketin tüm aylık nakit akış dengesini sarsabilir. |
-| **2** | **Sellco BAE Sözleşme Bitişi & Churn** | 🟠 **Yüksek** | **$25,000 Ciro Kaybı** | Sellco'nun sözleşmesi **20 Kasım 2026**'da sona eriyor. 2026'da hiç sipariş vermedi. 4 kurulu cihazın sarf geliri sıfırlanmış durumda. Acil müdahale edilmezse BAE pazarı tamamen kaybedilecek. |
+| **2** | **BAE Distribütör Boşluğu & Sellco Sarf Durması** | 🟠 **Yüksek** | **$25,000 Ciro Kaybı** | BAE'de sözleşmeli distribütör yoktur. Sellco sözleşmesiz spot müşteridir ve 2026'da $0 sarf çekmiştir. 4 kurulu cihaz atıl durmakta; 28 kliniklik BAE pazarı sahipsiz kalmaktadır. |
 | **3** | **Cihaz Sipariş Dalgalanması & Vade Uçurumu** | 🟡 **Orta-Yüksek** | **$40,000 - $60,000 İşletme Sermayesi Açığı** | Cihaz satışları parti partidir (lumpy). Bileşen tedarikçilerine avans ödenirken, distribütör vadeleri 60 güne sarktığında nakit akışında geçici açıklar meydana gelmektedir. |
 
 ---
 
 #### 3. 🛡️ 30 - 45 Günlük Acil Korunma ve Eylem Planı
-1. **Aksiyon 1 (Hemen) - BAE Pazarının Kurtarılması:**
-   Sellco Trading ile bu hafta acil online toplantı yapılarak ya asgari 2027 yıllık $25,000 sarf taahhüdü ile sözleşme yenilenecek ya da Dubai Health City merkezli alternatif distribütör adayına geçiş protokolü işletilecek.
+1. **Aksiyon 1 (Hemen) - BAE Pazarının Yetkili Distribütör ile Yapılandırılması:**
+   BAE pazarı için Dubai Health City merkezli kurumsal bir distribütör (Leader Healthcare / Al Zahrawi) atanarak 28 klinik kapsama alanına alınacak; Sellco'ya ise elindeki 4 cihaz için doğrudan peşin indirimli sarf teklifi sunulacaktır.
 2. **Aksiyon 2 (15 Gün) - Sirius Pharm & ITL İçin Çift Kanallı Nakit Güvencesi:**
    Sirius ve ITL siparişlerinde %40 sipariş anında peşin, %40 konşimento tesliminde (BL), %20 ise 30 gün vadeli ödeme kuralı zorunlu tutulacak. Peşin ödemeyi tercih edenlere %3 erken ödeme teşviki tanımlanacak.
 3. **Aksiyon 3 (30 Gün) - Türkiye Lokal Klinik Ağının Nakit Motoru Olarak Kullanılması:**
@@ -3163,14 +3150,14 @@ if nav_selection == "◈ Executive Dashboard":
                 <b>Yönetici Önerisi:</b> Kuveyt merkezlerine acil Piezo Oosit Protokol eğitimi ve konsinye aktivasyon kiti verilmeli; Garanti Leasing'in cihazı kurduğu klinik tespit edilerek doğrudan sarf protokolü başlatılmalıdır.
             </div>
         </div>
-        <div class="alert-card" style="border-left-color: #F0BC57; background:#0F192E; padding:14px; border-radius:8px; border:1px solid rgba(240,188,87,0.25);">
+        <div class="alert-card" style="border-left-color: #FF9800; background:#0F192E; padding:14px; border-radius:8px; border:1px solid rgba(255,152,0,0.25);">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-                <strong style="color:#FFB800; font-size:13.5px;">🟡 Müşteri Sözleşmesi Bitişi & BAE Distribütör Ataması (20 Kasım 2026)</strong>
-                <span style="font-size:10px; background:rgba(240,188,87,0.15); color:#FFB800; padding:3px 8px; border-radius:4px; font-weight:700;">30 GÜN KALDI</span>
+                <strong style="color:#FF9800; font-size:13.5px;">🇦🇪 BAE Pazarında Distribütör Boşluğu & Sözleşmesiz Müşteri Durumu</strong>
+                <span style="font-size:10px; background:rgba(255,152,0,0.15); color:#FF9800; padding:3px 8px; border-radius:4px; font-weight:700;">BÖLGESEL FIRSAT</span>
             </div>
             <div style="font-size:12.5px; color:#CCD7E6; margin-top:6px; line-height:1.5;">
-                <b>Kanıt:</b> SELLCO TRADING INTL (BAE) 2025'te 4 cihaz ($23.2K) almış doğrudan kurumsal müşteridir; sözleşmesi <b>20 Kasım 2026</b>'da dolmaktadır ve 2026'da sarf alımı yapmamıştır.<br>
-                <b>Yönetici Önerisi:</b> Sellco distribütör değildir (münhasırlığı yoktur). Sellco'ya refill sarf teklifi sunulurken eşzamanlı olarak BAE'deki 28 lisanslı klinik için yetkili distribütör (Leader Healthcare / Al Zahrawi) atanarak ülke geneline açılınmalıdır.
+                <b>Kanıt:</b> SELLCO TRADING INTL (BAE) bir distribütör olmayıp, <b>sözleşmesiz spot bir ticari müşteridir</b>. 2025'te 4 cihaz ($23,180) almış, aralarında herhangi bir distribütörlük veya tedarik sözleşmesi bulunmamaktadır. 2026 yılında ise sarf siparişi vermemiştir ($0). Şu anda BAE'de resmi yetkili distribütör bulunmamaktadır.<br>
+                <b>Yönetici Önerisi:</b> BAE'deki 28 lisanslı klinik ve 16,000 siklusluk zengin tüp bebek pazarına hakim olmak için, ülke geneline münhasır kurumsal bir distribütör (Leader Healthcare / Al Zahrawi Medikal) atanmalıdır. Sellco'nun elindeki 4 Piezo cihazı için ise spot doğrudan kurumsal sarf teklifi iletilmelidir.
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -3676,38 +3663,37 @@ Immediate Resolution: ZEUS Bioscience is actively incorporating this feedback in
         if show_red:
             render_ai_action_card(
                 case_id="sellco_uae",
-                title_html='<strong style="color:#FF8A96;font-size:15px;">🔴 SELLCO TRADING INTL — Birleşik Arap Emirlikleri (Uluslararası Doğrudan Müşteri / Ticari Alıcı)</strong>',
-                badge_html='<span class="chip chip-err">MÜŞTERİ TEDARİK SÖZLEŞMESİ BİTİŞİ: 20 KASIM 2026</span>',
-                fact_html='<b>Excel Fatura Kanıtı:</b> 2024: $0.00 | 2025: $23,180.00 (4 Piezo Pulse Stimulator = $19,000; 36 Electro Dish = $3,740; 12 Liquid = $440) | <b>2026 YTD: $0.00 (-%100.0)</b><br><b>Kurulu Cihaz:</b> 4 Ünite (BAE Merkezleri) | <b>Müşteri Statüsü:</b> Doğrudan Kurumsal Alıcı (Yetkili Distribütör Değil)',
-                diag_text="Sellco, BAE pazarında doğrudan 4 Piezo stimülatör cihazı ($19,000) ve $4,180 sarf malzemesi satın almış doğrudan ticari bir müşteridir (distribütör değildir). İkili tedarik sözleşmesi (ZEUS-AGR-SELLCO-2025) <b>20 Kasım 2026</b> tarihinde dolmaktadır. 2026 yılında yeni sarf siparişi verilmemiştir. Sellco bir distribütör olmadığı ve bölgesel münhasırlığı bulunmadığı için ZEUS, BAE'deki diğer tüp bebek kliniklerine doğrudan tedarik sağlamakta veya pazar için resmi bir distribütör (Leader Healthcare veya Al Zahrawi) atamakta tamamen serbesttir.",
+                title_html='<strong style="color:#FF8A96;font-size:15px;">🔴 SELLCO TRADING INTL — Birleşik Arap Emirlikleri (Spot Müşteri / Distribütör Değildir)</strong>',
+                badge_html='<span class="chip chip-wn">SÖZLEŞMESİZ TİCARİ MÜŞTERİ (SPOT ALICI)</span>',
+                fact_html='<b>Excel Fatura Kanıtı:</b> 2024: $0.00 | 2025: $23,180.00 (4 Piezo Pulse Stimulator = $19,000; 36 Electro Dish = $3,740; 12 Liquid = $440) | <b>2026 YTD: $0.00 (-%100.0)</b><br><b>Kurulu Cihaz:</b> 4 Ünite (BAE) | <b>Hukuki Statü:</b> Sözleşmesiz Spot Kurumsal Alıcı (Yetkili Distribütör Değildir, Aktif Sözleşmesi Yoktur)',
+                diag_text="Sellco, BAE pazarında 2025 yılında doğrudan 4 Piezo stimülatör cihazı ($19,000) ve $4,180 sarf malzemesi satın almış doğrudan ticari bir müşteridir (distribütör değildir ve ZEUS ile herhangi bir tedarik veya dağıtım sözleşmesi bulunmamaktadır). 2026 yılında ise yeni bir sarf siparişi verilmemiştir. Sellco'nun herhangi bir sözleşmesi veya münhasırlığı bulunmadığından ZEUS, BAE'deki 28 lisanslı kliniğe doğrudan satış yapmakta veya pazar için resmi bir distribütör (Leader Healthcare veya Al Zahrawi) atamakta tamamen serbesttir.",
                 ai_action_steps=[
-                    "<b>Refill Sarf Paketi Teklifi (Müşteriye Özel):</b> Sellco'ya elindeki 4 Piezo cihazını aktif tutabilmesi için özel 'Consumable Refill Pack' (25 Kutu Electro Dish + Solüsyon) avantajlı doğrudan kurumsal müşteri fiyatıyla sunulmalı.",
-                    "<b>Tedarik Sözleşmesi Yenileme (20 Kasım 2026):</b> 20 Kasım 2026 öncesinde Sellco ile standart doğrudan kurumsal müşteri tedarik protokolü uzatılmalı; asgari sipariş kotası tanımlanmalı.",
-                    "<b>Resmi BAE Distribütör Ataması (Yeni Pazar Fırsatı):</b> Sellco münhasır distribütör değil doğrudan müşteri olduğundan, BAE'deki 28 lisanslı klinik ve 16,000 siklusun tamamını kapsayacak yetkili bir distribütör (Leader Healthcare / Al Zahrawi) atanarak ülke geneline açılınmalı."
+                    "<b>Refill Sarf Paketi Teklifi (Spot Müşteriye Özel):</b> Sellco'ya elindeki 4 Piezo cihazını aktif tutabilmesi için özel 'Consumable Refill Pack' (25 Kutu Electro Dish + Solüsyon) avantajlı doğrudan kurumsal müşteri fiyatıyla teklif edilmeli.",
+                    "<b>Klinik ve Cihaz Durum Tespiti:</b> Sellco'nun 2025'te satın aldığı 4 Piezo cihazının kurulu olduğu klinikler tespit edilerek, laboratuvar sarf ihtiyaçları doğrudan takip edilmeli.",
+                    "<b>Resmi BAE Distribütör Ataması (Açık Beyaz Boşluk):</b> BAE pazarında herhangi bir sözleşme veya distribütör engeli bulunmadığından, ülkedeki 28 lisanslı klinik ve 16,000 siklusun tamamını kapsayacak yetkili bir distribütör (Leader Healthcare / Al Zahrawi) atanarak ülke geneline açılınmalı."
                 ],
-                letter_title="Sellco UAE Müşteri Tedarik Sözleşmesi Yenileme & Sarf Paketi Teklifi",
+                letter_title="Sellco UAE Doğrudan Müşteri Sarf Paketi & Teknik Destek Teklifi",
                 letter_body="""To: Management Board, Sellco Trading Intl, Dubai, United Arab Emirates
-Subject: Commercial Supply Agreement Renewal (Term Ending: Nov 20, 2026) & Consumable Refill Pack Offer
+Subject: Clinical Follow-up & Dedicated Consumable Refill Pack Offer for 4 Installed ZEUS Systems
 
 Dear Sellco Management,
 
-We are writing regarding our bilateral Commercial Supply and Procurement Agreement for ZEUS Bioscience medical systems, currently scheduled to reach its term on November 20, 2026.
+We are writing regarding the 4 ZEUS Piezo Pulse Stimulator units and paired consumables acquired by Sellco in 2025 ($23,180.00 total) for operations in the United Arab Emirates.
 
-According to our verified audit of accounts, Sellco successfully acquired 4 ZEUS Piezo Pulse Stimulator units and initial consumables ($23,180.00 total) during FY2025. However, our records indicate zero consumable re-orders during FY2026.
+According to our audited sales logs, no consumable re-orders have been placed during FY2026. To ensure the clinical centers using these systems continue to achieve peak blastocyst activation rates (>85%) without protocol disruptions:
 
-To ensure your 4 operational systems in local UAE IVF centers continue to run at peak clinical efficacy without protocol interruptions:
-1. ZEUS Bioscience is pleased to offer a dedicated "Consumable Refill Pack" (25 boxes ZEUS Electro Dish 1x2 and paired liquid solutions) under preferential client terms.
-2. We propose extending our direct commercial supply agreement for an additional 12-month term through November 2027.
-3. We offer certified virtual training for your embryology laboratory clients to standardize blastocyst activation yields.
+1. ZEUS Bioscience is pleased to offer a dedicated "Consumable Refill Pack" (25 boxes ZEUS Electro Dish 1x2 and paired liquid solutions) under preferential direct customer rates.
+2. We offer certified virtual training for your embryology laboratory clients to standardize piezo ICSI stimulation protocols.
+3. Dedicated technical support and voltage calibration assistance for all 4 operational units.
 
-Please let us know your preferred time this week for a conference call to finalize the renewal addendum.
+Please let us know your availability this week for a brief call to coordinate shipping.
 
 Sincerely,
 ZEUS Bioscience Commercial & Client Management Division""",
                 ai_memo_data={
                     "financial": "Sellco doğrudan bir müşteri olarak 2025'te $23.2K ciro kazandırmış, 2026'da ise sipariş vermemiştir. 4 cihaz için yıllık ~$15K-$20K sarf potansiyeli mevcuttur.",
-                    "leverage": "Sellco'nun distribütörlük veya münhasırlık hakkı yoktur; bu durum ZEUS'a BAE'de bağımsız bir yetkili distribütör atama veya diğer kliniklere doğrudan satma serbestisi verir.",
-                    "clause": "Tedarik Sözleşmesi Madde 3.2: Alıcı (Müşteri) cihazların orijinal sarf malzemelerini temin etmekle yükümlüdür; sözleşme 20 Kasım 2026'da kendiliğinden sona erer.",
+                    "leverage": "Sellco'nun herhangi bir sözleşmesi, distribütörlük veya münhasırlık hakkı yoktur; BAE pazarı tamamen açık beyaz boşluktur. ZEUS hem doğrudan diğer kliniklere satabilir hem de yeni yetkili distribütör atayabilir.",
+                    "clause": "Hukuki Statü: Sözleşmesiz Spot Müşteri (Herhangi bir sözleşme veya münhasırlık bağı yoktur).",
                     "recovery": "+$25,000 / Yıl (Sellco sarf ikmali + BAE pazarına yeni resmi distribütör atanması ile)"
                 }
             )
@@ -4579,7 +4565,7 @@ ZEUS Bioscience Scientific Affairs""",
                     - Kilit Sorunlar: 
                       1) Dish / Liquid Solution oranı 2.1:1 olup solüsyon tüketimi geride kalmaktadır (Bundle ihtiyacı).
                       2) Gen-Sa (4 cihaz, sadece 30 kutu sarf), Kuveyt ATC (3 cihaz, 9 kutu sarf), Acıbadem (2 cihaz, 11 kutu sarf), Medipolitan (2 cihaz, 12 kutu sarf) merkezlerinde embriyolog eğitimi ve sarf çekişi acil müdahale gerektirir.
-                      3) Sellco BAE doğrudan müşteri sözleşmesi 20 Kasım 2026'da bitmektedir ve 2026'da $0 çekmiştir (Müşteri churn ve BAE distribütörsüzlük riski).
+                      3) BAE pazarında yetkili distribütör bulunmamaktadır; 2025'te 4 cihaz alan Sellco sözleşmesiz spot bir müşteridir ve 2026'da $0 çekmiştir (BAE distribütörsüzlük ve churn riski).
                       4) Bölgesel strateji sorulduğunda; Asya-Pasifik, Avrupa, Kuzey Amerika, Latin Amerika, MENA ve Afrika olmak üzere 6 küresel bölgenin tamamını kapsayarak somut pazar ve distribütör aksiyonları öner.
                     
                     Raporunu tamamen Türkçe, profesyonel bir tonda, üst yönetime sunulacak 'ZEUS Executive Memorandum' formatında, yönetici özeti, veri odaklı tanı tablosu, taktik aksiyon takvimi ve finansal projeksiyon başlıklarıyla yaz.
@@ -4933,7 +4919,7 @@ elif nav_selection == "▤ Agreements & Compliance":
                 'Hukuki Statü': d.get('compliance', '✅ Onaylı Uluslararası Müşteri')
             })
         st.dataframe(pd.DataFrame(intl_table), use_container_width=True, hide_index=True)
-        st.caption("ℹ️ Sellco Trading Intl (BAE) uluslararası doğrudan müşteri tedarik sözleşmesi 20 Kasım 2026 tarihinde dolmaktadır; doğrudan müşteri sarf ikmal protokolü hazırlanmıştır.")
+        st.caption("ℹ️ Sellco Trading Intl (BAE) bir distribütör olmayıp sözleşmesiz spot ticari müşteridir. BAE pazarında henüz resmi bir distribütör atanmamış olup pazar açık beyaz boşluk statüsündedir.")
 
     # --------------------------------------------------------------------------
     # TAB 4: SÖZLEŞME VE DOKÜMAN ARŞİVİ
