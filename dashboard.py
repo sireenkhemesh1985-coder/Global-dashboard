@@ -992,6 +992,104 @@ def get_excel_sales_df():
     return None
 
 raw_sales_df = get_excel_sales_df()
+
+@st.cache_data
+def build_device_consumable_audit(df_sales):
+    """
+    Analyzes which company purchased which device, whether they bought consumables,
+    and returns exact purchase dates, invoices, and product details.
+    """
+    if df_sales is None or len(df_sales) == 0:
+        return []
+        
+    records = []
+    for comp in df_sales['Company'].unique():
+        cdf = df_sales[df_sales['Company'] == comp].sort_values('Date_dt')
+        country = str(cdf['Country'].iloc[0])
+        is_sister = ("GEN-SA" in comp.upper() or "GENSA" in comp.upper())
+        
+        c_dev = cdf[cdf['Group'] == 'Device']
+        c_cons = cdf[cdf['Group'] == 'Consumables']
+        
+        dev_qty = int(c_dev['Quantity'].sum()) if len(c_dev) > 0 else 0
+        dev_amt = float(c_dev['Amount (USD)'].sum()) if len(c_dev) > 0 else 0.0
+        dev_prods = c_dev['Product'].unique().tolist()
+        dev_dates = [d.strftime('%d.%m.%Y') if pd.notnull(d) else '' for d in c_dev['Date_dt']]
+        dev_dates_unique = sorted(list(set(d for d in dev_dates if d)), key=lambda x: pd.to_datetime(x, format='%d.%m.%Y'))
+        dev_invoices = c_dev[['Date', 'Invoice', 'Product', 'Quantity', 'Amount (USD)']].to_dict('records')
+        
+        cons_qty = int(c_cons['Quantity'].sum()) if len(c_cons) > 0 else 0
+        cons_amt = float(c_cons['Amount (USD)'].sum()) if len(c_cons) > 0 else 0.0
+        cons_prods = c_cons['Product'].unique().tolist()
+        cons_dates = [d.strftime('%d.%m.%Y') if pd.notnull(d) else '' for d in c_cons['Date_dt']]
+        cons_dates_unique = sorted(list(set(d for d in cons_dates if d)), key=lambda x: pd.to_datetime(x, format='%d.%m.%Y'))
+        cons_invoices = c_cons[['Date', 'Invoice', 'Product', 'Category', 'Quantity', 'Amount (USD)']].to_dict('records')
+        
+        has_2026_cons = any('2026' in str(d) for d in cons_dates)
+        
+        if dev_qty > 0 and cons_qty == 0:
+            status = '🔴 Sıfır Sarf (Hiç Sarf Almamış)'
+            code = 'zero_consumable'
+            risk_badge = '🔴 SIFIR SARF (RİSK)'
+            action_rec = 'Cihaz kurulu fakat bugüne kadar tek bir sarf siparişi verilmemiş! İvedilikle klinik ile temasa geçilerek sarf ikmali başlatılmalıdır.'
+        elif dev_qty > 0 and cons_qty > 0:
+            if not has_2026_cons:
+                status = "🟡 Sarf Alımı Durmuş (2026'da Sıfır Sarf / Uyuyan)"
+                code = 'dormant_consumable'
+                risk_badge = '🟡 UYUYAN HESAP (2026 0 SARF)'
+                action_rec = 'Cihaz var fakat 2026 yılında hiçbir sarf alımı yapılmamış. Protokol durması veya churn riski mevcut; acil klinik eğitim ve konsinye teklif önerilir.'
+            elif cons_qty < 15:
+                status = '🟠 Düşük Sarf Çekişi (Cihaz Başı Kritik Seviye)'
+                code = 'low_consumable'
+                risk_badge = '🟠 KRİTİK DÜŞÜK SARF'
+                action_rec = 'Cihaz başına sarf çekişi yıllık beklenen rasyonun altında. Baş embriyolog eğitimi ve indirimli bundle paketi tanımlanmalıdır.'
+            else:
+                status = '🟢 Aktif Düzenli Sarf Alımı'
+                code = 'active_consumable'
+                risk_badge = '🟢 AKTİF & DÜZENLİ'
+                action_rec = 'Cihaz ve sarf alımları sağlıklı rutin döngüde devam ediyor.'
+        elif dev_qty == 0 and cons_qty > 0:
+            status = '📦 Yalnızca Sarf Alan Kurum (Cihaz Kaydı Yok)'
+            code = 'consumables_only'
+            risk_badge = '📦 YALNIZCA SARF TÜKETİCİSİ'
+            action_rec = 'Doğrudan sarf tüketicisi (merkezinde başka kaynaktan cihaz mevcut veya fason laboratuvar). Yeni nesil Piezo donanım yükseltmesi önerilebilir.'
+        else:
+            status = '⚪ Diğer'
+            code = 'other'
+            risk_badge = '⚪ DİĞER'
+            action_rec = 'Standart hesap takibi.'
+            
+        records.append({
+            'company': comp,
+            'country': country,
+            'is_sister': is_sister,
+            'status': status,
+            'code': code,
+            'risk_badge': risk_badge,
+            'action_rec': action_rec,
+            'dev_qty': dev_qty,
+            'dev_amt': dev_amt,
+            'dev_prods': dev_prods,
+            'dev_prods_str': ', '.join(dev_prods) if dev_prods else '—',
+            'dev_dates': dev_dates_unique,
+            'dev_dates_str': ', '.join(dev_dates_unique) if dev_dates_unique else '—',
+            'dev_invoices': dev_invoices,
+            'cons_qty': cons_qty,
+            'cons_amt': cons_amt,
+            'cons_prods': cons_prods,
+            'cons_prods_str': ', '.join(cons_prods) if cons_prods else '—',
+            'cons_dates': cons_dates_unique,
+            'cons_dates_str': f"İlk: {cons_dates_unique[0]} — Son: {cons_dates_unique[-1]}" if cons_dates_unique else '—',
+            'first_dev_date': dev_dates_unique[0] if dev_dates_unique else '—',
+            'last_dev_date': dev_dates_unique[-1] if dev_dates_unique else '—',
+            'first_cons_date': cons_dates_unique[0] if cons_dates_unique else '—',
+            'last_cons_date': cons_dates_unique[-1] if cons_dates_unique else '—',
+            'cons_invoices': cons_invoices,
+            'total_amt': dev_amt + cons_amt
+        })
+    records.sort(key=lambda x: (x['code'] == 'zero_consumable', x['code'] == 'dormant_consumable', x['dev_qty'], x['total_amt']), reverse=True)
+    return records
+
 MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
 
 # -*- coding: utf-8 -*-
@@ -1156,7 +1254,7 @@ def get_base_distributors():
         tot_m = sum(m_counts)
         weights = [v / tot_m for v in m_counts] if tot_m > 0 else [1/12]*12
         
-        # Classification: Distributor (6 partners) vs Local Customer (25) vs International Customer (12)
+        # Classification: Distributor (6 partners) vs Sister Company (1: Gen-Sa) vs Local Customer (24) vs International Customer (12)
         DISTRIBUTOR_COMPANIES = {
             'SIRIUS PHARM COMPANY',
             'INTERNATIONAL TECHNICAL LEGACY (ITL)',
@@ -1165,8 +1263,22 @@ def get_base_distributors():
             'ASSISTED MEDICAL SOLUTION EST',
             'ADVANCED TECHNOLOGY COMPANY K.S.C.P.'
         }
+        SISTER_COMPANIES = {
+            'GEN-SA GENEL SAĞLIK HİZMETLERİ SANAYİ VE TİCARET ANONİM ŞİRKETİ'
+        }
         
-        if company in DISTRIBUTOR_COMPANIES:
+        is_sister = (company in SISTER_COMPANIES or 'GEN-SA' in company.upper() or 'GENSA' in company.upper())
+        
+        if is_sister:
+            acc_type = 'Sister Company'
+            acc_type_tr = '🏢 Kardeş Şirket (Gen-Sa)'
+            is_dist = False
+            loa_val = 'N/A (Kardeş Şirket / Grup Ortaklığı)'
+            exp_val = 'Süresiz Grup İçi Tedarik'
+            excl_val = 'Group Entity'
+            ag_type_val = 'Kardeş Şirket Tedarik Protokolü (Grup İçi Satış)'
+            comp_status = '🏢 Kardeş Şirket (Değerlendirme Dışı)'
+        elif company in DISTRIBUTOR_COMPANIES:
             acc_type = 'Distributor'
             acc_type_tr = 'Yetkili Distribütör'
             is_dist = True
@@ -1209,6 +1321,7 @@ def get_base_distributors():
             'account_type': acc_type,
             'account_type_tr': acc_type_tr,
             'is_distributor': is_dist,
+            'is_sister': is_sister,
             'agreement_type': ag_type_val,
             'compliance': comp_status,
             'base_rev_k': tot_rev / 1000.0,
@@ -1470,7 +1583,7 @@ def generate_zeus_executive_memo(active_prompt, total_rev, avg_margin, total_dev
 Excel satış kayıtlarındaki 874 işlem ve ürün bazlı çekiş frekansları incelendiğinde, portföyde acil ticari müdahale (promosyon, bundle kampanyası veya klinik aplikasyon eğitimi) gerektiren 3 kritik ürün grubu ve müşteri kümesi tespit edilmiştir:
 - **1. Zeus Electro Fusion SET ($15,890.85):** Şu ana kadar yalnızca 1 adet satılmıştır (Ghent University, Belçika). Batı Avrupa ve Körfez'deki üst düzey akademik merkezler için demo/tanıtım kampanyası başlatılmalıdır.
 - **2. Electro Liquid Solution (Powder & 2x1ml) Dengesizliği:** 2,097 kutu Electro Dish satılmasına karşın yalnızca 765 kutu Liquid Solution (2x1ml) ve 232 kutu Powder satılmıştır (**Dish / Liquid oranı ~2.1:1**). Klinikler solüsyonu ikame etmekte veya seyreltmektedir; acil **Bundle Kampanyası** gereklidir.
-- **3. Cihazı Kurulu Olup Sarf Çekişi Durmuş Klinikler (Klinik Eğitim İhtiyacı):** Acıbadem (2 cihaz - $760 sarf), Medipolitan (2 cihaz - $440 sarf), Kuveyt ATC (3 cihaz - $750 sarf) ve Gen-Sa (4 cihaz - $1,640 sarf) merkezlerinde embriyolog eğitimi eksikliği nedeniyle cihazlar atıl kalmaktadır.
+- **3. Cihazı Kurulu Olup Sarf Çekişi Durmuş Klinikler (Klinik Eğitim İhtiyacı):** Acıbadem (2 cihaz - $760 sarf), Medipolitan (2 cihaz - $440 sarf), Kuveyt ATC (3 cihaz - $750 sarf) ve Ferti Med (1 cihaz - $400 sarf) merkezlerinde embriyolog eğitimi eksikliği nedeniyle sarf çekişi durmuştur. *(Not: Gen-Sa Sağlık 4 cihaz ile kardeş şirketimiz olup ticari değerlendirme dışındadır).*
 
 ---
 
@@ -1480,7 +1593,7 @@ Excel satış kayıtlarındaki 874 işlem ve ürün bazlı çekiş frekansları 
 | :--- | :--- | :--- | :--- | :--- |
 | **Zeus Electro Fusion SET** | $15,890.85 | 1 Ünite | Tekil akademik satışta kaldı; ticari lansman yapılmadı. | **Uluslararası Tanıtım Kampanyası & ESHRE Canlı Demo** |
 | **Electro Liquid Solution (Powder & 2x1ml)** | $53,014.00 | 997 Şişe/Kutu | Dish çekişine göre %50 geride kalıyor (Oran: 2.1 Dish : 1 Solüsyon). | **10 Dish + 2 Liquid Solution %50 İndirimli Bundle Kampanyası** |
-| **Gen-Sa Sağlık (Türkiye)** | $33,140.00 | 4 Piezo Cihazı | Cihaz başı yıllık sarf çekişi yalnızca $410 (Beklenen: $3,500+). | **Yerinde Klinik Embriyolog Protokol Eğitimi** |
+| **Ferti Med Özel Sağlık (Türkiye)** | $9,400.00 | 1 Piezo Cihazı | 2025'ten bu yana sarf siparişi durmuştur. | **Klinik Aplikasyon Ziyareti & Sarf Teklifi** |
 | **Advanced Tech Co (Kuveyt - ATC)** | $26,250.00 | 3 Piezo Cihazı | Cihaz başı sarf çekişi yalnızca $250 (Toplam 9 kutu). | **Körfez Bölge Aplikasyon Ziyareti & Sertifikasyon** |
 | **Acıbadem & Medipolitan (Türkiye)** | $20,200.00 | 4 Piezo Cihazı | Türkiye'nin dev zincirleri, sarf alımında tekil ve düzensiz kalmış. | **Özel Kurumsal Fiyat Anlaşması + Baş Embriyolog Eğitimi** |
 
@@ -1623,7 +1736,7 @@ ZEUS Bioscience'ın küresel coğrafi dağılımı analiz edildiğinde; mevcut g
         topic_title = "Tekrar Eden Sarf Malzeme Gelirlerini %20+ Artırmak İçin Hedef Müşteri & Distribütör Odak Planı"
         kpi_impact = "+$42,500 / Yıl Net Düzenli Sarf Geliri (+%25.5 Artış)"
         timeline = "60 Gün (Hemen Başlatılabilir)"
-        target_group = "Gen-Sa, ATC Kuwait, Acıbadem, Medipolitan, Sirius Jordan-Iraq"
+        target_group = "ATC Kuwait, Acıbadem, Medipolitan, Ferti Med, Sirius Jordan-Iraq"
         risk_level = "Çok Düşük — Kurulu Cihaz Altyapısı Zaten Mevcut"
         
         memo_content = f"""### 📋 ZEUS EXECUTIVE MEMORANDUM
@@ -1646,7 +1759,7 @@ Excel veri tabanındaki 44 kurum tek tek incelendiğinde, şirketin sarf gelirin
 
 | Öncelik | Partner / Müşteri | Ülke | Kurulu Cihaz | Mevcut Sarf Hacmi | Cihaz Başı Tüketim | Hedeflenen Ek Sarf Geliri | Somut Uygulanacak Taktik |
 | :-: | :--- | :--- | :-: | :--- | :-: | :-: | :--- |
-| **#1** | **GEN-SA GENEL SAĞLIK A.Ş.** | Türkiye | 4 Cihaz | $1,640 (30 Kutu) | $410 / Cihaz | **+$13,000** | Cihazların kurulu olduğu 4 kliniğe yerinde oosit protokol eğitimi verilerek aylık 15 kutu kotası tanımlanacak. |
+| **#1** | **ADVANCED TECH CO (ATC)** | Kuveyt | 3 Cihaz | $750 (9 Kutu) | $250 / Cihaz | **+$12,500** | Kuveyt Sağlık Bakanlığı ve özel tüp bebek hastanelerine aplikasyon ziyareti ile çeyreklik 25 kutu sipariş şartı. |
 | **#2** | **ADVANCED TECH CO (ATC)** | Kuveyt | 3 Cihaz | $750 (9 Kutu) | $250 / Cihaz | **+$10,000** | Kuveyt Sağlık Bakanlığı ve özel tüp bebek hastanelerine aplikasyon ziyareti ile çeyreklik 25 kutu sipariş şartı. |
 | **#3** | **ACIBADEM SAĞLIK GRUBU** | Türkiye | 2 Cihaz | $760 (11 Kutu) | $380 / Cihaz | **+$7,500** | Türkiye'nin lider hastane zincirinde Piezo kullanımını kurtarma sikluslarından rutin sikluslara geçirme protokolü. |
 | **#4** | **MEDİPOLİTAN SAĞLIK A.Ş.** | Türkiye | 2 Cihaz | $440 (12 Kutu) | $220 / Cihaz | **+$5,000** | Kurumsal laboratuvar şefleri ile görüşülerek aylık konsinye sarf deposu anlaşması imzalanacak. |
@@ -3628,6 +3741,195 @@ ZEUS Bioscience Scientific Affairs""",
             mime="text/csv"
         )
 
+
+    # --------------------------------------------------------------------------
+    # 🔬 CIHAZ & SARF ALIM DENETİM MATRİSİ (EQUIPMENT VS CONSUMABLES AUDIT)
+    # Kim hangi cihazı aldı, sarf aldı mı, hangi tarihlerde alındılar?
+    # --------------------------------------------------------------------------
+    st.markdown("---")
+    st.subheader("🔬 Cihaz & Sarf Alım Denetim Matrisi: Kim Hangi Cihazı Aldı, Sarf Aldı mı? (Fatura & Tarihçe Analizi)")
+    st.caption("Excel satış veri tabanındaki (874 işlem) tüm faturalar çapraz taranarak; hangi kurumun hangi tarihte cihaz aldığı, sarf malzemesi alıp almadığı ve her iki kalemin kesin fatura tarihleri listelenmiştir.")
+
+    excel_sales_df = get_excel_sales_df()
+    audit_data = build_device_consumable_audit(excel_sales_df)
+    
+    # Summary KPI row
+    dev_owners = [a for a in audit_data if a['dev_qty'] > 0]
+    zero_cons = [a for a in audit_data if a['code'] == 'zero_consumable']
+    dormant_cons = [a for a in audit_data if a['code'] == 'dormant_consumable']
+    low_cons = [a for a in audit_data if a['code'] == 'low_consumable']
+    active_cons = [a for a in audit_data if a['code'] == 'active_consumable']
+    cons_only = [a for a in audit_data if a['code'] == 'consumables_only']
+    
+    k_aud1, k_aud2, k_aud3, k_aud4, k_aud5 = st.columns(5)
+    with k_aud1:
+        st.markdown(f"""
+        <div style="background:#0F192E;border:1px solid #FF5252;border-radius:10px;padding:12px;text-align:center;">
+            <span style="font-size:11px;color:#FF8A96;font-weight:700;text-transform:uppercase;">🔴 Sıfır Sarf (Hiç Almamış)</span>
+            <div style="font-size:22px;font-weight:700;color:#FF5252;margin-top:4px;">{len(zero_cons)} Kurum</div>
+            <span style="font-size:11px;color:#CCD7E6;">Garanti Leasing (1 Cihaz, $0 Sarf)</span>
+        </div>
+        """, unsafe_allow_html=True)
+    with k_aud2:
+        st.markdown(f"""
+        <div style="background:#0F192E;border:1px solid #FFB800;border-radius:10px;padding:12px;text-align:center;">
+            <span style="font-size:11px;color:#FFB800;font-weight:700;text-transform:uppercase;">🟡 2026'da Durmuş / Uyuyan</span>
+            <div style="font-size:22px;font-weight:700;color:#FFB800;margin-top:4px;">{len(dormant_cons)} Kurum</div>
+            <span style="font-size:11px;color:#CCD7E6;">Sellco BAE, ATC Kuveyt, Ferti Med...</span>
+        </div>
+        """, unsafe_allow_html=True)
+    with k_aud3:
+        st.markdown(f"""
+        <div style="background:#0F192E;border:1px solid #FF9800;border-radius:10px;padding:12px;text-align:center;">
+            <span style="font-size:11px;color:#FF9800;font-weight:700;text-transform:uppercase;">🟠 Düşük Sarf Çekişi</span>
+            <div style="font-size:22px;font-weight:700;color:#FF9800;margin-top:4px;">{len(low_cons)} Kurum</div>
+            <span style="font-size:11px;color:#CCD7E6;">Acıbadem (11), Medipolitan (12)...</span>
+        </div>
+        """, unsafe_allow_html=True)
+    with k_aud4:
+        st.markdown(f"""
+        <div style="background:#0F192E;border:1px solid #00E676;border-radius:10px;padding:12px;text-align:center;">
+            <span style="font-size:11px;color:#00E676;font-weight:700;text-transform:uppercase;">🟢 Aktif Düzenli Sarf</span>
+            <div style="font-size:22px;font-weight:700;color:#00E676;margin-top:4px;">{len(active_cons)} Kurum</div>
+            <span style="font-size:11px;color:#CCD7E6;">Sirius (675), ITL (449), SJNU (198)...</span>
+        </div>
+        """, unsafe_allow_html=True)
+    with k_aud5:
+        st.markdown(f"""
+        <div style="background:#0F192E;border:1px solid #00F5FF;border-radius:10px;padding:12px;text-align:center;">
+            <span style="font-size:11px;color:#00F5FF;font-weight:700;text-transform:uppercase;">📦 Yalnızca Sarf Tüketen</span>
+            <div style="font-size:22px;font-weight:700;color:#00F5FF;margin-top:4px;">{len(cons_only)} Klinik</div>
+            <span style="font-size:11px;color:#CCD7E6;">Tavmergen (352), Pınar (130)...</span>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    # Filter Controls
+    f_c1, f_c2 = st.columns([2.5, 1.5])
+    with f_c1:
+        audit_filter = st.radio(
+            "Cihaz & Sarf Alım Durumu Filtresi:",
+            [
+                f"Tüm Cihaz Sahipleri ({len(dev_owners)} Kurum)",
+                f"🔴 Sıfır Sarf — Hiç Almamış ({len(zero_cons)})",
+                f"🟡 Sarfı Durmuş — 2026'da 0 Sarf ({len(dormant_cons)})",
+                f"🟠 Düşük Sarf Çekenler ({len(low_cons)})",
+                f"🟢 Aktif Düzenli Sarf Alanlar ({len(active_cons)})",
+                f"📦 Yalnızca Sarf Alan Klinikler ({len(cons_only)})",
+                f"📋 Tüm Portföy ({len(audit_data)} Kurum)"
+            ],
+            horizontal=True
+        )
+    with f_c2:
+        audit_search = st.text_input("🔍 Kurum veya Ülke Ara:", placeholder="Örn: Garanti, Sellco, Acıbadem, Kuveyt...")
+
+    # Filter data
+    filtered_audit = audit_data.copy()
+    if "Tüm Cihaz Sahipleri" in audit_filter:
+        filtered_audit = [a for a in filtered_audit if a['dev_qty'] > 0]
+    elif "🔴" in audit_filter:
+        filtered_audit = [a for a in filtered_audit if a['code'] == 'zero_consumable']
+    elif "🟡" in audit_filter:
+        filtered_audit = [a for a in filtered_audit if a['code'] == 'dormant_consumable']
+    elif "🟠" in audit_filter:
+        filtered_audit = [a for a in filtered_audit if a['code'] == 'low_consumable']
+    elif "🟢" in audit_filter:
+        filtered_audit = [a for a in filtered_audit if a['code'] == 'active_consumable']
+    elif "📦" in audit_filter:
+        filtered_audit = [a for a in filtered_audit if a['code'] == 'consumables_only']
+
+    if audit_search and audit_search.strip():
+        q = audit_search.strip().lower()
+        filtered_audit = [a for a in filtered_audit if q in a['company'].lower() or q in a['country'].lower()]
+
+    # Build Master Audit Display Table
+    table_rows = []
+    for a in filtered_audit:
+        comp_disp = f"🏢 {a['company']} (Kardeş Şirket)" if a['is_sister'] else a['company']
+        table_rows.append({
+            'Kurum / Müşteri': comp_disp,
+            'Ülke': a['country'],
+            'Durum & Risk Teşhisi': a['status'],
+            'Cihaz Adet': f"{a['dev_qty']} Ünite" if a['dev_qty'] > 0 else "— (0)",
+            'Satın Alınan Cihaz': a['dev_prods_str'],
+            '📅 Cihaz Alım Tarihleri': a['dev_dates_str'],
+            'Sarf Adet (Kutu)': f"{a['cons_qty']} Adet" if a['cons_qty'] > 0 else "0 (Hiç Almadı)",
+            'Sarf Tutarı ($)': f"${a['cons_amt']:,.2f}" if a['cons_amt'] > 0 else "$0.00",
+            '📅 Sarf Alım Tarihleri (İlk - Son)': a['cons_dates_str'],
+            'Satın Alınan Sarf Ürünleri': a['cons_prods_str']
+        })
+
+    st.markdown(f"##### 📋 Denetim Raporu ({len(filtered_audit)} Kurum Listeleniyor)")
+    df_audit_disp = pd.DataFrame(table_rows)
+    st.dataframe(df_audit_disp, use_container_width=True, hide_index=True)
+
+    # Export CSV for Audit Matrix
+    csv_audit = df_audit_disp.to_csv(index=False).encode('utf-8')
+    st.download_button(
+        label="📥 Cihaz & Sarf Alım Denetim Tablosunu İndir (CSV)",
+        data=csv_audit,
+        file_name="ZEUS_Device_and_Consumables_Audit.csv",
+        mime="text/csv"
+    )
+
+    # --------------------------------------------------------------------------
+    # CHRONOLOGICAL INVOICE INSPECTOR (TEK TEK KURUMLARIN FATURA DETAYI)
+    # --------------------------------------------------------------------------
+    st.markdown("<br>", unsafe_allow_html=True)
+    with st.expander("🔍 Kurum Bazında Detaylı Fatura & Tarihçe İnceleyicisi (Chronological Invoice Ledger)", expanded=True):
+        st.markdown("##### 🧾 Fatura Dökümü ve Tarihçe Denetimi")
+        
+        comp_list = sorted([a['company'] for a in audit_data])
+        # Default to Garanti Leasing or Sellco if present
+        def_idx = next((i for i, c in enumerate(comp_list) if "GARANTİ" in c or "GARANTI" in c), 0)
+        selected_audit_comp = st.selectbox(
+            "Detaylı Fatura ve Tarihçesini İncelemek İstediğiniz Kurumu Seçin:",
+            comp_list,
+            index=def_idx
+        )
+        
+        target_rec = next((a for a in audit_data if a['company'] == selected_audit_comp), audit_data[0])
+        
+        # Summary Header for Selected Company
+        card_border_color = '#FF5252' if target_rec['code'] == 'zero_consumable' else ('#FFB800' if target_rec['code'] == 'dormant_consumable' else '#00F5FF')
+        badge_text_color = '#FF5252' if target_rec['code'] == 'zero_consumable' else ('#FFB800' if target_rec['code'] == 'dormant_consumable' else '#00E676')
+        
+        st.markdown(f"""
+        <div style="background:#0F192E; border-left:4px solid {card_border_color}; padding:14px 18px; border-radius:8px; margin-bottom:14px;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:16px; font-weight:700; color:#FFFFFF;">{target_rec['company']} ({target_rec['country']})</span>
+                <span style="font-size:12px; font-weight:700; color:{badge_text_color}; background:rgba(255,255,255,0.06); padding:4px 10px; border-radius:6px;">{target_rec['risk_badge']}</span>
+            </div>
+            <div style="font-size:13px; color:#CCD7E6; margin-top:8px;">
+                <b>Yapay Zeka Teşhisi ve Eylem Önerisi:</b> {target_rec['action_rec']}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        inv_col1, inv_col2 = st.columns(2)
+        
+        with inv_col1:
+            st.markdown(f"###### 🖥️ Satın Alınan Cihazlar ({target_rec['dev_qty']} Ünite — Toplam ${target_rec['dev_amt']:,.2f})")
+            if target_rec['dev_invoices']:
+                dev_inv_df = pd.DataFrame(target_rec['dev_invoices'])
+                dev_inv_df = dev_inv_df[['Date', 'Invoice', 'Product', 'Quantity', 'Amount (USD)']]
+                dev_inv_df.columns = ['Fatura Tarihi', 'Fatura No', 'Cihaz Modeli', 'Adet', 'Tutar (USD)']
+                st.dataframe(dev_inv_df, use_container_width=True, hide_index=True)
+            else:
+                st.info("ℹ️ Bu kurum adına doğrudan kesilmiş cihaz faturası bulunmamaktadır (Yalnızca sarf tüketicisi veya fason laboratuvar).")
+
+        with inv_col2:
+            st.markdown(f"###### 🧪 Satın Alınan Sarf Malzemeleri ({target_rec['cons_qty']} Adet/Kutu — Toplam ${target_rec['cons_amt']:,.2f})")
+            if target_rec['cons_invoices']:
+                cons_inv_df = pd.DataFrame(target_rec['cons_invoices'])
+                cons_inv_df = cons_inv_df[['Date', 'Invoice', 'Product', 'Quantity', 'Amount (USD)']]
+                cons_inv_df.columns = ['Fatura Tarihi', 'Fatura No', 'Sarf Ürünü', 'Adet', 'Tutar (USD)']
+                st.dataframe(cons_inv_df, use_container_width=True, hide_index=True)
+            else:
+                st.error("⚠️ DİKKAT: Bu kurumun fatura veri tabanında HİÇBİR SARF MALZEME SİPARİŞİ BULUNMAMAKTADIR! Cihaz sarf malzemesi olmadan atıl kalmış olabilir.")
+
+
     # --------------------------------------------------------------------------
     # TAB 2: GELECEK AYIN SATIŞ TAHMİNİ (PREDICTIVE FORECASTING)
     # --------------------------------------------------------------------------
@@ -4096,7 +4398,8 @@ elif nav_selection == "▤ Agreements & Compliance":
 
     # Categorize accounts
     dist_rows = [d for d in active_rows if d.get('account_type') == 'Distributor']
-    local_rows = [d for d in active_rows if d.get('account_type') == 'Local Customer']
+    sister_rows = [d for d in active_rows if d.get('account_type') == 'Sister Company' or d.get('is_sister')]
+    local_rows = [d for d in active_rows if d.get('account_type') == 'Local Customer' and not d.get('is_sister')]
     intl_rows = [d for d in active_rows if d.get('account_type') == 'International Customer']
 
     # Distributor-only LOA metrics
@@ -4105,11 +4408,12 @@ elif nav_selection == "▤ Agreements & Compliance":
     excl_count = len([d for d in dist_rows if 'exclusive' in str(d.get('exclusivity', '')).lower()])
 
     # Top KPI Metrics Cards
-    ac1, ac2, ac3, ac4 = st.columns(4)
+    ac1, ac2, ac3, ac4, ac5 = st.columns(5)
     ac1.metric("🏢 Yetkili Distribütörler", f"{len(dist_rows)} Partner", delta=f"{excl_count} Münhasır Bölge")
     ac2.metric("📜 Geçerli LOA Belgeleri", f"{valid_loas} / {len(dist_rows)}", delta=f"{renew_loas} Yenilemede" if renew_loas > 0 else "Tamamı Geçerli", delta_color="inverse" if renew_loas > 0 else "normal")
-    ac3.metric("🇹🇷 Local Müşteriler (Türkiye)", f"{len(local_rows)} Klinik", delta=f"{format_curr(sum(d['revenue'] for d in local_rows))} Yurtiçi Hacim")
-    ac4.metric("🌍 International Müşteriler", f"{len(intl_rows)} Kurum", delta=f"{format_curr(sum(d['revenue'] for d in intl_rows))} Doğrudan İhracat")
+    ac3.metric("🏢 Kardeş Şirket (Gen-Sa)", f"{len(sister_rows)} İştirak", delta=f"{format_curr(sum(d['revenue'] for d in sister_rows))} Grup İçi Satış")
+    ac4.metric("🇹🇷 Local Müşteriler (TR)", f"{len(local_rows)} Klinik", delta=f"{format_curr(sum(d['revenue'] for d in local_rows))} Yurtiçi Hacim")
+    ac5.metric("🌍 International Müşteriler", f"{len(intl_rows)} Kurum", delta=f"{format_curr(sum(d['revenue'] for d in intl_rows))} Doğrudan İhracat")
 
     st.markdown("<br>", unsafe_allow_html=True)
 
@@ -4545,14 +4849,16 @@ elif nav_selection == "◬ Sales & Product Analytics":
     # 3. Domestic Turkey IVF Clinics
     with lead_tab3:
         st.markdown("##### 🇹🇷 Türkiye Pazarı Klinik, Hastane ve Dağıtım Ortakları")
-        local_clients = [d for d in active_rows if d.get('account_type') == 'Local Customer']
+        local_clients = [d for d in active_rows if (d.get('account_type') == 'Local Customer' or d.get('is_sister')) and d.get('country_name') == 'Turkey']
         local_clients = sorted(local_clients, key=lambda x: x['revenue'], reverse=True)
         
         local_table = []
         for d in local_clients:
+            c_name = f"🏢 {d['name']} (Kardeş Şirket)" if d.get('is_sister') else d['name']
             local_table.append({
-                'Klinik / Kurum': d['name'],
+                'Klinik / Kurum': c_name,
                 'İl / Ülke': 'Türkiye',
+                'Statü / Sınıf': '🏢 Kardeş Şirket (Grup İştiraki)' if d.get('is_sister') else 'Yerel Müşteri',
                 'Net Hasılat': format_curr(d['revenue']),
                 'Kurulu Cihaz': f"{d['devices_count']} Adet" if d['devices_count'] > 0 else "—",
                 'Cihaz Tutarı': format_curr(d['device_rev']),
@@ -4572,7 +4878,7 @@ elif nav_selection == "◬ Sales & Product Analytics":
             all_table.append({
                 'Kurum Adı': d['name'],
                 'Ülke': d['country_name'],
-                'Hesap Sınıfı': '🏢 Distribütör' if d.get('account_type') == 'Distributor' else ('🇹🇷 Yurtiçi Müşteri' if d.get('account_type') == 'Local Customer' else '🌍 Uluslararası Müşteri'),
+                'Hesap Sınıfı': '🏢 Kardeş Şirket (Gen-Sa)' if d.get('is_sister') else ('🏢 Distribütör' if d.get('account_type') == 'Distributor' else ('🇹🇷 Yurtiçi Müşteri' if d.get('account_type') == 'Local Customer' else '🌍 Uluslararası Müşteri')),
                 'Net Ciro': format_curr(d['revenue']),
                 'Kurulu Cihaz': f"{d['devices_count']} Adet" if d['devices_count'] > 0 else "—",
                 'Cihaz Satışı': format_curr(d['device_rev']),
@@ -5970,6 +6276,9 @@ elif nav_selection == "▲ Performance Evaluator":
             <b>Sınıf:</b> {eval_d.get('account_type_tr', 'Distribütör')} &nbsp;|&nbsp; <b>LOA:</b> {eval_d.get('loa', 'N/A')}
         </div>
         """, unsafe_allow_html=True)
+        
+    if eval_d.get('is_sister') or 'GEN-SA' in eval_d['name']:
+        st.info("🏢 **BİLGİLENDİRME (Kardeş Şirket):** GEN-SA GENEL SAĞLIK A.Ş., ZEUS Bioscience'ın **kardeş şirketidir**. Şirket içi direktif gereği üçüncü taraf distribütör/klinik performans cezalandırmasına, sözleşme kotalarına veya ihtar/churn değerlendirmesine tabi tutulmamaktadır. Aşağıdaki veriler grup içi konsolide satış hareketleri kapsamında salt bilgi amaçlı sunulmaktadır.")
 
     # --------------------------------------------------------------------------
     # 2. GERÇEK EXCEL VERİLERİNDEN YILLIK & ÇEYREKLİK ANALİZ
