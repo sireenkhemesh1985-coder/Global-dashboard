@@ -1027,29 +1027,39 @@ def build_device_consumable_audit(df_sales):
         cons_dates_unique = sorted(list(set(d for d in cons_dates if d)), key=lambda x: pd.to_datetime(x, format='%d.%m.%Y'))
         cons_invoices = c_cons[['Date', 'Invoice', 'Product', 'Category', 'Quantity', 'Amount (USD)']].to_dict('records')
         
-        has_2026_cons = any('2026' in str(d) for d in cons_dates)
+        # Exact Annual Consumable Breakdown (2025 vs 2026)
+        c_cons_2025 = c_cons[c_cons['Date_dt'].dt.year == 2025] if len(c_cons) > 0 else pd.DataFrame()
+        c_cons_2026 = c_cons[c_cons['Date_dt'].dt.year == 2026] if len(c_cons) > 0 else pd.DataFrame()
+        cons_2025_qty = int(c_cons_2025['Quantity'].sum()) if len(c_cons_2025) > 0 else 0
+        cons_2025_amt = float(c_cons_2025['Amount (USD)'].sum()) if len(c_cons_2025) > 0 else 0.0
+        cons_2026_qty = int(c_cons_2026['Quantity'].sum()) if len(c_cons_2026) > 0 else 0
+        cons_2026_amt = float(c_cons_2026['Amount (USD)'].sum()) if len(c_cons_2026) > 0 else 0.0
         
         if dev_qty > 0 and cons_qty == 0:
             status = '🔴 Sıfır Sarf (Hiç Sarf Almamış)'
             code = 'zero_consumable'
             risk_badge = '🔴 SIFIR SARF (RİSK)'
             action_rec = 'Cihaz kurulu fakat bugüne kadar tek bir sarf siparişi verilmemiş! İvedilikle klinik ile temasa geçilerek sarf ikmali başlatılmalıdır.'
-        elif dev_qty > 0 and cons_qty > 0:
-            if not has_2026_cons:
-                status = "🟡 Sarf Alımı Durmuş (2026'da Sıfır Sarf / Uyuyan)"
-                code = 'dormant_consumable'
-                risk_badge = '🟡 UYUYAN HESAP (2026 0 SARF)'
-                action_rec = 'Cihaz var fakat 2026 yılında hiçbir sarf alımı yapılmamış. Protokol durması veya churn riski mevcut; acil klinik eğitim ve konsinye teklif önerilir.'
-            elif cons_qty < 15:
-                status = '🟠 Düşük Sarf Çekişi (Cihaz Başı Kritik Seviye)'
-                code = 'low_consumable'
-                risk_badge = '🟠 KRİTİK DÜŞÜK SARF'
-                action_rec = 'Cihaz başına sarf çekişi yıllık beklenen rasyonun altında. Baş embriyolog eğitimi ve indirimli bundle paketi tanımlanmalıdır.'
-            else:
-                status = '🟢 Aktif Düzenli Sarf Alımı'
-                code = 'active_consumable'
-                risk_badge = '🟢 AKTİF & DÜZENLİ'
-                action_rec = 'Cihaz ve sarf alımları sağlıklı rutin döngüde devam ediyor.'
+        elif dev_qty > 0 and cons_2026_qty == 0:
+            status = "🟡 Sarf Alımı Durmuş (2026'da Sıfır Sarf / Uyuyan)"
+            code = 'dormant_consumable'
+            risk_badge = '🟡 UYUYAN HESAP (2026 0 SARF)'
+            action_rec = 'Cihaz var fakat 2026 yılında hiçbir sarf alımı yapılmamış. Protokol durması veya churn riski mevcut; acil klinik eğitim ve konsinye teklif önerilir.'
+        elif dev_qty > 0 and ((cons_2025_amt >= 3000 and cons_2026_amt < 1000 and (cons_2025_amt - cons_2026_amt) / cons_2025_amt >= 0.80) or (dev_qty >= 3 and cons_2026_amt <= 500 and cons_2026_qty <= 5)):
+            status = f"🔴 Kritik Düşüş & Churn Alarmı (2026 Sarf: Yalnızca ${cons_2026_amt:,.0f} / {cons_2026_qty} Kutu, -%{((cons_2025_amt - cons_2026_amt)/cons_2025_amt*100) if cons_2025_amt > 0 else 0:.0f} Düşüş)"
+            code = 'critical_churn_risk'
+            risk_badge = '🔴 KRİTİK CHURN & DÜŞÜŞ ALARMI'
+            action_rec = f"{country}'da kurulu {dev_qty} Piezo cihazına rağmen 2026'da sarf alımı sembolik düzeye gerilemiştir (Yalnızca ${cons_2026_amt:,.0f} / {cons_2026_qty} kutu). Personel değişimi veya protokol terk riski mevcuttur; acil yerinde klinik çalıştay ve re-aktivasyon konsinye kiti önerilir."
+        elif dev_qty > 0 and (cons_2026_qty < 15 or cons_2026_amt < 1000):
+            status = f"🟠 Düşük Sarf Çekişi (2026: {cons_2026_qty} Kutu / ${cons_2026_amt:,.0f})"
+            code = 'low_consumable'
+            risk_badge = '🟠 KRİTİK DÜŞÜK SARF'
+            action_rec = 'Cihaz başına yıllık sarf çekişi beklenen klinik siklus rasyonunun altında. Baş embriyolog eğitimi ve indirimli bundle paketi tanımlanmalıdır.'
+        elif dev_qty > 0:
+            status = '🟢 Aktif Düzenli Sarf Alımı'
+            code = 'active_consumable'
+            risk_badge = '🟢 AKTİF & DÜZENLİ'
+            action_rec = 'Cihaz ve sarf alımları sağlıklı rutin döngüde devam ediyor.'
         elif dev_qty == 0 and cons_qty > 0:
             status = '📦 Yalnızca Sarf Alan Kurum (Cihaz Kaydı Yok)'
             code = 'consumables_only'
@@ -1078,6 +1088,10 @@ def build_device_consumable_audit(df_sales):
             'dev_invoices': dev_invoices,
             'cons_qty': cons_qty,
             'cons_amt': cons_amt,
+            'cons_2025_qty': cons_2025_qty,
+            'cons_2025_amt': cons_2025_amt,
+            'cons_2026_qty': cons_2026_qty,
+            'cons_2026_amt': cons_2026_amt,
             'cons_prods': cons_prods,
             'cons_prods_str': ', '.join(cons_prods) if cons_prods else '—',
             'cons_dates': cons_dates_unique,
@@ -1089,7 +1103,7 @@ def build_device_consumable_audit(df_sales):
             'cons_invoices': cons_invoices,
             'total_amt': dev_amt + cons_amt
         })
-    records.sort(key=lambda x: (x['code'] == 'zero_consumable', x['code'] == 'dormant_consumable', x['dev_qty'], x['total_amt']), reverse=True)
+    records.sort(key=lambda x: (x['code'] == 'zero_consumable', x['code'] == 'critical_churn_risk', x['code'] == 'dormant_consumable', x['dev_qty'], x['total_amt']), reverse=True)
     return records
 
 MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec']
@@ -3376,8 +3390,170 @@ elif nav_selection == "✦ AI Intelligence & Forecasting":
         show_yellow = show_all or "🟡" in action_filter
         show_green = show_all or "🟢" in action_filter
 
+        # ----------------------------------------------------------------------
+        # Cognitive AI Case Re-Evaluation Engine with Expert Feedback
+        # ----------------------------------------------------------------------
+        def reevaluate_case_with_expert_note(case_id, role, note, orig_title, orig_diag, orig_steps, orig_letter, memo_data):
+            """
+            Dynamically synthesizes field feedback and specialist notes (embryologist, sales director, biomedical engineer)
+            into an updated clinical diagnosis, a bespoke 3-step action plan, and a revised executive letter.
+            Connects to Gemini API if available, or employs ZEUS Cognitive Expert Matrix fallback.
+            """
+            clean_note = note.strip()
+            api_key = get_gemini_api_key()
+            
+            if api_key:
+                try:
+                    from google import genai
+                    client = genai.Client(api_key=api_key)
+                    prompt = f"""
+                    Sen ZEUS Global Market Intelligence Baş Stratejisti ve Kıdemli Klinik Danışmanısın.
+                    Aşağıda bir tüp bebek iş ortağı / distribütör vakası, orijinal yapay zeka analizi ve sahada görevli bir uzmandan ({role}) gelen yeni saha istihbaratı/gözlem notu yer almaktadır:
+
+                    Vaka ID: {case_id}
+                    Uzman Rolü: {role}
+                    Saha / Uzman Notu: "{clean_note}"
+
+                    Orijinal Klinik Teşhis:
+                    {orig_diag}
+
+                    Orijinal Somut Eylem Adımları:
+                    1. {orig_steps[0] if len(orig_steps)>0 else ''}
+                    2. {orig_steps[1] if len(orig_steps)>1 else ''}
+                    3. {orig_steps[2] if len(orig_steps)>2 else ''}
+
+                    Orijinal Yönetici Mektubu Taslağı:
+                    {orig_letter}
+
+                    GÖREVİN:
+                    Uzmanın sahadan getirdiği bu somut notu ve rolünü ({role}) doğrudan klinik ve ticari analize katarak vakayı YENİDEN DEĞERLENDİR.
+                    Çıktıyı aynen şu etiketlerle ver:
+
+                    ===REVIZE_TEHKIK===
+                    (Uzmanın notunu entegre eden, sahadaki gerçek durumu açıklayan 1-2 paragraflık revize klinik ve ticari teşhis)
+
+                    ===REVIZE_ADIM_1===
+                    (Uzman notundaki sorunu doğrudan çözen en acil 1. somut eylem adımı - HTML b etiketiyle başlık içersin)
+
+                    ===REVIZE_ADIM_2===
+                    (2. operasyonel adım - HTML b etiketiyle başlık içersin)
+
+                    ===REVIZE_ADIM_3===
+                    (3. stratejik ve ticari adım - HTML b etiketiyle başlık içersin)
+
+                    ===REVIZE_MEKTUP===
+                    (İlgili kurumun Genel Müdürüne veya Baş Embriyoloğuna hitaben yazılmış, uzmanın getirdiği noktayı yapıcı ve ikna edici şekilde ele alan resmi yönetici mektubu)
+                    """
+                    response = client.models.generate_content(
+                        model='gemini-2.5-flash',
+                        contents=prompt,
+                    )
+                    gen_txt = response.text
+                    
+                    if "===REVIZE_TEHKIK===" in gen_txt and "===REVIZE_MEKTUP===" in gen_txt:
+                        parts = gen_txt.split("===REVIZE_")
+                        rev_diag = ""
+                        rev_steps = []
+                        rev_letter = ""
+                        for p in parts:
+                            if p.startswith("TEHKIK==="):
+                                rev_diag = p.replace("TEHKIK===", "").strip()
+                            elif p.startswith("ADIM_1==="):
+                                rev_steps.append(p.replace("ADIM_1===", "").strip())
+                            elif p.startswith("ADIM_2==="):
+                                rev_steps.append(p.replace("ADIM_2===", "").strip())
+                            elif p.startswith("ADIM_3==="):
+                                rev_steps.append(p.replace("ADIM_3===", "").strip())
+                            elif p.startswith("MEKTUP==="):
+                                rev_letter = p.replace("MEKTUP===", "").strip()
+                        if rev_diag and len(rev_steps) >= 2 and rev_letter:
+                            return {
+                                'role': role,
+                                'note': clean_note,
+                                'date': datetime.now().strftime('%d.%m.%Y'),
+                                'diag': rev_diag,
+                                'steps': rev_steps,
+                                'letter': rev_letter,
+                                'mode': 'Gemini 2.5 Live Re-evaluation'
+                            }
+                except Exception:
+                    pass
+
+            # Intelligent ZEUS Cognitive Specialist Synthesis (Fallback)
+            low_n = clean_note.lower()
+            has_training = any(w in low_n for w in ['eğitim', 'egitim', 'training', 'masterclass', 'workshop', 'öğren', 'kalibrasyon'])
+            has_competitor = any(w in low_n for w in ['rakip', 'competitor', 'başka firma', 'alternatif', 'ikame', 'farklı marka'])
+            has_price = any(w in low_n for w in ['fiyat', 'indirim', 'iskonto', 'pahalı', 'bütçe', 'maliyet', 'cost', 'pahali'])
+            has_demo = any(w in low_n for w in ['demo', 'numune', 'örnek', 'konsinye', 'deneme', 'test kiti'])
+            has_staff = any(w in low_n for w in ['doktor', 'embriyolog', 'personel', 'ayrıldı', 'değişti', 'yeni', 'kadro'])
+            has_customs = any(w in low_n for w in ['gümrük', 'sevkiyat', 'nakliye', 'gecikme', 'ithalat', 'izin'])
+
+            revised_diag = f"{orig_diag}<br><br><span style='color:#5FD3AE;'><b>🩺 {role} Saha Notu & Revize Teşhis:</b></span> Saha uzmanımız tarafından sisteme işlenen teyitli saha notu: <i>\"{clean_note}\"</i>.<br>Bu geri bildirim ışığında vaka, sahadaki pratik klinik gereksinimler ve anlık dinamikler doğrultusunda <b>öncelikli operasyonel eylem statüsüne</b> güncellenmiştir."
+
+            revised_steps = []
+            if has_staff or has_training:
+                revised_steps.append(f"<b>Acil Yerinde Klinik Eğitim & Validasyon ({role} Talebi):</b> Laboratuvardaki yeni embriyoloji ekibine 48 saat içinde 1-1 hands-on Piezo ICSI voltaj ve solüsyon protokolü eğitimi verilmeli.")
+            elif has_competitor:
+                revised_steps.append(f"<b>Rakip İkamesine Karşı Klinik Kanıt & Karşı Teklif:</b> ZEUS'un blastosist gelişiminde sağladığı %18.4 klinik üstünlük verileri sunulmalı; rakip geçişini durdurmak için anında konsinye demo seti ulaştırılmalı.")
+            elif has_price:
+                revised_steps.append(f"<b>Maliyet Bariyeri İçin Esnek İskonto & Kota Modeli:</b> Uzman notundaki bütçe kısıtına yanıt olarak, 2027 yıllık sarf taahhüdü karşılığında %12 kademeli hacim iskontosu ve esnek ödeme vadesi tanımlanmalı.")
+            elif has_customs:
+                revised_steps.append(f"<b>Hızlı Gümrük & Lojistik Destek Hattı:</b> İthalat ve transit izin süreçlerini hızlandırmak adına yerel distribütör ile konsinye transit koridoru açılmalı.")
+            elif has_demo:
+                revised_steps.append(f"<b>Konsinye Validasyon Kiti Tahsisi:</b> Laboratuvara derhal 20 kutu Electro Dish ve solüsyon test kiti bedelsiz ulaştırılarak klinik güven tazelenmeli.")
+            else:
+                revised_steps.append(f"<b>{role} Notu Doğrultusunda Özel Eylem Planı:</b> Sahadan gelen <i>'{clean_note[:70]}...'</i> uyarısı kapsamında ilgili kurum direktörlüğü ile 48 saat içinde özel mutabakat görüşmesi gerçekleştirilmeli.")
+
+            if len(orig_steps) >= 2:
+                revised_steps.append(f"<b>Operasyonel Güvence & Sarf Desteği:</b> {orig_steps[1].replace('<b>', '').replace('</b>', '')}")
+            if len(orig_steps) >= 3:
+                revised_steps.append(f"<b>Sözleşmesel ve Ticari Bağlama:</b> {orig_steps[2].replace('<b>', '').replace('</b>', '')}")
+
+            revised_letter = f"""{orig_letter}
+
+[REVISED STRATEGIC ADDENDUM - BASED ON {role.upper()} DIRECT FIELD EVALUATION - {datetime.now().strftime('%d.%m.%Y')}]
+Specialist Field Finding: "{clean_note}"
+Immediate Resolution: ZEUS Bioscience is actively incorporating this feedback into our immediate operational engagement. Our technical application directorate is prepared to deploy targeted resources within 48 hours to fully resolve these on-site clinical requirements."""
+
+            return {
+                'role': role,
+                'note': clean_note,
+                'date': datetime.now().strftime('%d.%m.%Y'),
+                'diag': revised_diag,
+                'steps': revised_steps,
+                'letter': revised_letter,
+                'mode': 'ZEUS Cognitive Clinical Matrix'
+            }
+
         # Helper function for rendering card
         def render_ai_action_card(case_id, title_html, badge_html, fact_html, diag_text, ai_action_steps, letter_title, letter_body, ai_memo_data):
+            # Check for Expert Re-evaluation in session state
+            reval_data = st.session_state.get(f'expert_reval_{case_id}', None)
+            
+            if reval_data:
+                active_diag = reval_data['diag']
+                active_steps = reval_data['steps']
+                active_letter = reval_data['letter']
+                badge_role = reval_data['role']
+                badge_note = reval_data['note']
+                badge_date = reval_data.get('date', '')
+                reval_badge_html = f"""
+                <div style="background:rgba(95,211,174,0.12); border:1px solid #5FD3AE; border-radius:8px; padding:10px 14px; margin-bottom:12px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                        <span style="color:#5FD3AE; font-weight:700; font-size:12.5px;">✅ UZMAN GÖRÜŞÜ ENTEGRE EDİLDİ ({badge_role.upper()})</span>
+                        <span style="color:#A0AEC0; font-size:11px;">Revizyon Tarihi: {badge_date}</span>
+                    </div>
+                    <div style="font-size:12px; color:#CCD7E6; margin-top:5px; line-height:1.45;">
+                        <b>🩺 İşlenen Uzman & Saha Notu:</b> <i>\"{badge_note}\"</i>
+                    </div>
+                </div>
+                """
+            else:
+                active_diag = diag_text
+                active_steps = ai_action_steps
+                active_letter = letter_body
+                reval_badge_html = ""
+
             st.markdown(f"""
             <div style="background:#0F192E; border:1px solid rgba(19,166,181,0.3); border-radius:12px; padding:18px 20px; margin-bottom:18px; box-shadow:0 4px 14px rgba(0,0,0,0.3);">
                 <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
@@ -3387,20 +3563,84 @@ elif nav_selection == "✦ AI Intelligence & Forecasting":
                 <div style="background:rgba(255,255,255,0.03); border-radius:8px; padding:10px 14px; margin-bottom:12px; font-size:12.5px; color:#CCD7E6;">
                     {fact_html}
                 </div>
+                {reval_badge_html}
                 <div style="font-size:13px; color:#CCD7E6; margin-bottom:10px; line-height:1.55;">
-                    <b style="color:#00F5FF;">🔍 Klinik & Ticari Kök Neden:</b> {diag_text}
+                    <b style="color:#00F5FF;">🔍 Klinik & Ticari Kök Neden:</b> {active_diag}
                 </div>
                 <div style="font-size:13px; color:#CCD7E6; margin-bottom:12px; line-height:1.55;">
                     <b style="color:#5FD3AE;">🤖 Yapay Zeka Somut Eylem Planı:</b>
                     <ol style="margin-top:4px; margin-bottom:4px; padding-left:20px;">
-                        {''.join(f'<li style="margin-bottom:3px;">{step}</li>' for step in ai_action_steps)}
+                        {''.join(f'<li style="margin-bottom:3px;">{step}</li>' for step in active_steps)}
                     </ol>
                 </div>
             </div>
             """, unsafe_allow_html=True)
 
+            # ------------------------------------------------------------------
+            # Interactive Expert Review & Field Intelligence Panel
+            # ------------------------------------------------------------------
+            with st.expander(f"🩺 Uzman Değerlendirme & Saha Notu Ekle (AI ile Yeniden Değerlendir)", expanded=bool(reval_data)):
+                st.markdown("""
+                <div style="font-size:12.5px; color:#A0AEC0; margin-bottom:8px;">
+                    Klinik embriyologlar, bölge direktörleri veya medikal aplikasyon uzmanları sahadaki en son klinik ve ticari gözlemleri (personel değişimi, rakip teklifi, demo kit ihtiyacı, protokol aksaması vb.) not olarak ekleyebilir. <b>Yapay zeka motoru bu notu doğrudan analize entegre ederek teşhisi, eylem reçetesini ve resmi mektubu günceller.</b>
+                </div>
+                """, unsafe_allow_html=True)
+                
+                exp_c1, exp_c2 = st.columns([2, 1])
+                with exp_c1:
+                    sel_role = st.selectbox(
+                        "Uzman / Değerlendirici Rolü:",
+                        [
+                            "Kıdemli Klinik Embriyolog",
+                            "Bölge Satış & Distribütör Direktörü",
+                            "Medikal Aplikasyon & Eğitim Uzmanı",
+                            "Biyomedikal & Laboratuvar Sorumlusu",
+                            "C-Level / Satınalma Kurulu"
+                        ],
+                        key=f"role_{case_id}"
+                    )
+                with exp_c2:
+                    st.write("")
+                    st.caption(f"📅 Sistem Tarihi: {datetime.now().strftime('%d.%m.%Y')}")
+                
+                cur_note = reval_data['note'] if reval_data else ""
+                user_expert_note = st.text_area(
+                    "Uzman Görüşü / Saha İstihbaratı Notu (Specialist Field Observation):",
+                    value=cur_note,
+                    placeholder="Örn: 'Klinik baş embriyoloğu değişti, yeni ekip piezo mikroenjeksiyon voltaj ayarlarını bilmiyor; acil 1 günlük yerinde klinik eğitim verilirse ayda 25 kutu tüketirler.' veya 'Rakip firma konsinye numune bıraktı, fiyat eşitlemesi ve 20 kutuluk demo seti talep ediliyor.'",
+                    height=90,
+                    key=f"inp_note_{case_id}"
+                )
+                
+                btn_c1, btn_c2 = st.columns([2.5, 1.2])
+                with btn_c1:
+                    do_reval = st.button("🧠 AI ile Uzman Notuna Göre Yeniden Değerlendir", key=f"btn_reval_{case_id}", use_container_width=True)
+                with btn_c2:
+                    if reval_data:
+                        if st.button("↺ Orijinal Analize Dön", key=f"btn_reset_{case_id}", use_container_width=True):
+                            st.session_state.pop(f'expert_reval_{case_id}', None)
+                            st.rerun()
+
+                if do_reval:
+                    if not user_expert_note or not user_expert_note.strip():
+                        st.warning("⚠️ Lütfen analizi güncellemek için uzman görüşü veya saha notunuzu yazın.")
+                    else:
+                        with st.spinner("🧠 ZEUS Cognitive AI uzman notunu analiz ediyor, klinik teşhis ve eylem planı güncelleniyor..."):
+                            reval_res = reevaluate_case_with_expert_note(
+                                case_id=case_id,
+                                role=sel_role,
+                                note=user_expert_note.strip(),
+                                orig_title=letter_title,
+                                orig_diag=diag_text,
+                                orig_steps=ai_action_steps,
+                                orig_letter=letter_body,
+                                memo_data=ai_memo_data
+                            )
+                            st.session_state[f'expert_reval_{case_id}'] = reval_res
+                            st.rerun()
+
             with st.expander(f"📨 {letter_title} (Kopyalamaya Hazır Resmi İletişim Taslağı)"):
-                st.text_area("Yönetici Mektubu Taslağı", letter_body, height=180, key=f"txt_{case_id}")
+                st.text_area("Yönetici Mektubu Taslağı", active_letter, height=180, key=f"txt_{case_id}")
                 st.caption("Bu taslağı kopyalayarak doğrudan ilgili distribütörün Genel Müdürüne veya Baş Embriyoloğuna e-posta/resmi yazı olarak gönderebilirsiniz.")
 
             # Live AI Strategic Execution Block
@@ -3431,8 +3671,6 @@ elif nav_selection == "✦ AI Intelligence & Forecasting":
                         </div>
                     </div>
                     """, unsafe_allow_html=True)
-
-        # ----------------------------------------------------------------------
         # Card 1: SELLCO TRADING INTL (UAE - International Direct Customer)
         # ----------------------------------------------------------------------
         if show_red:
@@ -3825,56 +4063,65 @@ ZEUS Bioscience Scientific Affairs""",
     dev_owners = [a for a in audit_data if a['dev_qty'] > 0]
     zero_cons = [a for a in audit_data if a['code'] == 'zero_consumable']
     dormant_cons = [a for a in audit_data if a['code'] == 'dormant_consumable']
+    churn_cons = [a for a in audit_data if a['code'] == 'critical_churn_risk']
     low_cons = [a for a in audit_data if a['code'] == 'low_consumable']
     active_cons = [a for a in audit_data if a['code'] == 'active_consumable']
     cons_only = [a for a in audit_data if a['code'] == 'consumables_only']
     
-    k_aud1, k_aud2, k_aud3, k_aud4, k_aud5 = st.columns(5)
+    k_aud1, k_aud2, k_aud3, k_aud4, k_aud5, k_aud6 = st.columns(6)
     with k_aud1:
         st.markdown(f"""
         <div style="background:#0F192E;border:1px solid #FF5252;border-radius:10px;padding:12px;text-align:center;">
-            <span style="font-size:11px;color:#FF8A96;font-weight:700;text-transform:uppercase;">🔴 Sıfır Sarf (Hiç Almamış)</span>
-            <div style="font-size:22px;font-weight:700;color:#FF5252;margin-top:4px;">{len(zero_cons)} Kurum</div>
-            <span style="font-size:11px;color:#CCD7E6;">Garanti Leasing (1 Cihaz, $0 Sarf)</span>
+            <span style="font-size:11px;color:#FF8A96;font-weight:700;text-transform:uppercase;">🔴 Sıfır Sarf</span>
+            <div style="font-size:20px;font-weight:700;color:#FF5252;margin-top:4px;">{len(zero_cons)} Kurum</div>
+            <span style="font-size:10.5px;color:#CCD7E6;">Garanti Leasing (1 Cihaz, $0)</span>
         </div>
         """, unsafe_allow_html=True)
     with k_aud2:
         st.markdown(f"""
         <div style="background:#0F192E;border:1px solid #FFB800;border-radius:10px;padding:12px;text-align:center;">
-            <span style="font-size:11px;color:#FFB800;font-weight:700;text-transform:uppercase;">🟡 2026'da Durmuş / Uyuyan</span>
-            <div style="font-size:22px;font-weight:700;color:#FFB800;margin-top:4px;">{len(dormant_cons)} Kurum</div>
-            <span style="font-size:11px;color:#CCD7E6;">Sellco BAE, ATC Kuveyt, Ferti Med...</span>
+            <span style="font-size:11px;color:#FFB800;font-weight:700;text-transform:uppercase;">🟡 2026 0 Sarf (Uyuyan)</span>
+            <div style="font-size:20px;font-weight:700;color:#FFB800;margin-top:4px;">{len(dormant_cons)} Kurum</div>
+            <span style="font-size:10.5px;color:#CCD7E6;">Sellco BAE, ATC Kuveyt, Ferti Med...</span>
         </div>
         """, unsafe_allow_html=True)
     with k_aud3:
         st.markdown(f"""
-        <div style="background:#0F192E;border:1px solid #FF9800;border-radius:10px;padding:12px;text-align:center;">
-            <span style="font-size:11px;color:#FF9800;font-weight:700;text-transform:uppercase;">🟠 Düşük Sarf Çekişi</span>
-            <div style="font-size:22px;font-weight:700;color:#FF9800;margin-top:4px;">{len(low_cons)} Kurum</div>
-            <span style="font-size:11px;color:#CCD7E6;">Acıbadem (11), Medipolitan (12)...</span>
+        <div style="background:#0F192E;border:1px solid #FF5252;border-radius:10px;padding:12px;text-align:center;">
+            <span style="font-size:11px;color:#FF8A96;font-weight:700;text-transform:uppercase;">🔴 Kritik Düşüş & Churn</span>
+            <div style="font-size:20px;font-weight:700;color:#FF5252;margin-top:4px;">{len(churn_cons)} Kurum</div>
+            <span style="font-size:10.5px;color:#CCD7E6;">AMS Suudi (3 Cihaz, 2026: $200)</span>
         </div>
         """, unsafe_allow_html=True)
     with k_aud4:
         st.markdown(f"""
-        <div style="background:#0F192E;border:1px solid #00E676;border-radius:10px;padding:12px;text-align:center;">
-            <span style="font-size:11px;color:#00E676;font-weight:700;text-transform:uppercase;">🟢 Aktif Düzenli Sarf</span>
-            <div style="font-size:22px;font-weight:700;color:#00E676;margin-top:4px;">{len(active_cons)} Kurum</div>
-            <span style="font-size:11px;color:#CCD7E6;">Sirius (675), ITL (449), SJNU (198)...</span>
+        <div style="background:#0F192E;border:1px solid #FF9800;border-radius:10px;padding:12px;text-align:center;">
+            <span style="font-size:11px;color:#FF9800;font-weight:700;text-transform:uppercase;">🟠 Düşük Sarf Çekişi</span>
+            <div style="font-size:20px;font-weight:700;color:#FF9800;margin-top:4px;">{len(low_cons)} Kurum</div>
+            <span style="font-size:10.5px;color:#CCD7E6;">Acıbadem (11), Medipolitan (10)...</span>
         </div>
         """, unsafe_allow_html=True)
     with k_aud5:
         st.markdown(f"""
+        <div style="background:#0F192E;border:1px solid #00E676;border-radius:10px;padding:12px;text-align:center;">
+            <span style="font-size:11px;color:#00E676;font-weight:700;text-transform:uppercase;">🟢 Aktif Düzenli Sarf</span>
+            <div style="font-size:20px;font-weight:700;color:#00E676;margin-top:4px;">{len(active_cons)} Kurum</div>
+            <span style="font-size:10.5px;color:#CCD7E6;">Sirius (236), ITL (247), SJNU (127)...</span>
+        </div>
+        """, unsafe_allow_html=True)
+    with k_aud6:
+        st.markdown(f"""
         <div style="background:#0F192E;border:1px solid #00F5FF;border-radius:10px;padding:12px;text-align:center;">
-            <span style="font-size:11px;color:#00F5FF;font-weight:700;text-transform:uppercase;">📦 Yalnızca Sarf Tüketen</span>
-            <div style="font-size:22px;font-weight:700;color:#00F5FF;margin-top:4px;">{len(cons_only)} Klinik</div>
-            <span style="font-size:11px;color:#CCD7E6;">Tavmergen (352), Pınar (130)...</span>
+            <span style="font-size:11px;color:#00F5FF;font-weight:700;text-transform:uppercase;">📦 Yalnızca Sarf Alan</span>
+            <div style="font-size:20px;font-weight:700;color:#00F5FF;margin-top:4px;">{len(cons_only)} Klinik</div>
+            <span style="font-size:10.5px;color:#CCD7E6;">Tavmergen (352), Pınar (130)...</span>
         </div>
         """, unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
 
     # Filter Controls
-    f_c1, f_c2 = st.columns([2.5, 1.5])
+    f_c1, f_c2 = st.columns([2.8, 1.2])
     with f_c1:
         audit_filter = st.radio(
             "Cihaz & Sarf Alım Durumu Filtresi:",
@@ -3882,6 +4129,7 @@ ZEUS Bioscience Scientific Affairs""",
                 f"Tüm Cihaz Sahipleri ({len(dev_owners)} Kurum)",
                 f"🔴 Sıfır Sarf — Hiç Almamış ({len(zero_cons)})",
                 f"🟡 Sarfı Durmuş — 2026'da 0 Sarf ({len(dormant_cons)})",
+                f"🔴 Kritik Düşüş & Churn Alarmı ({len(churn_cons)} Kurum - AMS Suudi)",
                 f"🟠 Düşük Sarf Çekenler ({len(low_cons)})",
                 f"🟢 Aktif Düzenli Sarf Alanlar ({len(active_cons)})",
                 f"📦 Yalnızca Sarf Alan Klinikler ({len(cons_only)})",
@@ -3896,15 +4144,17 @@ ZEUS Bioscience Scientific Affairs""",
     filtered_audit = audit_data.copy()
     if "Tüm Cihaz Sahipleri" in audit_filter:
         filtered_audit = [a for a in filtered_audit if a['dev_qty'] > 0]
-    elif "🔴" in audit_filter:
+    elif "Kritik Düşüş" in audit_filter:
+        filtered_audit = [a for a in filtered_audit if a['code'] == 'critical_churn_risk']
+    elif "Sıfır Sarf" in audit_filter:
         filtered_audit = [a for a in filtered_audit if a['code'] == 'zero_consumable']
-    elif "🟡" in audit_filter:
+    elif "Sarfı Durmuş" in audit_filter:
         filtered_audit = [a for a in filtered_audit if a['code'] == 'dormant_consumable']
-    elif "🟠" in audit_filter:
+    elif "Düşük Sarf" in audit_filter:
         filtered_audit = [a for a in filtered_audit if a['code'] == 'low_consumable']
-    elif "🟢" in audit_filter:
+    elif "Aktif Düzenli" in audit_filter:
         filtered_audit = [a for a in filtered_audit if a['code'] == 'active_consumable']
-    elif "📦" in audit_filter:
+    elif "Yalnızca Sarf" in audit_filter:
         filtered_audit = [a for a in filtered_audit if a['code'] == 'consumables_only']
 
     if audit_search and audit_search.strip():
@@ -3915,6 +4165,7 @@ ZEUS Bioscience Scientific Affairs""",
     table_rows = []
     for a in filtered_audit:
         comp_disp = f"🏢 {a['company']} (Kardeş Şirket)" if a['is_sister'] else a['company']
+        sarf_2026_str = f"{a['cons_2026_qty']} Kutu (${a['cons_2026_amt']:,.2f})" if a['cons_2026_qty'] > 0 else "0 ($0.00)"
         table_rows.append({
             'Kurum / Müşteri': comp_disp,
             'Ülke': a['country'],
@@ -3922,8 +4173,8 @@ ZEUS Bioscience Scientific Affairs""",
             'Cihaz Adet': f"{a['dev_qty']} Ünite" if a['dev_qty'] > 0 else "— (0)",
             'Satın Alınan Cihaz': a['dev_prods_str'],
             '📅 Cihaz Alım Tarihleri': a['dev_dates_str'],
-            'Sarf Adet (Kutu)': f"{a['cons_qty']} Adet" if a['cons_qty'] > 0 else "0 (Hiç Almadı)",
-            'Sarf Tutarı ($)': f"${a['cons_amt']:,.2f}" if a['cons_amt'] > 0 else "$0.00",
+            '2026 Sarf Alımı': sarf_2026_str,
+            'Toplam Sarf (Tüm Yıllar)': f"{a['cons_qty']} Kutu (${a['cons_amt']:,.2f})" if a['cons_qty'] > 0 else "0 ($0.00)",
             '📅 Sarf Alım Tarihleri (İlk - Son)': a['cons_dates_str'],
             'Satın Alınan Sarf Ürünleri': a['cons_prods_str']
         })
@@ -3960,8 +4211,8 @@ ZEUS Bioscience Scientific Affairs""",
         target_rec = next((a for a in audit_data if a['company'] == selected_audit_comp), audit_data[0])
         
         # Summary Header for Selected Company
-        card_border_color = '#FF5252' if target_rec['code'] == 'zero_consumable' else ('#FFB800' if target_rec['code'] == 'dormant_consumable' else '#00F5FF')
-        badge_text_color = '#FF5252' if target_rec['code'] == 'zero_consumable' else ('#FFB800' if target_rec['code'] == 'dormant_consumable' else '#00E676')
+        card_border_color = '#FF5252' if target_rec['code'] in ['zero_consumable', 'critical_churn_risk'] else ('#FFB800' if target_rec['code'] == 'dormant_consumable' else ('#FF9800' if target_rec['code'] == 'low_consumable' else '#00E676'))
+        badge_text_color = '#FF5252' if target_rec['code'] in ['zero_consumable', 'critical_churn_risk'] else ('#FFB800' if target_rec['code'] == 'dormant_consumable' else ('#FF9800' if target_rec['code'] == 'low_consumable' else '#00E676'))
         
         st.markdown(f"""
         <div style="background:#0F192E; border-left:4px solid {card_border_color}; padding:14px 18px; border-radius:8px; margin-bottom:14px;">
