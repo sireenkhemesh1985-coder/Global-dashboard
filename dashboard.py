@@ -4054,55 +4054,220 @@ ZEUS Bioscience Scientific Affairs""",
     active_cons = [a for a in audit_data if a['code'] == 'active_consumable']
     cons_only = [a for a in audit_data if a['code'] == 'consumables_only']
     
-    k_aud1, k_aud2, k_aud3, k_aud4, k_aud5, k_aud6 = st.columns(6)
-    with k_aud1:
+    # Initialize active expanded card state if not present
+    if 'expanded_audit_card' not in st.session_state:
+        st.session_state['expanded_audit_card'] = None
+
+    # Card Grid: 2 Rows x 3 Columns (Comfortable 350px+ width per card, no squished text)
+    row1_c1, row1_c2, row1_c3 = st.columns(3)
+    
+    with row1_c1:
+        is_active = (st.session_state['expanded_audit_card'] == 'zero')
+        card_border = "#FF5252" if not is_active else "#FFFFFF"
+        glow = "box-shadow:0 0 16px rgba(255,82,82,0.4);" if is_active else ""
         st.markdown(f"""
-        <div style="background:#0F192E;border:1px solid #FF5252;border-radius:10px;padding:12px;text-align:center;">
-            <span style="font-size:11px;color:#FF8A96;font-weight:700;text-transform:uppercase;">🔴 Sıfır Sarf</span>
-            <div style="font-size:20px;font-weight:700;color:#FF5252;margin-top:4px;">{len(zero_cons)} Kurum</div>
-            <span style="font-size:10.5px;color:#CCD7E6;">Garanti Leasing (1 Cihaz, $0)</span>
+        <div style="background:#0F192E; border:1.5px solid {card_border}; border-radius:12px; padding:16px 18px; min-height:148px; {glow}">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:12.5px; color:#FF8A96; font-weight:700; text-transform:uppercase;">🔴 Sıfır Sarf (Hiç Almamış)</span>
+                <span style="font-size:22px; font-weight:700; color:#FF5252;">{len(zero_cons)} Kurum</span>
+            </div>
+            <div style="font-size:12px; color:#CCD7E6; margin-top:8px; line-height:1.45;">
+                <b>Kapsam:</b> Garanti Finansal Kiralama (1 Cihaz, $0 Sarf). Cihaz kiralanmış fakat klinik sarf ikmali başlamamıştır.
+            </div>
         </div>
         """, unsafe_allow_html=True)
-    with k_aud2:
+        btn_txt = "✕ Detayı Kapat" if is_active else "🔍 Kartı Büyüt & Tüm Kurumları Oku"
+        if st.button(btn_txt, key="btn_exp_zero", use_container_width=True):
+            st.session_state['expanded_audit_card'] = None if is_active else 'zero'
+            st.rerun()
+
+    with row1_c2:
+        is_active = (st.session_state['expanded_audit_card'] == 'dormant')
+        card_border = "#FFB800" if not is_active else "#FFFFFF"
+        glow = "box-shadow:0 0 16px rgba(255,184,0,0.4);" if is_active else ""
         st.markdown(f"""
-        <div style="background:#0F192E;border:1px solid #FFB800;border-radius:10px;padding:12px;text-align:center;">
-            <span style="font-size:11px;color:#FFB800;font-weight:700;text-transform:uppercase;">🟡 2026 0 Sarf (Uyuyan)</span>
-            <div style="font-size:20px;font-weight:700;color:#FFB800;margin-top:4px;">{len(dormant_cons)} Kurum</div>
-            <span style="font-size:10.5px;color:#CCD7E6;">Sellco BAE, ATC Kuveyt, Ferti Med...</span>
+        <div style="background:#0F192E; border:1.5px solid {card_border}; border-radius:12px; padding:16px 18px; min-height:148px; {glow}">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:12.5px; color:#FFB800; font-weight:700; text-transform:uppercase;">🟡 2026'da 0 Sarf (Uyuyan Hesaplar)</span>
+                <span style="font-size:22px; font-weight:700; color:#FFB800;">{len(dormant_cons)} Kurum</span>
+            </div>
+            <div style="font-size:12px; color:#CCD7E6; margin-top:8px; line-height:1.45;">
+                <b>Kapsam:</b> 2025'te alıp 2026'da sarf alımı duranlar: Sellco BAE (4 Cihaz), ATC Kuveyt (3 Cihaz), Ferti Med, Akova, Bisan, Seda Erdem, Halil Ruso.
+            </div>
         </div>
         """, unsafe_allow_html=True)
-    with k_aud3:
+        btn_txt = "✕ Detayı Kapat" if is_active else "🔍 Kartı Büyüt & Tüm Kurumları Oku"
+        if st.button(btn_txt, key="btn_exp_dormant", use_container_width=True):
+            st.session_state['expanded_audit_card'] = None if is_active else 'dormant'
+            st.rerun()
+
+    with row1_c3:
+        is_active = (st.session_state['expanded_audit_card'] == 'churn')
+        card_border = "#FF5252" if not is_active else "#FFFFFF"
+        glow = "box-shadow:0 0 16px rgba(255,82,82,0.4);" if is_active else ""
         st.markdown(f"""
-        <div style="background:#0F192E;border:1px solid #FF5252;border-radius:10px;padding:12px;text-align:center;">
-            <span style="font-size:11px;color:#FF8A96;font-weight:700;text-transform:uppercase;">🔴 Kritik Düşüş & Churn</span>
-            <div style="font-size:20px;font-weight:700;color:#FF5252;margin-top:4px;">{len(churn_cons)} Kurum</div>
-            <span style="font-size:10.5px;color:#CCD7E6;">AMS Suudi (3 Cihaz, 2026: $200)</span>
+        <div style="background:#0F192E; border:1.5px solid {card_border}; border-radius:12px; padding:16px 18px; min-height:148px; {glow}">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:12.5px; color:#FF8A96; font-weight:700; text-transform:uppercase;">🔴 Kritik Düşüş & Churn Alarmı</span>
+                <span style="font-size:22px; font-weight:700; color:#FF5252;">{len(churn_cons)} Kurum</span>
+            </div>
+            <div style="font-size:12px; color:#CCD7E6; margin-top:8px; line-height:1.45;">
+                <b>Kapsam:</b> AMS Suudi Arabistan (3 Cihaz). 2025'te $7.3K (88 kutu) sarf alırken, 2026'da sadece 4 flakon solüsyon tozu ($200) almış; dish sarfı sıfırlanmıştır (-%97.3).
+            </div>
         </div>
         """, unsafe_allow_html=True)
-    with k_aud4:
+        btn_txt = "✕ Detayı Kapat" if is_active else "🔍 Kartı Büyüt & Tüm Kurumları Oku"
+        if st.button(btn_txt, key="btn_exp_churn", use_container_width=True):
+            st.session_state['expanded_audit_card'] = None if is_active else 'churn'
+            st.rerun()
+
+    st.markdown("<div style='height:12px;'></div>", unsafe_allow_html=True)
+    row2_c1, row2_c2, row2_c3 = st.columns(3)
+
+    with row2_c1:
+        is_active = (st.session_state['expanded_audit_card'] == 'low')
+        card_border = "#FF9800" if not is_active else "#FFFFFF"
+        glow = "box-shadow:0 0 16px rgba(255,152,0,0.4);" if is_active else ""
         st.markdown(f"""
-        <div style="background:#0F192E;border:1px solid #FF9800;border-radius:10px;padding:12px;text-align:center;">
-            <span style="font-size:11px;color:#FF9800;font-weight:700;text-transform:uppercase;">🟠 Düşük Sarf Çekişi</span>
-            <div style="font-size:20px;font-weight:700;color:#FF9800;margin-top:4px;">{len(low_cons)} Kurum</div>
-            <span style="font-size:10.5px;color:#CCD7E6;">Acıbadem (11), Medipolitan (10)...</span>
+        <div style="background:#0F192E; border:1.5px solid {card_border}; border-radius:12px; padding:16px 18px; min-height:148px; {glow}">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:12.5px; color:#FF9800; font-weight:700; text-transform:uppercase;">🟠 Düşük Sarf Çekişi (Cihaz Başı)</span>
+                <span style="font-size:22px; font-weight:700; color:#FF9800;">{len(low_cons)} Kurum</span>
+            </div>
+            <div style="font-size:12px; color:#CCD7E6; margin-top:8px; line-height:1.45;">
+                <b>Kapsam:</b> Cihaz başına yıllık tüketimi kritik seviyede olanlar: Acıbadem Sağlık (11 Kutu), Medipolitan (10 Kutu), MLP Sağlık (13 Kutu), Bioram (10 Kutu), Ghent University (2 Kutu).
+            </div>
         </div>
         """, unsafe_allow_html=True)
-    with k_aud5:
+        btn_txt = "✕ Detayı Kapat" if is_active else "🔍 Kartı Büyüt & Tüm Kurumları Oku"
+        if st.button(btn_txt, key="btn_exp_low", use_container_width=True):
+            st.session_state['expanded_audit_card'] = None if is_active else 'low'
+            st.rerun()
+
+    with row2_c2:
+        is_active = (st.session_state['expanded_audit_card'] == 'active')
+        card_border = "#00E676" if not is_active else "#FFFFFF"
+        glow = "box-shadow:0 0 16px rgba(0,230,118,0.4);" if is_active else ""
         st.markdown(f"""
-        <div style="background:#0F192E;border:1px solid #00E676;border-radius:10px;padding:12px;text-align:center;">
-            <span style="font-size:11px;color:#00E676;font-weight:700;text-transform:uppercase;">🟢 Aktif Düzenli Sarf</span>
-            <div style="font-size:20px;font-weight:700;color:#00E676;margin-top:4px;">{len(active_cons)} Kurum</div>
-            <span style="font-size:10.5px;color:#CCD7E6;">Sirius (236), ITL (247), SJNU (127)...</span>
+        <div style="background:#0F192E; border:1.5px solid {card_border}; border-radius:12px; padding:16px 18px; min-height:148px; {glow}">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:12.5px; color:#00E676; font-weight:700; text-transform:uppercase;">🟢 Aktif Düzenli Sarf Tüketimi</span>
+                <span style="font-size:22px; font-weight:700; color:#00E676;">{len(active_cons)} Kurum</span>
+            </div>
+            <div style="font-size:12px; color:#CCD7E6; margin-top:8px; line-height:1.45;">
+                <b>Kapsam:</b> Rutin döngüde sarf çekenler: Sirius Pharm (236 Kutu), ITL Katar (247 Kutu), SJNU Kore (127 Kutu), CMC Filistin (46 Kutu), Gen-Sa (30 Kutu), Stem Gene (29 Kutu), İzmir Tüp Bebek (18 Kutu), İst. Kadın Doğum (16 Kutu).
+            </div>
         </div>
         """, unsafe_allow_html=True)
-    with k_aud6:
+        btn_txt = "✕ Detayı Kapat" if is_active else "🔍 Kartı Büyüt & Tüm Kurumları Oku"
+        if st.button(btn_txt, key="btn_exp_active", use_container_width=True):
+            st.session_state['expanded_audit_card'] = None if is_active else 'active'
+            st.rerun()
+
+    with row2_c3:
+        is_active = (st.session_state['expanded_audit_card'] == 'consonly')
+        card_border = "#00F5FF" if not is_active else "#FFFFFF"
+        glow = "box-shadow:0 0 16px rgba(0,245,255,0.4);" if is_active else ""
         st.markdown(f"""
-        <div style="background:#0F192E;border:1px solid #00F5FF;border-radius:10px;padding:12px;text-align:center;">
-            <span style="font-size:11px;color:#00F5FF;font-weight:700;text-transform:uppercase;">📦 Yalnızca Sarf Alan</span>
-            <div style="font-size:20px;font-weight:700;color:#00F5FF;margin-top:4px;">{len(cons_only)} Klinik</div>
-            <span style="font-size:10.5px;color:#CCD7E6;">Tavmergen (352), Pınar (130)...</span>
+        <div style="background:#0F192E; border:1.5px solid {card_border}; border-radius:12px; padding:16px 18px; min-height:148px; {glow}">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:12.5px; color:#00F5FF; font-weight:700; text-transform:uppercase;">📦 Yalnızca Sarf Alan Klinikler</span>
+                <span style="font-size:22px; font-weight:700; color:#00F5FF;">{len(cons_only)} Klinik</span>
+            </div>
+            <div style="font-size:12px; color:#CCD7E6; margin-top:8px; line-height:1.45;">
+                <b>Kapsam:</b> Cihaz kaydı olmadan doğrudan sarf tüketen 21 yerli tüp bebek merkezi (Tavmergen 352 Kutu, Pınar Sağlık 130 Kutu, Eurofertil, Bahçeci vb.).
+            </div>
         </div>
         """, unsafe_allow_html=True)
+        btn_txt = "✕ Detayı Kapat" if is_active else "🔍 Kartı Büyüt & Tüm Kurumları Oku"
+        if st.button(btn_txt, key="btn_exp_consonly", use_container_width=True):
+            st.session_state['expanded_audit_card'] = None if is_active else 'consonly'
+            st.rerun()
+
+    # --------------------------------------------------------------------------
+    # BÜYÜTÜLMÜŞ DETAY KARTI (EXPANDED DEEP-DIVE MODAL DRAWER)
+    # --------------------------------------------------------------------------
+    exp_code = st.session_state.get('expanded_audit_card')
+    if exp_code:
+        st.markdown("<br>", unsafe_allow_html=True)
+        if exp_code == 'zero':
+            target_list = zero_cons
+            exp_title = "🔴 BÜYÜTÜLMÜŞ DETAY KARTI: Sıfır Sarf Alan Kurumlar (Hiç Sarf Siparişi Vermemiş)"
+            exp_desc = "Bu kategorideki kurumlarda ZEUS donanımı bulunmasına karşın bugüne kadar tek bir sarf siparişi açılmamıştır. Cihazın atıl bekleme veya başka tedarik kanalı kullanma riski mevcuttur."
+            exp_theme = "#FF5252"
+        elif exp_code == 'dormant':
+            target_list = dormant_cons
+            exp_title = "🟡 BÜYÜTÜLMÜŞ DETAY KARTI: 2026'da Sarfı Tamamen Durmuş (Uyuyan) Hesaplar"
+            exp_desc = "Bu kurumlarda 2024 veya 2025 yılında sarf çekişi gerçekleşmiş; ancak 2026 yılının tamamında <b>0 KUTU ($0.00)</b> sarf siparişi verilmiştir. Protokol terk veya personel kaynaklı atıllık acil çözülmelidir."
+            exp_theme = "#FFB800"
+        elif exp_code == 'churn':
+            target_list = churn_cons
+            exp_title = "🔴 BÜYÜTÜLMÜŞ DETAY KARTI: Kritik Düşüş ve Churn Alarmı Veren Kurumlar"
+            exp_desc = "Bu kurumlarda kurulu çoklu cihaz tabanı olmasına ve geçmişte yüksek sarf tüketilmesine rağmen 2026 yılında siparişler sembolik düzeye gerilemiş (-%97.3 düşüş), dish alımı tamamen durmuştur."
+            exp_theme = "#FF5252"
+        elif exp_code == 'low':
+            target_list = low_cons
+            exp_title = "🟠 BÜYÜTÜLMÜŞ DETAY KARTI: Düşük Sarf Çekişi (Cihaz Başı Kritik Seviye)"
+            exp_desc = "Bu kurumlarda kurulu cihaz başına yıllık tüketilen sarf miktarı beklenen klinik siklus rasyonunun altındadır. Baş embriyolog eğitimi ve avantajlı bundle paketleri ile sarf frekansı artırılmalıdır."
+            exp_theme = "#FF9800"
+        elif exp_code == 'active':
+            target_list = active_cons
+            exp_title = "🟢 BÜYÜTÜLMÜŞ DETAY KARTI: Aktif & Düzenli Sarf Tüketen Kurumlar"
+            exp_desc = "Cihaz ve sarf alımları sağlıklı rutin klinik döngüde devam eden lokomotif merkezler ve uluslararası distribütörlerdir."
+            exp_theme = "#00E676"
+        else: # consonly
+            target_list = cons_only
+            exp_title = "📦 BÜYÜTÜLMÜŞ DETAY KARTI: Yalnızca Sarf Alan Tüp Bebek Merkezleri (Cihaz Kaydı Olmayanlar)"
+            exp_desc = "Doğrudan sarf tüketen 21 yerli tüp bebek kliniğidir. Merkezlerinde fason veya dış kaynaklı cihaz bulunmakta olup, yeni nesil Piezo donanım yükseltmesi için birincil hedef konumundadırlar."
+            exp_theme = "#00F5FF"
+
+        # Render Expanded Card Container
+        st.markdown(f"""
+        <div style="background:#0B132B; border:2px solid {exp_theme}; border-radius:14px; padding:20px 24px; box-shadow:0 8px 24px rgba(0,0,0,0.5); margin-bottom:20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+                <span style="font-size:16px; font-weight:700; color:{exp_theme};">{exp_title}</span>
+                <span style="font-size:12px; font-weight:700; background:rgba(255,255,255,0.08); color:#FFFFFF; padding:4px 12px; border-radius:6px;">{len(target_list)} Kurum Listeleniyor</span>
+            </div>
+            <div style="font-size:13px; color:#CCD7E6; margin-bottom:16px; line-height:1.5;">
+                {exp_desc}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        exp_table_data = []
+        for item in target_list:
+            comp_name = f"🏢 {item['company']} (Kardeş Şirket)" if item.get('is_sister') else item['company']
+            exp_table_data.append({
+                'Kurum / Firma Adı': comp_name,
+                'Ülke': item['country'],
+                'Kurulu Cihaz': f"{item['dev_qty']} Ünite ({item['dev_prods_str']})" if item['dev_qty'] > 0 else "— (Cihaz Yok)",
+                '2025 Sarf ($)': f"${item.get('cons_2025_amt', 0):,.2f} ({item.get('cons_2025_qty', 0)} Kutu)",
+                '2026 Sarf ($)': f"${item.get('cons_2026_amt', 0):,.2f} ({item.get('cons_2026_qty', 0)} Kutu)",
+                'Toplam Sarf Hacmi': f"${item['cons_amt']:,.2f} ({item['cons_qty']} Kutu)",
+                'Yapay Zeka Teşhis & Aksiyon Reçetesi': item['action_rec']
+            })
+        
+        df_exp = pd.DataFrame(exp_table_data)
+        st.dataframe(
+            df_exp,
+            use_container_width=True,
+            hide_index=True,
+            column_config={
+                "Kurum / Firma Adı": st.column_config.TextColumn("Kurum / Firma Adı", width="medium"),
+                "Ülke": st.column_config.TextColumn("Ülke", width="small"),
+                "Kurulu Cihaz": st.column_config.TextColumn("Kurulu Cihaz", width="medium"),
+                "2025 Sarf ($)": st.column_config.TextColumn("2025 Sarf ($)", width="small"),
+                "2026 Sarf ($)": st.column_config.TextColumn("2026 Sarf ($)", width="small"),
+                "Toplam Sarf Hacmi": st.column_config.TextColumn("Toplam Sarf Hacmi", width="small"),
+                "Yapay Zeka Teşhis & Aksiyon Reçetesi": st.column_config.TextColumn("Yapay Zeka Teşhis & Aksiyon Reçetesi", width="large")
+            }
+        )
+        
+        c_cls1, c_cls2 = st.columns([4, 1])
+        with c_cls2:
+            if st.button("✕ Büyütülmüş Görünümü Kapat", key="btn_close_exp_bottom", use_container_width=True):
+                st.session_state['expanded_audit_card'] = None
+                st.rerun()
 
     st.markdown("<br>", unsafe_allow_html=True)
 
@@ -4167,7 +4332,23 @@ ZEUS Bioscience Scientific Affairs""",
 
     st.markdown(f"##### 📋 Denetim Raporu ({len(filtered_audit)} Kurum Listeleniyor)")
     df_audit_disp = pd.DataFrame(table_rows)
-    st.dataframe(df_audit_disp, use_container_width=True, hide_index=True)
+    st.dataframe(
+        df_audit_disp,
+        use_container_width=True,
+        hide_index=True,
+        column_config={
+            "Kurum / Müşteri": st.column_config.TextColumn("Kurum / Müşteri", width="medium"),
+            "Ülke": st.column_config.TextColumn("Ülke", width="small"),
+            "Durum & Risk Teşhisi": st.column_config.TextColumn("Durum & Risk Teşhisi", width="medium"),
+            "Cihaz Adet": st.column_config.TextColumn("Cihaz Adet", width="small"),
+            "Satın Alınan Cihaz": st.column_config.TextColumn("Satın Alınan Cihaz", width="medium"),
+            "📅 Cihaz Alım Tarihleri": st.column_config.TextColumn("📅 Cihaz Alım Tarihleri", width="medium"),
+            "2026 Sarf Alımı": st.column_config.TextColumn("2026 Sarf Alımı", width="small"),
+            "Toplam Sarf (Tüm Yıllar)": st.column_config.TextColumn("Toplam Sarf (Tüm Yıllar)", width="small"),
+            "📅 Sarf Alım Tarihleri (İlk - Son)": st.column_config.TextColumn("📅 Sarf Alım Tarihleri (İlk - Son)", width="medium"),
+            "Satın Alınan Sarf Ürünleri": st.column_config.TextColumn("Satın Alınan Sarf Ürünleri", width="medium")
+        }
+    )
 
     # Export CSV for Audit Matrix
     csv_audit = df_audit_disp.to_csv(index=False).encode('utf-8')
