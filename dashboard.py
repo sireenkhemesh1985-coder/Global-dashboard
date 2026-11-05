@@ -4705,59 +4705,45 @@ elif nav_selection == "◎ Market Intelligence & Compare":
                         mail_body_enc = urllib.parse.quote(p.get('pitch_template', ''))
                         mailto_url = f"mailto:{c_email}?subject={mail_subject_enc}&body={mail_body_enc}"
 
-                        st.markdown(f"""
-                        <div style="background:#0F192E;border:1px solid rgba(255,255,255,0.08);border-left:4px solid {'#00F5FF' if 'Tier 1' in p['tier'] else '#FFB800'};border-radius:8px;padding:14px;margin-bottom:12px;box-shadow:0 4px 12px rgba(0,0,0,0.25);">
-                            <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;">
-                                <div>
-                                    <h4 style="margin:0 0 4px 0;color:#FFFFFF;font-size:16px;">{p['name']}</h4>
-                                    <span style="font-size:12px;color:#8A99AD;">📍 {p['city']} | {p['category']}</span>
-                                </div>
-                                <div>
-                                    <span style="background:rgba(0,245,255,0.12);color:#00F5FF;border:1px solid rgba(0,245,255,0.3);padding:3px 8px;border-radius:4px;font-size:11px;font-weight:600;">{p['tier']}</span>
-                                    <span style="background:rgba(0,230,118,0.15);color:#00E676;border:1px solid rgba(0,230,118,0.3);padding:3px 8px;border-radius:4px;font-size:11px;font-weight:700;margin-left:6px;">{p['est_revenue']}</span>
-                                </div>
-                            </div>
-                            
-                            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:10px;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.06);font-size:12px;">
-                                <div><span style="color:#8A99AD;">Hacim / Siklus:</span> <b style="color:#CCD7E6;">{p['volume']}</b></div>
-                                <div><span style="color:#8A99AD;">Karar Verici Persona:</span> <b style="color:#CCD7E6;">{p['decision_maker']}</b></div>
-                                <div><span style="color:#8A99AD;">Uyumlu ZEUS Çözümü:</span> <b style="color:#00F5FF;">{p['product_match']}</b></div>
-                            </div>
-
-                            <!-- Dedicated Direct Contact & Communications Block -->
-                            <div style="margin-top:10px;background:rgba(19,166,181,0.08);border:1px solid rgba(19,166,181,0.25);border-radius:6px;padding:10px 12px;">
-                                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;border-bottom:1px solid rgba(19,166,181,0.15);padding-bottom:4px;">
-                                    <span style="color:#00F5FF;font-weight:700;font-size:12px;">📞 Kurumsal İletişim & Doğrulanmış Kontak Bilgileri</span>
-                                    <span style="font-size:10px;color:#5FD3AE;background:rgba(95,211,174,0.12);padding:2px 6px;border-radius:3px;">✓ Doğrulanmış İletişim Kanalı</span>
-                                </div>
-                                <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));gap:8px;font-size:12px;">
-                                    <div><span style="color:#8A99AD;">👤 Yetkili Muhatap:</span> <b style="color:#FFFFFF;">{c_person}</b></div>
-                                    <div><span style="color:#8A99AD;">✉️ Resmi E-posta:</span> <a href="mailto:{c_email}" style="color:#00F5FF;text-decoration:none;font-weight:600;">{c_email}</a></div>
-                                    <div><span style="color:#8A99AD;">📞 Santral / Tel:</span> <a href="tel:{c_phone}" style="color:#CCD7E6;text-decoration:none;font-weight:600;">{c_phone}</a></div>
-                                    <div><span style="color:#8A99AD;">🌐 Web Sitesi:</span> <a href="{c_web}" target="_blank" style="color:#4FD1DE;text-decoration:none;font-weight:600;">{c_web_clean} ↗</a></div>
-                                    <div style="grid-column: 1 / -1;"><span style="color:#8A99AD;">📍 Merkez Adres:</span> <span style="color:#CCD7E6;">{c_address}</span></div>
-                                </div>
-                            </div>
-                            
-                            <div style="margin-top:10px;font-size:12px;color:#B0BEC5;background:rgba(0,0,0,0.25);padding:8px 10px;border-radius:6px;">
-                                <b style="color:#FFB800;">💡 Stratejik Gerekçe:</b> {p['why_target']}
-                            </div>
-                        </div>
-                        """, unsafe_allow_html=True)
+                        card_tier_color = '#00F5FF' if 'Tier 1' in p['tier'] else '#FFB800'
+                        card_html = (
+                            f'<div style="background:#0F192E;border:1px solid rgba(255,255,255,0.08);border-left:4px solid {card_tier_color};border-radius:8px;padding:14px;margin-bottom:12px;box-shadow:0 4px 12px rgba(0,0,0,0.25);">'
+                            f'<div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;">'
+                            f'<div><h4 style="margin:0 0 4px 0;color:#FFFFFF;font-size:16px;">{p["name"]}</h4>'
+                            f'<span style="font-size:12px;color:#8A99AD;">📍 {p["city"]} | {p["category"]}</span></div>'
+                            f'<div><span style="background:rgba(0,245,255,0.12);color:#00F5FF;border:1px solid rgba(0,245,255,0.3);padding:3px 8px;border-radius:4px;font-size:11px;font-weight:600;">{p["tier"]}</span>'
+                            f'<span style="background:rgba(0,230,118,0.15);color:#00E676;border:1px solid rgba(0,230,118,0.3);padding:3px 8px;border-radius:4px;font-size:11px;font-weight:700;margin-left:6px;">{p["est_revenue"]}</span></div></div>'
+                            f'<div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:10px;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.06);font-size:12px;">'
+                            f'<div><span style="color:#8A99AD;">Hacim / Siklus:</span> <b style="color:#CCD7E6;">{p["volume"]}</b></div>'
+                            f'<div><span style="color:#8A99AD;">Karar Verici Persona:</span> <b style="color:#CCD7E6;">{p["decision_maker"]}</b></div>'
+                            f'<div><span style="color:#8A99AD;">Uyumlu ZEUS Çözümü:</span> <b style="color:#00F5FF;">{p["product_match"]}</b></div></div>'
+                            f'<div style="margin-top:10px;background:rgba(19,166,181,0.08);border:1px solid rgba(19,166,181,0.25);border-radius:6px;padding:10px 12px;">'
+                            f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;border-bottom:1px solid rgba(19,166,181,0.15);padding-bottom:4px;">'
+                            f'<span style="color:#00F5FF;font-weight:700;font-size:12px;">📞 Kurumsal İletişim & Doğrulanmış Kontak Bilgileri</span>'
+                            f'<span style="font-size:10px;color:#5FD3AE;background:rgba(95,211,174,0.12);padding:2px 6px;border-radius:3px;">✓ Doğrulanmış İletişim Kanalı</span></div>'
+                            f'<div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));gap:8px;font-size:12px;">'
+                            f'<div><span style="color:#8A99AD;">👤 Yetkili Muhatap:</span> <b style="color:#FFFFFF;">{c_person}</b></div>'
+                            f'<div><span style="color:#8A99AD;">✉️ Resmi E-posta:</span> <a href="mailto:{c_email}" style="color:#00F5FF;text-decoration:none;font-weight:600;">{c_email}</a></div>'
+                            f'<div><span style="color:#8A99AD;">📞 Santral / Tel:</span> <a href="tel:{c_phone}" style="color:#CCD7E6;text-decoration:none;font-weight:600;">{c_phone}</a></div>'
+                            f'<div><span style="color:#8A99AD;">🌐 Web Sitesi:</span> <a href="{c_web}" target="_blank" style="color:#4FD1DE;text-decoration:none;font-weight:600;">{c_web_clean} ↗</a></div>'
+                            f'<div style="grid-column: 1 / -1;"><span style="color:#8A99AD;">📍 Merkez Adres:</span> <span style="color:#CCD7E6;">{c_address}</span></div></div></div>'
+                            f'<div style="margin-top:10px;font-size:12px;color:#B0BEC5;background:rgba(0,0,0,0.25);padding:8px 10px;border-radius:6px;">'
+                            f'<b style="color:#FFB800;">💡 Stratejik Gerekçe:</b> {p["why_target"]}</div>'
+                            f'</div>'
+                        )
+                        st.markdown(card_html, unsafe_allow_html=True)
                         
                         # AI Pitch Draft Expander with One-Click Email Trigger
                         with st.expander(f"📨 AI İlk Temas & B2B Pitch Taslağı ({p['name']})"):
                             st.caption(f"Hedef Muhatap: {c_person} | Alıcı: {c_email} | Tel: {c_phone}")
-                            st.markdown(f"""
-                            <div style="margin-bottom:8px;">
-                                <a href="{mailto_url}" target="_blank" style="display:inline-block;background:#00F5FF;color:#0F192E;font-weight:700;padding:6px 14px;border-radius:6px;text-decoration:none;font-size:12px;">
-                                    ✉️ Bu Metinle E-posta Gönder ({c_email})
-                                </a>
-                                <a href="tel:{c_phone}" style="display:inline-block;background:rgba(255,255,255,0.08);color:#FFFFFF;font-weight:600;padding:6px 14px;border-radius:6px;text-decoration:none;font-size:12px;margin-left:8px;">
-                                    📞 Ara ({c_phone})
-                                </a>
-                            </div>
-                            """, unsafe_allow_html=True)
+                            actions_html = (
+                                f'<div style="margin-bottom:8px;">'
+                                f'<a href="{mailto_url}" target="_blank" style="display:inline-block;background:#00F5FF;color:#0F192E;font-weight:700;padding:6px 14px;border-radius:6px;text-decoration:none;font-size:12px;">'
+                                f'✉️ Bu Metinle E-posta Gönder ({c_email})</a>'
+                                f'<a href="tel:{c_phone}" style="display:inline-block;background:rgba(255,255,255,0.08);color:#FFFFFF;font-weight:600;padding:6px 14px;border-radius:6px;text-decoration:none;font-size:12px;margin-left:8px;">'
+                                f'📞 Ara ({c_phone})</a></div>'
+                            )
+                            st.markdown(actions_html, unsafe_allow_html=True)
                             st.text_area("Özelleştirilmiş İletişim Metni:", value=p['pitch_template'], height=130, key=f"pitch_{radar_country}_{idx}")
 
                 # Export CSV button
