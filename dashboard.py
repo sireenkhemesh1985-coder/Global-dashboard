@@ -1224,6 +1224,23 @@ def get_country_intelligence():
         })
     return pd.DataFrame(records)
 
+country_to_region = {
+    'Turkey': 'Europe', 'Belgium': 'Europe', 'Albania-Slovakia': 'Europe',
+    'Bulgaria': 'Europe', 'Azerbaijan': 'Europe', 'United Kingdom': 'Europe',
+    'Jordan-Iraq': 'MENA', 'Jordan': 'MENA', 'Qatar': 'MENA',
+    'Palestine': 'MENA', 'Saudi Arabia': 'MENA', 'Kuwait': 'MENA',
+    'United Arab Emirates': 'MENA', 'Syria': 'MENA',
+    'South Korea': 'Asia-Pacific', 'Philippines': 'Asia-Pacific'
+}
+
+country_codes = {
+    'Turkey': 'TR', 'Jordan-Iraq': 'IQ', 'Jordan': 'JO', 'Qatar': 'QA',
+    'South Korea': 'KR', 'Palestine': 'PS', 'Saudi Arabia': 'SA',
+    'Kuwait': 'KW', 'United Arab Emirates': 'AE', 'Albania-Slovakia': 'AL',
+    'Belgium': 'BE', 'Azerbaijan': 'AZ', 'Bulgaria': 'BG',
+    'Philippines': 'PH', 'Syria': 'SY', 'United Kingdom': 'GB'
+}
+
 def get_base_distributors():
     df = get_excel_sales_df()
     if df is None:
@@ -1232,23 +1249,6 @@ def get_base_distributors():
     # Normalize Sirius country so both invoices consolidate into Jordan-Iraq
     df = df.copy()
     df.loc[df['Company'] == 'SIRIUS PHARM COMPANY', 'Country'] = 'Jordan-Iraq' 
-        
-    country_to_region = {
-        'Turkey': 'Europe', 'Belgium': 'Europe', 'Albania-Slovakia': 'Europe',
-        'Bulgaria': 'Europe', 'Azerbaijan': 'Europe', 'United Kingdom': 'Europe',
-        'Jordan-Iraq': 'MENA', 'Jordan': 'MENA', 'Qatar': 'MENA',
-        'Palestine': 'MENA', 'Saudi Arabia': 'MENA', 'Kuwait': 'MENA',
-        'United Arab Emirates': 'MENA', 'Syria': 'MENA',
-        'South Korea': 'Asia-Pacific', 'Philippines': 'Asia-Pacific'
-    }
-    
-    country_codes = {
-        'Turkey': 'TR', 'Jordan-Iraq': 'IQ', 'Jordan': 'JO', 'Qatar': 'QA',
-        'South Korea': 'KR', 'Palestine': 'PS', 'Saudi Arabia': 'SA',
-        'Kuwait': 'KW', 'United Arab Emirates': 'AE', 'Albania-Slovakia': 'AL',
-        'Belgium': 'BE', 'Azerbaijan': 'AZ', 'Bulgaria': 'BG',
-        'Philippines': 'PH', 'Syria': 'SY', 'United Kingdom': 'GB'
-    }
     
     accounts = []
     for (country, company), grp in df.groupby(['Country', 'Company']):
