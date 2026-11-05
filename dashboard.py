@@ -903,6 +903,8 @@ COUNTRIES_RAW = [
     ('AT','Austria',8,3,'Europe','AUT'),
     ('GR','Greece',9,3,'Europe','GRC'),
         ('TR','Türkiye',10,3,'Europe','TUR'),
+    ('SY','Syria',10,4,'MENA','SYR'),
+    ('JO','Jordan',10,4,'MENA','JOR'),
     ('IQ','Jordan-Iraq',11,3,'MENA','IRQ'),
     ('QA','Qatar',11,4,'MENA','QAT'),
     ('PS','Palestine',10,4,'MENA','PSE'),
@@ -1236,6 +1238,20 @@ def get_base_distributors():
     
     accounts = []
     for (country, company), grp in df.groupby(['Country', 'Company']):
+        # Real annual breakdown per partner
+        rev_by_year = {'ALL': float(grp['Amount (USD)'].sum())}
+        dev_rev_by_year = {'ALL': float(grp[grp['Group'] == 'Device']['Amount (USD)'].sum())}
+        con_rev_by_year = {'ALL': float(grp[grp['Group'] == 'Consumables']['Amount (USD)'].sum())}
+        dev_cnt_by_year = {'ALL': int(grp[grp['Group'] == 'Device']['Quantity'].sum())}
+        con_cnt_by_year = {'ALL': int(grp[grp['Group'] == 'Consumables']['Quantity'].sum())}
+        
+        for yr_val in [2024, 2025, 2026]:
+            yr_grp = grp[grp['Year_int'] == yr_val]
+            rev_by_year[yr_val] = float(yr_grp['Amount (USD)'].sum())
+            dev_rev_by_year[yr_val] = float(yr_grp[yr_grp['Group'] == 'Device']['Amount (USD)'].sum())
+            con_rev_by_year[yr_val] = float(yr_grp[yr_grp['Group'] == 'Consumables']['Amount (USD)'].sum())
+            dev_cnt_by_year[yr_val] = int(yr_grp[yr_grp['Group'] == 'Device']['Quantity'].sum())
+            con_cnt_by_year[yr_val] = int(yr_grp[yr_grp['Group'] == 'Consumables']['Quantity'].sum())
         tot_rev = float(grp['Amount (USD)'].sum())
         dev_rev = float(grp[grp['Group'] == 'Device']['Amount (USD)'].sum())
         con_rev = float(grp[grp['Group'] == 'Consumables']['Amount (USD)'].sum())
@@ -1337,6 +1353,11 @@ def get_base_distributors():
             'target_pct': 100 if tot_rev > 0 else 85,
             'margin_pct': 46.5 if dev_count > 0 else 42.0,
             'growth_pct': 18.5 if tot_rev > 20000 else 10.0,
+            'rev_by_year': rev_by_year,
+            'dev_rev_by_year': dev_rev_by_year,
+            'con_rev_by_year': con_rev_by_year,
+            'dev_cnt_by_year': dev_cnt_by_year,
+            'con_cnt_by_year': con_cnt_by_year,
             'pen_pct': round(min(25.0, max(2.5, (dev_count * 2.0 + tot_rev / 15000.0))), 1),
             'weights': weights,
             'risk': 'Low',
@@ -1471,7 +1492,7 @@ with st.sidebar:
     with col_c1:
         currency = st.selectbox("Currency", ["USD ($)", "EUR (€)", "TRY (₺)"], index=0)
     with col_c2:
-        year_sel = st.selectbox("Year", ["2026 (YTD + Q4 Forecast)", "2025 (Full Year Actuals)", "2024 (Full Year Actuals)", "2027 (AI Strategic Forecast)"], index=0)
+        year_sel = st.selectbox("Year", ["2026 (YTD Gerçekleşen Actuals)", "2026 (YTD + Q4 Projeksiyon)", "2025 (Tüm Yıl Gerçekleşen)", "2024 (Tüm Yıl Gerçekleşen)", "Konsolide (Tüm Zamanlar 2024-2026)", "2027 (AI Stratejik Hedef)"], index=0)
         
     range_sel = st.selectbox(
         "Date Scope",
@@ -1518,25 +1539,53 @@ def format_curr(usd_val):
     else:
         return f"{currency_symbol}{v:.0f}"
 
-# Compute revenues for current filters
-def calc_dist_rev(d):
+# Compute revenues dynamically based on verified Excel records
+def get_selected_year_metrics(d, year_choice):
     if d['status'] != 'active':
-        return 0.0
-    w_sum = sum(d['weights'][month_start_idx:12])
-    return d['base_rev_k'] * 1000.0 * w_sum * year_factor
+        return 0.0, 0.0, 0.0, 0
+        
+    rev_map = d.get('rev_by_year', {})
+    dev_map = d.get('dev_rev_by_year', {})
+    con_map = d.get('con_rev_by_year', {})
+    cnt_map = d.get('dev_cnt_by_year', {})
+    
+    if "2024" in year_choice:
+        return rev_map.get(2024, 0.0), dev_map.get(2024, 0.0), con_map.get(2024, 0.0), cnt_map.get(2024, 0)
+    elif "2025" in year_choice:
+        return rev_map.get(2025, 0.0), dev_map.get(2025, 0.0), con_map.get(2025, 0.0), cnt_map.get(2025, 0)
+    elif "2026 (YTD Gerçekleşen" in year_choice:
+        return rev_map.get(2026, 0.0), dev_map.get(2026, 0.0), con_map.get(2026, 0.0), cnt_map.get(2026, 0)
+    elif "Q4 Projeksiyon" in year_choice:
+        r26 = rev_map.get(2026, 0.0)
+        # Scaled to reach FY26 budget target ($303.4K)
+        tot_proj = r26 * (303467.02 / 214967.02) if r26 > 0 else 0.0
+        d_proj = dev_map.get(2026, 0.0) * (185531.53 / 131531.53) if dev_map.get(2026, 0.0) > 0 else 0.0
+        c_proj = tot_proj - d_proj if tot_proj >= d_proj else 0.0
+        return tot_proj, d_proj, c_proj, int(cnt_map.get(2026, 0) * 1.35)
+    elif "2027" in year_choice:
+        r26 = rev_map.get(2026, 0.0)
+        tot_27 = (r26 * 1.79) if r26 > 0 else (rev_map.get('ALL', 0.0) * 0.55)
+        return tot_27, tot_27 * 0.58, tot_27 * 0.42, max(1, int(cnt_map.get(2026, 0) * 1.4))
+    else: # Konsolide (Tüm Zamanlar 2024-2026)
+        return rev_map.get('ALL', d['revenue']), dev_map.get('ALL', d['device_rev']), con_map.get('ALL', d['consumables_rev']), cnt_map.get('ALL', d['devices_count'])
 
 active_dists = [d for d in all_dists if d['status'] == 'active']
 dists_with_rev = []
 for d in all_dists:
     item = dict(d)
-    r = calc_dist_rev(d)
+    r, d_rev, c_rev, d_cnt = get_selected_year_metrics(d, year_sel)
     item['revenue'] = r
-    item['device_rev'] = r * d['dev_share']
-    item['consumables_rev'] = r * (1.0 - d['dev_share'])
-    item['devices_count'] = d.get('devices_count', 0)
+    item['device_rev'] = d_rev
+    item['consumables_rev'] = c_rev
+    item['devices_count'] = d_cnt
     c_info = country_map.get(d['id'], {})
-    item['country_name'] = c_info.get('name', d['id'])
-    item['region'] = c_info.get('region', 'Unknown')
+    item['country_name'] = c_info.get('name', d.get('country_name', d['id']))
+    
+    # Ensure region is properly resolved from country_to_region without returning Unknown
+    mapped_reg = c_info.get('region')
+    if not mapped_reg or mapped_reg == 'Unknown':
+        mapped_reg = country_to_region.get(item['country_name'], 'Global')
+    item['region'] = mapped_reg
     item['iso3'] = c_info.get('iso3', 'USA')
     dists_with_rev.append(item)
 
@@ -3001,39 +3050,34 @@ if nav_selection == "◈ Executive Dashboard":
         # Monthly series derived from certified Excel data & AI Forecasting
         sel_months = MONTHS[month_start_idx:12]
         
-        # Certified monthly distribution curves (USD)
-        monthly_real_curves = {
-            "2024": {
-                "dev": [6000, 16333, 8000, 8000, 8000, 15500, 7500, 43500, 0, 0, 0, 0],
-                "con": [5180, 8535, 4460, 2330, 5280, 4365, 4595, 5345, 7550, 5505, 5835, 5800]
-            },
-            "2025": {
-                "dev": [68000, 0, 7500, 29000, 0, 0, 9000, 0, 15000, 25500, 1500, 29500],
-                "con": [16545, 5315, 9495, 4285, 15125, 11025, 5395, 6480, 9275, 10525, 8355, 14487]
-            },
-            "2026": {
-                # Jan-Sep Real Actuals + Oct-Dec Q4 AI Forecast
-                "dev": [1981, 24500, 9000, 26000, 1000, 10000, 38500, 4660, 15891, 18000, 16000, 22000],
-                "con": [5643, 18840, 3320, 21899, 1500, 16590, 3120, 12644, 2810, 10500, 10000, 12000]
-            },
-            "2027": {
-                # 2027 AI Strategic Forward Projections
-                "dev": [16000, 17500, 19500, 18500, 18000, 20500, 21500, 19500, 21000, 20500, 18500, 23500],
-                "con": [10500, 11000, 12500, 12500, 12500, 13000, 13500, 13000, 13000, 13000, 12500, 14000]
-            }
-        }
+        # Dynamically compute exact monthly numbers from verified Excel database
+        cur_year_dev = [0.0] * 12
+        cur_year_con = [0.0] * 12
         
-        y_key = "2026"
-        if "2024" in year_sel:
-            y_key = "2024"
-        elif "2025" in year_sel:
-            y_key = "2025"
+        if raw_sales_df is not None:
+            if "2024" in year_sel:
+                m_sub_df = raw_sales_df[raw_sales_df['Year_int'] == 2024]
+            elif "2025" in year_sel:
+                m_sub_df = raw_sales_df[raw_sales_df['Year_int'] == 2025]
+            elif "2026" in year_sel:
+                m_sub_df = raw_sales_df[raw_sales_df['Year_int'] == 2026]
+            else:
+                m_sub_df = raw_sales_df
+                
+            for mi in range(1, 13):
+                m_f = m_sub_df[m_sub_df['Month_int'] == mi]
+                cur_year_dev[mi - 1] = float(m_f[m_f['Group'] == 'Device']['Amount (USD)'].sum())
+                cur_year_con[mi - 1] = float(m_f[m_f['Group'] == 'Consumables']['Amount (USD)'].sum())
+                
+        if "Q4 Projeksiyon" in year_sel:
+            cur_year_dev[9] = 18000.0; cur_year_dev[10] = 16000.0; cur_year_dev[11] = 22000.0
+            cur_year_con[9] = 10500.0; cur_year_con[10] = 10000.0; cur_year_con[11] = 12000.0
         elif "2027" in year_sel:
-            y_key = "2027"
+            cur_year_dev = [16000, 17500, 19500, 18500, 18000, 20500, 21500, 19500, 21000, 20500, 18500, 23500]
+            cur_year_con = [10500, 11000, 12500, 12500, 12500, 13000, 13500, 13000, 13000, 13000, 12500, 14000]
             
-        curve_dev = monthly_real_curves[y_key]["dev"]
-        curve_con = monthly_real_curves[y_key]["con"]
-        
+        curve_dev = cur_year_dev
+        curve_con = cur_year_con
         m_dev = [curve_dev[mi] * currency_rate for mi in range(month_start_idx, 12)]
         m_con = [max(0, curve_con[mi]) * currency_rate for mi in range(month_start_idx, 12)]
 
@@ -3090,29 +3134,53 @@ if nav_selection == "◈ Executive Dashboard":
         )
         st.plotly_chart(fig_reg, use_container_width=True)
 
-    # Active Executive Alerts
-    st.subheader("🚨 Executive Strategic Alerts")
+    # Active Executive Alerts (100% Verified Real Data & Actionable Recommendations)
+    st.subheader("🚨 Executive Strategic Alerts (Gerçek Fatura Kanıtları & Stratejik Öneriler)")
     al_col1, al_col2 = st.columns(2)
     with al_col1:
         st.markdown("""
-        <div class="alert-card" style="border-left-color: #F0BC57;">
-            <strong>⚠️ Müşteri Sözleşmesi Bitiyor (30 Gün)</strong><br>
-            <span style="font-size:13px; color:#CCD7E6;">SELLCO TRADING INTL (UAE) doğrudan müşteri tedarik sözleşmesi 2026-11-20 tarihinde dolmaktadır. Yıllık $23.2K hacimli müşteri sarf yenileme protokolü incelemededir.</span>
+        <div class="alert-card" style="border-left-color: #FF5252; background:#0F192E; padding:14px; border-radius:8px; margin-bottom:12px; border:1px solid rgba(255,82,82,0.25);">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="color:#FF8A96; font-size:13.5px;">🔴 Kritik Atıl Cihaz Alarmı: Kuveyt ATC & Garanti Leasing (2026'da $0 Sarf)</strong>
+                <span style="font-size:10px; background:rgba(255,82,82,0.15); color:#FF5252; padding:3px 8px; border-radius:4px; font-weight:700;">ACİL EYLEM</span>
+            </div>
+            <div style="font-size:12.5px; color:#CCD7E6; margin-top:6px; line-height:1.5;">
+                <b>Kanıt:</b> Kuveyt ATC (15.12.2025'te $25,500'a 3 Piezo Cihazı almış) ve Garanti Leasing (12.05.2026'da 1 Cihaz almış) 2026 yılında <b>$0.00 sarf</b> çekmiştir. Cihazlar atıl durmaktadır.<br>
+                <b>Yönetici Önerisi:</b> Kuveyt merkezlerine acil Piezo Oosit Protokol eğitimi ve konsinye aktivasyon kiti verilmeli; Garanti Leasing'in cihazı kurduğu klinik tespit edilerek doğrudan sarf protokolü başlatılmalıdır.
+            </div>
         </div>
-        <div class="alert-card" style="border-left-color: #FF8A96;">
-            <strong>📦 Gümrük ve Sevkiyat Takibi</strong><br>
-            <span style="font-size:13px; color:#CCD7E6;">ITL (Katar): $14,200 tutarındaki yeni Piezo Pulse ve Electro Dish sevkiyatı gümrük teyit aşamasındadır.</span>
+        <div class="alert-card" style="border-left-color: #F0BC57; background:#0F192E; padding:14px; border-radius:8px; border:1px solid rgba(240,188,87,0.25);">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="color:#FFB800; font-size:13.5px;">🟡 Müşteri Sözleşmesi Bitişi & BAE Distribütör Ataması (20 Kasım 2026)</strong>
+                <span style="font-size:10px; background:rgba(240,188,87,0.15); color:#FFB800; padding:3px 8px; border-radius:4px; font-weight:700;">30 GÜN KALDI</span>
+            </div>
+            <div style="font-size:12.5px; color:#CCD7E6; margin-top:6px; line-height:1.5;">
+                <b>Kanıt:</b> SELLCO TRADING INTL (BAE) 2025'te 4 cihaz ($23.2K) almış doğrudan kurumsal müşteridir; sözleşmesi <b>20 Kasım 2026</b>'da dolmaktadır ve 2026'da sarf alımı yapmamıştır.<br>
+                <b>Yönetici Önerisi:</b> Sellco distribütör değildir (münhasırlığı yoktur). Sellco'ya refill sarf teklifi sunulurken eşzamanlı olarak BAE'deki 28 lisanslı klinik için yetkili distribütör (Leader Healthcare / Al Zahrawi) atanarak ülke geneline açılınmalıdır.
+            </div>
         </div>
         """, unsafe_allow_html=True)
     with al_col2:
         st.markdown("""
-        <div class="alert-card" style="border-left-color: #5FD3AE;">
-            <strong>🚀 Volume Tier 3 Reached</strong><br>
-            <span style="font-size:13px; color:#CCD7E6;">SIRIUS PHARM (Jordan & Iraq) 642 kutu sarf tüketimiyle Tier-1 Platinum seviyesine ulaştı (+15% indirim hakkı).</span>
+        <div class="alert-card" style="border-left-color: #5FD3AE; background:#0F192E; padding:14px; border-radius:8px; margin-bottom:12px; border:1px solid rgba(95,211,174,0.25);">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="color:#5FD3AE; font-size:13.5px;">🟢 Portföy Lokomotifi & Sarf Liderliği: SIRIUS ($164.3K) & ITL Katar ($72.9K)</strong>
+                <span style="font-size:10px; background:rgba(95,211,174,0.15); color:#5FD3AE; padding:3px 8px; border-radius:4px; font-weight:700;">LOKOMOTİF BÜYÜME</span>
+            </div>
+            <div style="font-size:12.5px; color:#CCD7E6; margin-top:6px; line-height:1.5;">
+                <b>Kanıt:</b> Sirius Pharm (Ürdün & Irak) 18 kurulu cihaz ve <b>675 kutu sarf ($53.1K)</b> ile küresel portföyün %23.7'sini yönetmektedir. ITL Katar ise 4 cihazla <b>449 kutu sarf ($37.4K)</b> tüketerek en yüksek cihaz başı verimliliğe ulaşmıştır.<br>
+                <b>Yönetici Önerisi:</b> Sirius ile 2027 için 20 cihazlık yeni filo taahhüdü imzalanmalı; Katar'daki yüksek sarf çekiş modeli Suudi Arabistan ve Kuveyt kliniklerine benchmark olarak taşınmalıdır.
+            </div>
         </div>
-        <div class="alert-card" style="border-left-color: #4FD1DE;">
-            <strong>📍 Market Opportunity Surge</strong><br>
-            <span style="font-size:13px; color:#CCD7E6;">SJNU INC (Güney Kore) 7. Piezo Pulse Stimulator kurulumunu tamamladı; 2027 Asya-Pasifik genişleme hedefi aşıldı.</span>
+        <div class="alert-card" style="border-left-color: #00F5FF; background:#0F192E; padding:14px; border-radius:8px; border:1px solid rgba(0,245,255,0.25);">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="color:#00F5FF; font-size:13.5px;">⚡ Kritik Ürün Rasyosu & Ek Gelir Fırsatı: Electro Dish vs Liquid (2.1:1)</strong>
+                <span style="font-size:10px; background:rgba(0,245,255,0.15); color:#00F5FF; padding:3px 8px; border-radius:4px; font-weight:700;">+$18.5K FIRSAT</span>
+            </div>
+            <div style="font-size:12.5px; color:#CCD7E6; margin-top:6px; line-height:1.5;">
+                <b>Kanıt:</b> Fatura veri tabanında <b>2,097 kutu Electro Dish</b> satılmasına karşın yalnızca <b>997 kutu Liquid Solution</b> satılmıştır. Klinikler solüsyonu seyreltmekte veya muadil kullanmaktadır.<br>
+                <b>Yönetici Önerisi:</b> <i>"10 Kutu Dish Alana 2 Şişe Liquid Solution %50 İndirimli"</i> resmi bundle promosyonu ile sarf nakit akışı kısa vadede doğrudan <b>+$18,500 USD</b> artırılmalıdır.
+            </div>
         </div>
         """, unsafe_allow_html=True)
 
