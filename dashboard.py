@@ -3137,6 +3137,83 @@ def get_country_prospects(c_name, c_row=None):
     ]
 
 
+def get_default_strategic_plans():
+    return {
+        'kuwait_garanti': {
+            'alert_id': 'kuwait_garanti',
+            'title': "🔴 Kritik Atıl Cihaz Alarmı: Kuveyt ATC & Garanti Leasing (2026'da $0 Sarf)",
+            'badge': 'ACİL EYLEM',
+            'badge_color': '#FF5252',
+            'evidence': "Kuveyt ATC (15.12.2025'te $25,500'a 3 Piezo Cihazı almış) ve Garanti Leasing (12.05.2026'da 1 Cihaz almış) 2026 yılında $0.00 sarf çekmiştir. Cihazlar atıl durmaktadır.",
+            'ai_recommendation': "Kuveyt merkezlerine acil Piezo Oosit Protokol eğitimi ve konsinye aktivasyon kiti verilmeli; Garanti Leasing'in cihazı kurduğu klinik tespit edilerek doğrudan sarf protokolü başlatılmalıdır.",
+            'user_comment': "Kuveyt ATC ile acil video konferans yapıldı; baş hekim ve embriyolog rotasyonu sonrası protokolün durduğu belirlendi. Garanti Leasing tarafında ise cihazı kiralayan tüp bebek merkezi tespit edildi; sarf sözleşmesi hazırlanıyor.",
+            'plan_type': 'Konsinye Aktivasyon Paketi & Yerinde Aplikasyon Eğitimi',
+            'responsible_unit': 'Klinik Aplikasyon & Eğitim Masası',
+            'priority': 'P1 - Acil (1-15 Gün)',
+            'target_date': 'Kasım 2026 (Q4)',
+            'action_steps': "1. Kuveyt ATC merkezine 15 kutu konsinye test dishi ve aktivasyon solüsyonu gönderilmesi.\n2. Baş embriyoloğa uzaktan Piezo oosit aktivasyon eğitimi verilmesi.\n3. Garanti Leasing cihazının kurulu olduğu yerli kliniğe yerinde ziyaret ve yıllık sarf sözleşmesi sunulması.",
+            'roi_projection': '4 atıl cihazın yeniden aktifleşmesiyle yıllık +$24,000 USD düzenli sarf nakit akışı',
+            'feasibility_score': '%92 (Yüksek Uygulanabilirlik)',
+            'status': 'Onaylandı & İcrada',
+            'decision_date': '2026-11-05'
+        },
+        'sirius_itl': {
+            'alert_id': 'sirius_itl',
+            'title': '🟢 Portföy Lokomotifi & Sarf Liderliği: SIRIUS ($164.3K) & ITL Katar ($72.9K)',
+            'badge': 'LOKOMOTİF BÜYÜME',
+            'badge_color': '#5FD3AE',
+            'evidence': "Sirius Pharm (Ürdün & Irak) 18 kurulu cihaz ve 675 kutu sarf ($53.1K) ile küresel portföyün %23.7'sini yönetmektedir. ITL Katar ise 4 cihazla 449 kutu sarf ($37.4K) tüketerek en yüksek cihaz başı verimliliğe ulaşmıştır.",
+            'ai_recommendation': "Sirius ile 2027 için 20 cihazlık yeni filo taahhüdü imzalanmalı; Katar'daki yüksek sarf çekiş modeli Suudi Arabistan ve Kuveyt kliniklerine benchmark olarak taşınmalıdır.",
+            'user_comment': "Sirius yönetimiyle Amman toplantısında mutabakat sağlandı. Katar ITL modelindeki yerinde haftalık embriyoloji desteğinin Suudi ve Kuveyt distribütörlerine aktarılması için takvim oluşturuldu.",
+            'plan_type': '2027 Filo Taahhüt Sözleşmesi & Bölgesel Benchmark Modeli',
+            'responsible_unit': 'Global Satış & Distribütör Masası',
+            'priority': 'P2 - Yüksek (30 Gün)',
+            'target_date': 'Aralık 2026',
+            'action_steps': "1. Sirius Pharm ile 2027 yılı için 20 cihazlık filo genişleme protokolü ve kademeli %15 sarf priminin imzalanması.\n2. ITL Katar'ın klinik başı 112 kutu yıllık tüketim başarı modelinin Suudi Arabistan AMS için kılavuz yapılması.\n3. Bölgesel konsinye yedek parça ve acil medya deposu oluşturulması.",
+            'roi_projection': '20 yeni cihaz kurulumu ve yıllık +$45,000 USD ek sarf taahhüdü',
+            'feasibility_score': '%96 (Çok Yüksek Başarı)',
+            'status': 'Onaylandı & İcrada',
+            'decision_date': '2026-11-05'
+        },
+        'sellco_uae': {
+            'alert_id': 'sellco_uae',
+            'title': '🇦🇪 BAE Pazarında Distribütör Boşluğu & Sözleşmesiz Müşteri Durumu',
+            'badge': 'BÖLGESEL FIRSAT',
+            'badge_color': '#FF9800',
+            'evidence': "SELLCO TRADING INTL (BAE) bir distribütör olmayıp, sözleşmesiz spot bir ticari müşteridir. 2025'te 4 cihaz ($23,180) almış, aralarında herhangi bir distribütörlük veya tedarik sözleşmesi bulunmamaktadır. 2026 yılında ise sarf siparişi vermemiştir ($0). Şu anda BAE'de resmi yetkili distribütör bulunmamaktadır.",
+            'ai_recommendation': "BAE'deki 28 lisanslı klinik ve 16,000 siklusluk zengin tüp bebek pazarına hakim olmak için, ülke geneline münhasır kurumsal bir distribütör (Leader Healthcare / Al Zahrawi Medikal) atanmalıdır. Sellco'nun elindeki 4 Piezo cihazı için ise spot doğrudan kurumsal sarf teklifi iletilmelidir.",
+            'user_comment': "BAE pazarında tek bir spot müşteriye bağlı kalınamaz. Dubai'de faaliyet gösteren Leader Healthcare ve Al Zahrawi ile distribütörlük görüşmeleri başlatıldı. Sellco'ya ise 4 cihazı için konsinye sarf teklifi verildi.",
+            'plan_type': 'Ülke Geneli Münhasır Distribütör Ataması & Spot Sarf Teklifi',
+            'responsible_unit': 'Bölge Ticari Direktörlüğü & Hukuk Kurulu',
+            'priority': 'P1 - Acil (1-15 Gün)',
+            'target_date': 'Kasım 2026',
+            'action_steps': "1. BAE geneli için Leader Healthcare veya Al Zahrawi ile MoHAP ruhsatlı münhasır distribütörlük şartnamesinin hazırlanması.\n2. Sellco Trading'e elindeki 4 Piezo cihazı için avantajlı '25 Kutu Refill Sarf Paketi' teklifinin iletilmesi.\n3. Dubai ve Abu Dabi'deki 28 IVF kliniğine doğrudan tanıtım ve numune organizasyonu düzenlenmesi.",
+            'roi_projection': "BAE'deki 28 lisanslı merkezden 8'ine nüfuz edilerek yıllık +$58,000 USD yeni pazar hacmi",
+            'feasibility_score': '%89 (Yüksek Stratejik Öncelik)',
+            'status': 'Onaylandı & İcrada',
+            'decision_date': '2026-11-05'
+        },
+        'dish_liquid_ratio': {
+            'alert_id': 'dish_liquid_ratio',
+            'title': '⚡ Kritik Ürün Rasyosu & Ek Gelir Fırsatı: Electro Dish vs Liquid (2.1:1)',
+            'badge': 'EK GELİR FIRSATI',
+            'badge_color': '#00F5FF',
+            'evidence': "Fatura veri tabanında 2,097 kutu Electro Dish satılmasına karşın yalnızca 997 kutu Liquid Solution satılmıştır. Klinikler solüsyonu seyreltmekte veya muadil kullanmaktadır.",
+            'ai_recommendation': "10 Kutu Dish Alana 2 Şişe Liquid Solution %50 İndirimli resmi bundle promosyonu ile sarf nakit akışı kısa vadede doğrudan +$18,500 USD artırılmalıdır.",
+            'user_comment': "Laboratuvarların dish başına solüsyon tüketim rasyosu incelendi. Seyreltme uygulamasının fertilizasyon başarısını düşürdüğü klinik bülteniyle partnerlere duyurulacak ve bundle avantajı devreye alınacak.",
+            'plan_type': 'Resmi Bundle Promosyonu (10 Dish Alana 2 Sıvı Solüsyon %50 İndirim)',
+            'responsible_unit': 'Pazarlama & Tedarik Masası',
+            'priority': 'P2 - Yüksek (30 Gün)',
+            'target_date': 'Kasım-Aralık 2026',
+            'action_steps': "1. '10 Kutu Electro Dish + 2 Şişe Liquid Solution %50 İndirimli' resmi promosyon genelgesinin tüm distribütörlere ve doğrudan kliniklere yayımlanması.\n2. Klinik embriyologlarına orijinal solüsyon konsantrasyonunun oosit canlılığına etkisini anlatan bilimsel kılavuzun gönderilmesi.\n3. 2026 Q4 sonuna kadar en az 400 ek şişe solüsyon satışı ile +$18,500 USD net nakit girişi sağlanması.",
+            'roi_projection': 'Kısa vadede doğrudan +$18,500 USD ek solüsyon nakit girişi',
+            'feasibility_score': '%95 (Hızlı Uygulanabilir Promosyon)',
+            'status': 'Onaylandı & İcrada',
+            'decision_date': '2026-11-05'
+        }
+    }
+
+
 if nav_selection == "◈ Executive Dashboard":
     # Header Banner
     col_h1, col_h2 = st.columns([3, 1])
@@ -3205,7 +3282,7 @@ if nav_selection == "◈ Executive Dashboard":
     st.markdown("<br>", unsafe_allow_html=True)
 
     # Global Choropleth Map with Layer Selection
-    col_map_head, col_map_sel = st.columns([2.2, 1.8])
+    col_map_head, col_map_sel = st.columns([2.0, 2.0])
     with col_map_head:
         st.subheader("🌐 360° Dönen Küre & Bölgesel Dağılım Haritası")
         st.caption("Farenizle küreyi 360° serbestçe döndürebilir veya '▶ 360° Otomatik Döndür' butonuna basabilirsiniz.")
@@ -3213,8 +3290,9 @@ if nav_selection == "◈ Executive Dashboard":
         map_layer = st.selectbox(
             "Harita Katmanı",
             [
+                "🌍 Resmi Distribütör Ülkeleri (Özel Ülke Renklendirmesi)",
+                "🔬 ZEUS'un Bulunduğu Tüm Ülkeler (Kurulu Taban & Satış Verileri)",
                 "🌐 6 Coğrafi Bölgeye Göre Renklendir",
-                "📊 Distribütör Kapsama Durumu",
                 "🎯 Pazar Fırsat Skoru",
                 "⚠️ Ticari Risk Profili"
             ],
@@ -3263,9 +3341,93 @@ if nav_selection == "◈ Executive Dashboard":
     }
 
     dist_by_code = {d['id']: d for d in dists_with_rev}
+    
+    # 1. Official Distributor Countries and their distinct vibrant colors (User Specified)
+    # Ürdün, Iraq, BAE, Suudi Arabistan, Qatar, South Korea
+    dist_country_map = {
+        'JOR': ('🇯🇴 Ürdün', '#FFD700', 'SIRIUS PHARM COMPANY (Amman & Bölge Dağıtımı)'),
+        'IRQ': ('🇮🇶 Irak', '#FF3366', 'SIRIUS PHARM COMPANY (Bağdat & Basra Konsorsiyumu)'),
+        'ARE': ('🇦🇪 BAE', '#00F5FF', 'SELLCO TRADING INTL (Dubai / Spot & Körfez Hub)'),
+        'SAU': ('🇸🇦 Suudi Arabistan', '#00E676', 'ASSISTED MEDICAL SOLUTION EST (Riyad)'),
+        'QAT': ('🇶🇦 Katar', '#B026FF', 'INTERNATIONAL TECHNICAL LEGACY - ITL (Doha)'),
+        'KOR': ('🇰🇷 Güney Kore', '#FF9100', 'SJNU INC (Seul - 7 Kurulu Cihaz)')
+    }
+    dist_color_discrete = {
+        '🇯🇴 Ürdün': '#FFD700',
+        '🇮🇶 Irak': '#FF3366',
+        '🇦🇪 BAE': '#00F5FF',
+        '🇸🇦 Suudi Arabistan': '#00E676',
+        '🇶🇦 Katar': '#B026FF',
+        '🇰🇷 Güney Kore': '#FF9100',
+        'Distribütörsüz Pazar': '#1E293B'
+    }
+
+    # 2. ZEUS Presence Countries pulled from actual Excel transaction database
+    zeus_presence_map = {
+        'TUR': ('🇹🇷 Türkiye (Merkez & 25 Klinik)', '#00F5FF', '$219.1K', '1,384 Ünite', 'ZEUS Genel Merkez & Doğrudan Klinik Ağı'),
+        'JOR': ('🇯🇴 Ürdün (SIRIUS PHARM)', '#FFD700', '$165.3K', '693 Ünite', 'Yetkili Distribütör Kurulu Tabanı'),
+        'IRQ': ('🇮🇶 Irak (SIRIUS Konsorsiyumu)', '#FF3366', '$165.3K', '693 Ünite', 'Yetkili Distribütör Kurulu Tabanı'),
+        'QAT': ('🇶🇦 Katar (ITL)', '#B026FF', '$72.9K', '453 Ünite', 'Yetkili Distribütör Kurulu Tabanı'),
+        'KOR': ('🇰🇷 Güney Kore (SJNU)', '#FF9100', '$68.6K', '205 Ünite', 'Yetkili Distribütör Kurulu Tabanı'),
+        'SAU': ('🇸🇦 Suudi Arabistan (AMS)', '#00E676', '$29.5K', '95 Ünite', 'Yetkili Distribütör Kurulu Tabanı'),
+        'ARE': ('🇦🇪 BAE (Sellco)', '#38BDF8', '$23.2K', '52 Ünite', 'Doğrudan Ticari Müşteri & Spot Dağıtım'),
+        'KWT': ('🇰🇼 Kuveyt (ATC)', '#FBBF24', '$26.3K', '12 Ünite', 'Kurumsal Alıcı (3 Cihaz)'),
+        'PSE': ('🇵🇸 Filistin (CMC)', '#34D399', '$46.7K', '120 Ünite', 'Kurumsal Alıcı (120 Kutu Sarf)'),
+        'BEL': ('🇧🇪 Belçika (Ghent Univ / UGent)', '#C084FC', '$16.1K', '3 Cihaz', 'Akademik & Klinik Referans Merkezi'),
+        'ALB': ('🇦🇱/🇸🇰 Arnavutluk-Slovakya (Stem Gene)', '#E879F9', '$18.8K', '121 Ünite', 'Özel IVF Klinikleri Ağı'),
+        'GBR': ('🇬🇧 İngiltere (Londra NHS Demo)', '#818CF8', '$0.0', '6 Cihaz', 'Validasyon & Klinik Demo Donanımı'),
+        'AZE': ('🇦🇿 Azerbaycan (Bakü Klinikleri)', '#F43F5E', '$4.3K', '49 Ünite', 'Doğrudan Klinik Tedariki'),
+        'BGR': ('🇧🇬 Bulgaristan (Sofya)', '#FB7185', '$1.6K', '11 Ünite', 'Doğrudan Klinik Tedariki'),
+        'PHL': ('🇵🇭 Filipinler (Manila)', '#F87171', '$1.2K', '44 Ünite', 'Spot Medikal Alıcı'),
+        'SYR': ('🇸🇾 Suriye (Şam)', '#FDA4AF', '$480', '10 Ünite', 'Spot Klinik Alımı')
+    }
+    zeus_presence_colors = {
+        '🇹🇷 Türkiye (Merkez & 25 Klinik)': '#00F5FF',
+        '🇯🇴 Ürdün (SIRIUS PHARM)': '#FFD700',
+        '🇮🇶 Irak (SIRIUS Konsorsiyumu)': '#FF3366',
+        '🇶🇦 Katar (ITL)': '#B026FF',
+        '🇰🇷 Güney Kore (SJNU)': '#FF9100',
+        '🇸🇦 Suudi Arabistan (AMS)': '#00E676',
+        '🇦🇪 BAE (Sellco)': '#38BDF8',
+        '🇰🇼 Kuveyt (ATC)': '#FBBF24',
+        '🇵🇸 Filistin (CMC)': '#34D399',
+        '🇧🇪 Belçika (Ghent Univ / UGent)': '#C084FC',
+        '🇦🇱/🇸🇰 Arnavutluk-Slovakya (Stem Gene)': '#E879F9',
+        '🇬🇧 İngiltere (Londra NHS Demo)': '#818CF8',
+        '🇦🇿 Azerbaycan (Bakü Klinikleri)': '#F43F5E',
+        '🇧🇬 Bulgaristan (Sofya)': '#FB7185',
+        '🇵🇭 Filipinler (Manila)': '#F87171',
+        '🇸🇾 Suriye (Şam)': '#FDA4AF',
+        'ZEUS Donanımı Bulunmayan Pazar': '#1E293B'
+    }
+
     for _, c in country_df.iterrows():
+        iso = c['iso3']
         code = c['code']
         d = dist_by_code.get(code)
+        
+        # Distributor layer assignment (Jordan, Iraq, UAE, Saudi, Qatar, South Korea)
+        if iso in dist_country_map:
+            d_name, d_col, d_desc = dist_country_map[iso]
+            dist_status_label = d_name
+            dist_partner_info = d_desc
+        else:
+            dist_status_label = 'Distribütörsüz Pazar'
+            dist_partner_info = 'Atanmış Resmi Distribütör Yok'
+
+        # ZEUS presence layer assignment
+        if iso in zeus_presence_map:
+            z_name, z_col, z_rev, z_qty, z_cat = zeus_presence_map[iso]
+            zeus_status_label = z_name
+            zeus_rev_str = z_rev
+            zeus_qty_str = z_qty
+            zeus_cat_str = z_cat
+        else:
+            zeus_status_label = 'ZEUS Donanımı Bulunmayan Pazar'
+            zeus_rev_str = '$0'
+            zeus_qty_str = '0'
+            zeus_cat_str = 'Kapsam Dışı Pazar'
+        
         st_label = 'Active' if (d and d['status'] == 'active') else ('Prospect' if (d and d['status'] == 'prospect') else 'Uncovered')
         risk_lvl = d['risk'] if (d and d['status'] == 'active') else c['risk']
         rev_str = format_curr(d['revenue']) if (d and d['status'] == 'active') else '$0'
@@ -3276,6 +3438,12 @@ if nav_selection == "◈ Executive Dashboard":
             'Country': c['name'],
             'Region': c['region'],
             'Coverage': st_label,
+            'Distributor_Country': dist_status_label,
+            'Distributor_Info': dist_partner_info,
+            'ZEUS_Presence': zeus_status_label,
+            'ZEUS_Revenue': zeus_rev_str,
+            'ZEUS_Volume': zeus_qty_str,
+            'ZEUS_Category': zeus_cat_str,
             'Risk': risk_lvl,
             'Opportunity Score': c['score'],
             'Clinics': c['clinics'],
@@ -3285,31 +3453,51 @@ if nav_selection == "◈ Executive Dashboard":
         })
     m_df = pd.DataFrame(map_data)
 
-    if map_layer == "🌐 6 Coğrafi Bölgeye Göre Renklendir":
+    if map_layer == "🌍 Resmi Distribütör Ülkeleri (Özel Ülke Renklendirmesi)":
+        fig_map = px.choropleth(
+            m_df, locations="iso3", color="Distributor_Country",
+            color_discrete_map=dist_color_discrete,
+            hover_name="Country",
+            hover_data={
+                "iso3": False, 
+                "Distributor_Country": True, 
+                "Distributor_Info": True, 
+                "Clinics": True, 
+                "Annual Cycles": True,
+                "Region": True
+            }
+        )
+    elif map_layer == "🔬 ZEUS'un Bulunduğu Tüm Ülkeler (Kurulu Taban & Satış Verileri)":
+        fig_map = px.choropleth(
+            m_df, locations="iso3", color="ZEUS_Presence",
+            color_discrete_map=zeus_presence_colors,
+            hover_name="Country",
+            hover_data={
+                "iso3": False, 
+                "ZEUS_Presence": True, 
+                "ZEUS_Category": True, 
+                "ZEUS_Revenue": True, 
+                "ZEUS_Volume": True, 
+                "Clinics": True
+            }
+        )
+    elif map_layer == "🌐 6 Coğrafi Bölgeye Göre Renklendir":
         fig_map = px.choropleth(
             m_df, locations="iso3", color="Region",
             color_discrete_map=region_color_map,
             hover_name="Country",
             hover_data={"iso3": False, "Region": True, "Coverage": True, "Distributor": True, "Net Revenue": True, "Clinics": True, "Annual Cycles": True, "Opportunity Score": True}
         )
-    elif map_layer == "📊 Distribütör Kapsama Durumu":
-        fig_map = px.choropleth(
-            m_df, locations="iso3", color="Coverage",
-            color_discrete_map=status_color_map,
-            hover_name="Country",
-            hover_data={"iso3": False, "Coverage": True, "Distributor": True, "Net Revenue": True, "Clinics": True, "Annual Cycles": True, "Opportunity Score": True}
-        )
     elif map_layer == "🎯 Pazar Fırsat Skoru":
-        # Multi-hue chromatic spectrum with sharp visual separation across score tiers
         fig_map = px.choropleth(
             m_df, locations="iso3", color="Opportunity Score",
             color_continuous_scale=[
-                [0.0, "#2D3748"],   # 35: Baz Seviye (Deep Slate)
-                [0.2, "#7C3AED"],   # 47: Canlı Mor / Violet (Orta-Düşük)
-                [0.4, "#2563EB"],   # 59: Parlak Kobalt Mavi (Orta)
-                [0.6, "#EA580C"],   # 71: Sıcak Turuncu / Amber (Orta-Yüksek)
-                [0.8, "#16A34A"],   # 83: Zümrüt Yeşili (Yüksek)
-                [1.0, "#00F5FF"]    # 95+: Parlak Neon Cyan (En Yüksek / Elit)
+                [0.0, "#2D3748"],
+                [0.2, "#7C3AED"],
+                [0.4, "#2563EB"],
+                [0.6, "#EA580C"],
+                [0.8, "#16A34A"],
+                [1.0, "#00F5FF"]
             ],
             range_color=[35, 95],
             hover_name="Country",
@@ -3323,7 +3511,7 @@ if nav_selection == "◈ Executive Dashboard":
             colorbar_len=0.75,
             colorbar_thickness=18
         )
-    else:
+    else: # ⚠️ Ticari Risk Profili
         fig_map = px.choropleth(
             m_df, locations="iso3", color="Risk",
             color_discrete_map=risk_color_map,
@@ -3483,56 +3671,237 @@ if nav_selection == "◈ Executive Dashboard":
 
     # Active Executive Alerts (100% Verified Real Data & Actionable Recommendations)
     st.subheader("🚨 Executive Strategic Alerts (Gerçek Fatura Kanıtları & Stratejik Öneriler)")
+    st.caption("Her uyarı kartının altında yöneticiler değerlendirme yorumu ekleyebilir, stratejik eylem planı oluşturabilir. Kaydedilen planlar doğrudan 'Strategic Decision Center' ve 'Executive Reports' modüllerine aktarılır.")
+
+    if 'executive_strategic_plans' not in st.session_state:
+        st.session_state['executive_strategic_plans'] = get_default_strategic_plans()
+
+    p_dict = st.session_state['executive_strategic_plans']
+    
     al_col1, al_col2 = st.columns(2)
+    
+    # ------------------ COLUMN 1: ALERT 1 & ALERT 3 ------------------
     with al_col1:
-        st.markdown("""
-        <div class="alert-card" style="border-left-color: #FF5252; background:#0F192E; padding:14px; border-radius:8px; margin-bottom:12px; border:1px solid rgba(255,82,82,0.25);">
+        # Alert 1: Kuveyt ATC & Garanti Leasing
+        p1 = p_dict['kuwait_garanti']
+        st.markdown(f"""
+        <div class="alert-card" style="border-left-color: #FF5252; background:#0F192E; padding:14px; border-radius:8px; margin-bottom:8px; border:1px solid rgba(255,82,82,0.25);">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-                <strong style="color:#FF8A96; font-size:13.5px;">🔴 Kritik Atıl Cihaz Alarmı: Kuveyt ATC & Garanti Leasing (2026'da $0 Sarf)</strong>
-                <span style="font-size:10px; background:rgba(255,82,82,0.15); color:#FF5252; padding:3px 8px; border-radius:4px; font-weight:700;">ACİL EYLEM</span>
+                <strong style="color:#FF8A96; font-size:13.5px;">{p1['title']}</strong>
+                <span style="font-size:10px; background:rgba(255,82,82,0.15); color:#FF5252; padding:3px 8px; border-radius:4px; font-weight:700;">{p1['badge']}</span>
             </div>
             <div style="font-size:12.5px; color:#CCD7E6; margin-top:6px; line-height:1.5;">
-                <b>Kanıt:</b> Kuveyt ATC (15.12.2025'te $25,500'a 3 Piezo Cihazı almış) ve Garanti Leasing (12.05.2026'da 1 Cihaz almış) 2026 yılında <b>$0.00 sarf</b> çekmiştir. Cihazlar atıl durmaktadır.<br>
-                <b>Yönetici Önerisi:</b> Kuveyt merkezlerine acil Piezo Oosit Protokol eğitimi ve konsinye aktivasyon kiti verilmeli; Garanti Leasing'in cihazı kurduğu klinik tespit edilerek doğrudan sarf protokolü başlatılmalıdır.
-            </div>
-        </div>
-        <div class="alert-card" style="border-left-color: #FF9800; background:#0F192E; padding:14px; border-radius:8px; border:1px solid rgba(255,152,0,0.25);">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-                <strong style="color:#FF9800; font-size:13.5px;">🇦🇪 BAE Pazarında Distribütör Boşluğu & Sözleşmesiz Müşteri Durumu</strong>
-                <span style="font-size:10px; background:rgba(255,152,0,0.15); color:#FF9800; padding:3px 8px; border-radius:4px; font-weight:700;">BÖLGESEL FIRSAT</span>
-            </div>
-            <div style="font-size:12.5px; color:#CCD7E6; margin-top:6px; line-height:1.5;">
-                <b>Kanıt:</b> SELLCO TRADING INTL (BAE) bir distribütör olmayıp, <b>sözleşmesiz spot bir ticari müşteridir</b>. 2025'te 4 cihaz ($23,180) almış, aralarında herhangi bir distribütörlük veya tedarik sözleşmesi bulunmamaktadır. 2026 yılında ise sarf siparişi vermemiştir ($0). Şu anda BAE'de resmi yetkili distribütör bulunmamaktadır.<br>
-                <b>Yönetici Önerisi:</b> BAE'deki 28 lisanslı klinik ve 16,000 siklusluk zengin tüp bebek pazarına hakim olmak için, ülke geneline münhasır kurumsal bir distribütör (Leader Healthcare / Al Zahrawi Medikal) atanmalıdır. Sellco'nun elindeki 4 Piezo cihazı için ise spot doğrudan kurumsal sarf teklifi iletilmelidir.
+                <b>Kanıt:</b> {p1['evidence']}<br>
+                <b>Yönetici Önerisi:</b> {p1['ai_recommendation']}
             </div>
         </div>
         """, unsafe_allow_html=True)
+        
+        with st.expander("✍️ Değerlendirme Yorumu & Eylem Planı Oluştur", expanded=False):
+            with st.form("form_alert_kuwait"):
+                c_comm1 = st.text_area("Yönetici Değerlendirmesi / Saha Yorumu:", value=p1['user_comment'], key="c_comm_kuwait")
+                f_c1a, f_c1b = st.columns(2)
+                with f_c1a:
+                    c_ptype1 = st.selectbox("Eylem Stratejisi Türü:", [
+                        "Konsinye Aktivasyon Paketi & Yerinde Aplikasyon Eğitimi",
+                        "Garanti Leasing Yerel Klinik Tespiti & Doğrudan Sözleşme",
+                        "Protokol Değişimi & Taze Sarf Promosyonu",
+                        "Hukuki İhtar & Cihaz Geri Alım Opsiyonu"
+                    ], index=0, key="c_ptype_kuwait")
+                    c_resp1 = st.selectbox("Sorumlu İcra Birimi:", [
+                        "Klinik Aplikasyon & Eğitim Masası",
+                        "Global Satış & Distribütör Masası",
+                        "Mevzuat & Hukuk Kurulu",
+                        "Bölge Ticari Direktörlüğü"
+                    ], index=0, key="c_resp_kuwait")
+                with f_c1b:
+                    c_prio1 = st.selectbox("Öncelik Seviyesi:", ["P1 - Acil (1-15 Gün)", "P2 - Yüksek (30 Gün)", "P3 - Orta (60 Gün)"], index=0, key="c_prio_kuwait")
+                    c_date1 = st.text_input("Hedef Termin / Çeyrek:", value=p1['target_date'], key="c_date_kuwait")
+                c_steps1 = st.text_area("Somut Eylem Adımları & KPI:", value=p1['action_steps'], key="c_steps_kuwait")
+                if st.form_submit_button("💾 Planı Kaydet & Karar Merkezine İlet", type="primary"):
+                    p_dict['kuwait_garanti']['user_comment'] = c_comm1.strip()
+                    p_dict['kuwait_garanti']['plan_type'] = c_ptype1
+                    p_dict['kuwait_garanti']['responsible_unit'] = c_resp1
+                    p_dict['kuwait_garanti']['priority'] = c_prio1
+                    p_dict['kuwait_garanti']['target_date'] = c_date1.strip()
+                    p_dict['kuwait_garanti']['action_steps'] = c_steps1.strip()
+                    p_dict['kuwait_garanti']['status'] = 'Onaylandı & İcrada'
+                    st.success("✓ Kuveyt ATC & Garanti planı Karar Merkezi ve Raporlara aktarıldı!")
+                    st.rerun()
+        
+        st.markdown(f"""
+        <div style="background:rgba(0,230,118,0.06);border:1px solid rgba(0,230,118,0.3);border-radius:6px;padding:6px 12px;margin-bottom:14px;font-size:11.5px;display:flex;justify-content:space-between;align-items:center;">
+            <span><b style="color:#00E676;">📋 Aktif Plan:</b> {p1['plan_type']} &nbsp;|&nbsp; <span style="color:#8FA3C0;">{p1['responsible_unit']}</span></span>
+            <span style="background:rgba(0,230,118,0.15);color:#00E676;padding:2px 8px;border-radius:4px;font-weight:700;">{p1['status']} ➔</span>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # Alert 3: BAE Sellco & Distribütör Boşluğu
+        p3 = p_dict['sellco_uae']
+        st.markdown(f"""
+        <div class="alert-card" style="border-left-color: #FF9800; background:#0F192E; padding:14px; border-radius:8px; margin-bottom:8px; border:1px solid rgba(255,152,0,0.25);">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="color:#FF9800; font-size:13.5px;">{p3['title']}</strong>
+                <span style="font-size:10px; background:rgba(255,152,0,0.15); color:#FF9800; padding:3px 8px; border-radius:4px; font-weight:700;">{p3['badge']}</span>
+            </div>
+            <div style="font-size:12.5px; color:#CCD7E6; margin-top:6px; line-height:1.5;">
+                <b>Kanıt:</b> {p3['evidence']}<br>
+                <b>Yönetici Önerisi:</b> {p3['ai_recommendation']}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        with st.expander("✍️ Değerlendirme Yorumu & Eylem Planı Oluştur", expanded=False):
+            with st.form("form_alert_sellco"):
+                c_comm3 = st.text_area("Yönetici Değerlendirmesi / Saha Yorumu:", value=p3['user_comment'], key="c_comm_sellco")
+                f_c3a, f_c3b = st.columns(2)
+                with f_c3a:
+                    c_ptype3 = st.selectbox("Eylem Stratejisi Türü:", [
+                        "Ülke Geneli Münhasır Distribütör Ataması & Spot Sarf Teklifi",
+                        "Leader Healthcare / Al Zahrawi İle Resmi Distribütörlük İhalesi",
+                        "Sellco 4 Ünitesi İçin Doğrudan Konsinye Sarf Tedariki",
+                        "Dubai Healthcare City Serbest Bölge Ofisi & Doğrudan Klinik Satışı"
+                    ], index=0, key="c_ptype_sellco")
+                    c_resp3 = st.selectbox("Sorumlu İcra Birimi:", [
+                        "Bölge Ticari Direktörlüğü & Hukuk Kurulu",
+                        "Global Satış & Distribütör Masası",
+                        "Klinik Aplikasyon & Eğitim Masası",
+                        "İcra Kurulu Başkanlığı"
+                    ], index=0, key="c_resp_sellco")
+                with f_c3b:
+                    c_prio3 = st.selectbox("Öncelik Seviyesi:", ["P1 - Acil (1-15 Gün)", "P2 - Yüksek (30 Gün)", "P3 - Orta (60 Gün)"], index=0, key="c_prio_sellco")
+                    c_date3 = st.text_input("Hedef Termin / Çeyrek:", value=p3['target_date'], key="c_date_sellco")
+                c_steps3 = st.text_area("Somut Eylem Adımları & KPI:", value=p3['action_steps'], key="c_steps_sellco")
+                if st.form_submit_button("💾 Planı Kaydet & Karar Merkezine İlet", type="primary"):
+                    p_dict['sellco_uae']['user_comment'] = c_comm3.strip()
+                    p_dict['sellco_uae']['plan_type'] = c_ptype3
+                    p_dict['sellco_uae']['responsible_unit'] = c_resp3
+                    p_dict['sellco_uae']['priority'] = c_prio3
+                    p_dict['sellco_uae']['target_date'] = c_date3.strip()
+                    p_dict['sellco_uae']['action_steps'] = c_steps3.strip()
+                    p_dict['sellco_uae']['status'] = 'Onaylandı & İcrada'
+                    st.success("✓ BAE Distribütörlük Planı Karar Merkezi ve Raporlara aktarıldı!")
+                    st.rerun()
+
+        st.markdown(f"""
+        <div style="background:rgba(255,184,0,0.06);border:1px solid rgba(255,184,0,0.3);border-radius:6px;padding:6px 12px;margin-bottom:14px;font-size:11.5px;display:flex;justify-content:space-between;align-items:center;">
+            <span><b style="color:#FFB800;">📋 Aktif Plan:</b> {p3['plan_type']} &nbsp;|&nbsp; <span style="color:#8FA3C0;">{p3['responsible_unit']}</span></span>
+            <span style="background:rgba(255,184,0,0.15);color:#FFB800;padding:2px 8px;border-radius:4px;font-weight:700;">{p3['status']} ➔</span>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # ------------------ COLUMN 2: ALERT 2 & ALERT 4 ------------------
     with al_col2:
-        st.markdown("""
-        <div class="alert-card" style="border-left-color: #5FD3AE; background:#0F192E; padding:14px; border-radius:8px; margin-bottom:12px; border:1px solid rgba(95,211,174,0.25);">
+        # Alert 2: Sirius & ITL Katar Lokomotif
+        p2 = p_dict['sirius_itl']
+        st.markdown(f"""
+        <div class="alert-card" style="border-left-color: #5FD3AE; background:#0F192E; padding:14px; border-radius:8px; margin-bottom:8px; border:1px solid rgba(95,211,174,0.25);">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-                <strong style="color:#5FD3AE; font-size:13.5px;">🟢 Portföy Lokomotifi & Sarf Liderliği: SIRIUS ($164.3K) & ITL Katar ($72.9K)</strong>
-                <span style="font-size:10px; background:rgba(95,211,174,0.15); color:#5FD3AE; padding:3px 8px; border-radius:4px; font-weight:700;">LOKOMOTİF BÜYÜME</span>
+                <strong style="color:#5FD3AE; font-size:13.5px;">{p2['title']}</strong>
+                <span style="font-size:10px; background:rgba(95,211,174,0.15); color:#5FD3AE; padding:3px 8px; border-radius:4px; font-weight:700;">{p2['badge']}</span>
             </div>
             <div style="font-size:12.5px; color:#CCD7E6; margin-top:6px; line-height:1.5;">
-                <b>Kanıt:</b> Sirius Pharm (Ürdün & Irak) 18 kurulu cihaz ve <b>675 kutu sarf ($53.1K)</b> ile küresel portföyün %23.7'sini yönetmektedir. ITL Katar ise 4 cihazla <b>449 kutu sarf ($37.4K)</b> tüketerek en yüksek cihaz başı verimliliğe ulaşmıştır.<br>
-                <b>Yönetici Önerisi:</b> Sirius ile 2027 için 20 cihazlık yeni filo taahhüdü imzalanmalı; Katar'daki yüksek sarf çekiş modeli Suudi Arabistan ve Kuveyt kliniklerine benchmark olarak taşınmalıdır.
+                <b>Kanıt:</b> {p2['evidence']}<br>
+                <b>Yönetici Önerisi:</b> {p2['ai_recommendation']}
             </div>
         </div>
-        <div class="alert-card" style="border-left-color: #00F5FF; background:#0F192E; padding:14px; border-radius:8px; border:1px solid rgba(0,245,255,0.25);">
+        """, unsafe_allow_html=True)
+        
+        with st.expander("✍️ Değerlendirme Yorumu & Eylem Planı Oluştur", expanded=False):
+            with st.form("form_alert_sirius"):
+                c_comm2 = st.text_area("Yönetici Değerlendirmesi / Saha Yorumu:", value=p2['user_comment'], key="c_comm_sirius")
+                f_c2a, f_c2b = st.columns(2)
+                with f_c2a:
+                    c_ptype2 = st.selectbox("Eylem Stratejisi Türü:", [
+                        "2027 Filo Taahhüt Sözleşmesi & Bölgesel Benchmark Modeli",
+                        "Sirius 20 Cihazlık Yeni Konsorsiyum Filo Protokolü",
+                        "ITL Katar Başarı Modelinin Suudi Arabistan'a Transferi",
+                        "Tier-1 Platinum İskonto & Bölgesel Tampon Depo Açılışı"
+                    ], index=0, key="c_ptype_sirius")
+                    c_resp2 = st.selectbox("Sorumlu İcra Birimi:", [
+                        "Global Satış & Distribütör Masası",
+                        "Klinik Aplikasyon & Eğitim Masası",
+                        "Tedarik Zinciri & Lojistik Masası",
+                        "Bölge Ticari Direktörlüğü"
+                    ], index=0, key="c_resp_sirius")
+                with f_c2b:
+                    c_prio2 = st.selectbox("Öncelik Seviyesi:", ["P2 - Yüksek (30 Gün)", "P1 - Acil (1-15 Gün)", "P3 - Orta (60 Gün)"], index=0, key="c_prio_sirius")
+                    c_date2 = st.text_input("Hedef Termin / Çeyrek:", value=p2['target_date'], key="c_date_sirius")
+                c_steps2 = st.text_area("Somut Eylem Adımları & KPI:", value=p2['action_steps'], key="c_steps_sirius")
+                if st.form_submit_button("💾 Planı Kaydet & Karar Merkezine İlet", type="primary"):
+                    p_dict['sirius_itl']['user_comment'] = c_comm2.strip()
+                    p_dict['sirius_itl']['plan_type'] = c_ptype2
+                    p_dict['sirius_itl']['responsible_unit'] = c_resp2
+                    p_dict['sirius_itl']['priority'] = c_prio2
+                    p_dict['sirius_itl']['target_date'] = c_date2.strip()
+                    p_dict['sirius_itl']['action_steps'] = c_steps2.strip()
+                    p_dict['sirius_itl']['status'] = 'Onaylandı & İcrada'
+                    st.success("✓ Sirius & ITL Katar Planı Karar Merkezi ve Raporlara aktarıldı!")
+                    st.rerun()
+
+        st.markdown(f"""
+        <div style="background:rgba(95,211,174,0.06);border:1px solid rgba(95,211,174,0.3);border-radius:6px;padding:6px 12px;margin-bottom:14px;font-size:11.5px;display:flex;justify-content:space-between;align-items:center;">
+            <span><b style="color:#5FD3AE;">📋 Aktif Plan:</b> {p2['plan_type']} &nbsp;|&nbsp; <span style="color:#8FA3C0;">{p2['responsible_unit']}</span></span>
+            <span style="background:rgba(95,211,174,0.15);color:#5FD3AE;padding:2px 8px;border-radius:4px;font-weight:700;">{p2['status']} ➔</span>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # Alert 4: Dish vs Liquid Rasyosu
+        p4 = p_dict['dish_liquid_ratio']
+        st.markdown(f"""
+        <div class="alert-card" style="border-left-color: #00F5FF; background:#0F192E; padding:14px; border-radius:8px; margin-bottom:8px; border:1px solid rgba(0,245,255,0.25);">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-                <strong style="color:#00F5FF; font-size:13.5px;">⚡ Kritik Ürün Rasyosu & Ek Gelir Fırsatı: Electro Dish vs Liquid (2.1:1)</strong>
-                <span style="font-size:10px; background:rgba(0,245,255,0.15); color:#00F5FF; padding:3px 8px; border-radius:4px; font-weight:700;">+$18.5K FIRSAT</span>
+                <strong style="color:#00F5FF; font-size:13.5px;">{p4['title']}</strong>
+                <span style="font-size:10px; background:rgba(0,245,255,0.15); color:#00F5FF; padding:3px 8px; border-radius:4px; font-weight:700;">{p4['badge']}</span>
             </div>
             <div style="font-size:12.5px; color:#CCD7E6; margin-top:6px; line-height:1.5;">
-                <b>Kanıt:</b> Fatura veri tabanında <b>2,097 kutu Electro Dish</b> satılmasına karşın yalnızca <b>997 kutu Liquid Solution</b> satılmıştır. Klinikler solüsyonu seyreltmekte veya muadil kullanmaktadır.<br>
-                <b>Yönetici Önerisi:</b> <i>"10 Kutu Dish Alana 2 Şişe Liquid Solution %50 İndirimli"</i> resmi bundle promosyonu ile sarf nakit akışı kısa vadede doğrudan <b>+$18,500 USD</b> artırılmalıdır.
+                <b>Kanıt:</b> {p4['evidence']}<br>
+                <b>Yönetici Önerisi:</b> {p4['ai_recommendation']}
             </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        with st.expander("✍️ Değerlendirme Yorumu & Eylem Planı Oluştur", expanded=False):
+            with st.form("form_alert_ratio"):
+                c_comm4 = st.text_area("Yönetici Değerlendirmesi / Saha Yorumu:", value=p4['user_comment'], key="c_comm_ratio")
+                f_c4a, f_c4b = st.columns(2)
+                with f_c4a:
+                    c_ptype4 = st.selectbox("Eylem Stratejisi Türü:", [
+                        "Resmi Bundle Promosyonu (10 Dish Alana 2 Sıvı Solüsyon %50 İndirim)",
+                        "Kliniklere Özel 'Hazır Medya Çözüm Paketi' Zorunluluğu",
+                        "Solüsyon Seyreltme Karşıtı Embriyoloji Kalite Bülteni",
+                        "Konsinye Sıvı Solüsyon Başlangıç Kiti Dağıtımı"
+                    ], index=0, key="c_ptype_ratio")
+                    c_resp4 = st.selectbox("Sorumlu İcra Birimi:", [
+                        "Pazarlama & Tedarik Masası",
+                        "Klinik Aplikasyon & Eğitim Masası",
+                        "Global Satış & Distribütör Masası",
+                        "Kalite Güvence & Regülasyon Kurulu"
+                    ], index=0, key="c_resp_ratio")
+                with f_c4b:
+                    c_prio4 = st.selectbox("Öncelik Seviyesi:", ["P2 - Yüksek (30 Gün)", "P1 - Acil (1-15 Gün)", "P3 - Orta (60 Gün)"], index=0, key="c_prio_ratio")
+                    c_date4 = st.text_input("Hedef Termin / Çeyrek:", value=p4['target_date'], key="c_date_ratio")
+                c_steps4 = st.text_area("Somut Eylem Adımları & KPI:", value=p4['action_steps'], key="c_steps_ratio")
+                if st.form_submit_button("💾 Planı Kaydet & Karar Merkezine İlet", type="primary"):
+                    p_dict['dish_liquid_ratio']['user_comment'] = c_comm4.strip()
+                    p_dict['dish_liquid_ratio']['plan_type'] = c_ptype4
+                    p_dict['dish_liquid_ratio']['responsible_unit'] = c_resp4
+                    p_dict['dish_liquid_ratio']['priority'] = c_prio4
+                    p_dict['dish_liquid_ratio']['target_date'] = c_date4.strip()
+                    p_dict['dish_liquid_ratio']['action_steps'] = c_steps4.strip()
+                    p_dict['dish_liquid_ratio']['status'] = 'Onaylandı & İcrada'
+                    st.success("✓ Ürün Rasyosu & Bundle Planı Karar Merkezi ve Raporlara aktarıldı!")
+                    st.rerun()
+
+        st.markdown(f"""
+        <div style="background:rgba(0,245,255,0.06);border:1px solid rgba(0,245,255,0.3);border-radius:6px;padding:6px 12px;margin-bottom:14px;font-size:11.5px;display:flex;justify-content:space-between;align-items:center;">
+            <span><b style="color:#00F5FF;">📋 Aktif Plan:</b> {p4['plan_type']} &nbsp;|&nbsp; <span style="color:#8FA3C0;">{p4['responsible_unit']}</span></span>
+            <span style="background:rgba(0,245,255,0.15);color:#00F5FF;padding:2px 8px;border-radius:4px;font-weight:700;">{p4['status']} ➔</span>
         </div>
         """, unsafe_allow_html=True)
 
 
-# ==============================================================================
+
 # 5. VIEW: AI INTELLIGENCE & PREDICTIVE ANALYTICS
 # ==============================================================================
 
@@ -7717,6 +8086,61 @@ elif nav_selection == "⚖ Strategic Decision Center":
     st.title("⚖️ Strategic Decision Center")
     st.caption("Configurable weighted multi-criteria assessment framework for critical corporate authorizations and commercial expansion.")
 
+    if 'executive_strategic_plans' not in st.session_state:
+        st.session_state['executive_strategic_plans'] = get_default_strategic_plans()
+
+    # --------------------------------------------------------------------------
+    # TOP EXECUTIVE EVALUATION BOARD: STRATEGIC ALERTS IMPLEMENTATION REVIEW
+    # --------------------------------------------------------------------------
+    st.markdown("### 🎯 Yönetici Stratejik Uyarıları Değerlendirme & Onay Masası")
+    st.caption("Executive Dashboard'da tanımlanan 4 kritik stratejik uyarı için yöneticiler tarafından girilen değerlendirme yorumları, eylem planları ve yapay zeka fizibilite kararları.")
+
+    p_dict = st.session_state['executive_strategic_plans']
+    
+    for a_key, a_plan in p_dict.items():
+        is_approved = (a_plan.get('status') == 'Onaylandı & İcrada')
+        border_col = a_plan['badge_color']
+        badge_bg = 'rgba(0,230,118,0.15)' if is_approved else 'rgba(255,184,0,0.15)'
+        badge_txt = '#00E676' if is_approved else '#FFB800'
+        
+        st.markdown(f"""
+        <div style="background:#0F192E; border:1.5px solid {border_col}; border-radius:12px; padding:16px 20px; margin-bottom:14px; box-shadow:0 4px 14px rgba(0,0,0,0.3);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                <span style="font-weight:700; color:{border_col}; font-size:14px;">{a_plan['title']}</span>
+                <span style="background:{badge_bg}; color:{badge_txt}; padding:3px 10px; border-radius:6px; font-weight:700; font-size:11px;">
+                    {a_plan['status']}
+                </span>
+            </div>
+            <div style="font-size:12px; color:#CCD7E6; margin-bottom:8px; line-height:1.5;">
+                <b>🔍 Kanıt & Anomali:</b> {a_plan['evidence']}<br>
+                <b>🤖 AI Tavsiyesi:</b> {a_plan['ai_recommendation']}
+            </div>
+            <div style="background:rgba(0,0,0,0.3); border-left:3px solid {border_col}; padding:10px 14px; border-radius:6px; margin:8px 0; font-size:12px;">
+                <b style="color:#00F5FF;">✍️ Yönetici Değerlendirmesi & Saha Yorumu:</b><br>
+                <span style="color:#E1E7EC;">{a_plan['user_comment']}</span>
+            </div>
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:10px; background:rgba(255,255,255,0.02); padding:10px; border-radius:8px; font-size:11.5px; margin-top:8px;">
+                <div><b style="color:#8FA3C0;">Kararlaştırılan Strateji:</b><br><span style="color:#FFFFFF; font-weight:600;">{a_plan['plan_type']}</span></div>
+                <div><b style="color:#8FA3C0;">Sorumlu Birim:</b><br><span style="color:#00F5FF; font-weight:600;">{a_plan['responsible_unit']}</span></div>
+                <div><b style="color:#8FA3C0;">Öncelik & Termin:</b><br><span style="color:#FFB800; font-weight:600;">{a_plan['priority']} | {a_plan['target_date']}</span></div>
+                <div><b style="color:#8FA3C0;">Tahmini Finansal Etki (ROI):</b><br><span style="color:#00E676; font-weight:700;">{a_plan['roi_projection']}</span></div>
+            </div>
+            <div style="font-size:11.5px; color:#CCD7E6; margin-top:8px;">
+                <b>📌 Somut İcra Adımları:</b> {a_plan['action_steps']}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        col_btn1, col_btn2 = st.columns([3, 1])
+        with col_btn2:
+            btn_label = "✕ İncelemeye Al" if is_approved else "✅ Kararı Resmileştir & İcra Protokolüne Onayla"
+            if st.button(btn_label, key=f"btn_toggle_sdc_{a_key}", use_container_width=True):
+                p_dict[a_key]['status'] = 'İncelemede / Revize' if is_approved else 'Onaylandı & İcrada'
+                st.rerun()
+
+    st.markdown("<hr style='border-color:rgba(255,255,255,0.1); margin:24px 0;'>", unsafe_allow_html=True)
+
+
     st.markdown("""
     <div style="background:rgba(19,166,181,0.08);border:1px solid rgba(19,166,181,0.3);padding:14px 18px;border-radius:12px;margin-bottom:18px;">
         <span style="font-weight:600;color:#4FD1DE;">💡 Corporate Governance Directive:</span>
@@ -7965,6 +8389,57 @@ elif nav_selection == "⇲ Executive Reports & Export":
     - **Weighted Gross Margin:** {avg_margin:.1f}%
     - **Active Partner Network:** {n_active_dists} partners across {n_countries} jurisdictions
     """)
+
+    # --------------------------------------------------------------------------
+    # CERTIFIED STRATEGIC ACTION PLANS & EXECUTIVE DECISION DOSSIER
+    # --------------------------------------------------------------------------
+    st.markdown("### 📑 Onaylanan Stratejik Eylem Planları & Yönetici Karar Dosyası")
+    st.caption("Executive Strategic Alerts ve Strategic Decision Center üzerinde değerlendirilip onaylanan resmi yönetim kurulu eylem planları.")
+
+    if 'executive_strategic_plans' not in st.session_state:
+        st.session_state['executive_strategic_plans'] = get_default_strategic_plans()
+
+    p_dict = st.session_state['executive_strategic_plans']
+    
+    plan_rows = []
+    for k, p in p_dict.items():
+        plan_rows.append({
+            'Stratejik Uyarı Konusu': p['title'],
+            'Yönetici Değerlendirmesi': p['user_comment'],
+            'Kararlaştırılan Eylem Planı': p['plan_type'],
+            'Sorumlu Birim': p['responsible_unit'],
+            'Öncelik': p['priority'],
+            'Termin': p['target_date'],
+            'Tahmini Finansal Etki': p['roi_projection'],
+            'İcra Durumu': p['status']
+        })
+    df_plans = pd.DataFrame(plan_rows)
+    st.dataframe(
+        df_plans,
+        use_container_width=True,
+        hide_index=True,
+        column_config={
+            "Stratejik Uyarı Konusu": st.column_config.TextColumn("Stratejik Uyarı Konusu", width="medium"),
+            "Yönetici Değerlendirmesi": st.column_config.TextColumn("Yönetici Değerlendirmesi", width="medium"),
+            "Kararlaştırılan Eylem Planı": st.column_config.TextColumn("Kararlaştırılan Eylem Planı", width="medium"),
+            "Sorumlu Birim": st.column_config.TextColumn("Sorumlu Birim", width="small"),
+            "Öncelik": st.column_config.TextColumn("Öncelik", width="small"),
+            "Termin": st.column_config.TextColumn("Termin", width="small"),
+            "Tahmini Finansal Etki": st.column_config.TextColumn("Tahmini Finansal Etki", width="medium"),
+            "İcra Durumu": st.column_config.TextColumn("İcra Durumu", width="small")
+        }
+    )
+
+    csv_plans = df_plans.to_csv(index=False).encode('utf-8')
+    st.download_button(
+        label="📥 Stratejik Eylem Planları Dosyasını İndir (CSV)",
+        data=csv_plans,
+        file_name=f"ZEUS_Strategic_Action_Plans_{year_sel}.csv",
+        mime="text/csv",
+        key="btn_dl_strategic_plans"
+    )
+    st.markdown("<br>", unsafe_allow_html=True)
+
 
     # Export Dataset
     exp_records = []
