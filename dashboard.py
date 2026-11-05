@@ -5060,61 +5060,243 @@ elif nav_selection == "◎ Market Intelligence & Compare":
             st.plotly_chart(fig_bubble, use_container_width=True)
 
         with comp_tab2:
-            st.markdown("#### 📋 Detaylı Çok Boyutlu Karşılaştırmalı Skor Kartı")
-            transposed_data = {
-                'Metrik / Gösterge': [
-                    'Yetkili Partner / Distribütör',
-                    'Tahmini ZEUS Penetrasyonu %',
-                    'Pazar Fırsat Skoru',
-                    'Ticari Risk Düzeyi',
-                    'Toplam GSYİH (GDP - USD Bn)',
-                    'Kişi Başı GSYİH (GDP Per Capita)',
-                    'Ülke Nüfusu (Milyon Kişi)',
-                    'Lisanslı IVF Klinik Sayısı',
-                    'Yıllık Tedavi Siklus Hacmi',
-                    'Milyon Başına Klinik Yoğunluğu',
-                    'Klinik Başına Yıllık Ortalama Siklus',
-                    'ICSI Mikroenjeksiyon Adaptasyonu %',
-                    'PGT Genetik Tanı Oranı %',
-                    'Kriyoprezervasyon (Dondurma) %',
-                    'Sağlık Harcaması / GSYİH %',
-                    'Medikal İthalat Rejimi',
-                    'Regülasyon Zorluk Derecesi'
-                ]
-            }
-            for _, r in cmp_df.iterrows():
-                transposed_data[r['name']] = [
-                    r['Distributor'],
-                    r['Penetration %'],
-                    f"{r['score']} / 100",
-                    r['risk'],
-                    f"${r['gdp']:,.1f} B",
-                    f"${r['gdp_pc']:,}",
-                    f"{r['pop']:.1f} M",
-                    f"{r['clinics']:,} Klinik",
-                    f"{r['cycles']:,} Siklus",
-                    f"{r['clinics_per_m']:.2f} klinik/M",
-                    f"{r['cycles_per_clinic']:,.0f} siklus/kl.",
-                    f"%{r['icsi_pct']}",
-                    f"%{r['pgt_pct']}",
-                    f"%{r['cryo_pct']}",
-                    f"%{r['health_pct']}",
-                    r['import_cond'],
-                    r['regulation']
-                ]
-            
-            scorecard_df = pd.DataFrame(transposed_data)
-            st.dataframe(scorecard_df, use_container_width=True, hide_index=True)
-            
-            # Export CSV button
-            csv_scorecard = scorecard_df.to_csv(index=False).encode('utf-8')
-            st.download_button(
-                label="📥 Karşılaştırma Skor Kartını CSV Olarak İndir",
-                data=csv_scorecard,
-                file_name="ZEUS_Market_Comparison_Scorecard.csv",
-                mime="text/csv"
-            )
+            st.markdown("#### 📊 Çok Boyutlu Karşılaştırma: Grafikler & Detaylı Skor Kartı")
+            st.caption("Resmi Dünya Bankası ve uluslararası IVF kayıtlarına dayalı pazar verileri, takibi kolaylaştırmak adına hem görsel analitik grafiklerle hem de yapılandırılmış skor kartı tablosuyla sunulmaktadır.")
 
+            # Top View Controls
+            vc1, vc2 = st.columns([1.8, 1.2])
+            with vc1:
+                score_view_mode = st.radio(
+                    "Görünüm Düzeni:",
+                    [
+                        "📊 Hem Grafik Hem Tablo (Entegre Görünüm)",
+                        "📈 Yalnızca Karşılaştırma Grafikleri",
+                        "📋 Yalnızca Detaylı Skor Kartı Tablosu"
+                    ],
+                    index=0,
+                    horizontal=True
+                )
+            with vc2:
+                cat_filter = st.selectbox(
+                    "Tablo Gösterge Grubu Filtresi:",
+                    [
+                        "Tüm Göstergeler (17 Metrik)",
+                        "🎯 Pazar Fırsatı & ZEUS Dağıtım Ağı",
+                        "🏥 Klinik Altyapı & Tedavi Kapasitesi",
+                        "💰 Makroekonomik Güç & Nüfus",
+                        "🔬 Klinik Teknoloji & Regülasyon Rejimi"
+                    ]
+                )
+
+            st.markdown("<br>", unsafe_allow_html=True)
+
+            show_charts = "Grafik" in score_view_mode
+            show_table = "Tablo" in score_view_mode
+
+            # ==================================================================
+            # 1. GÖRSEL KIYASLAMA VE GRAFİK BÖLÜMÜ
+            # ==================================================================
+            if show_charts:
+                # Row 1: Dual Core Strategic Benchmark Charts
+                st.markdown("##### 🎯 1. Stratejik Pazar Fırsatı & Tedavi Kapasitesi Kıyaslaması")
+                b_col1, b_col2 = st.columns(2)
+                
+                with b_col1:
+                    # Score & Risk horizontal bar
+                    score_sorted = cmp_df.sort_values('score', ascending=True)
+                    fig_score = px.bar(
+                        score_sorted,
+                        x='score', y='name', orientation='h',
+                        color='risk',
+                        color_discrete_map={'Low': '#00E676', 'Medium': '#FFB800', 'High': '#FF5252'},
+                        text='score',
+                        title="Pazar Fırsat Skoru (0-100) & Ticari Risk",
+                        labels={'score': 'Fırsat Skoru', 'name': 'Pazar', 'risk': 'Ticari Risk'}
+                    )
+                    fig_score.update_traces(texttemplate='  %{text} / 100', textposition='outside')
+                    fig_score.update_layout(
+                        template='plotly_dark', height=330,
+                        margin=dict(t=40, b=20, l=10, r=40),
+                        xaxis=dict(range=[0, 105], gridcolor='rgba(255,255,255,0.08)'),
+                        yaxis=dict(title=""),
+                        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
+                    )
+                    st.plotly_chart(fig_score, use_container_width=True)
+
+                with b_col2:
+                    # Cycles & Clinics grouped comparison
+                    cycles_sorted = cmp_df.sort_values('cycles', ascending=False)
+                    fig_cycles_bar = px.bar(
+                        cycles_sorted,
+                        x='name', y='cycles',
+                        color='name',
+                        color_discrete_sequence=['#00F5FF', '#13A6B5', '#7C93BD', '#FFB800', '#00E676', '#FF5252'],
+                        text='cycles',
+                        title="Yıllık Tahmini IVF Siklus Hacmi (Tedavi Sayısı)",
+                        labels={'cycles': 'Yıllık Siklus', 'name': 'Pazar'}
+                    )
+                    fig_cycles_bar.update_traces(texttemplate='%{text:,.0f} Siklus', textposition='outside')
+                    fig_cycles_bar.update_layout(
+                        template='plotly_dark', showlegend=False, height=330,
+                        margin=dict(t=40, b=20, l=10, r=10),
+                        yaxis=dict(gridcolor='rgba(255,255,255,0.08)'),
+                        xaxis=dict(title="")
+                    )
+                    st.plotly_chart(fig_cycles_bar, use_container_width=True)
+
+                # Row 2: 360° Radar Comparison & Dynamic Metric Visualizer
+                st.markdown("##### 🌐 2. 360° Çok Boyutlu Pazar Radarı & Dinamik Gösterge Kıyaslayıcı")
+                r_col1, r_col2 = st.columns([1.1, 1])
+
+                with r_col1:
+                    # 360° Spider Radar Chart
+                    radar_cats = ['Fırsat Skoru', 'Kişi Başı Gelir', 'Siklus Hacmi', 'Klinik Yoğunluğu', 'ICSI Adaptasyonu']
+                    fig_radar = go.Figure()
+                    max_cycles = cmp_df['cycles'].max() if cmp_df['cycles'].max() > 0 else 1
+                    max_gdp_pc = cmp_df['gdp_pc'].max() if cmp_df['gdp_pc'].max() > 0 else 1
+                    max_clinics_m = cmp_df['clinics_per_m'].max() if cmp_df['clinics_per_m'].max() > 0 else 1
+
+                    for _, r in cmp_df.iterrows():
+                        vals = [
+                            r['score'],
+                            round((r['gdp_pc'] / max_gdp_pc) * 100, 1),
+                            round((r['cycles'] / max_cycles) * 100, 1),
+                            round((r['clinics_per_m'] / max_clinics_m) * 100, 1),
+                            r['icsi_pct']
+                        ]
+                        vals.append(vals[0])
+                        fig_radar.add_trace(go.Scatterpolar(
+                            r=vals,
+                            theta=radar_cats + [radar_cats[0]],
+                            fill='toself',
+                            name=r['name'],
+                            opacity=0.65
+                        ))
+
+                    fig_radar.update_layout(
+                        polar=dict(
+                            radialaxis=dict(visible=True, range=[0, 100], gridcolor='rgba(255,255,255,0.12)', tickfont=dict(size=8, color='#8A99AD')),
+                            angularaxis=dict(gridcolor='rgba(255,255,255,0.12)', tickfont=dict(size=9.5, color='#CCD7E6'))
+                        ),
+                        template='plotly_dark',
+                        height=360,
+                        margin=dict(t=30, b=30, l=40, r=40),
+                        title="360° Pazar Gücü & Rekabet Radarı",
+                        legend=dict(orientation="h", yanchor="bottom", y=-0.35, xanchor="center", x=0.5)
+                    )
+                    st.plotly_chart(fig_radar, use_container_width=True)
+
+                with r_col2:
+                    # Dynamic metric visualizer
+                    dyn_metric_choice = st.selectbox(
+                        "🔍 Kıyaslanacak Göstergeyi Seçin:",
+                        [
+                            "💰 Kişi Başı GSYİH (GDP Per Capita - USD)",
+                            "🏢 Lisanslı Aktif IVF Klinik Sayısı",
+                            "🌐 Milyon Nüfusa Düşen Klinik Yoğunluğu",
+                            "🧬 ICSI Mikroenjeksiyon Adaptasyonu (%)",
+                            "🔬 PGT Genetik Tanı Oranı (%)",
+                            "❄️ Kriyoprezervasyon Dondurma Oranı (%)",
+                            "🏥 Sağlık Harcaması / GSYİH (%)",
+                            "📈 Klinik Başına Yıllık Ortalama Siklus"
+                        ]
+                    )
+
+                    metric_map = {
+                        "💰 Kişi Başı GSYİH (GDP Per Capita - USD)": ('gdp_pc', '${:,.0f}', 'USD Gelir', '#00E676'),
+                        "🏢 Lisanslı Aktif IVF Klinik Sayısı": ('clinics', '{:,.0f} Klinik', 'Klinik', '#00F5FF'),
+                        "🌐 Milyon Nüfusa Düşen Klinik Yoğunluğu": ('clinics_per_m', '{:.2f} kl./M', 'Klinik / Milyon', '#13A6B5'),
+                        "🧬 ICSI Mikroenjeksiyon Adaptasyonu (%)": ('icsi_pct', '%{:.1f}', 'ICSI %', '#FFB800'),
+                        "🔬 PGT Genetik Tanı Oranı (%)": ('pgt_pct', '%{:.1f}', 'PGT %', '#7C93BD'),
+                        "❄️ Kriyoprezervasyon Dondurma Oranı (%)": ('cryo_pct', '%{:.1f}', 'Cryo %', '#00F5FF'),
+                        "🏥 Sağlık Harcaması / GSYİH (%)": ('health_pct', '%{:.1f}', 'Sağlık Payı %', '#5FD3AE'),
+                        "📈 Klinik Başına Yıllık Ortalama Siklus": ('cycles_per_clinic', '{:,.0f} siklus', 'Siklus/Klinik', '#FF8A96')
+                    }
+                    col_key, fmt_str, y_lbl, bar_clr = metric_map[dyn_metric_choice]
+                    
+                    dyn_sorted = cmp_df.sort_values(col_key, ascending=False)
+                    fig_dyn = px.bar(
+                        dyn_sorted,
+                        x='name', y=col_key,
+                        text=col_key,
+                        color='name',
+                        color_discrete_sequence=['#00F5FF', '#00E676', '#13A6B5', '#FFB800', '#7C93BD', '#FF5252'],
+                        title=f"{dyn_metric_choice} Karşılaştırması",
+                        labels={col_key: y_lbl, 'name': 'Pazar'}
+                    )
+                    
+                    if '{:' in fmt_str:
+                        # build formatted text
+                        fig_dyn.update_traces(
+                            text=[fmt_str.format(v) for v in dyn_sorted[col_key]],
+                            textposition='outside'
+                        )
+                    fig_dyn.update_layout(
+                        template='plotly_dark', showlegend=False, height=360,
+                        margin=dict(t=40, b=20, l=10, r=10),
+                        yaxis=dict(gridcolor='rgba(255,255,255,0.08)', title=y_lbl),
+                        xaxis=dict(title="")
+                    )
+                    st.plotly_chart(fig_dyn, use_container_width=True)
+
+                st.markdown("---")
+
+            # ==================================================================
+            # 2. DETAYLI SKOR KARTI VERİ TABLOSU
+            # ==================================================================
+            if show_table:
+                st.markdown(f"##### 📋 Detaylı Çok Boyutlu Karşılaştırmalı Skor Kartı Tablosu ({cat_filter})")
+                st.caption("Aşağıdaki tablo Dünya Bankası (WDI) ve ESHRE/CDC resmi kayıtlarına dayalı verileri yan yana kıyaslamaktadır.")
+                
+                # Full Master Metrics Registry
+                all_metric_rows = [
+                    # Category 1: Opportunity & ZEUS
+                    {'cat': '🎯 Pazar Fırsatı & ZEUS Dağıtım Ağı', 'name': 'Yetkili Partner / Distribütör', 'extract': lambda r: r['Distributor']},
+                    {'cat': '🎯 Pazar Fırsatı & ZEUS Dağıtım Ağı', 'name': 'Tahmini ZEUS Penetrasyonu %', 'extract': lambda r: r['Penetration %']},
+                    {'cat': '🎯 Pazar Fırsatı & ZEUS Dağıtım Ağı', 'name': 'Pazar Fırsat Skoru', 'extract': lambda r: f"{r['score']} / 100"},
+                    {'cat': '🎯 Pazar Fırsatı & ZEUS Dağıtım Ağı', 'name': 'Ticari Risk Düzeyi', 'extract': lambda r: f"{'🟢' if r['risk']=='Low' else ('🟡' if r['risk']=='Medium' else '🔴')} {r['risk']}"},
+                    
+                    # Category 2: Clinical Infrastructure
+                    {'cat': '🏥 Klinik Altyapı & Tedavi Kapasitesi', 'name': 'Lisanslı Aktif IVF Klinik Sayısı', 'extract': lambda r: f"{r['clinics']:,} Klinik"},
+                    {'cat': '🏥 Klinik Altyapı & Tedavi Kapasitesi', 'name': 'Yıllık Tedavi Siklus Hacmi', 'extract': lambda r: f"{r['cycles']:,} Siklus"},
+                    {'cat': '🏥 Klinik Altyapı & Tedavi Kapasitesi', 'name': 'Milyon Nüfus Başına Klinik Yoğunluğu', 'extract': lambda r: f"{r['clinics_per_m']:.2f} klinik/M"},
+                    {'cat': '🏥 Klinik Altyapı & Tedavi Kapasitesi', 'name': 'Klinik Başına Yıllık Ortalama Siklus', 'extract': lambda r: f"{r['cycles_per_clinic']:,.0f} siklus/kl."},
+                    
+                    # Category 3: Macroeconomics & Demographics
+                    {'cat': '💰 Makroekonomik Güç & Nüfus', 'name': 'Kişi Başı GSYİH (GDP Per Capita)', 'extract': lambda r: f"${r['gdp_pc']:,} USD"},
+                    {'cat': '💰 Makroekonomik Güç & Nüfus', 'name': 'Toplam GSYİH (GDP - Milyar USD)', 'extract': lambda r: f"${r['gdp']:,.1f} Milyar"},
+                    {'cat': '💰 Makroekonomik Güç & Nüfus', 'name': 'Ülke Nüfusu (Milyon Kişi)', 'extract': lambda r: f"{r['pop']:.1f} Milyon"},
+                    {'cat': '💰 Makroekonomik Güç & Nüfus', 'name': 'Sağlık Harcaması / GSYİH %', 'extract': lambda r: f"%{r['health_pct']:.1f}"},
+                    
+                    # Category 4: Technology & Regulation
+                    {'cat': '🔬 Klinik Teknoloji & Regülasyon Rejimi', 'name': 'ICSI Mikroenjeksiyon Adaptasyonu %', 'extract': lambda r: f"%{r['icsi_pct']}"},
+                    {'cat': '🔬 Klinik Teknoloji & Regülasyon Rejimi', 'name': 'PGT Genetik Tanı Oranı %', 'extract': lambda r: f"%{r['pgt_pct']}"},
+                    {'cat': '🔬 Klinik Teknoloji & Regülasyon Rejimi', 'name': 'Kriyoprezervasyon (Dondurma) %', 'extract': lambda r: f"%{r['cryo_pct']}"},
+                    {'cat': '🔬 Klinik Teknoloji & Regülasyon Rejimi', 'name': 'Medikal İthalat Rejimi', 'extract': lambda r: r['import_cond']},
+                    {'cat': '🔬 Klinik Teknoloji & Regülasyon Rejimi', 'name': 'Regülasyon Zorluk Derecesi', 'extract': lambda r: r['regulation']}
+                ]
+
+                # Filter by category if chosen
+                if "Tüm Göstergeler" not in cat_filter:
+                    selected_metric_rows = [m for m in all_metric_rows if m['cat'] == cat_filter]
+                else:
+                    selected_metric_rows = all_metric_rows
+
+                transposed_data = {'Metrik / Gösterge': [m['name'] for m in selected_metric_rows]}
+                for _, r in cmp_df.iterrows():
+                    transposed_data[r['name']] = [m['extract'](r) for m in selected_metric_rows]
+
+                scorecard_df = pd.DataFrame(transposed_data)
+                st.dataframe(scorecard_df, use_container_width=True, hide_index=True)
+
+                # Export CSV button
+                csv_scorecard = scorecard_df.to_csv(index=False).encode('utf-8')
+                st.download_button(
+                    label="📥 Karşılaştırma Skor Kartını CSV Olarak İndir",
+                    data=csv_scorecard,
+                    file_name="ZEUS_Market_Comparison_Scorecard.csv",
+                    mime="text/csv"
+                )
         with comp_tab3:
             st.subheader("🎯 AI Potansiyel Müşteri, Klinik & Distribütör Radarı (AI Prospect Scout)")
             st.caption("Ülkenin klinik siklus kapasitesi, Dünya Bankası alım gücü ve medikal ithalat mevzuatına dayalı öncelikli IVF tüp bebek klinik zincirleri, medikal distribütörler ve akademik araştırma merkezleri.")
