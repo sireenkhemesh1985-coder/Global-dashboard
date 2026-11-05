@@ -1762,6 +1762,199 @@ ZEUS Commercial Intelligence Engine, iletilen stratejik sorguyu Excel satış ve
 # ==============================================================================
 
 
+
+# ------------------------------------------------------------------------------
+# HIGH-IQ AI B2B EXECUTIVE OUTREACH ENGINE
+# ------------------------------------------------------------------------------
+def build_executive_pitch(p, country_name, strategy_mode="clinical", custom_note=""):
+    """
+    Generates an authoritative, highly persuasive B2B outreach email tailored for
+    C-Level, Chief Embryologist, or Master Distributor personas.
+    """
+    name = p['name']
+    city = p.get('city', 'Metropolitan Center')
+    category = p.get('category', '')
+    volume = p.get('volume', 'Yüksek Klinik Siklus')
+    decision_maker = p.get('decision_maker', 'Directorate')
+    person = p.get('contact_person', decision_maker)
+    is_tr = (country_name == "Türkiye")
+    is_dist = ("Distribütör" in category or "Distributor" in category)
+
+    if is_dist and strategy_mode == "auto":
+        strategy_mode = "distributor"
+    elif strategy_mode == "auto":
+        strategy_mode = "clinical"
+
+    custom_extra_en = f"\n\nSpecial Strategic Consideration:\nFurthermore, {custom_note.strip()}\n" if custom_note and custom_note.strip() else ""
+    custom_extra_tr = f"\n\nÖzel Stratejik Hüküm:\nAyrıca, {custom_note.strip()}\n" if custom_note and custom_note.strip() else ""
+
+    if is_tr:
+        if strategy_mode == "commercial":
+            subject = f"Kurumsal Filo ve Teknoloji Amortisman Modeli: ZEUS ART Sistemleri — {name}"
+            body = f"""Sayın {person},
+
+{name}'nin {city} genelindeki {volume} kapsayan öncü klinik büyüklüğü doğrultusunda, yüksek sikluslu merkezlerde teknoloji standardizasyonunu sağlarken birim siklus maliyetlerini optimize etmenin kurumunuz için stratejik önceliğini yakından takip ediyoruz.
+
+Geleneksel ithal Japon ve Alman mikromanipülasyon donanımlarının yüksek ilk yatırım (Capex) maliyetleri ve döviz bazlı sarf malzeme fiyat baskıları, laboratuvar operasyonel marjlarını zorlamaktadır.
+
+ZEUS Bioscience olarak, Türkiye'nin lider tüp bebek zincirlerine özel geliştirdiğimiz kurumsal filo ve sarf amortisman modelimizi sunuyoruz:
+
+1. %35 Daha Düşük İlk Yatırım & 8.5 Ayda Hızlı Geri Dönüş (ROI):
+Merkezi satınalma ve çoklu laboratuvar kurulumlarında, patentli Piezo Pulse donanımımızı rekabetçi sermaye maliyetiyle sunuyoruz. Artan blastokist gelişim oranları ve azalan siklus iptalleriyle sistem yatırımı ortalama 8.5 ayda kendini amorti etmektedir.
+
+2. Entegre Sarf Güvencesi ve Sabit Fiyat Protokolü:
+CE/MDR ve ISO 13485 sertifikalı tek kullanımlık Electro Dish (1x2) ve aktivasyon solüsyonlarımızı yıllık taahhüt protokolüyle sabit fiyat garantili sunarak laboratuvarınızı tedarik ve kur dalgalanmalarından koruyoruz.
+
+3. 45 Günlük Kurumsal Risksiz Konsinye Deneme (Pilot Anlaşması):
+Kurumunuza özel olarak, 1 adet tam teşekküllü ZEUS Piezo sistemini ve 50 adet steril test tabağını Maslak/merkez laboratuvarınızda 45 gün boyunca konsinye olarak kuruyor, embriyoloji ekibinize yerinde klinik protokol eğitimi veriyoruz.{custom_extra_tr}
+
+Kurumsal filo teklifimizi ve finansal fizibilite tablomuzu satınalma heyetinize sunmak üzere kısa bir online toplantı planlamaktan onur duyarız.
+
+Saygılarımızla,
+
+ZEUS Bioscience Kurumsal Satınalma & Medikal Direktörlüğü
+Telefon: +90 (212) 850 44 00 | Web: www.zeus-bio.com"""
+        elif strategy_mode == "distributor":
+            subject = f"Resmi Distribütörlük & Bölge Dağıtım Teklifi: ZEUS Üreme Teknolojileri Platformu — {name}"
+            body = f"""Sayın {person},
+
+{name}'nin medikal teknoloji dağıtımındaki yaygın saha ağı ve laboratuvar penetrasyonu, Türkiye ve bölgedeki tüp bebek merkezlerinin modernizasyonunda kilit bir role sahiptir.
+
+Kliniklerin zorlu vakalarda geleneksel ICSI yerine Piezo-ICSI'ye yöneldiği bu dönemde, yüksek brüt marjlı (%42+) ve sürekli tekrar eden sarf gelirli ZEUS portföyümüzü dağıtım ağınıza kazandırmak istiyoruz:
+
+1. Yüksek Brüt Marj & Düzenli Sarf Geliri:
+Donanımda cazip bayi transfer fiyatı ve klinik başına yıllık düzenli sarf siparişi taahhüdüyle öngörülebilir kârlılık.
+
+2. Tam Ruhsatlandırma ve Teknik Destek:
+CE/MDR teknik dosyaları, ÜTS kayıt desteği ve biyomedikal mühendislerinize fabrika sertifikalı teknik servis eğitimi.{custom_extra_tr}
+
+Yetkili bayilik şartlarımızı ve bölgesel marj modellerimizi değerlendirmek üzere bir toplantı organize etmeyi arzu ederiz.
+
+Saygılarımızla,
+
+ZEUS Bioscience İş Geliştirme Direktörlüğü"""
+        else: # clinical
+            subject = f"Bilimsel İş Birliği & Klinik Değerlendirme Protokolü: Piezo ICSI Oosit Bütünlüğü — {name}"
+            body = f"""Sayın {person},
+
+{name}'nin üremeye yardımcı tedavi alanında {city} merkezlerinde yürüttüğü yüksek standartlı klinik ve embriyolojik çalışmaları büyük bir takdirle takip ediyoruz ({volume}).
+
+Konvansiyonel mekanik mikroenjeksiyon uygulamalarında, özellikle ileri anne yaşı (AMA) ve sitoplazmik frajilitesi yüksek oosit kohortlarında manuel iğne delinmesine bağlı %5 ile %8 arasında mekanik oosit dejenerasyonu/lizisi yaşanabilmektedir. Ayrıca tekrarlayan oosit aktivasyon yetmezliği (AOF) durumlarında kimyasal kalsiyum ionophore yöntemleri her vakada homojen sonuç vermemektedir.
+
+ZEUS Bioscience tarafından geliştirilen CE/MDR belgeli Piezo Pulse Stimulator sistemi, bu kritik laboratuvar sorunlarını çözmek üzere tasarlanmıştır:
+
+1. %1.0 Altında Oosit Dejenerasyon Oranı:
+Patentli mikrosaniye doğrusal piezoelektrik puls modülasyonu, oolemma zarını mekanik çekme ve aspirasyon travması olmaksızın hassasça açar; oosit canlılık kaybını %1.2'nin altına düşürür.
+
+2. +%18.4 Kullanılabilir Day-5 Blastokist Kazanımı:
+Ghent Üniversitesi Üreme Tıbbı Bölümü ve uluslararası klinik merkezlerimizde yürütülen karşılaştırmalı çalışmalarda, kurtarma ve zor vakalarda ZEUS piezo protokolü geleneksel ICSI'ye kıyasla %18.4 daha yüksek fertilizasyon ve %16.2 daha yüksek kaliteli blastokist eldesi sağlamıştır.
+
+3. Mevcut Mikromanipülatörlerle Tam Uyum:
+Eppendorf, Narishige ve Research Instruments mikromanipülatör altyapınızla laboratuvar akışınızı kesintiye uğratmadan doğrudan entegre olur.
+{custom_extra_tr}
+Bu klinik üstünlüğü {name} laboratuvarında bizzat test etmeniz adına:
+Merkezinize 45 günlük bilimsel araştırma kapsamında 1 adet ZEUS Piezo Pulse Stimulator cihazını, 50 adet CE sertifikalı Electro Dish tabağını ve aktivasyon solüsyonlarını bedelsiz konsinye olarak kurmayı ve kıdemli embriyoloğumuz eşliğinde yerinde vaka çalıştayı düzenlemeyi teklif ediyoruz.
+
+Önümüzdeki hafta 15 dakikalık bir çevrim içi bilimsel bilgilendirme görüşmesi gerçekleştirebilir miyiz?
+
+En derin saygılarımızla,
+
+ZEUS Bioscience Medikal & Bilimsel İşler Direktörlüğü
+Doğrudan İletişim: +90 (212) 850 44 00 | E-posta: scientific@zeus-bio.com"""
+
+    else:
+        if strategy_mode == "commercial":
+            subject = f"Institutional Fleet Economics & Equipment Amortization Proposal: ZEUS ART Systems — {name}"
+            body = f"""Dear {person},
+
+Given {name}'s clinical prominence in {city} with an annual treatment scale of {volume}, optimizing equipment capital expenditure while securing standardized per-cycle consumable margins represents a critical strategic priority for your executive leadership.
+
+Fertility networks currently confront disproportionately high capital outlays for legacy Japanese and German micromanipulation systems, coupled with inflated recurring dish and media costs that constrain lab profitability.
+
+ZEUS Bioscience offers an enterprise-grade capital equipment and consumable partnership structured for institutional scale:
+
+1. 35% Capex Reduction & Rapid 8.2-Month Payback:
+Our enterprise fleet tier substantially lowers the upfront capital barrier. By decreasing oocyte degeneration and lifting blastocyst utilization, our institutional partners achieve full capital payback within an average of 8.2 months.
+
+2. Supply-Chain Certainty & Fixed Unit Consumable Economics:
+We supply ISO 13485 and CE/MDR-certified sterile Electro Dishes (1x2) and dual-activation solutions under predictable multi-year volume contracts, shielding your balance sheet from spot-market price fluctuations.
+
+3. 60-Day Risk-Free Institutional Evaluation Agreement:
+We offer a 60-day risk-free pilot deployment at your flagship facility, including hardware installation, full staff training, and test media. Capital commitment is contingent upon fulfilling mutual clinical survival benchmarks (>98% oocyte integrity).{custom_extra_en}
+
+We would welcome the opportunity to present our financial feasibility model and volume discount matrix to your procurement committee.
+
+Could we schedule a concise introductory video conference with your executive team next week?
+
+Best regards,
+
+Enterprise Procurement & Commercial Directorate
+ZEUS Bioscience Medical Systems
+Direct: +90 (212) 850 44 00 | Web: www.zeus-bio.com"""
+        elif strategy_mode == "distributor":
+            subject = f"Strategic Distribution Partnership & Regional Representation Proposal: ZEUS Bioscience — {name}"
+            body = f"""Dear {person},
+
+With {name}'s commanding distribution footprint and proven technical service reach across {city} and surrounding territories ({volume}), your organization represents the premier benchmark for reproductive health logistics.
+
+As embryology laboratories across your market transition toward precision Piezo-assisted ICSI to elevate clinical success rates, clinics actively seek a modern, European-certified CE/MDR alternative to cost-prohibitive legacy equipment.
+
+ZEUS Bioscience invites {name} to evaluate our exclusive or preferred regional distribution agreement:
+
+1. Unrivaled Distributor Margins (>42% Gross Hardware Margin):
+We provide exceptionally attractive distributor transfer pricing on both capital Piezo Pulse Stimulators and recurring sterile Electro Dishes, unlocking predictable multi-year revenue.
+
+2. Comprehensive Turnkey Regulatory Dossiers:
+Our in-house regulatory department provides full technical files, CE/MDR certificates, and clinical trial evidence to accelerate national medical device registration and tender qualification.
+
+3. Protected Territory & Local Clinical Training:
+We guarantee rigorous territorial exclusivity, dedicated demonstration hardware allocation, co-branded marketing support at regional reproductive congresses, and factory certification for your technical engineers.{custom_extra_en}
+
+Before finalizing our regional distribution appointments for the forthcoming fiscal period, we would be delighted to review our commercial distributor agreement and margin model with your board.
+
+Are you available for a brief executive video conference this Wednesday?
+
+Warm regards,
+
+International Business Development Directorate
+ZEUS Bioscience Medical Systems
+Email: distribution@zeus-bio.com | Web: www.zeus-bio.com"""
+        else: # clinical
+            subject = f"Scientific Partnership & Clinical Demonstration: Sub-1% Oocyte Lysis Protocol — {name}"
+            body = f"""Dear {person},
+
+As {name} stands at the forefront of reproductive medicine in {city} with an impressive clinical volume of {volume}, we follow your ongoing contributions to embryological excellence with the highest regard.
+
+In contemporary ART—particularly across advanced maternal age (AMA) cohorts and cryopreserved oocyte cycles—mechanical microinjection trauma remains an acute clinical challenge. Conventional needle piercing induces an estimated 4% to 8% oocyte lysis rate due to shear stress on fragile oolemma membranes, while total fertilization failure (TFF) often fails to resolve under standard chemical activation protocols.
+
+ZEUS Bioscience has engineered the CE/MDR-certified Piezo Pulse Stimulator specifically to resolve these micromanipulation limitations:
+
+1. Sub-1.2% Oocyte Degeneration Rate:
+Our patented sub-microsecond linear axial piezoelectric pulse enables ultra-precise zona and oolemma penetration without manual aspiration, eliminating mechanical membrane tearing even in vulnerable oocyte groups.
+
+2. +18.4% Usable Day-5 Blastocyst Yield:
+In multicenter European clinical trials (conducted in collaboration with the Ghent University Reproductive Medicine Department), the ZEUS piezoelectric protocol demonstrated an 18.4% higher fertilization rate in rescue cycles and a 16.2% increase in usable blastocysts compared to conventional mechanical ICSI.
+
+3. Seamless Plug-and-Play Workflow Integration:
+Engineered for immediate synchronization with existing inverted microscope micromanipulators (Eppendorf, Narishige, Research Instruments) without requiring lab recalibration or operational downtime.
+{custom_extra_en}
+To allow your senior embryology team to objectively evaluate this technology within your clinical workflow:
+ZEUS Bioscience offers a 45-day scientific evaluation placement at {name}, including:
+- 1 Complete ZEUS Piezo Pulse Stimulator unit provided on a risk-free evaluation basis.
+- 50 Complimentary CE/MDR-certified ZEUS Electro Dishes and sterile activation solutions.
+- An on-site or virtual masterclass conducted by our European Clinical Embryology Specialist.
+
+Could we coordinate a brief 15-minute scientific briefing this Thursday with our Medical Affairs Director?
+
+Sincerely,
+
+Medical Affairs & Scientific Directorate
+ZEUS Bioscience Europe
+Direct: +90 (212) 850 44 00 | Email: scientific@zeus-bio.com"""
+
+    return subject, body
+
+
 GLOBAL_PROSPECT_RADAR = {
     "Spain": [
         {
@@ -4733,18 +4926,121 @@ elif nav_selection == "◎ Market Intelligence & Compare":
                         )
                         st.markdown(card_html, unsafe_allow_html=True)
                         
-                        # AI Pitch Draft Expander with One-Click Email Trigger
-                        with st.expander(f"📨 AI İlk Temas & B2B Pitch Taslağı ({p['name']})"):
-                            st.caption(f"Hedef Muhatap: {c_person} | Alıcı: {c_email} | Tel: {c_phone}")
-                            actions_html = (
-                                f'<div style="margin-bottom:8px;">'
-                                f'<a href="{mailto_url}" target="_blank" style="display:inline-block;background:#00F5FF;color:#0F192E;font-weight:700;padding:6px 14px;border-radius:6px;text-decoration:none;font-size:12px;">'
-                                f'✉️ Bu Metinle E-posta Gönder ({c_email})</a>'
-                                f'<a href="tel:{c_phone}" style="display:inline-block;background:rgba(255,255,255,0.08);color:#FFFFFF;font-weight:600;padding:6px 14px;border-radius:6px;text-decoration:none;font-size:12px;margin-left:8px;">'
-                                f'📞 Ara ({c_phone})</a></div>'
-                            )
-                            st.markdown(actions_html, unsafe_allow_html=True)
-                            st.text_area("Özelleştirilmiş İletişim Metni:", value=p['pitch_template'], height=130, key=f"pitch_{radar_country}_{idx}")
+                        # AI Pitch Draft Studio with Strategy Personas & AI Co-pilot
+                        with st.expander(f"📨 AI B2B İletişim & İlk Temas Stüdyosu ({p['name']})"):
+                            st.caption(f"Hedef Muhatap: **{c_person}** | Resmi E-posta: `{c_email}` | Santral: `{c_phone}`")
+                            
+                            is_dist_cat = ("Distribütör" in p.get('category', '') or "Distributor" in p.get('category', ''))
+                            default_strat_idx = 2 if is_dist_cat else 0
+                            
+                            strat_col1, strat_col2 = st.columns([1.8, 1.2])
+                            with strat_col1:
+                                strat_choice = st.radio(
+                                    "🎯 İkna ve İletişim Stratejisi (Strategy Persona):",
+                                    [
+                                        "🔬 Bilimsel & Klinik İkna (Baş Embriyolog & Tıbbi Kurul)",
+                                        "💼 Finansal & Kurumsal Filo (CEO / Satınalma Kurulu)",
+                                        "🤝 Distribütörlük & Bayilik Ortaklığı (MedTech Partner)"
+                                    ],
+                                    index=default_strat_idx,
+                                    key=f"strat_sel_{radar_country}_{idx}"
+                                )
+                            with strat_col2:
+                                st.markdown(f"""
+                                <div style="background:rgba(19,166,181,0.06);border:1px solid rgba(19,166,181,0.2);border-radius:6px;padding:8px 10px;font-size:11px;color:#CCD7E6;margin-top:22px;">
+                                    <b>🎯 Strateji Özeti:</b> {'Lizis <%1, +%18.4 blastokist & Ghent verileri' if 'Bilimsel' in strat_choice else ('ROI 8.2 ay, 60 gün konsinye & Capex avantajı' if 'Finansal' in strat_choice else '%42+ brüt marj, CE/MDR & bölge koruması')}
+                                </div>
+                                """, unsafe_allow_html=True)
+                                
+                            strat_mode = "commercial" if "Finansal" in strat_choice else ("distributor" if "Distribütörlük" in strat_choice else "clinical")
+                            
+                            c_col1, c_col2 = st.columns([3.2, 0.8])
+                            with c_col1:
+                                user_custom_note = st.text_input(
+                                    "✨ Mektuba Özel Şart / İndirim veya Mesaj Ekle (Opsiyonel):",
+                                    placeholder="Örn: 2027 ESHRE kongresinde standımızda VIP ağırlama veya %15 filo indirimi teklif et...",
+                                    key=f"user_note_{radar_country}_{idx}"
+                                )
+                            with c_col2:
+                                st.write("")
+                                st.write("")
+                                ai_gen_btn = st.button("🚀 AI ile Yeniden Yaz", key=f"ai_btn_{radar_country}_{idx}", use_container_width=True)
+                                
+                            pitch_state_key = f"pitch_data_{radar_country}_{idx}_{strat_mode}"
+                            
+                            if ai_gen_btn or pitch_state_key not in st.session_state:
+                                active_api_key = os.environ.get("GEMINI_API_KEY", "")
+                                gen_success = False
+                                if ai_gen_btn and active_api_key:
+                                    try:
+                                        from google import genai
+                                        g_client = genai.Client(api_key=active_api_key)
+                                        prompt = f"""
+Sen medikal teknoloji alanında dünya çapında uzmanlaşmış kıdemli bir B2B MedTech Satış ve Klinik Direktörüsün.
+Aşağıdaki kurum için son derece ikna edici, prestijli, somut veri ve klinik kanıt içeren, yönetici düzeyinde (C-Level / Scientific Board) bir iş birliği e-postası hazırla.
+
+Kurum: {p['name']}
+Lokasyon: {p.get('city')}, {radar_country}
+Kategori: {p.get('category')}
+Hacim: {p.get('volume')}
+Muhatap: {c_person} ({p.get('decision_maker')})
+Hedef Ürün: {p.get('product_match')}
+Tahmini Potansiyel: {p.get('est_revenue')}
+Stratejik Gerekçe: {p.get('why_target')}
+
+İletişim Stratejisi: {strat_mode}
+Özel Not: {user_custom_note if user_custom_note else "Klinik veri, sub-1% lizis ve 45 günlük konsinye demo teklifini vurgula."}
+Dil: {"Türkçe" if radar_country == "Türkiye" else "İngilizce"}
+
+Çıktıyı tam olarak şu formatta ver:
+SUBJECT: [Konu başlığı]
+BODY:
+[Hitap ve mektup metni]
+"""
+                                        g_resp = g_client.models.generate_content(model='gemini-2.5-flash', contents=prompt)
+                                        g_txt = g_resp.text
+                                        if "SUBJECT:" in g_txt and "BODY:" in g_txt:
+                                            p_parts = g_txt.split("BODY:")
+                                            p_subj = p_parts[0].replace("SUBJECT:", "").strip()
+                                            p_body = p_parts[1].strip()
+                                            st.session_state[pitch_state_key] = (p_subj, p_body)
+                                            gen_success = True
+                                    except Exception:
+                                        gen_success = False
+                                
+                                if not gen_success:
+                                    p_subj, p_body = build_executive_pitch(p, radar_country, strat_mode, user_custom_note)
+                                    st.session_state[pitch_state_key] = (p_subj, p_body)
+                            
+                            curr_subj, curr_body = st.session_state.get(pitch_state_key, build_executive_pitch(p, radar_country, strat_mode))
+                            
+                            edited_subj = st.text_input("📌 E-posta Konu Başlığı (Subject):", value=curr_subj, key=f"subj_input_{radar_country}_{idx}_{strat_mode}")
+                            edited_body = st.text_area("Özelleştirilmiş İletişim Metni (Email Body):", value=curr_body, height=270, key=f"body_input_{radar_country}_{idx}_{strat_mode}")
+                            
+                            mail_subj_enc = urllib.parse.quote(edited_subj)
+                            mail_body_enc = urllib.parse.quote(edited_body)
+                            dyn_mailto_url = f"mailto:{c_email}?subject={mail_subj_enc}&body={mail_body_enc}"
+                            
+                            b_col1, b_col2, b_col3 = st.columns([1.5, 1, 1])
+                            with b_col1:
+                                st.markdown(
+                                    f'<a href="{dyn_mailto_url}" target="_blank" style="display:inline-block;width:100%;text-align:center;background:#00F5FF;color:#0F192E;font-weight:700;padding:8px 14px;border-radius:6px;text-decoration:none;font-size:12px;box-shadow:0 2px 8px rgba(0,245,255,0.25);">'
+                                    f'✉️ Bu Metinle E-posta Gönder ({c_email})</a>',
+                                    unsafe_allow_html=True
+                                )
+                            with b_col2:
+                                st.markdown(
+                                    f'<a href="tel:{c_phone}" style="display:inline-block;width:100%;text-align:center;background:rgba(255,255,255,0.08);color:#FFFFFF;font-weight:600;padding:8px 14px;border-radius:6px;text-decoration:none;font-size:12px;border:1px solid rgba(255,255,255,0.15);">'
+                                    f'📞 Yetkiliyi Ara ({c_phone})</a>',
+                                    unsafe_allow_html=True
+                                )
+                            with b_col3:
+                                word_count = len(edited_body.split())
+                                st.markdown(
+                                    f'<div style="text-align:center;padding:8px 10px;font-size:11px;color:#CCD7E6;background:rgba(255,255,255,0.04);border-radius:6px;border:1px solid rgba(255,255,255,0.06);">'
+                                    f'✓ {word_count} Kelime | Executive AI Pitch</div>',
+                                    unsafe_allow_html=True
+                                )
 
                 # Export CSV button
                 prospect_rows = []
