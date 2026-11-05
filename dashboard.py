@@ -4239,48 +4239,48 @@ Immediate Resolution: ZEUS Bioscience is actively incorporating this feedback in
                 badge_role = reval_data['role']
                 badge_note = reval_data['note']
                 badge_date = reval_data.get('date', '')
-                reval_badge_html = f"""
-                <div style="background:rgba(95,211,174,0.12); border:1px solid #5FD3AE; border-radius:8px; padding:10px 14px; margin-bottom:12px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span style="color:#5FD3AE; font-weight:700; font-size:12.5px;">✅ UZMAN GÖRÜŞÜ ENTEGRE EDİLDİ ({badge_role.upper()})</span>
-                        <span style="color:#A0AEC0; font-size:11px;">Revizyon Tarihi: {badge_date}</span>
-                    </div>
-                    <div style="font-size:12px; color:#CCD7E6; margin-top:5px; line-height:1.45;">
-                        <b>🩺 İşlenen Uzman & Saha Notu:</b> <i>\"{badge_note}\"</i>
-                    </div>
-                </div>
-                """
+                reval_badge_html = (
+                    f'<div style="background:rgba(95,211,174,0.12); border:1px solid #5FD3AE; border-radius:8px; padding:10px 14px; margin-bottom:12px;">'
+                    f'<div style="display:flex; justify-content:space-between; align-items:center;">'
+                    f'<span style="color:#5FD3AE; font-weight:700; font-size:12.5px;">✅ UZMAN GÖRÜŞÜ ENTEGRE EDİLDİ ({badge_role.upper()})</span>'
+                    f'<span style="color:#A0AEC0; font-size:11px;">Revizyon Tarihi: {badge_date}</span>'
+                    f'</div>'
+                    f'<div style="font-size:12px; color:#CCD7E6; margin-top:5px; line-height:1.45;">'
+                    f'<b>🩺 İşlenen Uzman & Saha Notu:</b> <i>"{badge_note}"</i>'
+                    f'</div>'
+                    f'</div>'
+                )
             else:
                 active_diag = diag_text
                 active_steps = ai_action_steps
                 active_letter = letter_body
                 reval_badge_html = ""
 
-            st.markdown(f"""
-            <div style="background:#0F192E; border:1px solid rgba(19,166,181,0.3); border-radius:12px; padding:18px 20px; margin-bottom:18px; box-shadow:0 4px 14px rgba(0,0,0,0.3);">
-                <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
-                    <div>{title_html}</div>
-                    <div>{badge_html}</div>
-                </div>
-                <div style="background:rgba(255,255,255,0.03); border-radius:8px; padding:10px 14px; margin-bottom:12px; font-size:12.5px; color:#CCD7E6;">
-                    {fact_html}
-                </div>
-                {reval_badge_html}
-                <div style="font-size:13px; color:#CCD7E6; margin-bottom:10px; line-height:1.55;">
-                    <b style="color:#00F5FF;">🔍 Klinik & Ticari Kök Neden:</b> {active_diag}
-                </div>
-                <div style="font-size:13px; color:#CCD7E6; margin-bottom:12px; line-height:1.55;">
-                    <b style="color:#5FD3AE;">🤖 Yapay Zeka Somut Eylem Planı:</b>
-                    <ol style="margin-top:4px; margin-bottom:4px; padding-left:20px;">
-                        {''.join(f'<li style="margin-bottom:3px;">{step}</li>' for step in active_steps)}
-                    </ol>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+            steps_list_html = ''.join(f'<li style="margin-bottom:3px;">{step}</li>' for step in active_steps)
+            card_html = (
+                f'<div style="background:#0F192E; border:1px solid rgba(19,166,181,0.3); border-radius:12px; padding:18px 20px; margin-bottom:18px; box-shadow:0 4px 14px rgba(0,0,0,0.3);">'
+                f'<div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">'
+                f'<div>{title_html}</div><div>{badge_html}</div>'
+                f'</div>'
+                f'<div style="background:rgba(255,255,255,0.03); border-radius:8px; padding:10px 14px; margin-bottom:12px; font-size:12.5px; color:#CCD7E6;">'
+                f'{fact_html}'
+                f'</div>'
+                f'{reval_badge_html}'
+                f'<div style="font-size:13px; color:#CCD7E6; margin-bottom:10px; line-height:1.55;">'
+                f'<b style="color:#00F5FF;">🔍 Klinik & Ticari Kök Neden:</b> {active_diag}'
+                f'</div>'
+                f'<div style="font-size:13px; color:#CCD7E6; margin-bottom:12px; line-height:1.55;">'
+                f'<b style="color:#5FD3AE;">🤖 Yapay Zeka Somut Eylem Planı:</b>'
+                f'<ol style="margin-top:4px; margin-bottom:4px; padding-left:20px;">{steps_list_html}</ol>'
+                f'</div>'
+                f'</div>'
+            )
+            st.markdown(card_html, unsafe_allow_html=True)
 
             # ------------------------------------------------------------------
             # Interactive Expert Review & Field Intelligence Panel
             # ------------------------------------------------------------------
+
             with st.expander(f"🩺 Uzman Değerlendirme & Saha Notu Ekle (AI ile Yeniden Değerlendir)", expanded=bool(reval_data)):
                 st.markdown("""
                 <div style="font-size:12.5px; color:#A0AEC0; margin-bottom:8px;">
@@ -4360,19 +4360,17 @@ Immediate Resolution: ZEUS Bioscience is actively incorporating this feedback in
 
                 if run_ai_btn or st.session_state.get(f'ran_ai_{case_id}', False):
                     st.session_state[f'ran_ai_{case_id}'] = True
-                    st.markdown(f"""
-                    <div style="background:rgba(19,166,181,0.06); border-left:4px solid #00F5FF; padding:14px; border-radius:8px; margin-top:10px;">
-                        <div style="font-weight:700; color:#00F5FF; font-size:13.5px; margin-bottom:6px;">
-                            📋 ZEUS AI YÖNETİCİ EYLEM NOTU: {case_id.upper()} ({tone_sel})
-                        </div>
-                        <div style="font-size:12.5px; color:#CCD7E6; line-height:1.55;">
-                            <b>1. Finansal Maruziyet Analizi:</b> {ai_memo_data['financial']}<br>
-                            <b>2. Müzakere Kaldıracı:</b> {ai_memo_data['leverage']}<br>
-                            <b>3. Sözleşmesel Hüküm Önerisi:</b> <code>{ai_memo_data['clause']}</code><br>
-                            <b>4. Hedef Finansal Geri Kazanım:</b> <span style="color:#5FD3AE;font-weight:700;">{ai_memo_data['recovery']}</span>
-                        </div>
-                    </div>
-                    """, unsafe_allow_html=True)
+                    memo_html = (
+                        f'<div style="background:rgba(19,166,181,0.06); border-left:4px solid #00F5FF; padding:14px; border-radius:8px; margin-top:10px;">'
+                        f'<div style="font-weight:700; color:#00F5FF; font-size:13.5px; margin-bottom:6px;">📋 ZEUS AI YÖNETİCİ EYLEM NOTU: {case_id.upper()} ({tone_sel})</div>'
+                        f'<div style="font-size:12.5px; color:#CCD7E6; line-height:1.55;">'
+                        f'<b>1. Finansal Maruziyet Analizi:</b> {ai_memo_data["financial"]}<br>'
+                        f'<b>2. Müzakere Kaldıracı:</b> {ai_memo_data["leverage"]}<br>'
+                        f'<b>3. Sözleşmesel Hüküm Önerisi:</b> <code>{ai_memo_data["clause"]}</code><br>'
+                        f'<b>4. Hedef Finansal Geri Kazanım:</b> <span style="color:#5FD3AE;font-weight:700;">{ai_memo_data["recovery"]}</span>'
+                        f'</div></div>'
+                    )
+                    st.markdown(memo_html, unsafe_allow_html=True)
         # Card 1: SELLCO TRADING INTL (UAE - International Direct Customer)
         # ----------------------------------------------------------------------
         if show_red:
