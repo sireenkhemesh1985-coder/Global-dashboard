@@ -1810,7 +1810,8 @@ with st.sidebar:
     st.image("assets/zeus_logo_white.png")
     st.markdown('''
     <div style="margin-top: -6px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid rgba(19, 166, 181, 0.25); text-align: center;">
-        <span style="font-size: 11px; font-weight: 700; color: #00F5FF; letter-spacing: 0.08em; text-transform: uppercase;">Global Market Intelligence</span>
+        <div style="font-size: 11px; font-weight: 700; color: #00F5FF; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px;">Global Market Intelligence</div>
+        <div style="font-size: 13px; font-weight: 600; color: #FFFFFF; letter-spacing: 0.04em;">Sireen Khemesh</div>
     </div>
     ''', unsafe_allow_html=True)
     
