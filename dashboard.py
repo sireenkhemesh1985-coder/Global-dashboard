@@ -3562,21 +3562,62 @@ if nav_selection == "Executive Dashboard":
     with col_h2:
         st.markdown(f"<div style='text-align:right;padding-top:10px;'><span class='chip chip-ok'>System Online</span><br><small style='color:#8FA3C0;'>Period: {range_sel} {year_sel}</small></div>", unsafe_allow_html=True)
 
-    # 6 Top KPIs
+    # Portföy Segmentasyonu: Distribütörler vs Herkes Dahil (Tüm Klinikler & Hastaneler)
+    c_sc1, c_sc2 = st.columns([3.2, 1.8])
+    with c_sc1:
+        exec_scope = st.radio(
+            "Portföy Analiz Kapsamı",
+            [
+                "🌐 Tüm Ekosistem (Herkes Dahil - 43 Kurum)",
+                "🤝 Yalnızca Yetkili Distribütörler (6 Hub)",
+                "🏥 Doğrudan Klinikler & Hastaneler (37 Kurum)"
+            ],
+            index=0,
+            horizontal=True,
+            label_visibility="collapsed",
+            key="exec_scope_toggle"
+        )
+    with c_sc2:
+        st.markdown('''
+        <div style="text-align:right;padding-top:4px;">
+            <span style="font-size:11.5px;color:#94A3B8;">Kanal Kırılımı: </span>
+            <span style="font-size:11.5px;color:#00F5FF;font-weight:700;">Distribütör: %69.1 ($148.6K)</span>
+            <span style="color:#64748B;"> | </span>
+            <span style="font-size:11.5px;color:#FFB800;font-weight:700;">Klinikler: %30.9 ($66.4K)</span>
+        </div>
+        ''', unsafe_allow_html=True)
+
+    if "Distribütörler" in exec_scope:
+        sc_rows = dist_rows
+    elif "Klinikler" in exec_scope:
+        sc_rows = [d for d in active_rows if d not in dist_rows]
+    else:
+        sc_rows = active_rows
+
+    sc_total_rev = sum(d['revenue'] for d in sc_rows)
+    sc_total_dev_rev = sum(d['device_rev'] for d in sc_rows)
+    sc_total_con_rev = sc_total_rev - sc_total_dev_rev
+    sc_total_devices = sum(d['devices_count'] for d in sc_rows)
+    sc_avg_margin = (sum(d['margin_pct'] * d['revenue'] for d in sc_rows) / sc_total_rev) if sc_total_rev > 0 else 0.0
+    sc_avg_growth = (sum(d['growth_pct'] * d['revenue'] for d in sc_rows) / sc_total_rev) if sc_total_rev > 0 else 0.0
+    sc_n_partners = len(sc_rows)
+    sc_n_countries = len(set(d['id'] for d in sc_rows))
+
+    # 6 Top KPIs (Dinamik Segmentasyonlu)
     k1, k2, k3, k4, k5, k6 = st.columns(6)
     with k1:
         st.markdown(f"""
         <div class="kpi-container">
             <div class="kpi-header">Net Sales</div>
-            <div class="kpi-val">{format_curr(total_rev)}</div>
-            <div class="kpi-sub kpi-pos">+{avg_growth:.1f}% vs LY</div>
+            <div class="kpi-val">{format_curr(sc_total_rev)}</div>
+            <div class="kpi-sub kpi-pos">+{sc_avg_growth:.1f}% vs LY</div>
         </div>
         """, unsafe_allow_html=True)
     with k2:
         st.markdown(f"""
         <div class="kpi-container">
             <div class="kpi-header">Active Partners</div>
-            <div class="kpi-val">{n_active_dists}</div>
+            <div class="kpi-val">{sc_n_partners}</div>
             <div class="kpi-sub kpi-pos">+2 in 2026</div>
         </div>
         """, unsafe_allow_html=True)
@@ -3584,7 +3625,7 @@ if nav_selection == "Executive Dashboard":
         st.markdown(f"""
         <div class="kpi-container">
             <div class="kpi-header">Devices Placed</div>
-            <div class="kpi-val">{total_devices:,}</div>
+            <div class="kpi-val">{sc_total_devices:,}</div>
             <div class="kpi-sub kpi-pos">+{avg_growth*0.9:.1f}% Units</div>
         </div>
         """, unsafe_allow_html=True)
@@ -3592,7 +3633,7 @@ if nav_selection == "Executive Dashboard":
         st.markdown(f"""
         <div class="kpi-container">
             <div class="kpi-header">Consumables</div>
-            <div class="kpi-val">{format_curr(total_con_rev)}</div>
+            <div class="kpi-val">{format_curr(sc_total_con_rev)}</div>
             <div class="kpi-sub kpi-pos">+{(avg_growth+3.1):.1f}% Rec.</div>
         </div>
         """, unsafe_allow_html=True)
@@ -3600,7 +3641,7 @@ if nav_selection == "Executive Dashboard":
         st.markdown(f"""
         <div class="kpi-container">
             <div class="kpi-header">Gross Margin</div>
-            <div class="kpi-val">{avg_margin:.1f}%</div>
+            <div class="kpi-val">{sc_avg_margin:.1f}%</div>
             <div class="kpi-sub kpi-pos">+0.8 pt vs Target</div>
         </div>
         """, unsafe_allow_html=True)
@@ -3608,7 +3649,7 @@ if nav_selection == "Executive Dashboard":
         st.markdown(f"""
         <div class="kpi-container">
             <div class="kpi-header">Covered Mkts</div>
-            <div class="kpi-val">{n_countries}</div>
+            <div class="kpi-val">{sc_n_countries}</div>
             <div class="kpi-sub kpi-neu">of 48 Tracked</div>
         </div>
         """, unsafe_allow_html=True)
@@ -4312,56 +4353,140 @@ if nav_selection == "Executive Dashboard":
         else:
             st.plotly_chart(fig_map_dist, use_container_width=True)
 
-        # 6 Distributor Glass Performance Cards
+        # 6 Distributor Glass Performance Cards (Cihaz & Sarf / Consumable Çift Metrik)
         st.markdown('''
-        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));gap:10px;margin-top:12px;">
-            <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(0,245,255,0.3);border-top:3px solid #00F5FF;border-radius:10px;padding:9px 12px;backdrop-filter:blur(12px);">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(195px, 1fr));gap:10px;margin-top:12px;">
+            <div style="background:rgba(15,23,42,0.65);border:1px solid rgba(0,245,255,0.3);border-top:3px solid #00F5FF;border-radius:10px;padding:10px 12px;backdrop-filter:blur(12px);">
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                     <span style="font-size:12px;font-weight:700;color:#FFFFFF;">SIRIUS PHARM</span>
                     <span style="font-size:10px;color:#00F5FF;font-weight:600;">ÜRDÜN - IRAK</span>
                 </div>
-                <div style="font-size:16px;font-weight:800;color:#00F5FF;margin-top:4px;">18 Cihaz</div>
-                <div style="font-size:11px;color:#94A3B8;">$165.3K Kümülatif Ciro</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;background:rgba(0,0,0,0.25);padding:6px 8px;border-radius:6px;margin-top:7px;border:1px solid rgba(255,255,255,0.06);">
+                    <div>
+                        <div style="font-size:9.5px;color:#94A3B8;font-weight:600;">🔬 CİHAZ</div>
+                        <div style="font-size:14px;font-weight:800;color:#00F5FF;margin-top:1px;">18 Adet</div>
+                        <div style="font-size:10px;color:#64748B;">$112.1K</div>
+                    </div>
+                    <div>
+                        <div style="font-size:9.5px;color:#94A3B8;font-weight:600;">🧪 SARF (CON.)</div>
+                        <div style="font-size:14px;font-weight:800;color:#FFB800;margin-top:1px;">675 Kutu</div>
+                        <div style="font-size:10px;color:#64748B;">$53.1K</div>
+                    </div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-top:7px;padding-top:5px;border-top:1px dashed rgba(255,255,255,0.08);font-size:11px;">
+                    <span style="color:#94A3B8;">Kümülatif Hasılat:</span>
+                    <span style="font-weight:800;color:#10B981;font-size:11.5px;">$165.3K</span>
+                </div>
             </div>
-            <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(0,245,255,0.3);border-top:3px solid #00F5FF;border-radius:10px;padding:9px 12px;backdrop-filter:blur(12px);">
+            <div style="background:rgba(15,23,42,0.65);border:1px solid rgba(0,245,255,0.3);border-top:3px solid #00F5FF;border-radius:10px;padding:10px 12px;backdrop-filter:blur(12px);">
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                     <span style="font-size:12px;font-weight:700;color:#FFFFFF;">ITL</span>
                     <span style="font-size:10px;color:#00F5FF;font-weight:600;">KATAR</span>
                 </div>
-                <div style="font-size:16px;font-weight:800;color:#00F5FF;margin-top:4px;">4 Cihaz</div>
-                <div style="font-size:11px;color:#94A3B8;">$72.9K Kümülatif Ciro</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;background:rgba(0,0,0,0.25);padding:6px 8px;border-radius:6px;margin-top:7px;border:1px solid rgba(255,255,255,0.06);">
+                    <div>
+                        <div style="font-size:9.5px;color:#94A3B8;font-weight:600;">🔬 CİHAZ</div>
+                        <div style="font-size:14px;font-weight:800;color:#00F5FF;margin-top:1px;">4 Adet</div>
+                        <div style="font-size:10px;color:#64748B;">$35.5K</div>
+                    </div>
+                    <div>
+                        <div style="font-size:9.5px;color:#94A3B8;font-weight:600;">🧪 SARF (CON.)</div>
+                        <div style="font-size:14px;font-weight:800;color:#FFB800;margin-top:1px;">449 Kutu</div>
+                        <div style="font-size:10px;color:#64748B;">$37.4K</div>
+                    </div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-top:7px;padding-top:5px;border-top:1px dashed rgba(255,255,255,0.08);font-size:11px;">
+                    <span style="color:#94A3B8;">Kümülatif Hasılat:</span>
+                    <span style="font-weight:800;color:#10B981;font-size:11.5px;">$72.9K</span>
+                </div>
             </div>
-            <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(0,245,255,0.3);border-top:3px solid #00F5FF;border-radius:10px;padding:9px 12px;backdrop-filter:blur(12px);">
+            <div style="background:rgba(15,23,42,0.65);border:1px solid rgba(0,245,255,0.3);border-top:3px solid #00F5FF;border-radius:10px;padding:10px 12px;backdrop-filter:blur(12px);">
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                     <span style="font-size:12px;font-weight:700;color:#FFFFFF;">SJNU INC</span>
                     <span style="font-size:10px;color:#00F5FF;font-weight:600;">GÜNEY KORE</span>
                 </div>
-                <div style="font-size:16px;font-weight:800;color:#00F5FF;margin-top:4px;">7 Cihaz</div>
-                <div style="font-size:11px;color:#94A3B8;">$68.6K Kümülatif Ciro</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;background:rgba(0,0,0,0.25);padding:6px 8px;border-radius:6px;margin-top:7px;border:1px solid rgba(255,255,255,0.06);">
+                    <div>
+                        <div style="font-size:9.5px;color:#94A3B8;font-weight:600;">🔬 CİHAZ</div>
+                        <div style="font-size:14px;font-weight:800;color:#00F5FF;margin-top:1px;">7 Adet</div>
+                        <div style="font-size:10px;color:#64748B;">$51.5K</div>
+                    </div>
+                    <div>
+                        <div style="font-size:9.5px;color:#94A3B8;font-weight:600;">🧪 SARF (CON.)</div>
+                        <div style="font-size:14px;font-weight:800;color:#FFB800;margin-top:1px;">198 Kutu</div>
+                        <div style="font-size:10px;color:#64748B;">$17.1K</div>
+                    </div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-top:7px;padding-top:5px;border-top:1px dashed rgba(255,255,255,0.08);font-size:11px;">
+                    <span style="color:#94A3B8;">Kümülatif Hasılat:</span>
+                    <span style="font-weight:800;color:#10B981;font-size:11.5px;">$68.6K</span>
+                </div>
             </div>
-            <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(0,245,255,0.3);border-top:3px solid #00F5FF;border-radius:10px;padding:9px 12px;backdrop-filter:blur(12px);">
+            <div style="background:rgba(15,23,42,0.65);border:1px solid rgba(0,245,255,0.3);border-top:3px solid #00F5FF;border-radius:10px;padding:10px 12px;backdrop-filter:blur(12px);">
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                     <span style="font-size:12px;font-weight:700;color:#FFFFFF;">CMC</span>
                     <span style="font-size:10px;color:#00F5FF;font-weight:600;">FİLİSTİN</span>
                 </div>
-                <div style="font-size:16px;font-weight:800;color:#00F5FF;margin-top:4px;">5 Cihaz</div>
-                <div style="font-size:11px;color:#94A3B8;">$46.7K Kümülatif Ciro</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;background:rgba(0,0,0,0.25);padding:6px 8px;border-radius:6px;margin-top:7px;border:1px solid rgba(255,255,255,0.06);">
+                    <div>
+                        <div style="font-size:9.5px;color:#94A3B8;font-weight:600;">🔬 CİHAZ</div>
+                        <div style="font-size:14px;font-weight:800;color:#00F5FF;margin-top:1px;">5 Adet</div>
+                        <div style="font-size:10px;color:#64748B;">$38.0K</div>
+                    </div>
+                    <div>
+                        <div style="font-size:9.5px;color:#94A3B8;font-weight:600;">🧪 SARF (CON.)</div>
+                        <div style="font-size:14px;font-weight:800;color:#FFB800;margin-top:1px;">115 Kutu</div>
+                        <div style="font-size:10px;color:#64748B;">$8.7K</div>
+                    </div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-top:7px;padding-top:5px;border-top:1px dashed rgba(255,255,255,0.08);font-size:11px;">
+                    <span style="color:#94A3B8;">Kümülatif Hasılat:</span>
+                    <span style="font-weight:800;color:#10B981;font-size:11.5px;">$46.7K</span>
+                </div>
             </div>
-            <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(0,245,255,0.3);border-top:3px solid #00F5FF;border-radius:10px;padding:9px 12px;backdrop-filter:blur(12px);">
+            <div style="background:rgba(15,23,42,0.65);border:1px solid rgba(0,245,255,0.3);border-top:3px solid #00F5FF;border-radius:10px;padding:10px 12px;backdrop-filter:blur(12px);">
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                     <span style="font-size:12px;font-weight:700;color:#FFFFFF;">AMS</span>
                     <span style="font-size:10px;color:#00F5FF;font-weight:600;">SUUDİ ARABİSTAN</span>
                 </div>
-                <div style="font-size:16px;font-weight:800;color:#00F5FF;margin-top:4px;">3 Cihaz</div>
-                <div style="font-size:11px;color:#94A3B8;">$29.5K Kümülatif Ciro</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;background:rgba(0,0,0,0.25);padding:6px 8px;border-radius:6px;margin-top:7px;border:1px solid rgba(255,255,255,0.06);">
+                    <div>
+                        <div style="font-size:9.5px;color:#94A3B8;font-weight:600;">🔬 CİHAZ</div>
+                        <div style="font-size:14px;font-weight:800;color:#00F5FF;margin-top:1px;">3 Adet</div>
+                        <div style="font-size:10px;color:#64748B;">$22.0K</div>
+                    </div>
+                    <div>
+                        <div style="font-size:9.5px;color:#94A3B8;font-weight:600;">🧪 SARF (CON.)</div>
+                        <div style="font-size:14px;font-weight:800;color:#FFB800;margin-top:1px;">92 Kutu</div>
+                        <div style="font-size:10px;color:#64748B;">$7.5K</div>
+                    </div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-top:7px;padding-top:5px;border-top:1px dashed rgba(255,255,255,0.08);font-size:11px;">
+                    <span style="color:#94A3B8;">Kümülatif Hasılat:</span>
+                    <span style="font-weight:800;color:#10B981;font-size:11.5px;">$29.5K</span>
+                </div>
             </div>
-            <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(0,245,255,0.3);border-top:3px solid #00F5FF;border-radius:10px;padding:9px 12px;backdrop-filter:blur(12px);">
+            <div style="background:rgba(15,23,42,0.65);border:1px solid rgba(0,245,255,0.3);border-top:3px solid #00F5FF;border-radius:10px;padding:10px 12px;backdrop-filter:blur(12px);">
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                     <span style="font-size:12px;font-weight:700;color:#FFFFFF;">ATC</span>
                     <span style="font-size:10px;color:#00F5FF;font-weight:600;">KUVEYT</span>
                 </div>
-                <div style="font-size:16px;font-weight:800;color:#00F5FF;margin-top:4px;">3 Cihaz</div>
-                <div style="font-size:11px;color:#94A3B8;">$26.3K Kümülatif Ciro</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;background:rgba(0,0,0,0.25);padding:6px 8px;border-radius:6px;margin-top:7px;border:1px solid rgba(255,255,255,0.06);">
+                    <div>
+                        <div style="font-size:9.5px;color:#94A3B8;font-weight:600;">🔬 CİHAZ</div>
+                        <div style="font-size:14px;font-weight:800;color:#00F5FF;margin-top:1px;">3 Adet</div>
+                        <div style="font-size:10px;color:#64748B;">$25.5K</div>
+                    </div>
+                    <div>
+                        <div style="font-size:9.5px;color:#94A3B8;font-weight:600;">🧪 SARF (CON.)</div>
+                        <div style="font-size:14px;font-weight:800;color:#FFB800;margin-top:1px;">9 Kutu</div>
+                        <div style="font-size:10px;color:#64748B;">$750</div>
+                    </div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-top:7px;padding-top:5px;border-top:1px dashed rgba(255,255,255,0.08);font-size:11px;">
+                    <span style="color:#94A3B8;">Kümülatif Hasılat:</span>
+                    <span style="font-weight:800;color:#10B981;font-size:11.5px;">$26.3K</span>
+                </div>
             </div>
         </div>
         ''', unsafe_allow_html=True)
@@ -4382,24 +4507,24 @@ if nav_selection == "Executive Dashboard":
         else:
             components.html(globe_html, height=545)
 
-        # Table of 16 Presence Countries
+        # Table of 16 Presence Countries (Hem Cihaz Hem Konsumable Kırılımı)
         zeus_table_data = [
-            {"Ülke / Bölge": "🇹🇷 Türkiye (Merkez & 25 Klinik)", "Kurum Sayısı": "25 Kurum", "Toplam Hasılat": "$219,083 USD", "Ünite Sayısı": "1,384 Ünite", "Statü": "Global Genel Merkez & Klinik Ağı"},
-            {"Ülke / Bölge": "🇯🇴 Ürdün (SIRIUS PHARM)", "Kurum Sayısı": "1 Distribütör", "Toplam Hasılat": "$165,254 USD", "Ünite Sayısı": "693 Ünite (18 Cihaz)", "Statü": "Yetkili Distribütör"},
-            {"Ülke / Bölge": "🇮🇶 Irak (SIRIUS Konsorsiyumu)", "Kurum Sayısı": "Konsorsiyum", "Toplam Hasılat": "$165,254 USD", "Ünite Sayısı": "Bölge Dağıtımı", "Statü": "Yetkili Distribütör"},
-            {"Ülke / Bölge": "🇶🇦 Katar (ITL)", "Kurum Sayısı": "1 Distribütör", "Toplam Hasılat": "$72,867 USD", "Ünite Sayısı": "453 Ünite (4 Cihaz)", "Statü": "Yetkili Distribütör"},
-            {"Ülke / Bölge": "🇰🇷 Güney Kore (SJNU)", "Kurum Sayısı": "1 Distribütör", "Toplam Hasılat": "$68,550 USD", "Ünite Sayısı": "205 Ünite (7 Cihaz)", "Statü": "Yetkili Distribütör"},
-            {"Ülke / Bölge": "🇵🇸 Filistin (CMC)", "Kurum Sayısı": "1 Distribütör", "Toplam Hasılat": "$46,700 USD", "Ünite Sayısı": "120 Ünite (5 Cihaz)", "Statü": "Yetkili Distribütör"},
-            {"Ülke / Bölge": "🇸🇦 Suudi Arabistan (AMS)", "Kurum Sayısı": "1 Distribütör", "Toplam Hasılat": "$29,500 USD", "Ünite Sayısı": "95 Ünite (3 Cihaz)", "Statü": "Yetkili Distribütör"},
-            {"Ülke / Bölge": "🇰🇼 Kuveyt (ATC)", "Kurum Sayısı": "1 Distribütör", "Toplam Hasılat": "$26,250 USD", "Ünite Sayısı": "12 Ünite (3 Cihaz)", "Statü": "Yetkili Distribütör"},
-            {"Ülke / Bölge": "🇦🇪 BAE (Sellco Trading)", "Kurum Sayısı": "Spot Partner", "Toplam Hasılat": "$23,180 USD", "Ünite Sayısı": "52 Ünite", "Statü": "Körfez Dağıtım Hub"},
-            {"Ülke / Bölge": "🇦🇱/🇸🇰 Arnavutluk-Slovakya (Stem Gene)", "Kurum Sayısı": "3 Klinik", "Toplam Hasılat": "$18,840 USD", "Ünite Sayısı": "121 Ünite (1 Cihaz)", "Statü": "Doğrudan Klinikler"},
-            {"Ülke / Bölge": "🇧🇪 Belçika (Ghent University Hospital)", "Kurum Sayısı": "1 Üniversite", "Toplam Hasılat": "$16,120 USD", "Ünite Sayısı": "3 Ünite (1 Cihaz)", "Statü": "Akademik Referans Hastanesi"},
-            {"Ülke / Bölge": "🇦🇿 Azerbaycan (Bakü Klinikleri)", "Kurum Sayısı": "2 Klinik", "Toplam Hasılat": "$4,254 USD", "Ünite Sayısı": "49 Ünite", "Statü": "Kafkasya Doğrudan Müşteri"},
-            {"Ülke / Bölge": "🇧🇬 Bulgaristan (Sofya - Meyona)", "Kurum Sayısı": "1 Klinik", "Toplam Hasılat": "$1,580 USD", "Ünite Sayısı": "11 Ünite", "Statü": "Balkanlar Dağıtım"},
-            {"Ülke / Bölge": "🇵🇭 Filipinler (Manila IVF Corp)", "Kurum Sayısı": "1 Klinik", "Toplam Hasılat": "$1,228 USD", "Ünite Sayısı": "44 Ünite", "Statü": "Asya-Pasifik Doğrudan Klinik"},
-            {"Ülke / Bölge": "🇸🇾 Suriye (Şam - Bisan Co)", "Kurum Sayısı": "1 Şirket", "Toplam Hasılat": "$480 USD", "Ünite Sayısı": "10 Ünite", "Statü": "Spot Sarf Alımı"},
-            {"Ülke / Bölge": "🇬🇧 İngiltere (Londra NHS Demo)", "Kurum Sayısı": "Validasyon", "Toplam Hasılat": "Klinik Demo", "Ünite Sayısı": "6 Cihaz", "Statü": "Avrupa İnceleme Süreci"}
+            {"Ülke / Bölge": "🇹🇷 Türkiye (Merkez & 25 Klinik)", "Kurum Tipi": "25 Kurum & Klinik", "🔬 Cihaz (Hardware)": "2 Cihaz (Leasing & Merkez)", "🧪 Sarf (Consumables)": "1,382 Kutu Sarf", "Toplam Hasılat": "$219,083 USD", "Statü": "Global Genel Merkez & Klinik Ağı"},
+            {"Ülke / Bölge": "🇯🇴 Ürdün (SIRIUS PHARM)", "Kurum Tipi": "Yetkili Distribütör", "🔬 Cihaz (Hardware)": "18 Cihaz ($112.1K)", "🧪 Sarf (Consumables)": "675 Kutu ($53.1K)", "Toplam Hasılat": "$165,254 USD", "Statü": "Lokomotif Partner (Münhasır)"},
+            {"Ülke / Bölge": "🇮🇶 Irak (SIRIUS Konsorsiyumu)", "Kurum Tipi": "Konsorsiyum Dağıtımı", "🔬 Cihaz (Hardware)": "Bölgesel Filo", "🧪 Sarf (Consumables)": "Merkezi İkmal", "Toplam Hasılat": "$165,254 USD", "Statü": "Yetkili Distribütör"},
+            {"Ülke / Bölge": "🇶🇦 Katar (ITL)", "Kurum Tipi": "Yetkili Distribütör", "🔬 Cihaz (Hardware)": "4 Cihaz ($35.5K)", "🧪 Sarf (Consumables)": "449 Kutu ($37.4K)", "Toplam Hasılat": "$72,867 USD", "Statü": "Yetkili Distribütör (Yüksek Verim)"},
+            {"Ülke / Bölge": "🇰🇷 Güney Kore (SJNU)", "Kurum Tipi": "Yetkili Distribütör", "🔬 Cihaz (Hardware)": "7 Cihaz ($51.5K)", "🧪 Sarf (Consumables)": "198 Kutu ($17.1K)", "Toplam Hasılat": "$68,550 USD", "Statü": "Yetkili Distribütör (Asya Hub)"},
+            {"Ülke / Bölge": "🇵🇸 Filistin (CMC)", "Kurum Tipi": "Yetkili Distribütör", "🔬 Cihaz (Hardware)": "5 Cihaz ($38.0K)", "🧪 Sarf (Consumables)": "115 Kutu ($8.7K)", "Toplam Hasılat": "$46,700 USD", "Statü": "Yetkili Distribütör"},
+            {"Ülke / Bölge": "🇸🇦 Suudi Arabistan (AMS)", "Kurum Tipi": "Yetkili Distribütör", "🔬 Cihaz (Hardware)": "3 Cihaz ($22.0K)", "🧪 Sarf (Consumables)": "92 Kutu ($7.5K)", "Toplam Hasılat": "$29,500 USD", "Statü": "Yetkili Distribütör (Sarf Düşüş Uyarısı)"},
+            {"Ülke / Bölge": "🇰🇼 Kuveyt (ATC)", "Kurum Tipi": "Yetkili Distribütör", "🔬 Cihaz (Hardware)": "3 Cihaz ($25.5K)", "🧪 Sarf (Consumables)": "9 Kutu ($750)", "Toplam Hasılat": "$26,250 USD", "Statü": "Yetkili Distribütör (Atıl Cihaz Uyarısı)"},
+            {"Ülke / Bölge": "🇦🇪 BAE (Sellco Trading)", "Kurum Tipi": "Spot Ticari Müşteri", "🔬 Cihaz (Hardware)": "4 Cihaz ($19.0K)", "🧪 Sarf (Consumables)": "48 Kutu ($4.2K)", "Toplam Hasılat": "$23,180 USD", "Statü": "Spot Kurumsal Alıcı (Münhasırlık Yok)"},
+            {"Ülke / Bölge": "🇦🇱/🇸🇰 Arnavutluk-Slovakya (Stem Gene)", "Kurum Tipi": "3 Doğrudan Klinik", "🔬 Cihaz (Hardware)": "1 Cihaz ($5.0K)", "🧪 Sarf (Consumables)": "120 Kutu ($13.8K)", "Toplam Hasılat": "$18,840 USD", "Statü": "Doğrudan Klinikler Ağı"},
+            {"Ülke / Bölge": "🇧🇪 Belçika (Ghent University Hospital)", "Kurum Tipi": "Akademik Hastane", "🔬 Cihaz (Hardware)": "1 Cihaz ($15.9K)", "🧪 Sarf (Consumables)": "2 Kutu ($220)", "Toplam Hasılat": "$16,120 USD", "Statü": "Akademik Referans Merkezi"},
+            {"Ülke / Bölge": "🇦🇿 Azerbaycan (Bakü Klinikleri)", "Kurum Tipi": "2 Doğrudan Klinik", "🔬 Cihaz (Hardware)": "0 Cihaz", "🧪 Sarf (Consumables)": "49 Kutu ($4.3K)", "Toplam Hasılat": "$4,254 USD", "Statü": "Kafkasya Doğrudan Müşteri"},
+            {"Ülke / Bölge": "🇧🇬 Bulgaristan (Sofya - Meyona)", "Kurum Tipi": "Klinik Dağıtım", "🔬 Cihaz (Hardware)": "0 Cihaz", "🧪 Sarf (Consumables)": "11 Kutu ($1.6K)", "Toplam Hasılat": "$1,580 USD", "Statü": "Balkanlar Spot İkmal"},
+            {"Ülke / Bölge": "🇵🇭 Filipinler (Manila IVF Corp)", "Kurum Tipi": "Özel IVF Kliniği", "🔬 Cihaz (Hardware)": "0 Cihaz", "🧪 Sarf (Consumables)": "44 Kutu ($1.2K)", "Toplam Hasılat": "$1,228 USD", "Statü": "Asya-Pasifik Doğrudan Klinik"},
+            {"Ülke / Bölge": "🇸🇾 Suriye (Şam - Bisan Co)", "Kurum Tipi": "Spot Medikal Alıcı", "🔬 Cihaz (Hardware)": "0 Cihaz", "🧪 Sarf (Consumables)": "10 Kutu ($480)", "Toplam Hasılat": "$480 USD", "Statü": "Spot Klinik Alımı"},
+            {"Ülke / Bölge": "🇬🇧 İngiltere (Londra NHS Demo)", "Kurum Tipi": "Validasyon Merkezi", "🔬 Cihaz (Hardware)": "6 Demo Cihazı", "🧪 Sarf (Consumables)": "Klinik Test Sarfı", "Toplam Hasılat": "Klinik Demo", "Statü": "Avrupa İnceleme Süreci"}
         ]
         st.dataframe(pd.DataFrame(zeus_table_data), use_container_width=True, hide_index=True)
 
