@@ -1,5 +1,12 @@
 from datetime import datetime
+import re
+import json
+import io
+import sys
 import os
+
+# Ensure working directory is script directory
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
 import base64
 import urllib.parse
 import streamlit as st
@@ -24,20 +31,92 @@ st.set_page_config(
 # Custom Styling (ZGMI Executive Theme)
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
     
+    /* Global Background & Typography */
     html, body, [class*="css"] {
         font-family: 'Inter', system-ui, -apple-system, sans-serif;
     }
     
+    .stApp {
+        background: 
+            radial-gradient(circle at 14% 12%, rgba(0, 245, 255, 0.05) 0%, transparent 42%),
+            radial-gradient(circle at 86% 82%, rgba(19, 166, 181, 0.06) 0%, transparent 48%),
+            radial-gradient(circle at 50% 50%, rgba(11, 20, 38, 0.45) 0%, transparent 60%),
+            #070B14 !important;
+        color: #E2E8F0 !important;
+    }
+
+    /* Main Container Spacing */
+    .main .block-container {
+        padding-top: 1.8rem !important;
+        padding-bottom: 3rem !important;
+        max-width: 96% !important;
+    }
+
+    /* Modern Glass Sidebar */
+    [data-testid="stSidebar"] {
+        background: linear-gradient(180deg, rgba(10, 16, 28, 0.94) 0%, rgba(7, 11, 20, 0.98) 100%) !important;
+        backdrop-filter: blur(24px) !important;
+        -webkit-backdrop-filter: blur(24px) !important;
+        border-right: 1px solid rgba(0, 245, 255, 0.14) !important;
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.4) !important;
+    }
+    [data-testid="stSidebar"] hr {
+        border-color: rgba(0, 245, 255, 0.12) !important;
+        margin: 16px 0 !important;
+    }
+
+    /* Sidebar Navigation - Ultra Modern SaaS Radio */
+    [data-testid="stSidebar"] [data-testid="stRadio"] > div {
+        gap: 6px !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stRadio"] label {
+        background: rgba(15, 23, 42, 0.45) !important;
+        border: 1px solid rgba(255, 255, 255, 0.04) !important;
+        border-radius: 8px !important;
+        padding: 9px 12px !important;
+        margin: 0 !important;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        cursor: pointer !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stRadio"] label:hover {
+        background: rgba(0, 245, 255, 0.08) !important;
+        border-color: rgba(0, 245, 255, 0.3) !important;
+        transform: translateX(3px) !important;
+        box-shadow: 0 2px 14px rgba(0, 245, 255, 0.1) !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stRadio"] label[data-checked="true"],
+    [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) {
+        background: linear-gradient(90deg, rgba(0, 245, 255, 0.16) 0%, rgba(19, 166, 181, 0.05) 100%) !important;
+        border: 1px solid rgba(0, 245, 255, 0.4) !important;
+        border-left: 3px solid #00F5FF !important;
+        box-shadow: 0 0 20px rgba(0, 245, 255, 0.14), inset 0 0 12px rgba(0, 245, 255, 0.06) !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stRadio"] label span {
+        font-size: 13px !important;
+        font-weight: 500 !important;
+        color: #E2E8F0 !important;
+        letter-spacing: 0.01em !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) span {
+        color: #00F5FF !important;
+        font-weight: 600 !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stRadio"] input[type="radio"] + div {
+        display: none !important;
+    }
+
     /* Top Header Branding */
     .zg-brand {
         display: flex;
         align-items: center;
         gap: 14px;
-        margin-bottom: 20px;
-        padding-bottom: 12px;
-        border-bottom: 1px solid rgba(19, 166, 181, 0.2);
+        margin-bottom: 22px;
+        padding-bottom: 14px;
+        border-bottom: 1px solid rgba(0, 245, 255, 0.16);
     }
     .zg-logo-box {
         width: 44px;
@@ -50,96 +129,350 @@ st.markdown("""
         font-weight: 800;
         font-size: 24px;
         color: #ffffff;
-        box-shadow: 0 4px 14px rgba(19, 166, 181, 0.35);
+        box-shadow: 0 0 20px rgba(0, 245, 255, 0.35);
+        border: 1px solid rgba(0, 245, 255, 0.4);
     }
     .zg-title {
-        font-size: 20px;
+        font-size: 22px;
         font-weight: 700;
-        color: #13A6B5;
-        letter-spacing: 0.05em;
+        letter-spacing: -0.01em;
+        background: linear-gradient(90deg, #FFFFFF 0%, #E2E8F0 50%, #00F5FF 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
         margin: 0;
         line-height: 1.2;
     }
     .zg-subtitle {
         font-size: 12px;
-        color: #8FA3C0;
+        color: #64748B;
         margin: 0;
+        letter-spacing: 0.05em;
+        text-transform: uppercase;
     }
 
-    /* KPI Cards */
+    /* KPI Cards - Enhanced Deep Slate Glass & Neon */
     .kpi-container {
-        background: linear-gradient(145deg, rgba(19, 31, 56, 0.75) 0%, rgba(11, 20, 38, 0.85) 100%);
-        border: 1px solid rgba(36, 53, 87, 0.95);
-        border-radius: 12px;
-        padding: 12px 10px;
-        transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
-        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.25);
-        min-width: 0;
-        overflow: hidden;
+        background: linear-gradient(145deg, rgba(16, 26, 46, 0.72) 0%, rgba(9, 16, 30, 0.86) 100%) !important;
+        border: 1px solid rgba(0, 245, 255, 0.16) !important;
+        border-top: 1px solid rgba(0, 245, 255, 0.35) !important;
+        border-radius: 14px !important;
+        padding: 14px 12px !important;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+        backdrop-filter: blur(16px) !important;
+        -webkit-backdrop-filter: blur(16px) !important;
+        min-width: 0 !important;
+        overflow: hidden !important;
+        position: relative !important;
     }
     .kpi-container:hover {
-        transform: translateY(-2px);
-        border-color: #00F5FF;
-        box-shadow: 0 6px 24px rgba(0, 245, 255, 0.15);
+        transform: translateY(-3px) !important;
+        border-color: rgba(0, 245, 255, 0.65) !important;
+        box-shadow: 0 10px 32px rgba(0, 245, 255, 0.18), inset 0 0 12px rgba(0, 245, 255, 0.08) !important;
     }
     .kpi-header {
-        font-size: 10px;
-        font-weight: 700;
-        color: #8FA3C0;
-        text-transform: uppercase;
-        letter-spacing: 0.04em;
-        margin-bottom: 4px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: block;
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        color: #94A3B8 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.06em !important;
+        margin-bottom: 6px !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        display: block !important;
     }
     .kpi-val {
-        font-size: 19px;
-        font-weight: 800;
-        color: #FFFFFF;
-        letter-spacing: -0.02em;
-        margin-bottom: 2px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: block;
-        line-height: 1.25;
+        font-size: 21px !important;
+        font-weight: 700 !important;
+        font-family: 'JetBrains Mono', 'Inter', monospace !important;
+        font-feature-settings: 'tnum' !important;
+        color: #FFFFFF !important;
+        letter-spacing: -0.02em !important;
+        margin-bottom: 3px !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        display: block !important;
+        line-height: 1.25 !important;
     }
     .kpi-sub {
-        font-size: 11px;
-        font-weight: 600;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        display: block;
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        white-space: nowrap !important;
+        overflow: hidden !important;
+        text-overflow: ellipsis !important;
+        display: block !important;
     }
-    .kpi-pos { color: #5FD3AE; }
-    .kpi-neg { color: #FF8A96; }
-    .kpi-neu { color: #F0BC57; }
+    .kpi-pos { color: #10B981 !important; text-shadow: 0 0 8px rgba(16, 185, 129, 0.25) !important; }
+    .kpi-neg { color: #F43F5E !important; text-shadow: 0 0 8px rgba(244, 63, 94, 0.25) !important; }
+    .kpi-neu { color: #F59E0B !important; text-shadow: 0 0 8px rgba(245, 158, 11, 0.25) !important; }
 
     /* Badges & Chips */
     .chip {
-        display: inline-block;
-        padding: 3px 10px;
-        border-radius: 999px;
-        font-size: 11px;
-        font-weight: 600;
-        margin-right: 4px;
+        display: inline-flex !important;
+        align-items: center !important;
+        gap: 5px !important;
+        padding: 4px 10px !important;
+        border-radius: 999px !important;
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.02em !important;
+        margin-right: 4px !important;
+        backdrop-filter: blur(8px) !important;
     }
-    .chip-ok { background: rgba(30, 158, 120, 0.18); color: #5FD3AE; border: 1px solid rgba(30,158,120,0.3); }
-    .chip-wn { background: rgba(226, 176, 74, 0.18); color: #F0BC57; border: 1px solid rgba(226,176,74,0.3); }
-    .chip-err { background: rgba(229, 112, 123, 0.18); color: #FF8A96; border: 1px solid rgba(229,112,123,0.3); }
-    .chip-info { background: rgba(19, 166, 181, 0.18); color: #4FD1DE; border: 1px solid rgba(19,166,181,0.3); }
+    .chip-ok { background: rgba(16, 185, 129, 0.14) !important; color: #34D399 !important; border: 1px solid rgba(16, 185, 129, 0.3) !important; box-shadow: 0 0 10px rgba(16, 185, 129, 0.1) !important; }
+    .chip-wn { background: rgba(245, 158, 11, 0.14) !important; color: #FBBF24 !important; border: 1px solid rgba(245, 158, 11, 0.3) !important; box-shadow: 0 0 10px rgba(245, 158, 11, 0.1) !important; }
+    .chip-err { background: rgba(244, 63, 94, 0.14) !important; color: #FB7185 !important; border: 1px solid rgba(244, 63, 94, 0.3) !important; box-shadow: 0 0 10px rgba(244, 63, 94, 0.1) !important; }
+    .chip-info { background: rgba(0, 245, 255, 0.12) !important; color: #00F5FF !important; border: 1px solid rgba(0, 245, 255, 0.28) !important; box-shadow: 0 0 10px rgba(0, 245, 255, 0.1) !important; }
 
-    /* Alert Banner */
+    /* Alert Banner & Glass Cards */
     .alert-card {
-        border-radius: 12px;
-        padding: 12px 16px;
-        margin-bottom: 10px;
-        border-left: 4px solid #13A6B5;
-        background: rgba(24, 40, 72, 0.5);
+        border-radius: 12px !important;
+        padding: 14px 18px !important;
+        margin-bottom: 12px !important;
+        border-left: 3px solid #00F5FF !important;
+        background: linear-gradient(135deg, rgba(15, 23, 42, 0.7) 0%, rgba(10, 16, 28, 0.8) 100%) !important;
+        border-top: 1px solid rgba(0, 245, 255, 0.1) !important;
+        border-right: 1px solid rgba(0, 245, 255, 0.08) !important;
+        border-bottom: 1px solid rgba(0, 245, 255, 0.08) !important;
+        backdrop-filter: blur(14px) !important;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25) !important;
     }
+
+    /* Headings */
+    h1, h2, h3 {
+        color: #F8FAFC !important;
+        font-weight: 700 !important;
+        letter-spacing: -0.02em !important;
+    }
+    h1 { font-size: 26px !important; }
+    h2 { font-size: 20px !important; }
+    h3 { font-size: 16px !important; color: #00F5FF !important; }
+    .stCaption, small {
+        color: #94A3B8 !important;
+        font-size: 12px !important;
+    }
+
+    /* Modern Tabs */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 6px !important;
+        background: rgba(11, 18, 32, 0.6) !important;
+        padding: 5px !important;
+        border-radius: 12px !important;
+        border: 1px solid rgba(0, 245, 255, 0.12) !important;
+        backdrop-filter: blur(14px) !important;
+    }
+    .stTabs [data-baseweb="tab"] {
+        border-radius: 8px !important;
+        padding: 8px 16px !important;
+        color: #94A3B8 !important;
+        font-weight: 500 !important;
+        background: transparent !important;
+        border: 1px solid transparent !important;
+        transition: all 0.2s ease !important;
+    }
+    .stTabs [data-baseweb="tab"]:hover {
+        color: #E2E8F0 !important;
+        background: rgba(255, 255, 255, 0.03) !important;
+    }
+    .stTabs [aria-selected="true"] {
+        background: rgba(0, 245, 255, 0.14) !important;
+        border: 1px solid rgba(0, 245, 255, 0.35) !important;
+        color: #00F5FF !important;
+        font-weight: 600 !important;
+        box-shadow: 0 0 14px rgba(0, 245, 255, 0.15) !important;
+    }
+
+    /* Modern Glass Buttons */
+    .stButton > button {
+        background: linear-gradient(135deg, rgba(0, 245, 255, 0.14) 0%, rgba(19, 166, 181, 0.24) 100%) !important;
+        border: 1px solid rgba(0, 245, 255, 0.35) !important;
+        border-radius: 9px !important;
+        color: #FFFFFF !important;
+        font-weight: 600 !important;
+        font-size: 13px !important;
+        letter-spacing: 0.02em !important;
+        padding: 8px 18px !important;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        backdrop-filter: blur(10px) !important;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2) !important;
+    }
+    .stButton > button:hover {
+        background: linear-gradient(135deg, rgba(0, 245, 255, 0.26) 0%, rgba(19, 166, 181, 0.42) 100%) !important;
+        border-color: #00F5FF !important;
+        box-shadow: 0 0 20px rgba(0, 245, 255, 0.3) !important;
+        transform: translateY(-2px) !important;
+    }
+    .stButton > button[kind="primary"] {
+        background: linear-gradient(135deg, #00F5FF 0%, #0B6F85 100%) !important;
+        color: #070B14 !important;
+        font-weight: 700 !important;
+        border: none !important;
+        box-shadow: 0 0 22px rgba(0, 245, 255, 0.45) !important;
+    }
+
+    /* Modern Glass Inputs & Selectboxes */
+    div[data-baseweb="select"] > div,
+    div[data-baseweb="input"] > div {
+        background: rgba(13, 21, 38, 0.65) !important;
+        border: 1px solid rgba(0, 245, 255, 0.18) !important;
+        border-radius: 9px !important;
+        color: #F8FAFC !important;
+        backdrop-filter: blur(12px) !important;
+        transition: all 0.2s ease !important;
+    }
+    div[data-baseweb="select"] > div:hover,
+    div[data-baseweb="input"] > div:hover {
+        border-color: rgba(0, 245, 255, 0.5) !important;
+        box-shadow: 0 0 14px rgba(0, 245, 255, 0.15) !important;
+    }
+
+    /* Dataframes & Tables */
+    [data-testid="stDataFrame"], [data-testid="stTable"] {
+        background: rgba(10, 16, 28, 0.65) !important;
+        border: 1px solid rgba(0, 245, 255, 0.14) !important;
+        border-radius: 12px !important;
+        padding: 4px !important;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25) !important;
+        backdrop-filter: blur(16px) !important;
+    }
+
+    /* Expanders */
+    [data-testid="stExpander"] {
+        background: rgba(11, 18, 32, 0.5) !important;
+        border: 1px solid rgba(0, 245, 255, 0.12) !important;
+        border-radius: 12px !important;
+        backdrop-filter: blur(12px) !important;
+        overflow: hidden !important;
+    }
+
+    /* Custom Sleek Scrollbar */
+    ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+        background: rgba(7, 11, 20, 0.6);
+    }
+    ::-webkit-scrollbar-thumb {
+        background: rgba(0, 245, 255, 0.22);
+        border-radius: 999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgba(0, 245, 255, 0.5);
+    }
+
+    /* Glass Metric Card Grid */
+    .glass-metric-card {
+        background: linear-gradient(145deg, rgba(16, 26, 46, 0.72) 0%, rgba(9, 16, 30, 0.86) 100%) !important;
+        border: 1px solid rgba(0, 245, 255, 0.16) !important;
+        border-top: 1px solid rgba(0, 245, 255, 0.35) !important;
+        border-radius: 14px !important;
+        padding: 16px 18px !important;
+        backdrop-filter: blur(16px) !important;
+        -webkit-backdrop-filter: blur(16px) !important;
+        box-shadow: 0 6px 22px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        margin-bottom: 12px !important;
+    }
+    .glass-metric-card:hover {
+        transform: translateY(-3px) !important;
+        border-color: rgba(0, 245, 255, 0.65) !important;
+        box-shadow: 0 10px 30px rgba(0, 245, 255, 0.2), inset 0 0 12px rgba(0, 245, 255, 0.08) !important;
+    }
+    .glass-icon-box {
+        width: 36px;
+        height: 36px;
+        border-radius: 10px;
+        background: rgba(0, 245, 255, 0.08);
+        border: 1px solid rgba(0, 245, 255, 0.22);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 10px;
+        box-shadow: 0 0 12px rgba(0, 245, 255, 0.15);
+    }
+    .glass-metric-header {
+        font-size: 11px !important;
+        font-weight: 600 !important;
+        color: #94A3B8 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.06em !important;
+        margin-bottom: 4px !important;
+    }
+    .glass-metric-val {
+        font-size: 20px !important;
+        font-weight: 700 !important;
+        font-family: 'JetBrains Mono', 'Inter', monospace !important;
+        color: #FFFFFF !important;
+        letter-spacing: -0.02em !important;
+        margin-bottom: 2px !important;
+        line-height: 1.2 !important;
+    }
+    .glass-metric-sub {
+        font-size: 11px !important;
+        font-weight: 500 !important;
+        color: #64748B !important;
+    }
+
+    /* Sidebar Navigation - Ultra-Clean SaaS Pills */
+    [data-testid="stSidebar"] [data-testid="stRadio"] > div {
+        gap: 6px !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stRadio"] label {
+        background: rgba(15, 23, 42, 0.45) !important;
+        border: 1px solid rgba(255, 255, 255, 0.05) !important;
+        border-radius: 9px !important;
+        padding: 9px 12px !important;
+        margin: 0 !important;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        cursor: pointer !important;
+        display: flex !important;
+        align-items: center !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stRadio"] label:hover {
+        background: rgba(0, 245, 255, 0.08) !important;
+        border-color: rgba(0, 245, 255, 0.3) !important;
+        transform: translateX(3px) !important;
+        box-shadow: 0 2px 14px rgba(0, 245, 255, 0.1) !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked),
+    [data-testid="stSidebar"] [data-testid="stRadio"] label[data-checked="true"] {
+        background: linear-gradient(90deg, rgba(0, 245, 255, 0.16) 0%, rgba(19, 166, 181, 0.05) 100%) !important;
+        border: 1px solid rgba(0, 245, 255, 0.45) !important;
+        border-left: 3px solid #00F5FF !important;
+        box-shadow: 0 0 20px rgba(0, 245, 255, 0.15) !important;
+    }
+    /* Explicitly make label text visible and styled */
+    [data-testid="stSidebar"] [data-testid="stRadio"] label p,
+    [data-testid="stSidebar"] [data-testid="stRadio"] label span,
+    [data-testid="stSidebar"] [data-testid="stRadio"] [data-testid="stMarkdownContainer"] {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        font-size: 13px !important;
+        font-weight: 500 !important;
+        color: #E2E8F0 !important;
+        letter-spacing: 0.01em !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) p,
+    [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) span {
+        color: #00F5FF !important;
+        font-weight: 600 !important;
+    }
+    /* Hide only the radio circle and its svg */
+    [data-testid="stSidebar"] [data-testid="stRadio"] input[type="radio"],
+    [data-testid="stSidebar"] [data-testid="stRadio"] div[data-baseweb="radio"] > div:first-child:not([data-testid="stMarkdownContainer"]) {
+        display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -1383,37 +1716,37 @@ def build_device_consumable_audit(df_sales):
         if dev_qty > 0 and cons_qty == 0:
             status = '🔴 Sıfır Sarf (Hiç Sarf Almamış)'
             code = 'zero_consumable'
-            risk_badge = '🔴 SIFIR SARF (RİSK)'
+            risk_badge = 'SIFIR SARF (RİSK)'
             action_rec = 'Cihaz kurulu fakat bugüne kadar tek bir sarf siparişi verilmemiş! İvedilikle klinik ile temasa geçilerek sarf ikmali başlatılmalıdır.'
         elif dev_qty > 0 and cons_2026_qty == 0:
             status = "🟡 Sarf Alımı Durmuş (2026'da Sıfır Sarf / Uyuyan)"
             code = 'dormant_consumable'
-            risk_badge = '🟡 UYUYAN HESAP (2026 0 SARF)'
+            risk_badge = 'UYUYAN HESAP (2026 0 SARF)'
             action_rec = 'Cihaz var fakat 2026 yılında hiçbir sarf alımı yapılmamış. Protokol durması veya churn riski mevcut; acil klinik eğitim ve konsinye teklif önerilir.'
         elif dev_qty > 0 and ((cons_2025_amt >= 3000 and cons_2026_amt < 1000 and (cons_2025_amt - cons_2026_amt) / cons_2025_amt >= 0.80) or (dev_qty >= 3 and cons_2026_amt <= 500 and cons_2026_qty <= 5)):
             status = f"🔴 Kritik Düşüş & Churn Alarmı (2026 Sarf: Yalnızca ${cons_2026_amt:,.0f} / {cons_2026_qty} Kutu, -%{((cons_2025_amt - cons_2026_amt)/cons_2025_amt*100) if cons_2025_amt > 0 else 0:.0f} Düşüş)"
             code = 'critical_churn_risk'
-            risk_badge = '🔴 KRİTİK CHURN & DÜŞÜŞ ALARMI'
+            risk_badge = 'KRİTİK CHURN & DÜŞÜŞ ALARMI'
             action_rec = f"{country}'da kurulu {dev_qty} Piezo cihazına rağmen 2026'da sarf alımı sembolik düzeye gerilemiştir (Yalnızca ${cons_2026_amt:,.0f} / {cons_2026_qty} kutu). Personel değişimi veya protokol terk riski mevcuttur; acil yerinde klinik çalıştay ve re-aktivasyon konsinye kiti önerilir."
         elif dev_qty > 0 and (cons_2026_qty < 15 or cons_2026_amt < 1000):
             status = f"🟠 Düşük Sarf Çekişi (2026: {cons_2026_qty} Kutu / ${cons_2026_amt:,.0f})"
             code = 'low_consumable'
-            risk_badge = '🟠 KRİTİK DÜŞÜK SARF'
+            risk_badge = 'KRİTİK DÜŞÜK SARF'
             action_rec = 'Cihaz başına yıllık sarf çekişi beklenen klinik siklus rasyonunun altında. Baş embriyolog eğitimi ve indirimli bundle paketi tanımlanmalıdır.'
         elif dev_qty > 0:
             status = '🟢 Aktif Düzenli Sarf Alımı'
             code = 'active_consumable'
-            risk_badge = '🟢 AKTİF & DÜZENLİ'
+            risk_badge = 'AKTİF & DÜZENLİ'
             action_rec = 'Cihaz ve sarf alımları sağlıklı rutin döngüde devam ediyor.'
         elif dev_qty == 0 and cons_qty > 0:
             status = '📦 Yalnızca Sarf Alan Kurum (Cihaz Kaydı Yok)'
             code = 'consumables_only'
-            risk_badge = '📦 YALNIZCA SARF TÜKETİCİSİ'
+            risk_badge = 'YALNIZCA SARF TÜKETİCİSİ'
             action_rec = 'Doğrudan sarf tüketicisi (merkezinde başka kaynaktan cihaz mevcut veya fason laboratuvar). Yeni nesil Piezo donanım yükseltmesi önerilebilir.'
         else:
             status = '⚪ Diğer'
             code = 'other'
-            risk_badge = '⚪ DİĞER'
+            risk_badge = 'DİĞER'
             action_rec = 'Standart hesap takibi.'
             
         records.append({
@@ -1818,17 +2151,17 @@ with st.sidebar:
     nav_selection = st.radio(
         "Navigation",
         [
-            "◈ Executive Dashboard",
-            "✦ AI Intelligence & Forecasting",
-            "◇ Distributors & CRM",
-            "▤ Agreements & Compliance",
-            "◬ Sales & Product Analytics",
-            "◎ Market Intelligence & Compare",
-            "⌘ Pricing & Discount Calculator",
-            "⛛ Risk & Scenario Simulator",
-            "▲ Performance Evaluator",
-            "⚖ Strategic Decision Center",
-            "⇲ Executive Reports & Export"
+            "Executive Dashboard",
+            "AI Intelligence & Forecasting",
+            "Distributors & CRM",
+            "Agreements & Compliance",
+            "Sales & Product Analytics",
+            "Market Intelligence & Compare",
+            "Pricing & Discount Calculator",
+            "Risk & Scenario Simulator",
+            "Performance Evaluator",
+            "Strategic Decision Center",
+            "Executive Reports & Export"
         ],
         label_visibility="collapsed"
     )
@@ -3142,7 +3475,7 @@ def get_default_strategic_plans():
     return {
         'kuwait_garanti': {
             'alert_id': 'kuwait_garanti',
-            'title': "🔴 Kritik Atıl Cihaz Alarmı: Kuveyt ATC & Garanti Leasing (2026'da $0 Sarf)",
+            'title': "Kritik Atıl Cihaz Alarmı: Kuveyt ATC & Garanti Leasing (2026'da $0 Sarf)",
             'badge': 'ACİL EYLEM',
             'badge_color': '#FF5252',
             'evidence': "Kuveyt ATC (15.12.2025'te $25,500'a 3 Piezo Cihazı almış) ve Garanti Leasing (12.05.2026'da 1 Cihaz almış) 2026 yılında $0.00 sarf çekmiştir. Cihazlar atıl durmaktadır.",
@@ -3160,7 +3493,7 @@ def get_default_strategic_plans():
         },
         'sirius_itl': {
             'alert_id': 'sirius_itl',
-            'title': '🟢 Portföy Lokomotifi & Sarf Liderliği: SIRIUS ($164.3K) & ITL Katar ($72.9K)',
+            'title': 'Portföy Lokomotifi & Sarf Liderliği: SIRIUS ($164.3K) & ITL Katar ($72.9K)',
             'badge': 'LOKOMOTİF BÜYÜME',
             'badge_color': '#5FD3AE',
             'evidence': "Sirius Pharm (Ürdün & Irak) 18 kurulu cihaz ve 675 kutu sarf ($53.1K) ile küresel portföyün %23.7'sini yönetmektedir. ITL Katar ise 4 cihazla 449 kutu sarf ($37.4K) tüketerek en yüksek cihaz başı verimliliğe ulaşmıştır.",
@@ -3178,7 +3511,7 @@ def get_default_strategic_plans():
         },
         'sellco_uae': {
             'alert_id': 'sellco_uae',
-            'title': '🇦🇪 BAE Pazarında Distribütör Boşluğu & Sözleşmesiz Müşteri Durumu',
+            'title': 'BAE Pazarında Distribütör Boşluğu & Sözleşmesiz Müşteri Durumu',
             'badge': 'BÖLGESEL FIRSAT',
             'badge_color': '#FF9800',
             'evidence': "SELLCO TRADING INTL (BAE) bir distribütör olmayıp, sözleşmesiz spot bir ticari müşteridir. 2025'te 4 cihaz ($23,180) almış, aralarında herhangi bir distribütörlük veya tedarik sözleşmesi bulunmamaktadır. 2026 yılında ise sarf siparişi vermemiştir ($0). Şu anda BAE'de resmi yetkili distribütör bulunmamaktadır.",
@@ -3196,7 +3529,7 @@ def get_default_strategic_plans():
         },
         'dish_liquid_ratio': {
             'alert_id': 'dish_liquid_ratio',
-            'title': '⚡ Kritik Ürün Rasyosu & Ek Gelir Fırsatı: Electro Dish vs Liquid (2.1:1)',
+            'title': 'Kritik Ürün Rasyosu & Ek Gelir Fırsatı: Electro Dish vs Liquid (2.1:1)',
             'badge': 'EK GELİR FIRSATI',
             'badge_color': '#00F5FF',
             'evidence': "Fatura veri tabanında 2,097 kutu Electro Dish satılmasına karşın yalnızca 997 kutu Liquid Solution satılmıştır. Klinikler solüsyonu seyreltmekte veya muadil kullanmaktadır.",
@@ -3215,19 +3548,19 @@ def get_default_strategic_plans():
     }
 
 
-if nav_selection == "◈ Executive Dashboard":
+if nav_selection == "Executive Dashboard":
     # Header Banner
     col_h1, col_h2 = st.columns([3, 1])
     with col_h1:
         st.markdown(
             "<div><span class='chip chip-info'>Executive Overview</span>"
-            "<span class='chip chip-ok' style='background:rgba(0,230,118,0.18);color:#00E676;border:1px solid rgba(0,230,118,0.3);'>✓ Live Certified Medical Sales Data (874 Transactions)</span><span class='chip chip-wn' style='background:rgba(255,184,0,0.18);color:#FFB800;border:1px solid rgba(255,184,0,0.3);'>🔮 AI Predictive Engine Active</span></div>"
+            "<span class='chip chip-ok' style='background:rgba(0,230,118,0.18);color:#00E676;border:1px solid rgba(0,230,118,0.3);'>✓ Live Certified Medical Sales Data (874 Transactions)</span><span class='chip chip-wn' style='background:rgba(255,184,0,0.18);color:#FFB800;border:1px solid rgba(255,184,0,0.3);'>AI Predictive Engine Active</span></div>"
             "<h1 style='margin-top:4px;font-size:30px;font-weight:700;'>Global Distribution Command Center</h1>"
             "<p style='color:#8FA3C0;font-size:14px;margin-bottom:16px;'>Global reproductive technologies commercial performance & IVF market expansion tracking.</p>",
             unsafe_allow_html=True
         )
     with col_h2:
-        st.markdown(f"<div style='text-align:right;padding-top:10px;'><span class='chip chip-ok'>● System Online</span><br><small style='color:#8FA3C0;'>Period: {range_sel} {year_sel}</small></div>", unsafe_allow_html=True)
+        st.markdown(f"<div style='text-align:right;padding-top:10px;'><span class='chip chip-ok'>System Online</span><br><small style='color:#8FA3C0;'>Period: {range_sel} {year_sel}</small></div>", unsafe_allow_html=True)
 
     # 6 Top KPIs
     k1, k2, k3, k4, k5, k6 = st.columns(6)
@@ -3283,131 +3616,104 @@ if nav_selection == "◈ Executive Dashboard":
     st.markdown("<br>", unsafe_allow_html=True)
 
     # Global Choropleth Map with Layer Selection
-    col_map_head, col_map_sel = st.columns([2.0, 2.0])
-    with col_map_head:
-        st.subheader("🌐 360° Dönen Küre & Bölgesel Dağılım Haritası")
-        st.caption("Farenizle küreyi 360° serbestçe döndürebilir veya '▶ 360° Otomatik Döndür' butonuna basabilirsiniz.")
-    with col_map_sel:
-        map_layer = st.selectbox(
-            "Harita Katmanı",
-            [
-                "🌍 Resmi Distribütör Ülkeleri (Özel Ülke Renklendirmesi)",
-                "🔬 ZEUS'un Bulunduğu Tüm Ülkeler (Kurulu Taban & Satış Verileri)",
-                "🌐 6 Coğrafi Bölgeye Göre Renklendir",
-                "🎯 Pazar Fırsat Skoru",
-                "⚠️ Ticari Risk Profili"
-            ],
-            index=0
-        )
+    region_color_map = {
+        'Europe': '#00F5FF',
+        'MENA': '#F59E0B',
+        'Asia-Pacific': '#10B981',
+        'Latin America': '#EC4899',
+        'Africa': '#8B5CF6',
+        'North America': '#38BDF8'
+    }
 
-    # Quick regional focus buttons
-    col_fc1, col_fc2 = st.columns([1.2, 2.8])
-    with col_fc1:
-        st.write("**Bölgesel Odak:**")
-    with col_fc2:
-        reg_focus = st.radio(
-            "Küre Odağı",
-            ["Global / Avrupa (30°)", "Asya-Pasifik (105°)", "Amerika (-75°)", "MENA / Afrika (25°)"],
+    col_map_head, col_map_sel = st.columns([2.0, 1.8])
+    with col_map_head:
+        st.subheader("Global Dağıtım, Pazar Potansiyeli & 3D Telemetri")
+        st.caption("Resmi distribütörler, ZEUS'un bulunduğu aktif pazarlar, 48 ülkenin fırsat skoru ve ticari risk haritası.")
+    with col_map_sel:
+        map_proj_view = st.radio(
+            "Harita Görünüm Formatı",
+            ["3D Cyber Hologram Küre (WebGL 360°)", "2D Hassas Projeksiyon Haritası"],
+            index=0,
             horizontal=True,
             label_visibility="collapsed"
         )
-        
-    focus_lons = {
-        "Global / Avrupa (30°)": 30,
-        "Asya-Pasifik (105°)": 105,
-        "Amerika (-75°)": -75,
-        "MENA / Afrika (25°)": 25
-    }
-    init_lon = focus_lons.get(reg_focus, 30)
 
-    map_data = []
-    region_color_map = {
-        'Europe': '#00F5FF',         # Electric Luminous Cyan
-        'MENA': '#FFB800',           # Radiant Golden Amber
-        'Asia-Pacific': '#00E676',   # Vivid Emerald Neon Green
-        'Latin America': '#FF3366',  # Hot Coral Pink
-        'Africa': '#B026FF',         # Electric Violet / Purple
-        'North America': '#3B82F6'   # Bright Royal Blue
-    }
-    status_color_map = {
-        'Active': '#00E676',      # Vivid Emerald Green (Aktif Distribütör/Müşteri)
-        'Prospect': '#00F5FF',    # Radiant Electric Cyan (Hedef Pipeline)
-        'Uncovered': '#3A4B6E'    # Clean High-Contrast Slate Gray (Açık Beyaz Boşluk)
-    }
-    risk_color_map = {
-        'Low': '#00E676',         # Vivid Green (Düşük Risk)
-        'Medium': '#FFB800',      # Bright Amber (Orta Risk)
-        'High': '#FF3366',        # Vivid Coral Red (Yüksek Risk)
-        'Not rated': '#64748B'
-    }
-
-    dist_by_code = {d['id']: d for d in dists_with_rev}
-    
-    # 1. Official Distributor Countries and their distinct vibrant colors (User Specified)
-    # Ürdün, Iraq, BAE, Suudi Arabistan, Qatar, South Korea
+    # --------------------------------------------------------------------------
+    # Shared Data Preparation for All 4 Map Layers
+    # --------------------------------------------------------------------------
     dist_country_map = {
-        'JOR': ('🇯🇴 Ürdün', '#FFD700', 'SIRIUS PHARM COMPANY (Amman & Bölge Dağıtımı)'),
-        'IRQ': ('🇮🇶 Irak', '#FF3366', 'SIRIUS PHARM COMPANY (Bağdat & Basra Konsorsiyumu)'),
-        'ARE': ('🇦🇪 BAE', '#00F5FF', 'SELLCO TRADING INTL (Dubai / Spot & Körfez Hub)'),
-        'SAU': ('🇸🇦 Suudi Arabistan', '#00E676', 'ASSISTED MEDICAL SOLUTION EST (Riyad)'),
-        'QAT': ('🇶🇦 Katar', '#B026FF', 'INTERNATIONAL TECHNICAL LEGACY - ITL (Doha)'),
-        'KOR': ('🇰🇷 Güney Kore', '#FF9100', 'SJNU INC (Seul - 7 Kurulu Cihaz)')
+        'JOR': ('🇯🇴 Ürdün', '#FFD700', 'SIRIUS PHARM COMPANY (18 Kurulu Cihaz)'),
+        'IRQ': ('🇮🇶 Irak', '#FF3366', 'SIRIUS PHARM COMPANY (Konsorsiyum Ortaklığı)'),
+        'ARE': ('🇦🇪 BAE', '#EAB308', 'SELLCO TRADING INTL (Körfez Dağıtımı)'),
+        'SAU': ('🇸🇦 Suudi Arabistan', '#10B981', 'ASSISTED MEDICAL SOLUTION EST (3 Cihaz)'),
+        'QAT': ('🇶🇦 Katar', '#A855F7', 'INTERNATIONAL TECHNICAL LEGACY (4 Cihaz)'),
+        'KOR': ('🇰🇷 Güney Kore', '#FF9100', 'SJNU INC (7 Cihaz)'),
+        'KWT': ('🇰🇼 Kuveyt', '#F43F5E', 'ADVANCED TECHNOLOGY COMPANY (3 Cihaz)'),
+        'PSE': ('🇵🇸 Filistin', '#38BDF8', 'CONSULTANT MEDICAL COMPANY (5 Cihaz)')
     }
     dist_color_discrete = {
         '🇯🇴 Ürdün': '#FFD700',
         '🇮🇶 Irak': '#FF3366',
-        '🇦🇪 BAE': '#00F5FF',
-        '🇸🇦 Suudi Arabistan': '#00E676',
-        '🇶🇦 Katar': '#B026FF',
+        '🇦🇪 BAE': '#EAB308',
+        '🇸🇦 Suudi Arabistan': '#10B981',
+        '🇶🇦 Katar': '#A855F7',
         '🇰🇷 Güney Kore': '#FF9100',
-        'Distribütörsüz Pazar': '#1E293B'
+        '🇰🇼 Kuveyt': '#F43F5E',
+        '🇵🇸 Filistin': '#38BDF8',
+        'Distribütörsüz Pazar': '#131D31'
     }
 
-    # 2. ZEUS Presence Countries pulled from actual Excel transaction database
     zeus_presence_map = {
         'TUR': ('🇹🇷 Türkiye (Merkez & 25 Klinik)', '#00F5FF', '$219.1K', '1,384 Ünite', 'ZEUS Genel Merkez & Doğrudan Klinik Ağı'),
-        'JOR': ('🇯🇴 Ürdün (SIRIUS PHARM)', '#FFD700', '$165.3K', '693 Ünite', 'Yetkili Distribütör Kurulu Tabanı'),
+        'JOR': ('🇯🇴 Ürdün (SIRIUS PHARM)', '#FFD700', '$165.3K', '693 Ünite', 'Yetkili Distribütör (18 Cihaz)'),
         'IRQ': ('🇮🇶 Irak (SIRIUS Konsorsiyumu)', '#FF3366', '$165.3K', '693 Ünite', 'Yetkili Distribütör Kurulu Tabanı'),
-        'QAT': ('🇶🇦 Katar (ITL)', '#B026FF', '$72.9K', '453 Ünite', 'Yetkili Distribütör Kurulu Tabanı'),
-        'KOR': ('🇰🇷 Güney Kore (SJNU)', '#FF9100', '$68.6K', '205 Ünite', 'Yetkili Distribütör Kurulu Tabanı'),
-        'SAU': ('🇸🇦 Suudi Arabistan (AMS)', '#00E676', '$29.5K', '95 Ünite', 'Yetkili Distribütör Kurulu Tabanı'),
-        'ARE': ('🇦🇪 BAE (Sellco)', '#38BDF8', '$23.2K', '52 Ünite', 'Doğrudan Ticari Müşteri & Spot Dağıtım'),
-        'KWT': ('🇰🇼 Kuveyt (ATC)', '#FBBF24', '$26.3K', '12 Ünite', 'Kurumsal Alıcı (3 Cihaz)'),
-        'PSE': ('🇵🇸 Filistin (CMC)', '#34D399', '$46.7K', '120 Ünite', 'Kurumsal Alıcı (120 Kutu Sarf)'),
+        'QAT': ('🇶🇦 Katar (ITL)', '#A855F7', '$72.9K', '453 Ünite', 'Yetkili Distribütör (4 Cihaz)'),
+        'KOR': ('🇰🇷 Güney Kore (SJNU)', '#FF9100', '$68.6K', '205 Ünite', 'Yetkili Distribütör (7 Cihaz)'),
+        'SAU': ('🇸🇦 Suudi Arabistan (AMS)', '#10B981', '$29.5K', '95 Ünite', 'Yetkili Distribütör (3 Cihaz)'),
+        'ARE': ('🇦🇪 BAE (Sellco)', '#EAB308', '$23.2K', '52 Ünite', 'Doğrudan Ticari Müşteri & Spot Dağıtım'),
+        'KWT': ('🇰🇼 Kuveyt (ATC)', '#F43F5E', '$26.3K', '12 Ünite', 'Yetkili Distribütör (3 Cihaz)'),
+        'PSE': ('🇵🇸 Filistin (CMC)', '#38BDF8', '$46.7K', '120 Ünite', 'Yetkili Distribütör (5 Cihaz)'),
         'BEL': ('🇧🇪 Belçika (Ghent Univ / UGent)', '#C084FC', '$16.1K', '3 Cihaz', 'Akademik & Klinik Referans Merkezi'),
         'ALB': ('🇦🇱/🇸🇰 Arnavutluk-Slovakya (Stem Gene)', '#E879F9', '$18.8K', '121 Ünite', 'Özel IVF Klinikleri Ağı'),
-        'GBR': ('🇬🇧 İngiltere (Londra NHS Demo)', '#818CF8', '$0.0', '6 Cihaz', 'Validasyon & Klinik Demo Donanımı'),
-        'AZE': ('🇦🇿 Azerbaycan (Bakü Klinikleri)', '#F43F5E', '$4.3K', '49 Ünite', 'Doğrudan Klinik Tedariki'),
-        'BGR': ('🇧🇬 Bulgaristan (Sofya)', '#FB7185', '$1.6K', '11 Ünite', 'Doğrudan Klinik Tedariki'),
-        'PHL': ('🇵🇭 Filipinler (Manila)', '#F87171', '$1.2K', '44 Ünite', 'Spot Medikal Alıcı'),
+        'GBR': ('🇬🇧 İngiltere (Londra Demo)', '#818CF8', '$0.0', '6 Cihaz', 'Validasyon & Klinik Demo Donanımı'),
+        'AZE': ('🇦🇿 Azerbaycan (Bakü Klinikleri)', '#FB7185', '$4.3K', '49 Ünite', 'Doğrudan Klinik Tedariki'),
+        'BGR': ('🇧🇬 Bulgaristan (Sofya)', '#F87171', '$1.6K', '11 Ünite', 'Doğrudan Klinik Tedariki'),
+        'PHL': ('🇵🇭 Filipinler (Manila)', '#FBBF24', '$1.2K', '44 Ünite', 'Spot Medikal Alıcı'),
         'SYR': ('🇸🇾 Suriye (Şam)', '#FDA4AF', '$480', '10 Ünite', 'Spot Klinik Alımı')
     }
     zeus_presence_colors = {
         '🇹🇷 Türkiye (Merkez & 25 Klinik)': '#00F5FF',
         '🇯🇴 Ürdün (SIRIUS PHARM)': '#FFD700',
         '🇮🇶 Irak (SIRIUS Konsorsiyumu)': '#FF3366',
-        '🇶🇦 Katar (ITL)': '#B026FF',
+        '🇶🇦 Katar (ITL)': '#A855F7',
         '🇰🇷 Güney Kore (SJNU)': '#FF9100',
-        '🇸🇦 Suudi Arabistan (AMS)': '#00E676',
-        '🇦🇪 BAE (Sellco)': '#38BDF8',
-        '🇰🇼 Kuveyt (ATC)': '#FBBF24',
-        '🇵🇸 Filistin (CMC)': '#34D399',
+        '🇸🇦 Suudi Arabistan (AMS)': '#10B981',
+        '🇦🇪 BAE (Sellco)': '#EAB308',
+        '🇰🇼 Kuveyt (ATC)': '#F43F5E',
+        '🇵🇸 Filistin (CMC)': '#38BDF8',
         '🇧🇪 Belçika (Ghent Univ / UGent)': '#C084FC',
         '🇦🇱/🇸🇰 Arnavutluk-Slovakya (Stem Gene)': '#E879F9',
-        '🇬🇧 İngiltere (Londra NHS Demo)': '#818CF8',
-        '🇦🇿 Azerbaycan (Bakü Klinikleri)': '#F43F5E',
-        '🇧🇬 Bulgaristan (Sofya)': '#FB7185',
-        '🇵🇭 Filipinler (Manila)': '#F87171',
+        '🇬🇧 İngiltere (Londra Demo)': '#818CF8',
+        '🇦🇿 Azerbaycan (Bakü Klinikleri)': '#FB7185',
+        '🇧🇬 Bulgaristan (Sofya)': '#F87171',
+        '🇵🇭 Filipinler (Manila)': '#FBBF24',
         '🇸🇾 Suriye (Şam)': '#FDA4AF',
-        'ZEUS Donanımı Bulunmayan Pazar': '#1E293B'
+        'ZEUS Donanımı Bulunmayan Pazar': '#131D31'
     }
 
+    risk_color_map = {
+        'Low': '#10B981',
+        'Medium': '#F59E0B',
+        'High': '#EF4444',
+        'Not rated': '#64748B'
+    }
+
+    map_data = []
     for _, c in country_df.iterrows():
         iso = c['iso3']
         code = c['code']
         d = dist_by_code.get(code)
         
-        # Distributor layer assignment (Jordan, Iraq, UAE, Saudi, Qatar, South Korea)
         if iso in dist_country_map:
             d_name, d_col, d_desc = dist_country_map[iso]
             dist_status_label = d_name
@@ -3416,7 +3722,6 @@ if nav_selection == "◈ Executive Dashboard":
             dist_status_label = 'Distribütörsüz Pazar'
             dist_partner_info = 'Atanmış Resmi Distribütör Yok'
 
-        # ZEUS presence layer assignment
         if iso in zeus_presence_map:
             z_name, z_col, z_rev, z_qty, z_cat = zeus_presence_map[iso]
             zeus_status_label = z_name
@@ -3454,133 +3759,725 @@ if nav_selection == "◈ Executive Dashboard":
         })
     m_df = pd.DataFrame(map_data)
 
-    if map_layer == "🌍 Resmi Distribütör Ülkeleri (Özel Ülke Renklendirmesi)":
-        fig_map = px.choropleth(
-            m_df, locations="iso3", color="Distributor_Country",
-            color_discrete_map=dist_color_discrete,
-            hover_name="Country",
-            hover_data={
-                "iso3": False, 
-                "Distributor_Country": True, 
-                "Distributor_Info": True, 
-                "Clinics": True, 
-                "Annual Cycles": True,
-                "Region": True
-            }
-        )
-    elif map_layer == "🔬 ZEUS'un Bulunduğu Tüm Ülkeler (Kurulu Taban & Satış Verileri)":
-        fig_map = px.choropleth(
-            m_df, locations="iso3", color="ZEUS_Presence",
-            color_discrete_map=zeus_presence_colors,
-            hover_name="Country",
-            hover_data={
-                "iso3": False, 
-                "ZEUS_Presence": True, 
-                "ZEUS_Category": True, 
-                "ZEUS_Revenue": True, 
-                "ZEUS_Volume": True, 
-                "Clinics": True
-            }
-        )
-    elif map_layer == "🌐 6 Coğrafi Bölgeye Göre Renklendir":
-        fig_map = px.choropleth(
-            m_df, locations="iso3", color="Region",
-            color_discrete_map=region_color_map,
-            hover_name="Country",
-            hover_data={"iso3": False, "Region": True, "Coverage": True, "Distributor": True, "Net Revenue": True, "Clinics": True, "Annual Cycles": True, "Opportunity Score": True}
-        )
-    elif map_layer == "🎯 Pazar Fırsat Skoru":
-        fig_map = px.choropleth(
-            m_df, locations="iso3", color="Opportunity Score",
-            color_continuous_scale=[
-                [0.0, "#2D3748"],
-                [0.2, "#7C3AED"],
-                [0.4, "#2563EB"],
-                [0.6, "#EA580C"],
-                [0.8, "#16A34A"],
-                [1.0, "#00F5FF"]
-            ],
-            range_color=[35, 95],
-            hover_name="Country",
-            hover_data={"iso3": False, "Coverage": True, "Distributor": True, "Clinics": True, "Annual Cycles": True, "Opportunity Score": True}
-        )
-        fig_map.update_coloraxes(
-            colorbar_title="Fırsat Skoru",
-            colorbar_title_side="top",
-            colorbar_tickvals=[35, 50, 65, 80, 95],
-            colorbar_ticktext=["35 (Baz)", "50 (Orta)", "65 (Önemli)", "80 (Yüksek)", "95+ (Elit)"],
-            colorbar_len=0.75,
-            colorbar_thickness=18
-        )
-    else: # ⚠️ Ticari Risk Profili
-        fig_map = px.choropleth(
-            m_df, locations="iso3", color="Risk",
-            color_discrete_map=risk_color_map,
-            hover_name="Country",
-            hover_data={"iso3": False, "Risk": True, "Distributor": True, "Coverage": True, "Opportunity Score": True}
-        )
-
-    fig_map.update_geos(
-        projection_type='orthographic',
-        projection_rotation=dict(lon=init_lon, lat=15, roll=0),
-        showocean=True,
-        oceancolor='#060C18',
-        showland=True,
-        landcolor='#0D1629',
-        showlakes=True,
-        lakecolor='#060C18',
-        showcountries=True,
-        countrycolor='rgba(255, 255, 255, 0.35)',
-        countrywidth=1.0,
-        showcoastlines=True,
-        coastlinecolor='rgba(0, 245, 255, 0.85)',
-        coastlinewidth=1.4,
-        bgcolor='rgba(0,0,0,0)'
+    # 1. 2D Choropleth for Official Distributors
+    fig_map_dist = px.choropleth(
+        m_df, locations="iso3", color="Distributor_Country",
+        color_discrete_map=dist_color_discrete,
+        hover_name="Country",
+        hover_data={"iso3": False, "Distributor_Country": True, "Distributor_Info": True, "Clinics": True, "Annual Cycles": True, "Region": True}
+    )
+    # 2. 2D Choropleth for All ZEUS Presence Countries
+    fig_map_zeus = px.choropleth(
+        m_df, locations="iso3", color="ZEUS_Presence",
+        color_discrete_map=zeus_presence_colors,
+        hover_name="Country",
+        hover_data={"iso3": False, "ZEUS_Presence": True, "ZEUS_Category": True, "ZEUS_Revenue": True, "ZEUS_Volume": True, "Clinics": True}
+    )
+    # 3. 2D Choropleth for Market Opportunity Score
+    fig_map_opp = px.choropleth(
+        m_df, locations="iso3", color="Opportunity Score",
+        color_continuous_scale=[[0.0, "#1E293B"], [0.25, "#4F46E5"], [0.5, "#06B6D4"], [0.75, "#00F5FF"], [1.0, "#10B981"]],
+        range_color=[35, 98],
+        hover_name="Country",
+        hover_data={"iso3": False, "Coverage": True, "Distributor": True, "Clinics": True, "Annual Cycles": True, "Opportunity Score": True}
+    )
+    fig_map_opp.update_coloraxes(
+        colorbar_title="Fırsat Skoru",
+        colorbar_title_side="top",
+        colorbar_tickvals=[35, 50, 65, 80, 95],
+        colorbar_ticktext=["35 (Baz)", "50 (Orta)", "65 (Önemli)", "80 (Yüksek)", "95+ (Elit Pazar)"],
+        colorbar_len=0.75,
+        colorbar_thickness=16
+    )
+    # 4. 2D Choropleth for Commercial Risk Profile
+    fig_map_risk = px.choropleth(
+        m_df, locations="iso3", color="Risk",
+        color_discrete_map=risk_color_map,
+        hover_name="Country",
+        hover_data={"iso3": False, "Risk": True, "Distributor": True, "Coverage": True, "Opportunity Score": True}
     )
 
-    # 360-degree rotation animation frames
-    step = 15
-    frames = [
-        go.Frame(
-            layout=dict(geo=dict(projection_rotation=dict(lon=lon, lat=15, roll=0))),
-            name=f'rot_{lon}'
-        ) for lon in range(0, 360, step)
-    ]
-    fig_map.frames = frames
+    for f_map in [fig_map_dist, fig_map_zeus, fig_map_opp, fig_map_risk]:
+        f_map.update_geos(
+            projection_type='orthographic',
+            showocean=True,
+            oceancolor='#060C18',
+            showland=True,
+            landcolor='#0E172A',
+            showlakes=True,
+            lakecolor='#060C18',
+            showcountries=True,
+            countrycolor='rgba(255, 255, 255, 0.16)',
+            countrywidth=0.8,
+            showcoastlines=False,
+            bgcolor='rgba(0,0,0,0)'
+        )
+        f_map.update_layout(
+            height=490,
+            margin=dict(l=0, r=0, t=0, b=0),
+            paper_bgcolor='rgba(0,0,0,0)',
+            plot_bgcolor='rgba(0,0,0,0)',
+            font=dict(family="Inter, sans-serif", color="#CBD5E1")
+        )
 
-    fig_map.update_layout(
-        height=480,
-        margin=dict(l=0, r=0, t=0, b=0),
-        paper_bgcolor='rgba(0,0,0,0)',
-        plot_bgcolor='rgba(0,0,0,0)',
-        font=dict(family="Inter, sans-serif"),
-        updatemenus=[dict(
-            type='buttons',
-            showactive=False,
-            x=0.02, y=0.05,
-            bgcolor='rgba(19, 31, 56, 0.85)',
-            bordercolor='rgba(0, 245, 255, 0.4)',
-            font=dict(color='#FFFFFF', size=12),
-            buttons=[
-                dict(
-                    label='▶ 360° Otomatik Döndür',
-                    method='animate',
-                    args=[None, dict(frame=dict(duration=90, redraw=True), fromcurrent=True, mode='immediate', loop=True)]
-                ),
-                dict(
-                    label='⏸ Durdur',
-                    method='animate',
-                    args=[[None], dict(frame=dict(duration=0, redraw=False), mode='immediate')]
-                )
-            ]
-        )]
-    )
-    st.plotly_chart(fig_map, use_container_width=True)
+    # 3D Three.js WebGL Interactive Cyber Globe with Ankara Hub & Ice-Cyan Neon Arcs
+    globe_html = '''<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body { margin: 0; padding: 0; overflow: hidden; background: transparent; font-family: 'Inter', system-ui, sans-serif; }
+        #globe-container { position: relative; width: 100%; height: 530px; border-radius: 16px; background: radial-gradient(circle at 50% 40%, rgba(10, 18, 36, 0.95) 0%, rgba(4, 7, 16, 0.98) 100%); border: 1px solid rgba(0, 245, 255, 0.25); box-shadow: 0 12px 40px rgba(0,0,0,0.6), inset 0 0 35px rgba(0, 245, 255, 0.05); }
+        
+        #telemetry-box { position: absolute; top: 14px; left: 16px; pointer-events: none; z-index: 10; }
+        .hud-badge { font-size: 10.5px; font-weight: 700; letter-spacing: 0.1em; color: #00F5FF; background: rgba(0, 245, 255, 0.1); border: 1px solid rgba(0, 245, 255, 0.3); border-radius: 6px; padding: 5px 12px; display: inline-flex; align-items: center; gap: 6px; backdrop-filter: blur(8px); }
+        .hud-sub { font-size: 11px; color: #94A3B8; margin-top: 5px; font-weight: 500; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
+        
+        #fly-nav { position: absolute; top: 14px; right: 16px; display: flex; gap: 6px; z-index: 10; flex-wrap: wrap; justify-content: flex-end; }
+        .fly-btn { background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(255, 255, 255, 0.12); color: #E2E8F0; padding: 5px 11px; border-radius: 8px; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); backdrop-filter: blur(12px); }
+        .fly-btn:hover { background: rgba(0, 245, 255, 0.18); border-color: #00F5FF; color: #FFFFFF; transform: translateY(-1px); box-shadow: 0 4px 15px rgba(0, 245, 255, 0.25); }
+        .fly-btn.active { background: linear-gradient(90deg, rgba(0,245,255,0.25) 0%, rgba(16,185,129,0.2) 100%); border-color: #00F5FF; color: #00F5FF; font-weight: 700; }
 
-    # Charts Row: Monthly Trend + Breakdown by Region & Product
+        #bottom-bar { position: absolute; bottom: 12px; left: 16px; right: 16px; display: flex; justify-content: space-between; align-items: center; pointer-events: none; z-index: 10; }
+        #rot-toggle { pointer-events: auto; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(0, 245, 255, 0.3); color: #00F5FF; padding: 6px 14px; border-radius: 999px; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.2s; backdrop-filter: blur(8px); display: flex; align-items: center; gap: 6px; }
+        #rot-toggle:hover { background: rgba(0, 245, 255, 0.2); transform: scale(1.02); box-shadow: 0 0 16px rgba(0, 245, 255, 0.3); }
+        #hint-pill { background: rgba(7, 11, 20, 0.8); border: 1px solid rgba(255, 255, 255, 0.08); color: #94A3B8; padding: 4px 14px; border-radius: 999px; font-size: 10.5px; backdrop-filter: blur(8px); }
+
+        #hud-tooltip { position: absolute; display: none; pointer-events: none; background: rgba(10, 16, 28, 0.94); border: 1px solid #00F5FF; border-radius: 12px; padding: 12px 16px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 10px 35px rgba(0, 245, 255, 0.3), 0 0 15px rgba(0,0,0,0.8); z-index: 99; min-width: 230px; }
+        #tt-title { font-size: 13px; font-weight: 700; color: #FFFFFF; margin-bottom: 2px; }
+        #tt-city { font-size: 11px; color: #00F5FF; margin-bottom: 8px; font-weight: 600; }
+        .tt-metric-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; font-size: 11.5px; }
+        .tt-label { color: #94A3B8; }
+        .tt-val { font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+        #tt-status { font-size: 10.5px; font-weight: 600; padding: 3px 8px; border-radius: 5px; margin-top: 6px; display: inline-block; }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+    <div id="globe-container">
+        <div id="telemetry-box">
+            <div class="hud-badge">⬡ ANKARA GLOBAL MERKEZ & DAĞITIM AĞI</div>
+            <div class="hud-sub">● 14 Aktif Ülke Koridoru | 21 Kurulu Cihaz | 874 Doğrulanmış Fatura Hacmi</div>
+        </div>
+
+        <div id="fly-nav">
+            <button class="fly-btn active" onclick="flyTo(33, 40, this)">🇹🇷 Ankara Merkez Üs</button>
+            <button class="fly-btn" onclick="flyTo(45, 26, this)">🌴 Körfez & MENA</button>
+            <button class="fly-btn" onclick="flyTo(125, 36, this)">🌏 Asya-Pasifik (Seul)</button>
+            <button class="fly-btn" onclick="flyTo(10, 48, this)">🇪🇺 Avrupa (Gent / Londra)</button>
+            <button class="fly-btn" onclick="flyTo(-75, 25, this)">🗽 Amerika</button>
+        </div>
+
+        <div id="bottom-bar">
+            <button id="rot-toggle" onclick="toggleRotation()">
+                <span id="rot-icon">⏸</span> <span id="rot-text">Dönüşü Durdur</span>
+            </button>
+            <div id="hint-pill">● Buz Mavisi Işık Hatları: Ankara'dan Çıkan Resmi Distribütör & Klinik Koridorları</div>
+        </div>
+
+        <div id="hud-tooltip">
+            <div id="tt-title"></div>
+            <div id="tt-city"></div>
+            <div class="tt-metric-row">
+                <span class="tt-label">Kurulu Taban:</span>
+                <span class="tt-val" id="tt-dev" style="color:#00F5FF;"></span>
+            </div>
+            <div class="tt-metric-row">
+                <span class="tt-label">Kümülatif Hasılat:</span>
+                <span class="tt-val" id="tt-rev" style="color:#10B981;"></span>
+            </div>
+            <div id="tt-status"></div>
+        </div>
+    </div>
+
+    <script>
+        const container = document.getElementById('globe-container');
+        const tooltip = document.getElementById('hud-tooltip');
+        const ttTitle = document.getElementById('tt-title');
+        const ttCity = document.getElementById('tt-city');
+        const ttDev = document.getElementById('tt-dev');
+        const ttRev = document.getElementById('tt-rev');
+        const ttStatus = document.getElementById('tt-status');
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+        camera.position.set(0, 5, 24);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        container.appendChild(renderer.domElement);
+
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.minDistance = 11;
+        controls.maxDistance = 45;
+        controls.rotateSpeed = 0.8;
+
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.75);
+        scene.add(ambientLight);
+
+        const sunLight = new THREE.DirectionalLight(0xffffff, 1.4);
+        sunLight.position.set(25, 20, 25);
+        scene.add(sunLight);
+
+        const cyanBackLight = new THREE.DirectionalLight(0x00f5ff, 0.9);
+        cyanBackLight.position.set(-25, -15, -20);
+        scene.add(cyanBackLight);
+
+        const globeGroup = new THREE.Group();
+        scene.add(globeGroup);
+
+        const GLOBE_RADIUS = 8.0;
+
+        const textureLoader = new THREE.TextureLoader();
+        const earthTexture = textureLoader.load('data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAA8AAD/4QMraHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjAtYzA2MCA2MS4xMzQ3NzcsIDIwMTAvMDIvMTItMTc6MzI6MDAgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcE1NPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvbW0vIiB4bWxuczpzdFJlZj0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wL3NUeXBlL1Jlc291cmNlUmVmIyIgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIiB4bXBNTTpEb2N1bWVudElEPSJ4bXAuZGlkOkM1OTE5RDA5NUYxRjExRTBCRDYxODg3RkZCRjFFQjQxIiB4bXBNTTpJbnN0YW5jZUlEPSJ4bXAuaWlkOkM1OTE5RDA4NUYxRjExRTBCRDYxODg3RkZCRjFFQjQxIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDUzUgTWFjaW50b3NoIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6Njk0NjA4NDU1RDcxMTFFMEI0QkY4NjU5MjExNDc5MjgiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6Njk0NjA4NDY1RDcxMTFFMEI0QkY4NjU5MjExNDc5MjgiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7/7gAOQWRvYmUAZMAAAAAB/9sAhAAGBAQEBQQGBQUGCQYFBgkLCAYG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AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAADV/ut8WBkAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA1f7rfFgZAAVNgQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGr/AHW+LAyAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAav8Adb4sDIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABq/wB1viwMgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAH//2Q==');
+
+        const earthGeo = new THREE.SphereGeometry(GLOBE_RADIUS, 64, 64);
+        const earthMat = new THREE.MeshStandardMaterial({
+            map: earthTexture,
+            roughness: 0.72,
+            metalness: 0.15,
+            emissive: 0x050d1a,
+            emissiveIntensity: 0.5
+        });
+        const earthMesh = new THREE.Mesh(earthGeo, earthMat);
+        globeGroup.add(earthMesh);
+
+        const gridGeo = new THREE.SphereGeometry(GLOBE_RADIUS + 0.03, 36, 18);
+        const gridMat = new THREE.MeshBasicMaterial({
+            color: 0x00f5ff,
+            wireframe: true,
+            transparent: true,
+            opacity: 0.05
+        });
+        const gridMesh = new THREE.Mesh(gridGeo, gridMat);
+        globeGroup.add(gridMesh);
+
+        const atmosphereVertexShader = `
+            varying vec3 vNormal;
+            void main() {
+                vNormal = normalize(normalMatrix * normal);
+                gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0);
+            }
+        `;
+        const atmosphereFragmentShader = `
+            varying vec3 vNormal;
+            void main() {
+                float intensity = pow(0.68 - dot(vNormal, vec3(0, 0, 1.0)), 2.2);
+                gl_FragColor = vec4(0.0, 0.96, 1.0, 1.0) * intensity * 1.6;
+            }
+        `;
+        const atmosphereMaterial = new THREE.ShaderMaterial({
+            vertexShader: atmosphereVertexShader,
+            fragmentShader: atmosphereFragmentShader,
+            blending: THREE.AdditiveBlending,
+            side: THREE.BackSide,
+            transparent: true
+        });
+        const atmosphere = new THREE.Mesh(new THREE.SphereGeometry(GLOBE_RADIUS + 0.82, 64, 64), atmosphereMaterial);
+        scene.add(atmosphere);
+
+        const starGeo = new THREE.BufferGeometry();
+        const starCount = 300;
+        const starPos = new Float32Array(starCount * 3);
+        for(let i=0; i<starCount*3; i+=3) {
+            starPos[i] = (Math.random() - 0.5) * 80;
+            starPos[i+1] = (Math.random() - 0.5) * 80;
+            starPos[i+2] = (Math.random() - 0.5) * 80;
+        }
+        starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+        const starMat = new THREE.PointsMaterial({ color: 0x38bdf8, size: 0.15, transparent: true, opacity: 0.6 });
+        const starPoints = new THREE.Points(starGeo, starMat);
+        scene.add(starPoints);
+
+        function latLonToVec3(lat, lon, r) {
+            const phi = (90 - lat) * (Math.PI / 180);
+            const theta = (lon + 180) * (Math.PI / 180);
+            const x = -(r * Math.sin(phi) * Math.cos(theta));
+            const z = r * Math.sin(phi) * Math.sin(theta);
+            const y = r * Math.cos(phi);
+            return new THREE.Vector3(x, y, z);
+        }
+
+        // ANKARA HQ (Origin Point)
+        const ankaraPos = latLonToVec3(39.9334, 32.8597, GLOBE_RADIUS);
+        const ankaraNorm = ankaraPos.clone().normalize();
+
+        const ankRingGeo1 = new THREE.RingGeometry(0.18, 0.36, 32);
+        const ankRingMat1 = new THREE.MeshBasicMaterial({ color: 0x00f5ff, side: THREE.DoubleSide, transparent: true, opacity: 0.95 });
+        const ankRing1 = new THREE.Mesh(ankRingGeo1, ankRingMat1);
+        ankRing1.position.copy(ankaraPos.clone().add(ankaraNorm.clone().multiplyScalar(0.03)));
+        ankRing1.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), ankaraNorm);
+        globeGroup.add(ankRing1);
+
+        const ankRingGeo2 = new THREE.RingGeometry(0.48, 0.62, 32);
+        const ankRingMat2 = new THREE.MeshBasicMaterial({ color: 0x00f5ff, side: THREE.DoubleSide, transparent: true, opacity: 0.45 });
+        const ankRing2 = new THREE.Mesh(ankRingGeo2, ankRingMat2);
+        ankRing2.position.copy(ankaraPos.clone().add(ankaraNorm.clone().multiplyScalar(0.025)));
+        ankRing2.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), ankaraNorm);
+        globeGroup.add(ankRing2);
+
+        const ankCoreGeo = new THREE.CircleGeometry(0.13, 32);
+        const ankCoreMat = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide });
+        const ankCore = new THREE.Mesh(ankCoreGeo, ankCoreMat);
+        ankCore.position.copy(ankaraPos.clone().add(ankaraNorm.clone().multiplyScalar(0.04)));
+        ankCore.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), ankaraNorm);
+        globeGroup.add(ankCore);
+
+        const ankHitGeo = new THREE.SphereGeometry(0.55, 8, 8);
+        const ankHitMat = new THREE.MeshBasicMaterial({ visible: false });
+        const ankHit = new THREE.Mesh(ankHitGeo, ankHitMat);
+        ankHit.position.copy(ankaraPos);
+        ankHit.userData = {
+            name: "ZEUS Global Genel Merkez",
+            country: "Türkiye",
+            city: "Ankara (Genel Merkez)",
+            dev: "Global Ar-Ge ve Üretim Üssü",
+            rev: "$219,083 USD (TR) / $693,887 USD (Konsolide)",
+            status: "Global Command Center (Merkez Üs)",
+            isHQ: true,
+            rings: [ankRing1, ankRing2]
+        };
+        globeGroup.add(ankHit);
+
+        const targetsData = [
+            {"id": "SIRIUS", "name": "SIRIUS PHARM COMPANY", "country": "Ürdün & Irak", "city": "Amman & Bağdat", "lat": 31.9522, "lon": 35.9284, "type": "Distributor", "dev": "18 Adet Piezo Pulse Cihaz", "rev": "$165,254 USD", "status": "Lokomotif Distribütör (Valid LOA 2027)"},
+            {"id": "ITL", "name": "INTERNATIONAL TECHNICAL LEGACY (ITL)", "country": "Katar", "city": "Doha", "lat": 25.2854, "lon": 51.5310, "type": "Distributor", "dev": "4 Adet Kurulu Cihaz", "rev": "$72,867 USD", "status": "Yetkili Distribütör (Valid LOA 2026)"},
+            {"id": "SJNU", "name": "SJNU INC", "country": "Güney Kore", "city": "Seul", "lat": 37.5665, "lon": 126.9780, "type": "Distributor", "dev": "7 Adet Kurulu Cihaz", "rev": "$68,550 USD", "status": "Lokomotif Distribütör (Valid LOA 2027)"},
+            {"id": "CMC", "name": "CONSULTANT MEDICAL COMPANY (CMC)", "country": "Filistin", "city": "Ramallah", "lat": 31.9038, "lon": 35.2034, "type": "Distributor", "dev": "5 Adet Kurulu Cihaz", "rev": "$46,700 USD", "status": "Yetkili Distribütör (Valid LOA 2026)"},
+            {"id": "AMS", "name": "ASSISTED MEDICAL SOLUTION EST", "country": "Suudi Arabistan", "city": "Riyad", "lat": 24.7136, "lon": 46.6753, "type": "Distributor", "dev": "3 Adet Kurulu Cihaz", "rev": "$29,500 USD", "status": "Yetkili Distribütör (Pending Renewal)"},
+            {"id": "ATC", "name": "ADVANCED TECHNOLOGY COMPANY (ATC)", "country": "Kuveyt", "city": "Kuveyt Şehri", "lat": 29.3759, "lon": 47.9774, "type": "Distributor", "dev": "3 Adet Kurulu Cihaz", "rev": "$26,250 USD", "status": "Yetkili Distribütör (Atıl Cihaz Uyarısı)"},
+            {"id": "SELLCO", "name": "SELLCO TRADING INTL", "country": "Birleşik Arap Emirlikleri", "city": "Dubai", "lat": 25.2048, "lon": 55.2708, "type": "Presence", "dev": "Körfez Spot Alıcı / Dağıtım", "rev": "$23,180 USD", "status": "Körfez Ticari Partner & Dağıtım"},
+            {"id": "ALB_SVK", "name": "Ferticent & Stem Gene Art Clinic", "country": "Arnavutluk & Slovakya", "city": "Tiran & Bratislava", "lat": 41.3275, "lon": 19.8187, "type": "Presence", "dev": "1 Ünite Cihaz + Düzenli Sarf", "rev": "$18,840 USD", "status": "Doğrudan Klinik Müşterisi"},
+            {"id": "GHENT", "name": "Ghent University Hospital (UGent)", "country": "Belçika", "city": "Gent", "lat": 51.0543, "lon": 3.7174, "type": "Presence", "dev": "1 Ünite Donanım", "rev": "$16,120 USD", "status": "Akademik IVF Araştırma Hastanesi"},
+            {"id": "AZE", "name": "Maternal Fetal Care & RSM Bakü", "country": "Azerbaycan", "city": "Bakü", "lat": 40.4093, "lon": 49.8671, "type": "Presence", "dev": "Düzenli Sarf Tüketimi", "rev": "$4,254 USD", "status": "Kafkasya Klinik Müşterisi"},
+            {"id": "BGR", "name": "Meyona OOD", "country": "Bulgaristan", "city": "Sofya", "lat": 42.6977, "lon": 23.3219, "type": "Presence", "dev": "Düzenli Sarf Tüketimi", "rev": "$1,580 USD", "status": "Balkanlar Klinik Dağıtım"},
+            {"id": "PHL", "name": "Fertility Philippines IVF Corporation", "country": "Filipinler", "city": "Manila", "lat": 14.5995, "lon": 120.9842, "type": "Presence", "dev": "Deneme & Sarf Malzeme", "rev": "$1,228 USD", "status": "Asya-Pasifik Doğrudan Klinik"},
+            {"id": "SYR", "name": "Bisan Company for Export/Import", "country": "Suriye", "city": "Şam", "lat": 33.5138, "lon": 36.2765, "type": "Presence", "dev": "Sarf Malzeme İkmalı", "rev": "$480 USD", "status": "Bölgesel Spot Müşteri"},
+            {"id": "GBR", "name": "Halil Ruso UK Evaluation", "country": "İngiltere", "city": "Londra", "lat": 51.5074, "lon": -0.1278, "type": "Presence", "dev": "Klinik Değerlendirme", "rev": "Klinik Değerlendirme", "status": "Avrupa İnceleme Süreci"}
+        ];
+
+        const targetHitBoxes = [ankHit];
+        const arcLines = [];
+        const arcPulses = [];
+
+        targetsData.forEach(t => {
+            const destPos = latLonToVec3(t.lat, t.lon, GLOBE_RADIUS);
+            const destNorm = destPos.clone().normalize();
+            const isDist = t.type === 'Distributor';
+
+            const rSize = isDist ? 0.28 : 0.20;
+            const ringGeo = new THREE.RingGeometry(rSize * 0.65, rSize, 32);
+            const ringMat = new THREE.MeshBasicMaterial({
+                color: isDist ? 0x00f5ff : 0x38bdf8,
+                side: THREE.DoubleSide,
+                transparent: true,
+                opacity: isDist ? 0.95 : 0.75
+            });
+            const ring = new THREE.Mesh(ringGeo, ringMat);
+            ring.position.copy(destPos.clone().add(destNorm.clone().multiplyScalar(0.025)));
+            ring.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), destNorm);
+            globeGroup.add(ring);
+
+            const dotGeo = new THREE.CircleGeometry(rSize * 0.35, 16);
+            const dotMat = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide });
+            const dot = new THREE.Mesh(dotGeo, dotMat);
+            dot.position.copy(destPos.clone().add(destNorm.clone().multiplyScalar(0.03)));
+            dot.quaternion.setFromUnitVectors(new THREE.Vector3(0, 0, 1), destNorm);
+            globeGroup.add(dot);
+
+            const hitGeo = new THREE.SphereGeometry(0.48, 8, 8);
+            const hitMat = new THREE.MeshBasicMaterial({ visible: false });
+            const hitBox = new THREE.Mesh(hitGeo, hitMat);
+            hitBox.position.copy(destPos);
+            hitBox.userData = t;
+            hitBox.userData.ring = ring;
+            hitBox.userData.dot = dot;
+            globeGroup.add(hitBox);
+            targetHitBoxes.push(hitBox);
+
+            const dist = ankaraPos.distanceTo(destPos);
+            const mid = ankaraPos.clone().add(destPos).multiplyScalar(0.5);
+            const midHeight = GLOBE_RADIUS + dist * 0.30;
+            mid.normalize().multiplyScalar(midHeight);
+
+            const curve = new THREE.QuadraticBezierCurve3(ankaraPos, mid, destPos);
+            const points = curve.getPoints(50);
+            const arcGeo = new THREE.BufferGeometry().setFromPoints(points);
+            
+            const arcMat = new THREE.LineBasicMaterial({
+                color: 0x00f5ff,
+                transparent: true,
+                opacity: isDist ? 0.65 : 0.40,
+                blending: THREE.AdditiveBlending
+            });
+            const arcLine = new THREE.Line(arcGeo, arcMat);
+            globeGroup.add(arcLine);
+            arcLines.push({ line: arcLine, baseOpacity: arcMat.opacity, hitBox: hitBox });
+            hitBox.userData.arcLine = arcLine;
+
+            const pulseGeo = new THREE.SphereGeometry(isDist ? 0.13 : 0.10, 12, 12);
+            const pulseMat = new THREE.MeshBasicMaterial({
+                color: 0xffffff,
+                transparent: true,
+                opacity: 0.95
+            });
+            const pulse = new THREE.Mesh(pulseGeo, pulseMat);
+            globeGroup.add(pulse);
+            arcPulses.push({
+                mesh: pulse,
+                curve: curve,
+                offset: Math.random(),
+                speed: 0.005 + Math.random() * 0.003
+            });
+        });
+
+        let autoRotate = true;
+        let isFlying = false;
+        let targetRotY = 0;
+        let targetRotX = 0;
+
+        function flyTo(lon, lat, btn) {
+            if (btn) {
+                document.querySelectorAll('.fly-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+            }
+            targetRotY = -((lon - 25) * Math.PI / 180);
+            targetRotX = (lat - 20) * 0.008;
+            isFlying = true;
+        }
+
+        function toggleRotation() {
+            autoRotate = !autoRotate;
+            const icon = document.getElementById('rot-icon');
+            const txt = document.getElementById('rot-text');
+            if (autoRotate) {
+                icon.innerText = '⏸';
+                txt.innerText = 'Dönüşü Durdur';
+            } else {
+                icon.innerText = '▶';
+                txt.innerText = '360° Döndür';
+            }
+        }
+
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+        let hoveredTarget = null;
+
+        container.addEventListener('mousemove', (e) => {
+            const rect = container.getBoundingClientRect();
+            mouse.x = ((e.clientX - rect.left) / container.clientWidth) * 2 - 1;
+            mouse.y = -((e.clientY - rect.top) / container.clientHeight) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(targetHitBoxes);
+
+            if (intersects.length > 0) {
+                const hit = intersects[0].object;
+                if (hoveredTarget !== hit) {
+                    if (hoveredTarget) resetTarget(hoveredTarget);
+                    hoveredTarget = hit;
+                    highlightTarget(hoveredTarget);
+                }
+                const d = hit.userData;
+                ttTitle.innerText = d.name;
+                ttCity.innerText = d.city;
+                ttDev.innerText = d.dev;
+                ttRev.innerText = d.rev;
+                ttStatus.innerText = d.status;
+                ttStatus.style.background = (d.isHQ ? 'rgba(0,245,255,0.2)' : 'rgba(56,189,248,0.2)');
+                ttStatus.style.color = '#00F5FF';
+                ttStatus.style.border = '1px solid rgba(0,245,255,0.5)';
+
+                let tx = e.clientX - rect.left + 16;
+                let ty = e.clientY - rect.top - 30;
+                if (tx + 250 > container.clientWidth) tx = e.clientX - rect.left - 260;
+                if (ty < 10) ty = 10;
+                tooltip.style.left = tx + 'px';
+                tooltip.style.top = ty + 'px';
+                tooltip.style.display = 'block';
+                tooltip.style.borderColor = '#00F5FF';
+                container.style.cursor = 'pointer';
+            } else {
+                if (hoveredTarget) {
+                    resetTarget(hoveredTarget);
+                    hoveredTarget = null;
+                }
+                tooltip.style.display = 'none';
+                container.style.cursor = 'default';
+            }
+        });
+
+        function highlightTarget(target) {
+            const d = target.userData;
+            if (d.ring) {
+                d.ring.scale.set(1.5, 1.5, 1.5);
+                d.ring.material.opacity = 1.0;
+            }
+            if (d.arcLine) {
+                d.arcLine.material.opacity = 1.0;
+                d.arcLine.material.color.setHex(0x00ffff);
+            }
+            if (d.isHQ && d.rings) {
+                d.rings.forEach(r => r.scale.set(1.3, 1.3, 1.3));
+            }
+        }
+
+        function resetTarget(target) {
+            const d = target.userData;
+            if (d.ring) {
+                d.ring.scale.set(1, 1, 1);
+                d.ring.material.opacity = d.type === 'Distributor' ? 0.95 : 0.75;
+            }
+            if (d.arcLine) {
+                d.arcLine.material.opacity = d.type === 'Distributor' ? 0.65 : 0.40;
+                d.arcLine.material.color.setHex(0x00f5ff);
+            }
+            if (d.isHQ && d.rings) {
+                d.rings.forEach(r => r.scale.set(1, 1, 1));
+            }
+        }
+
+        let progress = 0;
+        let radarPulse = 0;
+
+        function animate() {
+            requestAnimationFrame(animate);
+
+            radarPulse += 0.04;
+            const rScale1 = 1.0 + 0.12 * Math.sin(radarPulse);
+            const rScale2 = 1.0 + 0.18 * Math.sin(radarPulse - 0.6);
+            ankRing1.scale.set(rScale1, rScale1, 1);
+            ankRing2.scale.set(rScale2, rScale2, 1);
+
+            progress += 0.0032;
+            arcPulses.forEach(p => {
+                const t = (progress + p.offset) % 1.0;
+                p.mesh.position.copy(p.curve.getPoint(t));
+            });
+
+            if (isFlying) {
+                let diff = targetRotY - globeGroup.rotation.y;
+                diff = Math.atan2(Math.sin(diff), Math.cos(diff));
+                if (Math.abs(diff) > 0.01) {
+                    globeGroup.rotation.y += diff * 0.08;
+                } else {
+                    globeGroup.rotation.y = targetRotY;
+                    isFlying = false;
+                }
+            } else if (autoRotate) {
+                globeGroup.rotation.y += 0.0022;
+            }
+
+            controls.update();
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+    </script>
+</body>
+</html>'''
+
+    # ==========================================================================
+    # 4 EXPLICIT TABS REQUESTED BY USER
+    # ==========================================================================
+    tab_dist, tab_zeus, tab_opp, tab_risk = st.tabs([
+        "🌍 Yetkili Distribütörler (6 Ülke Hub)",
+        "🔬 ZEUS'un Bulunduğu Tüm Ülkeler (16 Aktif Pazar)",
+        "🎯 Pazar Fırsat Skoru & Potansiyel Pazarlar (48 Ülke)",
+        "⚠️ Ticari Risk Profili"
+    ])
+
+    # 1. Official Authorized Distributors Tab
+    with tab_dist:
+        st.markdown('''
+        <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(0,245,255,0.25);border-left:4px solid #00F5FF;border-radius:10px;padding:10px 14px;margin-bottom:12px;backdrop-filter:blur(12px);">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+                <span style="font-size:12.5px;color:#E2E8F0;"><b style="color:#00F5FF;">Resmi Distribütör Koridoru:</b> 6 Yetkili Ülke Partneri, sahadaki 21 aktif cihaz filosu ve Ankara Genel Merkezli ikmal hatları.</span>
+                <span style="font-size:11px;color:#10B981;font-weight:700;">● %100 Doğrulanmış Excel Sözleşme Verisi</span>
+            </div>
+        </div>
+        ''', unsafe_allow_html=True)
+        
+        if map_proj_view == "3D Cyber Hologram Küre (WebGL 360°)":
+            components.html(globe_html, height=545)
+        else:
+            st.plotly_chart(fig_map_dist, use_container_width=True)
+
+        # 6 Distributor Glass Performance Cards
+        st.markdown('''
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));gap:10px;margin-top:12px;">
+            <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(0,245,255,0.3);border-top:3px solid #00F5FF;border-radius:10px;padding:9px 12px;backdrop-filter:blur(12px);">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <span style="font-size:12px;font-weight:700;color:#FFFFFF;">SIRIUS PHARM</span>
+                    <span style="font-size:10px;color:#00F5FF;font-weight:600;">ÜRDÜN - IRAK</span>
+                </div>
+                <div style="font-size:16px;font-weight:800;color:#00F5FF;margin-top:4px;">18 Cihaz</div>
+                <div style="font-size:11px;color:#94A3B8;">$165.3K Kümülatif Ciro</div>
+            </div>
+            <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(0,245,255,0.3);border-top:3px solid #00F5FF;border-radius:10px;padding:9px 12px;backdrop-filter:blur(12px);">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <span style="font-size:12px;font-weight:700;color:#FFFFFF;">ITL</span>
+                    <span style="font-size:10px;color:#00F5FF;font-weight:600;">KATAR</span>
+                </div>
+                <div style="font-size:16px;font-weight:800;color:#00F5FF;margin-top:4px;">4 Cihaz</div>
+                <div style="font-size:11px;color:#94A3B8;">$72.9K Kümülatif Ciro</div>
+            </div>
+            <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(0,245,255,0.3);border-top:3px solid #00F5FF;border-radius:10px;padding:9px 12px;backdrop-filter:blur(12px);">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <span style="font-size:12px;font-weight:700;color:#FFFFFF;">SJNU INC</span>
+                    <span style="font-size:10px;color:#00F5FF;font-weight:600;">GÜNEY KORE</span>
+                </div>
+                <div style="font-size:16px;font-weight:800;color:#00F5FF;margin-top:4px;">7 Cihaz</div>
+                <div style="font-size:11px;color:#94A3B8;">$68.6K Kümülatif Ciro</div>
+            </div>
+            <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(0,245,255,0.3);border-top:3px solid #00F5FF;border-radius:10px;padding:9px 12px;backdrop-filter:blur(12px);">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <span style="font-size:12px;font-weight:700;color:#FFFFFF;">CMC</span>
+                    <span style="font-size:10px;color:#00F5FF;font-weight:600;">FİLİSTİN</span>
+                </div>
+                <div style="font-size:16px;font-weight:800;color:#00F5FF;margin-top:4px;">5 Cihaz</div>
+                <div style="font-size:11px;color:#94A3B8;">$46.7K Kümülatif Ciro</div>
+            </div>
+            <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(0,245,255,0.3);border-top:3px solid #00F5FF;border-radius:10px;padding:9px 12px;backdrop-filter:blur(12px);">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <span style="font-size:12px;font-weight:700;color:#FFFFFF;">AMS</span>
+                    <span style="font-size:10px;color:#00F5FF;font-weight:600;">SUUDİ ARABİSTAN</span>
+                </div>
+                <div style="font-size:16px;font-weight:800;color:#00F5FF;margin-top:4px;">3 Cihaz</div>
+                <div style="font-size:11px;color:#94A3B8;">$29.5K Kümülatif Ciro</div>
+            </div>
+            <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(0,245,255,0.3);border-top:3px solid #00F5FF;border-radius:10px;padding:9px 12px;backdrop-filter:blur(12px);">
+                <div style="display:flex;justify-content:space-between;align-items:center;">
+                    <span style="font-size:12px;font-weight:700;color:#FFFFFF;">ATC</span>
+                    <span style="font-size:10px;color:#00F5FF;font-weight:600;">KUVEYT</span>
+                </div>
+                <div style="font-size:16px;font-weight:800;color:#00F5FF;margin-top:4px;">3 Cihaz</div>
+                <div style="font-size:11px;color:#94A3B8;">$26.3K Kümülatif Ciro</div>
+            </div>
+        </div>
+        ''', unsafe_allow_html=True)
+
+    # 2. All ZEUS Presence Countries Tab
+    with tab_zeus:
+        st.markdown('''
+        <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(56,189,248,0.25);border-left:4px solid #38BDF8;border-radius:10px;padding:10px 14px;margin-bottom:12px;backdrop-filter:blur(12px);">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+                <span style="font-size:12.5px;color:#E2E8F0;"><b style="color:#38BDF8;">ZEUS Küresel Operasyon Ayak İzi:</b> 16 Ülke, 43 Kurum & Klinik, 874 Doğrulanmış Fatura ve $693,887 USD konsolide hasılat.</span>
+                <span style="font-size:11px;color:#38BDF8;font-weight:700;">● Kurulu Cihazlar + Düzenli Sarf Tüketimi</span>
+            </div>
+        </div>
+        ''', unsafe_allow_html=True)
+
+        if map_proj_view == "2D Hassas Projeksiyon Haritası":
+            st.plotly_chart(fig_map_zeus, use_container_width=True)
+        else:
+            components.html(globe_html, height=545)
+
+        # Table of 16 Presence Countries
+        zeus_table_data = [
+            {"Ülke / Bölge": "🇹🇷 Türkiye (Merkez & 25 Klinik)", "Kurum Sayısı": "25 Kurum", "Toplam Hasılat": "$219,083 USD", "Ünite Sayısı": "1,384 Ünite", "Statü": "Global Genel Merkez & Klinik Ağı"},
+            {"Ülke / Bölge": "🇯🇴 Ürdün (SIRIUS PHARM)", "Kurum Sayısı": "1 Distribütör", "Toplam Hasılat": "$165,254 USD", "Ünite Sayısı": "693 Ünite (18 Cihaz)", "Statü": "Yetkili Distribütör"},
+            {"Ülke / Bölge": "🇮🇶 Irak (SIRIUS Konsorsiyumu)", "Kurum Sayısı": "Konsorsiyum", "Toplam Hasılat": "$165,254 USD", "Ünite Sayısı": "Bölge Dağıtımı", "Statü": "Yetkili Distribütör"},
+            {"Ülke / Bölge": "🇶🇦 Katar (ITL)", "Kurum Sayısı": "1 Distribütör", "Toplam Hasılat": "$72,867 USD", "Ünite Sayısı": "453 Ünite (4 Cihaz)", "Statü": "Yetkili Distribütör"},
+            {"Ülke / Bölge": "🇰🇷 Güney Kore (SJNU)", "Kurum Sayısı": "1 Distribütör", "Toplam Hasılat": "$68,550 USD", "Ünite Sayısı": "205 Ünite (7 Cihaz)", "Statü": "Yetkili Distribütör"},
+            {"Ülke / Bölge": "🇵🇸 Filistin (CMC)", "Kurum Sayısı": "1 Distribütör", "Toplam Hasılat": "$46,700 USD", "Ünite Sayısı": "120 Ünite (5 Cihaz)", "Statü": "Yetkili Distribütör"},
+            {"Ülke / Bölge": "🇸🇦 Suudi Arabistan (AMS)", "Kurum Sayısı": "1 Distribütör", "Toplam Hasılat": "$29,500 USD", "Ünite Sayısı": "95 Ünite (3 Cihaz)", "Statü": "Yetkili Distribütör"},
+            {"Ülke / Bölge": "🇰🇼 Kuveyt (ATC)", "Kurum Sayısı": "1 Distribütör", "Toplam Hasılat": "$26,250 USD", "Ünite Sayısı": "12 Ünite (3 Cihaz)", "Statü": "Yetkili Distribütör"},
+            {"Ülke / Bölge": "🇦🇪 BAE (Sellco Trading)", "Kurum Sayısı": "Spot Partner", "Toplam Hasılat": "$23,180 USD", "Ünite Sayısı": "52 Ünite", "Statü": "Körfez Dağıtım Hub"},
+            {"Ülke / Bölge": "🇦🇱/🇸🇰 Arnavutluk-Slovakya (Stem Gene)", "Kurum Sayısı": "3 Klinik", "Toplam Hasılat": "$18,840 USD", "Ünite Sayısı": "121 Ünite (1 Cihaz)", "Statü": "Doğrudan Klinikler"},
+            {"Ülke / Bölge": "🇧🇪 Belçika (Ghent University Hospital)", "Kurum Sayısı": "1 Üniversite", "Toplam Hasılat": "$16,120 USD", "Ünite Sayısı": "3 Ünite (1 Cihaz)", "Statü": "Akademik Referans Hastanesi"},
+            {"Ülke / Bölge": "🇦🇿 Azerbaycan (Bakü Klinikleri)", "Kurum Sayısı": "2 Klinik", "Toplam Hasılat": "$4,254 USD", "Ünite Sayısı": "49 Ünite", "Statü": "Kafkasya Doğrudan Müşteri"},
+            {"Ülke / Bölge": "🇧🇬 Bulgaristan (Sofya - Meyona)", "Kurum Sayısı": "1 Klinik", "Toplam Hasılat": "$1,580 USD", "Ünite Sayısı": "11 Ünite", "Statü": "Balkanlar Dağıtım"},
+            {"Ülke / Bölge": "🇵🇭 Filipinler (Manila IVF Corp)", "Kurum Sayısı": "1 Klinik", "Toplam Hasılat": "$1,228 USD", "Ünite Sayısı": "44 Ünite", "Statü": "Asya-Pasifik Doğrudan Klinik"},
+            {"Ülke / Bölge": "🇸🇾 Suriye (Şam - Bisan Co)", "Kurum Sayısı": "1 Şirket", "Toplam Hasılat": "$480 USD", "Ünite Sayısı": "10 Ünite", "Statü": "Spot Sarf Alımı"},
+            {"Ülke / Bölge": "🇬🇧 İngiltere (Londra NHS Demo)", "Kurum Sayısı": "Validasyon", "Toplam Hasılat": "Klinik Demo", "Ünite Sayısı": "6 Cihaz", "Statü": "Avrupa İnceleme Süreci"}
+        ]
+        st.dataframe(pd.DataFrame(zeus_table_data), use_container_width=True, hide_index=True)
+
+    # 3. Market Opportunity Score Tab (Potential Markets)
+    with tab_opp:
+        st.markdown('''
+        <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(16,185,129,0.25);border-left:4px solid #10B981;border-radius:10px;padding:10px 14px;margin-bottom:12px;backdrop-filter:blur(12px);">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+                <span style="font-size:12.5px;color:#E2E8F0;"><b style="color:#10B981;">Pazar Fırsat & Büyüme Potansiyeli:</b> 48 Küresel IVF Pazarı. Klinik sayısı, yıllık IVF döngüsü ve kişi başı GSYİH verilerine dayalı AI fırsat skoru (35 - 98).</span>
+                <span style="font-size:11px;color:#10B981;font-weight:700;">● Hedef Büyüme Koridorları</span>
+            </div>
+        </div>
+        ''', unsafe_allow_html=True)
+
+        if map_proj_view == "2D Hassas Projeksiyon Haritası":
+            st.plotly_chart(fig_map_opp, use_container_width=True)
+        else:
+            st.plotly_chart(fig_map_opp, use_container_width=True)
+
+        # Top 10 High Opportunity Markets Table
+        top_opp_df = country_df.sort_values('score', ascending=False).head(10)[[
+            'name', 'region', 'score', 'clinics', 'cycles', 'gdp_pc', 'risk'
+        ]].rename(columns={
+            'name': 'Hedef Pazar',
+            'region': 'Bölge',
+            'score': 'Fırsat Skoru (0-100)',
+            'clinics': 'Klinik Sayısı',
+            'cycles': 'Yıllık IVF Döngüsü',
+            'gdp_pc': 'Kişi Başı GSYİH ($)',
+            'risk': 'Ticari Risk'
+        })
+        st.markdown("##### En Yüksek Fırsat Skoruna Sahip İlk 10 Küresel Pazar (Global IVF Opportunity)")
+        st.dataframe(top_opp_df, use_container_width=True, hide_index=True)
+
+    # 4. Commercial Risk Profile Tab
+    with tab_risk:
+        st.markdown('''
+        <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(245,158,11,0.25);border-left:4px solid #F59E0B;border-radius:10px;padding:10px 14px;margin-bottom:12px;backdrop-filter:blur(12px);">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+                <span style="font-size:12.5px;color:#E2E8F0;"><b style="color:#F59E0B;">Ticari, Regülasyon ve Gümrük Riski:</b> 48 ülkenin ithalat lisansı, tıbbi cihaz ruhsatı ve döviz transfer risk matrisi.</span>
+                <span style="font-size:11px;color:#F59E0B;font-weight:700;">● Risk Dağılımı: 22 Düşük | 18 Orta | 8 Yüksek</span>
+            </div>
+        </div>
+        ''', unsafe_allow_html=True)
+
+        if map_proj_view == "2D Hassas Projeksiyon Haritası":
+            st.plotly_chart(fig_map_risk, use_container_width=True)
+        else:
+            st.plotly_chart(fig_map_risk, use_container_width=True)
+
+        # Risk Summary Matrix
+        rk1, rk2, rk3 = st.columns(3)
+        with rk1:
+            st.markdown('''
+            <div style="background:rgba(16,185,129,0.1);border:1px solid rgba(16,185,129,0.3);border-radius:8px;padding:12px;">
+                <b style="color:#10B981;font-size:13px;">Düşük Riskli Pazarlar (22 Ülke)</b>
+                <div style="font-size:11.5px;color:#CBD5E1;margin-top:4px;">AB ülkeleri, ABD, BAE, Katar, G. Kore. Hızlı gümrükleme, serbest sermaye akışı, oturmuş IVF regülasyonları.</div>
+            </div>
+            ''', unsafe_allow_html=True)
+        with rk2:
+            st.markdown('''
+            <div style="background:rgba(245,158,11,0.1);border:1px solid rgba(245,158,11,0.3);border-radius:8px;padding:12px;">
+                <b style="color:#F59E0B;font-size:13px;">Orta Riskli Pazarlar (18 Ülke)</b>
+                <div style="font-size:11.5px;color:#CBD5E1;margin-top:4px;">Suudi Arabistan, Kuveyt, Ürdün, Brezilya. SFDA / MoH yerel lisansı ve yetkili distribütör sözleşmesi gerektirir.</div>
+            </div>
+            ''', unsafe_allow_html=True)
+        with rk3:
+            st.markdown('''
+            <div style="background:rgba(239,68,68,0.1);border:1px solid rgba(239,68,68,0.3);border-radius:8px;padding:12px;">
+                <b style="color:#EF4444;font-size:13px;">Yüksek Riskli Pazarlar (8 Ülke)</b>
+                <div style="font-size:11.5px;color:#CBD5E1;margin-top:4px;">Irak, Suriye, Lübnan vb. Sıkı akreditif şartları, gümrük denetimleri ve döviz transfer riskleri.</div>
+            </div>
+            ''', unsafe_allow_html=True)
+
+
     c_left, c_right = st.columns([1.6, 1])
     with c_left:
-        st.subheader("📈 Revenue Trajectory (Devices vs Recurring Consumables)")
+        st.subheader("Revenue Trajectory: Devices vs Recurring Consumables")
         chart_mode = st.radio("Resolution", ["Monthly Net Sales", "Quarterly Aggregation"], horizontal=True, label_visibility="collapsed")
         
         # Monthly series derived from certified Excel data & AI Forecasting
@@ -3645,7 +4542,7 @@ if nav_selection == "◈ Executive Dashboard":
         st.plotly_chart(fig_trend, use_container_width=True)
 
     with c_right:
-        st.subheader("🌐 Revenue by Region")
+        st.subheader("Revenue by Region")
         reg_summary = {}
         for d in active_rows:
             reg = d['region']
@@ -3671,7 +4568,7 @@ if nav_selection == "◈ Executive Dashboard":
         st.plotly_chart(fig_reg, use_container_width=True)
 
     # Active Executive Alerts (100% Verified Real Data & Actionable Recommendations)
-    st.subheader("🚨 Executive Strategic Alerts (Gerçek Fatura Kanıtları & Stratejik Öneriler)")
+    st.subheader("Executive Strategic Alerts (Gerçek Fatura Kanıtları & Stratejik Öneriler)")
     st.caption("Her uyarı kartının altında yöneticiler değerlendirme yorumu ekleyebilir, stratejik eylem planı oluşturabilir. Kaydedilen planlar doğrudan 'Strategic Decision Center' ve 'Executive Reports' modüllerine aktarılır.")
 
     if 'executive_strategic_plans' not in st.session_state:
@@ -3907,8 +4804,8 @@ if nav_selection == "◈ Executive Dashboard":
 # ==============================================================================
 
 
-elif nav_selection == "✦ AI Intelligence & Forecasting":
-    st.title("✦ AI Commercial Intelligence & Predictive Analytics")
+elif nav_selection == "AI Intelligence & Forecasting":
+    st.title("AI Commercial Intelligence & Predictive Analytics")
     st.caption("Yapay zeka ve makine öğrenmesi destekli kurumsal satış projeksiyonu, anomali tespiti ve pazar optimizasyonu.")
 
     st.markdown("""
@@ -3924,17 +4821,17 @@ elif nav_selection == "✦ AI Intelligence & Forecasting":
     """, unsafe_allow_html=True)
 
     ai_tab1, ai_tab2, ai_tab3, ai_tab4 = st.tabs([
-        "✦ Düşen Ürün & Anomali Tespiti",
-        "◈ Gelecek Ay & Çeyrek Tahmini",
-        "◎ Bölgesel Zayıflık & Fırsat Boşluğu",
-        "⌘ AI Stratejik Danışman"
+        "Düşen Ürün & Anomali Tespiti",
+        "Gelecek Ay & Çeyrek Tahmini",
+        "Bölgesel Zayıflık & Fırsat Boşluğu",
+        "AI Stratejik Danışman"
     ])
 
     # --------------------------------------------------------------------------
     # TAB 1: DÜŞEN ÜRÜNLER VE ANOMALİ TESPİTİ (100% VERIFIED REAL EXCEL & AI ENGINE)
     # --------------------------------------------------------------------------
     with ai_tab1:
-        st.subheader("📉 Düşüş Eğilimindeki Ürünler, Churn Alarmları ve AI Aksiyon Planı")
+        st.subheader("Düşüş Eğilimindeki Ürünler, Churn Alarmları ve AI Aksiyon Planı")
         st.caption("Resmi fatura veritabanı (874 işlem kaydı) taranarak partner ve ürün bazında fiili sipariş düşüşleri ve atıl cihaz anomalileri tespit edilmiştir.")
 
         # Data Basis Info Box
@@ -4074,7 +4971,7 @@ elif nav_selection == "✦ AI Intelligence & Forecasting":
         # ----------------------------------------------------------------------
         # Yapay Zeka Teşhis ve Aksiyon Kartları (Interactive AI Cards)
         # ----------------------------------------------------------------------
-        st.markdown("#### 🚨 Yapay Zeka Teşhis ve Aksiyon Kartları (100% Gerçek Veriyle Doğrulanmış)")
+        st.markdown("#### Yapay Zeka Teşhis ve Aksiyon Kartları (100% Gerçek Veriyle Doğrulanmış)")
         st.caption("Aşağıdaki kartlar resmi Excel fatura veritabanı (874 satır), cihaz adetleri ve sözleşme koşullarına göre tek tek denetlenmiş ve doğrulanmıştır.")
 
         action_filter = st.radio(
@@ -4317,7 +5214,7 @@ Immediate Resolution: ZEUS Bioscience is actively incorporating this feedback in
                 
                 btn_c1, btn_c2 = st.columns([2.5, 1.2])
                 with btn_c1:
-                    do_reval = st.button("🧠 AI ile Uzman Notuna Göre Yeniden Değerlendir", key=f"btn_reval_{case_id}", use_container_width=True)
+                    do_reval = st.button("AI ile Uzman Notuna Göre Yeniden Değerlendir", key=f"btn_reval_{case_id}", use_container_width=True)
                 with btn_c2:
                     if reval_data:
                         if st.button("↺ Orijinal Analize Dön", key=f"btn_reset_{case_id}", use_container_width=True):
@@ -4357,7 +5254,7 @@ Immediate Resolution: ZEUS Bioscience is actively incorporating this feedback in
                     )
                 with c_btn:
                     st.write("")
-                    run_ai_btn = st.button("🚀 AI Raporu Üret", key=f"btn_ai_{case_id}")
+                    run_ai_btn = st.button("AI Raporu Üret", key=f"btn_ai_{case_id}")
 
                 if run_ai_btn or st.session_state.get(f'ran_ai_{case_id}', False):
                     st.session_state[f'ran_ai_{case_id}'] = True
@@ -4711,7 +5608,7 @@ ZEUS Bioscience Scientific Affairs""",
         # ----------------------------------------------------------------------
         # Gerçek Satış Hareketlerine Göre Anomali ve Trend Matrisi (43 Accounts)
         # ----------------------------------------------------------------------
-        st.markdown("#### 📋 Gerçek Satış Hareketlerine Göre Partner Sağlık ve Trend Matrisi")
+        st.markdown("#### Gerçek Satış Hareketlerine Göre Partner Sağlık ve Trend Matrisi")
         st.caption("Resmi Excel veritabanındaki 43 partnerin 2024, 2025, 2026 YTD fiili faturaları, cihaz sayıları ve AI sağlık durumları.")
 
         tb_filter = st.selectbox(
@@ -4753,7 +5650,7 @@ ZEUS Bioscience Scientific Affairs""",
     # Kim hangi cihazı aldı, sarf aldı mı, hangi tarihlerde alındılar?
     # --------------------------------------------------------------------------
     st.markdown("---")
-    st.subheader("🔬 Cihaz & Sarf Alım Denetim Matrisi: Kim Hangi Cihazı Aldı, Sarf Aldı mı? (Fatura & Tarihçe Analizi)")
+    st.subheader("Cihaz & Sarf Alım Denetim Matrisi: Kim Hangi Cihazı Aldı, Sarf Aldı mı? (Fatura & Tarihçe Analizi)")
     st.caption("Excel satış veri tabanındaki (874 işlem) tüm faturalar çapraz taranarak; hangi kurumun hangi tarihte cihaz aldığı, sarf malzemesi alıp almadığı ve her iki kalemin kesin fatura tarihleri listelenmiştir.")
 
     excel_sales_df = get_excel_sales_df()
@@ -4979,7 +5876,7 @@ ZEUS Bioscience Scientific Affairs""",
         
         c_cls1, c_cls2 = st.columns([4, 1])
         with c_cls2:
-            if st.button("✕ Büyütülmüş Görünümü Kapat", key="btn_close_exp_bottom", use_container_width=True):
+            if st.button("Büyütülmüş Görünümü Kapat", key="btn_close_exp_bottom", use_container_width=True):
                 st.session_state['expanded_audit_card'] = None
                 st.rerun()
 
@@ -5003,7 +5900,7 @@ ZEUS Bioscience Scientific Affairs""",
             horizontal=True
         )
     with f_c2:
-        audit_search = st.text_input("🔍 Kurum veya Ülke Ara:", placeholder="Örn: Garanti, Sellco, Acıbadem, Kuveyt...")
+        audit_search = st.text_input("Kurum veya Ülke Ara:", placeholder="Örn: Garanti, Sellco, Acıbadem, Kuveyt...")
 
     # Filter data
     filtered_audit = audit_data.copy()
@@ -5067,7 +5964,7 @@ ZEUS Bioscience Scientific Affairs""",
     # Export CSV for Audit Matrix
     csv_audit = df_audit_disp.to_csv(index=False).encode('utf-8')
     st.download_button(
-        label="📥 Cihaz & Sarf Alım Denetim Tablosunu İndir (CSV)",
+        label="Cihaz & Sarf Alım Denetim Tablosunu İndir (CSV)",
         data=csv_audit,
         file_name="ZEUS_Device_and_Consumables_Audit.csv",
         mime="text/csv"
@@ -5077,11 +5974,10 @@ ZEUS Bioscience Scientific Affairs""",
     # CHRONOLOGICAL INVOICE INSPECTOR (TEK TEK KURUMLARIN FATURA DETAYI)
     # --------------------------------------------------------------------------
     st.markdown("<br>", unsafe_allow_html=True)
-    with st.expander("🔍 Kurum Bazında Detaylı Fatura & Tarihçe İnceleyicisi (Chronological Invoice Ledger)", expanded=True):
-        st.markdown("##### 🧾 Fatura Dökümü ve Tarihçe Denetimi")
+    with st.expander("Kurum Bazında Detaylı Fatura & Tarihçe İnceleyicisi (Chronological Invoice Ledger)", expanded=True):
+        st.markdown("<h4 style='font-size:18px;font-weight:700;margin-bottom:12px;color:#F8FAFC;'>Fatura Dökümü ve Tarihçe Denetimi</h4>", unsafe_allow_html=True)
         
         comp_list = sorted([a['company'] for a in audit_data])
-        # Default to Garanti Leasing or Sellco if present
         def_idx = next((i for i, c in enumerate(comp_list) if "GARANTİ" in c or "GARANTI" in c), 0)
         selected_audit_comp = st.selectbox(
             "Detaylı Fatura ve Tarihçesini İncelemek İstediğiniz Kurumu Seçin:",
@@ -5091,50 +5987,126 @@ ZEUS Bioscience Scientific Affairs""",
         
         target_rec = next((a for a in audit_data if a['company'] == selected_audit_comp), audit_data[0])
         
-        # Summary Header for Selected Company
-        card_border_color = '#FF5252' if target_rec['code'] in ['zero_consumable', 'critical_churn_risk'] else ('#FFB800' if target_rec['code'] == 'dormant_consumable' else ('#FF9800' if target_rec['code'] == 'low_consumable' else '#00E676'))
-        badge_text_color = '#FF5252' if target_rec['code'] in ['zero_consumable', 'critical_churn_risk'] else ('#FFB800' if target_rec['code'] == 'dormant_consumable' else ('#FF9800' if target_rec['code'] == 'low_consumable' else '#00E676'))
+        # Modern Glass Diagnosis Card with Neon Accents
+        card_border_color = '#EF4444' if target_rec['code'] in ['zero_consumable', 'critical_churn_risk'] else ('#F59E0B' if target_rec['code'] == 'dormant_consumable' else ('#F97316' if target_rec['code'] == 'low_consumable' else '#10B981'))
+        badge_text_color = card_border_color
+        clean_risk_badge = re.sub(r'[\U00010000-\U0010ffff\u2600-\u27bf\u2300-\u23ff\u25a0-\u25ff\u2190-\u21ff]+\s*', '', str(target_rec['risk_badge'])).strip()
         
-        st.markdown(f"""
-        <div style="background:#0F192E; border-left:4px solid {card_border_color}; padding:14px 18px; border-radius:8px; margin-bottom:14px;">
-            <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-size:16px; font-weight:700; color:#FFFFFF;">{target_rec['company']} ({target_rec['country']})</span>
-                <span style="font-size:12px; font-weight:700; color:{badge_text_color}; background:rgba(255,255,255,0.06); padding:4px 10px; border-radius:6px;">{target_rec['risk_badge']}</span>
+        st.markdown(f'''
+        <div style="
+            background: linear-gradient(145deg, rgba(16, 26, 46, 0.75) 0%, rgba(9, 16, 30, 0.88) 100%);
+            border: 1px solid rgba(0, 245, 255, 0.16);
+            border-left: 4px solid {card_border_color};
+            border-top: 1px solid rgba(0, 245, 255, 0.3);
+            border-radius: 14px;
+            padding: 16px 20px;
+            margin-bottom: 18px;
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
+        ">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                <span style="font-size:16px; font-weight:700; color:#FFFFFF; letter-spacing:-0.01em;">{target_rec['company']} <span style="font-size:13px; color:#94A3B8; font-weight:500;">({target_rec['country']})</span></span>
+                <span style="
+                    font-size:11px;
+                    font-weight:700;
+                    letter-spacing:0.04em;
+                    color:{badge_text_color};
+                    background:rgba(255,255,255,0.05);
+                    border:1px solid {card_border_color}45;
+                    padding:4px 12px;
+                    border-radius:999px;
+                    display:inline-flex;
+                    align-items:center;
+                    gap:6px;
+                    box-shadow: 0 0 12px {card_border_color}25;
+                ">
+                    <span style="width:6px; height:6px; border-radius:50%; background:{card_border_color}; box-shadow:0 0 6px {card_border_color};"></span>
+                    {clean_risk_badge}
+                </span>
             </div>
-            <div style="font-size:13px; color:#CCD7E6; margin-top:8px;">
-                <b>Yapay Zeka Teşhisi ve Eylem Önerisi:</b> {target_rec['action_rec']}
+            <div style="
+                margin-top:12px;
+                padding-top:10px;
+                border-top:1px solid rgba(255,255,255,0.06);
+                font-size:13px;
+                color:#CBD5E1;
+                line-height:1.5;
+            ">
+                <span style="color:#00F5FF; font-weight:600; text-transform:uppercase; font-size:11px; letter-spacing:0.05em; display:block; margin-bottom:2px;">Yapay Zeka Teşhisi ve Eylem Önerisi</span>
+                {target_rec['action_rec']}
             </div>
         </div>
-        """, unsafe_allow_html=True)
+        ''', unsafe_allow_html=True)
 
         inv_col1, inv_col2 = st.columns(2)
         
         with inv_col1:
-            st.markdown(f"###### 🖥️ Satın Alınan Cihazlar ({target_rec['dev_qty']} Ünite — Toplam ${target_rec['dev_amt']:,.2f})")
+            st.markdown(f'''
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                <div style="width:26px; height:26px; border-radius:7px; background:rgba(0,245,255,0.1); border:1px solid rgba(0,245,255,0.25); display:flex; align-items:center; justify-content:center; color:#00F5FF;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                </div>
+                <span style="font-size:14px; font-weight:600; color:#E2E8F0;">Satın Alınan Cihazlar <span style="font-size:12px; color:#94A3B8; font-weight:400;">({target_rec['dev_qty']} Ünite — Toplam ${target_rec['dev_amt']:,.2f})</span></span>
+            </div>
+            ''', unsafe_allow_html=True)
             if target_rec['dev_invoices']:
                 dev_inv_df = pd.DataFrame(target_rec['dev_invoices'])
                 dev_inv_df = dev_inv_df[['Date', 'Invoice', 'Product', 'Quantity', 'Amount (USD)']]
                 dev_inv_df.columns = ['Fatura Tarihi', 'Fatura No', 'Cihaz Modeli', 'Adet', 'Tutar (USD)']
                 st.dataframe(dev_inv_df, use_container_width=True, hide_index=True)
             else:
-                st.info("ℹ️ Bu kurum adına doğrudan kesilmiş cihaz faturası bulunmamaktadır (Yalnızca sarf tüketicisi veya fason laboratuvar).")
+                st.markdown('''
+                <div style="background:rgba(15,23,42,0.6); border:1px solid rgba(0,245,255,0.15); border-left:3px solid #00F5FF; border-radius:10px; padding:14px; color:#94A3B8; font-size:12.5px; backdrop-filter:blur(10px);">
+                    Bu kurum adına doğrudan kesilmiş cihaz faturası bulunmamaktadır (Yalnızca sarf tüketicisi veya fason laboratuvar).
+                </div>
+                ''', unsafe_allow_html=True)
 
         with inv_col2:
-            st.markdown(f"###### 🧪 Satın Alınan Sarf Malzemeleri ({target_rec['cons_qty']} Adet/Kutu — Toplam ${target_rec['cons_amt']:,.2f})")
+            st.markdown(f'''
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
+                <div style="width:26px; height:26px; border-radius:7px; background:rgba(0,245,255,0.1); border:1px solid rgba(0,245,255,0.25); display:flex; align-items:center; justify-content:center; color:#00F5FF;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31"></path><path d="M14 9.3V1.99"></path><path d="M8.5 2h7"></path><path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path><path d="M5.52 16h12.96"></path></svg>
+                </div>
+                <span style="font-size:14px; font-weight:600; color:#E2E8F0;">Satın Alınan Sarf Malzemeleri <span style="font-size:12px; color:#94A3B8; font-weight:400;">({target_rec['cons_qty']} Adet/Kutu — Toplam ${target_rec['cons_amt']:,.2f})</span></span>
+            </div>
+            ''', unsafe_allow_html=True)
             if target_rec['cons_invoices']:
                 cons_inv_df = pd.DataFrame(target_rec['cons_invoices'])
                 cons_inv_df = cons_inv_df[['Date', 'Invoice', 'Product', 'Quantity', 'Amount (USD)']]
                 cons_inv_df.columns = ['Fatura Tarihi', 'Fatura No', 'Sarf Ürünü', 'Adet', 'Tutar (USD)']
                 st.dataframe(cons_inv_df, use_container_width=True, hide_index=True)
             else:
-                st.error("⚠️ DİKKAT: Bu kurumun fatura veri tabanında HİÇBİR SARF MALZEME SİPARİŞİ BULUNMAMAKTADIR! Cihaz sarf malzemesi olmadan atıl kalmış olabilir.")
+                st.markdown('''
+                <div style="
+                    background: linear-gradient(145deg, rgba(239, 68, 68, 0.08) 0%, rgba(15, 23, 42, 0.6) 100%);
+                    border: 1px solid rgba(239, 68, 68, 0.3);
+                    border-left: 3px solid #EF4444;
+                    border-radius: 12px;
+                    padding: 16px 18px;
+                    backdrop-filter: blur(14px);
+                    -webkit-backdrop-filter: blur(14px);
+                    box-shadow: 0 4px 18px rgba(0,0,0,0.3);
+                ">
+                    <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#EF4444" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+                        <span style="color:#EF4444; font-weight:700; font-size:12px; letter-spacing:0.04em; text-transform:uppercase;">Kritik Uyarı // Sıfır Sarf Detektörü</span>
+                    </div>
+                    <div style="font-size:12.5px; color:#FCA5A5; line-height:1.5;">
+                        Bu kurumun fatura veri tabanında <strong>HİÇBİR SARF MALZEME SİPARİŞİ BULUNMAMAKTADIR!</strong> Cihaz sarf malzemesi olmadan atıl kalmış olabilir.
+                    </div>
+                    <div style="margin-top:8px; font-size:11px; color:#94A3B8;">
+                        Önerilen Aksiyon: Konsinye aktivasyon kiti ve yerinde klinik aplikasyon protokolü başlatılmalıdır.
+                    </div>
+                </div>
+                ''', unsafe_allow_html=True)
 
 
     # --------------------------------------------------------------------------
     # TAB 2: GELECEK AYIN SATIŞ TAHMİNİ (PREDICTIVE FORECASTING)
     # --------------------------------------------------------------------------
     with ai_tab2:
-        st.subheader("🔮 Gelecek Ay ve Çeyrek Satış Tahmini (Predictive AI)")
+        st.subheader("Gelecek Ay ve Çeyrek Satış Tahmini (Predictive AI)")
         st.caption("Doğrusal trend regresyonu, aylık mevsimsellik endeksi ve volatilite bantları kullanılarak modellenmiştir.")
 
         fc_c1, fc_c2 = st.columns([1.2, 1])
@@ -5236,7 +6208,7 @@ ZEUS Bioscience Scientific Affairs""",
         st.plotly_chart(fig_fc, use_container_width=True)
 
         # Month by Month forecast breakdown
-        st.markdown("#### 📅 Gelecek Dönem Detaylı Öngörü Tablosu")
+        st.markdown("#### Gelecek Dönem Detaylı Öngörü Tablosu")
         fc_table = []
         for i in range(horizon_months):
             fc_table.append({
@@ -5254,7 +6226,7 @@ ZEUS Bioscience Scientific Affairs""",
     # TAB 3: BÖLGESEL ZAYIFLIK VE FIRSAT BOŞLUK ANALİZİ
     # --------------------------------------------------------------------------
     with ai_tab3:
-        st.subheader("🗺️ Bölgesel Zayıflık ve Fırsat Boşluk Analizi (White-Space Opportunity)")
+        st.subheader("Bölgesel Zayıflık ve Fırsat Boşluk Analizi (White-Space Opportunity)")
         st.caption("Ülkelerin IVF klinik altyapısı ve yıllık siklus potansiyeli, ZEUS'un mevcut penetrasyonu ile kıyaslanarak açık pazar fırsatları hesaplanmıştır.")
 
         # Compute regional clinical capacity vs realized sales
@@ -5293,7 +6265,7 @@ ZEUS Bioscience Scientific Affairs""",
         col_rg1, col_rg2 = st.columns([1.35, 1.05])
         with col_rg1:
             st.markdown("##### Bölgesel Klinik Kapasite vs ZEUS Ciro Verimliliği")
-            vtab1, vtab2 = st.tabs(["📊 Klinik Sayısı vs Ciro (Balon)", "📈 Bölgesel Hacim vs Açık Pazar ($)"])
+            vtab1, vtab2 = st.tabs(["Klinik Sayısı vs Ciro (Balon)", "Bölgesel Hacim vs Açık Pazar ($)"])
             with vtab1:
                 fig_gap = px.scatter(
                     reg_df, x='Total_Clinics', y='Realized_Revenue',
@@ -5330,7 +6302,7 @@ ZEUS Bioscience Scientific Affairs""",
                 st.plotly_chart(fig_bar_gap, use_container_width=True)
 
         with col_rg2:
-            st.markdown("##### 🌐 6 Küresel Bölgenin Zayıflık & Fırsat Analizi")
+            st.markdown("##### 6 Küresel Bölgenin Zayıflık & Fırsat Analizi")
             st.markdown("""
             <div style="max-height:435px; overflow-y:auto; padding-right:6px;">
                 <div style="background:rgba(19,166,181,0.1);border-left:4px solid #13A6B5;padding:10px 12px;border-radius:8px;margin-bottom:8px;">
@@ -5369,7 +6341,7 @@ ZEUS Bioscience Scientific Affairs""",
         st.markdown("<br>", unsafe_allow_html=True)
 
         # Region Table
-        st.markdown("#### 📋 Bölge Bazlı Potansiyel ve Zayıflık Raporu")
+        st.markdown("#### Bölge Bazlı Potansiyel ve Zayıflık Raporu")
         reg_disp = reg_df[['Region', 'Total_Clinics', 'Total_Cycles', 'Active_Partners', 'Realized_Revenue', 'Avg_Penetration_Pct', 'Untapped_Gap', 'Diagnosis']].copy()
         reg_disp['Total_Clinics'] = reg_disp['Total_Clinics'].apply(lambda x: f"{x:,}")
         reg_disp['Total_Cycles'] = reg_disp['Total_Cycles'].apply(lambda x: f"{x:,}")
@@ -5383,7 +6355,7 @@ ZEUS Bioscience Scientific Affairs""",
     # TAB 4: YAPAY ZEKA STRATEJİK DANIŞMAN (AI EXECUTIVE COPILOT)
     # --------------------------------------------------------------------------
     with ai_tab4:
-        st.subheader("🧠 Yapay Zeka Stratejik Danışman (AI Copilot)")
+        st.subheader("Yapay Zeka Stratejik Danışman (AI Copilot)")
         st.caption("Pazar ve satış verilerini gerçek zamanlı çapraz sorgulayarak üst yönetime özel stratejik notlar üretir.")
 
         prompt_choices = [
@@ -5399,7 +6371,7 @@ ZEUS Bioscience Scientific Affairs""",
         custom_q = st.text_input("Veya kendi stratejik sorunuzu yazın:", placeholder="Örn: Katar (ITL) veya Güney Kore için 2027 büyüme planı nedir?")
         active_prompt = custom_q.strip() if custom_q.strip() else selected_q
 
-        if st.button("🚀 AI Yönetici Notunu Oluştur", type="primary"):
+        if st.button("AI Yönetici Notunu Oluştur", type="primary"):
             st.markdown("---")
 
             # 1. Animasyon için placeholder alanı
@@ -5494,7 +6466,7 @@ ZEUS Bioscience Scientific Affairs""",
 
             # İndirme Butonu
             st.download_button(
-                label="📥 Bu Yönetici Notunu İndir (.md)",
+                label="Bu Yönetici Notunu İndir (.md)",
                 data=final_memo_body,
                 file_name=f"ZEUS_Executive_Memo_{datetime.now().strftime('%Y%m%d_%H%M')}.md",
                 mime="text/markdown"
@@ -5506,16 +6478,16 @@ ZEUS Bioscience Scientific Affairs""",
 # ==============================================================================
 # 5. VIEW: DISTRIBUTORS & CRM
 # ==============================================================================
-elif nav_selection == "◇ Distributors & CRM":
-    st.title("🏢 Commercial Accounts & Client Directory")
+elif nav_selection == "Distributors & CRM":
+    st.title("Commercial Accounts & Client Directory")
     st.caption("Excel satış kayıtlarındaki 44 aktif müşteri ve partnerin ticari sipariş hacimleri, cihaz kurulumları ve sarf tüketim dökümü.")
 
     # Search & Filters
     f_c1, f_c2, f_c3, f_c4 = st.columns([1.5, 1, 1, 1])
     with f_c1:
-        search_query = st.text_input("🔍 Firma adı, ülke veya ürün ara", "")
+        search_query = st.text_input("Firma adı, ülke veya ürün ara", "")
     with f_c2:
-        cat_crm_filter = st.selectbox("Müşteri / Bayi Sınıfı", ["Tümü", "🏢 Distribütörler", "🇹🇷 Local Müşteriler (Türkiye)", "🌍 International Müşteriler"])
+        cat_crm_filter = st.selectbox("Müşteri / Bayi Sınıfı", ["Tümü", "Distribütörler", "Local Müşteriler (Türkiye)", "International Müşteriler"])
     with f_c3:
         all_countries = sorted(list(set(d['country_name'] for d in dists_with_rev)))
         country_filter = st.selectbox("Ülkeye Göre Filtrele", ["Tümü"] + all_countries)
@@ -5523,11 +6495,11 @@ elif nav_selection == "◇ Distributors & CRM":
         type_filter = st.selectbox("Satın Alma Tipi", ["Tümü", "Cihaz ve Sarf Alanlar", "Sadece Sarf Alanlar"])
 
     filtered_accounts = dists_with_rev
-    if cat_crm_filter == "🏢 Distribütörler":
+    if cat_crm_filter == "Distribütörler":
         filtered_accounts = [d for d in filtered_accounts if d.get('account_type') == 'Distributor']
-    elif cat_crm_filter == "🇹🇷 Local Müşteriler (Türkiye)":
+    elif cat_crm_filter == "Local Müşteriler (Türkiye)":
         filtered_accounts = [d for d in filtered_accounts if d.get('account_type') == 'Local Customer']
-    elif cat_crm_filter == "🌍 International Müşteriler":
+    elif cat_crm_filter == "International Müşteriler":
         filtered_accounts = [d for d in filtered_accounts if d.get('account_type') == 'International Customer']
 
     if country_filter != "Tümü":
@@ -5572,7 +6544,7 @@ elif nav_selection == "◇ Distributors & CRM":
     st.dataframe(df_disp, use_container_width=True, hide_index=True)
 
     # Detailed Account Order Dossier
-    st.markdown("### 📋 Müşteri Sipariş Dökümü & Ürün Dağılımı")
+    st.markdown("### Müşteri Sipariş Dökümü & Ürün Dağılımı")
     selected_company_name = st.selectbox("Detaylı Sipariş İncelemesi İçin Müşteri Seçin", [d['name'] for d in filtered_accounts])
     sel_acc = next((d for d in filtered_accounts if d['name'] == selected_company_name), filtered_accounts[0])
     
@@ -5592,8 +6564,8 @@ elif nav_selection == "◇ Distributors & CRM":
 # ==============================================================================
 # 6. VIEW: AGREEMENTS & COMPLIANCE
 # ==============================================================================
-elif nav_selection == "▤ Agreements & Compliance":
-    st.title("📑 International Agreements, LOA & Regulatory Compliance")
+elif nav_selection == "Agreements & Compliance":
+    st.title("International Agreements, LOA & Regulatory Compliance")
     st.caption("Distribütörlük sözleşmeleri, LOA yetki belgeleri, yerel (Türkiye) ve uluslararası müşteri tedarik protokolleri yönetimi.")
 
     # Categorize accounts
@@ -5621,7 +6593,7 @@ elif nav_selection == "▤ Agreements & Compliance":
     # ACTION: YENİ SÖZLEŞME VE DOKÜMAN EKLEME FORMU
     # --------------------------------------------------------------------------
     with st.expander("➕ Yeni Sözleşme / Doküman Ekle (Add Agreement & Document)", expanded=False):
-        st.markdown("##### 📝 Yeni Sözleşme, LOA veya Tedarik Protokolü Tanımlama")
+        st.markdown("##### Yeni Sözleşme, LOA veya Tedarik Protokolü Tanımlama")
         
         f_c1, f_c2 = st.columns(2)
         with f_c1:
@@ -5689,7 +6661,7 @@ elif nav_selection == "▤ Agreements & Compliance":
                 
             if cat_key == "Distributor":
                 excl_sel = st.selectbox("Münhasırlık (Exclusivity Hakları)", ["Münhasır (Exclusive Territory)", "Non-Exclusive (Genel Yetkili)", "Bölgesel Öncelikli"])
-                loa_sel = st.selectbox("LOA Yetki Belgesi Durumu", ["✅ Geçerli (Valid)", "⚠️ Yenilemede (In Renewal)", "📝 Taslak / Hazırlanıyor (Draft)"])
+                loa_sel = st.selectbox("LOA Yetki Belgesi Durumu", ["Geçerli (Valid)", "Yenilemede (In Renewal)", "📝 Taslak / Hazırlanıyor (Draft)"])
                 min_commitment = st.number_input("Yıllık Asgari Satış Taahhüdü ($ USD)", min_value=0, value=50000, step=5000)
             else:
                 st.info("ℹ️ Local ve International doğrudan müşteriler için LOA ve Münhasırlık aranmaz; standart müşteri tedarik sözleşmesi uygulanır.")
@@ -5701,7 +6673,7 @@ elif nav_selection == "▤ Agreements & Compliance":
 
         notes_text = st.text_area("Hukuki Notlar veya Özel Maddeler", placeholder="Örn: Yıllık en az 500 kutu Electro Dish siparişi taahhüt edilmiştir. Ödeme vadesi 45 gündür.")
         
-        if st.button("💾 Dokümanı Kaydet ve Arşive Ekle", type="primary"):
+        if st.button("Dokümanı Kaydet ve Arşive Ekle", type="primary"):
             new_doc_entry = {
                 'doc_id': doc_ref_no,
                 'company': final_company,
@@ -5767,7 +6739,7 @@ elif nav_selection == "▤ Agreements & Compliance":
         </div>
         """, unsafe_allow_html=True)
 
-        local_search = st.text_input("🔍 Yerel klinik veya hastane ara:", "", key="search_local_clients")
+        local_search = st.text_input("Yerel klinik veya hastane ara:", "", key="search_local_clients")
         
         filtered_locals = local_rows
         if local_search.strip():
@@ -5820,7 +6792,7 @@ elif nav_selection == "▤ Agreements & Compliance":
     # TAB 4: SÖZLEŞME VE DOKÜMAN ARŞİVİ
     # --------------------------------------------------------------------------
     with tab_archive:
-        st.markdown("##### 📁 Resmi Sözleşmeler, LOA ve Regülasyon Sertifikaları Arşivi")
+        st.markdown("##### Resmi Sözleşmeler, LOA ve Regülasyon Sertifikaları Arşivi")
         st.caption("Sistemde kayıtlı ve yeni yüklenen tüm dijital sözleşme ve yetki belgeleri dökümü.")
 
         doc_disp = []
@@ -5839,7 +6811,7 @@ elif nav_selection == "▤ Agreements & Compliance":
 
         # Download sample certified list
         st.download_button(
-            label="📥 Tüm Sözleşme & LOA Kayıtlarını İndir (CSV)",
+            label="Tüm Sözleşme & LOA Kayıtlarını İndir (CSV)",
             data=pd.DataFrame(doc_disp).to_csv(index=False).encode('utf-8'),
             file_name="ZEUS_Agreements_LOA_Master_Export.csv",
             mime="text/csv"
@@ -5849,98 +6821,490 @@ elif nav_selection == "▤ Agreements & Compliance":
 # ==============================================================================
 # 7. VIEW: SALES & PRODUCT ANALYTICS
 # ==============================================================================
-elif nav_selection == "◬ Sales & Product Analytics":
-    st.title("📊 Multi-Dimensional Sales & Product Analytics")
-    st.caption("Excel satış veri tabanındaki (874 fatura satırı) gerçek cihaz/sarf dökümleri, gerçek ürün bazlı gelirler ve distribütör performans analizi.")
+elif nav_selection == "Sales & Product Analytics":
+    st.title("Multi-Dimensional Sales & Product Analytics")
+    st.caption("Excel satış veri tabanındaki (874 fatura satırı) doğrulanmış cihaz/sarf dökümleri, ürün bazlı hasılat ve distribütör performans analitiği.")
 
-    # Top KPI Metrics Row
+    # Top KPI Metrics Row (3D Glass Hologram Cards)
     kpi_s1, kpi_s2, kpi_s3, kpi_s4 = st.columns(4)
     with kpi_s1:
-        st.markdown(f"""
-        <div style="background:#0F192E;border:1px solid rgba(19,166,181,0.25);border-radius:10px;padding:12px;text-align:center;">
-            <span style="font-size:11px;color:#8A99AD;text-transform:uppercase;letter-spacing:1px;">Toplam Net Hasılat</span>
-            <div style="font-size:22px;font-weight:700;color:#00F5FF;margin-top:4px;">{format_curr(total_rev)}</div>
-            <span style="font-size:11px;color:#00E676;">874 Fatura Satırı</span>
+        st.markdown(f'''
+        <div class="glass-metric-card" style="border-top:1px solid #00F5FF;box-shadow:0 8px 25px rgba(0,245,255,0.15);">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                <span class="glass-metric-header">Toplam Net Hasılat</span>
+                <div class="glass-icon-box" style="margin-bottom:0;width:30px;height:30px;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                </div>
+            </div>
+            <div class="glass-metric-val" style="color:#00F5FF;font-size:24px;">{format_curr(total_rev)}</div>
+            <div style="font-size:11px;color:#10B981;font-weight:600;margin-top:4px;">● 874 Doğrulanmış Fatura Satırı</div>
         </div>
-        """, unsafe_allow_html=True)
+        ''', unsafe_allow_html=True)
     with kpi_s2:
-        st.markdown(f"""
-        <div style="background:#0F192E;border:1px solid rgba(19,166,181,0.25);border-radius:10px;padding:12px;text-align:center;">
-            <span style="font-size:11px;color:#8A99AD;text-transform:uppercase;letter-spacing:1px;">Cihaz / Donanım Geliri</span>
-            <div style="font-size:22px;font-weight:700;color:#CCD7E6;margin-top:4px;">{format_curr(total_dev_rev)}</div>
-            <span style="font-size:11px;color:#00F5FF;">{total_devices} Adet Kurulu Cihaz</span>
+        st.markdown(f'''
+        <div class="glass-metric-card" style="border-top:1px solid #38BDF8;box-shadow:0 8px 25px rgba(56,189,248,0.12);">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                <span class="glass-metric-header">Cihaz / Donanım Portföyü</span>
+                <div class="glass-icon-box" style="margin-bottom:0;width:30px;height:30px;">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                </div>
+            </div>
+            <div class="glass-metric-val" style="color:#E2E8F0;font-size:24px;">{format_curr(total_dev_rev)}</div>
+            <div style="font-size:11px;color:#38BDF8;font-weight:600;margin-top:4px;">● {total_devices} Adet Kurulu Cihaz</div>
         </div>
-        """, unsafe_allow_html=True)
+        ''', unsafe_allow_html=True)
     with kpi_s3:
-        st.markdown(f"""
-        <div style="background:#0F192E;border:1px solid rgba(19,166,181,0.25);border-radius:10px;padding:12px;text-align:center;">
-            <span style="font-size:11px;color:#8A99AD;text-transform:uppercase;letter-spacing:1px;">Tekrar Eden Sarf Geliri</span>
-            <div style="font-size:22px;font-weight:700;color:#5FD3AE;margin-top:4px;">{format_curr(total_con_rev)}</div>
-            <span style="font-size:11px;color:#5FD3AE;">3,150+ Kutu Sarf Malzeme</span>
+        st.markdown(f'''
+        <div class="glass-metric-card" style="border-top:1px solid #10B981;box-shadow:0 8px 25px rgba(16,185,129,0.12);">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                <span class="glass-metric-header">Tekrar Eden Sarf Hacmi</span>
+                <div class="glass-icon-box" style="margin-bottom:0;width:30px;height:30px;background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.3);">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2"><path d="M10 2v7.31"></path><path d="M14 9.3V1.99"></path><path d="M8.5 2h7"></path><path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path><path d="M5.52 16h12.96"></path></svg>
+                </div>
+            </div>
+            <div class="glass-metric-val" style="color:#10B981;font-size:24px;">{format_curr(total_con_rev)}</div>
+            <div style="font-size:11px;color:#34D399;font-weight:600;margin-top:4px;">● 3,150+ Kutu Düzenli Tüketim</div>
         </div>
-        """, unsafe_allow_html=True)
+        ''', unsafe_allow_html=True)
     with kpi_s4:
-        st.markdown(f"""
-        <div style="background:#0F192E;border:1px solid rgba(19,166,181,0.25);border-radius:10px;padding:12px;text-align:center;">
-            <span style="font-size:11px;color:#8A99AD;text-transform:uppercase;letter-spacing:1px;">Ticari Partner & Müşteri</span>
-            <div style="font-size:22px;font-weight:700;color:#FFB800;margin-top:4px;">43 Kurum</div>
-            <span style="font-size:11px;color:#FFB800;">7 Distribütör + 36 Klinik</span>
+        st.markdown(f'''
+        <div class="glass-metric-card" style="border-top:1px solid #F59E0B;box-shadow:0 8px 25px rgba(245,158,11,0.12);">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                <span class="glass-metric-header">Ticari Partner & Ağ</span>
+                <div class="glass-icon-box" style="margin-bottom:0;width:30px;height:30px;background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.3);">
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                </div>
+            </div>
+            <div class="glass-metric-val" style="color:#F59E0B;font-size:24px;">43 Kurum</div>
+            <div style="font-size:11px;color:#FBBF24;font-weight:600;margin-top:4px;">● 7 Distribütör + 36 Doğrudan Klinik</div>
         </div>
-        """, unsafe_allow_html=True)
+        ''', unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
 
     # Charts: Real Product Share vs Real Partner Split
-    p_col1, p_col2 = st.columns([1, 1.25])
+    p_col1, p_col2 = st.columns([1.1, 1.25])
     
     with p_col1:
-        st.subheader("ZEUS Gerçek Ürün Dağılımı (Excel Verisi)")
+        # Header with 3D / 2D View Selector
+        head_c1, head_c2 = st.columns([1.1, 1.1])
+        with head_c1:
+            st.subheader("Ürün Gelir Dağılımı")
+        with head_c2:
+            chart_3d_mode = st.radio(
+                "Görünüm Modu",
+                ["3D Holografik Sahne (360°)", "2D Hassas Halka"],
+                index=0,
+                horizontal=True,
+                label_visibility="collapsed"
+            )
+        
         # Real Product grouping from Excel
         excel_raw_df = get_excel_sales_df()
         if excel_raw_df is not None:
             prod_map = {
                 'Piezo Pulse Stimulator Device': 'Piezo Pulse Stimulator Device',
                 'Zeus Electro Fusion SET': 'Zeus Electro Fusion SET',
-                'Touch Screen Tablet With Software': 'Touch Screen Tablet & Accessories',
-                'ZEUS PULSE STIMULATOR TESTER DEVICE': 'Touch Screen Tablet & Accessories',
-                'Electro Dish (1x2)': 'Electro Dish (1x2 / 1x1)',
-                'Electro Dish ( 1x2 )': 'Electro Dish (1x2 / 1x1)',
-                'ZEUS ELECTRO DISH (1X1)': 'Electro Dish (1x2 / 1x1)',
-                'ZEUS ELECTRO LIQUID SOLUTION(2 X 1 ML)': 'ZEUS Electro Liquid Solution',
-                'ZEUS ELECTRO LIQUID SOLUTION POWDER(1 X 2 ML)': 'ZEUS Electro Liquid Solution',
-                'ZEUS ELECTRO LIQUID SOLUTION POWDER(1 X 2 ML )': 'ZEUS Electro Liquid Solution',
-                'ZEUS ELECTRO LIQUID SOLUTION(1 X 1 ML)': 'ZEUS Electro Liquid Solution',
+                'Touch Screen Tablet With Software': 'Touch Tablet & Accessories',
+                'ZEUS PULSE STIMULATOR TESTER DEVICE': 'Touch Tablet & Accessories',
+                'Electro Dish (1x2)': 'Electro Dish (Consumable)',
+                'Electro Dish ( 1x2 )': 'Electro Dish (Consumable)',
+                'ZEUS ELECTRO DISH (1X1)': 'Electro Dish (Consumable)',
+                'ZEUS ELECTRO LIQUID SOLUTION(2 X 1 ML)': 'Electro Liquid Solution',
+                'ZEUS ELECTRO LIQUID SOLUTION POWDER(1 X 2 ML)': 'Electro Liquid Solution',
+                'ZEUS ELECTRO LIQUID SOLUTION POWDER(1 X 2 ML )': 'Electro Liquid Solution',
+                'ZEUS ELECTRO LIQUID SOLUTION(1 X 1 ML)': 'Electro Liquid Solution',
             }
             tmp_df = excel_raw_df.copy()
-            tmp_df['Clean_Product'] = tmp_df['Product'].map(lambda x: prod_map.get(x, 'Smart Cryo-Tools & Lab Accessories'))
+            tmp_df['Clean_Product'] = tmp_df['Product'].map(lambda x: prod_map.get(x, 'Smart Cryo-Tools & Acc.'))
             p_summary = tmp_df.groupby('Clean_Product')['Amount (USD)'].sum().reset_index()
             p_summary = p_summary.sort_values('Amount (USD)', ascending=False)
             p_summary.columns = ['Product', 'Revenue']
         else:
             p_summary = pd.DataFrame([
                 {'Product': 'Piezo Pulse Stimulator Device', 'Revenue': 410993.34},
-                {'Product': 'Electro Dish (1x2 / 1x1)', 'Revenue': 207874.30},
-                {'Product': 'ZEUS Electro Liquid Solution', 'Revenue': 53709.43},
+                {'Product': 'Electro Dish (Consumable)', 'Revenue': 207874.30},
+                {'Product': 'Electro Liquid Solution', 'Revenue': 53709.43},
                 {'Product': 'Zeus Electro Fusion SET', 'Revenue': 15890.85},
-                {'Product': 'Smart Cryo-Tools & Accessories', 'Revenue': 5419.57}
+                {'Product': 'Smart Cryo-Tools & Acc.', 'Revenue': 5419.57}
             ])
 
-        fig_pie = px.pie(
-            p_summary, values='Revenue', names='Product', hole=0.45,
-            color_discrete_sequence=['#00F5FF', '#13A6B5', '#7C93BD', '#00E676', '#FFB800', '#FF5252'],
-            title="Excel Kayıtlarına Dayalı Net Ciro Payı"
-        )
-        fig_pie.update_traces(textposition='inside', textinfo='percent+label')
-        fig_pie.update_layout(
-            template='plotly_dark', height=400,
-            showlegend=False,
-            margin=dict(l=10, r=10, t=30, b=10)
-        )
-        st.plotly_chart(fig_pie, use_container_width=True)
+        total_p_rev = p_summary['Revenue'].sum()
+        p_summary['Share_Pct'] = (p_summary['Revenue'] / total_p_rev * 100).round(1)
+        
+        neon_colors = ['#00F5FF', '#10B981', '#8B5CF6', '#F59E0B', '#EC4899', '#38BDF8']
+
+        if chart_3d_mode == "3D Holografik Sahne (360°)":
+            # Dynamic Three.js items construction with Floating 3D Product & Percentage Badges
+            import math
+            max_r = p_summary['Revenue'].max() if len(p_summary) > 0 else 1.0
+            short_names = {
+                'Piezo Pulse Stimulator Device': 'Piezo Cihaz',
+                'Electro Dish (Consumable)': 'Electro Dish',
+                'Electro Liquid Solution': 'Liquid Solution',
+                'Zeus Electro Fusion SET': 'Fusion SET',
+                'Smart Cryo-Tools & Acc.': 'Cryo-Tools',
+                'Touch Tablet & Accessories': 'Touch Tablet'
+            }
+            three_items = []
+            for idx_p, p_row in p_summary.iterrows():
+                ang = (2 * math.pi / len(p_summary)) * idx_p
+                h_val = max(1.2, (p_row['Revenue'] / max_r) * 7.5)
+                c_val = neon_colors[idx_p % len(neon_colors)]
+                cat_val = "Cihaz / Donanım" if "Device" in p_row['Product'] or "Fusion" in p_row['Product'] or "Tablet" in p_row['Product'] else "Tekrar Eden Sarf"
+                s_name = short_names.get(p_row['Product'], p_row['Product'][:12])
+                three_items.append({
+                    "name": p_row['Product'],
+                    "short_name": s_name,
+                    "rev_fmt": f"${p_row['Revenue']:,.0f} USD",
+                    "pct": f"%{p_row['Share_Pct']}",
+                    "cat": cat_val,
+                    "h": round(h_val, 2),
+                    "r": 1.25,
+                    "color": c_val,
+                    "angle": round(ang, 3)
+                })
+            
+            three_items_json = json.dumps(three_items)
+
+            # High-Tech Three.js WebGL Interactive Stage with Floating Summit Badges
+            three_template = '''<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style>
+        body { margin: 0; padding: 0; overflow: hidden; background: transparent; font-family: 'Inter', system-ui, sans-serif; }
+        #stage-wrap { position: relative; width: 100%; height: 320px; border-radius: 14px; background: radial-gradient(circle at 50% 30%, rgba(15,25,48,0.95) 0%, rgba(7,11,20,0.98) 100%); border: 1px solid rgba(0,245,255,0.22); box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
+        #telemetry-tag { position: absolute; top: 10px; left: 12px; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; color: #00F5FF; background: rgba(0,245,255,0.08); border: 1px solid rgba(0,245,255,0.25); border-radius: 6px; padding: 4px 10px; pointer-events: none; }
+        #rot-hint { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); font-size: 10px; color: #94A3B8; pointer-events: none; background: rgba(10,16,28,0.85); padding: 3px 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.08); white-space: nowrap; }
+        
+        /* 3D Floating Summit Badges */
+        .cylinder-badge {
+            position: absolute;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            background: rgba(10, 16, 28, 0.88);
+            border: 1px solid rgba(0, 245, 255, 0.4);
+            border-radius: 6px;
+            padding: 2px 7px;
+            font-size: 10px;
+            font-weight: 700;
+            white-space: nowrap;
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            user-select: none;
+            z-index: 10;
+        }
+        .badge-name { color: #F1F5F9; font-size: 10px; font-weight: 600; letter-spacing: 0.02em; }
+        .badge-pct { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 10.5px; }
+
+        /* Detailed HUD Tooltip on Hover */
+        #hud-tooltip { position: absolute; display: none; pointer-events: none; background: rgba(10,16,28,0.96); border: 1px solid #00F5FF; border-radius: 10px; padding: 10px 14px; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: 0 8px 30px rgba(0,245,255,0.35); z-index: 999; min-width: 170px; }
+        #tt-title { font-size: 12px; font-weight: 700; color: #FFFFFF; margin-bottom: 4px; }
+        #tt-rev { font-size: 14.5px; font-weight: 800; color: #00F5FF; font-family: monospace; }
+        #tt-pct { font-size: 11px; font-weight: 600; color: #10B981; background: rgba(16,185,129,0.12); padding: 2px 6px; border-radius: 4px; margin-left: 6px; }
+        #tt-cat { font-size: 10px; color: #94A3B8; margin-top: 4px; }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"></script>
+</head>
+<body>
+    <div id="stage-wrap">
+        <div id="telemetry-tag">⬡ ZEUS 3D MATRIX ENGINE</div>
+        <div id="rot-hint">● 3D Modeli 360° Döndürebilirsiniz & Sütunların Üzerine Gelin</div>
+        <div id="hud-tooltip">
+            <div id="tt-title"></div>
+            <div style="display:flex;align-items:center;">
+                <span id="tt-rev"></span>
+                <span id="tt-pct"></span>
+            </div>
+            <div id="tt-cat"></div>
+        </div>
+    </div>
+    <script>
+        const container = document.getElementById('stage-wrap');
+        const tooltip = document.getElementById('hud-tooltip');
+        const ttTitle = document.getElementById('tt-title');
+        const ttRev = document.getElementById('tt-rev');
+        const ttPct = document.getElementById('tt-pct');
+        const ttCat = document.getElementById('tt-cat');
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(45, container.clientWidth / container.clientHeight, 0.1, 1000);
+        camera.position.set(0, 11, 23);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(container.clientWidth, container.clientHeight);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        container.appendChild(renderer.domElement);
+
+        const controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.autoRotate = true;
+        controls.autoRotateSpeed = 0.8;
+        controls.maxPolarAngle = Math.PI / 2 - 0.05;
+        controls.minDistance = 10;
+        controls.maxDistance = 42;
+
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.75);
+        scene.add(ambientLight);
+
+        const dirLight = new THREE.DirectionalLight(0x00f5ff, 1.4);
+        dirLight.position.set(15, 25, 15);
+        scene.add(dirLight);
+
+        const pointLight = new THREE.PointLight(0x10b981, 1.2, 50);
+        pointLight.position.set(-15, 12, -10);
+        scene.add(pointLight);
+
+        // Circular Glass Floor
+        const floorGeo = new THREE.CylinderGeometry(9.6, 9.6, 0.25, 64);
+        const floorMat = new THREE.MeshStandardMaterial({ color: 0x0c1424, roughness: 0.15, metalness: 0.85, transparent: true, opacity: 0.88 });
+        const floor = new THREE.Mesh(floorGeo, floorMat);
+        floor.position.y = -0.12;
+        scene.add(floor);
+
+        const ringGeo = new THREE.RingGeometry(9.4, 9.7, 64);
+        const ringMat = new THREE.MeshBasicMaterial({ color: 0x00f5ff, side: THREE.DoubleSide });
+        const ring = new THREE.Mesh(ringGeo, ringMat);
+        ring.rotation.x = Math.PI / 2;
+        ring.position.y = 0.02;
+        scene.add(ring);
+
+        // Cyber Grid Lines
+        const grid = new THREE.GridHelper(18, 18, 0x00f5ff, 0x1e293b);
+        grid.position.y = 0.01;
+        scene.add(grid);
+
+        // Floating Dust Particles
+        const partGeo = new THREE.BufferGeometry();
+        const partCount = 120;
+        const partPos = new Float32Array(partCount * 3);
+        for(let i=0; i<partCount*3; i+=3) {
+            partPos[i] = (Math.random() - 0.5) * 22;
+            partPos[i+1] = Math.random() * 12;
+            partPos[i+2] = (Math.random() - 0.5) * 22;
+        }
+        partGeo.setAttribute('position', new THREE.BufferAttribute(partPos, 3));
+        const partMat = new THREE.PointsMaterial({ color: 0x00f5ff, size: 0.12, transparent: true, opacity: 0.5 });
+        const particles = new THREE.Points(partGeo, partMat);
+        scene.add(particles);
+
+        const itemsData = __ITEMS_JSON__;
+        const meshList = [];
+
+        itemsData.forEach((it) => {
+            const dist = 5.2;
+            const x = Math.cos(it.angle) * dist;
+            const z = Math.sin(it.angle) * dist;
+            const colInt = parseInt(it.color.replace('#', '0x'));
+
+            const cylGeo = new THREE.CylinderGeometry(it.r, it.r * 1.04, it.h, 32);
+            const cylMat = new THREE.MeshPhysicalMaterial({
+                color: colInt,
+                emissive: colInt,
+                emissiveIntensity: 0.28,
+                roughness: 0.12,
+                metalness: 0.25,
+                transmission: 0.4,
+                transparent: true,
+                opacity: 0.92
+            });
+            const cyl = new THREE.Mesh(cylGeo, cylMat);
+            cyl.position.set(x, it.h / 2, z);
+            cyl.userData = it;
+            scene.add(cyl);
+            meshList.push(cyl);
+
+            // Top Crown Ring
+            const crownGeo = new THREE.TorusGeometry(it.r * 1.04, 0.05, 16, 32);
+            const crownMat = new THREE.MeshBasicMaterial({ color: 0xffffff });
+            const crown = new THREE.Mesh(crownGeo, crownMat);
+            crown.rotation.x = Math.PI / 2;
+            crown.position.set(x, it.h, z);
+            scene.add(crown);
+
+            // Base Ring
+            const baseGeo = new THREE.RingGeometry(it.r * 0.9, it.r * 1.25, 32);
+            const baseMat = new THREE.MeshBasicMaterial({ color: colInt, side: THREE.DoubleSide, transparent: true, opacity: 0.8 });
+            const baseRing = new THREE.Mesh(baseGeo, baseMat);
+            baseRing.rotation.x = Math.PI / 2;
+            baseRing.position.set(x, 0.03, z);
+            scene.add(baseRing);
+
+            // Floating 3D Badge Container for Name & Percentage
+            const badgeEl = document.createElement('div');
+            badgeEl.className = 'cylinder-badge';
+            badgeEl.style.borderColor = it.color;
+            badgeEl.style.boxShadow = '0 2px 10px rgba(0,0,0,0.6), 0 0 10px ' + it.color + '44';
+            badgeEl.innerHTML = '<span class="badge-name">' + it.short_name + '</span><span class="badge-pct" style="color:' + it.color + ';">' + it.pct + '</span>';
+            container.appendChild(badgeEl);
+            it.badgeEl = badgeEl;
+            it.topPos = new THREE.Vector3(x, it.h, z);
+        });
+
+        // Raycasting for Hover Interaction
+        const raycaster = new THREE.Raycaster();
+        const mouse = new THREE.Vector2();
+        let hoveredMesh = null;
+
+        container.addEventListener('mousemove', (e) => {
+            const rect = container.getBoundingClientRect();
+            mouse.x = ((e.clientX - rect.left) / container.clientWidth) * 2 - 1;
+            mouse.y = -((e.clientY - rect.top) / container.clientHeight) * 2 + 1;
+
+            raycaster.setFromCamera(mouse, camera);
+            const intersects = raycaster.intersectObjects(meshList);
+
+            if (intersects.length > 0) {
+                const hit = intersects[0].object;
+                if (hoveredMesh !== hit) {
+                    if (hoveredMesh) {
+                        hoveredMesh.material.emissiveIntensity = 0.28;
+                        hoveredMesh.scale.set(1, 1, 1);
+                    }
+                    hoveredMesh = hit;
+                    hoveredMesh.material.emissiveIntensity = 0.85;
+                    hoveredMesh.scale.set(1.06, 1.02, 1.06);
+                }
+                const d = hit.userData;
+                ttTitle.innerText = d.name;
+                ttRev.innerText = d.rev_fmt;
+                ttRev.style.color = d.color;
+                ttPct.innerText = d.pct;
+                ttCat.innerText = d.cat;
+
+                let tx = e.clientX - rect.left + 15;
+                let ty = e.clientY - rect.top - 20;
+                if (tx + 180 > container.clientWidth) tx = e.clientX - rect.left - 190;
+                if (ty < 10) ty = 10;
+                tooltip.style.left = tx + 'px';
+                tooltip.style.top = ty + 'px';
+                tooltip.style.display = 'block';
+                tooltip.style.borderColor = d.color;
+                container.style.cursor = 'pointer';
+            } else {
+                if (hoveredMesh) {
+                    hoveredMesh.material.emissiveIntensity = 0.28;
+                    hoveredMesh.scale.set(1, 1, 1);
+                    hoveredMesh = null;
+                }
+                tooltip.style.display = 'none';
+                container.style.cursor = 'default';
+            }
+        });
+
+        container.addEventListener('mouseleave', () => {
+            if (hoveredMesh) {
+                hoveredMesh.material.emissiveIntensity = 0.28;
+                hoveredMesh.scale.set(1, 1, 1);
+                hoveredMesh = null;
+            }
+            tooltip.style.display = 'none';
+        });
+
+        const tempV = new THREE.Vector3();
+        function animate() {
+            requestAnimationFrame(animate);
+            particles.rotation.y += 0.0006;
+            controls.update();
+
+            // Track 3D Cylinder summits and project floating HTML badges
+            itemsData.forEach(it => {
+                if (!it.badgeEl) return;
+                tempV.copy(it.topPos);
+                tempV.y += 0.55;
+                tempV.project(camera);
+
+                if (tempV.z > 1) {
+                    it.badgeEl.style.display = 'none';
+                } else {
+                    const sx = (tempV.x * 0.5 + 0.5) * container.clientWidth;
+                    const sy = (-tempV.y * 0.5 + 0.5) * container.clientHeight;
+                    it.badgeEl.style.display = 'flex';
+                    it.badgeEl.style.transform = 'translate(-50%, -100%) translate(' + sx + 'px, ' + sy + 'px)';
+                }
+            });
+
+            renderer.render(scene, camera);
+        }
+        animate();
+
+        window.addEventListener('resize', () => {
+            camera.aspect = container.clientWidth / container.clientHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(container.clientWidth, container.clientHeight);
+        });
+    </script>
+</body>
+</html>'''
+            three_html = three_template.replace("__ITEMS_JSON__", three_items_json)
+            components.html(three_html, height=335)
+
+            # Clean Glass Product Progress Cards (Zero text overlapping)
+            st.markdown("<div style='margin-top:10px;'>", unsafe_allow_html=True)
+            for idx, row in p_summary.iterrows():
+                col = neon_colors[idx % len(neon_colors)]
+                cat_tag = "Cihaz / Donanım" if "Device" in row['Product'] or "Fusion" in row['Product'] or "Tablet" in row['Product'] else "Tekrar Eden Sarf"
+                st.markdown(f'''
+                <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(255,255,255,0.06);border-left:3px solid {col};border-radius:9px;padding:8px 12px;margin-bottom:6px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;">
+                        <span style="font-size:12.5px;font-weight:600;color:#FFFFFF;">{row['Product']} <span style="font-size:10.5px;color:#94A3B8;font-weight:400;">({cat_tag})</span></span>
+                        <span style="font-size:12.5px;font-weight:700;color:{col};font-family:'JetBrains Mono',monospace;">${row['Revenue']:,.0f} <span style="font-size:11px;color:#94A3B8;">({row['Share_Pct']}%)</span></span>
+                    </div>
+                    <div style="width:100%;height:4px;background:rgba(255,255,255,0.06);border-radius:999px;margin-top:5px;overflow:hidden;">
+                        <div style="width:{row['Share_Pct']}%;height:100%;background:{col};border-radius:999px;box-shadow:0 0 8px {col};"></div>
+                    </div>
+                </div>
+                ''', unsafe_allow_html=True)
+            st.markdown("</div>", unsafe_allow_html=True)
+        else:
+            # 2D Precision Clean Donut
+            fig_pie = go.Figure(data=[go.Pie(
+                labels=p_summary['Product'],
+                values=p_summary['Revenue'],
+                hole=0.68,
+                marker=dict(
+                    colors=neon_colors[:len(p_summary)],
+                    line=dict(color='#070B14', width=2.5)
+                ),
+                textinfo='percent',
+                textposition='outside',
+                textfont=dict(color='#E2E8F0', size=11),
+                hovertemplate="<b>%{label}</b><br>Hasılat: $%{value:,.2f}<br>Pay: %{percent}<extra></extra>"
+            )])
+            fig_pie.add_annotation(
+                text=f"<span style='font-size:11px;color:#94A3B8;font-weight:600;'>KONSOLİDE</span><br><b style='font-size:18px;color:#00F5FF;'>${total_p_rev/1000:,.0f}K</b>",
+                x=0.5, y=0.5,
+                showarrow=False,
+                align='center'
+            )
+            fig_pie.update_layout(
+                template='plotly_dark',
+                paper_bgcolor='rgba(0,0,0,0)',
+                plot_bgcolor='rgba(0,0,0,0)',
+                height=420,
+                showlegend=True,
+                legend=dict(
+                    orientation="h",
+                    yanchor="bottom",
+                    y=-0.25,
+                    xanchor="center",
+                    x=0.5,
+                    font=dict(size=10, color="#CBD5E1")
+                ),
+                margin=dict(l=10, r=10, t=15, b=50)
+            )
+            st.plotly_chart(fig_pie, use_container_width=True)
 
     with p_col2:
-        st.subheader("Cihaz vs Sarf Gelir Dağılımı (Top Partnerler)")
-        # Clean readable names for Top 10 partners
+        st.subheader("Cihaz vs Sarf Gelir Dağılımı (Top 10 Partner)")
+        
         short_names_map = {
             'SIRIUS PHARM COMPANY': 'SIRIUS (Jordan-Iraq)',
             'INTERNATIONAL TECHNICAL LEGACY (ITL)': 'ITL (Qatar)',
@@ -5956,24 +7320,53 @@ elif nav_selection == "◬ Sales & Product Analytics":
         }
         dist_split = []
         top_split_rows = sorted(active_rows, key=lambda x: x['revenue'], reverse=True)[:10]
-        # Reverse order so top partner appears at the top of horizontal bar
+        
         for d in reversed(top_split_rows):
-            s_name = short_names_map.get(d['name'], d['name'][:22])
+            s_name = short_names_map.get(d['name'], d['name'][:20])
             dist_split.append({'Partner': s_name, 'Gelir Tipi': 'Cihaz / Donanım (Capital Devices)', 'Tutar': d['device_rev']})
             dist_split.append({'Partner': s_name, 'Gelir Tipi': 'Tekrar Eden Sarf (Consumables)', 'Tutar': d['consumables_rev']})
             
         s_df = pd.DataFrame(dist_split)
+        
         fig_split = px.bar(
             s_df, x='Tutar', y='Partner', color='Gelir Tipi', orientation='h',
-            color_discrete_map={'Cihaz / Donanım (Capital Devices)': '#00F5FF', 'Tekrar Eden Sarf (Consumables)': '#13A6B5'},
-            title="Cihaz Satışı vs Tekrar Eden Sarf Malzeme Hacmi ($)"
+            color_discrete_map={
+                'Cihaz / Donanım (Capital Devices)': '#00F5FF',
+                'Tekrar Eden Sarf (Consumables)': '#10B981'
+            }
         )
         fig_split.update_layout(
-            barmode='stack', template='plotly_dark', height=400,
-            margin=dict(l=140, r=20, t=30, b=20),
-            xaxis=dict(title="Toplam Tutar ($ USD)", gridcolor='rgba(255,255,255,0.08)'),
-            yaxis=dict(title=""),
-            legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
+            barmode='stack',
+            template='plotly_dark',
+            paper_bgcolor='rgba(0,0,0,0)',
+            plot_bgcolor='rgba(0,0,0,0)',
+            height=430,
+            margin=dict(l=140, r=20, t=10, b=40),
+            xaxis=dict(
+                title="Toplam Hasılat ($ USD)",
+                gridcolor='rgba(0, 245, 255, 0.08)',
+                color='#94A3B8'
+            ),
+            yaxis=dict(
+                title="",
+                color='#E2E8F0',
+                tickfont=dict(size=11)
+            ),
+            legend=dict(
+                orientation="h",
+                yanchor="bottom",
+                y=1.03,
+                xanchor="center",
+                x=0.5,
+                bgcolor='rgba(15,23,42,0.6)',
+                bordercolor='rgba(0,245,255,0.2)',
+                borderwidth=1,
+                font=dict(color="#E2E8F0", size=11)
+            )
+        )
+        fig_split.update_traces(
+            marker_line_color='#070B14',
+            marker_line_width=1.5
         )
         st.plotly_chart(fig_split, use_container_width=True)
 
@@ -5981,23 +7374,47 @@ elif nav_selection == "◬ Sales & Product Analytics":
     # Segmented Leaderboards: Distributors vs International Clients vs Domestic
     # --------------------------------------------------------------------------
     st.markdown("---")
-    st.subheader("🏆 Leaderboard: Ticari Partner & Distribütör Performans Tablosu")
-    st.caption("Excel satış kayıtlarındaki gerçek cihaz/sarf dökümleri, gerçek sözleşme taahhütleri ve hedef gerçekleşme oranları.")
+    
+    lead_hdr_c1, lead_hdr_c2 = st.columns([1.5, 1])
+    with lead_hdr_c1:
+        st.subheader("Leaderboard: Ticari Partner & Distribütör Performans Tablosu")
+        st.caption("Excel satış kayıtlarındaki (874 fatura satırı) gerçek kümülatif hasılat, sahadaki toplam kurulu cihaz tabanı ve dönem gerçekleşmeleri.")
+    with lead_hdr_c2:
+        lead_metric_view = st.radio(
+            "Leaderboard Metrik Kapsamı:",
+            ["Konsolide (Tüm Zamanlar Portföyü)", "Seçili Dönem Satışları (2026 YTD)"],
+            index=0,
+            horizontal=True
+        )
+
+    # Informational Glass Notice Banner
+    st.markdown('''
+    <div style="background:rgba(15,23,42,0.65);border:1px solid rgba(0,245,255,0.25);border-left:4px solid #00F5FF;border-radius:10px;padding:11px 16px;margin-bottom:14px;backdrop-filter:blur(16px);">
+        <div style="display:flex;align-items:center;gap:12px;">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            <div style="font-size:12.5px;color:#E2E8F0;line-height:1.45;">
+                <b style="color:#00F5FF;">Kurulu Cihaz Tabanı ve Hasılat Doğrulama Notu:</b> Aşağıdaki tabloda distribütörlerin sahadaki <b>gerçek toplam kurulu cihaz filosu (Sirius: 18, SJNU: 7, CMC: 5, ITL: 4, AMS: 3, ATC: 3 Adet)</b> ve tüm zamanlar cirosu listelenmektedir. Örneğin; <b>Kuwait ATC (3 Cihaz)</b> ve <b>Saudi AMS (3 Cihaz)</b> donanım teslimatlarını 2025'te tamamlamış olup, 2026 sütununda ise cari yıl gerçekleşmeleri şeffaf olarak gösterilmektedir.
+            </div>
+        </div>
+    </div>
+    ''', unsafe_allow_html=True)
 
     lead_tab1, lead_tab2, lead_tab3, lead_tab4 = st.tabs([
-        "🌐 Yetkili Uluslararası Distribütörler (6 Distribütör)",
-        "🌍 Uluslararası Doğrudan Müşteriler & Klinikler (12 Müşteri)",
-        "🇹🇷 Türkiye Pazarı Klinik & Müşterileri (25 Yerli Hesap)",
-        "📋 Konsolide Tüm Portföy (43 Kurum)"
+        "Yetkili Uluslararası Distribütörler (6 Distribütör)",
+        "Uluslararası Doğrudan Müşteriler & Klinikler (12 Müşteri)",
+        "Türkiye Pazarı Klinik & Müşterileri (25 Yerli Hesap)",
+        "Konsolide Tüm Portföy (43 Kurum)"
     ])
 
     # 1. Official International Distributors
     with lead_tab1:
-        st.markdown("##### 🌐 Resmi Yetkili Distribütörler (International Distributors)")
-        dists_only = [d for d in active_rows if d.get('account_type') == 'Distributor']
-        dists_only = sorted(dists_only, key=lambda x: x['revenue'], reverse=True)
+        st.markdown("##### Resmi Yetkili Distribütörler (International Distributors)")
+        dists_only = [d for d in all_dists if d.get('account_type') == 'Distributor']
         
-        # Exact Contract Targets for accurate attainment %
+        # Sort by All-Time total revenue to ensure accurate hierarchy
+        dists_only = sorted(dists_only, key=lambda x: x.get('rev_by_year', {}).get('ALL', x.get('revenue', 0)), reverse=True)
+        
+        # Contract targets for all-time / full contract
         d_targets = {
             'SIRIUS PHARM COMPANY': 160000.0,
             'INTERNATIONAL TECHNICAL LEGACY (ITL)': 70000.0,
@@ -6009,38 +7426,75 @@ elif nav_selection == "◬ Sales & Product Analytics":
         
         d_table = []
         for d in dists_only:
+            rev_map = d.get('rev_by_year', {})
+            dev_cnt_map = d.get('dev_cnt_by_year', {})
+            dev_rev_map = d.get('dev_rev_by_year', {})
+            con_rev_map = d.get('con_rev_by_year', {})
+            
+            all_time_rev = rev_map.get('ALL', d.get('revenue', 0.0))
+            all_time_dev_cnt = dev_cnt_map.get('ALL', d.get('devices_count', 0))
+            all_time_dev_rev = dev_rev_map.get('ALL', d.get('device_rev', 0.0))
+            all_time_con_rev = con_rev_map.get('ALL', d.get('consumables_rev', 0.0))
+            
+            period_rev = d.get('revenue', 0.0)
+            period_dev_cnt = d.get('devices_count', 0)
+            period_dev_rev = d.get('device_rev', 0.0)
+            period_con_rev = d.get('consumables_rev', 0.0)
+            
             target_val = d_targets.get(d['name'], 30000.0)
-            attainment_pct = round((d['revenue'] / target_val) * 100.0, 1)
-            d_table.append({
-                'Distribütör': d['name'],
-                'Ülke / Bölge': d['country_name'],
-                'Net Ciro': format_curr(d['revenue']),
-                'Kurulu Cihaz (Adet)': f"{d['devices_count']} Adet",
-                'Cihaz Hasılatı': format_curr(d['device_rev']),
-                'Sarf Hasılatı': format_curr(d['consumables_rev']),
-                'Hedef Gerçekleşme %': f"%{attainment_pct}",
-                'Brüt Kâr Marjı': f"%{d['margin_pct']:.1f}",
-                'Sözleşme / LOA': d.get('loa', 'Valid'),
-                'Sözleşme Bitiş': d.get('expiry', '2027-12-31')
-            })
+            attainment_pct = round((all_time_rev / target_val) * 100.0, 1)
+
+            if lead_metric_view == "Konsolide (Tüm Zamanlar Portföyü)":
+                d_table.append({
+                    'Distribütör': d['name'],
+                    'Ülke / Bölge': d.get('country_name', 'Jordan-Iraq'),
+                    'Toplam Ciro (All-Time)': format_curr(all_time_rev),
+                    'Kurulu Cihaz Parkı': f"{all_time_dev_cnt} Adet Cihaz",
+                    'Cihaz Satış Hasılatı': format_curr(all_time_dev_rev),
+                    'Tekrar Eden Sarf': format_curr(all_time_con_rev),
+                    '2026 YTD Dönem Satışı': format_curr(period_rev),
+                    '2026 Cihaz Teslimi': f"{period_dev_cnt} Adet" if period_dev_cnt > 0 else "— (2025 Kurulu)",
+                    'Sözleşme Hedefi': format_curr(target_val),
+                    'Hedef Gerçekleşme %': f"%{attainment_pct}",
+                    'Sözleşme / LOA': d.get('loa', 'Valid'),
+                    'Durum': 'Lokomotif Partner' if all_time_rev > 60000 else ('Aktif Distribütör' if all_time_rev > 25000 else 'Takipte')
+                })
+            else:
+                d_table.append({
+                    'Distribütör': d['name'],
+                    'Ülke / Bölge': d.get('country_name', 'Jordan-Iraq'),
+                    'Dönem Cirosu (2026)': format_curr(period_rev),
+                    'Dönem Cihazı': f"{period_dev_cnt} Adet",
+                    'Dönem Cihaz Hasılatı': format_curr(period_dev_rev),
+                    'Dönem Sarf Hasılatı': format_curr(period_con_rev),
+                    'Toplam Kurulu Taban (All-Time)': f"{all_time_dev_cnt} Adet",
+                    'Tüm Zamanlar Toplam Ciro': format_curr(all_time_rev),
+                    'Sözleşme / LOA': d.get('loa', 'Valid'),
+                    'Durum': '2026 Aktif Sipariş' if period_rev > 0 else '2026 Sipariş Bekleniyor (Atıl Cihaz Uyarısı)'
+                })
+        
         st.dataframe(pd.DataFrame(d_table), use_container_width=True, hide_index=True)
 
     # 2. International Direct Clients
     with lead_tab2:
-        st.markdown("##### 🌍 Uluslararası Doğrudan Satın Alan Klinikler & Hastaneler")
-        intl_clients = [d for d in active_rows if d.get('account_type') == 'International Customer']
-        intl_clients = sorted(intl_clients, key=lambda x: x['revenue'], reverse=True)
+        st.markdown("##### Uluslararası Doğrudan Satın Alan Klinikler & Hastaneler")
+        intl_clients = [d for d in all_dists if d.get('account_type') == 'International Customer']
+        intl_clients = sorted(intl_clients, key=lambda x: x.get('rev_by_year', {}).get('ALL', x.get('revenue', 0)), reverse=True)
         
         intl_table = []
         for d in intl_clients:
+            rev_map = d.get('rev_by_year', {})
+            dev_cnt_map = d.get('dev_cnt_by_year', {})
+            all_time_rev = rev_map.get('ALL', d.get('revenue', 0.0))
+            all_time_dev_cnt = dev_cnt_map.get('ALL', d.get('devices_count', 0))
+            
             intl_table.append({
                 'Kurum / Müşteri': d['name'],
-                'Ülke': d['country_name'],
+                'Ülke': d.get('country_name', 'Global'),
                 'Bölge': d.get('region', 'Global'),
-                'Net Hasılat': format_curr(d['revenue']),
-                'Cihaz Sayısı': f"{d['devices_count']} Adet" if d['devices_count'] > 0 else "—",
-                'Cihaz Tutarı': format_curr(d['device_rev']),
-                'Sarf Tutarı': format_curr(d['consumables_rev']),
+                'Toplam Hasılat (All-Time)': format_curr(all_time_rev),
+                'Kurulu Cihaz Sayısı': f"{all_time_dev_cnt} Adet" if all_time_dev_cnt > 0 else "—",
+                'Dönem Satışı (2026)': format_curr(d.get('revenue', 0.0)),
                 'Sipariş / Fatura Adedi': f"{d.get('invoices', 1)} Adet",
                 'Son Sipariş Tarihi': d.get('last_order', '—')
             })
@@ -6048,65 +7502,53 @@ elif nav_selection == "◬ Sales & Product Analytics":
 
     # 3. Domestic Turkey IVF Clinics
     with lead_tab3:
-        st.markdown("##### 🇹🇷 Türkiye Pazarı Klinik, Hastane ve Dağıtım Ortakları")
-        local_clients = [d for d in active_rows if (d.get('account_type') == 'Local Customer' or d.get('is_sister')) and d.get('country_name') == 'Turkey']
-        local_clients = sorted(local_clients, key=lambda x: x['revenue'], reverse=True)
+        st.markdown("##### Türkiye Pazarı Klinik, Hastane ve Dağıtım Ortakları")
+        local_clients = [d for d in all_dists if (d.get('account_type') == 'Local Customer' or d.get('is_sister')) and d.get('country_name') == 'Turkey']
+        local_clients = sorted(local_clients, key=lambda x: x.get('rev_by_year', {}).get('ALL', x.get('revenue', 0)), reverse=True)
         
         local_table = []
         for d in local_clients:
-            c_name = f"🏢 {d['name']} (Kardeş Şirket)" if d.get('is_sister') else d['name']
+            rev_map = d.get('rev_by_year', {})
+            dev_cnt_map = d.get('dev_cnt_by_year', {})
+            all_time_rev = rev_map.get('ALL', d.get('revenue', 0.0))
+            all_time_dev_cnt = dev_cnt_map.get('ALL', d.get('devices_count', 0))
+            
             local_table.append({
-                'Klinik / Kurum': c_name,
-                'İl / Ülke': 'Türkiye',
-                'Statü / Sınıf': '🏢 Kardeş Şirket (Grup İştiraki)' if d.get('is_sister') else 'Yerel Müşteri',
-                'Net Hasılat': format_curr(d['revenue']),
-                'Kurulu Cihaz': f"{d['devices_count']} Adet" if d['devices_count'] > 0 else "—",
-                'Cihaz Tutarı': format_curr(d['device_rev']),
-                'Sarf Tutarı': format_curr(d['consumables_rev']),
-                'Sarf Hacmi': f"{d.get('consumables_count', 0)} Kutu",
-                'Son Fatura Tarihi': d.get('last_order', '—')
+                'Kurum Adı': d['name'],
+                'Kategori': 'Dağıtım & Grup Şirketi' if d.get('is_sister') else 'Tüp Bebek Merkezi / Hastane',
+                'Toplam Hasılat (All-Time)': format_curr(all_time_rev),
+                'Kurulu Cihaz': f"{all_time_dev_cnt} Adet" if all_time_dev_cnt > 0 else "— (Sarf Tüketicisi)",
+                'Dönem Satışı (2026)': format_curr(d.get('revenue', 0.0)),
+                'Toplam Fatura Sayısı': f"{d.get('invoices', 1)} Fatura",
+                'Son İşlem Tarihi': d.get('last_order', '—')
             })
         st.dataframe(pd.DataFrame(local_table), use_container_width=True, hide_index=True)
 
-    # 4. Consolidated All Portfolio
+    # 4. Consolidated Portfolio
     with lead_tab4:
-        st.markdown("##### 📋 Konsolide Tüm Portföy (43 Kurum)")
-        all_sorted = sorted(active_rows, key=lambda x: x['revenue'], reverse=True)
+        st.markdown("##### Konsolide Tüm Portföy (43 Kurum)")
+        all_sorted = sorted(all_dists, key=lambda x: x.get('rev_by_year', {}).get('ALL', x.get('revenue', 0)), reverse=True)
         
         all_table = []
         for d in all_sorted:
+            rev_map = d.get('rev_by_year', {})
+            dev_cnt_map = d.get('dev_cnt_by_year', {})
+            all_time_rev = rev_map.get('ALL', d.get('revenue', 0.0))
+            all_time_dev_cnt = dev_cnt_map.get('ALL', d.get('devices_count', 0))
+            
             all_table.append({
-                'Kurum Adı': d['name'],
-                'Ülke': d['country_name'],
-                'Hesap Sınıfı': '🏢 Kardeş Şirket (Gen-Sa)' if d.get('is_sister') else ('🏢 Distribütör' if d.get('account_type') == 'Distributor' else ('🇹🇷 Yurtiçi Müşteri' if d.get('account_type') == 'Local Customer' else '🌍 Uluslararası Müşteri')),
-                'Net Ciro': format_curr(d['revenue']),
-                'Kurulu Cihaz': f"{d['devices_count']} Adet" if d['devices_count'] > 0 else "—",
-                'Cihaz Satışı': format_curr(d['device_rev']),
-                'Sarf Satışı': format_curr(d['consumables_rev']),
-                'Brüt Marj': f"%{d['margin_pct']:.1f}",
-                'Son Sipariş': d.get('last_order', '—')
+                'Kurum': d['name'],
+                'Hesap Türü': d.get('account_type', 'Customer'),
+                'Ülke': d.get('country_name', 'Global'),
+                'Toplam Ciro': format_curr(all_time_rev),
+                'Kurulu Cihaz': f"{all_time_dev_cnt} Adet" if all_time_dev_cnt > 0 else "—",
+                '2026 Dönem Satışı': format_curr(d.get('revenue', 0.0)),
+                'Ticari Risk': d.get('risk', 'Low'),
+                'Durum': 'Aktif' if d.get('status') == 'active' else 'Pasif'
             })
-        df_all_disp = pd.DataFrame(all_table)
-        st.dataframe(df_all_disp, use_container_width=True, hide_index=True)
-        
-        # Export CSV
-        csv_all = df_all_disp.to_csv(index=False).encode('utf-8')
-        st.download_button(
-            label="📥 Tüm Satış & Partner Tablosunu İndir (CSV)",
-            data=csv_all,
-            file_name="ZEUS_Consolidated_Sales_Leaderboard.csv",
-            mime="text/csv"
-        )
-
-
-# ==============================================================================
-# 8. VIEW: GLOBAL MARKET INTELLIGENCE & COUNTRY COMPARISON
-# ==============================================================================
-
-
-
-elif nav_selection == "◎ Market Intelligence & Compare":
-    st.title("🌍 Global IVF Market Intelligence & Country Comparison")
+        st.dataframe(pd.DataFrame(all_table), use_container_width=True, hide_index=True)
+elif nav_selection == "Market Intelligence & Compare":
+    st.title("Global IVF Market Intelligence & Country Comparison")
     st.caption("Resmi Dünya Bankası (WDI 2023/2024) ve uluslararası ESHRE/CDC tüp bebek kayıtlarına dayalı çok boyutlu pazar, ekonomik güç ve klinik teknoloji kıyaslama merkezi.")
 
     all_countries_list = country_df['name'].tolist()
@@ -6146,7 +7588,7 @@ elif nav_selection == "◎ Market Intelligence & Compare":
             # ------------------------------------------------------------------
             # 1. KLİNİK KAPASİTE & TEDAVİ HACMİ GRAFİKLERİ
             # ------------------------------------------------------------------
-            st.markdown("#### 🏥 1. Klinik Kapasitesi & Yıllık Tedavi Hacmi")
+            st.markdown("#### 1. Klinik Kapasitesi & Yıllık Tedavi Hacmi")
             cg1, cg2 = st.columns(2)
             with cg1:
                 fig_cycles = px.bar(
@@ -6173,7 +7615,7 @@ elif nav_selection == "◎ Market Intelligence & Compare":
             # ------------------------------------------------------------------
             # 2. DÜNYA BANKASI MAKROEKONOMİK GÖSTERGELERİ
             # ------------------------------------------------------------------
-            st.markdown("#### 💰 2. Dünya Bankası Makroekonomik Alım Gücü & Nüfus")
+            st.markdown("#### 2. Dünya Bankası Makroekonomik Alım Gücü & Nüfus")
             eg1, eg2 = st.columns(2)
             with eg1:
                 fig_econ = px.bar(
@@ -6200,7 +7642,7 @@ elif nav_selection == "◎ Market Intelligence & Compare":
             # ------------------------------------------------------------------
             # 3. KLİNİK TEKNOLOJİ & PAZAR DOYGUNLUĞU
             # ------------------------------------------------------------------
-            st.markdown("#### 🧬 3. Klinik Laboratuvar Teknolojileri & Pazar Doygunluğu")
+            st.markdown("#### 3. Klinik Laboratuvar Teknolojileri & Pazar Doygunluğu")
             tg1, tg2 = st.columns(2)
             with tg1:
                 melted_tech = cmp_df.melt(
@@ -6239,7 +7681,7 @@ elif nav_selection == "◎ Market Intelligence & Compare":
             # ------------------------------------------------------------------
             # 4. STRATEJİK FIRSAT & RİSK DAĞILIM MATRİSİ (BUBBLE PLOT)
             # ------------------------------------------------------------------
-            st.markdown("#### 🎯 4. Stratejik Pazar Fırsatı vs Alım Gücü Matrisi")
+            st.markdown("#### 4. Stratejik Pazar Fırsatı vs Alım Gücü Matrisi")
             risk_color_map = {'Low': '#00E676', 'Medium': '#FFB800', 'High': '#FF5252'}
             
             fig_bubble = px.scatter(
@@ -6260,7 +7702,7 @@ elif nav_selection == "◎ Market Intelligence & Compare":
             st.plotly_chart(fig_bubble, use_container_width=True)
 
         with comp_tab2:
-            st.markdown("#### 📊 Çok Boyutlu Karşılaştırma: Grafikler & Detaylı Skor Kartı")
+            st.markdown("#### Çok Boyutlu Karşılaştırma: Grafikler & Detaylı Skor Kartı")
             st.caption("Resmi Dünya Bankası ve uluslararası IVF kayıtlarına dayalı pazar verileri, takibi kolaylaştırmak adına hem görsel analitik grafiklerle hem de yapılandırılmış skor kartı tablosuyla sunulmaktadır.")
 
             # Top View Controls
@@ -6298,7 +7740,7 @@ elif nav_selection == "◎ Market Intelligence & Compare":
             # ==================================================================
             if show_charts:
                 # Row 1: Dual Core Strategic Benchmark Charts
-                st.markdown("##### 🎯 1. Stratejik Pazar Fırsatı & Tedavi Kapasitesi Kıyaslaması")
+                st.markdown("##### 1. Stratejik Pazar Fırsatı & Tedavi Kapasitesi Kıyaslaması")
                 b_col1, b_col2 = st.columns(2)
                 
                 with b_col1:
@@ -6345,49 +7787,160 @@ elif nav_selection == "◎ Market Intelligence & Compare":
                     st.plotly_chart(fig_cycles_bar, use_container_width=True)
 
                 # Row 2: 360° Radar Comparison & Dynamic Metric Visualizer
-                st.markdown("##### 🌐 2. 360° Çok Boyutlu Pazar Radarı & Dinamik Gösterge Kıyaslayıcı")
-                r_col1, r_col2 = st.columns([1.1, 1])
+                st.markdown("##### 2. Pazar Gücü & Çok Boyutlu Rekabet Matrisi")
+                r_col1, r_col2 = st.columns([1.18, 1])
 
                 with r_col1:
-                    # 360° Spider Radar Chart
-                    radar_cats = ['Fırsat Skoru', 'Kişi Başı Gelir', 'Siklus Hacmi', 'Klinik Yoğunluğu', 'ICSI Adaptasyonu']
-                    fig_radar = go.Figure()
+                    bench_mode = st.radio(
+                        "Kıyaslama Görünüm Formatı",
+                        ["📋 Yönetici Skor Matrisi (Net Tablo)", "📊 Karşılaştırmalı Sütun Grafiği", "🕸️ Klasik Radar"],
+                        index=0,
+                        horizontal=True,
+                        label_visibility="collapsed"
+                    )
+
+                    country_flags = {
+                        'Spain': '🇪🇸', 'Germany': '🇩🇪', 'Türkiye': '🇹🇷', 'Egypt': '🇪🇬', 'UAE': '🇦🇪', 'India': '🇮🇳',
+                        'United States': '🇺🇸', 'United Kingdom': '🇬🇧', 'France': '🇫🇷', 'Italy': '🇮🇹', 'Japan': '🇯🇵',
+                        'Australia': '🇦🇺', 'Canada': '🇨🇦', 'Jordan': '🇯🇴', 'Iraq': '🇮🇶', 'Saudi Arabia': '🇸🇦',
+                        'Qatar': '🇶🇦', 'Kuwait': '🇰🇼', 'South Korea': '🇰🇷', 'Belgium': '🇧🇪', 'Palestine': '🇵🇸',
+                        'Albania': '🇦🇱', 'Slovakia': '🇸🇰', 'Azerbaijan': '🇦🇿', 'Bulgaria': '🇧🇬', 'Philippines': '🇵🇭',
+                        'Syria': '🇸🇾', 'Brazil': '🇧🇷', 'Mexico': '🇲🇽', 'Argentina': '🇦🇷', 'Netherlands': '🇳🇱',
+                        'Sweden': '🇸🇪', 'Norway': '🇳🇴', 'Denmark': '🇩🇰', 'Finland': '🇫🇮', 'Switzerland': '🇨🇭',
+                        'Austria': '🇦🇹', 'Poland': '🇵🇱', 'Czech Republic': '🇨🇿', 'Greece': '🇬🇷', 'Portugal': '🇵🇹',
+                        'Ireland': '🇮🇪', 'Israel': '🇮🇱', 'Singapore': '🇸🇬', 'Malaysia': '🇲🇾', 'Thailand': '🇹🇭',
+                        'Vietnam': '🇻🇳', 'Indonesia': '🇮🇩', 'South Africa': '🇿🇦'
+                    }
+
+                    radar_cats = ['Fırsat Skoru', 'Kişi Başı Gelir', 'Siklus Hacmi', 'Klinik Yoğunluğu', 'ICSI Oranı']
                     max_cycles = cmp_df['cycles'].max() if cmp_df['cycles'].max() > 0 else 1
                     max_gdp_pc = cmp_df['gdp_pc'].max() if cmp_df['gdp_pc'].max() > 0 else 1
                     max_clinics_m = cmp_df['clinics_per_m'].max() if cmp_df['clinics_per_m'].max() > 0 else 1
 
-                    for _, r in cmp_df.iterrows():
-                        vals = [
-                            r['score'],
-                            round((r['gdp_pc'] / max_gdp_pc) * 100, 1),
-                            round((r['cycles'] / max_cycles) * 100, 1),
-                            round((r['clinics_per_m'] / max_clinics_m) * 100, 1),
-                            r['icsi_pct']
-                        ]
-                        vals.append(vals[0])
-                        fig_radar.add_trace(go.Scatterpolar(
-                            r=vals,
-                            theta=radar_cats + [radar_cats[0]],
-                            fill='toself',
-                            name=r['name'],
-                            opacity=0.65
-                        ))
+                    if bench_mode == "📋 Yönetici Skor Matrisi (Net Tablo)":
+                        # Ultra-Clean Glass Comparison Matrix Table without leading-space indentation
+                        table_rows_html = ""
+                        for _, r in cmp_df.iterrows():
+                            c_name = r['name']
+                            flag = country_flags.get(c_name, '🌐')
+                            risk_col = '#10B981' if r['risk'] == 'Low' else ('#F59E0B' if r['risk'] == 'Medium' else '#EF4444')
+                            risk_txt = 'Düşük' if r['risk'] == 'Low' else ('Orta' if r['risk'] == 'Medium' else 'Yüksek')
+                            
+                            score_fmt = f"{r['score']}"
+                            gdp_fmt = f"${r['gdp_pc']:,.0f}"
+                            cyc_fmt = f"{r['cycles']:,}" if r['cycles'] < 100000 else f"{r['cycles']/1000:.0f}K"
+                            cln_fmt = f"{r['clinics_per_m']:.1f}"
+                            icsi_fmt = f"%{r['icsi_pct']:.0f}"
 
-                    fig_radar.update_layout(
-                        polar=dict(
-                            radialaxis=dict(visible=True, range=[0, 100], gridcolor='rgba(255,255,255,0.12)', tickfont=dict(size=8, color='#8A99AD')),
-                            angularaxis=dict(gridcolor='rgba(255,255,255,0.12)', tickfont=dict(size=9.5, color='#CCD7E6'))
-                        ),
-                        template='plotly_dark',
-                        height=360,
-                        margin=dict(t=30, b=30, l=40, r=40),
-                        title="360° Pazar Gücü & Rekabet Radarı",
-                        legend=dict(orientation="h", yanchor="bottom", y=-0.35, xanchor="center", x=0.5)
-                    )
-                    st.plotly_chart(fig_radar, use_container_width=True)
+                            table_rows_html += (
+                                f'<tr style="background:rgba(30,41,59,0.45);border-bottom:1px solid rgba(255,255,255,0.05);">'
+                                f'<td style="padding:9px 10px;font-weight:700;color:#FFFFFF;font-size:12.5px;white-space:nowrap;">'
+                                f'<span style="font-size:14px;margin-right:4px;">{flag}</span> {c_name} '
+                                f'<span style="display:inline-block;margin-left:5px;font-size:9.5px;color:{risk_col};background:{risk_col}18;border:1px solid {risk_col}44;padding:1px 5px;border-radius:4px;font-weight:600;">{risk_txt}</span></td>'
+                                f'<td style="padding:9px 8px;text-align:center;white-space:nowrap;">'
+                                f'<span style="background:rgba(0,245,255,0.12);border:1px solid rgba(0,245,255,0.35);color:#00F5FF;font-weight:800;font-size:12px;padding:3px 8px;border-radius:6px;font-family:monospace;">{score_fmt}</span></td>'
+                                f'<td style="padding:9px 10px;text-align:right;color:#E2E8F0;font-family:monospace;font-size:12px;font-weight:600;white-space:nowrap;">{gdp_fmt}</td>'
+                                f'<td style="padding:9px 10px;text-align:right;color:#38BDF8;font-family:monospace;font-size:12px;font-weight:600;white-space:nowrap;">{cyc_fmt}</td>'
+                                f'<td style="padding:9px 8px;text-align:center;color:#E2E8F0;font-size:12px;white-space:nowrap;">{cln_fmt} <span style="font-size:10px;color:#94A3B8;">/M</span></td>'
+                                f'<td style="padding:9px 8px;text-align:center;color:#F59E0B;font-weight:700;font-size:12px;white-space:nowrap;">{icsi_fmt}</td>'
+                                f'</tr>'
+                            )
+
+                        matrix_html = (
+                            '<div style="background:rgba(15,23,42,0.75);border:1px solid rgba(0,245,255,0.22);border-radius:12px;padding:10px 14px;backdrop-filter:blur(14px);box-shadow:0 8px 24px rgba(0,0,0,0.4);overflow-x:auto;height:340px;box-sizing:border-box;">'
+                            '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,0.06);">'
+                            '<span style="font-size:12px;font-weight:700;color:#00F5FF;letter-spacing:0.04em;">⚡ SEÇİLEN PAZARLARIN TEMEL STRATEJİK GÖSTERGELERİ</span>'
+                            '<span style="font-size:10.5px;color:#94A3B8;">(WDI & ESHRE/CDC Verileri)</span>'
+                            '</div>'
+                            '<table style="width:100%;border-collapse:collapse;font-family:Inter,system-ui,sans-serif;">'
+                            '<thead>'
+                            '<tr style="color:#94A3B8;font-size:10.5px;text-transform:uppercase;letter-spacing:0.04em;border-bottom:1px solid rgba(255,255,255,0.1);">'
+                            '<th style="padding:6px 10px;text-align:left;">Hedef Pazar</th>'
+                            '<th style="padding:6px 8px;text-align:center;">🎯 Fırsat Skoru</th>'
+                            '<th style="padding:6px 10px;text-align:right;">💰 Kişi Başı Gelir</th>'
+                            '<th style="padding:6px 10px;text-align:right;">📈 Tedavi Hacmi</th>'
+                            '<th style="padding:6px 8px;text-align:center;">🏢 Yoğunluk</th>'
+                            '<th style="padding:6px 8px;text-align:center;">🧬 ICSI Oranı</th>'
+                            '</tr>'
+                            '</thead>'
+                            f'<tbody>{table_rows_html}</tbody>'
+                            '</table>'
+                            '</div>'
+                        )
+                        st.markdown(matrix_html, unsafe_allow_html=True)
+
+                    elif bench_mode == "📊 Karşılaştırmalı Sütun Grafiği":
+                        c_colors = ['#00F5FF', '#10B981', '#F59E0B', '#A855F7', '#EC4899', '#3B82F6']
+                        fig_bars = go.Figure()
+                        for c_idx, (_, r) in enumerate(cmp_df.iterrows()):
+                            c_name = r['name']
+                            clr = c_colors[c_idx % len(c_colors)]
+                            vals = [
+                                r['score'],
+                                round((r['gdp_pc'] / max_gdp_pc) * 100, 1),
+                                round((r['cycles'] / max_cycles) * 100, 1),
+                                round((r['clinics_per_m'] / max_clinics_m) * 100, 1),
+                                r['icsi_pct']
+                            ]
+                            raw_labels = [
+                                f"{r['score']} Puan",
+                                f"${r['gdp_pc']:,.0f}",
+                                f"{r['cycles']:,} Siklus",
+                                f"{r['clinics_per_m']:.1f} kl./M",
+                                f"%{r['icsi_pct']:.0f}"
+                            ]
+                            fig_bars.add_trace(go.Bar(
+                                name=c_name,
+                                x=radar_cats,
+                                y=vals,
+                                marker_color=clr,
+                                hovertemplate="<b>" + c_name + "</b><br>%{x}: <b>%{y:.1f}%</b><br>Gerçek Değer: <b>%{text}</b><extra></extra>",
+                                text=raw_labels
+                            ))
+                        fig_bars.update_layout(
+                            barmode='group',
+                            template='plotly_dark',
+                            height=340,
+                            margin=dict(t=20, b=30, l=30, r=20),
+                            paper_bgcolor='rgba(0,0,0,0)',
+                            plot_bgcolor='rgba(0,0,0,0)',
+                            yaxis=dict(title="Göreceli Güç (0 - 100)", range=[0, 115], gridcolor='rgba(255,255,255,0.08)'),
+                            legend=dict(orientation="h", yanchor="bottom", y=-0.38, xanchor="center", x=0.5)
+                        )
+                        st.plotly_chart(fig_bars, use_container_width=True)
+
+                    else:
+                        fig_radar = go.Figure()
+                        for _, r in cmp_df.iterrows():
+                            vals = [
+                                r['score'],
+                                round((r['gdp_pc'] / max_gdp_pc) * 100, 1),
+                                round((r['cycles'] / max_cycles) * 100, 1),
+                                round((r['clinics_per_m'] / max_clinics_m) * 100, 1),
+                                r['icsi_pct']
+                            ]
+                            vals.append(vals[0])
+                            fig_radar.add_trace(go.Scatterpolar(
+                                r=vals,
+                                theta=radar_cats + [radar_cats[0]],
+                                fill='toself',
+                                name=r['name'],
+                                opacity=0.45
+                            ))
+                        fig_radar.update_layout(
+                            polar=dict(
+                                radialaxis=dict(visible=True, range=[0, 100], gridcolor='rgba(255,255,255,0.12)', tickfont=dict(size=8, color='#8A99AD')),
+                                angularaxis=dict(gridcolor='rgba(255,255,255,0.12)', tickfont=dict(size=9.5, color='#CCD7E6'))
+                            ),
+                            template='plotly_dark',
+                            height=340,
+                            margin=dict(t=20, b=20, l=40, r=40),
+                            legend=dict(orientation="h", yanchor="bottom", y=-0.38, xanchor="center", x=0.5)
+                        )
+                        st.plotly_chart(fig_radar, use_container_width=True)
 
                 with r_col2:
-                    # Dynamic metric visualizer
+                    # Dynamic metric visualizer with individual bar labels
                     dyn_metric_choice = st.selectbox(
                         "🔍 Kıyaslanacak Göstergeyi Seçin:",
                         [
@@ -6414,32 +7967,29 @@ elif nav_selection == "◎ Market Intelligence & Compare":
                     }
                     col_key, fmt_str, y_lbl, bar_clr = metric_map[dyn_metric_choice]
                     
-                    dyn_sorted = cmp_df.sort_values(col_key, ascending=False)
+                    dyn_sorted = cmp_df.sort_values(col_key, ascending=False).copy()
+                    dyn_sorted['display_label'] = dyn_sorted[col_key].apply(lambda v: fmt_str.format(v) if '{:' in fmt_str else f"{v}")
+
                     fig_dyn = px.bar(
                         dyn_sorted,
                         x='name', y=col_key,
-                        text=col_key,
+                        text='display_label',
                         color='name',
                         color_discrete_sequence=['#00F5FF', '#00E676', '#13A6B5', '#FFB800', '#7C93BD', '#FF5252'],
                         title=f"{dyn_metric_choice} Karşılaştırması",
                         labels={col_key: y_lbl, 'name': 'Pazar'}
                     )
-                    
-                    if '{:' in fmt_str:
-                        # build formatted text
-                        fig_dyn.update_traces(
-                            text=[fmt_str.format(v) for v in dyn_sorted[col_key]],
-                            textposition='outside'
-                        )
+                    fig_dyn.update_traces(textposition='outside')
                     fig_dyn.update_layout(
-                        template='plotly_dark', showlegend=False, height=360,
+                        template='plotly_dark', showlegend=False, height=340,
                         margin=dict(t=40, b=20, l=10, r=10),
                         yaxis=dict(gridcolor='rgba(255,255,255,0.08)', title=y_lbl),
                         xaxis=dict(title="")
                     )
                     st.plotly_chart(fig_dyn, use_container_width=True)
 
-                st.markdown("---")
+
+            st.markdown("---")
 
             # ==================================================================
             # 2. DETAYLI SKOR KARTI VERİ TABLOSU
@@ -6492,13 +8042,13 @@ elif nav_selection == "◎ Market Intelligence & Compare":
                 # Export CSV button
                 csv_scorecard = scorecard_df.to_csv(index=False).encode('utf-8')
                 st.download_button(
-                    label="📥 Karşılaştırma Skor Kartını CSV Olarak İndir",
+                    label="Karşılaştırma Skor Kartını CSV Olarak İndir",
                     data=csv_scorecard,
                     file_name="ZEUS_Market_Comparison_Scorecard.csv",
                     mime="text/csv"
                 )
         with comp_tab3:
-            st.subheader("🎯 AI Potansiyel Müşteri, Klinik & Distribütör Radarı (AI Prospect Scout)")
+            st.subheader("AI Potansiyel Müşteri, Klinik & Distribütör Radarı (AI Prospect Scout)")
             st.caption("Ülkenin klinik siklus kapasitesi, Dünya Bankası alım gücü ve medikal ithalat mevzuatına dayalı öncelikli IVF tüp bebek klinik zincirleri, medikal distribütörler ve akademik araştırma merkezleri.")
 
             # Selection and Filters
@@ -6652,7 +8202,7 @@ elif nav_selection == "◎ Market Intelligence & Compare":
                             with c_col2:
                                 st.write("")
                                 st.write("")
-                                ai_gen_btn = st.button("🚀 AI ile Yeniden Yaz", key=f"ai_btn_{radar_country}_{idx}", use_container_width=True)
+                                ai_gen_btn = st.button("AI ile Yeniden Yaz", key=f"ai_btn_{radar_country}_{idx}", use_container_width=True)
                                 
                             pitch_state_key = f"pitch_data_{radar_country}_{idx}_{strat_mode}"
                             
@@ -6768,8 +8318,8 @@ BODY:
 # ==============================================================================
 # 9. VIEW: PRICING & DISCOUNT CALCULATOR
 # ==============================================================================
-elif nav_selection == "⌘ Pricing & Discount Calculator":
-    st.title("💰 Commercial Discount & Margin Impact Calculator")
+elif nav_selection == "Pricing & Discount Calculator":
+    st.title("Commercial Discount & Margin Impact Calculator")
     st.caption("Çok Boyutlu Fiyatlandırma ve İskonto Karar Motoru: Ülke GSYİH (GDP), Yaşam Standardı, Ulusal IVF Destek Rejimi, AI Algoritmik Analitiği ve Uzman Görüşü / Bilgi Bankası (Knowledge Base) ile sentezlenmiş stratejik karar merkezi.")
 
     # Order: Official distributors first, then international, then local
@@ -6796,7 +8346,7 @@ elif nav_selection == "⌘ Pricing & Discount Calculator":
     with calc_tab1:
         c_calc1, c_calc2 = st.columns([1.15, 1.35])
         with c_calc1:
-            st.markdown("#### 📋 Sipariş & Partner Parametreleri")
+            st.markdown("#### Sipariş & Partner Parametreleri")
             
             calc_dist_name = st.selectbox("İskonto Talep Eden Müşteri / Distribütör", all_ordered_names, index=def_partner_idx, key="calc_select_dist")
             calc_d = next((d for d in active_rows if d['name'] == calc_dist_name), active_rows[0])
@@ -6877,7 +8427,7 @@ elif nav_selection == "⌘ Pricing & Discount Calculator":
                                          help="Pazara giriş, kamu ihalesi veya rakip blokajı durumunda yönetim kurulu tarafından tanınan ek iskonto tavanı.")
 
         with c_calc2:
-            st.markdown("#### ⚖️ Kârlılık, Yetki ve Konsensüs Analizi")
+            st.markdown("#### ️ Kârlılık, Yetki ve Konsensüs Analizi")
 
             # Dual benchmark snapshot
             snap_macro = resolve_country_macro(calc_country)
@@ -7012,12 +8562,12 @@ elif nav_selection == "⌘ Pricing & Discount Calculator":
     # TAB 2: AI SUPPORT & UZMAN GÖRÜŞÜ KARAR MOTORU (DUAL DECISION ENGINE)
     # --------------------------------------------------------------------------
     with calc_tab2:
-        st.markdown("### ⚖️ ZEUS AI Support & Kıdemli Uzman Görüşü Karar Motoru")
+        st.markdown("### ️ ZEUS AI Support & Kıdemli Uzman Görüşü Karar Motoru")
         st.caption("Veriye dayalı yapay zeka analitiği (AI Support) ile sahadaki kıdemli medikal ve ticari direktör uzmanlığını sentezleyen hibrit karar destek merkezi.")
 
         ai_col1, ai_col2 = st.columns([1.05, 1.35])
         with ai_col1:
-            st.markdown("#### 🎯 Değerlendirilecek Partner & Stratejik Amaç")
+            st.markdown("#### Değerlendirilecek Partner & Stratejik Amaç")
             ai_dist_name = st.selectbox("Partner / Distribütör Seçimi", all_ordered_names, index=sirius_idx, key="ai_dist_select")
             ai_d = next((d for d in active_rows if d['name'] == ai_dist_name), active_rows[0])
             ai_country = ai_d.get('country_name', 'Turkey')
@@ -7055,7 +8605,7 @@ elif nav_selection == "⌘ Pricing & Discount Calculator":
             cons = generate_dual_consensus_decision(ai_rec, ai_expert, ai_d)
 
             # 1. AI Support Section
-            st.markdown("#### 🤖 1. AI Support (Algoritmik Veri Modeli)")
+            st.markdown("#### 1. AI Support (Algoritmik Veri Modeli)")
             rec_c1, rec_c2 = st.columns(2)
             rec_c1.metric(
                 "AI Cihaz İskontosu",
@@ -7082,7 +8632,7 @@ elif nav_selection == "⌘ Pricing & Discount Calculator":
             """, unsafe_allow_html=True)
 
             # 2. Expert Opinion Section
-            st.markdown("#### 🏛️ 2. Medikal Mevzuat & Klinik Danışma Kurulu Görüşü (Regulatory & Clinical Committee)")
+            st.markdown("#### ️ 2. Medikal Mevzuat & Klinik Danışma Kurulu Görüşü (Regulatory & Clinical Committee)")
             st.markdown(f"""
             <div style="background:rgba(255,184,0,0.04);border:1px solid rgba(255,184,0,0.35);border-radius:10px;padding:12px;margin:8px 0 14px 0;font-size:12px;line-height:1.6;">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
@@ -7098,7 +8648,7 @@ elif nav_selection == "⌘ Pricing & Discount Calculator":
             """, unsafe_allow_html=True)
 
             # 3. Dual Decision Consensus Matrix
-            st.markdown("#### ⚖️ 3. İcra Kurulu Ortak Konsensüs Kararı (Dual-Consensus Matrix)")
+            st.markdown("#### ️ 3. İcra Kurulu Ortak Konsensüs Kararı (Dual-Consensus Matrix)")
             st.markdown(f"""
             <div style="background:rgba(0,230,118,0.06);border:1.5px solid {cons['badge_color']};border-radius:12px;padding:14px;margin-bottom:14px;font-size:13px;line-height:1.7;">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
@@ -7118,7 +8668,7 @@ elif nav_selection == "⌘ Pricing & Discount Calculator":
             """, unsafe_allow_html=True)
 
             # Action button to apply consensus to simulator
-            if st.button("⚡ Bu Konsensüs Kararını Manuel Simülatöre Aktar", type="primary", key="btn_apply_consensus"):
+            if st.button("Konsensüs Kararını Manuel Simülatöre Aktar", type="primary", key="btn_apply_consensus"):
                 st.session_state['applied_ai_disc'] = cons['final_device_discount']
                 st.session_state['applied_ai_ship'] = cons['rec_freight']
                 st.session_state['sim_calc_partner'] = ai_dist_name
@@ -7128,7 +8678,7 @@ elif nav_selection == "⌘ Pricing & Discount Calculator":
     # TAB 3: GLOBAL IVF & TİCARİ KNOWLEDGE BASE (PAZAR & REGÜLASYON KÜTÜPHANESİ)
     # --------------------------------------------------------------------------
     with calc_tab3:
-        st.markdown("### 📚 ZEUS Global IVF Pazar, Sağlık Bakanlığı Kararları & Regülasyon Kütüphanesi")
+        st.markdown("### ZEUS Global IVF Pazar, Sağlık Bakanlığı Kararları & Regülasyon Kütüphanesi")
         st.caption("Uluslararası tüp bebek pazarları, Resmi Sağlık Bakanlığı (MOH) kararları, CE/MDR tescil mevzuatı, gümrük GTIP kodları, soğuk zincir protokolleri ve kurumsal uzman heyeti görüşleri.")
 
         kb_country = st.selectbox(
@@ -7264,7 +8814,7 @@ elif nav_selection == "⌘ Pricing & Discount Calculator":
         # ----------------------------------------------------------------------
         # INTERACTIVE FIELD INTELLIGENCE & OFFICIAL NOTE ADDER
         # ----------------------------------------------------------------------
-        st.markdown("#### ✍️ Sahadan Yeni Bakanlık Kararı veya Uzman Notu Ekle")
+        st.markdown("#### ️ Sahadan Yeni Bakanlık Kararı veya Uzman Notu Ekle")
         st.caption("Seçili ülke veya uluslararası pazarlara dair sahadan edinilen yeni bir Sağlık Bakanlığı kararı, ihale şartnamesi veya klinik uzman gözlemini bilgi bankasına kaydedin.")
 
         if 'custom_knowledge_notes' not in st.session_state:
@@ -7363,8 +8913,8 @@ elif nav_selection == "⌘ Pricing & Discount Calculator":
 
 # 10. VIEW: RISK & SCENARIO SIMULATOR
 # ==============================================================================
-elif nav_selection == "⛛ Risk & Scenario Simulator":
-    st.title("🎯 Commercial Risk & Financial Scenario Simulator")
+elif nav_selection == "Risk & Scenario Simulator":
+    st.title("Commercial Risk & Financial Scenario Simulator")
     st.caption("ZEUS Ticari Risk Simülatörü: Satış senaryoları, döviz & talep şokları, teslimat gecikmesi ve sözleşme bazlı tahsilat modellemesi.")
 
     # --------------------------------------------------------------------------
@@ -7418,7 +8968,7 @@ elif nav_selection == "⛛ Risk & Scenario Simulator":
 
     s_c1, s_c2 = st.columns([1.1, 1.4])
     with s_c1:
-        st.markdown("#### ⚙️ Satış Senaryosu Girişleri")
+        st.markdown("#### ️ Satış Senaryosu Girişleri")
         sim_fx = st.slider("USD ve Yerel Para Birimleri Değişimi (%)", -15.0, 15.0, float(p_fx), 1.0, help="Pozitif değer ciroyu azaltacak yönde uygulanır. Örneğin +%10 kur girdisi tek başına ciroyu %4.5 düşürür.")
         sim_demand = st.slider("Pazar Talebi Değişimi (%)", -30.0, 30.0, float(p_dem), 1.0, help="Satış hacmindeki genel talep artış/azalış değişimi.")
         sim_disc = st.slider("İndirim ve Rekabet Baskısı (%)", 0.0, 20.0, float(p_disc), 1.0, help="ZEUS satış fiyatına uygulanan senaryo indirimi.")
@@ -7461,7 +9011,7 @@ elif nav_selection == "⛛ Risk & Scenario Simulator":
         margin_sub = "Maliyet verisi bekleniyor"
 
     with s_c2:
-        st.markdown("#### 📊 Sonuç Göstergeleri (Finansal Etki)")
+        st.markdown("#### Sonuç Göstergeleri (Finansal Etki)")
         res1, res2 = st.columns(2)
         res1.metric("Öngörülen Ciro", format_curr(sim_rev), delta=f"{rev_delta:+.1f}% vs Baz")
         res2.metric("Teslimat Zamanlaması", f"+{sim_delay} Gün Öteleme" if sim_delay > 0 else "Zamanında (0 Gün)", delta="Baz Teslimat Planına Ek", delta_color="inverse" if sim_delay > 0 else "normal")
@@ -7506,7 +9056,7 @@ elif nav_selection == "⛛ Risk & Scenario Simulator":
     # --------------------------------------------------------------------------
     # 4. ÖDEME VE TAHSİLAT SİMÜLATÖRÜ (WORD KILAVUZUNA UYGUN 4 MODEL)
     # --------------------------------------------------------------------------
-    st.subheader("💳 Ödeme & Tahsilat Simülatörü (Payment & Cash Flow Collection)")
+    st.subheader("Ödeme & Tahsilat Simülatörü (Payment & Cash Flow Collection)")
     st.caption("Tek bir sipariş, taksitli satış veya kira sözleşmesi için sözleşme koşullarına göre 30, 60 ve 90 günlük nakit girişlerini modeller.")
 
     pay_model = st.radio(
@@ -7619,10 +9169,10 @@ elif nav_selection == "⛛ Risk & Scenario Simulator":
     # --------------------------------------------------------------------------
     # 5. AI STRATEJİK RİSK & NAKİT AKIŞI RAPORU
     # --------------------------------------------------------------------------
-    st.markdown("#### 🤖 Yapay Zeka Finansal Risk & Senaryo Değerlendirmesi")
+    st.markdown("#### Yapay Zeka Finansal Risk & Senaryo Değerlendirmesi")
     st.caption("Seçili satış şokları, teslimat gecikmesi ve tahsilat modelini ZEUS'un gerçek pazar yapısı ile çapraz sorgulayarak üst yönetime risk değerlendirmesi üretir.")
 
-    if st.button("🚀 AI Finansal Risk Değerlendirmesi Oluştur", type="primary"):
+    if st.button("AI Finansal Risk Değerlendirmesi Oluştur", type="primary"):
         ai_risk_placeholder = st.empty()
         with ai_risk_placeholder.container():
             components.html("""
@@ -7698,7 +9248,7 @@ Modellenen senaryoda; **%{sim_fx} kur baskısı**, **%{sim_demand} talep dalgala
         st.markdown(ai_risk_text)
 
         st.download_button(
-            label="📥 Bu Risk & Senaryo Raporunu İndir (.md)",
+            label="Bu Risk & Senaryo Raporunu İndir (.md)",
             data=ai_risk_text,
             file_name=f"ZEUS_Risk_Scenario_Assessment_{datetime.now().strftime('%Y%m%d_%H%M')}.md",
             mime="text/markdown"
@@ -7708,8 +9258,8 @@ Modellenen senaryoda; **%{sim_fx} kur baskısı**, **%{sim_demand} talep dalgala
 # ==============================================================================
 # 11. VIEW: DISTRIBUTOR PERFORMANCE EVALUATOR
 # ==============================================================================
-elif nav_selection == "▲ Performance Evaluator":
-    st.title("📈 Partner Operational & Strategic Performance Scorecard")
+elif nav_selection == "Performance Evaluator":
+    st.title("Partner Operational & Strategic Performance Scorecard")
     st.caption("Excel satış kayıtlarındaki gerçek yıllık cihaz/sarf dökümleri, gerçek YoY büyüme oranları ve çeyreklik sipariş düşüş analizi.")
 
     # --------------------------------------------------------------------------
@@ -7816,7 +9366,7 @@ elif nav_selection == "▲ Performance Evaluator":
     # --------------------------------------------------------------------------
     # 3. YILLIK CİHAZ VE SARF MALZEME GERÇEKLEŞME TABLOSU
     # --------------------------------------------------------------------------
-    st.subheader("📋 Yıllık Cihaz ve Sarf Malzeme Gerçekleşme Tablosu")
+    st.subheader("Yıllık Cihaz ve Sarf Malzeme Gerçekleşme Tablosu")
     st.caption("Firma bazında sermaye ekipmanı satışları ile tekrar eden sarf malzeme tüketiminin yıl bazında resmi dökümü.")
 
     disp_y_df = y_df.copy()
@@ -7840,7 +9390,7 @@ elif nav_selection == "▲ Performance Evaluator":
     # --------------------------------------------------------------------------
     # 4. ÇEYREKLİK SİPARİŞ TRENDİ VE TESPİT EDİLEN SİPARİŞ DÜŞÜŞLERİ GRAFİĞİ
     # --------------------------------------------------------------------------
-    st.subheader("📉 Çeyreklik Sipariş Trendi ve Sipariş Düşüşleri (Order Drop Tracking)")
+    st.subheader("Çeyreklik Sipariş Trendi ve Sipariş Düşüşleri (Order Drop Tracking)")
     st.caption("Zaman çizelgesi üzerinde gerçekleşen siparişler, sermaye ekipmanı ve sarf ayrımı ile tespit edilen kritik hacim düşüşleri.")
 
     all_quarters = ['2024Q1', '2024Q2', '2024Q3', '2024Q4', '2025Q1', '2025Q2', '2025Q3', '2025Q4', '2026Q1', '2026Q2', '2026Q3', '2026Q4']
@@ -7948,7 +9498,7 @@ elif nav_selection == "▲ Performance Evaluator":
     # Detailed Drop Insights Box
     c_dr1, c_dr2 = st.columns([1.5, 1])
     with c_dr1:
-        st.markdown("##### 🚨 Tespit Edilen Sipariş Düşüşleri ve Kritik Sapmalar")
+        st.markdown("##### Tespit Edilen Sipariş Düşüşleri ve Kritik Sapmalar")
         if len(detected_drops) > 0:
             for drop in detected_drops:
                 if drop['Is_Zero_Gap']:
@@ -7969,7 +9519,7 @@ elif nav_selection == "▲ Performance Evaluator":
             st.success("✅ Bu partner için çeyrekler arası keskin bir sipariş düşüşü tespit edilmemiştir; sipariş hacmi düzenli veya artış trendindedir.")
 
     with c_dr2:
-        st.markdown("##### 💡 Analitik Değerlendirme & Yorum")
+        st.markdown("##### Analitik Değerlendirme & Yorum")
         if tot_all_dev > 0 and y_df['Cihaz (Adet)'].iloc[-1] == 0:
             st.info(f"ℹ️ **Cihaz vs Sarf Dönüşümü:** {eval_dist_name}, geçmiş yıllarda {tot_all_dev} adet Piezo cihazı alarak altyapısını kurmuştur. 2026'da cihaz alımının durması normal bir sermaye ekipmanı doyumudur; asıl takip edilmesi gereken metrik kurulu 5 cihazın oosit sarf tüketim sürekliliğidir.")
         elif tot_all_dev == 0:
@@ -7982,7 +9532,7 @@ elif nav_selection == "▲ Performance Evaluator":
     # --------------------------------------------------------------------------
     # 5. GERÇEK VERİYE DAYALI AĞIRLIKLI PERFORMANS SKORU
     # --------------------------------------------------------------------------
-    st.subheader("🎯 Ağırlıklı Performans ve Sağlık Karnesi")
+    st.subheader("Ağırlıklı Performans ve Sağlık Karnesi")
     st.caption("Partnerin gerçek büyüme rasyoları, kurulu cihaz tabanı, sarf sürekliliği ve sipariş düşüş sıklığına göre hesaplanmıştır.")
 
     # Objective scores based on actual data
@@ -8054,7 +9604,7 @@ elif nav_selection == "▲ Performance Evaluator":
     # --------------------------------------------------------------------------
     # 6. YÖNETİCİ EYLEM REÇETESİ
     # --------------------------------------------------------------------------
-    st.markdown("#### 💊 Yönetici Teşhisi ve Eylem Reçetesi")
+    st.markdown("#### Yönetici Teşhisi ve Eylem Reçetesi")
     if "CMC" in eval_dist_name or "CONSULTANT" in eval_dist_name:
         st.markdown("""
         <div style="background:rgba(19,166,181,0.08);border:1px solid #13A6B5;border-radius:10px;padding:16px;">
@@ -8081,8 +9631,8 @@ elif nav_selection == "▲ Performance Evaluator":
 # ==============================================================================
 # 12. VIEW: STRATEGIC DECISION CENTER
 # ==============================================================================
-elif nav_selection == "⚖ Strategic Decision Center":
-    st.title("⚖️ Strategic Decision Center")
+elif nav_selection == "Strategic Decision Center":
+    st.title("Strategic Decision Center")
     st.caption("Configurable weighted multi-criteria assessment framework for critical corporate authorizations and commercial expansion.")
 
     if 'executive_strategic_plans' not in st.session_state:
@@ -8091,7 +9641,7 @@ elif nav_selection == "⚖ Strategic Decision Center":
     # --------------------------------------------------------------------------
     # TOP EXECUTIVE EVALUATION BOARD: STRATEGIC ALERTS IMPLEMENTATION REVIEW
     # --------------------------------------------------------------------------
-    st.markdown("### 🎯 Yönetici Stratejik Uyarıları Değerlendirme & Onay Masası")
+    st.markdown("### Yönetici Stratejik Uyarıları Değerlendirme & Onay Masası")
     st.caption("Executive Dashboard'da tanımlanan 4 kritik stratejik uyarı için yöneticiler tarafından girilen değerlendirme yorumları, eylem planları ve yapay zeka fizibilite kararları.")
 
     p_dict = st.session_state['executive_strategic_plans']
@@ -8174,7 +9724,7 @@ elif nav_selection == "⚖ Strategic Decision Center":
             target_d = next((d for d in active_rows if d['name'] in target_dist_name), active_rows[0])
             target_c = country_map.get(target_d['id'], country_df.iloc[0])
 
-    st.markdown("#### ⚙️ Weighted Multi-Criteria Framework")
+    st.markdown("#### ️ Weighted Multi-Criteria Framework")
     st.caption("Adjust corporate weightings for each strategic dimension (weights auto-normalize to 100%).")
     
     with st.expander("Configure Evaluation Criteria Weights & Thresholds", expanded=False):
@@ -8312,7 +9862,7 @@ elif nav_selection == "⚖ Strategic Decision Center":
 
     # Constraints, Due Diligence, and Sensitivity Analysis
     st.markdown("---")
-    st.subheader("🔍 Due Diligence, Constraints & Sensitivity Audit")
+    st.subheader("Due Diligence, Constraints & Sensitivity Audit")
     
     tab_audit1, tab_audit2, tab_audit3 = st.tabs([
         "⚠️ Important Constraints & Deal-Breakers",
@@ -8375,24 +9925,86 @@ elif nav_selection == "⚖ Strategic Decision Center":
 # ==============================================================================
 # 13. VIEW: EXECUTIVE REPORTS & EXPORT
 # ==============================================================================
-elif nav_selection == "⇲ Executive Reports & Export":
-    st.title("📋 Executive Governance Reports & Export Center")
+elif nav_selection == "Executive Reports & Export":
+    st.title("Executive Governance Reports & Export Center")
     st.caption("Generate formal distribution audit briefings and export certified commercial datasets.")
 
     st.markdown("### Executive Performance Summary")
-    st.markdown(f"""
-    - **Reporting Period:** {range_sel} {year_sel}
-    - **Total Active Commercial Revenue:** {format_curr(total_rev)}
-    - **Placed Equipment Volume:** {total_devices:,} units
-    - **Consumables Recurring Base:** {format_curr(total_con_rev)}
-    - **Weighted Gross Margin:** {avg_margin:.1f}%
-    - **Active Partner Network:** {n_active_dists} partners across {n_countries} jurisdictions
-    """)
+    
+    col_c1, col_c2, col_c3 = st.columns(3)
+    with col_c1:
+        st.markdown(f'''
+        <div class="glass-metric-card">
+            <div class="glass-icon-box">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            </div>
+            <div class="glass-metric-header">Reporting Period</div>
+            <div class="glass-metric-val" style="font-size:16px;">{range_sel}</div>
+            <div class="glass-metric-sub">{year_sel}</div>
+        </div>
+        ''', unsafe_allow_html=True)
+    with col_c2:
+        st.markdown(f'''
+        <div class="glass-metric-card">
+            <div class="glass-icon-box" style="background:rgba(16,185,129,0.1);border-color:rgba(16,185,129,0.25);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            </div>
+            <div class="glass-metric-header">Commercial Revenue</div>
+            <div class="glass-metric-val">{format_curr(total_rev)}</div>
+            <div class="glass-metric-sub">Audited Net Invoiced Actuals</div>
+        </div>
+        ''', unsafe_allow_html=True)
+    with col_c3:
+        st.markdown(f'''
+        <div class="glass-metric-card">
+            <div class="glass-icon-box">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+            </div>
+            <div class="glass-metric-header">Placed Equipment</div>
+            <div class="glass-metric-val">{total_devices:,} <span style="font-size:13px;color:#94A3B8;font-weight:500;">Units</span></div>
+            <div class="glass-metric-sub">Active Clinical Installations</div>
+        </div>
+        ''', unsafe_allow_html=True)
+
+    col_c4, col_c5, col_c6 = st.columns(3)
+    with col_c4:
+        st.markdown(f'''
+        <div class="glass-metric-card">
+            <div class="glass-icon-box">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31"></path><path d="M14 9.3V1.99"></path><path d="M8.5 2h7"></path><path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path><path d="M5.52 16h12.96"></path></svg>
+            </div>
+            <div class="glass-metric-header">Consumables Base</div>
+            <div class="glass-metric-val">{format_curr(total_con_rev)}</div>
+            <div class="glass-metric-sub">High-Margin Recurring Revenue</div>
+        </div>
+        ''', unsafe_allow_html=True)
+    with col_c5:
+        st.markdown(f'''
+        <div class="glass-metric-card">
+            <div class="glass-icon-box" style="background:rgba(245,158,11,0.1);border-color:rgba(245,158,11,0.25);">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="5" x2="5" y2="19"></line><circle cx="6.5" cy="6.5" r="2.5"></circle><circle cx="17.5" cy="17.5" r="2.5"></circle></svg>
+            </div>
+            <div class="glass-metric-header">Weighted Gross Margin</div>
+            <div class="glass-metric-val">{avg_margin:.1f}%</div>
+            <div class="glass-metric-sub">Consolidated Portfolio Delta</div>
+        </div>
+        ''', unsafe_allow_html=True)
+    with col_c6:
+        st.markdown(f'''
+        <div class="glass-metric-card">
+            <div class="glass-icon-box">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+            </div>
+            <div class="glass-metric-header">Active Partner Network</div>
+            <div class="glass-metric-val">{n_active_dists} <span style="font-size:13px;color:#94A3B8;font-weight:500;">Partners</span></div>
+            <div class="glass-metric-sub">Across {n_countries} Global Jurisdictions</div>
+        </div>
+        ''', unsafe_allow_html=True)
 
     # --------------------------------------------------------------------------
     # CERTIFIED STRATEGIC ACTION PLANS & EXECUTIVE DECISION DOSSIER
     # --------------------------------------------------------------------------
-    st.markdown("### 📑 Onaylanan Stratejik Eylem Planları & Yönetici Karar Dosyası")
+    st.markdown("### Onaylanan Stratejik Eylem Planları & Yönetici Karar Dosyası")
     st.caption("Executive Strategic Alerts ve Strategic Decision Center üzerinde değerlendirilip onaylanan resmi yönetim kurulu eylem planları.")
 
     if 'executive_strategic_plans' not in st.session_state:
@@ -8413,6 +10025,11 @@ elif nav_selection == "⇲ Executive Reports & Export":
             'İcra Durumu': p['status']
         })
     df_plans = pd.DataFrame(plan_rows)
+    # Sanitize emojis from table strings
+    if not df_plans.empty and 'Stratejik Uyarı Konusu' in df_plans.columns:
+        emoji_rx = re.compile(r'[\U00010000-\U0010ffff\u2600-\u27bf\u2300-\u23ff\u25a0-\u25ff\u2190-\u21ff]+\s*')
+        df_plans['Stratejik Uyarı Konusu'] = df_plans['Stratejik Uyarı Konusu'].apply(lambda x: emoji_rx.sub('', str(x)).strip())
+
     st.dataframe(
         df_plans,
         use_container_width=True,
@@ -8431,7 +10048,7 @@ elif nav_selection == "⇲ Executive Reports & Export":
 
     csv_plans = df_plans.to_csv(index=False).encode('utf-8')
     st.download_button(
-        label="📥 Stratejik Eylem Planları Dosyasını İndir (CSV)",
+        label="Stratejik Eylem Planları Dosyasını İndir (CSV)",
         data=csv_plans,
         file_name=f"ZEUS_Strategic_Action_Plans_{year_sel}.csv",
         mime="text/csv",
@@ -8464,7 +10081,7 @@ elif nav_selection == "⇲ Executive Reports & Export":
     csv_data = export_df.to_csv(index=False).encode('utf-8')
 
     st.download_button(
-        label="📥 Download Certified Commercial Dataset (CSV)",
+        label="Download Certified Commercial Dataset (CSV)",
         data=csv_data,
         file_name=f"ZGMI_Distribution_Audit_{year_sel}.csv",
         mime="text/csv",
@@ -8473,38 +10090,90 @@ elif nav_selection == "⇲ Executive Reports & Export":
     
     st.dataframe(export_df, use_container_width=True, hide_index=True)
 
-# GSAP Animasyonlu Karşılama Kartı
+# Modern Glass GSAP AI Telemetry Status Banner
 components.html("""
-    <!-- GSAP Kütüphanesini CDN üzerinden çekiyoruz -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     
-    <div id="box" style="
-        background: linear-gradient(135deg, #1e3a8a, #3b82f6); 
-        color: white; 
-        padding: 30px; 
-        border-radius: 15px; 
-        text-align: center;
-        font-family: sans-serif;
-        font-weight: bold;
-        box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    <div id="zeus-engine-box" style="
+        background: linear-gradient(145deg, rgba(16, 26, 46, 0.75) 0%, rgba(9, 16, 30, 0.88) 100%);
+        border: 1px solid rgba(0, 245, 255, 0.22);
+        border-top: 1px solid rgba(0, 245, 255, 0.45);
+        border-radius: 16px;
+        padding: 20px 26px;
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(0, 245, 255, 0.04);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        color: #F8FAFC;
+        margin: 10px 0;
+        box-sizing: border-box;
     ">
-        🚀 ZEUS INTEL ENGINE AKTİF
+        <div style="display: flex; align-items: center; gap: 16px;">
+            <div style="
+                width: 44px;
+                height: 44px;
+                border-radius: 12px;
+                background: linear-gradient(135deg, rgba(0, 245, 255, 0.15) 0%, rgba(19, 166, 181, 0.3) 100%);
+                border: 1px solid rgba(0, 245, 255, 0.4);
+                box-shadow: 0 0 16px rgba(0, 245, 255, 0.25);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-shrink: 0;
+            ">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="3"></circle>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                </svg>
+            </div>
+            <div>
+                <div style="font-size: 10px; font-weight: 700; color: #00F5FF; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2px;">
+                    AI TELEMETRY & STRATEGIC COPILOT
+                </div>
+                <div style="font-size: 15px; font-weight: 700; color: #FFFFFF; letter-spacing: -0.01em;">
+                    ZEUS Commercial Intelligence Engine
+                </div>
+                <div style="font-size: 12px; color: #94A3B8; margin-top: 2px;">
+                    Predictive Sales ML Corridors & Clinical IVF Benchmarking Active (48 Countries)
+                </div>
+            </div>
+        </div>
+        <div style="
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+            padding: 6px 14px;
+            border-radius: 999px;
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: #34D399;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.05em;
+            box-shadow: 0 0 14px rgba(16, 185, 129, 0.15);
+            flex-shrink: 0;
+        ">
+            <span style="width: 7px; height: 7px; border-radius: 50%; background: #10B981; box-shadow: 0 0 8px #10B981; display: inline-block;"></span>
+            ENGINE ONLINE
+        </div>
     </div>
 
     <script>
-        // Antigravity / Yerçekimsiz havada süzülme efekti
-        gsap.fromTo("#box", 
-            { y: 50, opacity: 0 }, 
-            { y: 0, opacity: 1, duration: 1.5, ease: "power4.out" }
+        gsap.fromTo("#zeus-engine-box", 
+            { y: 20, opacity: 0 }, 
+            { y: 0, opacity: 1, duration: 1.2, ease: "power3.out" }
         );
-        gsap.to("#box", {
-            y: -10,
+        gsap.to("#zeus-engine-box", {
+            y: -5,
             repeat: -1,
             yoyo: true,
-            duration: 2,
+            duration: 2.2,
             ease: "sine.inOut",
-            delay: 1.5
+            delay: 1.2
         });
     </script>
-""", height=150)
+""", height=110)
 
