@@ -353,6 +353,31 @@ st.markdown("""
         overflow: hidden !important;
     }
 
+    /* Universal Metric Truncation & Ellipsis Fix */
+    [data-testid="stMetric"] {
+        min-width: 0 !important;
+        overflow: visible !important;
+    }
+    [data-testid="stMetricValue"] {
+        font-size: 1.45rem !important;
+        white-space: normal !important;
+        word-break: break-word !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+    }
+    [data-testid="stMetricLabel"] {
+        white-space: normal !important;
+        word-break: break-word !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+    }
+    [data-testid="stMetricDelta"] {
+        white-space: normal !important;
+        word-break: break-word !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+    }
+
     /* Custom Sleek Scrollbar */
     ::-webkit-scrollbar {
         width: 6px;
@@ -541,12 +566,29 @@ COUNTRY_MACRO_IVF = {
         'pop_m': 11.3,
         'customs_tariff_pct': 6.0,
         'customs_clearance_days': 14,
-        'import_difficulty': 'Orta (JFDA Medikal Onayı)',
+        'import_difficulty': 'Orta (JFDA Medikal Onayı & Akabe/Amman Gümrük)',
         'ivf_support': '%100 Cepten Ödeme (Destek Yok)',
         'ivf_support_code': 'Self-Pay / Out-of-Pocket',
-        'ivf_support_desc': 'Özel tüp bebek merkezleri ağırlıklı; cepten ödeme hakim.',
+        'ivf_support_desc': 'Özel tüp bebek merkezleri ağırlıklı; medikal turizm ve bölge ülkelerinden hasta akışı yaygındır.',
         'price_sensitivity': 'Yüksek',
         'macro_discount_allowance': 2.0,
+        'ivf_discount_allowance': 2.0
+    },
+    'Iraq': {
+        'gdp_pc': 5390,
+        'gdp_tier': 'Lower-Middle Income',
+        'living_standard': 'Orta-Düşük (HDI: 0.686)',
+        'living_standard_code': 'Medium-Low',
+        'clinics': 45,
+        'pop_m': 45.5,
+        'customs_tariff_pct': 7.0,
+        'customs_clearance_days': 35,
+        'import_difficulty': 'Yüksek (Kimadia / Sınır Güvenlik Denetimi & Döviz/LC)',
+        'ivf_support': '%100 Cepten Ödeme (Destek Yok)',
+        'ivf_support_code': 'Self-Pay / Out-of-Pocket',
+        'ivf_support_desc': 'Devlet IVF tedavilerini karşılamaz; hastalar özel ve kamu dışı kliniklerde tüm giderleri cepten öder.',
+        'price_sensitivity': 'Kritik Derecede Yüksek (Döviz Kısıtlaması & Bankacılık Kısıtı)',
+        'macro_discount_allowance': 2.5,
         'ivf_discount_allowance': 2.0
     },
     'Qatar': {
@@ -780,7 +822,11 @@ def resolve_country_macro(c_name):
         key = 'United Arab Emirates'
     elif c in ['SY', 'Syria']:
         key = 'Syria'
-    elif c in ['Jordan-Iraq', 'Jordan', 'Iraq', 'JO', 'IQ']:
+    elif c in ['Jordan', 'JO', 'Ürdün']:
+        key = 'Jordan'
+    elif c in ['Iraq', 'IQ', 'Irak']:
+        key = 'Iraq'
+    elif c in ['Jordan-Iraq', 'Jordan & Iraq', 'Ürdün-Irak']:
         key = 'Jordan-Iraq'
     elif c in ['Albania-Slovakia', 'Slovakia', 'Albania']:
         key = 'Albania-Slovakia'
@@ -995,6 +1041,66 @@ MARKET_KNOWLEDGE_BASE = {
             'cold_chain': 'Beyrut/Dubai aktarmalı uçuşlarda kuru buz veya VIP soğuk zincir ambalajı zorunludur.',
             'payment_norms': 'Akreditif (Irrevocable LC) veya sevkiyat öncesi nakit TT transferi.',
             'dos': 'Yıllık sözleşmeye en az 60 kutu sarf çekiş kuralı ve 45 günlük tampon stok şartı ekleyin.',
+            'donts': 'Akreditif veya peşinat teyidi alınmadan cihaz sevkiyatı başlatmayın.'
+        }
+    },
+    'Jordan': {
+        'authority_name': 'Ürdün Gıda ve İlaç Kurumu — JFDA (Jordan Food and Drug Administration)',
+        'specialist_name': 'JFDA & Amman Medikal Teknoloji Masası',
+        'expert_stance': 'Onaylı (Bölgesel Lojistik & Konsinye Depo Üssü)',
+        'expert_max_discount': 8.0,
+        'expert_rec_sarf_disc': 8.0,
+        'clinical_dynamics': 'Amman bölgesel tüp bebek turizminin merkezidir. 22 aktif özel klinik yüksek teknolojili piezo-ICSI sistemlerini tercih eder; kalite ve gebelik oranı önceliklidir.',
+        'regulatory_watch': 'JFDA cihaz tescili, Free Sales Certificate (FSC) ve CE sertifikasyonu şarttır. Gümrük çekim süresi ortalama 14 gündür (Akabe / Amman Havalimanı).',
+        'competitor_threat': 'CooperSurgical ve Vitrolife Amman depolarından hızlı teslimat yapmaktadır.',
+        'commercial_guardrails': 'Cihaz iskonto tavanı %8.0; Amman konsinye yedek parça ve sarf deposu anlaşması şarttır.',
+        'ministry_decrees': [
+            {
+                'decree_no': 'JFDA-LAW-32/2023',
+                'title': 'Ürdün Gıda ve İlaç Kurumu Tıbbi Cihaz Tescil ve Hızlı Geçiş Direktifi',
+                'date': '2023-10-08',
+                'status': '🟢 Yürürlükte',
+                'summary': 'Amman merkezli tüp bebek hastanelerine cihaz ve sarf teslimatında JFDA tescil belgesi ve Free Sales Certificate (FSC) aranır.',
+                'impact_zeus': 'ZEUS CE belgesi JFDA hızlı kayıt masası tarafından doğrudan akredite edilmektedir.',
+                'consumable_rule': 'Sınır ve havalimanı kargo beklemelerine karşı en az 45 günlük tampon stok zorunludur.'
+            }
+        ],
+        'knowledge_profile': {
+            'clinic_type': 'Amman merkezli özel tüp bebek hastaneleri (%95).',
+            'customs_code': 'Tarife %6.0, ortalama 14 gün çekim süresi (Akabe Limanı / Amman Havalimanı).',
+            'cold_chain': '+2°C / +8°C veri kaydedicili soğuk zincir ambalajı.',
+            'payment_norms': 'Akreditif (LC) veya 30 gün açık hesap (Konsinye Depo).',
+            'dos': 'Amman deposuna 45 günlük tampon sarf stoğu yerleştirin.',
+            'donts': 'JFDA tescil onayı olmadan doğrudan hastane teslimatı yapmayın.'
+        }
+    },
+    'Iraq': {
+        'authority_name': 'Irak Sağlık Bakanlığı (MOH) & Kimadia (Devlet İlaç ve Tıbbi Malzeme Şirketi)',
+        'specialist_name': 'Kimadia & Bağdat-Erbil Medikal İhale ve Tescil Masası',
+        'expert_stance': 'Şartlı Onay (Akreditif / LC & Yerinde Aplikasyon Eğitimi)',
+        'expert_max_discount': 9.0,
+        'expert_rec_sarf_disc': 10.0,
+        'clinical_dynamics': 'Bağdat, Erbil ve Basra’da 45 merkez yılda ~32.000 siklus gerçekleştirmektedir. Cihaz talebi yüksek ancak bankacılık ve döviz transferleri akreditif (LC) güvencesi gerektirir.',
+        'regulatory_watch': 'Irak MOH ve Kimadia kayıtları 4–6 ay sürer. Menşe Şahadetnamesi (COO) Irak Konsolosluğu tasdikli olmalıdır. Sınır güvenlik denetimi 30–45 gün sürer.',
+        'competitor_threat': 'CooperSurgical ve Esco yerel temsilciler üzerinden aktiftir; ZEUS’un doğrudan aplikasyon desteği avantaj sağlar.',
+        'commercial_guardrails': 'Cihaz iskonto tavanı %9.0; %40 peşinat ve bakiye için onaylı Akreditif (LC) veya nakit TT zorunludur.',
+        'ministry_decrees': [
+            {
+                'decree_no': 'KIMADIA-TECH-SPEC-2024/07',
+                'title': 'Irak Sağlık Bakanlığı Tüp Bebek Laboratuvar Donanımı İhale Şartnamesi',
+                'date': '2024-06-11',
+                'status': '🟢 Yürürlükte / Zorunlu',
+                'summary': 'Bağdat ve Basra kamu tüp bebek merkezleri ihalelerinde cihaz menşe şahadetnamesinin (COO) yerel ticaret odası ve Irak konsolosluğu onaylı olması şarttır.',
+                'impact_zeus': 'Sirius Pharm konsorsiyumuna sunulan tekliflerde menşe şahadetnamesi tasdikli sunulmalıdır.',
+                'consumable_rule': 'İhale teslimatlarında parti analiz belgelerinin Arapça tercümeli olması ve en az 18 ay miad bulunması şarttır.'
+            }
+        ],
+        'knowledge_profile': {
+            'clinic_type': 'Bağdat, Erbil ve Basra özel ve kamu IVF merkezleri (%85 özel).',
+            'customs_code': 'Tarife %7.0, 30–45 gün çekim süresi (Bağdat/Erbil ek güvenlik denetimi).',
+            'cold_chain': 'Beyrut/Dubai aktarmalı uçuşlarda kuru buz veya VIP soğuk zincir ambalajı zorunludur.',
+            'payment_norms': 'Teyitli Akreditif (Irrevocable Confirmed LC) veya sevkiyat öncesi peşin nakit TT.',
+            'dos': 'Yıllık sözleşmeye en az 60 kutu sarf çekiş kuralı ekleyin.',
             'donts': 'Akreditif veya peşinat teyidi alınmadan cihaz sevkiyatı başlatmayın.'
         }
     },
@@ -1484,8 +1590,15 @@ MARKET_KNOWLEDGE_BASE = {
 }
 
 def resolve_market_knowledge(country_name):
-    if country_name in MARKET_KNOWLEDGE_BASE:
-        return MARKET_KNOWLEDGE_BASE[country_name]
+    c = str(country_name).strip()
+    if c in ['Jordan', 'JO', 'Ürdün']:
+        c = 'Jordan'
+    elif c in ['Iraq', 'IQ', 'Irak']:
+        c = 'Iraq'
+    elif c in ['Jordan-Iraq', 'Jordan & Iraq', 'Ürdün-Irak']:
+        c = 'Jordan-Iraq'
+    if c in MARKET_KNOWLEDGE_BASE:
+        return MARKET_KNOWLEDGE_BASE[c]
     
     # Generic fallback
     return {
@@ -9172,29 +9285,89 @@ elif nav_selection == "Pricing & Discount Calculator":
             growth_bonus = 1.0 if partner_growth >= 15.0 else 0.0
             total_perf_bonus = perf_bonus + growth_bonus
 
-            # Macro & IVF Context Card
-            st.markdown(f"""
-            <div style="background:rgba(19,166,181,0.06);border:1px solid rgba(19,166,181,0.28);border-radius:10px;padding:12px;margin:10px 0 16px 0;font-size:12px;line-height:1.6;">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                    <span style="font-weight:700;color:#00F5FF;font-size:13px;">🌍 {calc_country} Makro & IVF Ekosistemi</span>
-                    <span style="background:rgba(19,166,181,0.2);color:#4FD1DE;font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600;border:1px solid rgba(19,166,181,0.4);">{macro['living_standard_code']}</span>
-                </div>
-                <b>Kişi Başı GSYİH (GDP pc):</b> ${macro['gdp_pc']:,} USD <span style="color:#8FA3C0;">({macro['gdp_tier']})</span><br>
-                <b>Yaşam Standardı & Refah:</b> {macro['living_standard']}<br>
-                <b>Aktif IVF Klinik Sayısı:</b> {macro['clinics']} Merkez &nbsp;|&nbsp; <b>Nüfus:</b> {macro['pop_m']}M<br>
-                <b>Gümrük Vergisi & Süresi:</b> %{macro['customs_tariff_pct']:.1f} ({macro['customs_clearance_days']} Gün Bekleme)<br>
-                <b>Devlet IVF Desteği / Geri Ödeme:</b> <span style="color:#00E676;font-weight:600;">{macro['ivf_support']}</span><br>
-                <span style="color:#8FA3C0;font-size:11px;">{macro['ivf_support_desc']}</span>
-                <div style="margin-top:4px;color:#FFB800;font-size:11px;"><b>Pazar Fiyat Hassasiyeti:</b> {macro['price_sensitivity']}</div>
-                <hr style="border-color:rgba(19,166,181,0.18);margin:8px 0;">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-                    <span style="font-weight:700;color:#00F5FF;font-size:13px;">📊 Partner Satış & Büyüme Performansı</span>
-                    <span style="color:{perf_badge_color};font-weight:700;">{perf_badge}</span>
-                </div>
-                <b>Excel Kayıtlı Ciro:</b> {format_curr(partner_rev)} &nbsp;|&nbsp; <b>Kurulu Cihaz:</b> {partner_devs} Adet &nbsp;|&nbsp; <b>Sarf:</b> {partner_cons} Kutu<br>
-                <b>Yıllık YoY Büyüme:</b> <span style="color:{'#00E676' if partner_growth >= 0 else '#FF5252'};font-weight:600;">%{partner_growth:+.1f}</span> &nbsp;|&nbsp; <b>Sınıf:</b> {partner_type_tr}
-            </div>
-            """, unsafe_allow_html=True)
+            # Macro & IVF Context Cards (Dual Ecosystem for Sirius Jordan-Iraq)
+            is_sirius_consortium = ('SIRIUS' in calc_dist_name.upper()) or (calc_country in ['Jordan-Iraq', 'Jordan', 'Iraq'])
+            active_calc_country = calc_country
+
+            if is_sirius_consortium:
+                sub_market = st.radio(
+                    "🎯 Fiyatlandırma & Sevkiyat Hedef Pazarı (Aktif Simülasyon):",
+                    ["🇯🇴 Jordan (Ürdün — 8 Cihaz / Amman Hub)", "🇮🇶 Iraq (Irak — 10 Cihaz / Bağdat & Erbil)"],
+                    horizontal=True,
+                    key="sirius_submarket_calc"
+                )
+                if "Iraq" in sub_market or "Irak" in sub_market:
+                    macro = resolve_country_macro('Iraq')
+                    active_calc_country = "Iraq"
+                else:
+                    macro = resolve_country_macro('Jordan')
+                    active_calc_country = "Jordan"
+
+                macro_jo = resolve_country_macro('Jordan')
+                macro_iq = resolve_country_macro('Iraq')
+
+                card_jordan_html = f"""<div style="background:rgba(0,245,255,0.05);border:1px solid rgba(0,245,255,0.35);border-radius:10px;padding:12px;margin:8px 0;font-size:12px;line-height:1.6;">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+<span style="font-weight:700;color:#00F5FF;font-size:13px;">🇯🇴 Jordan (Ürdün) Makro & IVF Ekosistemi</span>
+<span style="background:rgba(0,245,255,0.18);color:#00F5FF;font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600;border:1px solid rgba(0,245,255,0.4);">{macro_jo['living_standard_code']}</span>
+</div>
+<b>Kişi Başı GSYİH (GDP pc):</b> ${macro_jo['gdp_pc']:,} USD <span style="color:#8FA3C0;">({macro_jo['gdp_tier']})</span><br>
+<b>Yaşam Standardı & Refah:</b> {macro_jo['living_standard']}<br>
+<b>Aktif IVF Klinik Sayısı:</b> {macro_jo['clinics']} Merkez &nbsp;|&nbsp; <b>Nüfus:</b> {macro_jo['pop_m']}M<br>
+<b>Gümrük Vergisi & Süresi:</b> %{macro_jo['customs_tariff_pct']:.1f} ({macro_jo['customs_clearance_days']} Gün Bekleme — JFDA Medikal Tescili)<br>
+<b>Devlet IVF Desteği / Geri Ödeme:</b> <span style="color:#00E676;font-weight:600;">{macro_jo['ivf_support']}</span><br>
+<span style="color:#8FA3C0;font-size:11px;">{macro_jo['ivf_support_desc']}</span>
+<div style="margin-top:4px;color:#FFB800;font-size:11px;"><b>Pazar Fiyat Hassasiyeti:</b> {macro_jo['price_sensitivity']} &nbsp;|&nbsp; <b>Saha Varlığı:</b> 8 Kurulu Cihaz (Amman)</div>
+</div>"""
+
+                card_iraq_html = f"""<div style="background:rgba(255,107,107,0.05);border:1px solid rgba(255,107,107,0.35);border-radius:10px;padding:12px;margin:8px 0;font-size:12px;line-height:1.6;">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+<span style="font-weight:700;color:#FF6B6B;font-size:13px;">🇮🇶 Iraq (Irak) Makro & IVF Ekosistemi</span>
+<span style="background:rgba(255,107,107,0.18);color:#FFA8A8;font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600;border:1px solid rgba(255,107,107,0.4);">{macro_iq['living_standard_code']}</span>
+</div>
+<b>Kişi Başı GSYİH (GDP pc):</b> ${macro_iq['gdp_pc']:,} USD <span style="color:#8FA3C0;">({macro_iq['gdp_tier']})</span><br>
+<b>Yaşam Standardı & Refah:</b> {macro_iq['living_standard']}<br>
+<b>Aktif IVF Klinik Sayısı:</b> {macro_iq['clinics']} Merkez &nbsp;|&nbsp; <b>Nüfus:</b> {macro_iq['pop_m']}M (Yıllık ~32,000 Siklus)<br>
+<b>Gümrük Vergisi & Süresi:</b> %{macro_iq['customs_tariff_pct']:.1f} ({macro_iq['customs_clearance_days']} Gün Bekleme — Kimadia Denetimi)<br>
+<b>Devlet IVF Desteği / Geri Ödeme:</b> <span style="color:#00E676;font-weight:600;">{macro_iq['ivf_support']}</span><br>
+<span style="color:#8FA3C0;font-size:11px;">{macro_iq['ivf_support_desc']}</span>
+<div style="margin-top:4px;color:#FFB800;font-size:11px;"><b>Pazar Fiyat Hassasiyeti:</b> {macro_iq['price_sensitivity']} &nbsp;|&nbsp; <b>Saha Varlığı:</b> 10 Kurulu Cihaz (Bağdat/Erbil/Basra)</div>
+</div>"""
+
+                card_perf_html = f"""<div style="background:rgba(255,215,0,0.05);border:1px solid rgba(255,215,0,0.35);border-radius:10px;padding:12px;margin:8px 0 16px 0;font-size:12px;line-height:1.6;">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+<span style="font-weight:700;color:#FFD700;font-size:13px;">📊 Sirius Pharm Konsorsiyum Satış & Filo Performansı</span>
+<span style="color:{perf_badge_color};font-weight:700;">{perf_badge}</span>
+</div>
+<b>Excel Kayıtlı Toplam Ciro:</b> {format_curr(partner_rev)} &nbsp;|&nbsp; <b>Toplam Filo:</b> {partner_devs} Cihaz (8 Ürdün / 10 Irak) &nbsp;|&nbsp; <b>Sarf:</b> {partner_cons} Kutu<br>
+<b>Yıllık YoY Büyüme:</b> <span style="color:{'#00E676' if partner_growth >= 0 else '#FF5252'};font-weight:600;">%{partner_growth:+.1f}</span> &nbsp;|&nbsp; <b>Sınıf:</b> {partner_type_tr} (Yetkili Bölge Hub'ı)
+</div>"""
+
+                st.markdown(card_jordan_html, unsafe_allow_html=True)
+                st.markdown(card_iraq_html, unsafe_allow_html=True)
+                st.markdown(card_perf_html, unsafe_allow_html=True)
+            else:
+                card_single_html = f"""<div style="background:rgba(19,166,181,0.06);border:1px solid rgba(19,166,181,0.28);border-radius:10px;padding:12px;margin:10px 0 16px 0;font-size:12px;line-height:1.6;">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+<span style="font-weight:700;color:#00F5FF;font-size:13px;">🌍 {calc_country} Makro & IVF Ekosistemi</span>
+<span style="background:rgba(19,166,181,0.2);color:#4FD1DE;font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600;border:1px solid rgba(19,166,181,0.4);">{macro['living_standard_code']}</span>
+</div>
+<b>Kişi Başı GSYİH (GDP pc):</b> ${macro['gdp_pc']:,} USD <span style="color:#8FA3C0;">({macro['gdp_tier']})</span><br>
+<b>Yaşam Standardı & Refah:</b> {macro['living_standard']}<br>
+<b>Aktif IVF Klinik Sayısı:</b> {macro['clinics']} Merkez &nbsp;|&nbsp; <b>Nüfus:</b> {macro['pop_m']}M<br>
+<b>Gümrük Vergisi & Süresi:</b> %{macro['customs_tariff_pct']:.1f} ({macro['customs_clearance_days']} Gün Bekleme)<br>
+<b>Devlet IVF Desteği / Geri Ödeme:</b> <span style="color:#00E676;font-weight:600;">{macro['ivf_support']}</span><br>
+<span style="color:#8FA3C0;font-size:11px;">{macro['ivf_support_desc']}</span>
+<div style="margin-top:4px;color:#FFB800;font-size:11px;"><b>Pazar Fiyat Hassasiyeti:</b> {macro['price_sensitivity']}</div>
+<hr style="border-color:rgba(19,166,181,0.18);margin:8px 0;">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+<span style="font-weight:700;color:#00F5FF;font-size:13px;">📊 Partner Satış & Büyüme Performansı</span>
+<span style="color:{perf_badge_color};font-weight:700;">{perf_badge}</span>
+</div>
+<b>Excel Kayıtlı Ciro:</b> {format_curr(partner_rev)} &nbsp;|&nbsp; <b>Kurulu Cihaz:</b> {partner_devs} Adet &nbsp;|&nbsp; <b>Sarf:</b> {partner_cons} Kutu<br>
+<b>Yıllık YoY Büyüme:</b> <span style="color:{'#00E676' if partner_growth >= 0 else '#FF5252'};font-weight:600;">%{partner_growth:+.1f}</span> &nbsp;|&nbsp; <b>Sınıf:</b> {partner_type_tr}
+</div>"""
+                st.markdown(card_single_html, unsafe_allow_html=True)
             
             # Check if values prefilled from AI / Consensus Tab
             init_disc = float(st.session_state.get('applied_ai_disc', 8.0))
@@ -9216,8 +9389,8 @@ elif nav_selection == "Pricing & Discount Calculator":
             st.markdown("#### ️ Kârlılık, Yetki ve Konsensüs Analizi")
 
             # Dual benchmark snapshot
-            snap_macro = resolve_country_macro(calc_country)
-            snap_expert = resolve_market_knowledge(calc_country)
+            snap_macro = macro
+            snap_expert = resolve_market_knowledge(active_calc_country if is_sirius_consortium else calc_country)
             snap_ai = generate_ai_pricing_bundle_recommendation(calc_d, snap_macro, "⚖️ Dengeli Kârlılık ve Marj Koruma (Balanced Corporate Profitability)")
             snap_cons = generate_dual_consensus_decision(snap_ai, snap_expert, calc_d)
 
@@ -9313,9 +9486,22 @@ elif nav_selection == "Pricing & Discount Calculator":
                 </div>
                 """, unsafe_allow_html=True)
 
-            kpi_c1, kpi_c2 = st.columns(2)
-            kpi_c1.metric("İndirimli Net Hasılat", format_curr(net_revenue), delta=f"-{format_curr(disc_amt)} İskonto Bedeli", delta_color="inverse")
-            kpi_c2.metric("Brüt Kâr & Marj", format_curr(gross_profit), delta=f"%{gross_margin:.1f} Brüt Marj", delta_color="normal")
+            st.markdown(f"""<div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:12px;margin:10px 0 14px 0;">
+<div style="background:rgba(19,166,181,0.08);border:1px solid rgba(0,245,255,0.3);border-radius:10px;padding:12px 14px;box-shadow:0 4px 14px rgba(0,0,0,0.25);">
+<div style="font-size:11px;font-weight:700;color:#8FA3C0;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px;white-space:normal;">İndirimli Net Hasılat</div>
+<div style="font-size:24px;font-weight:800;color:#00F5FF;font-family:'JetBrains Mono',monospace;letter-spacing:-0.02em;white-space:normal;overflow:visible;">{format_curr(net_revenue)}</div>
+<div style="font-size:11.5px;font-weight:600;color:#FF5252;margin-top:4px;display:flex;align-items:center;gap:4px;">
+<span>↓</span> <span>-{format_curr(disc_amt)} İskonto Bedeli</span>
+</div>
+</div>
+<div style="background:rgba(0,230,118,0.08);border:1px solid rgba(0,230,118,0.3);border-radius:10px;padding:12px 14px;box-shadow:0 4px 14px rgba(0,0,0,0.25);">
+<div style="font-size:11px;font-weight:700;color:#8FA3C0;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px;white-space:normal;">Brüt Kâr & Marj</div>
+<div style="font-size:24px;font-weight:800;color:#00E676;font-family:'JetBrains Mono',monospace;letter-spacing:-0.02em;white-space:normal;overflow:visible;">{format_curr(gross_profit)}</div>
+<div style="font-size:11.5px;font-weight:600;color:#00E676;margin-top:4px;display:flex;align-items:center;gap:4px;">
+<span>↑</span> <span>%{gross_margin:.1f} Brüt Marj</span>
+</div>
+</div>
+</div>""", unsafe_allow_html=True)
 
             # Clean unindented matrix HTML
             extra_tr = f'''<tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><td style="padding:5px 0;">🛡️ <b>Yönetim Özel Stratejik Esneklik:</b></td><td style="padding:5px 0;text-align:right;">Board / CEO İstisna Yetkisi</td><td style="padding:5px 0;text-align:right;color:#FFB800;font-weight:700;">+%{exec_override:.1f}</td></tr>''' if exec_override > 0 else ""
@@ -9357,8 +9543,24 @@ elif nav_selection == "Pricing & Discount Calculator":
             ai_dist_name = st.selectbox("Partner / Distribütör Seçimi", all_ordered_names, index=sirius_idx, key="ai_dist_select")
             ai_d = next((d for d in active_rows if d['name'] == ai_dist_name), active_rows[0])
             ai_country = ai_d.get('country_name', 'Turkey')
-            ai_macro = resolve_country_macro(ai_country)
-            ai_expert = resolve_market_knowledge(ai_country)
+
+            is_ai_sirius = ('SIRIUS' in ai_dist_name.upper()) or (ai_country in ['Jordan-Iraq', 'Jordan', 'Iraq'])
+            if is_ai_sirius:
+                ai_sirius_sub = st.radio(
+                    "🎯 AI Analizi İçin Hedef Ülke / Pazar:",
+                    ["🇯🇴 Jordan (Ürdün — 8 Cihaz / Amman Hub)", "🇮🇶 Iraq (Irak — 10 Cihaz / Bağdat & Erbil)"],
+                    horizontal=True,
+                    key="ai_sirius_sub_radio"
+                )
+                ai_target_country = "Iraq" if ("Iraq" in ai_sirius_sub or "Irak" in ai_sirius_sub) else "Jordan"
+                ai_macro = resolve_country_macro(ai_target_country)
+                ai_expert = resolve_market_knowledge(ai_target_country)
+                macro_jo_ai = resolve_country_macro('Jordan')
+                macro_iq_ai = resolve_country_macro('Iraq')
+            else:
+                ai_target_country = ai_country
+                ai_macro = resolve_country_macro(ai_country)
+                ai_expert = resolve_market_knowledge(ai_country)
 
             ai_goal = st.radio(
                 "Ticari Optimizasyon Hedefi:",
@@ -9371,19 +9573,48 @@ elif nav_selection == "Pricing & Discount Calculator":
                 key="ai_goal_select"
             )
 
-            # Macro indicator badge
-            st.markdown(f"""
-            <div style="background:rgba(19,166,181,0.06);border:1px solid rgba(19,166,181,0.25);border-radius:10px;padding:12px;margin-top:14px;font-size:12px;line-height:1.7;">
-                <div style="font-weight:700;color:#00F5FF;margin-bottom:6px;font-size:13px;">📌 {ai_country} Pazar ve Gümrük Parametreleri</div>
-                • <b>Kişi Başı GSYİH:</b> ${ai_macro['gdp_pc']:,} USD ({ai_macro['gdp_tier']})<br>
-                • <b>Yaşam Standardı:</b> {ai_macro['living_standard']}<br>
-                • <b>Lisanslı IVF Klinik Sayısı:</b> {ai_macro['clinics']} Merkez &nbsp;|&nbsp; <b>Nüfus:</b> {ai_macro['pop_m']}M<br>
-                • <b>Gümrük Vergisi:</b> %{ai_macro['customs_tariff_pct']:.1f} (Ortalama {ai_macro['customs_clearance_days']} Gün Bekleme)<br>
-                • <b>İthalat Zorluğu:</b> {ai_macro['import_difficulty']}<br>
-                • <b>Devlet Desteği:</b> {ai_macro['ivf_support']}<br>
-                • <b>Partner Kayıtlı Satışı:</b> {format_curr(ai_d.get('revenue', 0.0))} ({ai_d.get('devices_count', 0)} Cihaz / {ai_d.get('consumables_count', 0)} Sarf)
-            </div>
-            """, unsafe_allow_html=True)
+            # Macro indicator cards (Dual for Sirius Jordan-Iraq)
+            if is_ai_sirius:
+                card_jo_ai_html = f"""<div style="background:rgba(0,245,255,0.05);border:1px solid rgba(0,245,255,0.3);border-radius:10px;padding:10px 12px;margin-top:10px;font-size:12px;line-height:1.6;">
+<div style="font-weight:700;color:#00F5FF;margin-bottom:4px;font-size:13px;">🇯🇴 Ürdün (Jordan) Pazar ve Gümrük Parametreleri</div>
+• <b>Kişi Başı GSYİH:</b> ${macro_jo_ai['gdp_pc']:,} USD ({macro_jo_ai['gdp_tier']})<br>
+• <b>Yaşam Standardı:</b> {macro_jo_ai['living_standard']}<br>
+• <b>Lisanslı IVF Klinik:</b> {macro_jo_ai['clinics']} Merkez | <b>Nüfus:</b> {macro_jo_ai['pop_m']}M<br>
+• <b>Gümrük Vergisi:</b> %{macro_jo_ai['customs_tariff_pct']:.1f} ({macro_jo_ai['customs_clearance_days']} Gün Bekleme — JFDA)<br>
+• <b>Devlet Desteği:</b> {macro_jo_ai['ivf_support']}<br>
+• <b>Saha Dağılımı:</b> 8 Kurulu Cihaz (Amman Genel Merkez & Bölgesel Depo)
+</div>"""
+
+                card_iq_ai_html = f"""<div style="background:rgba(255,107,107,0.05);border:1px solid rgba(255,107,107,0.3);border-radius:10px;padding:10px 12px;margin-top:8px;font-size:12px;line-height:1.6;">
+<div style="font-weight:700;color:#FF6B6B;margin-bottom:4px;font-size:13px;">🇮🇶 Irak (Iraq) Pazar ve Gümrük Parametreleri</div>
+• <b>Kişi Başı GSYİH:</b> ${macro_iq_ai['gdp_pc']:,} USD ({macro_iq_ai['gdp_tier']})<br>
+• <b>Yaşam Standardı:</b> {macro_iq_ai['living_standard']}<br>
+• <b>Lisanslı IVF Klinik:</b> {macro_iq_ai['clinics']} Merkez | <b>Nüfus:</b> {macro_iq_ai['pop_m']}M (~32K Siklus)<br>
+• <b>Gümrük Vergisi:</b> %{macro_iq_ai['customs_tariff_pct']:.1f} ({macro_iq_ai['customs_clearance_days']} Gün Bekleme — Kimadia)<br>
+• <b>Devlet Desteği:</b> {macro_iq_ai['ivf_support']}<br>
+• <b>Saha Dağılımı:</b> 10 Kurulu Cihaz (Bağdat, Erbil ve Basra Klinik Ağı)
+</div>"""
+
+                card_cons_ai_html = f"""<div style="background:rgba(255,215,0,0.05);border:1px solid rgba(255,215,0,0.3);border-radius:10px;padding:10px 12px;margin-top:8px;font-size:12px;line-height:1.6;">
+<div style="font-weight:700;color:#FFD700;margin-bottom:4px;font-size:13px;">📊 Sirius Pharm Konsorsiyum Kayıtlı Satışı</div>
+• <b>Toplam Ciro:</b> {format_curr(ai_d.get('revenue', 0.0))} &nbsp;|&nbsp; <b>Toplam Filo:</b> 18 Cihaz (8 Ürdün / 10 Irak)<br>
+• <b>Sarf Hacmi:</b> {ai_d.get('consumables_count', 0)} Kutu &nbsp;|&nbsp; <b>Yıllık Büyüme:</b> +%{ai_d.get('growth_pct', 0.0):.1f}
+</div>"""
+                st.markdown(card_jo_ai_html, unsafe_allow_html=True)
+                st.markdown(card_iq_ai_html, unsafe_allow_html=True)
+                st.markdown(card_cons_ai_html, unsafe_allow_html=True)
+            else:
+                card_ai_single_html = f"""<div style="background:rgba(19,166,181,0.06);border:1px solid rgba(19,166,181,0.25);border-radius:10px;padding:12px;margin-top:14px;font-size:12px;line-height:1.7;">
+<div style="font-weight:700;color:#00F5FF;margin-bottom:6px;font-size:13px;">📌 {ai_country} Pazar ve Gümrük Parametreleri</div>
+• <b>Kişi Başı GSYİH:</b> ${ai_macro['gdp_pc']:,} USD ({ai_macro['gdp_tier']})<br>
+• <b>Yaşam Standardı:</b> {ai_macro['living_standard']}<br>
+• <b>Lisanslı IVF Klinik Sayısı:</b> {ai_macro['clinics']} Merkez &nbsp;|&nbsp; <b>Nüfus:</b> {ai_macro['pop_m']}M<br>
+• <b>Gümrük Vergisi:</b> %{ai_macro['customs_tariff_pct']:.1f} (Ortalama {ai_macro['customs_clearance_days']} Gün Bekleme)<br>
+• <b>İthalat Zorluğu:</b> {ai_macro['import_difficulty']}<br>
+• <b>Devlet Desteği:</b> {ai_macro['ivf_support']}<br>
+• <b>Partner Kayıtlı Satışı:</b> {format_curr(ai_d.get('revenue', 0.0))} ({ai_d.get('devices_count', 0)} Cihaz / {ai_d.get('consumables_count', 0)} Sarf)
+</div>"""
+                st.markdown(card_ai_single_html, unsafe_allow_html=True)
 
         with ai_col2:
             # Generate AI recommendation & Dual consensus
