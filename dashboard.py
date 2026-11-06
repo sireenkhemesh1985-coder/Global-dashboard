@@ -152,56 +152,62 @@ st.markdown("""
 
     /* KPI Cards - Enhanced Deep Slate Glass & Neon */
     .kpi-container {
-        background: linear-gradient(145deg, rgba(16, 26, 46, 0.72) 0%, rgba(9, 16, 30, 0.86) 100%) !important;
-        border: 1px solid rgba(0, 245, 255, 0.16) !important;
-        border-top: 1px solid rgba(0, 245, 255, 0.35) !important;
-        border-radius: 14px !important;
-        padding: 14px 12px !important;
+        background: linear-gradient(145deg, rgba(16, 26, 46, 0.85) 0%, rgba(9, 16, 30, 0.94) 100%) !important;
+        border: 1px solid rgba(0, 245, 255, 0.18) !important;
+        border-top: 1px solid rgba(0, 245, 255, 0.45) !important;
+        border-radius: 12px !important;
+        padding: 13px 12px !important;
         transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
         box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
         backdrop-filter: blur(16px) !important;
         -webkit-backdrop-filter: blur(16px) !important;
         min-width: 0 !important;
-        overflow: hidden !important;
+        overflow: visible !important;
         position: relative !important;
+        min-height: 220px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
     }
     .kpi-container:hover {
-        transform: translateY(-3px) !important;
+        transform: translateY(-2px) !important;
         border-color: rgba(0, 245, 255, 0.65) !important;
-        box-shadow: 0 10px 32px rgba(0, 245, 255, 0.18), inset 0 0 12px rgba(0, 245, 255, 0.08) !important;
+        box-shadow: 0 10px 30px rgba(0, 245, 255, 0.2), inset 0 0 12px rgba(0, 245, 255, 0.08) !important;
     }
     .kpi-header {
-        font-size: 11px !important;
-        font-weight: 600 !important;
-        color: #94A3B8 !important;
+        font-size: 11.5px !important;
+        font-weight: 700 !important;
+        color: #CCD7E6 !important;
         text-transform: uppercase !important;
-        letter-spacing: 0.06em !important;
-        margin-bottom: 6px !important;
-        white-space: nowrap !important;
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
+        letter-spacing: 0.04em !important;
+        margin-bottom: 2px !important;
+        white-space: normal !important;
+        word-break: break-word !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
         display: block !important;
+        line-height: 1.25 !important;
     }
     .kpi-val {
-        font-size: 21px !important;
-        font-weight: 700 !important;
+        font-size: 23px !important;
+        font-weight: 800 !important;
         font-family: 'JetBrains Mono', 'Inter', monospace !important;
         font-feature-settings: 'tnum' !important;
         color: #FFFFFF !important;
         letter-spacing: -0.02em !important;
-        margin-bottom: 3px !important;
-        white-space: nowrap !important;
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
+        margin-bottom: 2px !important;
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
         display: block !important;
-        line-height: 1.25 !important;
+        line-height: 1.2 !important;
     }
     .kpi-sub {
         font-size: 11px !important;
         font-weight: 600 !important;
-        white-space: nowrap !important;
-        overflow: hidden !important;
-        text-overflow: ellipsis !important;
+        white-space: normal !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
         display: block !important;
     }
     .kpi-pos { color: #10B981 !important; text-shadow: 0 0 8px rgba(16, 185, 129, 0.25) !important; }
@@ -3978,132 +3984,167 @@ if nav_selection == "Executive Dashboard":
     </div>
     ''', unsafe_allow_html=True)
 
-    # 6 Top KPIs (Ultra Net & Şeffaf Yönetici Tasarımı)
+    # 6 Top KPIs (Ultra Net & Şeffaf Yönetici Tasarımı - Taşma Korumalı & Eşit Kart Boyutları)
     st.markdown('<div style="font-size:12px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">📅 CARİ DÖNEM DETAY METRİKLERİ (' + y_badge_str + '):</div>', unsafe_allow_html=True)
 
     k1, k2, k3, k4, k5, k6 = st.columns(6)
     with k1:
         st.markdown(f"""
         <div class="kpi-container" style="border-top: 3px solid #00F5FF;">
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-                <span class="kpi-header" style="font-size:12px;font-weight:700;color:#CCD7E6;">Net Satış (Net Sales)</span>
-                <span style="font-size:9.5px;background:rgba(0,245,255,0.15);color:#00F5FF;padding:2px 6px;border-radius:4px;font-weight:700;">{y_badge_str}</span>
+            <div>
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:4px;margin-bottom:6px;">
+                    <div>
+                        <div style="font-size:13px;font-weight:800;color:#FFFFFF;line-height:1.2;">Net Satış</div>
+                        <div style="font-size:9px;color:#94A3B8;font-weight:600;letter-spacing:0.4px;">NET SALES</div>
+                    </div>
+                    <span style="font-size:8.5px;background:rgba(0,245,255,0.15);color:#00F5FF;padding:2px 5px;border-radius:4px;font-weight:700;white-space:nowrap;flex-shrink:0;">{y_badge_str}</span>
+                </div>
+                <div class="kpi-val" style="font-size:23px;font-weight:800;color:#FFFFFF;margin-top:2px;">{format_curr(sc_total_rev)}</div>
+                <div style="font-size:10px;color:#00E676;font-weight:600;margin-top:1px;">+{sc_avg_growth:.1f}% vs LY</div>
             </div>
-            <div class="kpi-val" style="font-size:24px;font-weight:800;color:#FFFFFF;margin-top:2px;">{format_curr(sc_total_rev)}</div>
-            <div style="font-size:10.5px;color:#00E676;font-weight:600;margin-top:2px;">+{sc_avg_growth:.1f}% vs LY</div>
             
-            <div style="background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.22);border-radius:5px;padding:3px 6px;margin-top:5px;font-size:10px;color:#00F5FF;font-weight:700;">
-                🌐 2024-2026 Toplam: <b>{format_curr(sc_all_time_rev)}</b>
-            </div>
-
-            <div style="margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,0.08);font-size:10px;line-height:1.45;color:#94A3B8;">
-                <div style="color:{scope_badge_color};font-weight:700;">● {scope_badge_label}</div>
-                <div style="color:#CBD5E1;">🤝 Distribütör: <b>{format_curr(sc_dist_rev)}</b></div>
-                <div style="color:#CBD5E1;">🏥 Klinikler: <b>{format_curr(sc_clin_rev)}</b></div>
+            <div style="margin-top:6px;">
+                <div style="background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.22);border-radius:5px;padding:3px 6px;font-size:9.5px;color:#00F5FF;font-weight:700;">
+                    🌐 2024-2026 Toplam: <b>{format_curr(sc_all_time_rev)}</b>
+                </div>
+                <div style="margin-top:5px;padding-top:5px;border-top:1px solid rgba(255,255,255,0.08);font-size:9.5px;line-height:1.4;color:#94A3B8;">
+                    <div style="color:{scope_badge_color};font-weight:700;margin-bottom:2px;">● {scope_badge_label}</div>
+                    <div style="color:#CBD5E1;">🤝 Distribütör: <b>{format_curr(sc_dist_rev)}</b></div>
+                    <div style="color:#CBD5E1;">🏥 Klinikler: <b>{format_curr(sc_clin_rev)}</b></div>
+                </div>
             </div>
         </div>
         """, unsafe_allow_html=True)
     with k2:
         st.markdown(f"""
         <div class="kpi-container" style="border-top: 3px solid #10B981;">
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-                <span class="kpi-header" style="font-size:12px;font-weight:700;color:#CCD7E6;">Aktif Müşteri / Partner</span>
-                <span style="font-size:9.5px;background:rgba(16,185,129,0.15);color:#10B981;padding:2px 6px;border-radius:4px;font-weight:700;">{sc_n_partners} KURUM</span>
+            <div>
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:4px;margin-bottom:6px;">
+                    <div>
+                        <div style="font-size:13px;font-weight:800;color:#FFFFFF;line-height:1.2;">Aktif Portföy</div>
+                        <div style="font-size:9px;color:#94A3B8;font-weight:600;letter-spacing:0.4px;">MÜŞTERİ & AĞ</div>
+                    </div>
+                    <span style="font-size:8.5px;background:rgba(16,185,129,0.15);color:#10B981;padding:2px 5px;border-radius:4px;font-weight:700;white-space:nowrap;flex-shrink:0;">{sc_n_partners} KURUM</span>
+                </div>
+                <div class="kpi-val" style="font-size:23px;font-weight:800;color:#FFFFFF;margin-top:2px;">{sc_n_partners}</div>
+                <div style="font-size:10px;color:#10B981;font-weight:600;margin-top:1px;">+2 Yeni Partner (2026)</div>
             </div>
-            <div class="kpi-val" style="font-size:24px;font-weight:800;color:#FFFFFF;margin-top:2px;">{sc_n_partners}</div>
-            <div style="font-size:10.5px;color:#10B981;font-weight:600;margin-top:2px;">+2 Yeni Partner (2026)</div>
             
-            <div style="background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.22);border-radius:5px;padding:3px 6px;margin-top:5px;font-size:10px;color:#10B981;font-weight:700;">
-                🌐 2024-2026: <b>{sc_all_time_rows} Fatura</b>
-            </div>
-
-            <div style="margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,0.08);font-size:10px;line-height:1.45;color:#94A3B8;">
-                <div style="color:#CBD5E1;">• <b>{len(sc_dist_rows)}</b> Yetkili Distribütör</div>
-                <div style="color:#CBD5E1;">• <b>{len(sc_clin_rows)}</b> Doğrudan Klinik/Merkez</div>
+            <div style="margin-top:6px;">
+                <div style="background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.22);border-radius:5px;padding:3px 6px;font-size:9.5px;color:#10B981;font-weight:700;">
+                    🌐 2024-2026: <b>{sc_all_time_rows} Fatura</b>
+                </div>
+                <div style="margin-top:5px;padding-top:5px;border-top:1px solid rgba(255,255,255,0.08);font-size:9.5px;line-height:1.4;color:#94A3B8;">
+                    <div style="color:#CBD5E1;margin-bottom:2px;">• <b>{len(sc_dist_rows)}</b> Yetkili Distribütör</div>
+                    <div style="color:#CBD5E1;">• <b>{len(sc_clin_rows)}</b> Doğrudan Klinik</div>
+                </div>
             </div>
         </div>
         """, unsafe_allow_html=True)
     with k3:
         st.markdown(f"""
         <div class="kpi-container" style="border-top: 3px solid #38BDF8;">
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-                <span class="kpi-header" style="font-size:12px;font-weight:700;color:#CCD7E6;">Kurulu / Satılan Cihaz</span>
-                <span style="font-size:9.5px;background:rgba(56,189,248,0.15);color:#38BDF8;padding:2px 6px;border-radius:4px;font-weight:700;">{y_badge_str}</span>
+            <div>
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:4px;margin-bottom:6px;">
+                    <div>
+                        <div style="font-size:13px;font-weight:800;color:#FFFFFF;line-height:1.2;">Kurulu Cihaz</div>
+                        <div style="font-size:9px;color:#94A3B8;font-weight:600;letter-spacing:0.4px;">CİHAZ SATIŞI</div>
+                    </div>
+                    <span style="font-size:8.5px;background:rgba(56,189,248,0.15);color:#38BDF8;padding:2px 5px;border-radius:4px;font-weight:700;white-space:nowrap;flex-shrink:0;">{y_badge_str}</span>
+                </div>
+                <div class="kpi-val" style="font-size:23px;font-weight:800;color:#FFFFFF;margin-top:2px;">{sc_total_devices:,} Cihaz</div>
+                <div style="font-size:10px;color:#00E676;font-weight:600;margin-top:1px;">Cihaz Geliri: {format_curr(sc_total_dev_rev)}</div>
             </div>
-            <div class="kpi-val" style="font-size:24px;font-weight:800;color:#FFFFFF;margin-top:2px;">{sc_total_devices:,} Cihaz</div>
-            <div style="font-size:10.5px;color:#00E676;font-weight:600;margin-top:2px;">Cihaz Geliri: {format_curr(sc_total_dev_rev)}</div>
             
-            <div style="background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.22);border-radius:5px;padding:3px 6px;margin-top:5px;font-size:10px;color:#38BDF8;font-weight:700;">
-                🌐 2024-2026 Toplam: <b>{sc_all_time_dev_cnt} Cihaz</b> ({format_curr(sc_all_time_dev_rev)})
-            </div>
-
-            <div style="margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,0.08);font-size:10px;line-height:1.45;color:#94A3B8;">
-                <div style="color:#CBD5E1;">• <b>{sc_all_time_dist_dev}</b> Distribütör Tabanı</div>
-                <div style="color:#CBD5E1;">• <b>{sc_all_time_clin_dev}</b> Doğrudan Klinik Satışı</div>
+            <div style="margin-top:6px;">
+                <div style="background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.22);border-radius:5px;padding:3px 6px;font-size:9.5px;color:#38BDF8;font-weight:700;">
+                    🌐 2024-2026: <b>{sc_all_time_dev_cnt} Cihaz</b> ({format_curr(sc_all_time_dev_rev)})
+                </div>
+                <div style="margin-top:5px;padding-top:5px;border-top:1px solid rgba(255,255,255,0.08);font-size:9.5px;line-height:1.4;color:#94A3B8;">
+                    <div style="color:#CBD5E1;margin-bottom:2px;">• <b>{sc_all_time_dist_dev}</b> Distribütör Tabanı</div>
+                    <div style="color:#CBD5E1;">• <b>{sc_all_time_clin_dev}</b> Klinik Satışı</div>
+                </div>
             </div>
         </div>
         """, unsafe_allow_html=True)
     with k4:
         st.markdown(f"""
         <div class="kpi-container" style="border-top: 3px solid #FFB800;">
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-                <span class="kpi-header" style="font-size:12px;font-weight:700;color:#CCD7E6;">Tekrar Eden Sarf</span>
-                <span style="font-size:9.5px;background:rgba(255,184,0,0.15);color:#FFB800;padding:2px 6px;border-radius:4px;font-weight:700;">{y_badge_str}</span>
+            <div>
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:4px;margin-bottom:6px;">
+                    <div>
+                        <div style="font-size:13px;font-weight:800;color:#FFFFFF;line-height:1.2;">Tekrar Eden Sarf</div>
+                        <div style="font-size:9px;color:#94A3B8;font-weight:600;letter-spacing:0.4px;">RECURRING SALES</div>
+                    </div>
+                    <span style="font-size:8.5px;background:rgba(255,184,0,0.15);color:#FFB800;padding:2px 5px;border-radius:4px;font-weight:700;white-space:nowrap;flex-shrink:0;">{y_badge_str}</span>
+                </div>
+                <div class="kpi-val" style="font-size:23px;font-weight:800;color:#FFFFFF;margin-top:2px;">{format_curr(sc_total_con_rev)}</div>
+                <div style="font-size:10px;color:#FFB800;font-weight:600;margin-top:1px;">Cironun %{(sc_total_con_rev/sc_total_rev*100) if sc_total_rev > 0 else 0:.1f}'i</div>
             </div>
-            <div class="kpi-val" style="font-size:24px;font-weight:800;color:#FFFFFF;margin-top:2px;">{format_curr(sc_total_con_rev)}</div>
-            <div style="font-size:10.5px;color:#FFB800;font-weight:600;margin-top:2px;">Cironun %{(sc_total_con_rev/sc_total_rev*100) if sc_total_rev > 0 else 0:.1f}'i</div>
             
-            <div style="background:rgba(255,184,0,0.08);border:1px solid rgba(255,184,0,0.22);border-radius:5px;padding:3px 6px;margin-top:5px;font-size:10px;color:#FFB800;font-weight:700;">
-                🌐 2024-2026 Toplam: <b>{format_curr(sc_all_time_con_rev)}</b> ({sc_all_time_con_cnt:,} Kutu)
-            </div>
-
-            <div style="margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,0.08);font-size:10px;line-height:1.45;color:#94A3B8;">
-                <div style="color:#CBD5E1;">• <b>{sc_all_time_dist_con:,}</b> Distribütör Çekişi</div>
-                <div style="color:#CBD5E1;">• <b>{sc_all_time_clin_con:,}</b> Klinik Tüketimi</div>
+            <div style="margin-top:6px;">
+                <div style="background:rgba(255,184,0,0.08);border:1px solid rgba(255,184,0,0.22);border-radius:5px;padding:3px 6px;font-size:9.5px;color:#FFB800;font-weight:700;">
+                    🌐 2024-2026: <b>{format_curr(sc_all_time_con_rev)}</b> ({sc_all_time_con_cnt:,} Kutu)
+                </div>
+                <div style="margin-top:5px;padding-top:5px;border-top:1px solid rgba(255,255,255,0.08);font-size:9.5px;line-height:1.4;color:#94A3B8;">
+                    <div style="color:#CBD5E1;margin-bottom:2px;">• <b>{sc_all_time_dist_con:,}</b> Dist Çekişi</div>
+                    <div style="color:#CBD5E1;">• <b>{sc_all_time_clin_con:,}</b> Klinik Tüketimi</div>
+                </div>
             </div>
         </div>
         """, unsafe_allow_html=True)
     with k5:
         st.markdown(f"""
         <div class="kpi-container" style="border-top: 3px solid #A855F7;">
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-                <span class="kpi-header" style="font-size:12px;font-weight:700;color:#CCD7E6;">Brüt Kâr Marjı</span>
-                <span style="font-size:9.5px;background:rgba(168,85,247,0.15);color:#A855F7;padding:2px 6px;border-radius:4px;font-weight:700;">ORTALAMA</span>
+            <div>
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:4px;margin-bottom:6px;">
+                    <div>
+                        <div style="font-size:13px;font-weight:800;color:#FFFFFF;line-height:1.2;">Brüt Kâr Marjı</div>
+                        <div style="font-size:9px;color:#94A3B8;font-weight:600;letter-spacing:0.4px;">GROSS MARGIN</div>
+                    </div>
+                    <span style="font-size:8.5px;background:rgba(168,85,247,0.15);color:#A855F7;padding:2px 5px;border-radius:4px;font-weight:700;white-space:nowrap;flex-shrink:0;">ORTALAMA</span>
+                </div>
+                <div class="kpi-val" style="font-size:23px;font-weight:800;color:#FFFFFF;margin-top:2px;">{sc_avg_margin:.1f}%</div>
+                <div style="font-size:10px;color:#00E676;font-weight:600;margin-top:1px;">+0.8 pt vs Hedef</div>
             </div>
-            <div class="kpi-val" style="font-size:24px;font-weight:800;color:#FFFFFF;margin-top:2px;">{sc_avg_margin:.1f}%</div>
-            <div style="font-size:10.5px;color:#00E676;font-weight:600;margin-top:2px;">+0.8 pt vs Hedef</div>
             
-            <div style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.22);border-radius:5px;padding:3px 6px;margin-top:5px;font-size:10px;color:#C084FC;font-weight:700;">
-                🌐 2024-2026 Konsolide: <b>%48.4 Marj</b>
-            </div>
-
-            <div style="margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,0.08);font-size:10px;line-height:1.45;color:#94A3B8;">
-                <div style="color:#CBD5E1;">• Distribütör Marjı: <b>%42.5</b></div>
-                <div style="color:#CBD5E1;">• Klinik Marjı: <b>%51.2</b></div>
+            <div style="margin-top:6px;">
+                <div style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.22);border-radius:5px;padding:3px 6px;font-size:9.5px;color:#C084FC;font-weight:700;">
+                    🌐 2024-2026: <b>%48.4 Konsolide</b>
+                </div>
+                <div style="margin-top:5px;padding-top:5px;border-top:1px solid rgba(255,255,255,0.08);font-size:9.5px;line-height:1.4;color:#94A3B8;">
+                    <div style="color:#CBD5E1;margin-bottom:2px;">• Distribütör Marjı: <b>%42.5</b></div>
+                    <div style="color:#CBD5E1;">• Klinik Marjı: <b>%51.2</b></div>
+                </div>
             </div>
         </div>
         """, unsafe_allow_html=True)
     with k6:
         st.markdown(f"""
         <div class="kpi-container" style="border-top: 3px solid #64748B;">
-            <div style="display:flex;justify-content:space-between;align-items:center;">
-                <span class="kpi-header" style="font-size:12px;font-weight:700;color:#CCD7E6;">Kapsanan Pazarlar</span>
-                <span style="font-size:9.5px;background:rgba(100,116,139,0.15);color:#CBD5E1;padding:2px 6px;border-radius:4px;font-weight:700;">15 / 48 ÜLKE</span>
+            <div>
+                <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:4px;margin-bottom:6px;">
+                    <div>
+                        <div style="font-size:13px;font-weight:800;color:#FFFFFF;line-height:1.2;">Kapsanan Pazar</div>
+                        <div style="font-size:9px;color:#94A3B8;font-weight:600;letter-spacing:0.4px;">GLOBAL COVERAGE</div>
+                    </div>
+                    <span style="font-size:8.5px;background:rgba(100,116,139,0.15);color:#CBD5E1;padding:2px 5px;border-radius:4px;font-weight:700;white-space:nowrap;flex-shrink:0;">15 / 48 ÜLKE</span>
+                </div>
+                <div class="kpi-val" style="font-size:23px;font-weight:800;color:#FFFFFF;margin-top:2px;">{sc_n_countries} Ülke</div>
+                <div style="font-size:10px;color:#94A3B8;font-weight:600;margin-top:1px;">48 Takip Edilen Pazar</div>
             </div>
-            <div class="kpi-val" style="font-size:24px;font-weight:800;color:#FFFFFF;margin-top:2px;">{sc_n_countries} Ülke</div>
-            <div style="font-size:10.5px;color:#94A3B8;font-weight:600;margin-top:2px;">48 Takip Edilen Pazar</div>
             
-            <div style="background:rgba(100,116,139,0.1);border:1px solid rgba(100,116,139,0.25);border-radius:5px;padding:3px 6px;margin-top:5px;font-size:10px;color:#E2E8F0;font-weight:700;">
-                🌐 2024-2026 Ayak İzi: <b>16 Ülke</b>
-            </div>
-
-            <div style="margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,0.08);font-size:10px;line-height:1.45;color:#94A3B8;">
-                <div style="color:#CBD5E1;">• <b>6</b> Distribütör Hub Ülkesi</div>
-                <div style="color:#CBD5E1;">• <b>10</b> Doğrudan Satış Ülkesi</div>
+            <div style="margin-top:6px;">
+                <div style="background:rgba(100,116,139,0.1);border:1px solid rgba(100,116,139,0.25);border-radius:5px;padding:3px 6px;font-size:9.5px;color:#E2E8F0;font-weight:700;">
+                    🌐 2024-2026: <b>16 Ülke Ayak İzi</b>
+                </div>
+                <div style="margin-top:5px;padding-top:5px;border-top:1px solid rgba(255,255,255,0.08);font-size:9.5px;line-height:1.4;color:#94A3B8;">
+                    <div style="color:#CBD5E1;margin-bottom:2px;">• <b>6</b> Distribütör Hub Ülkesi</div>
+                    <div style="color:#CBD5E1;">• <b>10</b> Doğrudan Satış Ülkesi</div>
+                </div>
             </div>
         </div>
         """, unsafe_allow_html=True)
-
     st.markdown("<br>", unsafe_allow_html=True)
 
     # Global Choropleth Map with Layer Selection
