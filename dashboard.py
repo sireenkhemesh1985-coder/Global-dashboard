@@ -3820,6 +3820,7 @@ if nav_selection == "Executive Dashboard":
         scope_badge_color = "#10B981"
         scope_desc_str = "6 Distribütör + 37 Klinik"
 
+    # Seçili Dönem Metrikleri (Cari 2026 YTD veya Seçili Yıl)
     sc_total_rev = sum(d['revenue'] for d in sc_rows)
     sc_total_dev_rev = sum(d['device_rev'] for d in sc_rows)
     sc_total_con_rev = sc_total_rev - sc_total_dev_rev
@@ -3834,7 +3835,152 @@ if nav_selection == "Executive Dashboard":
     sc_dist_rev = sum(d['revenue'] for d in sc_dist_rows)
     sc_clin_rev = sum(d['revenue'] for d in sc_clin_rows)
 
+    # 🌐 2024-2026 KONSOLİDE TÜM ZAMANLAR KÜMÜLATİF VERİLERİ (874 Doğrulanmış Fatura)
+    sc_all_time_rev = sum(d.get('rev_by_year', {}).get('ALL', d.get('revenue', 0.0)) for d in sc_rows)
+    sc_all_time_dev_rev = sum(d.get('dev_rev_by_year', {}).get('ALL', d.get('device_rev', 0.0)) for d in sc_rows)
+    sc_all_time_con_rev = sum(d.get('con_rev_by_year', {}).get('ALL', d.get('consumables_rev', 0.0)) for d in sc_rows)
+    sc_all_time_dev_cnt = sum(d.get('dev_cnt_by_year', {}).get('ALL', d.get('devices_count', 0)) for d in sc_rows)
+    sc_all_time_con_cnt = sum(d.get('con_cnt_by_year', {}).get('ALL', d.get('consumables_count', 0)) for d in sc_rows)
+    
+    if "Distribütörler" in exec_scope:
+        sc_all_time_rows = 188
+        sc_all_time_dist_rev = sc_all_time_rev
+        sc_all_time_clin_rev = 0.0
+        sc_all_time_dist_dev = sc_all_time_dev_cnt
+        sc_all_time_clin_dev = 0
+        sc_all_time_dist_con = sc_all_time_con_cnt
+        sc_all_time_clin_con = 0
+    elif "Klinikler" in exec_scope:
+        sc_all_time_rows = 686
+        sc_all_time_dist_rev = 0.0
+        sc_all_time_clin_rev = sc_all_time_rev
+        sc_all_time_dist_dev = 0
+        sc_all_time_clin_dev = sc_all_time_dev_cnt
+        sc_all_time_dist_con = 0
+        sc_all_time_clin_con = sc_all_time_con_cnt
+    else:
+        sc_all_time_rows = 874
+        sc_all_time_dist_rev = 409121.26
+        sc_all_time_clin_rev = 284766.23
+        sc_all_time_dist_dev = 40
+        sc_all_time_clin_dev = 26
+        sc_all_time_dist_con = 1538
+        sc_all_time_clin_con = 1654
+
+    # Yıllık Kırılımlar
+    sc_rev_2024 = sum(d.get('rev_by_year', {}).get(2024, 0.0) for d in sc_rows)
+    sc_rev_2025 = sum(d.get('rev_by_year', {}).get(2025, 0.0) for d in sc_rows)
+    sc_rev_2026 = sum(d.get('rev_by_year', {}).get(2026, 0.0) for d in sc_rows)
+
+    sc_dev_2024 = sum(d.get('dev_cnt_by_year', {}).get(2024, 0) for d in sc_rows)
+    sc_dev_2025 = sum(d.get('dev_cnt_by_year', {}).get(2025, 0) for d in sc_rows)
+    sc_dev_2026 = sum(d.get('dev_cnt_by_year', {}).get(2026, 0) for d in sc_rows)
+
+    sc_con_2024 = sum(d.get('con_cnt_by_year', {}).get(2024, 0) for d in sc_rows)
+    sc_con_2025 = sum(d.get('con_cnt_by_year', {}).get(2025, 0) for d in sc_rows)
+    sc_con_2026 = sum(d.get('con_cnt_by_year', {}).get(2026, 0) for d in sc_rows)
+
+    # --------------------------------------------------------------------------
+    # 🏛️ 2024-2026 KONSOLİDE TÜM ZAMANLAR KÜMÜLATİF SKOR PANELİ
+    # --------------------------------------------------------------------------
+    st.markdown(f'''
+    <div style="background:linear-gradient(135deg, rgba(13,22,40,0.92) 0%, rgba(20,32,56,0.88) 100%); border:1px solid rgba(0,245,255,0.32); border-radius:12px; padding:15px 18px; margin-bottom:18px; box-shadow:0 8px 28px rgba(0,0,0,0.45); backdrop-filter:blur(12px);">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">
+            <div style="display:flex; align-items:center; gap:10px;">
+                <span style="font-size:19px;">🏛️</span>
+                <div>
+                    <span style="font-size:13.5px; font-weight:800; color:#FFFFFF; letter-spacing:0.4px;">
+                        2024 - 2026 KONSOLİDE TÜM ZAMANLAR KÜMÜLATİF PERFORMANS
+                    </span>
+                    <span style="font-size:11px; color:#94A3B8; margin-left:8px;">
+                        (Tüm Satış Arşivi • 874 Doğrulanmış Fatura • 16 Ülke • 43 Kurumsal Partner)
+                    </span>
+                </div>
+            </div>
+            <div style="display:flex; align-items:center; gap:8px;">
+                <span style="font-size:10.5px; background:{scope_badge_bg}; color:{scope_badge_color}; border:1px solid {scope_badge_color}66; padding:3px 9px; border-radius:6px; font-weight:700;">
+                    ● {scope_badge_label}
+                </span>
+                <span style="font-size:10.5px; background:rgba(16,185,129,0.15); color:#10B981; border:1px solid rgba(16,185,129,0.3); padding:3px 9px; border-radius:6px; font-weight:700;">
+                    ✓ Doğrulanmış Excel Sözleşme & Fatura Verisi
+                </span>
+            </div>
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:12px;">
+            <!-- KART 1: 2024-2026 TOPLAM NET SATIŞ -->
+            <div style="background:rgba(15,23,42,0.75); border:1px solid rgba(0,245,255,0.22); border-left:3px solid #00F5FF; border-radius:8px; padding:10px 14px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-size:11px; font-weight:700; color:#94A3B8; text-transform:uppercase;">🌐 2024-2026 Toplam Net Satış</span>
+                    <span style="font-size:9.5px; background:rgba(0,245,255,0.15); color:#00F5FF; padding:1px 5px; border-radius:3px; font-weight:700;">KÜMÜLATİF</span>
+                </div>
+                <div style="font-size:24px; font-weight:800; color:#00F5FF; margin-top:3px;">{format_curr(sc_all_time_rev)}</div>
+                <div style="font-size:10.5px; color:#E2E8F0; margin-top:3px;">
+                    🤝 Distribütör: <b>{format_curr(sc_all_time_dist_rev)}</b> <span style="color:#64748B;">|</span> 🏥 Klinik: <b>{format_curr(sc_all_time_clin_rev)}</b>
+                </div>
+                <div style="margin-top:6px; padding-top:5px; border-top:1px solid rgba(255,255,255,0.06); font-size:10px; color:#94A3B8; display:flex; justify-content:space-between;">
+                    <span>'24: <b>{format_curr(sc_rev_2024)}</b></span>
+                    <span>'25: <b>{format_curr(sc_rev_2025)}</b></span>
+                    <span style="color:#00F5FF;">'26: <b>{format_curr(sc_rev_2026)}</b></span>
+                </div>
+            </div>
+
+            <!-- KART 2: 2024-2026 TOPLAM CİHAZ SATIŞI -->
+            <div style="background:rgba(15,23,42,0.75); border:1px solid rgba(56,189,248,0.22); border-left:3px solid #38BDF8; border-radius:8px; padding:10px 14px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-size:11px; font-weight:700; color:#94A3B8; text-transform:uppercase;">🔬 2024-2026 Toplam Satılan Cihaz</span>
+                    <span style="font-size:9.5px; background:rgba(56,189,248,0.15); color:#38BDF8; padding:1px 5px; border-radius:3px; font-weight:700;">66 CİHAZ</span>
+                </div>
+                <div style="font-size:24px; font-weight:800; color:#38BDF8; margin-top:3px;">{sc_all_time_dev_cnt:,} Adet Cihaz</div>
+                <div style="font-size:10.5px; color:#E2E8F0; margin-top:3px;">
+                    🤝 Dist Filosu: <b>{sc_all_time_dist_dev} Cihaz</b> <span style="color:#64748B;">|</span> 🏥 Klinik: <b>{sc_all_time_clin_dev} Cihaz</b>
+                </div>
+                <div style="margin-top:6px; padding-top:5px; border-top:1px solid rgba(255,255,255,0.06); font-size:10px; color:#94A3B8; display:flex; justify-content:space-between;">
+                    <span>'24: <b>{sc_dev_2024} Adet</b></span>
+                    <span>'25: <b>{sc_dev_2025} Adet</b></span>
+                    <span style="color:#38BDF8;">'26: <b>{sc_dev_2026} Adet</b></span>
+                </div>
+            </div>
+
+            <!-- KART 3: 2024-2026 TOPLAM TEKRAR EDEN SARF -->
+            <div style="background:rgba(15,23,42,0.75); border:1px solid rgba(255,184,0,0.22); border-left:3px solid #FFB800; border-radius:8px; padding:10px 14px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-size:11px; font-weight:700; color:#94A3B8; text-transform:uppercase;">🧪 2024-2026 Tekrar Eden Sarf</span>
+                    <span style="font-size:9.5px; background:rgba(255,184,0,0.15); color:#FFB800; padding:1px 5px; border-radius:3px; font-weight:700;">3,192 KUTU</span>
+                </div>
+                <div style="font-size:24px; font-weight:800; color:#FFB800; margin-top:3px;">{format_curr(sc_all_time_con_rev)}</div>
+                <div style="font-size:10.5px; color:#E2E8F0; margin-top:3px;">
+                    🤝 Dist: <b>{sc_all_time_dist_con:,} Kutu</b> <span style="color:#64748B;">|</span> 🏥 Klinik: <b>{sc_all_time_clin_con:,} Kutu</b>
+                </div>
+                <div style="margin-top:6px; padding-top:5px; border-top:1px solid rgba(255,255,255,0.06); font-size:10px; color:#94A3B8; display:flex; justify-content:space-between;">
+                    <span>'24: <b>{sc_con_2024:,} Kutu</b></span>
+                    <span>'25: <b>{sc_con_2025:,} Kutu</b></span>
+                    <span style="color:#FFB800;">'26: <b>{sc_con_2026:,} Kutu</b></span>
+                </div>
+            </div>
+
+            <!-- KART 4: 2024-2026 DOĞRULANMIŞ FATURA HACMİ -->
+            <div style="background:rgba(15,23,42,0.75); border:1px solid rgba(16,185,129,0.22); border-left:3px solid #10B981; border-radius:8px; padding:10px 14px;">
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                    <span style="font-size:11px; font-weight:700; color:#94A3B8; text-transform:uppercase;">📑 Doğrulanmış Fatura Hacmi</span>
+                    <span style="font-size:9.5px; background:rgba(16,185,129,0.15); color:#10B981; padding:1px 5px; border-radius:3px; font-weight:700;">874 İŞLEM</span>
+                </div>
+                <div style="font-size:24px; font-weight:800; color:#10B981; margin-top:3px;">{sc_all_time_rows} Fatura</div>
+                <div style="font-size:10.5px; color:#E2E8F0; margin-top:3px;">
+                    🌐 <b>16 Aktif Ülke</b> <span style="color:#64748B;">•</span> 🏢 <b>43 Kurum & Partner</b>
+                </div>
+                <div style="margin-top:6px; padding-top:5px; border-top:1px solid rgba(255,255,255,0.06); font-size:10px; color:#94A3B8; display:flex; justify-content:space-between;">
+                    <span>3 Yıllık Ort. Marj: <b style="color:#10B981;">%48.4</b></span>
+                    <span>Aktif Hub: <b style="color:#FFFFFF;">6 Ülke</b></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    ''', unsafe_allow_html=True)
+
     # 6 Top KPIs (Ultra Net & Şeffaf Yönetici Tasarımı)
+    st.markdown('<div style="font-size:12px;font-weight:700;color:#94A3B8;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px;">📅 CARİ DÖNEM DETAY METRİKLERİ (' + y_badge_str + '):</div>', unsafe_allow_html=True)
+
     k1, k2, k3, k4, k5, k6 = st.columns(6)
     with k1:
         st.markdown(f"""
@@ -3843,8 +3989,13 @@ if nav_selection == "Executive Dashboard":
                 <span class="kpi-header" style="font-size:12px;font-weight:700;color:#CCD7E6;">Net Satış (Net Sales)</span>
                 <span style="font-size:9.5px;background:rgba(0,245,255,0.15);color:#00F5FF;padding:2px 6px;border-radius:4px;font-weight:700;">{y_badge_str}</span>
             </div>
-            <div class="kpi-val" style="font-size:25px;font-weight:800;color:#FFFFFF;margin-top:2px;">{format_curr(sc_total_rev)}</div>
+            <div class="kpi-val" style="font-size:24px;font-weight:800;color:#FFFFFF;margin-top:2px;">{format_curr(sc_total_rev)}</div>
             <div style="font-size:10.5px;color:#00E676;font-weight:600;margin-top:2px;">+{sc_avg_growth:.1f}% vs LY</div>
+            
+            <div style="background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.22);border-radius:5px;padding:3px 6px;margin-top:5px;font-size:10px;color:#00F5FF;font-weight:700;">
+                🌐 2024-2026 Toplam: <b>{format_curr(sc_all_time_rev)}</b>
+            </div>
+
             <div style="margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,0.08);font-size:10px;line-height:1.45;color:#94A3B8;">
                 <div style="color:{scope_badge_color};font-weight:700;">● {scope_badge_label}</div>
                 <div style="color:#CBD5E1;">🤝 Distribütör: <b>{format_curr(sc_dist_rev)}</b></div>
@@ -3859,8 +4010,13 @@ if nav_selection == "Executive Dashboard":
                 <span class="kpi-header" style="font-size:12px;font-weight:700;color:#CCD7E6;">Aktif Müşteri / Partner</span>
                 <span style="font-size:9.5px;background:rgba(16,185,129,0.15);color:#10B981;padding:2px 6px;border-radius:4px;font-weight:700;">{sc_n_partners} KURUM</span>
             </div>
-            <div class="kpi-val" style="font-size:25px;font-weight:800;color:#FFFFFF;margin-top:2px;">{sc_n_partners}</div>
+            <div class="kpi-val" style="font-size:24px;font-weight:800;color:#FFFFFF;margin-top:2px;">{sc_n_partners}</div>
             <div style="font-size:10.5px;color:#10B981;font-weight:600;margin-top:2px;">+2 Yeni Partner (2026)</div>
+            
+            <div style="background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.22);border-radius:5px;padding:3px 6px;margin-top:5px;font-size:10px;color:#10B981;font-weight:700;">
+                🌐 2024-2026: <b>{sc_all_time_rows} Fatura</b>
+            </div>
+
             <div style="margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,0.08);font-size:10px;line-height:1.45;color:#94A3B8;">
                 <div style="color:#CBD5E1;">• <b>{len(sc_dist_rows)}</b> Yetkili Distribütör</div>
                 <div style="color:#CBD5E1;">• <b>{len(sc_clin_rows)}</b> Doğrudan Klinik/Merkez</div>
@@ -3874,11 +4030,16 @@ if nav_selection == "Executive Dashboard":
                 <span class="kpi-header" style="font-size:12px;font-weight:700;color:#CCD7E6;">Kurulu / Satılan Cihaz</span>
                 <span style="font-size:9.5px;background:rgba(56,189,248,0.15);color:#38BDF8;padding:2px 6px;border-radius:4px;font-weight:700;">{y_badge_str}</span>
             </div>
-            <div class="kpi-val" style="font-size:25px;font-weight:800;color:#FFFFFF;margin-top:2px;">{sc_total_devices:,} Cihaz</div>
+            <div class="kpi-val" style="font-size:24px;font-weight:800;color:#FFFFFF;margin-top:2px;">{sc_total_devices:,} Cihaz</div>
             <div style="font-size:10.5px;color:#00E676;font-weight:600;margin-top:2px;">Cihaz Geliri: {format_curr(sc_total_dev_rev)}</div>
+            
+            <div style="background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.22);border-radius:5px;padding:3px 6px;margin-top:5px;font-size:10px;color:#38BDF8;font-weight:700;">
+                🌐 2024-2026 Toplam: <b>{sc_all_time_dev_cnt} Cihaz</b> ({format_curr(sc_all_time_dev_rev)})
+            </div>
+
             <div style="margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,0.08);font-size:10px;line-height:1.45;color:#94A3B8;">
-                <div style="color:#CBD5E1;">• <b>18</b> Distribütör Tabanı</div>
-                <div style="color:#CBD5E1;">• <b>3</b> Doğrudan Klinik Satışı</div>
+                <div style="color:#CBD5E1;">• <b>{sc_all_time_dist_dev}</b> Distribütör Tabanı</div>
+                <div style="color:#CBD5E1;">• <b>{sc_all_time_clin_dev}</b> Doğrudan Klinik Satışı</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -3889,11 +4050,16 @@ if nav_selection == "Executive Dashboard":
                 <span class="kpi-header" style="font-size:12px;font-weight:700;color:#CCD7E6;">Tekrar Eden Sarf</span>
                 <span style="font-size:9.5px;background:rgba(255,184,0,0.15);color:#FFB800;padding:2px 6px;border-radius:4px;font-weight:700;">{y_badge_str}</span>
             </div>
-            <div class="kpi-val" style="font-size:25px;font-weight:800;color:#FFFFFF;margin-top:2px;">{format_curr(sc_total_con_rev)}</div>
+            <div class="kpi-val" style="font-size:24px;font-weight:800;color:#FFFFFF;margin-top:2px;">{format_curr(sc_total_con_rev)}</div>
             <div style="font-size:10.5px;color:#FFB800;font-weight:600;margin-top:2px;">Cironun %{(sc_total_con_rev/sc_total_rev*100) if sc_total_rev > 0 else 0:.1f}'i</div>
+            
+            <div style="background:rgba(255,184,0,0.08);border:1px solid rgba(255,184,0,0.22);border-radius:5px;padding:3px 6px;margin-top:5px;font-size:10px;color:#FFB800;font-weight:700;">
+                🌐 2024-2026 Toplam: <b>{format_curr(sc_all_time_con_rev)}</b> ({sc_all_time_con_cnt:,} Kutu)
+            </div>
+
             <div style="margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,0.08);font-size:10px;line-height:1.45;color:#94A3B8;">
-                <div style="color:#CBD5E1;">• <b>1,420+</b> Kutu Electro Dish</div>
-                <div style="color:#CBD5E1;">• <b>680+</b> Flakon Liquid Media</div>
+                <div style="color:#CBD5E1;">• <b>{sc_all_time_dist_con:,}</b> Distribütör Çekişi</div>
+                <div style="color:#CBD5E1;">• <b>{sc_all_time_clin_con:,}</b> Klinik Tüketimi</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -3904,8 +4070,13 @@ if nav_selection == "Executive Dashboard":
                 <span class="kpi-header" style="font-size:12px;font-weight:700;color:#CCD7E6;">Brüt Kâr Marjı</span>
                 <span style="font-size:9.5px;background:rgba(168,85,247,0.15);color:#A855F7;padding:2px 6px;border-radius:4px;font-weight:700;">ORTALAMA</span>
             </div>
-            <div class="kpi-val" style="font-size:25px;font-weight:800;color:#FFFFFF;margin-top:2px;">{sc_avg_margin:.1f}%</div>
+            <div class="kpi-val" style="font-size:24px;font-weight:800;color:#FFFFFF;margin-top:2px;">{sc_avg_margin:.1f}%</div>
             <div style="font-size:10.5px;color:#00E676;font-weight:600;margin-top:2px;">+0.8 pt vs Hedef</div>
+            
+            <div style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.22);border-radius:5px;padding:3px 6px;margin-top:5px;font-size:10px;color:#C084FC;font-weight:700;">
+                🌐 2024-2026 Konsolide: <b>%48.4 Marj</b>
+            </div>
+
             <div style="margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,0.08);font-size:10px;line-height:1.45;color:#94A3B8;">
                 <div style="color:#CBD5E1;">• Distribütör Marjı: <b>%42.5</b></div>
                 <div style="color:#CBD5E1;">• Klinik Marjı: <b>%51.2</b></div>
@@ -3919,11 +4090,16 @@ if nav_selection == "Executive Dashboard":
                 <span class="kpi-header" style="font-size:12px;font-weight:700;color:#CCD7E6;">Kapsanan Pazarlar</span>
                 <span style="font-size:9.5px;background:rgba(100,116,139,0.15);color:#CBD5E1;padding:2px 6px;border-radius:4px;font-weight:700;">15 / 48 ÜLKE</span>
             </div>
-            <div class="kpi-val" style="font-size:25px;font-weight:800;color:#FFFFFF;margin-top:2px;">{sc_n_countries} Ülke</div>
+            <div class="kpi-val" style="font-size:24px;font-weight:800;color:#FFFFFF;margin-top:2px;">{sc_n_countries} Ülke</div>
             <div style="font-size:10.5px;color:#94A3B8;font-weight:600;margin-top:2px;">48 Takip Edilen Pazar</div>
+            
+            <div style="background:rgba(100,116,139,0.1);border:1px solid rgba(100,116,139,0.25);border-radius:5px;padding:3px 6px;margin-top:5px;font-size:10px;color:#E2E8F0;font-weight:700;">
+                🌐 2024-2026 Ayak İzi: <b>16 Ülke</b>
+            </div>
+
             <div style="margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,0.08);font-size:10px;line-height:1.45;color:#94A3B8;">
                 <div style="color:#CBD5E1;">• <b>6</b> Distribütör Hub Ülkesi</div>
-                <div style="color:#CBD5E1;">• <b>9</b> Doğrudan Satış Ülkesi</div>
+                <div style="color:#CBD5E1;">• <b>10</b> Doğrudan Satış Ülkesi</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
