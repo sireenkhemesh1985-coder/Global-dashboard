@@ -3471,6 +3471,179 @@ def get_country_prospects(c_name, c_row=None):
     ]
 
 
+
+def get_default_distributor_quotas():
+    return {
+        'ATC_Kuwait': {
+            'id': 'ATC_Kuwait',
+            'name': 'ADVANCED TECHNOLOGY COMPANY K.S.C.P. (ATC)',
+            'country': 'Kuwait',
+            'country_flag': '🇰🇼 Kuveyt',
+            'gdp_pc': '$52,000 USD (Yüksek Alım Gücü)',
+            'clinics': 14,
+            'cycles': '8,500 Siklus / Yıl',
+            'customs': '%5.0 (Körfez Gümrük Birliği - Düşük Engel)',
+            'installed_devices': 3,
+            'historical_summary': '2025: 3 Cihaz ($25.5K) | 2026: 0 Cihaz, 9 Kutu Sarf ($750)',
+            'status_diagnosis': '⚠️ UYUYAN / PASİF DİSTRİBÜTÖR (Atıl Cihaz Tehlikesi)',
+            'ai_rationale': 'Kuveyt kişi başı $52K GSYİH ile dünyanın en zengin pazarlarından biridir ve %5 gümrük vergisi ithalatta maliyet baskısı yaratmamaktadır. Sahadaki 3 kurulu Piezo cihazı yılda klinik başına en az 25-30 kutu dish tüketme potansiyeline sahiptir (asgari 75-90 kutu sarf). ATC 2026 yılında yalnızca $750 sarf alarak cihazları atıl bırakmıştır. 2027 için asgari sarf çekişi zorunlu tutulmalı ve 1 yeni cihaz kotası konulmalıdır.',
+            'ai_target_devices': 1,
+            'ai_target_consumables': 75,
+            'ai_target_revenue': 14750.0,
+            'user_comment': 'Kuveyt distribütörü ATC ile LOA yenileme görüşmesinde sahadaki 3 cihazın aktivasyonu şart koşulacak. Yıllık en az 1 yeni cihaz ve 75 kutu sarf alımı yapılmazsa Kuveyt münhasırlığı feshedilip doğrudan hastanelere satışa geçilecektir.',
+            'approved_devices': 1,
+            'approved_consumables': 75,
+            'approved_revenue': 14750.0,
+            'enforcement_clause': '6 ay içinde asgari sarf kotasının %50\'si sipariş edilmezse münhasırlık askıya alınır.',
+            'status': 'Onaylandı & İcrada',
+            'target_year': '2027'
+        },
+        'AMS_Saudi': {
+            'id': 'AMS_Saudi',
+            'name': 'ASSISTED MEDICAL SOLUTION EST (AMS)',
+            'country': 'Saudi Arabia',
+            'country_flag': '🇸🇦 Suudi Arabistan',
+            'gdp_pc': '$32,000 USD (G20 MENA Lideri)',
+            'clinics': 38,
+            'cycles': '22,000 Siklus / Yıl',
+            'customs': '%5.0 (SFDA Medikal Cihaz Tescili Gerekli)',
+            'installed_devices': 3,
+            'historical_summary': '2025: 3 Cihaz ($22.0K), 88 Sarf ($7.3K) | 2026: 0 Cihaz, 4 Solüsyon ($200)',
+            'status_diagnosis': '🚨 KRİTİK SARF DÜŞÜŞÜ / UYUYAN DİSTRİBÜTÖR',
+            'ai_rationale': 'Suudi Arabistan 38 lisanslı IVF merkezi ve 22,000 yıllık siklusu ile bölgenin en büyük pazarıdır. ZEUS penetrasyonu sadece %7.8 seviyesindedir. 2025 yılında 88 kutu sarf çeken AMS, 2026\'da dish alımını sıfırlamış, yalnızca 4 solüsyon almıştır (-%97.3 düşüş). Ülkedeki SFDA kayıtları tamamlanmışken AMS\'nin pasif kalması kabul edilemez. 2027\'de en az 2 yeni cihaz ve 120 kutu sarf kotası zorunlu kılınmalıdır.',
+            'ai_target_devices': 2,
+            'ai_target_consumables': 120,
+            'ai_target_revenue': 28400.0,
+            'user_comment': 'Suudi AMS\'ye resmi ihtar gönderilerek Riyad ve Cidde klinikleri için klinik aplikasyon desteği önerildi. 2027 yılı için 2 cihaz ve 120 kutu sarf taahhüdü sözleşme eki (Addendum) olarak imzalatılacak.',
+            'approved_devices': 2,
+            'approved_consumables': 120,
+            'approved_revenue': 28400.0,
+            'enforcement_clause': 'Yıllık 120 kutu sarf kotası tutturulamazsa Suudi Arabistan ikinci bir yetkili satıcıya (non-exclusive) açılacaktır.',
+            'status': 'Onaylandı & İcrada',
+            'target_year': '2027'
+        },
+        'Sirius_Jordan_Iraq': {
+            'id': 'Sirius_Jordan_Iraq',
+            'name': 'SIRIUS PHARM COMPANY',
+            'country': 'Jordan-Iraq',
+            'country_flag': '🇯🇴🇮🇶 Ürdün & Irak',
+            'gdp_pc': '$4,800 USD (Orta Gelir)',
+            'clinics': 55,
+            'cycles': '28,000 Siklus / Yıl',
+            'customs': '%6.0 - %10.0 (Kimadia / JFDA İthalat İzni)',
+            'installed_devices': 18,
+            'historical_summary': '2024: 8 Cihaz, 140 Sarf | 2025: 10 Cihaz, 299 Sarf | 2026: 236 Sarf ($19K)',
+            'status_diagnosis': '🏆 LOKOMOTİF DİSTRİBÜTÖR (Münhasır Dağıtıcı)',
+            'ai_rationale': '18 kurulu cihaz ile ZEUS\'un en büyük kurulu tabanına sahiptir. Ürdün ve Irak pazarında toplam 55 klinik bulunmaktadır. Mevcut 18 cihazın yıllık teorik tüketim kapasitesi 550-700 kutu sarftır. Bağdat ve Amman ihalelerinde yeni 4 Piezo cihazı ve 600 kutu sarf kotası rasyonel ve ulaşılabilirdir.',
+            'ai_target_devices': 4,
+            'ai_target_consumables': 600,
+            'ai_target_revenue': 78000.0,
+            'user_comment': 'Sirius konsorsiyumu ile 2027 yılı için 4 yeni cihaz ve 600 kutu sarf alım protokolü görüşülüyor. Irak Sağlık Bakanlığı Kimadia ihalesi için yetki belgesi uzatıldı.',
+            'approved_devices': 4,
+            'approved_consumables': 600,
+            'approved_revenue': 78000.0,
+            'enforcement_clause': 'Tier-1 Platinum distribütör iskonto hakkı (%15) asgari 500 kutu sarf taahhüdüne bağlıdır.',
+            'status': 'Onaylandı & İcrada',
+            'target_year': '2027'
+        },
+        'ITL_Qatar': {
+            'id': 'ITL_Qatar',
+            'name': 'INTERNATIONAL TECHNICAL LEGACY (ITL)',
+            'country': 'Qatar',
+            'country_flag': '🇶🇦 Katar',
+            'gdp_pc': '$82,000 USD (Dünya Lideri Alım Gücü)',
+            'clinics': 8,
+            'cycles': '4,500 Siklus / Yıl',
+            'customs': '%5.0 (MoPH Hızlı Gümrükleme)',
+            'installed_devices': 4,
+            'historical_summary': '2025: 4 Cihaz, 202 Sarf ($52.3K) | 2026: 247 Sarf ($20.6K)',
+            'status_diagnosis': '💎 YÜKSEK VERİMLİ AKTİF DİSTRİBÜTÖR (Cihaz Başı Lider)',
+            'ai_rationale': 'Katar kişi başı $82K GSYİH ile en zengin pazardır. ITL, 4 cihazla yıllık 247 kutu sarf tüketerek cihaz başı verimlilikte portföy birincisidir. Pazardaki 8 kliniğin 4\'ünde ZEUS bulunmaktadır (%50 penetrasyon). 2027 hedefi 1 yeni cihaz ve 400 kutu sarftır.',
+            'ai_target_devices': 1,
+            'ai_target_consumables': 400,
+            'ai_target_revenue': 41500.0,
+            'user_comment': 'Doha merkezli ITL ile ilişkiler mükemmel seviyede. 2027 için 1 yeni cihaz ve 400 kutu sarf taahhüdü onaylandı.',
+            'approved_devices': 1,
+            'approved_consumables': 400,
+            'approved_revenue': 41500.0,
+            'enforcement_clause': 'Münhasır LOA 2027 sonuna kadar geçerlidir.',
+            'status': 'Onaylandı & İcrada',
+            'target_year': '2027'
+        },
+        'SJNU_Korea': {
+            'id': 'SJNU_Korea',
+            'name': 'SJNU INC',
+            'country': 'South Korea',
+            'country_flag': '🇰🇷 Güney Kore',
+            'gdp_pc': '$34,000 USD (Yüksek Teknoloji & IVF Talebi)',
+            'clinics': 150,
+            'cycles': '85,000 Siklus / Yıl (Dünya Rekoru Siklus)',
+            'customs': '%8.0 (MFDS Medikal Ruhsatı)',
+            'installed_devices': 7,
+            'historical_summary': '2025: 4 Cihaz, 71 Sarf ($35.6K) | 2026: 3 Cihaz, 127 Sarf ($32.9K)',
+            'status_diagnosis': '🚀 DÜZENLİ BÜYÜYEN STRATEJİK ASYA HUBI',
+            'ai_rationale': 'Güney Kore 150 klinik ve 85,000 siklus ile dünyanın en büyük tüp bebek pazarlarındandır. SJNU 2025\'te 4, 2026\'da 3 cihaz alarak 7 cihaza ulaşmış ve sarf alımını %78 artırmıştır. 2027 hedefi en az 3 yeni cihaz ve 250 kutu sarftır.',
+            'ai_target_devices': 3,
+            'ai_target_consumables': 250,
+            'ai_target_revenue': 47000.0,
+            'user_comment': 'Seul ve Busan kliniklerinde piezo oosit aktivasyonu klinik protokollere girdi. 2027 için 3 yeni cihaz ve 250 sarf hedefi onaylandı.',
+            'approved_devices': 3,
+            'approved_consumables': 250,
+            'approved_revenue': 47000.0,
+            'enforcement_clause': 'Asya-Pasifik bölge münhasırlığı yıllık 3 cihaz ve 200 kutu sarf şartına bağlıdır.',
+            'status': 'Onaylandı & İcrada',
+            'target_year': '2027'
+        },
+        'CMC_Palestine': {
+            'id': 'CMC_Palestine',
+            'name': 'CONSULTANT MEDICAL COMPANY (CMC)',
+            'country': 'Palestine',
+            'country_flag': '🇵🇸 Filistin',
+            'gdp_pc': '$3,600 USD',
+            'clinics': 18,
+            'cycles': '7,200 Siklus / Yıl',
+            'customs': 'Aşdod Liman Gümrük & Güvenlik Denetimi',
+            'installed_devices': 5,
+            'historical_summary': '2024: 5 Cihaz, 69 Sarf ($43.2K) | 2025: 0 | 2026: 46 Sarf ($3.5K)',
+            'status_diagnosis': '✅ AKTİF SARF İKMALİ (Lojistik Takipte)',
+            'ai_rationale': '5 kurulu cihaz sahadadır. Lojistik ve liman aksaklıkları nedeniyle 2025 siparişi 2026 başına kaymıştır. 2026\'da sarf çekişi yeniden başlamıştır. 2027 hedefi 1 yeni cihaz ve 100 kutu sarftır.',
+            'ai_target_devices': 1,
+            'ai_target_consumables': 100,
+            'ai_target_revenue': 16500.0,
+            'user_comment': 'Liman gecikmelerine karşı Batı Şeria merkezlerine 3 aylık konsinye tampon stok bırakılması kararlaştırıldı. 2027 kotası 1 cihaz + 100 kutu sarf.',
+            'approved_devices': 1,
+            'approved_consumables': 100,
+            'approved_revenue': 16500.0,
+            'enforcement_clause': 'Konsinye stok güvencesi ile düzenli çeyreklik sarf çekişi.',
+            'status': 'Onaylandı & İcrada',
+            'target_year': '2027'
+        },
+        'Sellco_UAE': {
+            'id': 'Sellco_UAE',
+            'name': 'SELLCO TRADING INTL (BAE)',
+            'country': 'United Arab Emirates',
+            'country_flag': '🇦🇪 Birleşik Arap Emirlikleri',
+            'gdp_pc': '$53,000 USD (Yüksek Gelir)',
+            'clinics': 28,
+            'cycles': '16,000 Siklus / Yıl',
+            'customs': '%5.0 (MoHAP Tıbbi Cihaz Kaydı)',
+            'installed_devices': 4,
+            'historical_summary': '2025: 4 Cihaz, 48 Sarf ($23.2K) | 2026: 0 Cihaz, 0 Sarf ($0)',
+            'status_diagnosis': '⚠️ SÖZLEŞMESİZ SPOT MÜŞTERİ (Atıl Cihaz Tehlikesi)',
+            'ai_rationale': 'Sellco resmi distribütör değildir; 2025 yılında 4 cihaz almış spot kurumsal alıcıdır. 2026 yılında hiçbir sarf alımı yapmamıştır ($0). BAE\'de 28 klinik bulunmakta olup sahipsizdir. Sellco\'daki 4 cihazın aktivasyonu için 30 kutuluk özel indirimli refill sarf paketi ($2,850) teklif edilmeli, eşzamanlı olarak BAE geneli için resmi yetkili distribütör (Leader / Al Zahrawi) atanmalıdır.',
+            'ai_target_devices': 0,
+            'ai_target_consumables': 30,
+            'ai_target_revenue': 2850.0,
+            'user_comment': 'Sellco\'ya elindeki 4 cihaz için özel konsinye/indirimli sarf refill teklifi gönderilecek. BAE geneli için yeni distribütör ataması süreci başlatıldı.',
+            'approved_devices': 0,
+            'approved_consumables': 30,
+            'approved_revenue': 2850.0,
+            'enforcement_clause': 'Spot müşteridir; münhasırlığı yoktur.',
+            'status': 'Onaylandı & İcrada',
+            'target_year': '2027'
+        }
+    }
+
 def get_default_strategic_plans():
     return {
         'kuwait_garanti': {
@@ -7608,7 +7781,11 @@ elif nav_selection == "Sales & Product Analytics":
     with lead_hdr_c2:
         lead_metric_view = st.radio(
             "Leaderboard Metrik Kapsamı:",
-            ["Konsolide (Tüm Zamanlar Portföyü)", "Seçili Dönem Satışları (2026 YTD)"],
+            [
+                "Konsolide (Tüm Zamanlar Portföyü)",
+                "📅 Yıllık Cihaz & Sarf Dağılımı (2024 / 2025 / 2026)",
+                "Seçili Dönem Satışları (2026 YTD)"
+            ],
             index=0,
             horizontal=True
         )
@@ -7625,8 +7802,9 @@ elif nav_selection == "Sales & Product Analytics":
     </div>
     ''', unsafe_allow_html=True)
 
-    lead_tab1, lead_tab2, lead_tab3, lead_tab4 = st.tabs([
+    lead_tab1, lead_tab_quota, lead_tab2, lead_tab3, lead_tab4 = st.tabs([
         "Yetkili Uluslararası Distribütörler (6 Distribütör)",
+        "🎯 Yıllık Pazar Kapasitesi & AI Sipariş İsteme Masası (Kotalar & Aktivasyon)",
         "Uluslararası Doğrudan Müşteriler & Klinikler (12 Müşteri)",
         "Türkiye Pazarı Klinik & Müşterileri (25 Yerli Hesap)",
         "Konsolide Tüm Portföy (43 Kurum)"
@@ -7670,7 +7848,32 @@ elif nav_selection == "Sales & Product Analytics":
             target_val = d_targets.get(d['name'], 30000.0)
             attainment_pct = round((all_time_rev / target_val) * 100.0, 1)
 
-            if lead_metric_view == "Konsolide (Tüm Zamanlar Portföyü)":
+            if "Yıllık Cihaz & Sarf" in lead_metric_view:
+                y24_str = f"{dev_cnt_map.get(2024, 0)} Cihaz ({format_curr(dev_rev_map.get(2024, 0.0))}) | {format_curr(con_rev_map.get(2024, 0.0))} Sarf" if rev_map.get(2024, 0.0) > 0 else "— ($0)"
+                y25_str = f"{dev_cnt_map.get(2025, 0)} Cihaz ({format_curr(dev_rev_map.get(2025, 0.0))}) | {format_curr(con_rev_map.get(2025, 0.0))} Sarf" if rev_map.get(2025, 0.0) > 0 else "— ($0)"
+                y26_str = f"{dev_cnt_map.get(2026, 0)} Cihaz ({format_curr(dev_rev_map.get(2026, 0.0))}) | {format_curr(con_rev_map.get(2026, 0.0))} Sarf" if rev_map.get(2026, 0.0) > 0 else "— ($0)"
+                
+                if rev_map.get(2026, 0.0) == 0:
+                    status_str = "🚨 2026 Sipariş Sıfır (Uyuyan / Pasif)"
+                elif con_rev_map.get(2026, 0.0) < 1000:
+                    status_str = "⚠️ Kritik Sarf Düşüşü (Atıl Cihaz)"
+                elif all_time_rev > 60000:
+                    status_str = "🏆 Lokomotif Partner (Aktif Yıllık Çekiş)"
+                else:
+                    status_str = "✅ Aktif Düzenli Sipariş"
+                    
+                d_table.append({
+                    'Distribütör': d['name'],
+                    'Ülke / Bölge': d.get('country_name', 'Jordan-Iraq'),
+                    '2024 (Cihaz | Sarf)': y24_str,
+                    '2025 (Cihaz | Sarf)': y25_str,
+                    '2026 Bu Yıl (Cihaz | Sarf)': y26_str,
+                    'Kurulu Taban': f"{all_time_dev_cnt} Cihaz",
+                    'Toplam Sarf Hasılatı': format_curr(all_time_con_rev),
+                    'Konsolide Ciro': format_curr(all_time_rev),
+                    'Aktivite Teşhisi': status_str
+                })
+            elif "Konsolide" in lead_metric_view:
                 d_table.append({
                     'Distribütör': d['name'],
                     'Ülke / Bölge': d.get('country_name', 'Jordan-Iraq'),
@@ -7700,6 +7903,107 @@ elif nav_selection == "Sales & Product Analytics":
                 })
         
         st.dataframe(pd.DataFrame(d_table), use_container_width=True, hide_index=True)
+
+    # 2. Annual Market Capacity & AI Quota Recommendation Desk (Requested by User)
+    with lead_tab_quota:
+        st.markdown("""
+        <div style="background:rgba(19,166,181,0.08);border:1px solid rgba(0,245,255,0.25);border-left:4px solid #00F5FF;border-radius:10px;padding:12px 16px;margin-bottom:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+                <div>
+                    <span style="font-size:13px;font-weight:700;color:#00F5FF;">🎯 YILLIK PAZAR KAPASİTESİ & Aİ ASGARİ SİPARİŞ KOTALARI MASASI</span>
+                    <div style="font-size:12px;color:#E2E8F0;margin-top:3px;line-height:1.45;">
+                        Cihaz almış fakat düzenli yıllık sipariş vermeyen <b>pasif/uyuyan distribütörleri</b> aktive etmek için her ülkenin <b>GSYİH (GDP), Yıllık Siklus, Klinik Sayısı ve Gümrük Rejimi</b> parametrelerine göre AI asgari yıllık sipariş tahmini üretilmiştir. Yöneticiler değerlendirme yorumu ekleyip resmi kotayı belirleyebilir; kaydedilen kararlar doğrudan <b>Strategic Decision Center</b>'a aktarılır.
+                    </div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        if 'distributor_annual_quotas' not in st.session_state:
+            st.session_state['distributor_annual_quotas'] = get_default_distributor_quotas()
+
+        q_dict = st.session_state['distributor_annual_quotas']
+
+        for q_id, q_data in q_dict.items():
+            is_dormant = "UYUYAN" in q_data['status_diagnosis'] or "KRİTİK" in q_data['status_diagnosis'] or "SPOT" in q_data['status_diagnosis']
+            card_border = "#FF5252" if is_dormant else "#00F5FF"
+            badge_bg = "rgba(255,82,82,0.15)" if is_dormant else "rgba(0,245,255,0.15)"
+            badge_color = "#FF5252" if is_dormant else "#00F5FF"
+
+            st.markdown(f"""
+            <div style="background:#0F192E;border:1.5px solid {card_border};border-radius:12px;padding:16px 20px;margin-bottom:16px;box-shadow:0 6px 18px rgba(0,0,0,0.35);">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
+                    <div>
+                        <span style="font-size:15px;font-weight:800;color:#FFFFFF;">{q_data['country_flag']} — {q_data['name']}</span>
+                        <div style="font-size:11px;color:#94A3B8;margin-top:2px;">Hedef Sezon: <b>{q_data['target_year']} Asgari Yıllık Sipariş Şartnamesi</b></div>
+                    </div>
+                    <span style="background:{badge_bg};color:{badge_color};padding:4px 10px;border-radius:6px;font-weight:800;font-size:11px;border:1px solid {badge_color};">
+                        {q_data['status_diagnosis']}
+                    </span>
+                </div>
+                
+                <!-- 4 Macro & Clinical Parameters -->
+                <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(170px, 1fr));gap:8px;background:rgba(255,255,255,0.03);padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);margin-bottom:10px;">
+                    <div>
+                        <div style="font-size:10px;color:#94A3B8;font-weight:600;">💰 KİŞİ BAŞI GSYİH (GDP):</div>
+                        <div style="font-size:12px;color:#FFFFFF;font-weight:700;margin-top:1px;">{q_data['gdp_pc']}</div>
+                    </div>
+                    <div>
+                        <div style="font-size:10px;color:#94A3B8;font-weight:600;">🏥 LİSANSLI KLİNİK SAYISI:</div>
+                        <div style="font-size:12px;color:#00F5FF;font-weight:700;margin-top:1px;">{q_data['clinics']} Klinik</div>
+                    </div>
+                    <div>
+                        <div style="font-size:10px;color:#94A3B8;font-weight:600;">🔄 YILLIK IVF SİKLUS HACMİ:</div>
+                        <div style="font-size:12px;color:#10B981;font-weight:700;margin-top:1px;">{q_data['cycles']}</div>
+                    </div>
+                    <div>
+                        <div style="font-size:10px;color:#94A3B8;font-weight:600;">🛃 GÜMRÜK VERGİSİ & İTHALAT:</div>
+                        <div style="font-size:12px;color:#FFB800;font-weight:700;margin-top:1px;">{q_data['customs']}</div>
+                    </div>
+                </div>
+
+                <!-- Installed Base & History -->
+                <div style="font-size:11.5px;color:#CCD7E6;margin-bottom:10px;padding:6px 10px;background:rgba(0,0,0,0.25);border-radius:6px;">
+                    <b>🔬 Sahadaki Kurulu Taban:</b> <span style="color:#00F5FF;font-weight:700;">{q_data['installed_devices']} Cihaz</span> | 
+                    <b>📜 Geçmiş Sipariş Çekişi:</b> <span style="color:#E2E8F0;">{q_data['historical_summary']}</span>
+                </div>
+
+                <!-- AI Recommendation Rationale -->
+                <div style="background:rgba(0,245,255,0.04);border-left:3px solid #00F5FF;padding:10px 14px;border-radius:6px;margin-bottom:12px;">
+                    <div style="font-size:11px;font-weight:700;color:#00F5FF;margin-bottom:3px;">🤖 AI Pazar Kapasitesi Analizi & Kota Rasyoneli:</div>
+                    <div style="font-size:12px;color:#CBD5E1;line-height:1.5;">{q_data['ai_rationale']}</div>
+                    <div style="margin-top:8px;padding-top:6px;border-top:1px dashed rgba(0,245,255,0.2);display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;">
+                        <span>🎯 <b>AI Önerilen Cihaz:</b> <b style="color:#00F5FF;">+{q_data['ai_target_devices']} Adet</b></span>
+                        <span>🧪 <b>AI Önerilen Sarf:</b> <b style="color:#FFB800;">{q_data['ai_target_consumables']} Kutu</b></span>
+                        <span>💰 <b>AI Asgari Ciro Kotası:</b> <b style="color:#10B981;">{format_curr(q_data['ai_target_revenue'])}</b></span>
+                    </div>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            with st.expander(f"✍️ Yönetici Değerlendirmesi & 2027 Resmi Sipariş Kotası Belirle ({q_data['name']})", expanded=False):
+                with st.form(f"form_quota_{q_id}"):
+                    c_comm = st.text_area("Yönetici Değerlendirme Yorumu & Saha Stratejisi:", value=q_data.get('user_comment', ''), key=f"qcomm_{q_id}")
+                    col_q1, col_q2, col_q3 = st.columns(3)
+                    with col_q1:
+                        c_dev = st.number_input("Onaylanan Yıllık Cihaz Kotası (Adet):", min_value=0, max_value=20, value=int(q_data.get('approved_devices', q_data['ai_target_devices'])), key=f"qdev_{q_id}")
+                    with col_q2:
+                        c_con = st.number_input("Onaylanan Yıllık Sarf Kotası (Kutu):", min_value=0, max_value=1500, value=int(q_data.get('approved_consumables', q_data['ai_target_consumables'])), step=10, key=f"qcon_{q_id}")
+                    with col_q3:
+                        c_rev = st.number_input("Asgari Yıllık Ciro Taahhüdü ($ USD):", min_value=0.0, max_value=200000.0, value=float(q_data.get('approved_revenue', q_data['ai_target_revenue'])), step=1000.0, key=f"qrev_{q_id}")
+                    
+                    c_clause = st.text_input("Münhasırlık Şartı & İhtar / Fesih Klozu:", value=q_data.get('enforcement_clause', ''), key=f"qcl_{q_id}")
+                    
+                    if st.form_submit_button("💾 Yıllık Sipariş Kotasını Kaydet & Strategic Decision Center'a İlet", type="primary"):
+                        q_dict[q_id]['user_comment'] = c_comm.strip()
+                        q_dict[q_id]['approved_devices'] = int(c_dev)
+                        q_dict[q_id]['approved_consumables'] = int(c_con)
+                        q_dict[q_id]['approved_revenue'] = float(c_rev)
+                        q_dict[q_id]['enforcement_clause'] = c_clause.strip()
+                        q_dict[q_id]['status'] = 'Onaylandı & İcrada'
+                        st.session_state['distributor_annual_quotas'] = q_dict
+                        st.success(f"✓ {q_data['name']} yıllık sipariş kotası ve yorumunuz başarıyla kaydedildi ve Strategic Decision Center'a aktarıldı!")
+                        st.rerun()
 
     # 2. International Direct Clients
     with lead_tab2:
@@ -9913,7 +10217,98 @@ elif nav_selection == "Strategic Decision Center":
                 p_dict[a_key]['status'] = 'İncelemede / Revize' if is_approved else 'Onaylandı & İcrada'
                 st.rerun()
 
-    st.markdown("<hr style='border-color:rgba(255,255,255,0.1); margin:24px 0;'>", unsafe_allow_html=True)
+
+    # --------------------------------------------------------------------------
+    # STRATEGIC DECISION INTEGRATION: DISTRIBUTOR ANNUAL QUOTAS & ACTIVATION DESK
+    # --------------------------------------------------------------------------
+    st.markdown("### 🎯 Distribütör Yıllık Asgari Sipariş Kotaları & Aktivasyon Masası")
+    st.caption("Sales & Product Analytics'te yöneticiler tarafından belirlenen yıllık cihaz/sarf hedefleri, pazar kapasitesi parametreleri (GDP, Siklus, Gümrük) ve icra protokolü onayları.")
+
+    if 'distributor_annual_quotas' not in st.session_state:
+        st.session_state['distributor_annual_quotas'] = get_default_distributor_quotas()
+
+    q_dict = st.session_state['distributor_annual_quotas']
+
+    # KPI Summary Row for All Quotas
+    tot_target_dev = sum(int(q.get('approved_devices', q['ai_target_devices'])) for q in q_dict.values())
+    tot_target_con = sum(int(q.get('approved_consumables', q['ai_target_consumables'])) for q in q_dict.values())
+    tot_target_rev = sum(float(q.get('approved_revenue', q['ai_target_revenue'])) for q in q_dict.values())
+
+    qc1, qc2, qc3 = st.columns(3)
+    with qc1:
+        st.markdown(f"""
+        <div class="kpi-container" style="border-top:3px solid #00F5FF;">
+            <div class="kpi-header">Toplam Hedef Cihaz Alımı (2027)</div>
+            <div class="kpi-val">{tot_target_dev} Cihaz</div>
+            <div class="kpi-sub kpi-pos">Yeni Filo Dağıtımı</div>
+        </div>
+        """, unsafe_allow_html=True)
+    with qc2:
+        st.markdown(f"""
+        <div class="kpi-container" style="border-top:3px solid #FFB800;">
+            <div class="kpi-header">Toplam Hedef Sarf Siparişi (2027)</div>
+            <div class="kpi-val">{tot_target_con:,} Kutu</div>
+            <div class="kpi-sub kpi-pos">Düzenli İkmal Taahhüdü</div>
+        </div>
+        """, unsafe_allow_html=True)
+    with qc3:
+        st.markdown(f"""
+        <div class="kpi-container" style="border-top:3px solid #10B981;">
+            <div class="kpi-header">Taahhüt Edilen Asgari Hasılat</div>
+            <div class="kpi-val">{format_curr(tot_target_rev)}</div>
+            <div class="kpi-sub kpi-pos">Sözleşme Bağlayıcı Kota</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    for q_id, q in q_dict.items():
+        is_appr = (q.get('status') == 'Onaylandı & İcrada')
+        is_dorm = "UYUYAN" in q['status_diagnosis'] or "KRİTİK" in q['status_diagnosis'] or "SPOT" in q['status_diagnosis']
+        b_col = "#FF5252" if is_dorm else "#00F5FF"
+        b_txt = "#00E676" if is_appr else "#FFB800"
+        b_bg = "rgba(0,230,118,0.15)" if is_appr else "rgba(255,184,0,0.15)"
+
+        st.markdown(f"""
+        <div style="background:#0F192E; border:1.5px solid {b_col}; border-radius:12px; padding:16px 20px; margin-bottom:12px; box-shadow:0 4px 14px rgba(0,0,0,0.3);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:8px;">
+                <span style="font-weight:700; color:{b_col}; font-size:14.5px;">{q['country_flag']} — {q['name']}</span>
+                <div style="display:flex; gap:8px; align-items:center;">
+                    <span style="background:rgba(255,255,255,0.06); color:#CCD7E6; padding:3px 8px; border-radius:4px; font-size:11px;">{q['status_diagnosis']}</span>
+                    <span style="background:{b_bg}; color:{b_txt}; padding:3px 10px; border-radius:6px; font-weight:700; font-size:11px;">{q.get('status', 'Onaylandı & İcrada')}</span>
+                </div>
+            </div>
+            
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap:8px; background:rgba(255,255,255,0.02); padding:8px 12px; border-radius:6px; font-size:11px; margin-bottom:8px;">
+                <div><span style="color:#8FA3C0;">Pazar Gücü:</span> <b style="color:#FFFFFF;">{q['gdp_pc']}</b></div>
+                <div><span style="color:#8FA3C0;">Klinik Kapasitesi:</span> <b style="color:#00F5FF;">{q['clinics']} Klinik ({q['cycles']})</b></div>
+                <div><span style="color:#8FA3C0;">Gümrük & İthalat:</span> <b style="color:#FFB800;">{q['customs']}</b></div>
+                <div><span style="color:#8FA3C0;">Kurulu Taban:</span> <b style="color:#10B981;">{q['installed_devices']} Cihaz</b></div>
+            </div>
+
+            <div style="background:rgba(0,0,0,0.25); border-left:3px solid {b_col}; padding:8px 12px; border-radius:6px; margin-bottom:8px; font-size:12px;">
+                <b style="color:#00F5FF;">✍️ Yönetici Değerlendirmesi:</b> <span style="color:#E2E8F0;">{q.get('user_comment', '')}</span>
+            </div>
+
+            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:10px; background:rgba(0,245,255,0.04); padding:10px; border-radius:8px; font-size:11.5px; margin-bottom:8px;">
+                <div><b style="color:#8FA3C0;">Onaylanan Cihaz Kotası:</b><br><span style="color:#00F5FF; font-weight:700; font-size:13px;">+{q.get('approved_devices', q['ai_target_devices'])} Adet</span></div>
+                <div><b style="color:#8FA3C0;">Onaylanan Sarf Kotası:</b><br><span style="color:#FFB800; font-weight:700; font-size:13px;">{q.get('approved_consumables', q['ai_target_consumables'])} Kutu</span></div>
+                <div><b style="color:#8FA3C0;">Asgari Yıllık Ciro Taahhüdü:</b><br><span style="color:#10B981; font-weight:700; font-size:13px;">{format_curr(q.get('approved_revenue', q['ai_target_revenue']))}</span></div>
+                <div><b style="color:#8FA3C0;">Münhasırlık Şartı:</b><br><span style="color:#CCD7E6;">{q.get('enforcement_clause', 'Standart Sözleşme')}</span></div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        col_qbtn1, col_qbtn2 = st.columns([3, 1])
+        with col_qbtn2:
+            q_btn_lbl = "✕ İncelemeye Al" if is_appr else "✅ Yıllık Kotayı Resmileştir & Onayla"
+            if st.button(q_btn_lbl, key=f"btn_toggle_quota_{q_id}", use_container_width=True):
+                q_dict[q_id]['status'] = 'İncelemede / Revize' if is_appr else 'Onaylandı & İcrada'
+                st.session_state['distributor_annual_quotas'] = q_dict
+                st.rerun()
+
+
+        st.markdown("<hr style='border-color:rgba(255,255,255,0.1); margin:24px 0;'>", unsafe_allow_html=True)
 
 
     st.markdown("""
