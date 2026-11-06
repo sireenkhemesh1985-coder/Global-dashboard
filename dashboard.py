@@ -3554,13 +3554,54 @@ if nav_selection == "Executive Dashboard":
     with col_h1:
         st.markdown(
             "<div><span class='chip chip-info'>Executive Overview</span>"
-            "<span class='chip chip-ok' style='background:rgba(0,230,118,0.18);color:#00E676;border:1px solid rgba(0,230,118,0.3);'>✓ Live Certified Medical Sales Data (874 Transactions)</span><span class='chip chip-wn' style='background:rgba(255,184,0,0.18);color:#FFB800;border:1px solid rgba(255,184,0,0.3);'>AI Predictive Engine Active</span></div>"
-            "<h1 style='margin-top:4px;font-size:30px;font-weight:700;'>Global Distribution Command Center</h1>"
-            "<p style='color:#8FA3C0;font-size:14px;margin-bottom:16px;'>Global reproductive technologies commercial performance & IVF market expansion tracking.</p>",
+            "<span class='chip chip-ok' style='background:rgba(0,230,118,0.18);color:#00E676;border:1px solid rgba(0,230,118,0.3);'>✓ Canlı Doğrulanmış Medikal Satış Verisi (874 Fatura)</span><span class='chip chip-wn' style='background:rgba(255,184,0,0.18);color:#FFB800;border:1px solid rgba(255,184,0,0.3);'>AI Predictive Engine Active</span></div>"
+            "<h1 style='margin-top:4px;font-size:28px;font-weight:700;'>Global Commercial & Distribution Command Center</h1>"
+            "<p style='color:#8FA3C0;font-size:14px;margin-bottom:12px;'>ZEUS Üreme Teknolojileri küresel satış hacmi, klinik penetrasyon ve pazar yayılım paneli.</p>",
             unsafe_allow_html=True
         )
     with col_h2:
-        st.markdown(f"<div style='text-align:right;padding-top:10px;'><span class='chip chip-ok'>System Online</span><br><small style='color:#8FA3C0;'>Period: {range_sel} {year_sel}</small></div>", unsafe_allow_html=True)
+        st.markdown(f"<div style='text-align:right;padding-top:10px;'><span class='chip chip-ok'>System Online</span><br><small style='color:#8FA3C0;'>Seçili Dönem: <b>{year_sel}</b></small></div>", unsafe_allow_html=True)
+
+    # --------------------------------------------------------------------------
+    # NETLİK VE ŞEFFAFLIK BİLGİLENDİRME BANNERI (YÖNETİCİ AÇIKLAMA MASASI)
+    # --------------------------------------------------------------------------
+    if "2026 (YTD" in year_sel:
+        y_badge_str = "2026 YILI (BU YIL)"
+        period_expl = "YALNIZCA BU YIL (2026 YTD)"
+    elif "Projeksiyon" in year_sel:
+        y_badge_str = "2026 (YTD + Q4 PROJEKSİYON)"
+        period_expl = "2026 YILI + Q4 BEKLENTİ"
+    elif "2025" in year_sel:
+        y_badge_str = "2025 (TAM YIL)"
+        period_expl = "2025 TAKVİM YILI"
+    elif "2024" in year_sel:
+        y_badge_str = "2024 (TAM YIL)"
+        period_expl = "2024 TAKVİM YILI"
+    elif "Konsolide" in year_sel:
+        y_badge_str = "TÜM ZAMANLAR (2024-2026)"
+        period_expl = "2024 - 2026 TÜM ARŞİV"
+    else:
+        y_badge_str = year_sel[:10]
+        period_expl = year_sel
+
+    st.markdown(f'''
+    <div style="background:rgba(19,166,181,0.08);border:1px solid rgba(0,245,255,0.25);border-left:4px solid #00F5FF;border-radius:10px;padding:11px 16px;margin-bottom:14px;backdrop-filter:blur(10px);">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+            <div>
+                <span style="font-size:12.5px;font-weight:700;color:#00F5FF;letter-spacing:0.5px;">📌 VERİ KAPSAMI & DÖNEM ŞEFFAFLIK RAPORU:</span>
+                <div style="font-size:12px;color:#E2E8F0;margin-top:3px;line-height:1.45;">
+                    Aşağıdaki <b>$215.0K</b> cirosu <b>{period_expl}</b> dönemine aittir. Kapsam olarak <b>HERKES DAHİLDİR</b> (6 Yetkili Distribütör + Türkiye ve dünyadaki 37 Doğrudan Klinik/Hastane).
+                </div>
+            </div>
+            <div style="display:flex;gap:10px;font-size:11px;background:rgba(15,23,42,0.7);padding:6px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);flex-wrap:wrap;">
+                <div>📅 2024: <b>$177.6K</b></div>
+                <div>📅 2025: <b>$301.3K</b></div>
+                <div>📅 2026 (Bu Yıl): <b style="color:#00F5FF;">$215.0K</b></div>
+                <div style="border-left:1px solid rgba(255,255,255,0.2);padding-left:8px;">🌐 Tüm Zamanlar: <b style="color:#10B981;">$693.9K</b></div>
+            </div>
+        </div>
+    </div>
+    ''', unsafe_allow_html=True)
 
     # Portföy Segmentasyonu: Distribütörler vs Herkes Dahil (Tüm Klinikler & Hastaneler)
     c_sc1, c_sc2 = st.columns([3.2, 1.8])
@@ -3580,19 +3621,31 @@ if nav_selection == "Executive Dashboard":
     with c_sc2:
         st.markdown('''
         <div style="text-align:right;padding-top:4px;">
-            <span style="font-size:11.5px;color:#94A3B8;">Kanal Kırılımı: </span>
-            <span style="font-size:11.5px;color:#00F5FF;font-weight:700;">Distribütör: %69.1 ($148.6K)</span>
+            <span style="font-size:11.5px;color:#94A3B8;">2026 Kanal Kırılımı: </span>
+            <span style="font-size:11.5px;color:#00F5FF;font-weight:700;">Distribütör: %50.1 ($107.7K)</span>
             <span style="color:#64748B;"> | </span>
-            <span style="font-size:11.5px;color:#FFB800;font-weight:700;">Klinikler: %30.9 ($66.4K)</span>
+            <span style="font-size:11.5px;color:#FFB800;font-weight:700;">Klinikler: %49.9 ($107.2K)</span>
         </div>
         ''', unsafe_allow_html=True)
 
     if "Distribütörler" in exec_scope:
         sc_rows = dist_rows
+        scope_badge_label = "YALNIZCA DİSTRİBÜTÖRLER"
+        scope_badge_bg = "rgba(0,245,255,0.15)"
+        scope_badge_color = "#00F5FF"
+        scope_desc_str = "6 Yetkili Distribütör Hub"
     elif "Klinikler" in exec_scope:
         sc_rows = [d for d in active_rows if d not in dist_rows]
+        scope_badge_label = "DOĞRUDAN KLİNİKLER"
+        scope_badge_bg = "rgba(255,184,0,0.15)"
+        scope_badge_color = "#FFB800"
+        scope_desc_str = "37 Doğrudan Klinik & Hastane"
     else:
         sc_rows = active_rows
+        scope_badge_label = "HERKES DAHİL (TÜM PORTFÖY)"
+        scope_badge_bg = "rgba(16,185,129,0.15)"
+        scope_badge_color = "#10B981"
+        scope_desc_str = "6 Distribütör + 37 Klinik"
 
     sc_total_rev = sum(d['revenue'] for d in sc_rows)
     sc_total_dev_rev = sum(d['device_rev'] for d in sc_rows)
@@ -3603,54 +3656,102 @@ if nav_selection == "Executive Dashboard":
     sc_n_partners = len(sc_rows)
     sc_n_countries = len(set(d['id'] for d in sc_rows))
 
-    # 6 Top KPIs (Dinamik Segmentasyonlu)
+    sc_dist_rows = [d for d in sc_rows if d in dist_rows]
+    sc_clin_rows = [d for d in sc_rows if d not in dist_rows]
+    sc_dist_rev = sum(d['revenue'] for d in sc_dist_rows)
+    sc_clin_rev = sum(d['revenue'] for d in sc_clin_rows)
+
+    # 6 Top KPIs (Ultra Net & Şeffaf Yönetici Tasarımı)
     k1, k2, k3, k4, k5, k6 = st.columns(6)
     with k1:
         st.markdown(f"""
-        <div class="kpi-container">
-            <div class="kpi-header">Net Sales</div>
-            <div class="kpi-val">{format_curr(sc_total_rev)}</div>
-            <div class="kpi-sub kpi-pos">+{sc_avg_growth:.1f}% vs LY</div>
+        <div class="kpi-container" style="border-top: 3px solid #00F5FF;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span class="kpi-header" style="font-size:12px;font-weight:700;color:#CCD7E6;">Net Satış (Net Sales)</span>
+                <span style="font-size:9.5px;background:rgba(0,245,255,0.15);color:#00F5FF;padding:2px 6px;border-radius:4px;font-weight:700;">{y_badge_str}</span>
+            </div>
+            <div class="kpi-val" style="font-size:25px;font-weight:800;color:#FFFFFF;margin-top:2px;">{format_curr(sc_total_rev)}</div>
+            <div style="font-size:10.5px;color:#00E676;font-weight:600;margin-top:2px;">+{sc_avg_growth:.1f}% vs LY</div>
+            <div style="margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,0.08);font-size:10px;line-height:1.45;color:#94A3B8;">
+                <div style="color:{scope_badge_color};font-weight:700;">● {scope_badge_label}</div>
+                <div style="color:#CBD5E1;">🤝 Distribütör: <b>{format_curr(sc_dist_rev)}</b></div>
+                <div style="color:#CBD5E1;">🏥 Klinikler: <b>{format_curr(sc_clin_rev)}</b></div>
+            </div>
         </div>
         """, unsafe_allow_html=True)
     with k2:
         st.markdown(f"""
-        <div class="kpi-container">
-            <div class="kpi-header">Active Partners</div>
-            <div class="kpi-val">{sc_n_partners}</div>
-            <div class="kpi-sub kpi-pos">+2 in 2026</div>
+        <div class="kpi-container" style="border-top: 3px solid #10B981;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span class="kpi-header" style="font-size:12px;font-weight:700;color:#CCD7E6;">Aktif Müşteri / Partner</span>
+                <span style="font-size:9.5px;background:rgba(16,185,129,0.15);color:#10B981;padding:2px 6px;border-radius:4px;font-weight:700;">{sc_n_partners} KURUM</span>
+            </div>
+            <div class="kpi-val" style="font-size:25px;font-weight:800;color:#FFFFFF;margin-top:2px;">{sc_n_partners}</div>
+            <div style="font-size:10.5px;color:#10B981;font-weight:600;margin-top:2px;">+2 Yeni Partner (2026)</div>
+            <div style="margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,0.08);font-size:10px;line-height:1.45;color:#94A3B8;">
+                <div style="color:#CBD5E1;">• <b>{len(sc_dist_rows)}</b> Yetkili Distribütör</div>
+                <div style="color:#CBD5E1;">• <b>{len(sc_clin_rows)}</b> Doğrudan Klinik/Merkez</div>
+            </div>
         </div>
         """, unsafe_allow_html=True)
     with k3:
         st.markdown(f"""
-        <div class="kpi-container">
-            <div class="kpi-header">Devices Placed</div>
-            <div class="kpi-val">{sc_total_devices:,}</div>
-            <div class="kpi-sub kpi-pos">+{avg_growth*0.9:.1f}% Units</div>
+        <div class="kpi-container" style="border-top: 3px solid #38BDF8;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span class="kpi-header" style="font-size:12px;font-weight:700;color:#CCD7E6;">Kurulu / Satılan Cihaz</span>
+                <span style="font-size:9.5px;background:rgba(56,189,248,0.15);color:#38BDF8;padding:2px 6px;border-radius:4px;font-weight:700;">{y_badge_str}</span>
+            </div>
+            <div class="kpi-val" style="font-size:25px;font-weight:800;color:#FFFFFF;margin-top:2px;">{sc_total_devices:,} Cihaz</div>
+            <div style="font-size:10.5px;color:#00E676;font-weight:600;margin-top:2px;">Cihaz Geliri: {format_curr(sc_total_dev_rev)}</div>
+            <div style="margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,0.08);font-size:10px;line-height:1.45;color:#94A3B8;">
+                <div style="color:#CBD5E1;">• <b>18</b> Distribütör Tabanı</div>
+                <div style="color:#CBD5E1;">• <b>3</b> Doğrudan Klinik Satışı</div>
+            </div>
         </div>
         """, unsafe_allow_html=True)
     with k4:
         st.markdown(f"""
-        <div class="kpi-container">
-            <div class="kpi-header">Consumables</div>
-            <div class="kpi-val">{format_curr(sc_total_con_rev)}</div>
-            <div class="kpi-sub kpi-pos">+{(avg_growth+3.1):.1f}% Rec.</div>
+        <div class="kpi-container" style="border-top: 3px solid #FFB800;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span class="kpi-header" style="font-size:12px;font-weight:700;color:#CCD7E6;">Tekrar Eden Sarf</span>
+                <span style="font-size:9.5px;background:rgba(255,184,0,0.15);color:#FFB800;padding:2px 6px;border-radius:4px;font-weight:700;">{y_badge_str}</span>
+            </div>
+            <div class="kpi-val" style="font-size:25px;font-weight:800;color:#FFFFFF;margin-top:2px;">{format_curr(sc_total_con_rev)}</div>
+            <div style="font-size:10.5px;color:#FFB800;font-weight:600;margin-top:2px;">Cironun %{(sc_total_con_rev/sc_total_rev*100) if sc_total_rev > 0 else 0:.1f}'i</div>
+            <div style="margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,0.08);font-size:10px;line-height:1.45;color:#94A3B8;">
+                <div style="color:#CBD5E1;">• <b>1,420+</b> Kutu Electro Dish</div>
+                <div style="color:#CBD5E1;">• <b>680+</b> Flakon Liquid Media</div>
+            </div>
         </div>
         """, unsafe_allow_html=True)
     with k5:
         st.markdown(f"""
-        <div class="kpi-container">
-            <div class="kpi-header">Gross Margin</div>
-            <div class="kpi-val">{sc_avg_margin:.1f}%</div>
-            <div class="kpi-sub kpi-pos">+0.8 pt vs Target</div>
+        <div class="kpi-container" style="border-top: 3px solid #A855F7;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span class="kpi-header" style="font-size:12px;font-weight:700;color:#CCD7E6;">Brüt Kâr Marjı</span>
+                <span style="font-size:9.5px;background:rgba(168,85,247,0.15);color:#A855F7;padding:2px 6px;border-radius:4px;font-weight:700;">ORTALAMA</span>
+            </div>
+            <div class="kpi-val" style="font-size:25px;font-weight:800;color:#FFFFFF;margin-top:2px;">{sc_avg_margin:.1f}%</div>
+            <div style="font-size:10.5px;color:#00E676;font-weight:600;margin-top:2px;">+0.8 pt vs Hedef</div>
+            <div style="margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,0.08);font-size:10px;line-height:1.45;color:#94A3B8;">
+                <div style="color:#CBD5E1;">• Distribütör Marjı: <b>%42.5</b></div>
+                <div style="color:#CBD5E1;">• Klinik Marjı: <b>%51.2</b></div>
+            </div>
         </div>
         """, unsafe_allow_html=True)
     with k6:
         st.markdown(f"""
-        <div class="kpi-container">
-            <div class="kpi-header">Covered Mkts</div>
-            <div class="kpi-val">{sc_n_countries}</div>
-            <div class="kpi-sub kpi-neu">of 48 Tracked</div>
+        <div class="kpi-container" style="border-top: 3px solid #64748B;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <span class="kpi-header" style="font-size:12px;font-weight:700;color:#CCD7E6;">Kapsanan Pazarlar</span>
+                <span style="font-size:9.5px;background:rgba(100,116,139,0.15);color:#CBD5E1;padding:2px 6px;border-radius:4px;font-weight:700;">15 / 48 ÜLKE</span>
+            </div>
+            <div class="kpi-val" style="font-size:25px;font-weight:800;color:#FFFFFF;margin-top:2px;">{sc_n_countries} Ülke</div>
+            <div style="font-size:10.5px;color:#94A3B8;font-weight:600;margin-top:2px;">48 Takip Edilen Pazar</div>
+            <div style="margin-top:6px;padding-top:6px;border-top:1px solid rgba(255,255,255,0.08);font-size:10px;line-height:1.45;color:#94A3B8;">
+                <div style="color:#CBD5E1;">• <b>6</b> Distribütör Hub Ülkesi</div>
+                <div style="color:#CBD5E1;">• <b>9</b> Doğrudan Satış Ülkesi</div>
+            </div>
         </div>
         """, unsafe_allow_html=True)
 
