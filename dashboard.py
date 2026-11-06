@@ -1859,6 +1859,39 @@ print("Total countries defined:", len(REAL_WORLD_BANK_IVF_DATA))
 
 @st.cache_data
 def get_country_intelligence():
+    # Specific IVF & PGT Health Expenditure and State Reimbursement Benchmark Database
+    SPECIFIC_IVF_REIMBURSEMENT = {
+        'TR': {'ivf_gdp_pct': 0.07, 'state_support_pct': 40.0, 'reimbursement': 'SGK Kısmi Desteği (3 Siklus Katkı Paylı İlaç/İşlem + Tıbbi PGT)'},
+        'ES': {'ivf_gdp_pct': 0.14, 'state_support_pct': 60.0, 'reimbursement': 'Karma Model (Kamu Hastanelerinde 3 Siklus Ücretsiz + Özelde Cepten)'},
+        'DE': {'ivf_gdp_pct': 0.10, 'state_support_pct': 50.0, 'reimbursement': 'GKV Kamu Sandığı %50 Geri Ödeme (3 Siklus; PGT Tıbbi İzinli)'},
+        'FR': {'ivf_gdp_pct': 0.12, 'state_support_pct': 100.0, 'reimbursement': 'Sécurité Sociale %100 Tam Kapsam (4 Siklus + Tıbbi Endikasyonlu PGT)'},
+        'BE': {'ivf_gdp_pct': 0.15, 'state_support_pct': 85.0, 'reimbursement': 'Tam Kamu Desteği (6 Siklus Laboratuvar Ücretsiz + Tıbbi PGT-M)'},
+        'DK': {'ivf_gdp_pct': 0.16, 'state_support_pct': 90.0, 'reimbursement': 'Kamu Sağlığı Tam Kapsam (3-6 Siklus Ücretsiz + İlaç Desteği)'},
+        'GB': {'ivf_gdp_pct': 0.08, 'state_support_pct': 45.0, 'reimbursement': 'NHS Bölgesel Kapsam (1-3 Siklus ICB Kotası; Özel Ağırlıklı)'},
+        'US': {'ivf_gdp_pct': 0.09, 'state_support_pct': 20.0, 'reimbursement': 'Eyalet Mandası Odaklı (19 Eyalette Sigorta Zorunluluğu, %80 Cepten)'},
+        'AE': {'ivf_gdp_pct': 0.09, 'state_support_pct': 65.0, 'reimbursement': 'Thiqa Sigortası (BAE Vatandaşlarına 3 Siklus Ücretsiz; Yabancılara Özel)'},
+        'SA': {'ivf_gdp_pct': 0.08, 'state_support_pct': 55.0, 'reimbursement': 'Kamu & Askeri Hastanelerde Vatandaşlara Ücretsiz; Özelde Cepten'},
+        'QA': {'ivf_gdp_pct': 0.08, 'state_support_pct': 70.0, 'reimbursement': 'Hamad Medical (HMC) Kapsamında Vatandaşlara Tam Ücretsiz IVF'},
+        'KW': {'ivf_gdp_pct': 0.07, 'state_support_pct': 65.0, 'reimbursement': 'MoH Kamu Merkezinde Vatandaşlara Ücretsiz; Özel Klinikler Cepten'},
+        'IQ': {'ivf_gdp_pct': 0.04, 'state_support_pct': 10.0, 'reimbursement': 'Tamamen Özel Sektör & Cepten Ödeme (Kamu Sigortası Kapsamı Yok)'},
+        'JO': {'ivf_gdp_pct': 0.05, 'state_support_pct': 15.0, 'reimbursement': 'Özel Klinik ve Merkez Ağırlıklı (Minimal Kamu Desteği)'},
+        'EG': {'ivf_gdp_pct': 0.03, 'state_support_pct': 15.0, 'reimbursement': 'Üniversite Hastanelerinde Kısıtlı Düşük Maliyetli Kota; %90+ Cepten'},
+        'IN': {'ivf_gdp_pct': 0.02, 'state_support_pct': 5.0, 'reimbursement': 'Tamamen Özel Sektör & Cepten Ödeme (Kamu Geri Ödemesi Yok)'},
+        'KR': {'ivf_gdp_pct': 0.13, 'state_support_pct': 75.0, 'reimbursement': 'Ulusal Doğum Teşviki (9 Siklusa Kadar %70-90 Devlet Kuponu Desteği)'},
+        'JP': {'ivf_gdp_pct': 0.15, 'state_support_pct': 70.0, 'reimbursement': 'Ulusal Sağlık Sigortası (6 Siklus %70 Geri Ödeme + İlaç)'},
+        'IT': {'ivf_gdp_pct': 0.08, 'state_support_pct': 50.0, 'reimbursement': 'SSN Bölgesel LEA Kapsamı (3 Siklus Katkı Paylı; Uzun Bekleme Listesi)'},
+        'NL': {'ivf_gdp_pct': 0.11, 'state_support_pct': 80.0, 'reimbursement': 'Temel Sağlık Sigortası Zorunlu Kapsamı (3 Siklus %100 İlaç & İşlem)'},
+        'SE': {'ivf_gdp_pct': 0.12, 'state_support_pct': 85.0, 'reimbursement': 'Bölgesel Sağlık Konseyleri Kapsamı (1-3 Siklus Ücretsiz Tedavi)'},
+        'NO': {'ivf_gdp_pct': 0.11, 'state_support_pct': 75.0, 'reimbursement': 'Helfo Ulusal Sigortası (3 Siklusa Kadar Cüzi Katkı Payı İle Karşılama)'},
+        'AU': {'ivf_gdp_pct': 0.10, 'state_support_pct': 60.0, 'reimbursement': 'Medicare & Safety Net Geri Ödemesi (Sınırsız Siklus İçin Kısmi İade)'},
+        'CA': {'ivf_gdp_pct': 0.08, 'state_support_pct': 40.0, 'reimbursement': 'Eyalet Odaklı (Ontario 1 Siklus Ücretsiz, Diğer Eyaletlerde Vergi İndirimi)'},
+        'PS': {'ivf_gdp_pct': 0.03, 'state_support_pct': 10.0, 'reimbursement': 'Tamamen Özel Klinikler & Cepten Ödeme'},
+        'AZ': {'ivf_gdp_pct': 0.04, 'state_support_pct': 20.0, 'reimbursement': 'İcbari Tıbbi Sığorta Kısmi Pilot Desteği; Genelde Cepten Ödeme'},
+        'BG': {'ivf_gdp_pct': 0.09, 'state_support_pct': 80.0, 'reimbursement': 'Ulusal Destekli Üreme Fonu (4 Siklusa Kadar Devlet Desteği)'},
+        'AL': {'ivf_gdp_pct': 0.05, 'state_support_pct': 25.0, 'reimbursement': 'Özel Klinik ve Merkez Ağırlıklı; Kısıtlı Kamu Desteği'},
+        'PH': {'ivf_gdp_pct': 0.02, 'state_support_pct': 5.0, 'reimbursement': 'PhilHealth Desteği Yok; Tamamen Özel ve Cepten Ödeme'}
+    }
+
     records = []
     for c in COUNTRIES_RAW:
         code = c[0]
@@ -1882,6 +1915,32 @@ def get_country_intelligence():
         opp_score = min(98, max(35, vol_score + wealth_score + clinic_score))
         
         r = lambda k: rnd_val(code, k)
+
+        # IVF & PGT Harcaması / GSYİH (%) ve Devlet Desteği Parametreleri
+        sp_data = SPECIFIC_IVF_REIMBURSEMENT.get(code, {})
+        base_h = real.get('health_pct', 7.0)
+        calc_ivf_gdp = round(min(0.20, max(0.02, (cycles / (pop * 1000000 + 1)) * 380 + base_h * 0.006)), 2)
+        ivf_gdp = sp_data.get('ivf_gdp_pct', real.get('ivf_gdp_pct', calc_ivf_gdp))
+        
+        if gdp_pc > 50000 and base_h > 10.0:
+            calc_state_supp = 80.0
+        elif gdp_pc > 25000:
+            calc_state_supp = 55.0
+        elif gdp_pc > 10000:
+            calc_state_supp = 35.0
+        else:
+            calc_state_supp = 15.0
+        state_supp = sp_data.get('state_support_pct', real.get('state_support_pct', calc_state_supp))
+        
+        if state_supp >= 75:
+            calc_reimb = "Tam Devlet Geri Ödemesi (3-6 Siklus + PGT Dahil)"
+        elif state_supp >= 40:
+            calc_reimb = "Kısmi Sigorta / SGK Desteği (Katkı Paylı)"
+        elif state_supp >= 20:
+            calc_reimb = "Kısıtlı Kamu Desteği (Özel Sigorta / Cepten Ağırlıklı)"
+        else:
+            calc_reimb = "Tamamen Özel Sektör & Cepten Ödeme (Kamu Kapsamı Yok)"
+        reimb = sp_data.get('reimbursement', real.get('reimbursement', calc_reimb))
         
         records.append({
             'code': code,
@@ -1895,7 +1954,10 @@ def get_country_intelligence():
             'gdp': gdp,
             'pop': pop,
             'gdp_pc': gdp_pc,
-            'health_pct': real.get('health_pct', 7.0),
+            'health_pct': base_h,
+            'ivf_gdp_pct': ivf_gdp,
+            'state_support_pct': state_supp,
+            'reimbursement_policy': reimb,
             'inflation_pct': round(1.5 + r(8) * 8.0, 1),
             'icsi_pct': real.get('icsi_pct', 78),
             'pgt_pct': real.get('pgt_pct', 22),
@@ -8552,7 +8614,8 @@ elif nav_selection == "Market Intelligence & Compare":
                                 f'<tr style="background:rgba(30,41,59,0.45);border-bottom:1px solid rgba(255,255,255,0.05);">'
                                 f'<td style="padding:9px 10px;font-weight:700;color:#FFFFFF;font-size:12.5px;white-space:nowrap;">'
                                 f'<span style="font-size:14px;margin-right:4px;">{flag}</span> {c_name} '
-                                f'<span style="display:inline-block;margin-left:5px;font-size:9.5px;color:{risk_col};background:{risk_col}18;border:1px solid {risk_col}44;padding:1px 5px;border-radius:4px;font-weight:600;">{risk_txt}</span></td>'
+                                f'<span style="display:inline-block;margin-left:5px;font-size:9.5px;color:{risk_col};background:{risk_col}18;border:1px solid {risk_col}44;padding:1px 5px;border-radius:4px;font-weight:600;">{risk_txt}</span>'
+                                f'<div style="font-size:9.5px;color:#94A3B8;margin-top:2px;">🏛️ Destek: <b style="color:#FFB800;">%{r.get("state_support_pct", 40):.0f}</b> | IVF/GSYİH: <b style="color:#00F5FF;">%{r.get("ivf_gdp_pct", 0.08):.2f}</b></div></td>'
                                 f'<td style="padding:9px 8px;text-align:center;white-space:nowrap;">'
                                 f'<span style="background:rgba(0,245,255,0.12);border:1px solid rgba(0,245,255,0.35);color:#00F5FF;font-weight:800;font-size:12px;padding:3px 8px;border-radius:6px;font-family:monospace;">{score_fmt}</span></td>'
                                 f'<td style="padding:9px 10px;text-align:right;color:#E2E8F0;font-family:monospace;font-size:12px;font-weight:600;white-space:nowrap;">{gdp_fmt}</td>'
@@ -8660,25 +8723,29 @@ elif nav_selection == "Market Intelligence & Compare":
                     dyn_metric_choice = st.selectbox(
                         "🔍 Kıyaslanacak Göstergeyi Seçin:",
                         [
+                            "🏥 Sağlık Harcaması / GSYİH (%)",
+                            "🧬 IVF & PGT Harcaması / GSYİH (%)",
+                            "🏛️ IVF & PGT Devlet Desteği & Geri Ödeme (%)",
                             "💰 Kişi Başı GSYİH (GDP Per Capita - USD)",
                             "🏢 Lisanslı Aktif IVF Klinik Sayısı",
                             "🌐 Milyon Nüfusa Düşen Klinik Yoğunluğu",
-                            "🧬 ICSI Mikroenjeksiyon Adaptasyonu (%)",
                             "🔬 PGT Genetik Tanı Oranı (%)",
+                            "🧬 ICSI Mikroenjeksiyon Adaptasyonu (%)",
                             "❄️ Kriyoprezervasyon Dondurma Oranı (%)",
-                            "🏥 Sağlık Harcaması / GSYİH (%)",
                             "📈 Klinik Başına Yıllık Ortalama Siklus"
                         ]
                     )
 
                     metric_map = {
+                        "🏥 Sağlık Harcaması / GSYİH (%)": ('health_pct', '%{:.1f}', 'Sağlık Payı %', '#5FD3AE'),
+                        "🧬 IVF & PGT Harcaması / GSYİH (%)": ('ivf_gdp_pct', '%{:.2f}', 'IVF/PGT GSYİH %', '#00F5FF'),
+                        "🏛️ IVF & PGT Devlet Desteği & Geri Ödeme (%)": ('state_support_pct', '%{:.0f}', 'Devlet Desteği %', '#FFB800'),
                         "💰 Kişi Başı GSYİH (GDP Per Capita - USD)": ('gdp_pc', '${:,.0f}', 'USD Gelir', '#00E676'),
                         "🏢 Lisanslı Aktif IVF Klinik Sayısı": ('clinics', '{:,.0f} Klinik', 'Klinik', '#00F5FF'),
                         "🌐 Milyon Nüfusa Düşen Klinik Yoğunluğu": ('clinics_per_m', '{:.2f} kl./M', 'Klinik / Milyon', '#13A6B5'),
-                        "🧬 ICSI Mikroenjeksiyon Adaptasyonu (%)": ('icsi_pct', '%{:.1f}', 'ICSI %', '#FFB800'),
                         "🔬 PGT Genetik Tanı Oranı (%)": ('pgt_pct', '%{:.1f}', 'PGT %', '#7C93BD'),
+                        "🧬 ICSI Mikroenjeksiyon Adaptasyonu (%)": ('icsi_pct', '%{:.1f}', 'ICSI %', '#FFB800'),
                         "❄️ Kriyoprezervasyon Dondurma Oranı (%)": ('cryo_pct', '%{:.1f}', 'Cryo %', '#00F5FF'),
-                        "🏥 Sağlık Harcaması / GSYİH (%)": ('health_pct', '%{:.1f}', 'Sağlık Payı %', '#5FD3AE'),
                         "📈 Klinik Başına Yıllık Ortalama Siklus": ('cycles_per_clinic', '{:,.0f} siklus', 'Siklus/Klinik', '#FF8A96')
                     }
                     col_key, fmt_str, y_lbl, bar_clr = metric_map[dyn_metric_choice]
@@ -8733,6 +8800,9 @@ elif nav_selection == "Market Intelligence & Compare":
                     {'cat': '💰 Makroekonomik Güç & Nüfus', 'name': 'Toplam GSYİH (GDP - Milyar USD)', 'extract': lambda r: f"${r['gdp']:,.1f} Milyar"},
                     {'cat': '💰 Makroekonomik Güç & Nüfus', 'name': 'Ülke Nüfusu (Milyon Kişi)', 'extract': lambda r: f"{r['pop']:.1f} Milyon"},
                     {'cat': '💰 Makroekonomik Güç & Nüfus', 'name': 'Sağlık Harcaması / GSYİH %', 'extract': lambda r: f"%{r['health_pct']:.1f}"},
+                    {'cat': '💰 Makroekonomik Güç & Nüfus', 'name': '🧬 IVF & PGT Harcaması / GSYİH %', 'extract': lambda r: f"%{r.get('ivf_gdp_pct', 0.08):.2f}"},
+                    {'cat': '💰 Makroekonomik Güç & Nüfus', 'name': '🏛️ IVF & PGT Devlet Desteği Oranı %', 'extract': lambda r: f"%{r.get('state_support_pct', 40.0):.0f}"},
+                    {'cat': '💰 Makroekonomik Güç & Nüfus', 'name': '📜 Devlet Geri Ödeme & Sigorta Politikası Kapsamı', 'extract': lambda r: r.get('reimbursement_policy', 'Kısmi Geri Ödeme')},
                     
                     # Category 4: Technology & Regulation
                     {'cat': '🔬 Klinik Teknoloji & Regülasyon Rejimi', 'name': 'ICSI Mikroenjeksiyon Adaptasyonu %', 'extract': lambda r: f"%{r['icsi_pct']}"},
