@@ -10547,43 +10547,126 @@ elif nav_selection == "Performance Evaluator":
     st.markdown("---")
 
     # --------------------------------------------------------------------------
-    # 5. GERÇEK VERİYE DAYALI AĞIRLIKLI PERFORMANS SKORU
+    # 5. GERÇEK VERİYE VE ÜLKE ŞARTLARINA DAYALI AĞIRLIKLI PERFORMANS SKORU
     # --------------------------------------------------------------------------
-    st.subheader("Ağırlıklı Performans ve Sağlık Karnesi")
-    st.caption("Partnerin gerçek büyüme rasyoları, kurulu cihaz tabanı, sarf sürekliliği ve sipariş düşüş sıklığına göre hesaplanmıştır.")
+    st.subheader("Ağırlıklı Performans ve Sağlık Karnesi (Ülke Şartlarına Göre Kalibre Edilmiş)")
+    st.caption("Partnerin performansı; ülkedeki toplam lisanslı IVF klinik sayısı, pazar penetrasyon oranı, cihaz başına sarf tüketim rasyosu, GSYİH satın alma gücü, gümrük bariyerleri ve mevzuat şartlarına göre çok boyutlu olarak ağırlıklandırılmıştır.")
 
-    # Objective scores based on actual data
-    # 1. Device base score (0 to 100)
-    s_device = min(100, tot_all_dev * 20)  # 5 devices = 100
-    
-    # 2. Consumables velocity score
-    s_consumable = min(100, tot_all_con * 2) # 50 boxes = 100
-    
-    # 3. Growth score (penalizes sharp contraction, rewards positive growth)
-    if yoy_26 > 15.0:
-        s_growth = 95
-    elif yoy_26 > 0.0:
-        s_growth = 80
-    elif yoy_26 > -30.0:
-        s_growth = 60
-    elif yoy_26 > -60.0:
-        s_growth = 45
+    # Country macroeconomic intelligence
+    eval_country = eval_d.get('country_name', 'Turkey')
+    c_macro = resolve_country_macro(eval_country)
+
+    total_country_clinics = c_macro.get('clinics', 20)
+    c_gdp = c_macro.get('gdp_pc', 12000)
+    c_gdp_tier = c_macro.get('gdp_tier', 'Middle Income')
+    c_customs_days = c_macro.get('customs_clearance_days', 15)
+    c_customs_pct = c_macro.get('customs_tariff_pct', 6.0)
+    c_import_diff = c_macro.get('import_difficulty', 'Orta')
+    c_support = c_macro.get('ivf_support', '%100 Cepten Ödeme')
+
+    pen_rate = (tot_all_dev / total_country_clinics * 100.0) if total_country_clinics > 0 else 0.0
+    boxes_per_dev = (tot_all_con / max(1, tot_all_dev)) if tot_all_dev > 0 else 0.0
+
+    # Country Benchmark Card
+    bench_card_html = f"""<div style="background:rgba(19,166,181,0.06);border:1px solid rgba(19,166,181,0.28);border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:12px;line-height:1.7;">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+<span style="font-weight:700;color:#00F5FF;font-size:13px;">🌍 Değerlendirme Kriteri: {eval_country} Ülke Şartları & IVF Pazar Kıyaslama Rasyoları</span>
+<span style="background:rgba(19,166,181,0.2);color:#4FD1DE;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600;">{c_gdp_tier}</span>
+</div>
+• <b>Toplam Lisanslı IVF Klinik Havuzu:</b> {total_country_clinics} Merkez &nbsp;|&nbsp; <b>Partner Kurulu Cihaz:</b> {tot_all_dev} Adet &nbsp;→&nbsp; <span style="color:#00F5FF;font-weight:700;">%{pen_rate:.1f} Pazar Penetrasyonu</span><br>
+• <b>Kişi Başı GSYİH & Refah:</b> ${c_gdp:,} USD &nbsp;|&nbsp; <b>Devlet IVF Güvencesi:</b> <span style="color:#00E676;font-weight:600;">{c_support}</span><br>
+• <b>Gümrük & İthalat Bariyeri:</b> %{c_customs_pct:.1f} Tarife / Ortalama {c_customs_days} Gün Bekleme &nbsp;({c_import_diff})<br>
+• <b>Cihaz Başına Ortalama Sarf Tüketimi:</b> <span style="color:#FFD700;font-weight:700;">{boxes_per_dev:.1f} Kutu / Cihaz</span> (Toplam {tot_all_con} Kutu Sarf Hacmi)
+</div>"""
+    st.markdown(bench_card_html, unsafe_allow_html=True)
+
+    # 1. Device base score calibrated by country penetration
+    if pen_rate >= 35.0:
+        s_device = 90 + min(10, (pen_rate - 35.0) * 0.3)
+    elif pen_rate >= 20.0:
+        s_device = 75 + (pen_rate - 20.0) * 1.0
+    elif pen_rate >= 10.0:
+        s_device = 60 + (pen_rate - 10.0) * 1.5
+    elif pen_rate >= 5.0:
+        s_device = 45 + (pen_rate - 5.0) * 3.0
+    elif pen_rate > 0.0:
+        s_device = 25 + pen_rate * 4.0
     else:
-        s_growth = 35
+        s_device = 0
+    if c_customs_days >= 25 and pen_rate >= 20.0:
+        s_device += 2
+    s_device = max(0, min(100, round(s_device)))
+
+    # Detail for Factor 1
+    if tot_all_dev > 0:
+        det_device = f"{tot_all_dev} / {total_country_clinics} Klinik (%{pen_rate:.1f} Pazar Payı)"
+    else:
+        det_device = "0 Cihaz (Salt Sarf Malzeme Müşterisi)"
+
+    # 2. Consumables velocity score calibrated by boxes per device and country economics
+    if tot_all_dev == 0:
+        s_consumable = min(100, round(tot_all_con * 1.5))
+        det_consumable = f"{tot_all_con} Kutu (Salt Sarf Müşterisi)"
+    else:
+        if boxes_per_dev >= 50.0:
+            s_con_base = 95 + min(5, (boxes_per_dev - 50.0) * 0.2)
+        elif boxes_per_dev >= 30.0:
+            s_con_base = 80 + (boxes_per_dev - 30.0) * 0.75
+        elif boxes_per_dev >= 15.0:
+            s_con_base = 65 + (boxes_per_dev - 15.0) * 1.0
+        elif boxes_per_dev >= 5.0:
+            s_con_base = 40 + (boxes_per_dev - 5.0) * 2.5
+        else:
+            s_con_base = max(15, round(boxes_per_dev * 8.0))
         
-    # 4. Regularity score (penalized by number of drop quarters)
+        # Resilience adjustment: low-income self-pay vs high-income state coverage
+        if c_gdp < 10000 and boxes_per_dev >= 15.0:
+            s_con_base += 5  # High continuity under harsh economic conditions
+        elif c_gdp > 30000 and boxes_per_dev < 10.0:
+            s_con_base -= 10 # Wealthy market with idle machines
+        s_consumable = max(0, min(100, round(s_con_base)))
+        det_consumable = f"{tot_all_con} Kutu (Cihaz Başına {boxes_per_dev:.1f} Kutu)"
+
+    # 3. Growth score (evaluates composite device saturation and recurring consumable growth)
+    if pen_rate >= 20.0 and tot_all_dev > 0 and con_yoy_26 > 0:
+        # Recognized transition: Capital saturation with recurring consumables growth
+        s_con_g = 80 if con_yoy_26 > 10.0 else 70
+        s_rev_g = 80 if yoy_26 > 0.0 else (60 if yoy_26 > -30.0 else (45 if yoy_26 > -60.0 else 35))
+        s_growth = round(0.55 * s_con_g + 0.45 * s_rev_g)
+        det_growth = f"Cihaz Doyumu Sonrası Sarf Büyümesi: Sarf {con_yoy_26:+.1f}% / Ciro {yoy_26:+.1f}%"
+    else:
+        if yoy_26 > 15.0:
+            s_growth = 95
+        elif yoy_26 > 0.0:
+            s_growth = 80
+        elif yoy_26 > -30.0:
+            s_growth = 60
+        elif yoy_26 > -60.0:
+            s_growth = 45
+        else:
+            s_growth = 35
+        det_growth = f"{yoy_26:+.1f}% 2026 Net Değişim (Cihaz: {dev_yoy_26:+.0f}%, Sarf: {con_yoy_26:+.1f}%)"
+
+    # 4. Regularity score (calibrated by country customs clearance lead times)
     num_drops = len([d for d in detected_drops if d['Is_Zero_Gap']])
-    s_regularity = max(30, 95 - num_drops * 20)
-    
+    if c_customs_days >= 25:
+        # High lead time countries (Palestine, Iraq) use semi-annual bulk batches
+        s_regularity = max(40, round(95 - (num_drops * 12)))
+        det_regularity = f"{num_drops} Sıfır Çeyrek Boşluğu ({c_customs_days} Gün Gümrük Beklemesi Nedeniyle Yarıyıl Toplu Sevkiyat Modeli)"
+    else:
+        s_regularity = max(30, round(95 - (num_drops * 20)))
+        det_regularity = f"{num_drops} Sıfır Çeyrek Boşluğu (Çeyreklik Takip Modeli)"
+
     # 5. Compliance score
     s_comp = 95 if eval_d.get('loa') == 'Valid' else (65 if eval_d.get('loa') == 'In renewal' else 80)
+    det_comp = f"Statü: {eval_d.get('compliance', 'Uyumlu')} & LOA: {eval_d.get('loa', 'N/A')}"
 
     perf_factors = [
-        {"Factor": "Kurulu Cihaz Tabanı & Penetrasyon", "Score": s_device, "Weight": "25%", "Detail": f"{tot_all_dev} Adet Placed Piezo Pulse"},
-        {"Factor": "Tekrar Eden Sarf Tüketim Hacmi", "Score": s_consumable, "Weight": "25%", "Detail": f"{tot_all_con} Kutu Electro Dish & Solüsyon"},
-        {"Factor": "Yıllık Satış Büyüme İvmesi (YoY)", "Score": s_growth, "Weight": "20%", "Detail": f"{yoy_26:+.1f}% 2026 Net Değişim"},
-        {"Factor": "Sipariş Düzenliliği & Düşüş Direnci", "Score": s_regularity, "Weight": "15%", "Detail": f"{num_drops} Sıfır Çeyrek Boşluğu"},
-        {"Factor": "Hukuki Uyum & Sözleşme Sağlığı", "Score": s_comp, "Weight": "15%", "Detail": f"Statü: {eval_d.get('compliance', 'Uyumlu')}"}
+        {"Factor": "Kurulu Cihaz Tabanı & Ülke Penetrasyonu", "Score": s_device, "Weight": "25%", "Detail": det_device},
+        {"Factor": "Tekrar Eden Sarf Tüketim Hacmi & Cihaz Rasyosu", "Score": s_consumable, "Weight": "25%", "Detail": det_consumable},
+        {"Factor": "Yıllık Satış Büyüme İvmesi & Gelir Karması", "Score": s_growth, "Weight": "20%", "Detail": det_growth},
+        {"Factor": "Sipariş Düzenliliği & Lojistik Düşüş Direnci", "Score": s_regularity, "Weight": "15%", "Detail": det_regularity},
+        {"Factor": "Hukuki Uyum & Sözleşme Sağlığı", "Score": s_comp, "Weight": "15%", "Detail": det_comp}
     ]
 
     total_weighted_score = round(
@@ -10610,13 +10693,24 @@ elif nav_selection == "Performance Evaluator":
             <div class="kpi-header">Genel Partner Sağlık Skoru</div>
             <div style="font-size:52px;font-weight:800;color:{band_col};">{total_weighted_score}</div>
             <div style="font-size:14px;color:#CCD7E6;font-weight:600;margin-top:6px;">{band_title}</div>
-            <div style="font-size:11px;color:#7C93BD;margin-top:4px;">Gerçek Satış ve Sipariş İvmesine Dayalı</div>
+            <div style="font-size:11px;color:#7C93BD;margin-top:4px;">Ülke Makro Şartları & Gerçek Satış Verisi</div>
         </div>
         """, unsafe_allow_html=True)
     with ev2:
         for item in perf_factors:
             st.write(f"**{item['Factor']}** ({item['Weight']}) — `{item['Detail']}`")
             st.progress(item['Score'] / 100.0, text=f"{item['Score']} / 100")
+
+    with st.expander("🔍 Skorlama Metodolojisi & Ülke Şartları Kalibrasyon Rehberi"):
+        st.markdown(f"""
+        <div style="font-size:12px;line-height:1.7;color:#C4D1D9;">
+            <b>1. Kurulu Cihaz Tabanı & Penetrasyon (%25):</b> Maktuf cihaz adedi yerine ülkedeki toplam lisanslı IVF klinik sayısına oranlanır. Örneğin 14 klinikli Filistin'de 5 cihaz (%35.7 penetrasyon) pazar liderliği skoru (90+) alırken, 150 klinikli Güney Kore'de 7 cihaz (%4.7 penetrasyon) büyüme aşaması skoru (44) alır.<br>
+            <b>2. Tekrar Eden Sarf Tüketimi & Cihaz Başı Rasyo (%25):</b> Toplam kutu sayısı kurulu cihaz sayısına bölünerek cihaz başına kullanım verimliliği ölçülür. Kişi başı GSYİH ($3,500) ve %100 cepten ödeme rejimine rağmen cihaz başına 23 kutu sarf çekişi yüksek klinik süreklilik olarak değerlendirilir.<br>
+            <b>3. Büyüme & Gelir Karması (%20):</b> Sermaye cihazı doyumuna ulaşmış pazarlarda ciro düşüşü normal kabul edilerek tekrar eden sarf büyümesi (+%12.2) pozitif katkı sağlar.<br>
+            <b>4. Sipariş Düzenliliği (%15):</b> Gümrük ve güvenlik denetimi 30+ gün süren ülkelerde (Filistin, Irak) çeyreklik küçük siparişler yerine lojistik maliyeti optimize eden yarıyıllık toplu sipariş periyotları gözetilir.<br>
+            <b>5. Hukuki Uyum (%15):</b> Distribütörlük sözleşmesi, LOA yetki belgesi ve yerel Sağlık Bakanlığı akreditasyonu esas alınır.
+        </div>
+        """, unsafe_allow_html=True)
 
     # --------------------------------------------------------------------------
     # 6. YÖNETİCİ EYLEM REÇETESİ
