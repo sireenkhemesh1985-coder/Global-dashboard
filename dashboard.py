@@ -3901,6 +3901,113 @@ def get_default_strategic_plans():
         }
     }
 
+def get_default_regional_expert_assessments():
+    return {
+        'apac': {
+            'id': 'apac',
+            'name': '1. Asya-Pasifik (APAC)',
+            'opportunity': '+$180,000 Fırsat',
+            'opportunity_val': 180000,
+            'color': '#13A6B5',
+            'stats': '3,689 Klinik | 3,208,500 Siklus | Mevcut Ciro: $69.8K (G. Kore SJNU - 7 Piezo)',
+            'ai_weakness': "Japonya (620 klinik) ve Hindistan'da (1,850 klinik) sıfır doğrudan bayi.",
+            'ai_action': "Kore referansıyla Kitazato ağına Piezo ICSI protokolü ve ASPIRE lansmanı.",
+            'expert_title': 'Kıdemli Medikal Direktör & APAC Pazar Danışmanı',
+            'expert_opinion': "Japonya'da Kato Ladies Clinic (KLC) ekolü Piezo stimülasyonuna son derece yatkın ancak yerel PMDA onayı olmadan doğrudan donanım satışı yavaş ilerler. Kitazato ile OEM sarf partnerliği kurulursa Kore'deki SJNU başarısı doğrudan Tokyo ve Osaka'ya replike edilebilir. Hindistan pazarı ise yüksek volümlü düşük maliyetli sarf talep ediyor; piezo cihazı konsinye verilip dish ve aktivasyon solüsyonu üzerinden 3 yıllık kontrat bağlanmalı.",
+            'user_comment': "SJNU Seul ekibi ile görüşüldü; Kitazato Ar-Ge direktörüne demo ünitesi gönderildi. Hindistan için Apollo Fertility zinciriyle pilot çalışma planlanıyor.",
+            'consensus_status': 'Tam Konsensüs (Uyumlu)',
+            'status': 'Onaylandı & İcrada',
+            'decision_priority': 'P1 - Yüksek Öncelik',
+            'target_roi': '+$180K / Yıl'
+        },
+        'mena': {
+            'id': 'mena',
+            'name': '2. MENA & Körfez',
+            'opportunity': '+$65,000 Fırsat',
+            'opportunity_val': 65000,
+            'color': '#F0BC57',
+            'stats': '279 Klinik | 168,000 Siklus | Mevcut Ciro: $363.8K (Katar, Ürdün-Irak, BAE)',
+            'ai_weakness': "Kurulu 18 Piezo'da sarf çekiş düşüklüğü ve Sellco BAE kontrat sonu (20 Kasım).",
+            'ai_action': "Acil BAE sözleşme revizyonu ve Mısır özel tüp bebek zincirlerine açılım.",
+            'expert_title': 'MENA Bölge Direktörü & Klinik Koordinatörü',
+            'expert_opinion': "Sellco BAE ile 20 Kasım kontrat yenilemesinde yıllık minimum 800 kutu sarf taahhüdü (MoQ) zorunlu tutulmalı; aksi halde Dubai Healthcare City klinikleri doğrudan genel merkeze bağlanmalı. Kuveyt ATC ve Suudi AMS merkezlerindeki kurulu Piezo cihazlarında embriyolog eğitim eksiği var; yerinde klinik çalıştay düzenlenirse sarf tüketimi 2 ayda %40 artar.",
+            'user_comment': "Sellco yönetimine revize sözleşme taslağı iletildi. Kuveyt ATC ve Suudi AMS kliniklerine Aralık ayı için yerinde embriyolog aplikasyon eğitimi takvimlendi.",
+            'consensus_status': 'Tam Konsensüs (Uyumlu)',
+            'status': 'Onaylandı & İcrada',
+            'decision_priority': 'P1 - Acil',
+            'target_roi': '+$65K / Yıl'
+        },
+        'europe': {
+            'id': 'europe',
+            'name': '3. Avrupa (Batı & Doğu)',
+            'opportunity': '+$120,000 Fırsat',
+            'opportunity_val': 120000,
+            'color': '#5FD3AE',
+            'stats': '1,610 Klinik | 1,054,000 Siklus | Mevcut Ciro: $259.8K (TR + Belçika Ghent + Doğu Avr)',
+            'ai_weakness': "Avrupa'nın 1 ve 2 numarası İspanya ve Almanya'da yerel ticari bayi bulunmaması.",
+            'ai_action': "Ghent Univ Electro Fusion referansıyla IVI-RMA ve Gynemed DACH distribütörlüğü.",
+            'expert_title': 'Avrupa Regülasyon & Satış Masası Direktörü',
+            'expert_opinion': "MDR Class IIa sertifikasyonumuz Ghent Üniversitesi validasyon verileriyle tam uyumlu. İspanya'da IVI-RMA zinciri 30'dan fazla kliniğe sahip; doğrudan kurumsal satın alma masasıyla demo anlaşması yapılmalı. Almanya (DACH) için Gynemed hazır bir dağıtım ağı sunuyor; CE belgeleriyle birlikte Q1'de distribütörlük sözleşmesi imzalanması durumunda yıllık $120K hedefi rahat aşılır.",
+            'user_comment': "IVI-RMA Valencia merkezine demo cihaz protokolü sunuldu; Gynemed ile NDA imzalandı ve 2027 DACH master distribütörlük görüşmeleri başlatıldı.",
+            'consensus_status': 'Tam Konsensüs (Uyumlu)',
+            'status': 'Onaylandı & İcrada',
+            'decision_priority': 'P2 - Stratejik Büyüme',
+            'target_roi': '+$120K / Yıl'
+        },
+        'north_america': {
+            'id': 'north_america',
+            'name': '4. Kuzey Amerika (ABD & Kanada)',
+            'opportunity': '+$150,000 Fırsat',
+            'opportunity_val': 150000,
+            'color': '#4FD1DE',
+            'stats': '502 Klinik | 428,000 Siklus | Mevcut Ciro: $0 (Sıfır Penetrasyon)',
+            'ai_weakness': "FDA 510(k) regülasyon engeli ve konsorsiyum (GPO) satınalma duvarı.",
+            'ai_action': "CooperSurgical/Hamilton Thorne eşdeğeri ABD partneri ile OEM veya ASRM lansmanı.",
+            'expert_title': 'Kuzey Amerika Strateji & FDA Danışmanı',
+            'expert_opinion': "ABD pazarında bağımsız klinik yerine GPO (Grup Satın Alma Organizasyonları) ve büyük IVF ağları (Progyny, US Fertility) pazarı domine ediyor. 510(k) başvuru süreci 9-12 ay süreceğinden, ilk etapta Hamilton Thorne veya Vitrolife üzerinden ortak markalı (Co-branded) donanım dağıtımı en risksiz yoldur. ASRM kongresinde canlı workshop düzenlenmeli.",
+            'user_comment': "FDA danışmanlık firması ile 510(k) ön hazırlık toplantısı yapıldı. ASRM 2027 için sponsorluk ve canlı Piezo ICSI workshop başvurusu tamamlandı.",
+            'consensus_status': 'Şartlı Onay (Regülasyon Doğrulaması)',
+            'status': 'İncelemede / Revize',
+            'decision_priority': 'P2 - Orta Vadeli',
+            'target_roi': '+$150K / Yıl'
+        },
+        'latam': {
+            'id': 'latam',
+            'name': '5. Latin Amerika (LATAM)',
+            'opportunity': '+$75,000 Fırsat',
+            'opportunity_val': 75000,
+            'color': '#FF8A65',
+            'stats': '407 Klinik | 191,500 Siklus | Mevcut Ciro: $0 (Sıfır Penetrasyon)',
+            'ai_weakness': "ANVISA ve COFEPRIS ithalat engeli, gümrük vergileri ve coğrafi uzaklık.",
+            'ai_action': "Brezilya'da Spectrun Bio ve REDLARA akredite master distribütör modeli.",
+            'expert_title': 'LATAM Ticari Operasyonlar Danışmanı',
+            'expert_opinion': "Brezilya ve Meksika'da yüksek gümrük tarifeleri (%28-35) nedeniyle doğrudan donanım ithalatı zor. Sao Paulo merkezli Spectrun Bio yerel ANVISA ruhsatını üstlenmeye istekli. REDLARA kongresinde piezo ICSI başarı oranları sunulursa Kolombiya ve Şili klinikleri de bu master distribütör üzerinden hızla portföye katılabilir.",
+            'user_comment': "Spectrun Bio ile ön niyet mektubu (LoI) teatisi yapıldı. ANVISA dosya hazırlığı için teknik dokümantasyon Portekizceye çevriliyor.",
+            'consensus_status': 'Tam Konsensüs (Uyumlu)',
+            'status': 'Onaylandı & İcrada',
+            'decision_priority': 'P3 - Genişleme',
+            'target_roi': '+$75K / Yıl'
+        },
+        'africa': {
+            'id': 'africa',
+            'name': '6. Afrika & Gelişen Pazarlar',
+            'opportunity': '+$40,000 Fırsat',
+            'opportunity_val': 40000,
+            'color': '#BA68C8',
+            'stats': '129 Klinik | 34,500 Siklus | Mevcut Ciro: $0 (Sıfır Penetrasyon)',
+            'ai_weakness': "Doğrudan alımlarda döviz transfer kısıtları ve klinik sermaye yetersizliği.",
+            'ai_action': "Güney Afrika (Vitalab) ve Kahire tıp merkezlerine anahtar teslim cihaz+sarf paketi.",
+            'expert_title': 'Afrika & Gelişen Pazarlar Medikal Misyon Sorumlusu',
+            'expert_opinion': "Mısır (Kahire/İskenderiye) ve Güney Afrika (Johannesburg) dışındaki pazarlarda döviz konvertibilitesi ve akreditif riski yüksek. Bu nedenle sadece peşin ödemeli veya IFC destekli özel IVF projeleri kabul edilmeli. Vitalab grubu 4 cihazlık paket alımına sıcak bakıyor; Johannesburg merkezli demo ünitesi kurulursa çevre ülkelere referans olur.",
+            'user_comment': "Vitalab Grubu medikal direktörü ile online sunum yapıldı. Mısır için ise Nile IVF zinciri ile peşin ödemeli 2 ünite Piezo cihazı teklifi hazırlandı.",
+            'consensus_status': 'Tam Konsensüs (Uyumlu)',
+            'status': 'Onaylandı & İcrada',
+            'decision_priority': 'P3 - Seçici Genişleme',
+            'target_roi': '+$40K / Yıl'
+        }
+    }
+
+
 
 if nav_selection == "Executive Dashboard":
     # Header Banner
@@ -7063,42 +7170,70 @@ ZEUS Bioscience Scientific Affairs""",
 
         with col_rg2:
             st.markdown("##### 6 Küresel Bölgenin Zayıflık & Fırsat Analizi")
-            st.markdown("""
-            <div style="max-height:435px; overflow-y:auto; padding-right:6px;">
-                <div style="background:rgba(19,166,181,0.1);border-left:4px solid #13A6B5;padding:10px 12px;border-radius:8px;margin-bottom:8px;">
-                    <div style="display:flex;justify-content:space-between;"><b style="color:#13A6B5;">1. Asya-Pasifik (APAC)</b> <span style="font-size:11px;color:#00F5FF;font-weight:700;">+$180,000 Fırsat</span></div>
-                    <span style="font-size:11px;color:#8A99AD;">3,689 Klinik | 3,208,500 Siklus | Mevcut Ciro: $69.8K (G. Kore SJNU - 7 Piezo)</span><br>
-                    <span style="font-size:12px;color:#CCD7E6;"><b>Zayıflık:</b> Japonya (620 klinik) ve Hindistan\'da (1,850 klinik) sıfır doğrudan bayi.<br><b>Aksiyon:</b> Kore referansıyla Kitazato ağına Piezo ICSI protokolü ve ASPIRE lansmanı.</span>
-                </div>
-                <div style="background:rgba(240,188,87,0.1);border-left:4px solid #F0BC57;padding:10px 12px;border-radius:8px;margin-bottom:8px;">
-                    <div style="display:flex;justify-content:space-between;"><b style="color:#F0BC57;">2. MENA & Körfez</b> <span style="font-size:11px;color:#00E676;font-weight:700;">+$65,000 Fırsat</span></div>
-                    <span style="font-size:11px;color:#8A99AD;">279 Klinik | 168,000 Siklus | Mevcut Ciro: $363.8K (Katar, Ürdün-Irak, BAE)</span><br>
-                    <span style="font-size:12px;color:#CCD7E6;"><b>Zayıflık:</b> Kurulu 18 Piezo\'da sarf çekiş düşüklüğü ve Sellco BAE kontrat sonu (20 Kasım).<br><b>Aksiyon:</b> Acil BAE sözleşme revizyonu ve Mısır özel tüp bebek zincirlerine açılım.</span>
-                </div>
-                <div style="background:rgba(95,211,174,0.1);border-left:4px solid #5FD3AE;padding:10px 12px;border-radius:8px;margin-bottom:8px;">
-                    <div style="display:flex;justify-content:space-between;"><b style="color:#5FD3AE;">3. Avrupa (Batı & Doğu)</b> <span style="font-size:11px;color:#5FD3AE;font-weight:700;">+$120,000 Fırsat</span></div>
-                    <span style="font-size:11px;color:#8A99AD;">1,610 Klinik | 1,054,000 Siklus | Mevcut Ciro: $259.8K (TR + Belçika Ghent + Doğu Avr)</span><br>
-                    <span style="font-size:12px;color:#CCD7E6;"><b>Zayıflık:</b> Avrupa\'nın 1 ve 2 numarası İspanya ve Almanya\'da yerel ticari bayi bulunmaması.<br><b>Aksiyon:</b> Ghent Univ Electro Fusion referansıyla IVI-RMA ve Gynemed DACH distribütörlüğü.</span>
-                </div>
-                <div style="background:rgba(79,209,222,0.1);border-left:4px solid #4FD1DE;padding:10px 12px;border-radius:8px;margin-bottom:8px;">
-                    <div style="display:flex;justify-content:space-between;"><b style="color:#4FD1DE;">4. Kuzey Amerika (ABD & Kanada)</b> <span style="font-size:11px;color:#4FD1DE;font-weight:700;">+$150,000 Fırsat</span></div>
-                    <span style="font-size:11px;color:#8A99AD;">502 Klinik | 428,000 Siklus | Mevcut Ciro: $0 (Sıfır Penetrasyon)</span><br>
-                    <span style="font-size:12px;color:#CCD7E6;"><b>Zayıflık:</b> FDA 510(k) regülasyon engeli ve konsorsiyum (GPO) satınalma duvarı.<br><b>Aksiyon:</b> CooperSurgical/Hamilton Thorne eşdeğeri ABD partneri ile OEM veya ASRM lansmanı.</span>
-                </div>
-                <div style="background:rgba(255,138,101,0.1);border-left:4px solid #FF8A65;padding:10px 12px;border-radius:8px;margin-bottom:8px;">
-                    <div style="display:flex;justify-content:space-between;"><b style="color:#FF8A65;">5. Latin Amerika (LATAM)</b> <span style="font-size:11px;color:#FF8A65;font-weight:700;">+$75,000 Fırsat</span></div>
-                    <span style="font-size:11px;color:#8A99AD;">407 Klinik | 191,500 Siklus | Mevcut Ciro: $0 (Sıfır Penetrasyon)</span><br>
-                    <span style="font-size:12px;color:#CCD7E6;"><b>Zayıflık:</b> ANVISA ve COFEPRIS ithalat engeli, gümrük vergileri ve coğrafi uzaklık.<br><b>Aksiyon:</b> Brezilya\'da Spectrun Bio ve REDLARA akredite master distribütör modeli.</span>
-                </div>
-                <div style="background:rgba(186,104,200,0.1);border-left:4px solid #BA68C8;padding:10px 12px;border-radius:8px;">
-                    <div style="display:flex;justify-content:space-between;"><b style="color:#BA68C8;">6. Afrika & Gelişen Pazarlar</b> <span style="font-size:11px;color:#BA68C8;font-weight:700;">+$40,000 Fırsat</span></div>
-                    <span style="font-size:11px;color:#8A99AD;">129 Klinik | 34,500 Siklus | Mevcut Ciro: $0 (Sıfır Penetrasyon)</span><br>
-                    <span style="font-size:12px;color:#CCD7E6;"><b>Zayıflık:</b> Doğrudan alımlarda döviz transfer kısıtları ve klinik sermaye yetersizliği.<br><b>Aksiyon:</b> Güney Afrika (Vitalab) ve Kahire tıp merkezlerine anahtar teslim cihaz+sarf paketi.</span>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+            st.caption("AI analitiği ile saha uzmanı değerlendirmelerini yan yana sunar; kaydedilen görüşler doğrudan 'Strategic Decision Center' modülüne aktarılır.")
 
-        st.markdown("<br>", unsafe_allow_html=True)
+            if 'regional_expert_assessments' not in st.session_state:
+                st.session_state['regional_expert_assessments'] = get_default_regional_expert_assessments()
+
+            reg_dict = st.session_state['regional_expert_assessments']
+
+            for rk, r_item in reg_dict.items():
+                r_col = r_item['color']
+                status_badge_bg = 'rgba(0,230,118,0.15)' if 'Onay' in r_item['consensus_status'] or 'Uyumlu' in r_item['consensus_status'] else 'rgba(255,184,0,0.15)'
+                status_badge_txt = '#00E676' if 'Onay' in r_item['consensus_status'] or 'Uyumlu' in r_item['consensus_status'] else '#FFB800'
+
+                card_html = (
+                    f'<div style="background:rgba(15,23,42,0.65);border-left:4px solid {r_col};border:1px solid rgba(255,255,255,0.06);border-left-width:4px;padding:12px 14px;border-radius:10px;margin-bottom:8px;backdrop-filter:blur(8px);">'
+                    f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">'
+                    f'<b style="color:{r_col};font-size:13.5px;">{r_item["name"]}</b>'
+                    f'<span style="font-size:11px;color:#00F5FF;font-weight:700;background:rgba(0,245,255,0.1);padding:2px 8px;border-radius:4px;border:1px solid rgba(0,245,255,0.25);">{r_item["opportunity"]}</span>'
+                    f'</div>'
+                    f'<div style="font-size:11px;color:#8A99AD;margin-bottom:6px;">{r_item["stats"]}</div>'
+                    f'<div style="font-size:11.5px;color:#CBD5E1;line-height:1.45;margin-bottom:8px;">'
+                    f'<b style="color:#F87171;">⚠️ Zayıflık:</b> {r_item["ai_weakness"]}<br>'
+                    f'<b style="color:#38BDF8;">🤖 AI Aksiyonu:</b> {r_item["ai_action"]}'
+                    f'</div>'
+                    f'<div style="background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.06);border-left:3px solid {r_col};border-radius:6px;padding:8px 10px;font-size:11.5px;margin-bottom:6px;">'
+                    f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;">'
+                    f'<b style="color:#00F5FF;font-size:11px;">👨‍⚕️ Uzman Görüşü ({r_item["expert_title"]}):</b>'
+                    f'<span style="font-size:9.5px;color:{status_badge_txt};background:{status_badge_bg};padding:1px 6px;border-radius:3px;font-weight:700;">{r_item["consensus_status"]}</span>'
+                    f'</div>'
+                    f'<div style="color:#E2E8F0;line-height:1.4;">{r_item["expert_opinion"]}</div>'
+                    f'</div>'
+                    f'<div style="background:rgba(30,41,59,0.4);border-radius:6px;padding:6px 10px;font-size:11px;color:#94A3B8;">'
+                    f'<b style="color:#F59E0B;">✍️ Mevcut Saha / Karar Notu:</b> <span style="color:#E2E8F0;">{r_item["user_comment"]}</span>'
+                    f'</div>'
+                    f'</div>'
+                )
+                st.markdown(card_html, unsafe_allow_html=True)
+
+                with st.expander(f"✍️ {r_item['name']} - Uzman Yorumunu / Kararını Düzenle", expanded=False):
+                    with st.form(f"form_reg_expert_{rk}"):
+                        new_comment = st.text_area("Saha Uzmanı Görüşü & Karar Notu:", value=r_item['user_comment'], height=70, key=f"inp_comm_{rk}")
+                        f_col_a, f_col_b = st.columns(2)
+                        with f_col_a:
+                            new_status = st.selectbox(
+                                "Yönetim Konsensüs Statüsü:",
+                                ["Tam Konsensüs (Uyumlu)", "Şartlı Onay (İncelemede)", "Revize Gerekli"],
+                                index=0 if "Tam" in r_item["consensus_status"] else (1 if "Şartlı" in r_item["consensus_status"] else 2),
+                                key=f"sel_stat_{rk}"
+                            )
+                        with f_col_b:
+                            new_prio = st.selectbox(
+                                "İcra Önceliği:",
+                                ["P1 - Yüksek Öncelik", "P2 - Stratejik Büyüme", "P3 - Orta Vadeli"],
+                                index=0 if "P1" in r_item["decision_priority"] else (1 if "P2" in r_item["decision_priority"] else 2),
+                                key=f"sel_prio_{rk}"
+                            )
+                        if st.form_submit_button("💾 Yorumu Kaydet & Strategic Decision Center'a İlet", type="primary"):
+                            reg_dict[rk]['user_comment'] = new_comment.strip()
+                            reg_dict[rk]['consensus_status'] = new_status
+                            reg_dict[rk]['decision_priority'] = new_prio
+                            reg_dict[rk]['status'] = 'Onaylandı & İcrada' if 'Tam' in new_status else 'İncelemede / Revize'
+                            st.success(f"✓ {r_item['name']} uzman notu kaydedildi ve Strategic Decision Center masasına iletildi!")
+                            st.rerun()
+
+            st.markdown("<br>", unsafe_allow_html=True)
 
         # Region Table
         st.markdown("#### Bölge Bazlı Potansiyel ve Zayıflık Raporu")
@@ -10797,6 +10932,102 @@ elif nav_selection == "Strategic Decision Center":
             if st.button(btn_label, key=f"btn_toggle_sdc_{a_key}", use_container_width=True):
                 p_dict[a_key]['status'] = 'İncelemede / Revize' if is_approved else 'Onaylandı & İcrada'
                 st.rerun()
+
+    # --------------------------------------------------------------------------
+    # 6 REGIONAL EXPANSION STRATEGIES: AI DIAGNOSIS VS. EXPERT CONSENSUS
+    # --------------------------------------------------------------------------
+    st.markdown("### 🌐 6 Küresel Bölge Stratejisi: Yapay Zeka vs. Saha Uzmanı Konsensüsü")
+    st.caption("AI Intelligence & Forecasting modülünde analiz edilen 6 küresel bölgenin pazar fırsatları, zayıflıkları ve saha uzmanlarının değerlendirmeleri. Nihai karar alırken yapay zeka tavsiyeleri ile uzman görüşlerini karşılaştırarak onaylayabilirsiniz.")
+
+    if 'regional_expert_assessments' not in st.session_state:
+        st.session_state['regional_expert_assessments'] = get_default_regional_expert_assessments()
+
+    reg_dict = st.session_state['regional_expert_assessments']
+
+    # KPI Summary Row for 6 Regions
+    total_reg_opp = sum(r['opportunity_val'] for r in reg_dict.values())
+    approved_reg_count = sum(1 for r in reg_dict.values() if r.get('status') == 'Onaylandı & İcrada')
+    
+    r_kpi1, r_kpi2, r_kpi3 = st.columns(3)
+    with r_kpi1:
+        st.markdown(f"""
+        <div style="background:#0F192E;border:1px solid rgba(0,245,255,0.25);border-radius:8px;padding:12px;text-align:center;">
+            <div style="color:#8FA3C0;font-size:11px;font-weight:600;">TOPLAM AÇIK BÖLGESEL FIRSAT</div>
+            <div style="color:#00F5FF;font-size:22px;font-weight:800;font-family:monospace;">${total_reg_opp:,.0f} USD</div>
+            <div style="color:#CBD5E1;font-size:11px;">6 Küresel Bölge Portföyü</div>
+        </div>
+        """, unsafe_allow_html=True)
+    with r_kpi2:
+        st.markdown(f"""
+        <div style="background:#0F192E;border:1px solid rgba(0,230,118,0.25);border-radius:8px;padding:12px;text-align:center;">
+            <div style="color:#8FA3C0;font-size:11px;font-weight:600;">ONAYLANAN BÖLGESEL PROTOKOLLER</div>
+            <div style="color:#00E676;font-size:22px;font-weight:800;font-family:monospace;">{approved_reg_count} / 6 Bölge</div>
+            <div style="color:#CBD5E1;font-size:11px;">Uzman & AI Konsensüsü Sağlandı</div>
+        </div>
+        """, unsafe_allow_html=True)
+    with r_kpi3:
+        st.markdown(f"""
+        <div style="background:#0F192E;border:1px solid rgba(255,184,0,0.25);border-radius:8px;padding:12px;text-align:center;">
+            <div style="color:#8FA3C0;font-size:11px;font-weight:600;">KARAR MASASI STATÜSÜ</div>
+            <div style="color:#FFB800;font-size:22px;font-weight:800;">{6 - approved_reg_count} İncelemede</div>
+            <div style="color:#CBD5E1;font-size:11px;">Stratejik Onay Bekleyen Bölgeler</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.markdown("<div style='height:12px;'></div>", unsafe_allow_html=True)
+
+    # 2-column cards layout for 6 regions
+    reg_col_left, reg_col_right = st.columns(2)
+    for idx_reg, (rk, r_item) in enumerate(reg_dict.items()):
+        is_reg_approved = (r_item.get('status') == 'Onaylandı & İcrada')
+        r_border = r_item['color']
+        r_badge_bg = 'rgba(0,230,118,0.15)' if is_reg_approved else 'rgba(255,184,0,0.15)'
+        r_badge_txt = '#00E676' if is_reg_approved else '#FFB800'
+        
+        target_col = reg_col_left if idx_reg % 2 == 0 else reg_col_right
+        with target_col:
+            st.markdown(f"""
+            <div style="background:#0F192E; border:1.5px solid {r_border}; border-radius:12px; padding:16px 18px; margin-bottom:12px; box-shadow:0 4px 14px rgba(0,0,0,0.3);">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <span style="font-weight:700; color:{r_border}; font-size:14px;">{r_item['name']}</span>
+                    <span style="background:{r_badge_bg}; color:{r_badge_txt}; padding:3px 10px; border-radius:6px; font-weight:700; font-size:11px;">
+                        {r_item['status']}
+                    </span>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; font-size:11px; color:#8FA3C0;">
+                    <span>{r_item['stats']}</span>
+                    <span style="color:#00F5FF; font-weight:700; background:rgba(0,245,255,0.1); padding:1px 6px; border-radius:4px;">{r_item['opportunity']}</span>
+                </div>
+                <div style="font-size:12px; color:#CCD7E6; margin-bottom:8px; line-height:1.45; background:rgba(0,0,0,0.25); padding:8px 10px; border-radius:6px; border-left:3px solid #38BDF8;">
+                    <b style="color:#F87171;">⚠️ AI Zayıflık Teşhisi:</b> {r_item['ai_weakness']}<br>
+                    <b style="color:#38BDF8;">🤖 AI Aksiyon Önerisi:</b> {r_item['ai_action']}
+                </div>
+                <div style="background:rgba(0,245,255,0.04); border-left:3px solid {r_border}; padding:10px 12px; border-radius:6px; margin:8px 0; font-size:11.8px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:3px;">
+                        <b style="color:#00F5FF; font-size:11px;">👨‍⚕️ Uzman Görüşü ({r_item['expert_title']}):</b>
+                        <span style="font-size:10px; color:#10B981; font-weight:700;">{r_item['consensus_status']}</span>
+                    </div>
+                    <span style="color:#E1E7EC; line-height:1.4;">{r_item['expert_opinion']}</span>
+                </div>
+                <div style="background:rgba(245,158,11,0.06); border-left:3px solid #F59E0B; padding:8px 12px; border-radius:6px; margin:8px 0; font-size:11.5px;">
+                    <b style="color:#F59E0B;">✍️ Saha / Yönetici Karar Notu:</b><br>
+                    <span style="color:#E2E8F0;">{r_item['user_comment']}</span>
+                </div>
+                <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; color:#8FA3C0; margin-top:8px; padding-top:6px; border-top:1px solid rgba(255,255,255,0.06);">
+                    <span><b>Öncelik:</b> <span style="color:#FFB800;">{r_item['decision_priority']}</span></span>
+                    <span><b>Hedef ROI:</b> <span style="color:#00E676; font-weight:700;">{r_item['target_roi']}</span></span>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            btn_reg_label = "✕ İncelemeye Al" if is_reg_approved else "✅ Bölgesel İcra Protokolünü Onayla"
+            if st.button(btn_reg_label, key=f"btn_toggle_reg_sdc_{rk}", use_container_width=True):
+                reg_dict[rk]['status'] = 'İncelemede / Revize' if is_reg_approved else 'Onaylandı & İcrada'
+                st.rerun()
+
+
+    st.markdown("<hr style='border-color:rgba(255,255,255,0.1); margin:24px 0;'>", unsafe_allow_html=True)
+
 
 
     # --------------------------------------------------------------------------
