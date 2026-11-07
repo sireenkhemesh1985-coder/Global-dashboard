@@ -3624,153 +3624,313 @@ GLOBAL_PROSPECT_RADAR = {
 
 
 # ==============================================================================
-# ZEUS OFFICIAL CLINICAL DEVICE & TECHNOLOGY PORTFOLIO (CE/MDR & USER MANUALS)
+# ==============================================================================
+# ZEUS GLOBAL OFFICIAL DISTRIBUTOR & CLINICAL REFERENCE NETWORK (2026 CATALOG P.51)
+# ==============================================================================
+ZEUS_GLOBAL_REFERENCE_NETWORK_2026 = {
+    'distributors': [
+        {
+            'name': 'Sirius Pharm Company',
+            'countries': ['Jordan', 'Iraq'],
+            'territory_tr': 'Ürdün & Irak (Ortadoğu Yetkili Bölge Distribütörü)',
+            'status': 'Aktif & Yüksek Hacimli Dağıtıcı (18 Kurulu Cihaz, Düzenli Sarf Tüketimi)',
+            'key_centers': ['Farah Center (Irak)', 'Sadeen Center (Irak)', 'Amal Hospital (Ürdün)', 'Isteqlal Hospital (Ürdün)', 'Shmissani Hospital (Ürdün)'],
+            'focus_products': ['ZEUS Pulse Stimulator (ZPS 26)', 'Electro Dish (ZPS13-002)', 'Electroliquid (ZPS26-003)', 'Smart Cryo-Tools (ZCT25)']
+        },
+        {
+            'name': 'Advanced Technology Company (ATC) K.S.C.P.',
+            'countries': ['Kuwait'],
+            'territory_tr': 'Kuveyt (Ulusal Yetkili Distribütör)',
+            "status": "Aktif Partner (2025’te 3 Adet Piezo Pulse Stimulator Kurulumu Tamamlandı)",
+            'key_centers': ['Kuveyt Sağlık Bakanlığı Tüp Bebek Merkezleri & Özel Referans ART Hastaneleri'],
+            'focus_products': ['ZEUS Pulse Stimulator (ZPS24-001)', 'Electro Dish Sarfları', 'Smart Cryo-Tools Vitrifikasyon']
+        },
+        {
+            'name': 'International Technical Legacy (ITL)',
+            'countries': ['Qatar', 'Pakistan', 'Syria', 'Egypt', 'Bahrain'],
+            'territory_tr': 'Katar, Pakistan, Suriye, Mısır, Bahreyn (Çok Bölgeli Dağıtıcı)',
+            'status': 'Aktif Bölgesel Güç ($28.9K Ciro, Hızlı Genişleyen İhale & Özel Dağıtım Ağı)',
+            'key_centers': ['F&D Biotech (Suriye)', 'Orient Hospital (Suriye)', 'Doha & Kahire Özel IVF Zincirleri'],
+            'focus_products': ['ZEUS Pulse Stimulator', 'Mismatch Blocker', 'Black-Box BioPSafe']
+        },
+        {
+            'name': 'SJNU INC',
+            'countries': ['South Korea'],
+            'territory_tr': 'Güney Kore (Doğu Asya Yetkili Teknoloji Partneri)',
+            'status': 'Stratejik İleri Teknoloji Partneri (7 Cihaz Kurulumu, $36.8K Ciro, ROSI Protokol Lideri)',
+            'key_centers': ['Suji Maria Hospital (Seul)', 'Dongtan Maria Hospital (Seul)'],
+            'focus_products': ['ZEUS Pulse Stimulator (Piezo AOA & ROSI)', 'Black-Box BioPSafe Platform', 'Smart Cryo-Tools']
+        },
+        {
+            'name': 'Geen Medical Co. (Under the Brand of IVF MedTech)',
+            'countries': ['Saudi Arabia'],
+            'territory_tr': 'Suudi Arabistan Krallığı (Resmi Krallık Distribütörü)',
+            'status': 'Resmi Dağıtıcı (MOH Kamu & Askeri Hastaneler İhale Kanalı)',
+            'key_centers': ['King Fahad Medical City (KFMC Riyad)', 'Erfan ART and IVF Unit (Cidde)'],
+            'focus_products': ['Mismatch Blocker (7 Terminal)', 'Black-Box BioPSafe (ZBB25-001)', 'Pulse Stimulator']
+        },
+        {
+            'name': 'Solvay Medical Supplies Company',
+            'countries': ['United Arab Emirates', 'Oman'],
+            'territory_tr': 'Birleşik Arap Emirlikleri & Umman (Körfez Premium Distribütörü)',
+            'status': 'Körfez Lüks Sağlık Kanalı (A+ Klinik Zincirleri Odaklı)',
+            'key_centers': ['Fakih IVF (Dubai, BAE)', 'Maternal Fetal Care Center (Maskat, Umman)'],
+            'focus_products': ['ZEUS Black-Box Witness Platform', 'Smart Cryo-Tools (4X Tank)', 'Mismatch Blocker']
+        },
+        {
+            'name': 'Consultant Medical Company (CMC)',
+            'countries': ['Palestine'],
+            'territory_tr': 'Filistin Bölgesi (Bölge Distribütörü)',
+            'status': 'Aktif Tedarikçi ($4.0K Ciro, Düzenli Klinik Siparişi)',
+            'key_centers': ['Italian Center for Fertilization (Ramallah)', 'Italian Center for Fertilization (Hebron)'],
+            'focus_products': ['ZEUS Pulse Stimulator (ZPS 26)', 'Electro Dish & Sarf Malzemeleri']
+        }
+    ],
+    'international_centers': [
+        {'name': 'Fakih IVF (Dubai)', 'country': 'United Arab Emirates', 'region': 'MENA', 'highlight': 'Ortadoğu’nun en prestijli zincir tüp bebek merkezi; Black-Box ve Kriyomimari referansı.'},
+        {'name': 'King Fahad Medical City (KFMC)', 'country': 'Saudi Arabia', 'region': 'MENA', 'highlight': 'Körfez’in en büyük kamu araştırma ve tıp kompleksi; PGT ve kalite şahitlik protokolleri.'},
+        {'name': 'Erfan ART and IVF Unit', 'country': 'Saudi Arabia', 'region': 'MENA', 'highlight': 'Cidde’nin öncü özel tüp bebek merkezi; piezoelektrik aktivasyon kullanıcısı.'},
+        {'name': 'Avenues Life London Fertility & IVF Centre', 'country': 'United Kingdom', 'region': 'Europe', 'highlight': 'Londra Harley Street bölgesinde uluslararası referans merkezi; CE/MDR onaylı teknoloji.'},
+        {'name': 'Suji Maria Hospital & Dongtan Maria Hospital', 'country': 'South Korea', 'region': 'Asia-Pacific', 'highlight': 'Dünyanın en yüksek sikluslu Maria IVF zinciri; Piezo aktivasyon ve ROSI öncüsü.'},
+        {'name': 'Farah Center & Sadeen Center', 'country': 'Iraq', 'region': 'MENA', 'highlight': 'Bağdat ve Erbil’de yüksek vaka hacimli klinik referansları; 18 kurulu piezo cihazı ağı.'},
+        {'name': 'Amal Hospital, Isteqlal Hospital, Shmissani Hospital', 'country': 'Jordan', 'region': 'MENA', 'highlight': 'Amman’ın köklü özel hastane tüp bebek birimleri; düzenli sarf döngüsü.'},
+        {'name': 'Maternal Fetal Care Center', 'country': 'Oman', 'region': 'MENA', 'highlight': 'Maskat’ta üst düzey kadın sağlığı ve tüp bebek merkezi.'},
+        {'name': 'Italian Center for Fertilization (Ramallah & Hebron)', 'country': 'Palestine', 'region': 'MENA', 'highlight': 'Batı Şeria’da İtalyan işbirliğiyle kurulan referans IVF merkezi.'},
+        {'name': 'Stem & Gene ART Clinic', 'country': 'Albania', 'region': 'Europe', 'highlight': 'Balkanlar’da genetik ve kök hücre destekli IVF merkezi.'},
+        {'name': 'Meyona ODD IVF', 'country': 'Bulgaria', 'region': 'Europe', 'highlight': 'Doğu Avrupa tüp bebek laboratuvarı.'},
+        {'name': 'ARK Cryo LTD. & Cyprus IVF Organization', 'country': 'Cyprus', 'region': 'Europe', 'highlight': 'Kıbrıs uluslararası hasta akışında kriyodepolama ve biyopsi merkezi.'},
+        {'name': 'Bakü Mercan IVF & RSM Bakü IVF', 'country': 'Azerbaijan', 'region': 'CIS / Asia', 'highlight': 'Kafkaslar bölgesinde piezo stimülatör kullanıcıları.'},
+        {'name': 'Fertility Philippines IVF Corporation', 'country': 'Philippines', 'region': 'Asia-Pacific', 'highlight': 'Güneydoğu Asya’da büyüyen tüp bebek pazarı referansı.'},
+        {'name': 'Cihangir Çakıcı IVF', 'country': 'Kyrgyzstan', 'region': 'CIS / Central Asia', 'highlight': 'Orta Asya referans kliniği.'},
+        {'name': 'İstanbul Eku Merkezi', 'country': 'Uzbekistan', 'region': 'CIS / Central Asia', 'highlight': 'Özbekistan Taşkent tüp bebek merkezi.'},
+        {'name': 'Ministry of Health, State Dept for Medical Services', 'country': 'Kenya', 'region': 'Africa', 'highlight': 'Afrika kamu sağlığı ve üreme tıbbı referansı.'},
+        {'name': 'F&D Biotech Co. & Orient Hospital', 'country': 'Syria', 'region': 'MENA', 'highlight': 'Şam bölgesinde devam eden klinik operasyonlar.'}
+    ],
+    'domestic_centers': [
+        {'name': 'Ankara Gen-Art IVF', 'city': 'Ankara', 'type': 'Kurucu Referans Merkezi (Prof. Dr. Volkan Baltacı)'},
+        {'name': 'Sis Medikal Ankara', 'city': 'Ankara', 'type': 'Medikal Ar-Ge & Klinik Uygulama'},
+        {'name': 'İstanbul Üniversitesi Çapa Tıp Fakültesi', 'city': 'İstanbul', 'type': 'Akademik Referans & Üniversite Hastanesi'},
+        {'name': 'İstanbul Memorial Şişli IVF (Sarf & Teknoloji)', 'city': 'İstanbul', 'type': 'JCI Akredite Uluslararası Referans'},
+        {'name': 'İstanbul Acıbadem Fulya IVF', 'city': 'İstanbul', 'type': 'Acıbadem Sağlık Grubu IVF Merkezi'},
+        {'name': 'İstanbul Liv Hospital Ulus IVF', 'city': 'İstanbul', 'type': 'A+ Segment Özel Hastane'},
+        {'name': 'Medical Park Grubu (Florya, Pendik, Göztepe, İzmir, Samsun)', 'city': 'Çoklu İl', 'type': 'Türkiye’nin En Büyük Hastane Zinciri'},
+        {'name': 'İzmir Acıbadem & Tavmergen IVF', 'city': 'İzmir', 'type': 'Ege Bölgesi Öncü Referansları'},
+        {'name': 'Yeni Yüzyıl Üniversitesi Gaziosmanpaşa/Pendik Hastanesi', 'city': 'İstanbul', 'type': 'Üniversite IVF Kliniği'},
+        {'name': 'Antalya IVF, Denizli Özel Sağlık, Adana Turan Çetin, Diyarlife Diyarbakır, Palmiye İskenderun', 'city': 'Bölgesel Merkezler', 'type': 'Akdeniz, Ege ve Güneydoğu Referans Ağları'}
+    ]
+}
+
+# ==============================================================================
+# ZEUS OFFICIAL CLINICAL DEVICE & TECHNOLOGY PORTFOLIO (2026 CATALOG & MANUALS)
 # ==============================================================================
 ZEUS_CLINICAL_DEVICE_PORTFOLIO = {
     'zps26': {
         'id': 'zps26',
-        'code': 'ZPS 26',
-        'name': 'ZEUS Pulse Stimulator (ZPS 26)',
-        'category': 'Cihaz / Donanım (Elektroporasyon & Hücre Füzyonu)',
+        'code': 'ZPS 26 (Catalog: ZPS24-001)',
+        'name': 'ZEUS Pulse Stimulator (ZPS 26 / ZPS24-001)',
+        'category': 'Elektroporasyon, Yapay Oosit Aktivasyonu (AOA) ve Hücre Füzyon Cihazı',
         'icon': '⚡',
-        'tagline': 'Piezoelektrik Yapay Oosit Aktivasyonu (AOA) ve Hücre Füzyonu',
-        'manual_model': 'ZEUS Pulse Stimulator - ZPS 26 (GenSa Sağlık / ZEUS Bioscience)',
+        'tagline': 'Piezoelektrik Fizyolojik Kalsiyum Dalgaları ile Kontrollü Oosit Aktivasyonu (AOA)',
+        'manual_model': 'ZEUS Pulse Stimulator ZPS 26 / ZPS24-001 (GenSa Sağlık / ZEUS Bioscience)',
+        'catalog_codes': {
+            'main_unit': 'ZPS24-001 (ZEUS Pulse Stimulator Ana Konsol)',
+            'electro_dish': 'ZPS13-002 (Steril 4 Hücre Havuzlu Metal Elektrotlu Petri)',
+            'dish_fastener': 'ZPS13-006 (Stereomikroskop Tablası Sabitleyici Termal Blok)',
+            'electroliquid': 'ZPS26-003 (ZEUS Electroliquid İzo-ozmotik Kalsiyum Aktivasyon Solüsyonu / Tozu)'
+        },
         'specs': {
-            'voltage': '24V / 3A DC',
-            'screen': '4.3 inç Dokunmatik Renkli Dijital Ekran',
-            'modes': 'DC Mode (Varsayılan 70 µs) & AC/DC Mode (Varsayılan 5 sn) — Ayarlanabilir süre',
-            'dimensions': '140 x 240 x 190 mm | Ağırlık: 3.425 g',
-            'safety': 'Şehir şebeke dalgalanmalarını engelleyen depolanmış akım mimarisi ve LED indikatör',
-            'certification': 'CE & T.C. Ticaret Bakanlığı 89252994-401.01.05 Satış İzni, TİTCK ÜTS & MDR Uyumlu'
+            'voltage': '24V / 3A DC Stored-Energy Power Architecture (Şehir şebeke dalgalanmalarından %100 izole sabit deşarj)',
+            'screen': '4.3 inç Yüksek Hassasiyetli Renkli Dokunmatik Arayüz (Zero User Error Protokolü)',
+            'modes': 'Dual-Mode Stimülasyon: DC Modu (70 µs mikro-darbe) & AC/DC Modu (5 sn AC + 70 µs DC ayarlanabilir)',
+            'dimensions': '140 x 240 x 190 mm | Ağırlık: 3.425 g (Laminar kabin veya stereo tabla yanı kompakt form)',
+            'safety': 'Depolanmış kondansatör akımı ile sabit voltaj hassasiyeti; oosit lizis oranı <%1.0',
+            'certification': 'CE İşareti, MDR & ISO 13485 Uyumlu, T.C. Ticaret Bakanlığı 89252994-401.01.05 Satış İzni, TİTCK ÜTS Kayıtlı'
         },
         'consumables': [
-            'ZEUS Electro Dish (ED): Metal elektrotlu, 4 ayrı havuzlu steril tek kullanımlık petri (1x1, 1x2)',
-            'ZEUS Dish Fastener (DF): Mikroskop stereo tablasına sabitleyici U-şekilli metal termal blok',
-            'ZEUS Electroliquid Solution (ES): Mannitol, MgSO4, CaCl2, HSA ve HEPES içeren steril elektrolit (+2°C / +8°C)',
-            'Krokodil Elektrot Kablosu, Adaptör ve Koruyucu Taşıma Çantası'
+            'ZPS13-002 ZEUS Electro Dish: 4 ayrı hücre havuzlu (Pool 1-4), platin/metal elektrotlu steril tek kullanımlık petri (1x1, 1x2)',
+            'ZPS13-006 ZEUS Dish Fastener: Mikroskop tablasına sabitleyici U-şekilli metal termal blok',
+            'ZPS26-003 ZEUS Electroliquid Powder/Solution: Mannitol, MgSO4, CaCl2, HSA ve HEPES içeren steril izotonik elektrolit (+2°C / +8°C)',
+            'Tıbbi Sınıf Krokodil Elektrot Kablosu, DC Güç Adaptörü ve Alüminyum Koruyucu Taşıma Çantası'
         ],
         'clinical_purpose': (
-            "Düşük fertilizasyon, total fertilizasyon başarısızlığı (TFF), ileri anne yaşı (AMA) "
-            "ve şiddetli erkek faktörü vakalarında patentli mikrosaniye elektrik darbeleriyle oosit aktivasyonu sağlar. "
-            "Oosit lizis oranını <%1.2 seviyesinde tutarak fertilizasyon oranlarını %15-20 artırır."
+            "Total Fertilizasyon Başarısızlığı (TFF), düşük döllenme oranları, ileri anne yaşı (AMA) "
+            "ve şiddetli erkek faktörü (globozoospermi, kriptozoospermi, ROSI) vakalarında geri dönüşümlü hücre zarı "
+            "gözenekleri (elektroporasyon) açarak hücre içi kalsiyum salınımını tetikler. Kimyasal aktivatörlerin aksine "
+            "fizyolojik Ca2+ osilasyonlarını taklit eder, oosit lizis riskini minimize eder ve döllenme başarısını artırır."
         ),
-        'target_clinics': 'Tüm aktif ICSI merkezleri, fertilizasyon yetmezliği referans klinikleri, üniversite hastaneleri.',
-        'trigger_conditions': 'ICSI adaptasyonu > %70 veya açıklanamayan fertilizasyon başarısızlığı vakaları.',
+        'clinical_evidence': [
+            "Baltacı et al. (Ankara): Total Fertilizasyon Başarısızlığı (TFF) vakalarında döllenme oranı %12’den %62’nin üzerine çıkmış; %42.8 klinik gebelik oranı elde edilmiştir.",
+            "Tanaka et al. (PNAS 2015 & 2018 Update): Round Spermatid Injection (ROSI) ile piezoelektrik aktivasyon uygulanan vakalarda döllenme oranı %64.3’e ulaşmış (kontrol: %32.8); dünya çapında 90'ın üzerinde sağlıklı canlı doğum raporlanmıştır.",
+            "Mansour et al.: Elektrostimülasyon grubunda TFF oranı %0 iken standart ICSI kontrol grubunda 5 TFF vakası görülmüştür.",
+            "Vanden Meerschaut et al. (Human Reproduction, 17 Yıllık Takip): AOA ile doğan 100’den fazla çocuğun normal neonatal sağlık ve konjenital güvenliğini doğrulamıştır.",
+            "ESHRE Add-on Rehberi: Tekrarlayan döllenme başarısızlığı ve şiddetli erkek faktörü için kanıta dayalı klinik add-on protokolü olarak tanınmıştır."
+        ],
+        'target_clinics': 'Tüm aktif ICSI merkezleri, fertilizasyon yetmezliği referans klinikleri, üniversite tüp bebek hastaneleri.',
+        'trigger_conditions': 'ICSI adaptasyonu > %70, açıklanamayan fertilizasyon başarısızlığı veya şiddetli erkek infertilitesi vakaları.',
         'base_price': 18500,
         'cogs': 9200,
-        'sarf_multiplier': 'Cihaz başına yılda 60–120 kutu Electro Dish ve Electroliquid ($6,000–$14,000 sarf/yıl)'
+        'sarf_multiplier': 'Cihaz başına yılda 60–120 kutu Electro Dish (ZPS13-002) ve Electroliquid ($6,000–$14,000 sarf/yıl)'
     },
     'biopsafe': {
         'id': 'biopsafe',
-        'code': 'ZBS26',
-        'name': 'ZEUS BioPSafe Embryo Biopsy & Tubing Tracking System (ZBS26)',
-        'category': 'Cihaz / Donanım (Otomatik Biyopsi & PCR Tubing Doğrulama)',
+        'code': 'ZBB25-001 (BioPSafe Plate)',
+        'name': 'ZEUS Black-Box Witness Platform (BioPSafe ZBB25-001)',
+        'category': 'Cihaz & Donanım (Sensörlü Biyopsi, PCR Eşleşme ve Stereomikroskop İşlem Takibi)',
         'icon': '🧬',
-        'tagline': 'Stereomikroskop Altında Sıfır Hatalı Embriyo Biyopsisi ve PCR Tubing Takibi ("Black-Box BioPSafe")',
-        'manual_model': 'ZEUS BioPSafe - ZBS26 (ZEUS Bioscience Biyomedikal A.Ş.)',
+        'tagline': '13 Kızılötesi Sensör, Çift Tablet ve Bluetooth Pedalla Sıfır Hatalı Biyopsi & IVF İşlem Takip Platformu',
+        'manual_model': 'ZEUS Black-Box Witness Platform ZBB25-001 (BioPSafe & Multi-Purpose Modules)',
+        'catalog_codes': {
+            'main_platform': 'ZBB25-001 (Black-Box Ana Alıcı Platform & Tablet Konsolu)',
+            'biopsy_dish': 'ZBB25-002 (Yağsız Yıkama Alanlı 5 Şeritli Steril Biyopsi Dishi)',
+            'culture_dish': 'ZBB25-003 (Biyopsi Sonrası 5 Şeritli Kültür Dishi)',
+            'multipurpose_dish': 'ZBB25-004 (15 Çift Damlacıklı ICSI ve Rutin İşlem Dishi)',
+            'tube_holder': 'ZBB25-005 (5 Yuvalı Açılı Ergonomik PCR Tüp Tutucu)',
+            'barcode_reader': 'ZBB25-008 (Entegre 2D Barkod Okuyucu Modülü)'
+        },
         'specs': {
-            'voltage': '24V / 3A DC | 2 Step Motor Tahrik Mekanizması',
-            'screen': '7 inç Entegre Renkli Dokunmatik Ekran & BioPSafe Gerçek Zamanlı Takip Yazılımı',
-            'controllers': 'Çift Trackball Kontrolcü (Ambidextrous): Mikro Mod (≤5 mm) & Makro Mod + 3 Buton (Pick-Up, Sensitivity, Drop)',
-            'dimensions': '67.5 x 27.5 x 21 cm | Ağırlık: 5.0 kg (Laminar Flow kabin ve ısıtmalı tabla uyumlu)',
-            'printer': 'Entegre Termal Barkod & Test İstek Formu (TRF) Yazıcısı — Müdahale edilemez anlık audit logu',
-            'certification': 'CE Belgesi, ISO 13485, Stereomikroskop Kalibrasyon Protokolü (1-2 dk)'
+            'modules': '2 Bağımsız Modül: 1) BioPSafe Modülü (Embriyo biyopsisi & PCR tüp eşleşmesi), 2) Multi-Purpose Modülü (ICSI, yıkama, besiyeri değişimi ve dish-to-dish transferler)',
+            'sensors': '13 Entegre Kızılötesi (IR) Mesafe Sensörü: BioPSafe plaka pozisyonunu, şeritleri (Lane 1-5) ve damlacıkları gerçek zamanlı milimetrik izler',
+            'displays': 'Çift Kontrol Tableti: Sağ Tablet (İşlem akışı, yönlendirme ve kural denetimi), Sol Tablet (Stereomikroskop canlı kamera yayını & senkron HD video kaydı)',
+            'foot_pedal': 'Bluetooth Çift Ayak Pedalı: Sağ Pedal (Pick-Up / Aspirasyon), Sol Pedal (Drop / Damlatma) — Ellerin serbest kalmasını sağlar',
+            'security_layers': '3 Katmanlı Koruma: 1) Pozisyonel Doğrulama, 2) Sıralı Şerit Kontrolü (Lane 1->5 zorunluluğu), 3) Dijital Denetim İzi & Yüz Tanıma',
+            'certification': 'CE Belgesi, ISO 13485, Stereomikroskop Kalibrasyon Protokolü (1-2 dakika)'
         },
         'consumables': [
-            'BioPSafe SLS Plate: Kültür dishi, biyopsi dishi ve PCR tüp tutucuyu sabitleyen manyetik kilitli alüminyum plaka',
-            'MultiPurpose SLS Plate: İki adet multi-purpose dishi sabitleyen damlacıktan damlacığa transfer plakası',
-            'BioPSafe Biopsy Dish: Lazer veya mekanik biyopsi için yağsız yıkama alanlı steril tek kullanımlık petri',
-            'BioPSafe Culture Dish & Multi-Purpose Dishes: Gün 3 ve Gün 5 transferleri için özel şeritli petri',
-            'Açılı Ergonomik PCR Tüp Tutucu & Barkodlu PCR Tüpleri'
+            'ZBB25-002 ZEUS Biopsy Dish: Lazer veya mekanik biyopsi için yağsız yıkama alanlı, 5 şeritli steril petri',
+            'ZBB25-003 ZEUS Culture Dish: Biyopsi sonrası embriyo transferi için 5 şeritli özel kültür petrisi',
+            'ZBB25-004 ZEUS Multipurpose Dish: 15 çift damlacıklı (5 şerit x 3 sütun A-C) rutin transfer dishi',
+            'ZBB25-005 Açılı Ergonomik PCR Tüp Tutucu & Barkodlu PCR Tüp Setleri (1-5 Numaralandırılmış)',
+            'ZBB25-008 Entegre 2D Barkod Okuyucu ve Termal Test İstek Formu (TRF) Etiketleri'
         ],
         'clinical_purpose': (
-            "PGT-A/PGT-M/PGT-SR embriyo biyopsisi sırasında embriyo ile biyopsi hücresinin karışmasını, "
+            "PGT-A/PGT-M/PGT-SR embriyo biyopsisinde embriyo ile biyopsi hücresinin karışmasını, "
             "yanlış PCR tüpüne aktarılmasını ve şerit kaymalarını donanımsal ve yazılımsal olarak %100 engeller. "
-            "Damlacıklar arası transferleri doğrular ve işlem biter bitmez otomatik barkodlu TRF raporu basar."
+            "Multi-Purpose modülüyle rutin ICSI, besiyeri değişimi ve dish-to-dish transferlerde de embriyo bazlı takip sağlayarak adli ve klinik güvenliği garanti eder."
         ),
-        'target_clinics': 'Preimplantasyon Genetik Tanı (PGT) uygulayan merkezler, referans genetik laboratuvarları, yüksek hasta sayılı hastaneler.',
-        'trigger_conditions': 'Klinik sikluslarının >%25\'inde PGT-A biyopsisi yapılması veya akreditasyon (CAP/ISO 15189) hedefi.',
+        'clinical_evidence': [
+            "Çift tablet ve senkronize video kaydı ile işlem anında müdahale edilemez tam dijital audit logu oluşturulur.",
+            "13 IR sensör, pipet ucunun yanlış şeride (lane) gitmesi durumunda anında sesli ve görsel blokaj uyarısı verir.",
+            "Sıralı Şerit Kontrolü (Sequential Control), Lane 1 doğrulanmadan Lane 2’ye geçişi engelleyerek insan hatasını donanımsal olarak sıfırlar.",
+            "Açılı ergonomik PCR tüp tutucu ve 2D barkod tarayıcı, biyopsi örneğinin doğru hastaya ait doğru tüple eşleştiğini doğrular."
+        ],
+        'target_clinics': 'Preimplantasyon Genetik Tanı (PGT) uygulayan merkezler, referans genetik laboratuvarları, yüksek hasta sayılı tüp bebek hastaneleri.',
+        'trigger_conditions': 'Klinik sikluslarının >%25’inde PGT-A biyopsisi yapılması veya akreditasyon (CAP/ISO 15189) hedefi.',
         'base_price': 24500,
         'cogs': 12800,
-        'sarf_multiplier': 'Klinik başına yılda 100–300 adet Biopsy Dish, SLS sarfı ve barkod kiti ($8,000–$18,000/yıl)'
+        'sarf_multiplier': 'Klinik başına yılda 100–300 set Biopsy/Culture Dish ve PCR Tüp Tutucu sarfı ($8,000–$22,000/yıl sarf hacmi)'
     },
     'mismatch_blocker': {
         'id': 'mismatch_blocker',
-        'code': 'MB-7T',
-        'name': 'ZEUS Mismatch Blocker System (7-Terminal Witnessing)',
-        'category': 'Sistem / Donanım + Yazılım (Klinik Çapında Elektronik Şahitlik & Çift Kontrol)',
+        'code': 'ZMB-7T',
+        'name': 'ZEUS Mismatch Blocker Electronic Witnessing System',
+        'category': 'Kurumsal Tüp Bebek Elektronik Şahitlik & Numune Karışıklığı Engelleme Sistemi',
         'icon': '🛡️',
-        'tagline': 'Hasta Kayıttan Dondurma Odasına 7 İstasyonlu Tam Elektronik Numune Güvenliği',
-        'manual_model': 'ZEUS Mismatch Blocker Clinical Witnessing Suite (ZEUS Bioscience)',
+        'tagline': 'QR Kod Teknolojisi, 7 Özel Terminal ve Siklus Başına Kontör (Coin) Modeliyle Sıfır Hata Şahitliği',
+        'manual_model': 'ZEUS Mismatch Blocker 7-Terminal Witnessing Network (ZEUS Bioscience / GenSa)',
+        'catalog_codes': {
+            'terminals': 'ZMB-7T (7 İstasyonlu Özelleşmiş Kablosuz Dokunmatik Terminal Ağı)',
+            'wristbands': 'ZMB-WB (Kadın & Erkek Partner İçin Suya ve Kimyasallara Dayanıklı Barkodlu Bileklikler)',
+            'dish_labels': 'ZMB-LBL (Laminar Kabin ve Isıtmalı Tablaya Dayanıklı Steril Petri ve Tüp Etiketleri)',
+            'coin_credit': 'ZMB-COIN (Sanal POS Üzerinden Anında Yüklenen Siklus Başı Kontör Kredisi)'
+        },
         'specs': {
-            'architecture': '7 Bağımsız Terminal İstasyonu Entegre RF/Barkod Doğrulama Ağı',
             'terminals': [
-                'Terminal 1 (Kayıt Masası): Çipli kimlik kartı & barkodlu çift hasta bilekliği basımı',
-                'Terminal 2 (Sperm Alma Odası): Hasta bilekliği ile numune kabı barkodunun biyometrik/optik eşleşmesi',
-                'Terminal 3 (OPU Odası): Kadın hasta bileklik doğrulaması ve sözlü iletişimi kaldıran sessiz canlı oosit sayacı',
-                'Terminal 4 (Androloji Laboratuvarı): Laminar kabin içi sperm hazırlığı barkod şahitliği',
+                'Terminal 1 (Hasta Kayıt Masası): Çipsiz/çipli kimlik kartı okuma ile klavyesiz kayıt; her iki partnere barkodlu bileklik basımı',
+                'Terminal 2 (Sperm Verme Odası): Erkek partner bilekliği ile numune kabı barkodunun biyometrik/optik eşleşmesi',
+                'Terminal 3 (OPU Giriş & OPU Odası): Kadın hasta bileklik doğrulaması ve sözlü iletişimi kaldıran sessiz canlı oosit sayacı',
+                'Terminal 4 (Androloji Laboratuvarı): Laminar kabin içi sperm hazırlığı, yoğunluk gradyanı ve yıkama barkod şahitliği',
                 'Terminal 5 (Embriyoloji Laboratuvarı): Oosit toplama, soyma, yıkama, ICSI ve besiyeri transfer şahitliği',
-                'Terminal 6 (Mikromanipülatör / İnverted Mikroskop): 2PN fertilizasyon, Gün 3/Gün 5 AA/AB/BB embriyo kalite skorlaması',
-                'Terminal 7 (Dondurma & Kriyobanka): Tank, kanister, cane, goblet ve payet adresleme & çözme öncesi mobil barkod teyidi'
+                'Terminal 6 (Mikromanipülatör / İnverted Mikroskop): 2PN fertilizasyon, Gün 3/Gün 5 AA/AB/BB embriyo kalite skorlaması (standart görsel kılavuzlar)',
+                'Terminal 7 (Dondurma & Kriyobanka): Tank, kanister, cane, goblet ve payet optimal adresleme & çözme öncesi mobil barkod teyidi'
             ],
-            'hardware': 'Endüstriyel Dokunmatik Tabletler, Mobil Kablosuz Barkod Okuyucular, Yüksek Hızlı Bileklik/Etiket Barkod Yazıcıları',
-            'traceability': 'Görsel rehberler, standardize embriyo gelişim skoru ve uzaktan doktor/laboratuvar denetim erişimi'
+            'economic_advantage': 'Pahalı RFID çipli sistemlere (RI Witness, Matcher) karşı devrim: Ücretsiz ve sınırsız barkod kullanımı + Sanal POS ile anında yüklenen siklus başı kontör (coin) kredisi. Klinik sarf maliyetini %75 düşürür!',
+            'security_logic': 'Active Patient Lock (Ekranda sadece işlemdeki hasta aktiftir; çapraz veri riski sıfırdır), Zero-Lift Scanning (Numuneler ısıtmalı tabladan kaldırılmadan taranır; 37°C ve pH korunur), Akıllı Anlık Uyarı (Farklı hasta barkodunda derhal alarm verir)',
+            'remote_mobile': '7/24 Doktor & Hasta Mobil Uygulaması: Hekimler ve hastalar embriyo gelişim raporlarına uzaktan güvenle erişebilir',
+            'hardware': 'Endüstriyel Dokunmatik Tabletler, Kablosuz Barkod Okuyucular, Yüksek Hızlı Termal Bileklik ve Etiket Yazıcıları'
         },
         'consumables': [
             'RFID & Barkodlu Hasta Bileklikleri (Kadın & Erkek Partner)',
             'Dondurmaya Dayanıklı Kriyojenik Straw ve Goblet Barkod Etiketleri',
-            'Laminar Kabin İçi Steril Barkodlu Dish ve Tüp Etiketleri'
+            'Laminar Kabin İçi Steril Barkodlu Dish ve Tüp Etiketleri',
+            'Sanal POS Entegre Kontör (Coin) Kredisi'
         ],
         'clinical_purpose': (
             "Tüp bebek kliniklerinde meydana gelebilecek en büyük tıbbi-hukuki felaket olan sperm, oosit veya embriyo "
             "karışıklıklarını sıfıra indirir. 7 kritik istasyonda insan hatasını bloke eder, manuel şahitlik maliyetini ve "
             "laboratuvar stresini ortadan kaldırarak kliniklere uluslararası altın standart (CAP, JCI, ISO 15189) güvencesi sunar."
         ),
-        'target_clinics': 'Çok laboratuvarlı tüp bebek hastaneleri, kurumsal zincirler (Acıbadem, Memorial, Bahçeci, IVI-RMA), yıllık >500 siklus yapan tüm merkezler.',
+        'clinical_evidence': [
+            "Pahalı RFID çipli dishlere ihtiyaç duymadan, QR/barkod teknolojisiyle siklus başına %75 maliyet tasarrufu sağlar.",
+            "Active Patient Lock algoritması sayesinde teknisyen veya embriyoloğun başka bir hastanın kaydı açıkken işlem yapmasını %100 bloke eder.",
+            "Zero-Lift Scanning özelliği, embriyo kültür kaplarının 37°C ısıtmalı yüzeyden kaldırılmadan taranmasını sağlayarak termal stresi önler.",
+            "OPU odasında hekimin karşısındaki ekranda canlı oosit sayımı gösterilerek laboratuvar-ameliyathane arası sözlü iletişim hatası bertaraf edilir."
+        ],
+        'target_clinics': 'Çok laboratuvarlı tüp bebek hastaneleri, kurumsal zincirler (Acıbadem, Memorial, Medical Park, Fakih, Maria), yıllık >400 siklus yapan tüm merkezler.',
         'trigger_conditions': 'Yıllık >400 siklus, çoklu embriyolog kadrosu veya kurumsal marka itibar koruması.',
         'base_price': 32000,
         'cogs': 16500,
-        'sarf_multiplier': 'Siklus başına barkodlu hasta kiti ve sarf etiketleri ($15–$25 / hasta siklusu)'
+        'sarf_multiplier': 'Siklus başına kontör (coin) kredisi ve sarf barkod kitleri ($12–$20 / hasta siklusu)'
     },
     'smart_cryo': {
         'id': 'smart_cryo',
-        'code': 'SCT-4X',
-        'name': 'ZEUS Smart Cryo-Tools & High-Density Goblet Ecosystem',
-        'category': 'Kriyobiyoloji & Laboratuvar Optimizasyon Ekosistemi',
+        'code': 'ZCT25',
+        'name': 'ZEUS Smart Cryo-Tools & High-Density Vitrification Architecture',
+        'category': 'Kriyobiyoloji, Yüksek Yoğunluklu Vitrifikasyon ve Tank Optimizasyon Ekosistemi',
         'icon': '❄️',
         'tagline': 'Mevcut Sıvı Azot Tanklarının Kapasitesini 4 Katına (4X) Çıkaran Patentli Kriyomimari',
         'manual_model': 'ZEUS Smart Cryo-Tools Vitrification Architecture (ZEUS Bioscience / GenArt)',
+        'catalog_codes': {
+            'smart_straws': 'ZCT25-001FT / ZCT25-001RT (Üçgen Geometrili, Kısaltılabilir Smart Straws)',
+            'octagonal_goblet': 'ZCT25-002 (8 Payet Kapasiteli, Sıvı Azot Rezervuarlı Sekizgen Goblet)',
+            'cryo_cane': 'ZCT25-004 (5 Goblet = 40 Payet Saklama Kapasiteli Alüminyum Cane)',
+            'cane_sleeve': 'ZCT25-016 (15.5 mm İç Çaplı Özel Silindirik Koruyucu Kılıf)',
+            'cryo_box': 'ZCT25-010 (Kriyojenik Dereceli Yalıtımlı Sıvı Azot Kutusu)',
+            'aluminum_block': 'ZCT25-005 (6 Sekizgen Yuvalı, Termal Kütleli Alüminyum Blok Tutucu)',
+            'grabber_pen': 'ZCT25-006 (Sıvı Azot İçinde Kısaltılmış Payeti Tutan Uzatma Kalemi)',
+            'touch_tablet': 'ZCT25-011 (Entegre Dokunmatik Tablet & Tank İçi Adresleme Yazılımı)',
+            'dual_printers': 'ZCT25-012 (Payet ve Goblet İçin Özel Çift Barkod Yazıcısı)',
+            'wireless_reader': 'ZCT25-013 (Sıvı Azot İçinde Okuma Yapabilen Kablosuz Barkod Okuyucu)',
+            'cryo_labels': 'ZCT25-014 / ZCT25-015 (Sıvı Azota Dayanıklı Payet ve Goblet Etiketleri)'
+        },
         'specs': {
-            'capacity_boost': 'Mevcut LN2 sıvı azot tankı saklama kapasitesini donanım yatırımı yapmadan net 4 Katına (4X) çıkarır',
-            'smart_straws': 'Kırılma noktaları kalibre edilmiş, dondurulduktan sonra kısaltılabilir patentli Smart Straws (Kriyopayetler)',
-            'goblets': 'Özel sekizgen (Octagonal) ve üçgen yüksek yoğunluklu petek dizilimli goblet geometrisi (Sarı & Turuncu)',
-            'thermal_protection': 'Numunelerin transfer ve kontrol sırasında sıvı azot buharı/sıvısı içinde kalmasını sağlayarak termal şoktan korur (>%95 çözme canlılığı)',
-            'digital_addressing': 'Tank, kanister, cane, goblet ve straw hiyerarşik dijital kütüphane adreslemesi (Mismatch Blocker T7 entegre)',
-            'accessories': 'Alüminyum Blok Tutucu (DF), ZEUS Cane with Sleeve, Sıvı Azot Kutusu, Grabber Kalem, Özel Kriyopens'
+            'capacity_boost': 'Mevcut LN2 sıvı azot tankı kapasitesini 4 Katına (4X) çıkarır: Tek cane üzerinde 5 goblet x 8 payet = cane başına 40 payet (Geleneksel cane’lerde 10 payet)',
+            'zero_capex': 'Yeni sıvı azot tankı alma zorunluluğunu ($35,000–$50,000 CAPEX) ve temiz oda metrekare genişletme ihtiyacını ortadan kaldırır',
+            'thermal_protection': 'Sekizgen Goblet tanktan çıkarıldığında tabanındaki rezervuarda sıvı azot tutar; payet uçları sürekli sıvı azot daldırma sıcaklığında (<-150°C) kalarak termal şoktan korunur (>%95 çözme canlılığı)',
+            'barcode_visibility': 'Üçgen geometrili Smart Straws sayesinde tüm barkodlar goblet dışından 360° net görünür; payetleri yukarı çekip ısıtmaya gerek kalmaz',
+            'shortening_mechanism': 'Embriyo/oosit yüklendikten sonra payet goblet içindeyken kalibre edilmiş kırma noktasından güvenle kısaltılır',
+            'grabber_pen': 'ZCT25-006 Grabber Pen çözme işlemi sırasında kısaltılmış payeti sıvı azot içinde güvenle tutar ve uzatarak güvenli çalışma mesafesi sağlar',
+            'digital_mapping': 'ZCT25-011 Dokunmatik Tablet yazılımı ile Tank -> Kanister -> Cane -> Goblet -> Straw tam dijital kütüphane adreslemesi',
+            'in_tank_scanning': 'ZCT25-013 Kablosuz Barkod Okuyucu sıvı azot buharı ve sıvısı içindeki barkodları doğrudan okur'
         },
         'consumables': [
-            'ZEUS Kısaltılabilir Smart Straw Flexible Tip (1x10 Sarı / Mavi)',
-            'ZEUS Octagonal Goblet (1x5 Sarı / Turuncu)',
-            'ZEUS Cane with Sleeve (1x1) ve Cane Case',
-            'Goblet & Straw Dayanıklı Kriyojenik Barkod Setleri (1x500)'
+            'ZCT25-001FT/RT ZEUS Kısaltılabilir Smart Straw Flexible Tip (1x10 Sarı / Mavi)',
+            'ZCT25-002 ZEUS Octagonal Goblet (1x5 Sarı / Turuncu, Sıvı Azot Rezervuarlı)',
+            'ZCT25-004 ZEUS Cane (1x1) ve ZCT25-016 Cryo Cane Sleeve (15.5 mm)',
+            'ZCT25-014/015 Sıvı Azota Dayanıklı Dayanıklı Kriyojenik Barkod Setleri (1x500)'
         ],
         'clinical_purpose': (
             "Kliniklerin ve kriyobankaların sıvı azot tankı kapasite yetersizliği ve temiz oda metrekare darboğazını çözer. "
             "Yeni bir kriyotank satın alma maliyetini ($35,000–$50,000 CAPEX) ve sıvı azot tüketimini bertaraf ederken, "
             "sekizgen tasarımıyla numunelerin termal dalgalanmalara maruz kalmasını önleyerek embriyo/oosit yaşama oranını maksimize eder."
         ),
+        'clinical_evidence': [
+            "Sekizgen goblet tabanındaki sıvı azot rezervuarı, tank dışına çıkarma esnasında numune sıcaklığının -150°C üzerine çıkmasını engelleyerek kriyohasarı önler.",
+            "Geleneksel yuvarlak payetlerdeki döndürme zorunluluğuna karşılık, üçgen geometri barkodun doğrudan karşıya bakmasını sağlar ve arama süresini %80 kısaltır.",
+            "Mevcut tank donanımını değiştirmeden saklama alanını anında 4 katına (4X) çıkararak laboratuvar temiz oda metrekare maliyetini amorti eder.",
+            ">%95 çözme sonrası canlılık oranı ile vitrifikasyon kalitesini en üst klinik seviyede tutar."
+        ],
         'target_clinics': 'Kriyoprezervasyon hacmi yüksek klinikler, sosyal dondurma / onkofertilite merkezleri, sperm/oosit bankaları, alan sıkıntısı çeken laboratuvarlar.',
         'trigger_conditions': 'Dondurulan embriyo/oosit sayısı > 500/yıl veya tank kapasite doluluk oranı > %75.',
         'base_price': 9800,
         'cogs': 4200,
-        'sarf_multiplier': 'Her vitrifikasyon döngüsünde düzenli payet, sekizgen goblet ve kriyobarkod tüketimi ($4,000–$12,000/yıl sarf hacmi)'
+        'sarf_multiplier': 'Her vitrifikasyon döngüsünde düzenli payet, sekizgen goblet ve kriyobarkod tüketimi ($4,000–$14,000/yıl sarf hacmi)'
     }
 }
 
 def get_country_device_suitability(c_row):
     """
     Computes fit score (0-100), priority tier, and rationale for each of the 4 ZEUS technologies
-    based on national IVF statistics and clinical demographics.
+    based on national IVF statistics, clinical demographics, and official 2026 catalog intelligence.
     """
     clinics = int(c_row.get('clinics', 40)) if c_row is not None and 'clinics' in c_row else 40
     cycles = int(c_row.get('cycles', 20000)) if c_row is not None and 'cycles' in c_row else 20000
@@ -3780,27 +3940,48 @@ def get_country_device_suitability(c_row):
     c_code = str(c_row.get('code', 'INT')) if c_row is not None else 'INT'
     
     cycles_per_clinic = cycles / max(1, clinics)
+
+    # Check 2026 network presence
+    dist_match = next((d for d in ZEUS_GLOBAL_REFERENCE_NETWORK_2026['distributors'] if c_name in d['countries']), None)
+    ref_match = [r for r in ZEUS_GLOBAL_REFERENCE_NETWORK_2026['international_centers'] if r['country'] == c_name]
     
     # 1. ZPS 26 (Piezo Stimulator)
-    zps_score = min(99, int(60 + (icsi_pct - 60) * 0.7 + (10 if gdp_pc > 15000 else 0) + (5 if c_code in ['IQ', 'JO', 'TR', 'KR', 'JP', 'DE'] else 0)))
+    has_piezo_ref = c_code in ['IQ', 'JO', 'TR', 'KR', 'JP', 'DE', 'KW', 'QA', 'SA', 'EG', 'SY', 'AZ']
+    zps_boost = 15 if dist_match and 'ZEUS Pulse Stimulator' in str(dist_match.get('focus_products', [])) else (10 if has_piezo_ref else 0)
+    zps_score = min(99, int(60 + (icsi_pct - 60) * 0.7 + (10 if gdp_pc > 15000 else 0) + zps_boost))
     zps_tier = "Tier 1: Öncelikli Standart" if zps_score >= 85 else ("Tier 2: Tamamlayıcı" if zps_score >= 75 else "Tier 3: Niş")
-    zps_rationale = f"{c_name} pazarında %{icsi_pct:.0f} ICSI adaptasyonu ve zorlu vakalar (ileri anne yaşı, TFF) için doğrudan fertilizasyon artışı sağlar."
+    
+    if dist_match and c_name == 'Kuwait':
+        zps_rationale = "Kuveyt pazarında resmi bayimiz ATC Kuwait 2025'te 3 adet Pulse Stimulator kurmuştur. Kamu ve özel tüp bebek merkezlerinde sarf tüketimi (Electro Dish) ve yeni ünite satışı önceliklidir."
+    elif dist_match and c_name in ['Jordan', 'Iraq']:
+        zps_rationale = "Sirius Pharm Company ve Farah/Sadeen/Amal referanslarıyla kurulu 18 piezo cihazlık tabanda Electro Dish (ZPS13-002) ve Electroliquid düzenli sarf çekişi garanti altındadır."
+    elif dist_match and c_name == 'South Korea':
+        zps_rationale = "SJNU INC ve Suji/Dongtan Maria Hospital referanslarıyla Piezo AOA ve Tanaka ROSI protokolü pazar standardı durumundadır; ESHRE add-on uyumlu en yüksek penetrasyon pazarımızdır."
+    else:
+        zps_rationale = f"{c_name} pazarında %{icsi_pct:.0f} ICSI adaptasyonu ve zorlu vakalar (ileri anne yaşı, TFF) için Baltacı et al. (%62 fertilizasyon) ve Tanaka ROSI klinik kanıtlarıyla doğrudan döllenme artışı sağlar."
 
-    # 2. BioPSafe ZBS26
-    pgt_friendly = c_code in ['ES', 'US', 'AE', 'TR', 'IT', 'GR', 'QA', 'SA', 'UK', 'CY']
-    biopsafe_score = min(99, int(55 + (20 if pgt_friendly else 0) + (15 if gdp_pc > 25000 else 5) + (10 if cycles_per_clinic > 400 else 0)))
+    # 2. Black-Box BioPSafe ZBB25-001
+    pgt_friendly = c_code in ['ES', 'US', 'AE', 'TR', 'IT', 'GR', 'QA', 'SA', 'UK', 'CY', 'JO']
+    bb_boost = 15 if (ref_match or (dist_match and 'Black-Box' in str(dist_match.get('focus_products', [])))) else (10 if pgt_friendly else 0)
+    biopsafe_score = min(99, int(55 + (15 if pgt_friendly else 0) + (15 if gdp_pc > 25000 else 5) + (10 if cycles_per_clinic > 400 else 0) + bb_boost))
     biopsafe_tier = "Tier 1: Yüksek Öncelik (PGT Lideri)" if biopsafe_score >= 85 else ("Tier 2: Gelişen Segment" if biopsafe_score >= 70 else "Tier 3: Seçilmiş Merkezler")
-    biopsafe_rationale = f"{c_name} kliniklerinde PGT-A biyopsi şerit ve PCR tüp eşleşmesinde %100 doğrulama ve mikroskop başında ergonomik çift trackball kontrolü sağlar."
+    
+    if c_name in ['United Arab Emirates', 'Saudi Arabia']:
+        biopsafe_rationale = f"{c_name} pazarında Fakih IVF Dubai ve King Fahad Medical City gibi A+ referans merkezlerinde 13 kızılötesi sensörlü Black-Box platformu (ZBB25-001) ve çift tabletli HD denetim izi en yüksek satın alma motivasyonudur."
+    else:
+        biopsafe_rationale = f"{c_name} kliniklerinde PGT-A/PGT-M embriyo biyopsisinde 13 IR sensör, çift tablet ve ayak pedallarıyla şerit atlama ve PCR tüp karışıklığı riskini sıfırlar; Multi-Purpose modülüyle rutin ICSI'yi de güvenceye alır."
 
-    # 3. Mismatch Blocker (7 Terminal)
-    mb_score = min(99, int(50 + (20 if cycles > 20000 or clinics > 30 else 5) + (15 if gdp_pc > 20000 else 5) + (10 if cycles_per_clinic > 350 else 0)))
+    # 3. Mismatch Blocker (ZMB-7T)
+    mb_boost = 15 if (dist_match and 'Mismatch Blocker' in str(dist_match.get('focus_products', []))) else (10 if clinics > 40 else 0)
+    mb_score = min(99, int(50 + (20 if cycles > 20000 or clinics > 30 else 5) + (15 if gdp_pc > 20000 else 5) + (10 if cycles_per_clinic > 350 else 0) + mb_boost))
     mb_tier = "Tier 1: Kurumsal Standart" if mb_score >= 85 else ("Tier 2: Orta-Büyük Ölçek" if mb_score >= 72 else "Tier 3: Pilot Merkezler")
-    mb_rationale = f"{c_name} pazarındaki {clinics} aktif klinikte sperm, oosit ve embriyo numunelerinin 7 aşamalı elektronik şahitliğini yaparak hasta karışıklığı riskini sıfırlar."
+    mb_rationale = f"{c_name} pazarındaki {clinics} aktif klinikte sperm, oosit ve embriyo numunelerinin 7 aşamalı elektronik şahitliğini yapar. Pahalı RFID çiplere kıyasla sınırsız ücretsiz barkod ve döngü başı kontör (coin) modeliyle %75 OPEX tasarrufu sunar."
 
-    # 4. Smart Cryo-Tools (4X Tank Optimization)
-    cryo_score = min(99, int(65 + (15 if cycles > 10000 else 5) + (10 if clinics > 20 else 5) + (10 if cycles_per_clinic > 300 else 0)))
+    # 4. Smart Cryo-Tools (ZCT25 - 4X Tank Optimization)
+    cryo_boost = 15 if dist_match else (10 if clinics > 25 else 0)
+    cryo_score = min(99, int(65 + (15 if cycles > 10000 else 5) + (10 if clinics > 20 else 5) + (10 if cycles_per_clinic > 300 else 0) + cryo_boost))
     cryo_tier = "Tier 1: Evrensel İhtiyaç (4X Kapasite)" if cryo_score >= 85 else ("Tier 2: Yüksek Tasarruf" if cryo_score >= 75 else "Tier 3: Standart")
-    cryo_rationale = f"{c_name} kliniklerinin mevcut sıvı azot tankı kapasitesini 4 katına çıkarır, $35K-$50K tank yatırımını önler ve termal şok korumasıyla çözme canlılığını maksimize eder."
+    cryo_rationale = f"{c_name} kliniklerinin mevcut sıvı azot tankı kapasitesini net 4 katına (cane başına 40 payet) çıkarır. Klinik başına $35,000–$50,000 yeni tank yatırımını önler ve sıvı azot rezervuarlı sekizgen gobletleriyle termal şoku engelleyerek >%95 çözme canlılığı sağlar."
 
     return {
         'zps26': {'score': zps_score, 'tier': zps_tier, 'rationale': zps_rationale},
@@ -3808,6 +3989,7 @@ def get_country_device_suitability(c_row):
         'mismatch_blocker': {'score': mb_score, 'tier': mb_tier, 'rationale': mb_rationale},
         'smart_cryo': {'score': cryo_score, 'tier': cryo_tier, 'rationale': cryo_rationale}
     }
+
 
 def get_country_prospects(c_name, c_row=None):
     if c_name in GLOBAL_PROSPECT_RADAR:
@@ -10228,6 +10410,8 @@ elif nav_selection == "Market Intelligence & Compare":
             c_dev_suit = get_country_device_suitability(target_country_row)
             top_dev_key = max(c_dev_suit, key=lambda k: c_dev_suit[k]['score'])
             top_dev_obj = ZEUS_CLINICAL_DEVICE_PORTFOLIO[top_dev_key]
+            net_dist = next((d for d in ZEUS_GLOBAL_REFERENCE_NETWORK_2026['distributors'] if radar_country in d['countries']), None)
+            net_refs = [r for r in ZEUS_GLOBAL_REFERENCE_NETWORK_2026['international_centers'] if r['country'] == radar_country]
 
             st.markdown(f"""
             <div style="background:rgba(19,166,181,0.08);border:1px solid rgba(19,166,181,0.3);border-radius:10px;padding:15px;margin-bottom:18px;">
@@ -10261,6 +10445,9 @@ elif nav_selection == "Market Intelligence & Compare":
                         <span style="background:rgba(56,189,248,0.12);color:#38BDF8;border:1px solid rgba(56,189,248,0.3);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">❄️ Smart Cryo: %{c_dev_suit['smart_cryo']['score']}</span>
                     </div>
                 </div>
+                {f'''<div style="margin-top:10px;padding-top:8px;border-top:1px dashed rgba(255,184,0,0.25);font-size:11.5px;color:#FFB800;">
+                    ⭐ <b>2026 Resmi Katalog Ağı:</b> {f"Yetkili Bayi: <b>{net_dist['name']}</b> ({net_dist['territory_tr']}) " if net_dist else ""}{f"• Referans: <b>{', '.join([r['name'] for r in net_refs])}</b>" if net_refs else ""}
+                </div>''' if (net_dist or net_refs) else ''}
             </div>
             """, unsafe_allow_html=True)
 
@@ -10474,35 +10661,35 @@ BODY:
         # --------------------------------------------------------------------------
         with comp_tab4:
             st.subheader("🔬 ZEUS Akıllı Cihaz & Teknoloji Portföyü AI Değerlendirme Masası")
-            st.caption("Resmi kullanım kılavuzları (User Manuals), CE/MDR sertifikasyonları ve patentli kriyomimari referans alınarak; hedef pazarın klinik siklus, PGT-A biyopsi, ICSI ve kriyodepolama dinamiklerine göre AI tarafından türetilmiş cihaz ve teknoloji tavsiyeleri.")
+            st.caption("2026 Resmi Ürün Kataloğu (52 Sayfa), Klinik Çalışmalar (Prof. Dr. Volkan Baltacı et al., Tanaka et al. PNAS ROSI, Mansour et al., Vanden Meerschaut et al.), CE/MDR Sertifikasyonları ve Patentli Kriyomimari referans alınarak; hedef pazarın klinik siklus, PGT-A biyopsi, ICSI ve kriyodepolama dinamiklerine göre AI tarafından türetilmiş cihaz ve teknoloji tavsiyeleri.")
 
-            # Top Strategic Callout with YouTube & Manual References
+            # Top Strategic Callout with YouTube & Official 2026 Catalog References
             st.markdown("""
-            <div style="background:linear-gradient(135deg, rgba(15,25,46,0.95) 0%, rgba(19,166,181,0.18) 100%);border:1px solid rgba(0,245,255,0.35);border-left:5px solid #00F5FF;border-radius:12px;padding:16px 20px;margin-bottom:20px;box-shadow:0 8px 24px rgba(0,0,0,0.35);">
+            <div style="background:linear-gradient(135deg, rgba(15,25,46,0.95) 0%, rgba(19,166,181,0.2) 100%);border:1px solid rgba(0,245,255,0.35);border-left:5px solid #00F5FF;border-radius:12px;padding:16px 20px;margin-bottom:20px;box-shadow:0 8px 24px rgba(0,0,0,0.35);">
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;">
                     <div>
                         <div style="display:flex;align-items:center;gap:10px;">
                             <span style="font-size:24px;">🔬</span>
                             <div>
-                                <h4 style="margin:0;color:#FFFFFF;font-size:16px;font-weight:700;">ZEUS 4'lü İleri IVF Teknoloji ve Donanım Ekosistemi</h4>
-                                <span style="font-size:12px;color:#8A99AD;">CE Sertifikalı Tıbbi Cihazlar • Patentli Kriyomimari • Klinik Çapında Elektronik Şahitlik & Biyopsi Güvenliği</span>
+                                <h4 style="margin:0;color:#FFFFFF;font-size:16px;font-weight:700;">ZEUS 2026 Kapsamlı Klinik Teknoloji & Donanım Portföyü</h4>
+                                <span style="font-size:12px;color:#8A99AD;">CE Sertifikalı Tıbbi Cihazlar • Kanıta Dayalı AOA • 13 IR Sensörlü Black-Box • 7 Terminalli Şahitlik • 4X Kriyomimari</span>
                             </div>
                         </div>
                     </div>
-                    <div style="display:flex;align-items:center;gap:8px;">
+                    <div style="display:flex;align-items:center;gap:10px;">
                         <a href="https://www.youtube.com/shorts/LN8BofqSbis" target="_blank" style="display:inline-flex;align-items:center;gap:6px;background:rgba(255,0,0,0.18);border:1px solid rgba(255,82,82,0.45);color:#FF5252;padding:6px 12px;border-radius:6px;text-decoration:none;font-size:12px;font-weight:700;">
                             ▶️ Smart Cryo-Tools Video İncelemesi (YouTube) ↗
                         </a>
                     </div>
                 </div>
                 <div style="margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.08);color:#CCD7E6;font-size:12.5px;line-height:1.55;">
-                    Bu masa; <b>ZPS 26 Piezo Stimulator</b> (oosit aktivasyonu), <b>BioPSafe ZBS26</b> (çift trackball kontrollü biyopsi takip sistemi), <b>Mismatch Blocker</b> (7 terminalli elektronik şahitlik) ve <b>Smart Cryo-Tools</b> (sıvı azot tank kapasitesini 4 katına çıkaran patentli sekizgen goblet ekosistemi) teknolojilerini pazarın alım gücü ve klinik ihtiyaçlarıyla eşleştirir.
+                    Bu masa; <b>ZPS 26 / ZPS24-001 Pulse Stimulator</b> (piezoelektrik oosit aktivasyonu & füzyon), <b>ZEUS Black-Box Witness Platform (BioPSafe ZBB25-001)</b> (13 IR sensör, çift tablet ve pedal kontrollü biyopsi takibi), <b>Mismatch Blocker ZMB-7T</b> (7 istasyonlu QR kodlu şahitlik & kontör kredisi) ve <b>Smart Cryo-Tools ZCT25</b> (sıvı azot tank kapasitesini 4 katına çıkaran sekizgen goblet mimarisi) teknolojilerini pazarın alım gücü, regülasyonları ve klinik ihtiyaçlarıyla sentezler.
                 </div>
             </div>
             """, unsafe_allow_html=True)
 
             # Target Country Selector for Device Intelligence
-            c_dev_col1, c_dev_col2 = st.columns([1.4, 2.6])
+            c_dev_col1, c_dev_col2 = st.columns([1.3, 2.7])
             with c_dev_col1:
                 target_dev_country = st.selectbox(
                     "📍 Cihaz Uygunluğu Analiz Edilecek Ülke:",
@@ -10512,6 +10699,21 @@ BODY:
                 )
                 dev_country_row = country_df[country_df['name'] == target_dev_country].iloc[0] if len(country_df[country_df['name'] == target_dev_country]) > 0 else target_country_row
                 dev_suit = get_country_device_suitability(dev_country_row)
+
+                # Check official 2026 catalog presence
+                dev_net_dist = next((d for d in ZEUS_GLOBAL_REFERENCE_NETWORK_2026['distributors'] if target_dev_country in d['countries']), None)
+                dev_net_refs = [r for r in ZEUS_GLOBAL_REFERENCE_NETWORK_2026['international_centers'] if r['country'] == target_dev_country]
+                
+                if dev_net_dist or dev_net_refs:
+                    st.markdown(f"""
+                    <div style="background:rgba(255,184,0,0.08);border:1px solid rgba(255,184,0,0.35);border-radius:8px;padding:9px 12px;margin-top:10px;">
+                        <span style="color:#FFB800;font-size:11.5px;font-weight:700;">⭐ 2026 Resmi Katalog Ağı:</span>
+                        <div style="font-size:11px;color:#E2E8F0;margin-top:3px;line-height:1.45;">
+                            {f"<b>Yetkili Bayi:</b> {dev_net_dist['name']}<br>" if dev_net_dist else ""}
+                            {f"<b>Referans:</b> {', '.join([r['name'] for r in dev_net_refs])}" if dev_net_refs else ""}
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
 
             with c_dev_col2:
                 # 4-device suitability KPI badges
@@ -10523,7 +10725,7 @@ BODY:
                         <span style="font-size:10px;color:#5FD3AE;">{dev_suit['zps26']['tier']}</span>
                     </div>
                     <div style="background:#0F192E;border:1px solid rgba(95,211,174,0.3);border-radius:8px;padding:10px;text-align:center;">
-                        <span style="font-size:11px;color:#8A99AD;">🧬 BioPSafe ZBS26</span><br>
+                        <span style="font-size:11px;color:#8A99AD;">🧬 Black-Box (BioPSafe)</span><br>
                         <b style="font-size:18px;color:#5FD3AE;">%{dev_suit['biopsafe']['score']}</b><br>
                         <span style="font-size:10px;color:#5FD3AE;">{dev_suit['biopsafe']['tier']}</span>
                     </div>
@@ -10542,15 +10744,16 @@ BODY:
 
             st.markdown("---")
 
-            # Deep-dive Device Portfolio Tabs
-            dev_sub1, dev_sub2, dev_sub3, dev_sub4 = st.tabs([
-                "⚡ ZEUS Pulse Stimulator (ZPS 26)",
-                "🧬 ZEUS BioPSafe (ZBS26)",
-                "🛡️ Mismatch Blocker (7 Terminal)",
-                "❄️ Smart Cryo-Tools (4X Tank Kapasite)"
+            # Deep-dive Device Portfolio Tabs + Global Reference Network Tab
+            dev_sub1, dev_sub2, dev_sub3, dev_sub4, dev_sub5 = st.tabs([
+                "⚡ ZEUS Pulse Stimulator (ZPS 26 / ZPS24-001)",
+                "🧬 ZEUS Black-Box Witness Platform (BioPSafe ZBB25-001)",
+                "🛡️ Mismatch Blocker (ZMB-7T / QR Coin Modeli)",
+                "❄️ Smart Cryo-Tools (ZCT25 / 4X Tank Kapasite)",
+                "🌍 2026 Resmi Global Distribütör ve Klinik Referans Ağı (Katalog S.51)"
             ])
 
-            # TAB 1: ZPS 26
+            # TAB 1: ZPS 26 PULSE STIMULATOR
             with dev_sub1:
                 z_info = ZEUS_CLINICAL_DEVICE_PORTFOLIO['zps26']
                 z_suit = dev_suit['zps26']
@@ -10571,13 +10774,13 @@ BODY:
                     
                     <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.08);">
                         <div style="background:rgba(0,0,0,0.25);padding:12px;border-radius:8px;">
-                            <b style="color:#00F5FF;font-size:12.5px;">📋 User Manual Teknik Özellikleri:</b>
+                            <b style="color:#00F5FF;font-size:12.5px;">📋 User Manual & Donanım Mimarisi:</b>
                             <ul style="color:#CCD7E6;font-size:11.5px;margin:6px 0 0 16px;padding:0;line-height:1.6;">
                                 <li><b>Güç / Voltaj:</b> {z_info['specs']['voltage']}</li>
                                 <li><b>Ekran & Kontrol:</b> {z_info['specs']['screen']}</li>
                                 <li><b>Çalışma Modları:</b> {z_info['specs']['modes']}</li>
                                 <li><b>Boyut & Ağırlık:</b> {z_info['specs']['dimensions']}</li>
-                                <li><b>Şebeke Koruması:</b> {z_info['specs']['safety']}</li>
+                                <li><b>Şebeke İzolasyonu:</b> {z_info['specs']['safety']}</li>
                                 <li><b>Ruhsat & Tescil:</b> {z_info['specs']['certification']}</li>
                             </ul>
                         </div>
@@ -10589,8 +10792,15 @@ BODY:
                         </div>
                     </div>
 
+                    <div style="margin-top:12px;background:rgba(0,245,255,0.06);border:1px solid rgba(0,245,255,0.2);border-radius:8px;padding:12px;">
+                        <b style="color:#00F5FF;font-size:12.5px;">📚 Resmi Katalogdaki Bilimsel Yayınlar ve Kanıta Dayalı Klinik Kanıtlar:</b>
+                        <div style="display:grid;grid-template-columns:1fr;gap:6px;margin-top:8px;">
+                            {''.join([f'<div style="background:rgba(0,0,0,0.3);padding:8px 12px;border-radius:6px;font-size:11.5px;color:#E2E8F0;border-left:3px solid #00F5FF;">• {ev}</div>' for ev in z_info.get('clinical_evidence', [])])}
+                        </div>
+                    </div>
+
                     <div style="margin-top:12px;background:rgba(19,166,181,0.08);border:1px solid rgba(19,166,181,0.25);border-radius:8px;padding:12px;">
-                        <b style="color:#4FD1DE;font-size:12.5px;">🧪 Tescilli Sarf Malzeme ve Aksesuar Ekosistemi:</b>
+                        <b style="color:#4FD1DE;font-size:12.5px;">🧪 Resmi Katalog Kodlarıyla Sarf Malzeme ve Aksesuar Ekosistemi:</b>
                         <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:8px;margin-top:8px;">
                             {''.join([f'<div style="background:rgba(0,0,0,0.3);padding:8px 10px;border-radius:6px;font-size:11.5px;color:#E2E8F0;">• {c}</div>' for c in z_info['consumables']])}
                         </div>
@@ -10606,7 +10816,7 @@ BODY:
                 </div>
                 """, unsafe_allow_html=True)
 
-            # TAB 2: BIOPSAFE ZBS26
+            # TAB 2: BIOPSAFE / BLACK-BOX ZBB25-001
             with dev_sub2:
                 b_info = ZEUS_CLINICAL_DEVICE_PORTFOLIO['biopsafe']
                 b_suit = dev_suit['biopsafe']
@@ -10624,29 +10834,36 @@ BODY:
                             <span style="display:block;font-size:11px;color:#5FD3AE;">{b_suit['tier']}</span>
                         </div>
                     </div>
-                    
+
                     <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.08);">
                         <div style="background:rgba(0,0,0,0.25);padding:12px;border-radius:8px;">
-                            <b style="color:#5FD3AE;font-size:12.5px;">📋 User Manual Teknik Özellikleri:</b>
+                            <b style="color:#5FD3AE;font-size:12.5px;">📋 13 IR Sensör, Çift Tablet & Güvenlik Mimarisi:</b>
                             <ul style="color:#CCD7E6;font-size:11.5px;margin:6px 0 0 16px;padding:0;line-height:1.6;">
-                                <li><b>Ekran & Yazılım:</b> {b_info['specs']['screen']}</li>
-                                <li><b>Çift Trackball:</b> {b_info['specs']['controllers']}</li>
-                                <li><b>Dahili Rapor Yazıcısı:</b> {b_info['specs']['printer']}</li>
-                                <li><b>Motor & Hareket:</b> {b_info['specs']['voltage']}</li>
-                                <li><b>Boyutlar & Ağırlık:</b> {b_info['specs']['dimensions']}</li>
-                                <li><b>Sertifikasyon:</b> {b_info['specs']['certification']}</li>
+                                <li><b>Çift Modül:</b> {b_info['specs']['modules']}</li>
+                                <li><b>Sensör Mimarisi:</b> {b_info['specs']['sensors']}</li>
+                                <li><b>Çift Tablet:</b> {b_info['specs']['displays']}</li>
+                                <li><b>Bluetooth Ayak Pedalı:</b> {b_info['specs']['foot_pedal']}</li>
+                                <li><b>3 Katmanlı Güvenlik:</b> {b_info['specs']['security_layers']}</li>
+                                <li><b>Kalite & Tescil:</b> {b_info['specs']['certification']}</li>
                             </ul>
                         </div>
                         <div style="background:rgba(0,0,0,0.25);padding:12px;border-radius:8px;">
                             <b style="color:#00F5FF;font-size:12.5px;">🔬 Klinik Amaç ve Çözülen Problem:</b>
                             <p style="color:#CCD7E6;font-size:11.5px;margin:6px 0 10px 0;line-height:1.55;">{b_info['clinical_purpose']}</p>
-                            <b style="color:#FFB800;font-size:12px;">Hedef Klinik Grubu:</b>
+                            <b style="color:#FFB800;font-size:12px;">Hedef Kurumlar & PGT Odaklılığı:</b>
                             <p style="color:#CCD7E6;font-size:11.5px;margin:2px 0 0 0;">{b_info['target_clinics']}</p>
                         </div>
                     </div>
 
+                    <div style="margin-top:12px;background:rgba(95,211,174,0.06);border:1px solid rgba(95,211,174,0.2);border-radius:8px;padding:12px;">
+                        <b style="color:#5FD3AE;font-size:12.5px;">📚 3 Katmanlı Donanımsal ve Yazılımsal Güvenlik Kanıtları:</b>
+                        <div style="display:grid;grid-template-columns:1fr;gap:6px;margin-top:8px;">
+                            {''.join([f'<div style="background:rgba(0,0,0,0.3);padding:8px 12px;border-radius:6px;font-size:11.5px;color:#E2E8F0;border-left:3px solid #5FD3AE;">• {ev}</div>' for ev in b_info.get('clinical_evidence', [])])}
+                        </div>
+                    </div>
+
                     <div style="margin-top:12px;background:rgba(95,211,174,0.08);border:1px solid rgba(95,211,174,0.25);border-radius:8px;padding:12px;">
-                        <b style="color:#5FD3AE;font-size:12.5px;">🧪 Tescilli Sarf Malzeme ve Plaka Ekosistemi:</b>
+                        <b style="color:#5FD3AE;font-size:12.5px;">🧪 Resmi Katalog Kodlarıyla Sarf ve Plaka Setleri:</b>
                         <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:8px;margin-top:8px;">
                             {''.join([f'<div style="background:rgba(0,0,0,0.3);padding:8px 10px;border-radius:6px;font-size:11.5px;color:#E2E8F0;">• {c}</div>' for c in b_info['consumables']])}
                         </div>
@@ -10690,12 +10907,15 @@ BODY:
 
                     <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-top:12px;">
                         <div style="background:rgba(0,0,0,0.25);padding:12px;border-radius:8px;">
-                            <b style="color:#00F5FF;font-size:12.5px;">🔬 Klinik Güvenlik & Hukuki Koruma:</b>
-                            <p style="color:#CCD7E6;font-size:11.5px;margin:6px 0 0 0;line-height:1.55;">{m_info['clinical_purpose']}</p>
+                            <b style="color:#00F5FF;font-size:12.5px;">💰 Ekonomik Devrim: QR vs Çipli Sistemler:</b>
+                            <p style="color:#CCD7E6;font-size:11.5px;margin:6px 0 0 0;line-height:1.55;">{m_info['specs']['economic_advantage']}</p>
+                            <div style="margin-top:8px;font-size:11px;color:#5FD3AE;">
+                                <b>Operasyonel Özellikler:</b> {m_info['specs']['security_logic']}
+                            </div>
                         </div>
                         <div style="background:rgba(0,0,0,0.25);padding:12px;border-radius:8px;">
                             <b style="color:#5FD3AE;font-size:12.5px;">🎯 Hedef Kurumlar & Tetikleyici Kriterler:</b>
-                            <p style="color:#CCD7E6;font-size:11.5px;margin:6px 0 0 0;line-height:1.55;">{m_info['target_clinics']}<br><br><b>Sarf Döngüsü:</b> {m_info['sarf_multiplier']}</p>
+                            <p style="color:#CCD7E6;font-size:11.5px;margin:6px 0 0 0;line-height:1.55;">{m_info['target_clinics']}<br><br><b>Mobil Entegrasyon:</b> {m_info['specs']['remote_mobile']}<br><br><b>Sarf Döngüsü:</b> {m_info['sarf_multiplier']}</p>
                         </div>
                     </div>
 
@@ -10727,14 +10947,16 @@ BODY:
 
                     <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.08);">
                         <div style="background:rgba(0,0,0,0.25);padding:12px;border-radius:8px;">
-                            <b style="color:#38BDF8;font-size:12.5px;">📐 Patentli Kriyomimari & Donanım Özellikleri:</b>
+                            <b style="color:#38BDF8;font-size:12.5px;">📐 4 Temel Kriyobiyoloji Darboğazını Çözen Donanım:</b>
                             <ul style="color:#CCD7E6;font-size:11.5px;margin:6px 0 0 16px;padding:0;line-height:1.6;">
                                 <li><b>Kapasite Artışı:</b> {c_info['specs']['capacity_boost']}</li>
-                                <li><b>Smart Straws:</b> {c_info['specs']['smart_straws']}</li>
-                                <li><b>Sekizgen Gobletler:</b> {c_info['specs']['goblets']}</li>
+                                <li><b>CAPEX Tasarrufu:</b> {c_info['specs']['zero_capex']}</li>
                                 <li><b>Termal Koruma:</b> {c_info['specs']['thermal_protection']}</li>
-                                <li><b>Dijital Adresleme:</b> {c_info['specs']['digital_addressing']}</li>
-                                <li><b>Aksesuarlar:</b> {c_info['specs']['accessories']}</li>
+                                <li><b>Barkod Görünürlüğü:</b> {c_info['specs']['barcode_visibility']}</li>
+                                <li><b>Kısaltma Mekanizması:</b> {c_info['specs']['shortening_mechanism']}</li>
+                                <li><b>Grabber Pen:</b> {c_info['specs']['grabber_pen']}</li>
+                                <li><b>Dijital Adresleme:</b> {c_info['specs']['digital_mapping']}</li>
+                                <li><b>Tank İçi Tarayıcı:</b> {c_info['specs']['in_tank_scanning']}</li>
                             </ul>
                         </div>
                         <div style="background:rgba(0,0,0,0.25);padding:12px;border-radius:8px;">
@@ -10747,7 +10969,7 @@ BODY:
                     </div>
 
                     <div style="margin-top:12px;background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.25);border-radius:8px;padding:12px;">
-                        <b style="color:#38BDF8;font-size:12.5px;">🧪 Kriyojenik Sarf & Aksesuar Kiti:</b>
+                        <b style="color:#38BDF8;font-size:12.5px;">🧪 Resmi Katalog Kodlarıyla Kriyojenik Sarf & Aksesuar Kiti:</b>
                         <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:8px;margin-top:8px;">
                             {''.join([f'<div style="background:rgba(0,0,0,0.3);padding:8px 10px;border-radius:6px;font-size:11.5px;color:#E2E8F0;">• {c}</div>' for c in c_info['consumables']])}
                         </div>
@@ -10763,43 +10985,130 @@ BODY:
                 </div>
                 """, unsafe_allow_html=True)
 
+            # TAB 5: 2026 OFFICIAL GLOBAL REFERENCE NETWORK (CATALOG PAGE 51)
+            with dev_sub5:
+                st.markdown("""
+                <div style="background:rgba(15,25,46,0.85);border:1px solid rgba(255,184,0,0.35);border-radius:12px;padding:18px;margin-bottom:14px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+                        <div>
+                            <span style="background:rgba(255,184,0,0.15);color:#FFB800;border:1px solid rgba(255,184,0,0.3);padding:3px 8px;border-radius:4px;font-size:11px;font-weight:700;">2026 CATALOG P.51</span>
+                            <h3 style="margin:6px 0 2px 0;color:#FFFFFF;font-size:18px;">🌍 ZEUS Bioscience Global Resmi Distribütör & Klinik Referans Ağı</h3>
+                            <span style="color:#8A99AD;font-size:12.5px;">Resmi Ürün Kataloğu Sayfa 51'de Belgelenmiş Uluslararası Yetkili Dağıtıcılar ve Prestijli Referans Hastaneleri</span>
+                        </div>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
+                ref_t1, ref_t2, ref_t3 = st.tabs([
+                    "🤝 Resmi 2026 Distribütör Ağı (7 Yetkili Bayi)",
+                    "🏥 Uluslararası Klinik Referans Merkezleri (18 Merkez)",
+                    "🇹🇷 Türkiye Referans ve Kullanıcı Merkezleri (19 Merkez)"
+                ])
+
+                with ref_t1:
+                    st.markdown("##### 🤝 2026 Resmi Bölge Distribütörleri")
+                    dist_cards = []
+                    for d in ZEUS_GLOBAL_REFERENCE_NETWORK_2026['distributors']:
+                        is_match = target_dev_country in d['countries']
+                        border_col = "#00F5FF" if is_match else "rgba(255,255,255,0.1)"
+                        bg_col = "rgba(0,245,255,0.06)" if is_match else "rgba(0,0,0,0.25)"
+                        match_pill = "<span style='background:#00F5FF;color:#0F192E;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700;margin-left:6px;'>SEÇİLEN ÜLKE PARTNERİ</span>" if is_match else ""
+                        
+                        dist_cards.append(f"""
+                        <div style="background:{bg_col};border:1px solid {border_col};border-radius:8px;padding:12px;margin-bottom:10px;">
+                            <div style="display:flex;justify-content:space-between;align-items:flex-start;">
+                                <div>
+                                    <b style="color:#FFFFFF;font-size:14px;">{d['name']}</b> {match_pill}<br>
+                                    <span style="color:#00F5FF;font-size:12px;">📍 Bölge: {d['territory_tr']}</span>
+                                </div>
+                                <span style="font-size:11px;color:#5FD3AE;background:rgba(95,211,174,0.15);padding:2px 8px;border-radius:4px;">{d['status'].split('(')[0]}</span>
+                            </div>
+                            <div style="margin-top:6px;font-size:11.5px;color:#CCD7E6;">
+                                <b>Operasyonel Durum:</b> {d['status']}
+                            </div>
+                            <div style="margin-top:4px;font-size:11.5px;color:#FFB800;">
+                                <b>Öne Çıkan Ürünler:</b> {', '.join(d['focus_products'])}
+                            </div>
+                            <div style="margin-top:4px;font-size:11px;color:#8A99AD;">
+                                <b>Kilit Klinikler:</b> {', '.join(d['key_centers'])}
+                            </div>
+                        </div>
+                        """)
+                    st.markdown("".join(dist_cards), unsafe_allow_html=True)
+
+                with ref_t2:
+                    st.markdown("##### 🏥 Uluslararası Öncü Referans Tüp Bebek Merkezleri")
+                    int_cards = []
+                    for c in ZEUS_GLOBAL_REFERENCE_NETWORK_2026['international_centers']:
+                        is_match = c['country'] == target_dev_country
+                        border_col = "#00F5FF" if is_match else "rgba(255,255,255,0.08)"
+                        bg_col = "rgba(0,245,255,0.06)" if is_match else "rgba(0,0,0,0.25)"
+                        match_pill = "<span style='background:#00F5FF;color:#0F192E;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700;margin-left:6px;'>SEÇİLEN ÜLKE</span>" if is_match else ""
+
+                        int_cards.append(f"""
+                        <div style="background:{bg_col};border:1px solid {border_col};border-radius:8px;padding:10px 14px;margin-bottom:8px;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;">
+                                <b style="color:#FFFFFF;font-size:13px;">{c['name']}</b> {match_pill}
+                                <span style="color:#8A99AD;font-size:11px;">{c['country']} ({c['region']})</span>
+                            </div>
+                            <div style="font-size:11.5px;color:#CCD7E6;margin-top:3px;">{c['highlight']}</div>
+                        </div>
+                        """)
+                    st.markdown("".join(int_cards), unsafe_allow_html=True)
+
+                with ref_t3:
+                    st.markdown("##### 🇹🇷 Türkiye Referans ve Kullanıcı Merkezleri (Ar-Ge ve Klinik Taban)")
+                    dom_cards = []
+                    for dom in ZEUS_GLOBAL_REFERENCE_NETWORK_2026['domestic_centers']:
+                        dom_cards.append(f"""
+                        <div style="background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:10px 14px;margin-bottom:8px;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;">
+                                <b style="color:#00F5FF;font-size:13px;">{dom['name']}</b>
+                                <span style="color:#FFB800;font-size:11px;">📍 {dom['city']}</span>
+                            </div>
+                            <div style="font-size:11.5px;color:#CCD7E6;margin-top:2px;">{dom['type']}</div>
+                        </div>
+                        """)
+                    st.markdown("".join(dom_cards), unsafe_allow_html=True)
+
             # Summary Comparison Table Across All 4 Devices
             st.markdown(f"##### 📊 {target_dev_country} İçin 4'lü Teknoloji Karşılaştırma Matrisi")
             summary_rows = [
                 {
-                    "Teknoloji": f"⚡ ZPS 26 Pulse Stimulator",
+                    "Teknoloji": "⚡ ZPS 26 Pulse Stimulator",
                     "Kategori": "Elektroporasyon & AOA",
-                    "Klinik Problem": "Düşük fertilizasyon, TFF, oosit lizisi",
-                    "Temel Sarf": "Electro Dish & Electroliquid",
+                    "Klinik Problem": "Düşük fertilizasyon, TFF, oosit lizisi (Baltacı & Tanaka ROSI)",
+                    "Temel Sarf": "ZPS13-002 Electro Dish & Electroliquid",
                     f"{target_dev_country} AI Skoru": f"%{dev_suit['zps26']['score']}",
                     "Tavsiye Seviyesi": dev_suit['zps26']['tier']
                 },
                 {
-                    "Teknoloji": f"🧬 BioPSafe ZBS26",
-                    "Kategori": "Otomatik Biyopsi & PCR Tubing",
-                    "Klinik Problem": "PGT-A biyopsi şerit ve PCR tüp karışıklığı",
-                    "Temel Sarf": "BioPSafe SLS Plate & Dishes",
+                    "Teknoloji": "🧬 Black-Box BioPSafe (ZBB25-001)",
+                    "Kategori": "13 IR Sensörlü Biyopsi & PCR Eşleşme",
+                    "Klinik Problem": "PGT-A biyopsi şerit ve PCR tüp karışıklığı, rutin ICSI takibi",
+                    "Temel Sarf": "ZBB25-002/003/004 Dish Setleri & PCR Holder",
                     f"{target_dev_country} AI Skoru": f"%{dev_suit['biopsafe']['score']}",
                     "Tavsiye Seviyesi": dev_suit['biopsafe']['tier']
                 },
                 {
-                    "Teknoloji": f"🛡️ Mismatch Blocker",
-                    "Kategori": "7-Terminal Elektronik Şahitlik",
-                    "Klinik Problem": "Hasta/sperm/oosit karışıklığı riski",
-                    "Temel Sarf": "Çipli Bileklik & Kriyobarkodlar",
+                    "Teknoloji": "🛡️ Mismatch Blocker (ZMB-7T)",
+                    "Kategori": "7-Terminal Elektronik Şahitlik & QR Coin",
+                    "Klinik Problem": "Hasta/sperm/oosit karışıklığı riski, pahalı RFID çip maliyeti",
+                    "Temel Sarf": "Bileklik, Kriyobarkodlar & Sanal POS Kontörü",
                     f"{target_dev_country} AI Skoru": f"%{dev_suit['mismatch_blocker']['score']}",
                     "Tavsiye Seviyesi": dev_suit['mismatch_blocker']['tier']
                 },
                 {
-                    "Teknoloji": f"❄️ Smart Cryo-Tools",
-                    "Kategori": "4X Kriyotank Optimizasyonu",
-                    "Klinik Problem": "Sıvı azot tankı doluluğu & termal şok",
-                    "Temel Sarf": "Smart Straws & Sekizgen Gobletler",
+                    "Teknoloji": "❄️ Smart Cryo-Tools (ZCT25)",
+                    "Kategori": "4X Kriyotank Optimizasyonu & Sekizgen Goblet",
+                    "Klinik Problem": "Sıvı azot tankı doluluğu, $35K-$50K tank maliyeti & termal şok",
+                    "Temel Sarf": "ZCT25-001FT Smart Straws & Sekizgen Gobletler",
                     f"{target_dev_country} AI Skoru": f"%{dev_suit['smart_cryo']['score']}",
                     "Tavsiye Seviyesi": dev_suit['smart_cryo']['tier']
                 }
             ]
             st.dataframe(pd.DataFrame(summary_rows), use_container_width=True, hide_index=True)
+
 
     else:
         st.warning("Lütfen karşılaştırma analizi için en az 2 pazar seçiniz.")
@@ -13218,4 +13527,3 @@ components.html("""
         });
     </script>
 """, height=110)
-
