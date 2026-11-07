@@ -6864,7 +6864,7 @@ elif nav_selection == "AI Intelligence & Forecasting":
                 except Exception:
                     pass
 
-            # Intelligent ZEUS Cognitive Specialist Synthesis (Fallback)
+            # Intelligent ZEUS Cognitive Specialist Synthesis (Fallback with 5 Authorized Roles)
             low_n = clean_note.lower()
             has_training = any(w in low_n for w in ['eğitim', 'egitim', 'training', 'masterclass', 'workshop', 'öğren', 'kalibrasyon'])
             has_competitor = any(w in low_n for w in ['rakip', 'competitor', 'başka firma', 'alternatif', 'ikame', 'farklı marka'])
@@ -6872,11 +6872,38 @@ elif nav_selection == "AI Intelligence & Forecasting":
             has_demo = any(w in low_n for w in ['demo', 'numune', 'örnek', 'konsinye', 'deneme', 'test kiti'])
             has_staff = any(w in low_n for w in ['doktor', 'embriyolog', 'personel', 'ayrıldı', 'değişti', 'yeni', 'kadro'])
             has_customs = any(w in low_n for w in ['gümrük', 'sevkiyat', 'nakliye', 'gecikme', 'ithalat', 'izin'])
+            has_legal = any(w in low_n for w in ['sözleşme', 'sozlesme', 'kontrat', 'hukuk', 'distribütörlük', 'münhasır', 'tahsilat', 'ödeme', 'vade'])
 
-            revised_diag = f"{orig_diag}<br><br><span style='color:#5FD3AE;'><b>🩺 {role} Saha Notu & Revize Teşhis:</b></span> Saha uzmanımız tarafından sisteme işlenen teyitli saha notu: <i>\"{clean_note}\"</i>.<br>Bu geri bildirim ışığında vaka, sahadaki pratik klinik gereksinimler ve anlık dinamikler doğrultusunda <b>öncelikli operasyonel eylem statüsüne</b> güncellenmiştir."
+            role_perspectives = {
+                "Genel Müdür": "Tepe Yönetim & C-Level Stratejik Vizyon Masası",
+                "Uluslararası İlişkiler Müdürü": "Küresel Diplomasi, Regülasyon & Distribütörlük Masası",
+                "Satın Alma Sorumlusu": "Tedarik Zinciri, Lojistik & Maliyet Optimizasyonu Masası",
+                "Finans Müdürü": "Nakit Akışı, Tahsilat Güvencesi & Finansal Risk Masası",
+                "Kıdemli Klinik Embriyolog": "IVF Laboratuvarı, Embriyoloji Aplikasyonu & Protokol Masası"
+            }
+            perspective_label = role_perspectives.get(role, f"{role} Masası")
+
+            revised_diag = (
+                f"{orig_diag}<br><br>"
+                f"<div style='background:rgba(0,245,255,0.06);border:1px solid rgba(0,245,255,0.25);border-left:4px solid #00F5FF;padding:10px 14px;border-radius:6px;'>"
+                f"<b style='color:#00F5FF;'>👨‍💼 {role} ({perspective_label}) Değerlendirmesi & Revize Teşhis:</b><br>"
+                f"Sistemimize işlenen resmi değerlendirme notu: <i>\"{clean_note}\"</i>.<br>"
+                f"Bu stratejik geri bildirim doğrultusunda vaka, kurumun <b>{role}</b> koordinasyonundaki öncelikli icra ve müzakere gündemine alınmıştır."
+                f"</div>"
+            )
 
             revised_steps = []
-            if has_staff or has_training:
+            if role == "Genel Müdür":
+                revised_steps.append(f"<b>C-Level Yönetim Kurulu Teması & Stratejik Mutabakat (Genel Müdür İcrası):</b> İlgili partnerin tepe yönetimi ile 48 saat içinde özel bir CEO zirvesi gerçekleştirilmeli; kurumsal iş ortaklığı ve büyüme vizyonu resmileştirilmelidir.")
+            elif role == "Uluslararası İlişkiler Müdürü":
+                revised_steps.append(f"<b>Uluslararası Distribütörlük Şartnamesi & Diplomatik Temas:</b> İlgili ülkenin ticaret ataşeliği ve yerel sağlık otoritesi (MoHAP/FDA/CE) regülasyonları doğrultusunda revize distribütörlük şartnamesi ve LOA yetkilendirmesi yürürlüğe konulmalıdır.")
+            elif role == "Satın Alma Sorumlusu":
+                revised_steps.append(f"<b>Tedarik ve Maliyet Optimizasyonu (1 Yıl Raf Ömürlü Liyofilize MoQ):</b> Satınalma maliyetlerini %25 düşürmek için 1 yıl raf ömürlü liyofilize toz solüsyon ve dishlerden oluşan yıllık toplu sipariş (MoQ) paketi tanımlanmalıdır.")
+            elif role == "Finans Müdürü":
+                revised_steps.append(f"<b>Tahsilat Güvencesi & Akreditifli Finansal Koruma (Finans Müdürü Kararı):</b> Vade uçurumunu kapatmak adına peşin/akreditifli ödeme veya banka teminat mektubu protokolü devreye alınarak nakit akışı %100 güvenceye bağlanmalıdır.")
+            elif role == "Kıdemli Klinik Embriyolog":
+                revised_steps.append(f"<b>Acil Yerinde Klinik Protokol Eğitimi & Aplikasyon (Embriyolog Müdahalesi):</b> Laboratuvardaki embriyoloji ekibine 48 saat içinde 1-1 hands-on Piezo ICSI voltaj ayarları ve oosit aktivasyon SOP eğitimi verilmelidir.")
+            elif has_staff or has_training:
                 revised_steps.append(f"<b>Acil Yerinde Klinik Eğitim & Validasyon ({role} Talebi):</b> Laboratuvardaki yeni embriyoloji ekibine 48 saat içinde 1-1 hands-on Piezo ICSI voltaj ve solüsyon protokolü eğitimi verilmeli.")
             elif has_competitor:
                 revised_steps.append(f"<b>Rakip İkamesine Karşı Klinik Kanıt & Karşı Teklif:</b> ZEUS'un blastosist gelişiminde sağladığı %18.4 klinik üstünlük verileri sunulmalı; rakip geçişini durdurmak için anında konsinye demo seti ulaştırılmalı.")
@@ -6887,7 +6914,7 @@ elif nav_selection == "AI Intelligence & Forecasting":
             elif has_demo:
                 revised_steps.append(f"<b>Konsinye Validasyon Kiti Tahsisi:</b> Laboratuvara derhal 20 kutu Electro Dish ve solüsyon test kiti bedelsiz ulaştırılarak klinik güven tazelenmeli.")
             else:
-                revised_steps.append(f"<b>{role} Notu Doğrultusunda Özel Eylem Planı:</b> Sahadan gelen <i>'{clean_note[:70]}...'</i> uyarısı kapsamında ilgili kurum direktörlüğü ile 48 saat içinde özel mutabakat görüşmesi gerçekleştirilmeli.")
+                revised_steps.append(f"<b>{role} Özel Eylem Kararı:</b> Sahadan gelen <i>'{clean_note[:70]}...'</i> değerlendirmesi kapsamında 48 saat içinde aksiyon başlatılmalı.")
 
             if len(orig_steps) >= 2:
                 revised_steps.append(f"<b>Operasyonel Güvence & Sarf Desteği:</b> {orig_steps[1].replace('<b>', '').replace('</b>', '')}")
@@ -6896,9 +6923,9 @@ elif nav_selection == "AI Intelligence & Forecasting":
 
             revised_letter = f"""{orig_letter}
 
-[REVISED STRATEGIC ADDENDUM - BASED ON {role.upper()} DIRECT FIELD EVALUATION - {datetime.now().strftime('%d.%m.%Y')}]
-Specialist Field Finding: "{clean_note}"
-Immediate Resolution: ZEUS Bioscience is actively incorporating this feedback into our immediate operational engagement. Our technical application directorate is prepared to deploy targeted resources within 48 hours to fully resolve these on-site clinical requirements."""
+[REVISED EXECUTIVE ADDENDUM - AUTHORIZED BY {role.upper()} - {datetime.now().strftime('%d.%m.%Y')}]
+Evaluation / Observation: "{clean_note}"
+Immediate Resolution: ZEUS Bioscience is actively incorporating this high-level directive from our {role}. Our executive management is prepared to coordinate directly with your leadership within 48 hours to execute these specific requirements."""
 
             return {
                 'role': role,
@@ -6967,7 +6994,7 @@ Immediate Resolution: ZEUS Bioscience is actively incorporating this feedback in
             with st.expander(f"🩺 Uzman Değerlendirme & Saha Notu Ekle (AI ile Yeniden Değerlendir)", expanded=bool(reval_data)):
                 st.markdown("""
                 <div style="font-size:12.5px; color:#A0AEC0; margin-bottom:8px;">
-                    Klinik embriyologlar, bölge direktörleri veya medikal aplikasyon uzmanları sahadaki en son klinik ve ticari gözlemleri (personel değişimi, rakip teklifi, demo kit ihtiyacı, protokol aksaması vb.) not olarak ekleyebilir. <b>Yapay zeka motoru bu notu doğrudan analize entegre ederek teşhisi, eylem reçetesini ve resmi mektubu günceller.</b>
+                    Genel Müdür, Uluslararası İlişkiler Müdürü, Satın Alma Sorumlusu, Finans Müdürü veya Kıdemli Klinik Embriyolog sahadaki ve yönetimdeki en son stratejik, klinik ve ticari gözlemleri (bütçe kararı, sözleşme müzakeresi, rakip hamlesi, sarf tüketimi vb.) not olarak ekleyebilir. <b>Yapay zeka motoru bu notu doğrudan analize entegre ederek teşhisi, eylem reçetesini ve resmi mektubu günceller.</b>
                 </div>
                 """, unsafe_allow_html=True)
                 
@@ -6976,11 +7003,11 @@ Immediate Resolution: ZEUS Bioscience is actively incorporating this feedback in
                     sel_role = st.selectbox(
                         "Uzman / Değerlendirici Rolü:",
                         [
-                            "Kıdemli Klinik Embriyolog",
-                            "Bölge Satış & Distribütör Direktörü",
-                            "Medikal Aplikasyon & Eğitim Uzmanı",
-                            "Biyomedikal & Laboratuvar Sorumlusu",
-                            "C-Level / Satınalma Kurulu"
+                            "Genel Müdür",
+                            "Uluslararası İlişkiler Müdürü",
+                            "Satın Alma Sorumlusu",
+                            "Finans Müdürü",
+                            "Kıdemli Klinik Embriyolog"
                         ],
                         key=f"role_{case_id}"
                     )
@@ -8130,7 +8157,7 @@ ZEUS Bioscience Scientific Affairs""",
                     f'</div>'
                     f'<div style="background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.06);border-left:3px solid {r_col};border-radius:6px;padding:8px 10px;font-size:11.5px;margin-bottom:6px;">'
                     f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;">'
-                    f'<b style="color:#00F5FF;font-size:11px;">👨‍⚕️ Uzman Görüşü ({r_item["expert_title"]}):</b>'
+                    f'<b style="color:#00F5FF;font-size:11px;">👨‍💼 Uzman Görüşü ({r_item.get("expert_role", r_item["expert_title"])}):</b>'
                     f'<span style="font-size:9.5px;color:{status_badge_txt};background:{status_badge_bg};padding:1px 6px;border-radius:3px;font-weight:700;">{r_item["consensus_status"]}</span>'
                     f'</div>'
                     f'<div style="color:#E2E8F0;line-height:1.4;">{r_item["expert_opinion"]}</div>'
@@ -8161,6 +8188,19 @@ ZEUS Bioscience Scientific Affairs""",
                             all_devices,
                             default=curr_devs,
                             key=f"ms_dev_tab2_{rk}"
+                        )
+                        
+                        new_expert_role = st.selectbox(
+                            "Değerlendirmeyi Yapan Uzman Rolü:",
+                            [
+                                "Genel Müdür",
+                                "Uluslararası İlişkiler Müdürü",
+                                "Satın Alma Sorumlusu",
+                                "Finans Müdürü",
+                                "Kıdemli Klinik Embriyolog"
+                            ],
+                            index=0 if r_item.get('expert_role', '') == 'Genel Müdür' else (1 if r_item.get('expert_role', '') == 'Uluslararası İlişkiler Müdürü' else (2 if r_item.get('expert_role', '') == 'Satın Alma Sorumlusu' else (3 if r_item.get('expert_role', '') == 'Finans Müdürü' else 4))),
+                            key=f"sel_role_reg_{rk}"
                         )
                         
                         new_moves = st.text_area(
@@ -8194,6 +8234,7 @@ ZEUS Bioscience Scientific Affairs""",
                             )
                         if st.form_submit_button("💾 Cihaz Önerilerini, Saha Hamlelerini & Uzman Yorumunu Kaydet", type="primary"):
                             reg_dict[rk]['recommended_devices'] = sel_devs
+                            reg_dict[rk]['expert_role'] = new_expert_role
                             reg_dict[rk]['field_moves'] = new_moves.strip()
                             reg_dict[rk]['user_comment'] = new_comment.strip()
                             reg_dict[rk]['consensus_status'] = new_status
