@@ -28,6 +28,17 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+# Global Markdown HTML sanitizer: strips leading indentation so CommonMark never parses HTML as <pre><code> blocks
+_original_st_markdown = st.markdown
+
+def _safe_st_markdown(body, *args, **kwargs):
+    if kwargs.get('unsafe_allow_html') and isinstance(body, str) and '<' in body:
+        lines = [line.strip() for line in body.splitlines() if line.strip()]
+        body = "\n".join(lines)
+    return _original_st_markdown(body, *args, **kwargs)
+
+st.markdown = _safe_st_markdown
+
 # Custom Styling (ZGMI Executive Theme)
 st.markdown("""
 <style>
@@ -9144,56 +9155,47 @@ elif nav_selection == "Sales & Product Analytics":
             badge_bg = "rgba(255,82,82,0.15)" if is_dormant else "rgba(0,245,255,0.15)"
             badge_color = "#FF5252" if is_dormant else "#00F5FF"
 
-            st.markdown(f"""
-            <div style="background:#0F192E;border:1.5px solid {card_border};border-radius:12px;padding:16px 20px;margin-bottom:16px;box-shadow:0 6px 18px rgba(0,0,0,0.35);">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
-                    <div>
-                        <span style="font-size:15px;font-weight:800;color:#FFFFFF;">{q_data['country_flag']} — {q_data['name']}</span>
-                        <div style="font-size:11px;color:#94A3B8;margin-top:2px;">Hedef Sezon: <b>{q_data['target_year']} Asgari Yıllık Sipariş Şartnamesi</b></div>
-                    </div>
-                    <span style="background:{badge_bg};color:{badge_color};padding:4px 10px;border-radius:6px;font-weight:800;font-size:11px;border:1px solid {badge_color};">
-                        {q_data['status_diagnosis']}
-                    </span>
-                </div>
-                
-                <!-- 4 Macro & Clinical Parameters -->
-                <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(170px, 1fr));gap:8px;background:rgba(255,255,255,0.03);padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);margin-bottom:10px;">
-                    <div>
-                        <div style="font-size:10px;color:#94A3B8;font-weight:600;">💰 KİŞİ BAŞI GSYİH (GDP):</div>
-                        <div style="font-size:12px;color:#FFFFFF;font-weight:700;margin-top:1px;">{q_data['gdp_pc']}</div>
-                    </div>
-                    <div>
-                        <div style="font-size:10px;color:#94A3B8;font-weight:600;">🏥 LİSANSLI KLİNİK SAYISI:</div>
-                        <div style="font-size:12px;color:#00F5FF;font-weight:700;margin-top:1px;">{q_data['clinics']} Klinik</div>
-                    </div>
-                    <div>
-                        <div style="font-size:10px;color:#94A3B8;font-weight:600;">🔄 YILLIK IVF SİKLUS HACMİ:</div>
-                        <div style="font-size:12px;color:#10B981;font-weight:700;margin-top:1px;">{q_data['cycles']}</div>
-                    </div>
-                    <div>
-                        <div style="font-size:10px;color:#94A3B8;font-weight:600;">🛃 GÜMRÜK VERGİSİ & İTHALAT:</div>
-                        <div style="font-size:12px;color:#FFB800;font-weight:700;margin-top:1px;">{q_data['customs']}</div>
-                    </div>
-                </div>
-
-                <!-- Installed Base & History -->
-                <div style="font-size:11.5px;color:#CCD7E6;margin-bottom:10px;padding:6px 10px;background:rgba(0,0,0,0.25);border-radius:6px;">
-                    <b>🔬 Sahadaki Kurulu Taban:</b> <span style="color:#00F5FF;font-weight:700;">{q_data['installed_devices']} Cihaz</span> | 
-                    <b>📜 Geçmiş Sipariş Çekişi:</b> <span style="color:#E2E8F0;">{q_data['historical_summary']}</span>
-                </div>
-
-                <!-- AI Recommendation Rationale -->
-                <div style="background:rgba(0,245,255,0.04);border-left:3px solid #00F5FF;padding:10px 14px;border-radius:6px;margin-bottom:12px;">
-                    <div style="font-size:11px;font-weight:700;color:#00F5FF;margin-bottom:3px;">🤖 AI Pazar Kapasitesi Analizi & Kota Rasyoneli:</div>
-                    <div style="font-size:12px;color:#CBD5E1;line-height:1.5;">{q_data['ai_rationale']}</div>
-                    <div style="margin-top:8px;padding-top:6px;border-top:1px dashed rgba(0,245,255,0.2);display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;">
-                        <span>🎯 <b>AI Önerilen Cihaz:</b> <b style="color:#00F5FF;">+{q_data['ai_target_devices']} Adet</b></span>
-                        <span>🧪 <b>AI Önerilen Sarf:</b> <b style="color:#FFB800;">{q_data['ai_target_consumables']} Kutu</b></span>
-                        <span>💰 <b>AI Asgari Ciro Kotası:</b> <b style="color:#10B981;">{format_curr(q_data['ai_target_revenue'])}</b></span>
-                    </div>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+            quota_card_html = f"""<div style="background:#0F192E;border:1.5px solid {card_border};border-radius:12px;padding:16px 20px;margin-bottom:16px;box-shadow:0 6px 18px rgba(0,0,0,0.35);">
+<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
+<div>
+<span style="font-size:15px;font-weight:800;color:#FFFFFF;">{q_data['country_flag']} — {q_data['name']}</span>
+<div style="font-size:11px;color:#94A3B8;margin-top:2px;">Hedef Sezon: <b>{q_data['target_year']} Asgari Yıllık Sipariş Şartnamesi</b></div>
+</div>
+<span style="background:{badge_bg};color:{badge_color};padding:4px 10px;border-radius:6px;font-weight:800;font-size:11px;border:1px solid {badge_color};">{q_data['status_diagnosis']}</span>
+</div>
+<div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(170px, 1fr));gap:8px;background:rgba(255,255,255,0.03);padding:10px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.06);margin-bottom:10px;">
+<div>
+<div style="font-size:10px;color:#94A3B8;font-weight:600;">💰 KİŞİ BAŞI GSYİH (GDP):</div>
+<div style="font-size:12px;color:#FFFFFF;font-weight:700;margin-top:1px;">{q_data['gdp_pc']}</div>
+</div>
+<div>
+<div style="font-size:10px;color:#94A3B8;font-weight:600;">🏥 LİSANSLI KLİNİK SAYISI:</div>
+<div style="font-size:12px;color:#00F5FF;font-weight:700;margin-top:1px;">{q_data['clinics']} Klinik</div>
+</div>
+<div>
+<div style="font-size:10px;color:#94A3B8;font-weight:600;">🔄 YILLIK IVF SİKLUS HACMİ:</div>
+<div style="font-size:12px;color:#10B981;font-weight:700;margin-top:1px;">{q_data['cycles']}</div>
+</div>
+<div>
+<div style="font-size:10px;color:#94A3B8;font-weight:600;">🛃 GÜMRÜK VERGİSİ & İTHALAT:</div>
+<div style="font-size:12px;color:#FFB800;font-weight:700;margin-top:1px;">{q_data['customs']}</div>
+</div>
+</div>
+<div style="font-size:11.5px;color:#CCD7E6;margin-bottom:10px;padding:6px 10px;background:rgba(0,0,0,0.25);border-radius:6px;">
+<b>🔬 Sahadaki Kurulu Taban:</b> <span style="color:#00F5FF;font-weight:700;">{q_data['installed_devices']} Cihaz</span> | 
+<b>📜 Geçmiş Sipariş Çekişi:</b> <span style="color:#E2E8F0;">{q_data['historical_summary']}</span>
+</div>
+<div style="background:rgba(0,245,255,0.04);border-left:3px solid #00F5FF;padding:10px 14px;border-radius:6px;margin-bottom:12px;">
+<div style="font-size:11px;font-weight:700;color:#00F5FF;margin-bottom:3px;">🤖 AI Pazar Kapasitesi Analizi & Kota Rasyoneli:</div>
+<div style="font-size:12px;color:#CBD5E1;line-height:1.5;">{q_data['ai_rationale']}</div>
+<div style="margin-top:8px;padding-top:6px;border-top:1px dashed rgba(0,245,255,0.2);display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;">
+<span>🎯 <b>AI Önerilen Cihaz:</b> <b style="color:#00F5FF;">+{q_data['ai_target_devices']} Adet</b></span>
+<span>🧪 <b>AI Önerilen Sarf:</b> <b style="color:#FFB800;">{q_data['ai_target_consumables']} Kutu</b></span>
+<span>💰 <b>AI Asgari Ciro Kotası:</b> <b style="color:#10B981;">{format_curr(q_data['ai_target_revenue'])}</b></span>
+</div>
+</div>
+</div>"""
+            st.markdown(quota_card_html, unsafe_allow_html=True)
 
             with st.expander(f"✍️ Yönetici Değerlendirmesi & 2027 Resmi Sipariş Kotası Belirle ({q_data['name']})", expanded=False):
                 with st.form(f"form_quota_{q_id}"):
@@ -11616,33 +11618,30 @@ elif nav_selection == "Strategic Decision Center":
         badge_bg = 'rgba(0,230,118,0.15)' if is_approved else 'rgba(255,184,0,0.15)'
         badge_txt = '#00E676' if is_approved else '#FFB800'
         
-        st.markdown(f"""
-        <div style="background:#0F192E; border:1.5px solid {border_col}; border-radius:12px; padding:16px 20px; margin-bottom:14px; box-shadow:0 4px 14px rgba(0,0,0,0.3);">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
-                <span style="font-weight:700; color:{border_col}; font-size:14px;">{a_plan['title']}</span>
-                <span style="background:{badge_bg}; color:{badge_txt}; padding:3px 10px; border-radius:6px; font-weight:700; font-size:11px;">
-                    {a_plan['status']}
-                </span>
-            </div>
-            <div style="font-size:12px; color:#CCD7E6; margin-bottom:8px; line-height:1.5;">
-                <b>🔍 Kanıt & Anomali:</b> {a_plan['evidence']}<br>
-                <b>🤖 AI Tavsiyesi:</b> {a_plan['ai_recommendation']}
-            </div>
-            <div style="background:rgba(0,0,0,0.3); border-left:3px solid {border_col}; padding:10px 14px; border-radius:6px; margin:8px 0; font-size:12px;">
-                <b style="color:#00F5FF;">✍️ Yönetici Değerlendirmesi & Saha Yorumu:</b><br>
-                <span style="color:#E1E7EC;">{a_plan['user_comment']}</span>
-            </div>
-            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:10px; background:rgba(255,255,255,0.02); padding:10px; border-radius:8px; font-size:11.5px; margin-top:8px;">
-                <div><b style="color:#8FA3C0;">Kararlaştırılan Strateji:</b><br><span style="color:#FFFFFF; font-weight:600;">{a_plan['plan_type']}</span></div>
-                <div><b style="color:#8FA3C0;">Sorumlu Birim:</b><br><span style="color:#00F5FF; font-weight:600;">{a_plan['responsible_unit']}</span></div>
-                <div><b style="color:#8FA3C0;">Öncelik & Termin:</b><br><span style="color:#FFB800; font-weight:600;">{a_plan['priority']} | {a_plan['target_date']}</span></div>
-                <div><b style="color:#8FA3C0;">Tahmini Finansal Etki (ROI):</b><br><span style="color:#00E676; font-weight:700;">{a_plan['roi_projection']}</span></div>
-            </div>
-            <div style="font-size:11.5px; color:#CCD7E6; margin-top:8px;">
-                <b>📌 Somut İcra Adımları:</b> {a_plan['action_steps']}
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        plan_card_html = f"""<div style="background:#0F192E; border:1.5px solid {border_col}; border-radius:12px; padding:16px 20px; margin-bottom:14px; box-shadow:0 4px 14px rgba(0,0,0,0.3);">
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+<span style="font-weight:700; color:{border_col}; font-size:14px;">{a_plan['title']}</span>
+<span style="background:{badge_bg}; color:{badge_txt}; padding:3px 10px; border-radius:6px; font-weight:700; font-size:11px;">{a_plan['status']}</span>
+</div>
+<div style="font-size:12px; color:#CCD7E6; margin-bottom:8px; line-height:1.5;">
+<b>🔍 Kanıt & Anomali:</b> {a_plan['evidence']}<br>
+<b>🤖 AI Tavsiyesi:</b> {a_plan['ai_recommendation']}
+</div>
+<div style="background:rgba(0,0,0,0.3); border-left:3px solid {border_col}; padding:10px 14px; border-radius:6px; margin:8px 0; font-size:12px;">
+<b style="color:#00F5FF;">✍️ Yönetici Değerlendirmesi & Saha Yorumu:</b><br>
+<span style="color:#E1E7EC;">{a_plan['user_comment']}</span>
+</div>
+<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:10px; background:rgba(255,255,255,0.02); padding:10px; border-radius:8px; font-size:11.5px; margin-top:8px;">
+<div><b style="color:#8FA3C0;">Kararlaştırılan Strateji:</b><br><span style="color:#FFFFFF; font-weight:600;">{a_plan['plan_type']}</span></div>
+<div><b style="color:#8FA3C0;">Sorumlu Birim:</b><br><span style="color:#00F5FF; font-weight:600;">{a_plan['responsible_unit']}</span></div>
+<div><b style="color:#8FA3C0;">Öncelik & Termin:</b><br><span style="color:#FFB800; font-weight:600;">{a_plan['priority']} | {a_plan['target_date']}</span></div>
+<div><b style="color:#8FA3C0;">Tahmini Finansal Etki (ROI):</b><br><span style="color:#00E676; font-weight:700;">{a_plan['roi_projection']}</span></div>
+</div>
+<div style="font-size:11.5px; color:#CCD7E6; margin-top:8px;">
+<b>📌 Somut İcra Adımları:</b> {a_plan['action_steps']}
+</div>
+</div>"""
+        st.markdown(plan_card_html, unsafe_allow_html=True)
 
         col_btn1, col_btn2 = st.columns([3, 1])
         with col_btn2:
@@ -11904,29 +11903,23 @@ elif nav_selection == "Strategic Decision Center":
 
     qc1, qc2, qc3 = st.columns(3)
     with qc1:
-        st.markdown(f"""
-        <div class="kpi-container" style="border-top:3px solid #00F5FF;">
-            <div class="kpi-header">Toplam Hedef Cihaz Alımı (2027)</div>
-            <div class="kpi-val">{tot_target_dev} Cihaz</div>
-            <div class="kpi-sub kpi-pos">Yeni Filo Dağıtımı</div>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(f"""<div class="kpi-container" style="border-top:3px solid #00F5FF;">
+<div class="kpi-header">Toplam Hedef Cihaz Alımı (2027)</div>
+<div class="kpi-val">{tot_target_dev} Cihaz</div>
+<div class="kpi-sub kpi-pos">Yeni Filo Dağıtımı</div>
+</div>""", unsafe_allow_html=True)
     with qc2:
-        st.markdown(f"""
-        <div class="kpi-container" style="border-top:3px solid #FFB800;">
-            <div class="kpi-header">Toplam Hedef Sarf Siparişi (2027)</div>
-            <div class="kpi-val">{tot_target_con:,} Kutu</div>
-            <div class="kpi-sub kpi-pos">Düzenli İkmal Taahhüdü</div>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(f"""<div class="kpi-container" style="border-top:3px solid #FFB800;">
+<div class="kpi-header">Toplam Hedef Sarf Siparişi (2027)</div>
+<div class="kpi-val">{tot_target_con:,} Kutu</div>
+<div class="kpi-sub kpi-pos">Düzenli İkmal Taahhüdü</div>
+</div>""", unsafe_allow_html=True)
     with qc3:
-        st.markdown(f"""
-        <div class="kpi-container" style="border-top:3px solid #10B981;">
-            <div class="kpi-header">Taahhüt Edilen Asgari Hasılat</div>
-            <div class="kpi-val">{format_curr(tot_target_rev)}</div>
-            <div class="kpi-sub kpi-pos">Sözleşme Bağlayıcı Kota</div>
-        </div>
-        """, unsafe_allow_html=True)
+        st.markdown(f"""<div class="kpi-container" style="border-top:3px solid #10B981;">
+<div class="kpi-header">Taahhüt Edilen Asgari Hasılat</div>
+<div class="kpi-val">{format_curr(tot_target_rev)}</div>
+<div class="kpi-sub kpi-pos">Sözleşme Bağlayıcı Kota</div>
+</div>""", unsafe_allow_html=True)
 
     st.markdown("<br>", unsafe_allow_html=True)
 
@@ -11937,35 +11930,31 @@ elif nav_selection == "Strategic Decision Center":
         b_txt = "#00E676" if is_appr else "#FFB800"
         b_bg = "rgba(0,230,118,0.15)" if is_appr else "rgba(255,184,0,0.15)"
 
-        st.markdown(f"""
-        <div style="background:#0F192E; border:1.5px solid {b_col}; border-radius:12px; padding:16px 20px; margin-bottom:12px; box-shadow:0 4px 14px rgba(0,0,0,0.3);">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:8px;">
-                <span style="font-weight:700; color:{b_col}; font-size:14.5px;">{q['country_flag']} — {q['name']}</span>
-                <div style="display:flex; gap:8px; align-items:center;">
-                    <span style="background:rgba(255,255,255,0.06); color:#CCD7E6; padding:3px 8px; border-radius:4px; font-size:11px;">{q['status_diagnosis']}</span>
-                    <span style="background:{b_bg}; color:{b_txt}; padding:3px 10px; border-radius:6px; font-weight:700; font-size:11px;">{q.get('status', 'Onaylandı & İcrada')}</span>
-                </div>
-            </div>
-            
-            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap:8px; background:rgba(255,255,255,0.02); padding:8px 12px; border-radius:6px; font-size:11px; margin-bottom:8px;">
-                <div><span style="color:#8FA3C0;">Pazar Gücü:</span> <b style="color:#FFFFFF;">{q['gdp_pc']}</b></div>
-                <div><span style="color:#8FA3C0;">Klinik Kapasitesi:</span> <b style="color:#00F5FF;">{q['clinics']} Klinik ({q['cycles']})</b></div>
-                <div><span style="color:#8FA3C0;">Gümrük & İthalat:</span> <b style="color:#FFB800;">{q['customs']}</b></div>
-                <div><span style="color:#8FA3C0;">Kurulu Taban:</span> <b style="color:#10B981;">{q['installed_devices']} Cihaz</b></div>
-            </div>
-
-            <div style="background:rgba(0,0,0,0.25); border-left:3px solid {b_col}; padding:8px 12px; border-radius:6px; margin-bottom:8px; font-size:12px;">
-                <b style="color:#00F5FF;">✍️ Yönetici Değerlendirmesi:</b> <span style="color:#E2E8F0;">{q.get('user_comment', '')}</span>
-            </div>
-
-            <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:10px; background:rgba(0,245,255,0.04); padding:10px; border-radius:8px; font-size:11.5px; margin-bottom:8px;">
-                <div><b style="color:#8FA3C0;">Onaylanan Cihaz Kotası:</b><br><span style="color:#00F5FF; font-weight:700; font-size:13px;">+{q.get('approved_devices', q['ai_target_devices'])} Adet</span></div>
-                <div><b style="color:#8FA3C0;">Onaylanan Sarf Kotası:</b><br><span style="color:#FFB800; font-weight:700; font-size:13px;">{q.get('approved_consumables', q['ai_target_consumables'])} Kutu</span></div>
-                <div><b style="color:#8FA3C0;">Asgari Yıllık Ciro Taahhüdü:</b><br><span style="color:#10B981; font-weight:700; font-size:13px;">{format_curr(q.get('approved_revenue', q['ai_target_revenue']))}</span></div>
-                <div><b style="color:#8FA3C0;">Münhasırlık Şartı:</b><br><span style="color:#CCD7E6;">{q.get('enforcement_clause', 'Standart Sözleşme')}</span></div>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        card_quota_html = f"""<div style="background:#0F192E; border:1.5px solid {b_col}; border-radius:12px; padding:16px 20px; margin-bottom:12px; box-shadow:0 4px 14px rgba(0,0,0,0.3);">
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px; flex-wrap:wrap; gap:8px;">
+<span style="font-weight:700; color:{b_col}; font-size:14.5px;">{q['country_flag']} — {q['name']}</span>
+<div style="display:flex; gap:8px; align-items:center;">
+<span style="background:rgba(255,255,255,0.06); color:#CCD7E6; padding:3px 8px; border-radius:4px; font-size:11px;">{q['status_diagnosis']}</span>
+<span style="background:{b_bg}; color:{b_txt}; padding:3px 10px; border-radius:6px; font-weight:700; font-size:11px;">{q.get('status', 'Onaylandı & İcrada')}</span>
+</div>
+</div>
+<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap:8px; background:rgba(255,255,255,0.02); padding:8px 12px; border-radius:6px; font-size:11px; margin-bottom:8px;">
+<div><span style="color:#8FA3C0;">Pazar Gücü:</span> <b style="color:#FFFFFF;">{q['gdp_pc']}</b></div>
+<div><span style="color:#8FA3C0;">Klinik Kapasitesi:</span> <b style="color:#00F5FF;">{q['clinics']} Klinik ({q['cycles']})</b></div>
+<div><span style="color:#8FA3C0;">Gümrük & İthalat:</span> <b style="color:#FFB800;">{q['customs']}</b></div>
+<div><span style="color:#8FA3C0;">Kurulu Taban:</span> <b style="color:#10B981;">{q['installed_devices']} Cihaz</b></div>
+</div>
+<div style="background:rgba(0,0,0,0.25); border-left:3px solid {b_col}; padding:8px 12px; border-radius:6px; margin-bottom:8px; font-size:12px;">
+<b style="color:#00F5FF;">✍️ Yönetici Değerlendirmesi:</b> <span style="color:#E2E8F0;">{q.get('user_comment', '')}</span>
+</div>
+<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:10px; background:rgba(0,245,255,0.04); padding:10px; border-radius:8px; font-size:11.5px; margin-bottom:8px;">
+<div><b style="color:#8FA3C0;">Onaylanan Cihaz Kotası:</b><br><span style="color:#00F5FF; font-weight:700; font-size:13px;">+{q.get('approved_devices', q['ai_target_devices'])} Adet</span></div>
+<div><b style="color:#8FA3C0;">Onaylanan Sarf Kotası:</b><br><span style="color:#FFB800; font-weight:700; font-size:13px;">{q.get('approved_consumables', q['ai_target_consumables'])} Kutu</span></div>
+<div><b style="color:#8FA3C0;">Asgari Yıllık Ciro Taahhüdü:</b><br><span style="color:#10B981; font-weight:700; font-size:13px;">{format_curr(q.get('approved_revenue', q['ai_target_revenue']))}</span></div>
+<div><b style="color:#8FA3C0;">Münhasırlık Şartı:</b><br><span style="color:#CCD7E6;">{q.get('enforcement_clause', 'Standart Sözleşme')}</span></div>
+</div>
+</div>"""
+        st.markdown(card_quota_html, unsafe_allow_html=True)
 
         col_qbtn1, col_qbtn2 = st.columns([3, 1])
         with col_qbtn2:
