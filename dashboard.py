@@ -4359,8 +4359,11 @@ def get_default_regional_expert_assessments():
             'stats': '3,689 Klinik | 3,208,500 Siklus | Mevcut Ciro: $69.8K (G. Kore SJNU - 7 Piezo)',
             'ai_weakness': "Japonya (620 klinik) ve Hindistan'da (1,850 klinik) sıfır doğrudan bayi.",
             'ai_action': "Kore referansıyla Kitazato ağına Piezo ICSI protokolü ve ASPIRE lansmanı.",
+            'recommended_devices': ['⚡ ZEUS Pulse Stimulator (ZPS 26)', '❄️ Smart Cryo-Tools (ZCT25)'],
+            'device_rationale': "Doğu Asya'da Tanaka ROSI protokolü (90+ canlı doğum) ve Japonya/Kore yüksek yoğunluklu kriyobankaları için ZPS 26 ve Smart Cryo-Tools 4X tank optimizasyonu önceliklidir.",
             'expert_title': 'Kıdemli Medikal Direktör & APAC Pazar Danışmanı',
             'expert_opinion': "Japonya'da Kato Ladies Clinic (KLC) ekolü Piezo stimülasyonuna son derece yatkın ancak yerel PMDA onayı olmadan doğrudan donanım satışı yavaş ilerler. Kitazato ile OEM sarf partnerliği kurulursa Kore'deki SJNU başarısı doğrudan Tokyo ve Osaka'ya replike edilebilir. Hindistan pazarı ise yüksek volümlü düşük maliyetli sarf talep ediyor; piezo cihazı konsinye verilip dish ve aktivasyon solüsyonu üzerinden 3 yıllık kontrat bağlanmalı.",
+            'field_moves': "1) G. Kore SJNU üzerinden Seul Maria Hospital referans ziyareti yapıldı. 2) Kitazato Ar-Ge ekibine demo Pulse Stimulator teslim edildi. 3) Hindistan Apollo Fertility zincirine konsinye cihaz + 3 yıllık sarf teklifi sunuldu.",
             'user_comment': "SJNU Seul ekibi ile görüşüldü; Kitazato Ar-Ge direktörüne demo ünitesi gönderildi. Hindistan için Apollo Fertility zinciriyle pilot çalışma planlanıyor.",
             'consensus_status': 'Tam Konsensüs (Uyumlu)',
             'status': 'Onaylandı & İcrada',
@@ -4376,8 +4379,11 @@ def get_default_regional_expert_assessments():
             'stats': '279 Klinik | 168,000 Siklus | Mevcut Ciro: $363.8K (Katar, Ürdün-Irak, BAE)',
             'ai_weakness': "Kurulu 18 Piezo'da sarf çekiş düşüklüğü ve Sellco BAE kontrat sonu (20 Kasım).",
             'ai_action': "Acil BAE sözleşme revizyonu ve Mısır özel tüp bebek zincirlerine açılım.",
+            'recommended_devices': ['🛡️ Mismatch Blocker (ZMB-7T)', '⚡ ZEUS Pulse Stimulator (ZPS 26)', '🧬 Black-Box BioPSafe (ZBB25-001)'],
+            'device_rationale': "Bölgedeki lüks klinik zincirlerinde (Fakih IVF, KFMC) RI Witness RFID maliyetini (%75) kırmak için Mismatch Blocker; kurulu 18 piezo tabanında Electro Dish sarfı; PGT doğrulaması için BioPSafe.",
             'expert_title': 'MENA Bölge Direktörü & Klinik Koordinatörü',
             'expert_opinion': "Sellco BAE ile 20 Kasım kontrat yenilemesinde yıllık minimum 800 kutu sarf taahhüdü (MoQ) zorunlu tutulmalı; aksi halde Dubai Healthcare City klinikleri doğrudan genel merkeze bağlanmalı. Kuveyt ATC ve Suudi AMS merkezlerindeki kurulu Piezo cihazlarında embriyolog eğitim eksiği var; yerinde klinik çalıştay düzenlenirse sarf tüketimi 2 ayda %40 artar.",
+            'field_moves': "1) Sellco BAE'ye asgari 800 kutu MoQ şartlı revize distribütörlük sözleşmesi yollandı. 2) Kuveyt ATC ve Suudi Arabistan'daki 5 merkeze yerinde klinik aplikasyon takvimi çıkarıldı. 3) Amman üzerinden Bağdat ve Erbil merkezlerine hava kargo lojistik hattı güvenceye alındı.",
             'user_comment': "Sellco yönetimine revize sözleşme taslağı iletildi. Kuveyt ATC ve Suudi AMS kliniklerine Aralık ayı için yerinde embriyolog aplikasyon eğitimi takvimlendi.",
             'consensus_status': 'Tam Konsensüs (Uyumlu)',
             'status': 'Onaylandı & İcrada',
@@ -4393,8 +4399,11 @@ def get_default_regional_expert_assessments():
             'stats': '1,610 Klinik | 1,054,000 Siklus | Mevcut Ciro: $259.8K (TR + Belçika Ghent + Doğu Avr)',
             'ai_weakness': "Avrupa'nın 1 ve 2 numarası İspanya ve Almanya'da yerel ticari bayi bulunmaması.",
             'ai_action': "Ghent Univ Electro Fusion referansıyla IVI-RMA ve Gynemed DACH distribütörlüğü.",
+            'recommended_devices': ['🧬 Black-Box BioPSafe (ZBB25-001)', '❄️ Smart Cryo-Tools (ZCT25)', '⚡ ZPS 26 Pulse Stimulator'],
+            'device_rationale': "İspanya ve İngiltere'de katı PGT-A biyopsi regülasyonları için 13 IR sensörlü BioPSafe; yüksek sikluslu merkezlerde tank CAPEX tasarrufu ($45K) için Smart Cryo-Tools.",
             'expert_title': 'Avrupa Regülasyon & Satış Masası Direktörü',
             'expert_opinion': "MDR Class IIa sertifikasyonumuz Ghent Üniversitesi validasyon verileriyle tam uyumlu. İspanya'da IVI-RMA zinciri 30'dan fazla kliniğe sahip; doğrudan kurumsal satın alma masasıyla demo anlaşması yapılmalı. Almanya (DACH) için Gynemed hazır bir dağıtım ağı sunuyor; CE belgeleriyle birlikte Q1'de distribütörlük sözleşmesi imzalanması durumunda yıllık $120K hedefi rahat aşılır.",
+            'field_moves': "1) IVI-RMA Valencia ve Madrid merkezlerine BioPSafe ve Cryo-Tools demo protokolü sunuldu. 2) Gynemed DACH ile master distribütörlük NDA'sı imzalandı. 3) Londra Harley Street referans kliniğine numune Smart Straw setleri ulaştırıldı.",
             'user_comment': "IVI-RMA Valencia merkezine demo cihaz protokolü sunuldu; Gynemed ile NDA imzalandı ve 2027 DACH master distribütörlük görüşmeleri başlatıldı.",
             'consensus_status': 'Tam Konsensüs (Uyumlu)',
             'status': 'Onaylandı & İcrada',
@@ -4410,8 +4419,11 @@ def get_default_regional_expert_assessments():
             'stats': '502 Klinik | 428,000 Siklus | Mevcut Ciro: $0 (Sıfır Penetrasyon)',
             'ai_weakness': "FDA 510(k) regülasyon engeli ve konsorsiyum (GPO) satınalma duvarı.",
             'ai_action': "CooperSurgical/Hamilton Thorne eşdeğeri ABD partneri ile OEM veya ASRM lansmanı.",
+            'recommended_devices': ['🛡️ Mismatch Blocker (ZMB-7T)', '🧬 Black-Box BioPSafe (ZBB25-001)', '❄️ Smart Cryo-Tools'],
+            'device_rationale': "CAP/FDA regülasyonlu ABD tüp bebek zincirlerinde (Progyny, US Fertility) 7 terminalli şahitlik ve 13 IR sensörlü PGT biyopsi güvenliği; coin modeli ile sigorta baskısını kırma.",
             'expert_title': 'Kuzey Amerika Strateji & FDA Danışmanı',
             'expert_opinion': "ABD pazarında bağımsız klinik yerine GPO (Grup Satın Alma Organizasyonları) ve büyük IVF ağları (Progyny, US Fertility) pazarı domine ediyor. 510(k) başvuru süreci 9-12 ay süreceğinden, ilk etapta Hamilton Thorne veya Vitrolife üzerinden ortak markalı (Co-branded) donanım dağıtımı en risksiz yoldur. ASRM kongresinde canlı workshop düzenlenmeli.",
+            'field_moves': "1) FDA 510(k) regülasyon danışmanıyla klasifikasyon ve ön dosya toplantısı yapıldı. 2) ASRM 2027 kongresinde canlı Piezo ICSI ve Mismatch Blocker workshop başvurusu tamamlandı. 3) Hamilton Thorne ve Vitrolife ile OEM teması kuruldu.",
             'user_comment': "FDA danışmanlık firması ile 510(k) ön hazırlık toplantısı yapıldı. ASRM 2027 için sponsorluk ve canlı Piezo ICSI workshop başvurusu tamamlandı.",
             'consensus_status': 'Şartlı Onay (Regülasyon Doğrulaması)',
             'status': 'İncelemede / Revize',
@@ -4427,8 +4439,11 @@ def get_default_regional_expert_assessments():
             'stats': '407 Klinik | 191,500 Siklus | Mevcut Ciro: $0 (Sıfır Penetrasyon)',
             'ai_weakness': "ANVISA ve COFEPRIS ithalat engeli, gümrük vergileri ve coğrafi uzaklık.",
             'ai_action': "Brezilya'da Spectrun Bio ve REDLARA akredite master distribütör modeli.",
+            'recommended_devices': ['🛡️ Mismatch Blocker (ZMB-7T / Coin Modeli)', '⚡ ZEUS Pulse Stimulator (ZPS 26)'],
+            'device_rationale': "Brezilya ve Meksika'da pahalı RFID çipleri yerine döngü başı kontör modeli; yüksek ICSI adaptasyonu (%80+) için piezo oosit aktivatörü.",
             'expert_title': 'LATAM Ticari Operasyonlar Danışmanı',
             'expert_opinion': "Brezilya ve Meksika'da yüksek gümrük tarifeleri (%28-35) nedeniyle doğrudan donanım ithalatı zor. Sao Paulo merkezli Spectrun Bio yerel ANVISA ruhsatını üstlenmeye istekli. REDLARA kongresinde piezo ICSI başarı oranları sunulursa Kolombiya ve Şili klinikleri de bu master distribütör üzerinden hızla portföye katılabilir.",
+            'field_moves': "1) Sao Paulo merkezli Spectrun Bio ile ANVISA ruhsatlandırma ve dağıtım niyet mektubu (LoI) imzalandı. 2) REDLARA kongresi için piezo ICSI bildiri özeti kabul edildi. 3) Kolombiya ve Şili merkezlerine online demo verildi.",
             'user_comment': "Spectrun Bio ile ön niyet mektubu (LoI) teatisi yapıldı. ANVISA dosya hazırlığı için teknik dokümantasyon Portekizceye çevriliyor.",
             'consensus_status': 'Tam Konsensüs (Uyumlu)',
             'status': 'Onaylandı & İcrada',
@@ -4444,8 +4459,11 @@ def get_default_regional_expert_assessments():
             'stats': '129 Klinik | 34,500 Siklus | Mevcut Ciro: $0 (Sıfır Penetrasyon)',
             'ai_weakness': "Doğrudan alımlarda döviz transfer kısıtları ve klinik sermaye yetersizliği.",
             'ai_action': "Güney Afrika (Vitalab) ve Kahire tıp merkezlerine anahtar teslim cihaz+sarf paketi.",
+            'recommended_devices': ['⚡ ZEUS Pulse Stimulator (ZPS 26)', '❄️ Smart Cryo-Tools (ZCT25)'],
+            'device_rationale': "Kahire ve Johannesburg'daki merkezlerde TFF fertilizasyon artışı için ZPS 26; yeni kriyotank alamayan kliniklere 4X kapasite sağlayan Smart Cryo-Tools.",
             'expert_title': 'Afrika & Gelişen Pazarlar Medikal Misyon Sorumlusu',
             'expert_opinion': "Mısır (Kahire/İskenderiye) ve Güney Afrika (Johannesburg) dışındaki pazarlarda döviz konvertibilitesi ve akreditif riski yüksek. Bu nedenle sadece peşin ödemeli veya IFC destekli özel IVF projeleri kabul edilmeli. Vitalab grubu 4 cihazlık paket alımına sıcak bakıyor; Johannesburg merkezli demo ünitesi kurulursa çevre ülkelere referans olur.",
+            'field_moves': "1) Vitalab Grubu medikal direktörü ile 4 cihazlık paket alım protokolü görüşüldü. 2) Mısır Nile IVF zinciri için peşin ödemeli proforma fatura düzenlendi. 3) Kenya Sağlık Bakanlığı ihale teknik şartnamesi incelendi.",
             'user_comment': "Vitalab Grubu medikal direktörü ile online sunum yapıldı. Mısır için ise Nile IVF zinciri ile peşin ödemeli 2 ünite Piezo cihazı teklifi hazırlandı.",
             'consensus_status': 'Tam Konsensüs (Uyumlu)',
             'status': 'Onaylandı & İcrada',
@@ -4453,8 +4471,6 @@ def get_default_regional_expert_assessments():
             'target_roi': '+$40K / Yıl'
         }
     }
-
-
 
 
 COUNTRY_FLAG_MAP = {
@@ -8053,7 +8069,7 @@ ZEUS Bioscience Scientific Affairs""",
 
         with col_rg2:
             st.markdown("##### 6 Küresel Bölgenin Zayıflık & Fırsat Analizi")
-            st.caption("AI analitiği ile saha uzmanı değerlendirmelerini yan yana sunar; kaydedilen görüşler doğrudan 'Strategic Decision Center' modülüne aktarılır.")
+            st.caption("AI analitiği, tavsiye edilen ZEUS cihazları, yürütülen saha hamleleri ve uzman değerlendirmeleri. Kaydedilen tüm görüş ve hamleler doğrudan 'Strategic Decision Center' modülüne aktarılır.")
 
             if 'regional_expert_assessments' not in st.session_state:
                 st.session_state['regional_expert_assessments'] = get_default_regional_expert_assessments()
@@ -8062,8 +8078,11 @@ ZEUS Bioscience Scientific Affairs""",
 
             for rk, r_item in reg_dict.items():
                 r_col = r_item['color']
-                status_badge_bg = 'rgba(0,230,118,0.15)' if 'Onay' in r_item['consensus_status'] or 'Uyumlu' in r_item['consensus_status'] else 'rgba(255,184,0,0.15)'
-                status_badge_txt = '#00E676' if 'Onay' in r_item['consensus_status'] or 'Uyumlu' in r_item['consensus_status'] else '#FFB800'
+                status_badge_bg = 'rgba(0,230,118,0.15)' if 'Onay' in r_item.get('consensus_status', '') or 'Uyumlu' in r_item.get('consensus_status', '') else 'rgba(255,184,0,0.15)'
+                status_badge_txt = '#00E676' if 'Onay' in r_item.get('consensus_status', '') or 'Uyumlu' in r_item.get('consensus_status', '') else '#FFB800'
+
+                dev_list = r_item.get('recommended_devices', [])
+                dev_pills = ''.join([f'<span style="background:rgba(0,245,255,0.12);color:#00F5FF;border:1px solid rgba(0,245,255,0.3);padding:2px 7px;border-radius:4px;font-size:10.5px;font-weight:700;margin-right:4px;display:inline-block;margin-bottom:3px;">{d}</span>' for d in dev_list])
 
                 card_html = (
                     f'<div style="background:rgba(15,23,42,0.65);border-left:4px solid {r_col};border:1px solid rgba(255,255,255,0.06);border-left-width:4px;padding:12px 14px;border-radius:10px;margin-bottom:8px;backdrop-filter:blur(8px);">'
@@ -8072,9 +8091,14 @@ ZEUS Bioscience Scientific Affairs""",
                     f'<span style="font-size:11px;color:#00F5FF;font-weight:700;background:rgba(0,245,255,0.1);padding:2px 8px;border-radius:4px;border:1px solid rgba(0,245,255,0.25);">{r_item["opportunity"]}</span>'
                     f'</div>'
                     f'<div style="font-size:11px;color:#8A99AD;margin-bottom:6px;">{r_item["stats"]}</div>'
-                    f'<div style="font-size:11.5px;color:#CBD5E1;line-height:1.45;margin-bottom:8px;">'
+                    f'<div style="font-size:11.5px;color:#CBD5E1;line-height:1.45;margin-bottom:6px;">'
                     f'<b style="color:#F87171;">⚠️ Zayıflık:</b> {r_item["ai_weakness"]}<br>'
                     f'<b style="color:#38BDF8;">🤖 AI Aksiyonu:</b> {r_item["ai_action"]}'
+                    f'</div>'
+                    f'<div style="background:rgba(0,245,255,0.05);border:1px solid rgba(0,245,255,0.2);border-radius:6px;padding:7px 10px;margin-bottom:6px;">'
+                    f'<b style="color:#00F5FF;font-size:11px;">🔬 Tavsiye Edilen ZEUS Cihaz & Teknolojileri:</b><br>'
+                    f'<div style="margin-top:4px;margin-bottom:3px;">{dev_pills}</div>'
+                    f'<span style="color:#CCD7E6;font-size:10.5px;line-height:1.4;">{r_item.get("device_rationale", "")}</span>'
                     f'</div>'
                     f'<div style="background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.06);border-left:3px solid {r_col};border-radius:6px;padding:8px 10px;font-size:11.5px;margin-bottom:6px;">'
                     f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;">'
@@ -8083,6 +8107,10 @@ ZEUS Bioscience Scientific Affairs""",
                     f'</div>'
                     f'<div style="color:#E2E8F0;line-height:1.4;">{r_item["expert_opinion"]}</div>'
                     f'</div>'
+                    f'<div style="background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.25);border-radius:6px;padding:7px 10px;font-size:11px;color:#CBD5E1;margin-bottom:6px;">'
+                    f'<b style="color:#10B981;">🚀 Yürütülen Saha Hamleleri & Aksiyonlar:</b><br>'
+                    f'<span style="color:#E2E8F0;line-height:1.4;">{r_item.get("field_moves", "")}</span>'
+                    f'</div>'
                     f'<div style="background:rgba(30,41,59,0.4);border-radius:6px;padding:6px 10px;font-size:11px;color:#94A3B8;">'
                     f'<b style="color:#F59E0B;">✍️ Mevcut Saha / Karar Notu:</b> <span style="color:#E2E8F0;">{r_item["user_comment"]}</span>'
                     f'</div>'
@@ -8090,35 +8118,64 @@ ZEUS Bioscience Scientific Affairs""",
                 )
                 st.markdown(card_html, unsafe_allow_html=True)
 
-                with st.expander(f"✍️ {r_item['name']} - Uzman Yorumunu / Kararını Düzenle", expanded=False):
+                with st.expander(f"✍️ {r_item['name']} - Cihaz Önerisi, Saha Hamlesi ve Uzman Yorumunu Düzenle", expanded=False):
                     with st.form(f"form_reg_expert_{rk}"):
-                        new_comment = st.text_area("Saha Uzmanı Görüşü & Karar Notu:", value=r_item['user_comment'], height=70, key=f"inp_comm_{rk}")
+                        all_devices = [
+                            '⚡ ZEUS Pulse Stimulator (ZPS 26)',
+                            '🧬 Black-Box BioPSafe (ZBB25-001)',
+                            '🛡️ Mismatch Blocker (ZMB-7T)',
+                            '❄️ Smart Cryo-Tools (ZCT25)'
+                        ]
+                        curr_devs = [d for d in r_item.get('recommended_devices', []) if d in all_devices]
+                        
+                        sel_devs = st.multiselect(
+                            "🔬 Bu Bölge İçin Önerilen ZEUS Cihaz & Teknolojileri:",
+                            all_devices,
+                            default=curr_devs,
+                            key=f"ms_dev_tab2_{rk}"
+                        )
+                        
+                        new_moves = st.text_area(
+                            "🚀 Yürütülen Saha Hamleleri & Aksiyonlar (Klinik Temasları, Kongre, Demo vb.):",
+                            value=r_item.get('field_moves', ''),
+                            height=70,
+                            key=f"inp_moves_tab2_{rk}"
+                        )
+                        
+                        new_comment = st.text_area(
+                            "✍️ Saha Uzmanı Görüşü & Karar Notu:",
+                            value=r_item.get('user_comment', ''),
+                            height=60,
+                            key=f"inp_comm_tab2_{rk}"
+                        )
+                        
                         f_col_a, f_col_b = st.columns(2)
                         with f_col_a:
                             new_status = st.selectbox(
                                 "Yönetim Konsensüs Statüsü:",
                                 ["Tam Konsensüs (Uyumlu)", "Şartlı Onay (İncelemede)", "Revize Gerekli"],
-                                index=0 if "Tam" in r_item["consensus_status"] else (1 if "Şartlı" in r_item["consensus_status"] else 2),
-                                key=f"sel_stat_{rk}"
+                                index=0 if "Tam" in r_item.get("consensus_status", "") else (1 if "Şartlı" in r_item.get("consensus_status", "") else 2),
+                                key=f"sel_stat_tab2_{rk}"
                             )
                         with f_col_b:
                             new_prio = st.selectbox(
                                 "İcra Önceliği:",
                                 ["P1 - Yüksek Öncelik", "P2 - Stratejik Büyüme", "P3 - Orta Vadeli"],
-                                index=0 if "P1" in r_item["decision_priority"] else (1 if "P2" in r_item["decision_priority"] else 2),
-                                key=f"sel_prio_{rk}"
+                                index=0 if "P1" in r_item.get("decision_priority", "") else (1 if "P2" in r_item.get("decision_priority", "") else 2),
+                                key=f"sel_prio_tab2_{rk}"
                             )
-                        if st.form_submit_button("💾 Yorumu Kaydet & Strategic Decision Center'a İlet", type="primary"):
+                        if st.form_submit_button("💾 Cihaz Önerilerini, Saha Hamlelerini & Uzman Yorumunu Kaydet", type="primary"):
+                            reg_dict[rk]['recommended_devices'] = sel_devs
+                            reg_dict[rk]['field_moves'] = new_moves.strip()
                             reg_dict[rk]['user_comment'] = new_comment.strip()
                             reg_dict[rk]['consensus_status'] = new_status
                             reg_dict[rk]['decision_priority'] = new_prio
                             reg_dict[rk]['status'] = 'Onaylandı & İcrada' if 'Tam' in new_status else 'İncelemede / Revize'
-                            st.success(f"✓ {r_item['name']} uzman notu kaydedildi ve Strategic Decision Center masasına iletildi!")
+                            st.success(f"✓ {r_item['name']} cihaz önerisi, saha hamleleri ve uzman notu kaydedildi; Strategic Decision Center masasına aktarıldı!")
                             st.rerun()
 
             st.markdown("<br>", unsafe_allow_html=True)
 
-        # Region Table
         st.markdown("#### Bölge Bazlı Potansiyel ve Zayıflık Raporu")
         reg_disp = reg_df[['Region', 'Total_Clinics', 'Total_Cycles', 'Active_Partners', 'Realized_Revenue', 'Avg_Penetration_Pct', 'Untapped_Gap', 'Diagnosis']].copy()
         reg_disp['Total_Clinics'] = reg_disp['Total_Clinics'].apply(lambda x: f"{x:,}")
@@ -12955,6 +13012,9 @@ elif nav_selection == "Strategic Decision Center":
         r_border = r_item['color']
         r_badge_bg = 'rgba(0,230,118,0.15)' if is_reg_approved else 'rgba(255,184,0,0.15)'
         r_badge_txt = '#00E676' if is_reg_approved else '#FFB800'
+
+        dev_list_sdc = r_item.get('recommended_devices', [])
+        dev_pills_sdc = ''.join([f'<span style="background:rgba(0,245,255,0.12);color:#00F5FF;border:1px solid rgba(0,245,255,0.3);padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;margin-right:4px;display:inline-block;margin-bottom:3px;">{d}</span>' for d in dev_list_sdc])
         
         target_col = reg_col_left if idx_reg % 2 == 0 else reg_col_right
         with target_col:
@@ -12974,12 +13034,21 @@ elif nav_selection == "Strategic Decision Center":
                     <b style="color:#F87171;">⚠️ AI Zayıflık Teşhisi:</b> {r_item['ai_weakness']}<br>
                     <b style="color:#38BDF8;">🤖 AI Aksiyon Önerisi:</b> {r_item['ai_action']}
                 </div>
+                <div style="background:rgba(0,245,255,0.04); border:1px solid rgba(0,245,255,0.2); border-radius:6px; padding:7px 10px; margin-bottom:8px;">
+                    <b style="color:#00F5FF; font-size:11px;">🔬 Tavsiye Edilen ZEUS Cihaz & Teknolojileri:</b><br>
+                    <div style="margin-top:4px; margin-bottom:3px;">{dev_pills_sdc}</div>
+                    <span style="color:#CCD7E6; font-size:10.5px; line-height:1.4;">{r_item.get('device_rationale', '')}</span>
+                </div>
                 <div style="background:rgba(0,245,255,0.04); border-left:3px solid {r_border}; padding:10px 12px; border-radius:6px; margin:8px 0; font-size:11.8px;">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:3px;">
                         <b style="color:#00F5FF; font-size:11px;">👨‍⚕️ Uzman Görüşü ({r_item['expert_title']}):</b>
                         <span style="font-size:10px; color:#10B981; font-weight:700;">{r_item['consensus_status']}</span>
                     </div>
                     <span style="color:#E1E7EC; line-height:1.4;">{r_item['expert_opinion']}</span>
+                </div>
+                <div style="background:rgba(16,185,129,0.08); border:1px solid rgba(16,185,129,0.25); border-radius:6px; padding:8px 12px; margin:8px 0; font-size:11.5px;">
+                    <b style="color:#10B981;">🚀 Yürütülen Saha Hamleleri & Aksiyonlar:</b><br>
+                    <span style="color:#E2E8F0; line-height:1.4;">{r_item.get('field_moves', '')}</span>
                 </div>
                 <div style="background:rgba(245,158,11,0.06); border-left:3px solid #F59E0B; padding:8px 12px; border-radius:6px; margin:8px 0; font-size:11.5px;">
                     <b style="color:#F59E0B;">✍️ Saha / Yönetici Karar Notu:</b><br>
@@ -12992,11 +13061,32 @@ elif nav_selection == "Strategic Decision Center":
             </div>
             """, unsafe_allow_html=True)
 
-            btn_reg_label = "✕ İncelemeye Al" if is_reg_approved else "✅ Bölgesel İcra Protokolünü Onayla"
-            if st.button(btn_reg_label, key=f"btn_toggle_reg_sdc_{rk}", use_container_width=True):
-                reg_dict[rk]['status'] = 'İncelemede / Revize' if is_reg_approved else 'Onaylandı & İcrada'
-                st.rerun()
+            col_sbtn1, col_sbtn2 = st.columns([1.5, 1.5])
+            with col_sbtn1:
+                btn_reg_label = "✕ İncelemeye Al" if is_reg_approved else "✅ Bölgesel İcra Protokolünü Onayla"
+                if st.button(btn_reg_label, key=f"btn_toggle_reg_sdc_{rk}", use_container_width=True):
+                    reg_dict[rk]['status'] = 'İncelemede / Revize' if is_reg_approved else 'Onaylandı & İcrada'
+                    st.rerun()
 
+            with col_sbtn2:
+                with st.popover(f"✍️ Hamle / Not Ekle"):
+                    with st.form(f"form_sdc_reg_{rk}"):
+                        all_devs_sdc = [
+                            '⚡ ZEUS Pulse Stimulator (ZPS 26)',
+                            '🧬 Black-Box BioPSafe (ZBB25-001)',
+                            '🛡️ Mismatch Blocker (ZMB-7T)',
+                            '❄️ Smart Cryo-Tools (ZCT25)'
+                        ]
+                        cur_sdc_devs = [d for d in r_item.get('recommended_devices', []) if d in all_devs_sdc]
+                        sdc_sel_devs = st.multiselect("Önerilen Cihazlar:", all_devs_sdc, default=cur_sdc_devs, key=f"sdc_ms_dev_{rk}")
+                        sdc_moves = st.text_area("Saha Hamleleri / Aksiyonlar:", value=r_item.get('field_moves', ''), height=65, key=f"sdc_moves_{rk}")
+                        sdc_note = st.text_area("Karar Notu:", value=r_item.get('user_comment', ''), height=55, key=f"sdc_note_{rk}")
+                        if st.form_submit_button("💾 Güncelle", type="primary"):
+                            reg_dict[rk]['recommended_devices'] = sdc_sel_devs
+                            reg_dict[rk]['field_moves'] = sdc_moves.strip()
+                            reg_dict[rk]['user_comment'] = sdc_note.strip()
+                            st.success(f"✓ {r_item['name']} güncellendi!")
+                            st.rerun()
 
     st.markdown("<hr style='border-color:rgba(255,255,255,0.1); margin:24px 0;'>", unsafe_allow_html=True)
 
