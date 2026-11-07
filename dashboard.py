@@ -8331,22 +8331,49 @@ ZEUS Bioscience Scientific Affairs""",
 # ==============================================================================
 # 5. VIEW: DISTRIBUTORS & CRM
 # ==============================================================================
-elif nav_selection == "Distributors & CRM":
-    st.title("Commercial Accounts & Client Directory")
-    st.caption("Excel satış kayıtlarındaki 44 aktif müşteri ve partnerin ticari sipariş hacimleri, cihaz kurulumları ve sarf tüketim dökümü.")
 
-    # Search & Filters
-    f_c1, f_c2, f_c3, f_c4 = st.columns([1.5, 1, 1, 1])
+elif nav_selection == "Distributors & CRM":
+    def format_partner_device_distribution(dev_cnt_by_yr):
+        """Formats device count by year like '3 Adet (3x\'25)' or '18 Adet (9x\'24, 5x\'25, 4x\'26)'"""
+        tot = dev_cnt_by_yr.get('ALL', 0)
+        if tot == 0:
+            return "—"
+        parts = []
+        for y in [2024, 2025, 2026]:
+            cnt = dev_cnt_by_yr.get(y, 0)
+            if cnt > 0:
+                parts.append(f"{cnt}x\'{str(y)[2:]}")
+        if parts:
+            return f"{tot} Adet ({', '.join(parts)})"
+        return f"{tot} Adet"
+    st.title("Commercial Accounts & Client Directory")
+    st.caption("Excel resmi satış kayıtlarındaki 43 aktif müşteri ve partnerin yıllık (2024, 2025, 2026) ve konsolide sipariş hacimleri, kurulu cihaz dağılımları ve sarf tüketim dökümü.")
+
+    # Search & 5-Column Filters (Including Dedicated Year Selector)
+    f_c1, f_c2, f_c3, f_c4, f_c5 = st.columns([1.3, 1.0, 1.0, 1.0, 1.3])
     with f_c1:
-        search_query = st.text_input("Firma adı, ülke veya ürün ara", "")
+        search_query = st.text_input("Firma adı, ülke veya ürün ara", "", key="crm_search_query")
     with f_c2:
-        cat_crm_filter = st.selectbox("Müşteri / Bayi Sınıfı", ["Tümü", "Distribütörler", "Local Müşteriler (Türkiye)", "International Müşteriler"])
+        cat_crm_filter = st.selectbox("Müşteri / Bayi Sınıfı", ["Tümü", "Distribütörler", "Local Müşteriler (Türkiye)", "International Müşteriler"], key="crm_cat_filter")
     with f_c3:
         all_countries = sorted(list(set(d['country_name'] for d in dists_with_rev)))
-        country_filter = st.selectbox("Ülkeye Göre Filtrele", ["Tümü"] + all_countries)
+        country_filter = st.selectbox("Ülkeye Göre Filtrele", ["Tümü"] + all_countries, key="crm_country_filter")
     with f_c4:
-        type_filter = st.selectbox("Satın Alma Tipi", ["Tümü", "Cihaz ve Sarf Alanlar", "Sadece Sarf Alanlar"])
+        type_filter = st.selectbox("Satın Alma Tipi", ["Tümü", "Cihaz ve Sarf Alanlar", "Sadece Sarf Alanlar", "Kurulu Cihazı Olanlar"], key="crm_type_filter")
+    with f_c5:
+        crm_year_filter = st.selectbox(
+            "📅 Dönem / Yıl Filtresi",
+            [
+                "Tüm Zamanlar (Konsolide: 2024–2026)",
+                "2026 (YTD Gerçekleşen)",
+                "2025 (Tüm Yıl Gerçekleşen)",
+                "2024 (Tüm Yıl Gerçekleşen)"
+            ],
+            index=0,
+            key="crm_year_filter"
+        )
 
+    # Base accounts
     filtered_accounts = dists_with_rev
     if cat_crm_filter == "Distribütörler":
         filtered_accounts = [d for d in filtered_accounts if d.get('account_type') == 'Distributor']
@@ -8357,11 +8384,13 @@ elif nav_selection == "Distributors & CRM":
 
     if country_filter != "Tümü":
         filtered_accounts = [d for d in filtered_accounts if d['country_name'] == country_filter]
-        
+
     if type_filter == "Cihaz ve Sarf Alanlar":
-        filtered_accounts = [d for d in filtered_accounts if d['devices_count'] > 0]
+        filtered_accounts = [d for d in filtered_accounts if d.get('dev_cnt_by_year', {}).get('ALL', 0) > 0 and d.get('con_cnt_by_year', {}).get('ALL', 0) > 0]
     elif type_filter == "Sadece Sarf Alanlar":
-        filtered_accounts = [d for d in filtered_accounts if d['devices_count'] == 0]
+        filtered_accounts = [d for d in filtered_accounts if d.get('dev_cnt_by_year', {}).get('ALL', 0) == 0 and d.get('con_cnt_by_year', {}).get('ALL', 0) > 0]
+    elif type_filter == "Kurulu Cihazı Olanlar":
+        filtered_accounts = [d for d in filtered_accounts if d.get('dev_cnt_by_year', {}).get('ALL', 0) > 0]
 
     if search_query.strip():
         q = search_query.strip().lower()
@@ -8369,54 +8398,173 @@ elif nav_selection == "Distributors & CRM":
             d for d in filtered_accounts if q in d['name'].lower() or q in d['country_name'].lower() or any(q in p.lower() for p in d.get('products', []))
         ]
 
-    # Quick metrics
+    # Helper to resolve metrics for the selected CRM year
+    def resolve_crm_period_metrics(d_item, y_choice):
+        r_map = d_item.get('rev_by_year', {})
+        d_map = d_item.get('dev_rev_by_year', {})
+        c_map = d_item.get('con_rev_by_year', {})
+        dc_map = d_item.get('dev_cnt_by_year', {})
+        cc_map = d_item.get('con_cnt_by_year', {})
+
+        if "2026" in y_choice:
+            return r_map.get(2026, 0.0), d_map.get(2026, 0.0), c_map.get(2026, 0.0), dc_map.get(2026, 0), cc_map.get(2026, 0), "2026 (YTD)"
+        elif "2025" in y_choice:
+            return r_map.get(2025, 0.0), d_map.get(2025, 0.0), c_map.get(2025, 0.0), dc_map.get(2025, 0), cc_map.get(2025, 0), "2025"
+        elif "2024" in y_choice:
+            return r_map.get(2024, 0.0), d_map.get(2024, 0.0), c_map.get(2024, 0.0), dc_map.get(2024, 0), cc_map.get(2024, 0), "2024"
+        else:
+            return r_map.get('ALL', d_item.get('revenue', 0.0)), d_map.get('ALL', d_item.get('device_rev', 0.0)), c_map.get('ALL', d_item.get('consumables_rev', 0.0)), dc_map.get('ALL', d_item.get('devices_count', 0)), cc_map.get('ALL', d_item.get('consumables_count', 0)), "Tüm Zamanlar (Konsolide)"
+
+    # Compute Period Totals
+    period_tot_rev = 0.0
+    period_tot_devs = 0
+    period_tot_cons = 0
+    alltime_tot_rev = 0.0
+    alltime_tot_devs = 0
+    alltime_tot_cons = 0
+
+    for d in filtered_accounts:
+        p_r, p_dr, p_cr, p_dc, p_cc, active_lbl = resolve_crm_period_metrics(d, crm_year_filter)
+        period_tot_rev += p_r
+        period_tot_devs += p_dc
+        period_tot_cons += p_cc
+
+        alltime_tot_rev += d.get('rev_by_year', {}).get('ALL', d.get('revenue', 0.0))
+        alltime_tot_devs += d.get('dev_cnt_by_year', {}).get('ALL', d.get('devices_count', 0))
+        alltime_tot_cons += d.get('con_cnt_by_year', {}).get('ALL', d.get('consumables_count', 0))
+
+    # Quick metrics cards
     m1, m2, m3, m4 = st.columns(4)
     m1.metric("Kayıtlı Müşteri / Firma", len(filtered_accounts))
-    m2.metric("Toplam Faturalanan Ciro", format_curr(sum(d['revenue'] for d in filtered_accounts)))
-    m3.metric("Kurulu Cihaz Sayısı", f"{sum(d['devices_count'] for d in filtered_accounts):,} Adet")
-    m4.metric("Sarf Sipariş Hacmi", f"{sum(d.get('consumables_count', 0) for d in filtered_accounts):,} Kutu")
+    
+    if "Konsolide" in crm_year_filter:
+        m2.metric("Toplam Faturalanan Ciro", format_curr(period_tot_rev), delta="Konsolide (2024–2026)")
+        m3.metric("Kurulu Cihaz Sayısı", f"{period_tot_devs:,} Adet", delta="Konsolide Toplam")
+        m4.metric("Sarf Sipariş Hacmi", f"{period_tot_cons:,} Kutu", delta="Konsolide Toplam")
+    else:
+        m2.metric(f"Dönem Cirosu ({crm_year_filter.split(' ')[0]})", format_curr(period_tot_rev), delta=f"Tüm Zamanlar: {format_curr(alltime_tot_rev)}")
+        m3.metric(f"Dönem Cihaz ({crm_year_filter.split(' ')[0]})", f"{period_tot_devs:,} Adet", delta=f"Tüm Zamanlar: {alltime_tot_devs:,} Adet")
+        m4.metric(f"Dönem Sarf ({crm_year_filter.split(' ')[0]})", f"{period_tot_cons:,} Kutu", delta=f"Tüm Zamanlar: {alltime_tot_cons:,} Kutu")
 
-    st.markdown("---")
+    # Contextual note for year clarity
+    st.markdown(f"""
+    <div style="background:rgba(19,166,181,0.08);border:1px solid rgba(19,166,181,0.25);border-left:4px solid #00F5FF;padding:10px 14px;border-radius:8px;margin:12px 0 16px 0;font-size:12px;color:#CCD7E6;">
+        <b>📅 Analiz Edilen Dönem:</b> <span style="color:#00F5FF;font-weight:700;">{crm_year_filter}</span> &nbsp;|&nbsp; 
+        Aşağıdaki tabloda her müşterinin <b>2024, 2025, 2026 ve Toplam Konsolide ciroları</b> yan yana listelenmiştir. Önceki yıllarda cihaz satın almış ancak bu yıl henüz sipariş vermemiş müşteriler (ör. <b>Kuwait ATC: 2025'te 3 Cihaz, $26.2K</b> veya <b>UAE Sellco: 2025'te 4 Cihaz, $23.2K</b>) eksiksiz olarak raporlanmaktadır.
+    </div>
+    """, unsafe_allow_html=True)
 
-    # Table View
+    # Main Table View with Explicit Annual Breakdown Columns
     table_rows = []
     for d in filtered_accounts:
+        r_map = d.get('rev_by_year', {})
+        d_cnt_map = d.get('dev_cnt_by_year', {})
+        c_cnt_map = d.get('con_cnt_by_year', {})
+
+        rev_24 = r_map.get(2024, 0.0)
+        rev_25 = r_map.get(2025, 0.0)
+        rev_26 = r_map.get(2026, 0.0)
+        rev_all = r_map.get('ALL', d.get('revenue', 0.0))
+
+        dev_all = d_cnt_map.get('ALL', d.get('devices_count', 0))
+        dev_25 = d_cnt_map.get(2025, 0)
+        dev_26 = d_cnt_map.get(2026, 0)
+
+        # Device distribution string e.g. "3 Adet (3x'25)"
+        dev_str = format_partner_device_distribution(d_cnt_map)
+
+        # Activity badge
+        if rev_26 > 0:
+            activity_status = "🟢 2026 Aktif Sipariş"
+        elif rev_25 > 0 and dev_all > 0:
+            activity_status = f"🟡 2025'te {dev_all} Cihaz Kuruldu (2026 Bekleniyor)"
+        elif rev_25 > 0:
+            activity_status = "🟡 2025 Siparişi Var (2026 Bekleniyor)"
+        elif rev_24 > 0 and dev_all > 0:
+            activity_status = f"🟠 2024'te {dev_all} Cihaz Kuruldu"
+        else:
+            activity_status = "⚪ Pasif / Tarihsel Kayıt"
+
         table_rows.append({
             'Firma / Klinik': d['name'],
             'Sınıf': '🏢 Distribütör' if d.get('account_type') == 'Distributor' else ('🇹🇷 Local' if d.get('account_type') == 'Local Customer' else '🌍 International'),
             'Ülke': d['country_name'],
             'Bölge': d['region'],
-            'Net Ciro': format_curr(d['revenue']),
-            'Cihaz (Adet)': f"{d['devices_count']} Adet" if d['devices_count'] > 0 else "—",
-            'Sarf (Kutu)': f"{d.get('consumables_count', 0)} Kutu",
+            '2024 Ciro ($)': format_curr(rev_24) if rev_24 > 0 else "—",
+            '2025 Ciro ($)': format_curr(rev_25) if rev_25 > 0 else "—",
+            '2026 Ciro ($)': format_curr(rev_26) if rev_26 > 0 else "—",
+            'Toplam Net Ciro ($)': format_curr(rev_all),
+            'Kurulu Cihaz Dağılımı': dev_str,
+            'Sarf (Kutu)': f"{c_cnt_map.get('ALL', 0)} Kutu",
             'Fatura Sayısı': f"{d.get('invoices', 1)} İşlem",
             'Son Sipariş': d.get('last_order', '—'),
-            'Ana Ürünler': ', '.join(d.get('products', [])[:2])
+            'Yıllık Aktivite Durumu': activity_status
         })
+
+    # Sort table by Toplam Ciro descending
     df_disp = pd.DataFrame(table_rows)
     st.dataframe(df_disp, use_container_width=True, hide_index=True)
 
     # Detailed Account Order Dossier
-    st.markdown("### Müşteri Sipariş Dökümü & Ürün Dağılımı")
-    selected_company_name = st.selectbox("Detaylı Sipariş İncelemesi İçin Müşteri Seçin", [d['name'] for d in filtered_accounts])
+    st.markdown("### 📋 Müşteri Sipariş Dökümü & Yıllık Ürün Dağılımı")
+    selected_company_name = st.selectbox(
+        "Detaylı Sipariş İncelemesi İçin Müşteri Seçin:",
+        [d['name'] for d in filtered_accounts],
+        key="crm_company_select"
+    )
     sel_acc = next((d for d in filtered_accounts if d['name'] == selected_company_name), filtered_accounts[0])
-    
-    col_d1, col_d2 = st.columns([1.5, 1])
+
+    sel_r_map = sel_acc.get('rev_by_year', {})
+    sel_dr_map = sel_acc.get('dev_rev_by_year', {})
+    sel_cr_map = sel_acc.get('con_rev_by_year', {})
+    sel_dc_map = sel_acc.get('dev_cnt_by_year', {})
+    sel_cc_map = sel_acc.get('con_cnt_by_year', {})
+
+    col_d1, col_d2 = st.columns([1.3, 1.7])
     with col_d1:
         st.markdown(f"#### **{sel_acc['name']}**")
         st.write(f"**Ülke / Bölge:** {sel_acc['country_name']} ({sel_acc['region']})")
-        st.write(f"**Toplam Fatura / Sipariş:** `{sel_acc.get('invoices', 1)} İşlem` | **Son Sipariş Tarihi:** `{sel_acc.get('last_order', '—')}`")
+        st.write(f"**Müşteri Sınıfı:** {sel_acc.get('account_type_tr', sel_acc.get('account_type', 'Müşteri'))}")
+        st.write(f"**Toplam Fatura / İşlem:** `{sel_acc.get('invoices', 1)} İşlem` | **Son Sipariş:** `{sel_acc.get('last_order', '—')}`")
         st.write(f"**Satın Alınan Ürünler:** {', '.join(sel_acc.get('products', []))}")
-        
+
     with col_d2:
-        st.metric("Toplam Faturalandırılan Tutar", format_curr(sel_acc['revenue']))
-        st.write(f"• **Cihaz Geliri:** {format_curr(sel_acc.get('device_rev', 0))}")
-        st.write(f"• **Sarf Malzeme Geliri:** {format_curr(sel_acc.get('consumables_rev', 0))}")
+        # 4-Box Annual Breakdown Cards
+        st.markdown(f"""
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(130px, 1fr));gap:10px;">
+            <div style="background:#0F192E;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:10px;">
+                <span style="font-size:11px;color:#8A99AD;">2024 Dönemi</span><br>
+                <b style="font-size:15px;color:#CCD7E6;">{format_curr(sel_r_map.get(2024, 0.0))}</b><br>
+                <span style="font-size:10px;color:#8A99AD;">Cihaz: {sel_dc_map.get(2024, 0)} | Sarf: {sel_cc_map.get(2024, 0)}</span>
+            </div>
+            <div style="background:#0F192E;border:1px solid rgba(0,245,255,0.3);border-radius:8px;padding:10px;">
+                <span style="font-size:11px;color:#00F5FF;font-weight:700;">2025 Dönemi</span><br>
+                <b style="font-size:15px;color:#00F5FF;">{format_curr(sel_r_map.get(2025, 0.0))}</b><br>
+                <span style="font-size:10px;color:#5FD3AE;">Cihaz: {sel_dc_map.get(2025, 0)} Adet | Sarf: {sel_cc_map.get(2025, 0)}</span>
+            </div>
+            <div style="background:#0F192E;border:1px solid rgba(0,230,118,0.3);border-radius:8px;padding:10px;">
+                <span style="font-size:11px;color:#00E676;font-weight:700;">2026 (YTD)</span><br>
+                <b style="font-size:15px;color:#00E676;">{format_curr(sel_r_map.get(2026, 0.0))}</b><br>
+                <span style="font-size:10px;color:#00E676;">Cihaz: {sel_dc_map.get(2026, 0)} Adet | Sarf: {sel_cc_map.get(2026, 0)}</span>
+            </div>
+            <div style="background:linear-gradient(135deg, rgba(19,166,181,0.15) 0%, rgba(15,25,46,0.9) 100%);border:1px solid rgba(0,245,255,0.4);border-radius:8px;padding:10px;">
+                <span style="font-size:11px;color:#FFB800;font-weight:700;">Konsolide Toplam</span><br>
+                <b style="font-size:16px;color:#FFFFFF;">{format_curr(sel_r_map.get('ALL', sel_acc['revenue']))}</b><br>
+                <span style="font-size:10px;color:#FFB800;">Cihaz: {sel_dc_map.get('ALL', sel_acc['devices_count'])} Adet | Sarf: {sel_cc_map.get('ALL', sel_acc.get('consumables_count', 0))}</span>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
 
+    # Historical Invoices Table for this Partner from raw_sales_df
+    if raw_sales_df is not None and len(raw_sales_df) > 0:
+        c_invoices_df = raw_sales_df[raw_sales_df['Company'] == sel_acc['name']].sort_values('Date_dt', ascending=False)
+        if len(c_invoices_df) > 0:
+            with st.expander(f"📑 {sel_acc['name']} — Tarihsel Fatura ve Satın Alma Kalemleri ({len(c_invoices_df)} Kalem Kaydı)", expanded=True):
+                disp_inv = c_invoices_df[['Date', 'Invoice', 'Product', 'Group', 'Quantity', 'Unit', 'Amount (USD)']].copy()
+                disp_inv.columns = ['Fatura Tarihi', 'Fatura No', 'Ürün Adı', 'Grup', 'Adet', 'Birim', 'Tutar (USD)']
+                disp_inv['Tutar (USD)'] = disp_inv['Tutar (USD)'].apply(lambda v: f"${v:,.2f}")
+                st.dataframe(disp_inv, use_container_width=True, hide_index=True)
 
-# ==============================================================================
-# 6. VIEW: AGREEMENTS & COMPLIANCE
-# ==============================================================================
 elif nav_selection == "Agreements & Compliance":
     st.title("International Agreements, LOA & Regulatory Compliance")
     st.caption("Distribütörlük sözleşmeleri, LOA yetki belgeleri, yerel (Türkiye) ve uluslararası müşteri tedarik protokolleri yönetimi.")
