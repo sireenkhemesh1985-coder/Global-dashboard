@@ -1714,7 +1714,8 @@ COUNTRIES_RAW = [
         ('TR','Türkiye',10,3,'Europe','TUR'),
     ('SY','Syria',10,4,'MENA','SYR'),
     ('JO','Jordan',10,4,'MENA','JOR'),
-    ('IQ','Jordan-Iraq',11,3,'MENA','IRQ'),
+    ('IQ','Iraq',11,3,'MENA','IRQ'),
+    ('JI','Jordan-Iraq',11,3,'MENA','IRQ'),
     ('QA','Qatar',11,4,'MENA','QAT'),
     ('PS','Palestine',10,4,'MENA','PSE'),
     ('KW','Kuwait',11,4,'MENA','KWT'),
@@ -1948,7 +1949,9 @@ REAL_WORLD_BANK_IVF_DATA = {
     'AT': {'pop': 9.1, 'gdp': 516, 'gdp_pc': 56600, 'clinics': 35, 'cycles': 15000, 'health_pct': 11.5, 'icsi_pct': 74, 'pgt_pct': 20, 'cryo_pct': 72, 'risk': 'Low', 'reg': 'Strict', 'imp': 'Open'},
     'GR': {'pop': 10.4, 'gdp': 238, 'gdp_pc': 22900, 'clinics': 55, 'cycles': 32000, 'health_pct': 9.6, 'icsi_pct': 82, 'pgt_pct': 30, 'cryo_pct': 75, 'risk': 'Low', 'reg': 'Moderate', 'imp': 'Open'},
     'TR': {'pop': 85.3, 'gdp': 1118, 'gdp_pc': 13110, 'clinics': 165, 'cycles': 72000, 'health_pct': 4.6, 'icsi_pct': 88, 'pgt_pct': 24, 'cryo_pct': 75, 'risk': 'Medium', 'reg': 'Strict', 'imp': 'Licensing required'},
-    'IQ': {'pop': 55.8, 'gdp': 301, 'gdp_pc': 5390, 'clinics': 45, 'cycles': 32000, 'health_pct': 4.8, 'icsi_pct': 85, 'pgt_pct': 15, 'cryo_pct': 58, 'risk': 'High', 'reg': 'Strict', 'imp': 'Restricted'},
+    'IQ': {'pop': 45.5, 'gdp': 250, 'gdp_pc': 5390, 'clinics': 45, 'cycles': 32000, 'health_pct': 4.8, 'icsi_pct': 85, 'pgt_pct': 15, 'cryo_pct': 58, 'risk': 'High', 'reg': 'Strict', 'imp': 'Restricted'},
+    'JO': {'pop': 11.4, 'gdp': 51, 'gdp_pc': 4500, 'clinics': 22, 'cycles': 14000, 'health_pct': 7.6, 'icsi_pct': 86, 'pgt_pct': 22, 'cryo_pct': 68, 'risk': 'Medium', 'reg': 'Moderate', 'imp': 'Licensing required'},
+    'JI': {'pop': 56.9, 'gdp': 301, 'gdp_pc': 4900, 'clinics': 67, 'cycles': 46000, 'health_pct': 5.4, 'icsi_pct': 85, 'pgt_pct': 18, 'cryo_pct': 62, 'risk': 'Medium', 'reg': 'Moderate', 'imp': 'Licensing required'},
     'QA': {'pop': 2.7, 'gdp': 213, 'gdp_pc': 78900, 'clinics': 12, 'cycles': 5500, 'health_pct': 3.8, 'icsi_pct': 82, 'pgt_pct': 35, 'cryo_pct': 75, 'risk': 'Low', 'reg': 'Strict', 'imp': 'Licensing required'},
     'PS': {'pop': 5.4, 'gdp': 18.6, 'gdp_pc': 3450, 'clinics': 9, 'cycles': 6500, 'health_pct': 5.2, 'icsi_pct': 86, 'pgt_pct': 14, 'cryo_pct': 55, 'risk': 'High', 'reg': 'Strict', 'imp': 'Restricted'},
     'KW': {'pop': 4.3, 'gdp': 160, 'gdp_pc': 37200, 'clinics': 14, 'cycles': 7000, 'health_pct': 5.5, 'icsi_pct': 80, 'pgt_pct': 28, 'cryo_pct': 72, 'risk': 'Low', 'reg': 'Strict', 'imp': 'Licensing required'},
@@ -1998,7 +2001,8 @@ def get_country_intelligence():
         'QA': {'ivf_gdp_pct': 0.08, 'state_support_pct': 70.0, 'reimbursement': 'Hamad Medical (HMC) Kapsamında Vatandaşlara Tam Ücretsiz IVF'},
         'KW': {'ivf_gdp_pct': 0.07, 'state_support_pct': 65.0, 'reimbursement': 'MoH Kamu Merkezinde Vatandaşlara Ücretsiz; Özel Klinikler Cepten'},
         'IQ': {'ivf_gdp_pct': 0.04, 'state_support_pct': 10.0, 'reimbursement': 'Tamamen Özel Sektör & Cepten Ödeme (Kamu Sigortası Kapsamı Yok)'},
-        'JO': {'ivf_gdp_pct': 0.05, 'state_support_pct': 15.0, 'reimbursement': 'Özel Klinik ve Merkez Ağırlıklı (Minimal Kamu Desteği)'},
+        'JO': {'ivf_gdp_pct': 0.05, 'state_support_pct': 15.0, 'reimbursement': 'Özel Klinik ve Merkez Ağırlıklı (Minimal Kamu Desteği / %100 Cepten Ödeme)'},
+        'JI': {'ivf_gdp_pct': 0.05, 'state_support_pct': 12.0, 'reimbursement': 'Özel Klinik ve Merkez Ağırlıklı (Minimal Kamu Desteği / %100 Cepten Ödeme)'},
         'EG': {'ivf_gdp_pct': 0.03, 'state_support_pct': 15.0, 'reimbursement': 'Üniversite Hastanelerinde Kısıtlı Düşük Maliyetli Kota; %90+ Cepten'},
         'IN': {'ivf_gdp_pct': 0.02, 'state_support_pct': 5.0, 'reimbursement': 'Tamamen Özel Sektör & Cepten Ödeme (Kamu Geri Ödemesi Yok)'},
         'KR': {'ivf_gdp_pct': 0.13, 'state_support_pct': 75.0, 'reimbursement': 'Ulusal Doğum Teşviki (9 Siklusa Kadar %70-90 Devlet Kuponu Desteği)'},
@@ -2097,14 +2101,14 @@ def get_country_intelligence():
 country_to_region = {
     'Turkey': 'Europe', 'Belgium': 'Europe', 'Albania-Slovakia': 'Europe',
     'Bulgaria': 'Europe', 'Azerbaijan': 'Europe', 'United Kingdom': 'Europe',
-    'Jordan-Iraq': 'MENA', 'Jordan': 'MENA', 'Qatar': 'MENA',
+    'Jordan-Iraq': 'MENA', 'Jordan': 'MENA', 'Iraq': 'MENA', 'Qatar': 'MENA',
     'Palestine': 'MENA', 'Saudi Arabia': 'MENA', 'Kuwait': 'MENA',
     'United Arab Emirates': 'MENA', 'Syria': 'MENA',
     'South Korea': 'Asia-Pacific', 'Philippines': 'Asia-Pacific'
 }
 
 country_codes = {
-    'Turkey': 'TR', 'Jordan-Iraq': 'IQ', 'Jordan': 'JO', 'Qatar': 'QA',
+    'Turkey': 'TR', 'Jordan-Iraq': 'IQ', 'Jordan': 'JO', 'Iraq': 'IQ', 'Qatar': 'QA',
     'South Korea': 'KR', 'Palestine': 'PS', 'Saudi Arabia': 'SA',
     'Kuwait': 'KW', 'United Arab Emirates': 'AE', 'Albania-Slovakia': 'AL',
     'Belgium': 'BE', 'Azerbaijan': 'AZ', 'Bulgaria': 'BG',
@@ -2475,6 +2479,22 @@ avg_growth = (sum(d['growth_pct'] * d['revenue'] for d in active_rows) / total_r
 n_active_dists = len(active_rows)
 n_countries = len(set(d['id'] for d in active_rows))
 dist_by_code = {d['id']: d for d in dists_with_rev}
+
+# Link Jordan (JO), Iraq (IQ), and Jordan-Iraq (JI) to SIRIUS PHARM COMPANY (same authorized partner for both territories)
+sirius_dist = next((d for d in dists_with_rev if 'SIRIUS' in d.get('name', '').upper()), None)
+if sirius_dist:
+    if 'IQ' not in dist_by_code:
+        dist_by_code['IQ'] = sirius_dist
+    if 'JO' not in dist_by_code:
+        jo_sirius = dict(sirius_dist)
+        jo_sirius['id'] = 'JO'
+        jo_sirius['country_name'] = 'Jordan'
+        dist_by_code['JO'] = jo_sirius
+    if 'JI' not in dist_by_code:
+        ji_sirius = dict(sirius_dist)
+        ji_sirius['id'] = 'JI'
+        ji_sirius['country_name'] = 'Jordan-Iraq'
+        dist_by_code['JI'] = ji_sirius
 
 
 # ------------------------------------------------------------------------------
@@ -9089,7 +9109,7 @@ elif nav_selection == "Sales & Product Analytics":
                     
                 d_table.append({
                     'Distribütör': d['name'],
-                    'Ülke / Bölge': d.get('country_name', 'Jordan-Iraq'),
+                    'Ülke / Bölge': 'Jordan & Iraq (Ürdün & Irak)' if 'SIRIUS' in d['name'].upper() else d.get('country_name', 'Global'),
                     '2024 (Cihaz | Sarf)': y24_str,
                     '2025 (Cihaz | Sarf)': y25_str,
                     '2026 Bu Yıl (Cihaz | Sarf)': y26_str,
@@ -9101,7 +9121,7 @@ elif nav_selection == "Sales & Product Analytics":
             elif "Konsolide" in lead_metric_view:
                 d_table.append({
                     'Distribütör': d['name'],
-                    'Ülke / Bölge': d.get('country_name', 'Jordan-Iraq'),
+                    'Ülke / Bölge': 'Jordan & Iraq (Ürdün & Irak)' if 'SIRIUS' in d['name'].upper() else d.get('country_name', 'Global'),
                     'Toplam Ciro (All-Time)': format_curr(all_time_rev),
                     'Kurulu Cihaz Parkı': f"{all_time_dev_cnt} Adet Cihaz",
                     'Cihaz Satış Hasılatı': format_curr(all_time_dev_rev),
@@ -9116,7 +9136,7 @@ elif nav_selection == "Sales & Product Analytics":
             else:
                 d_table.append({
                     'Distribütör': d['name'],
-                    'Ülke / Bölge': d.get('country_name', 'Jordan-Iraq'),
+                    'Ülke / Bölge': 'Jordan & Iraq (Ürdün & Irak)' if 'SIRIUS' in d['name'].upper() else d.get('country_name', 'Global'),
                     'Dönem Cirosu (2026)': format_curr(period_rev),
                     'Dönem Cihazı': f"{period_dev_cnt} Adet",
                     'Dönem Cihaz Hasılatı': format_curr(period_dev_rev),
@@ -9311,6 +9331,12 @@ elif nav_selection == "Market Intelligence & Compare":
         
         # Add active partner info & derived metrics
         def get_market_partner_label(c_code):
+            # Sirius Pharm covers both Jordan (JO) and Iraq (IQ/JI)
+            if c_code in ['JO', 'IQ', 'JI']:
+                sirius_match = [d for d in dist_rows if 'SIRIUS' in d.get('name', '').upper()]
+                if sirius_match:
+                    return f"{sirius_match[0]['name']} (Jordan & Iraq)"
+                return "SIRIUS PHARM COMPANY (Jordan & Iraq)"
             dists = [d for d in dist_rows if d['id'] == c_code]
             if dists:
                 return dists[0]['name']
@@ -9319,7 +9345,7 @@ elif nav_selection == "Market Intelligence & Compare":
                 return f"Yok (Müşteri: {intls[0]['name']})"
             return "Yok (Yetkili Dağıtıcı Yok)"
         cmp_df['Distributor'] = cmp_df['code'].apply(get_market_partner_label)
-        cmp_df['Penetration %'] = cmp_df['code'].apply(lambda c: f"{dist_by_code.get(c, {}).get('pen_pct', 0.0):.1f}%")
+        cmp_df['Penetration %'] = cmp_df['code'].apply(lambda c: f"{dist_by_code.get(c, {}).get('pen_pct', (dist_by_code.get('IQ', {}).get('pen_pct', 14.2) if c in ['JO', 'JI'] else 0.0)):.1f}%")
         cmp_df['clinics_per_m'] = (cmp_df['clinics'] / cmp_df['pop']).round(2)
         cmp_df['cycles_per_clinic'] = (cmp_df['cycles'] / cmp_df['clinics']).round(0)
 
@@ -9833,7 +9859,11 @@ elif nav_selection == "Market Intelligence & Compare":
 
             # Country AI Landscape Summary Card
             dist_info = dist_by_code.get(target_country_row['code'], {})
-            current_dist_name = dist_info.get('name', 'None')
+            if target_country_row['code'] in ['JO', 'IQ', 'JI']:
+                dist_info = dist_info or dist_by_code.get('IQ', {}) or sirius_dist
+                current_dist_name = "SIRIUS PHARM COMPANY (Jordan & Iraq Bölge Distribütörü)"
+            else:
+                current_dist_name = dist_info.get('name', 'None') if dist_info else 'None'
             has_partner = current_dist_name != 'None' and current_dist_name != ''
             
             st.markdown(f"""
