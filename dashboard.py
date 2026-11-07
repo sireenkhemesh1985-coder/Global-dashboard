@@ -10898,6 +10898,31 @@ BODY:
                         </div>
                     </div>
 
+                    <!-- RFID GAPS VS ZEUS ADVANTAGES CALLOUT -->
+                    <div style="margin-top:14px;background:rgba(0,0,0,0.35);border-radius:8px;padding:14px;border:1px solid rgba(255,184,0,0.25);">
+                        <b style="color:#FFB800;font-size:13px;">⚡ Geleneksel RFID Sistemlerinin (RI Witness / Matcher) Açıkları ve ZEUS Üstünlüğü:</b>
+                        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:10px;margin-top:10px;">
+                            <div style="background:rgba(255,82,82,0.08);border:1px solid rgba(255,82,82,0.25);border-radius:6px;padding:10px;">
+                                <b style="color:#FF5252;font-size:12px;">❌ RFID'nin Zayıflıkları (Gaps):</b>
+                                <ul style="color:#CCD7E6;font-size:11px;margin:6px 0 0 16px;padding:0;line-height:1.5;">
+                                    <li><b>Ağır Sarf Kanaması:</b> Her siklusta $15–$30 çipli kap zorunluluğu ($20K–$50K/yıl döviz kaybı).</li>
+                                    <li><b>Sadece Kap Takibi:</b> Yalnızca iki kabın temasını görür; klinik embriyoloji verisini işlemez.</li>
+                                    <li><b>Manuel Kağıt Yükü:</b> Embriyolog 2PN sayısını ve AA/AB skorlarını kağıtlara elle yazmak zorundadır.</li>
+                                    <li><b>Sıfır Mobil Erişim:</b> Doktor ve hasta laboratuvardan kopuktur; kapalı yerel ağa hapsolmuştur.</li>
+                                </ul>
+                            </div>
+                            <div style="background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.25);border-radius:6px;padding:10px;">
+                                <b style="color:#00F5FF;font-size:12px;">✅ ZEUS Mismatch Blocker Üstünlüğü:</b>
+                                <ul style="color:#CCD7E6;font-size:11px;margin:6px 0 0 16px;padding:0;line-height:1.5;">
+                                    <li><b>Coin Modeli & Sınırsız Ücretsiz Barkod:</b> Döngü başı tek kontör, %100 bedava barkod; %75 OPEX tasarrufu.</li>
+                                    <li><b>7 Terminalli Tam Süreç:</b> OPU Ameliyathanesinde doktora dönük sessiz oosit sayacı ekranından kriyobankaya.</li>
+                                    <li><b>Sıfır Kağıt / Dijital Embriyoloji:</b> Mikroskop başında 2PN, Day 3/5 skorları dokunmatik kaydedilir.</li>
+                                    <li><b>3'lü 7/24 Mobil Ekosistem:</b> Doktor, embriyolog ve hasta için özel iOS/Android mobil uygulaması.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
                     <div style="margin-top:14px;background:rgba(0,0,0,0.3);border-radius:8px;padding:12px;border:1px solid rgba(255,255,255,0.06);">
                         <b style="color:#FFB800;font-size:12.5px;">🏢 7 İstasyonlu Tam Klinik Şahitlik ve Eşleştirme Konfigürasyonu:</b>
                         <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:8px;margin-top:8px;">
@@ -10926,7 +10951,6 @@ BODY:
                 </div>
                 """, unsafe_allow_html=True)
 
-            # TAB 4: SMART CRYO-TOOLS (4X TANK CAPACITY)
             with dev_sub4:
                 c_info = ZEUS_CLINICAL_DEVICE_PORTFOLIO['smart_cryo']
                 c_suit = dev_suit['smart_cryo']
@@ -10945,7 +10969,28 @@ BODY:
                         </div>
                     </div>
 
-                    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.08);">
+                    <!-- CRYO PINPOINT ADDRESSING & THERMAL SHOCK TRIO -->
+                    <div style="margin-top:14px;background:rgba(0,0,0,0.35);border-radius:8px;padding:14px;border:1px solid rgba(56,189,248,0.25);">
+                        <b style="color:#38BDF8;font-size:13px;">🎯 Şahitlik Sistemiyle Entegre 'Nokta Atışı' Adresleme & Termal Şok Koruması:</b>
+                        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:10px;margin-top:10px;">
+                            <div style="background:rgba(0,245,255,0.06);border:1px solid rgba(0,245,255,0.2);border-radius:6px;padding:10px;">
+                                <b style="color:#00F5FF;font-size:12px;">📍 'Nokta Atışı' Hedef Bulma Algoritması:</b>
+                                <p style="color:#CCD7E6;font-size:11px;margin:4px 0 0 0;line-height:1.5;">
+                                    Hasta sistemden çağrıldığında hedef payetin koordinatları anında ekranda parlar: <b>Tank # &rarr; Kanister # &rarr; Cane # &rarr; Sekizgen Goblet (Renk) &rarr; Smart Straw #</b>. Arama süresini %80 kısaltır; yanlış payet çekme riskini sıfırlar.
+                                </p>
+                            </div>
+                            <div style="background:rgba(0,230,118,0.06);border:1px solid rgba(0,230,118,0.2);border-radius:6px;padding:10px;">
+                                <b style="color:#00E676;font-size:12px;">🛡️ Termal Şok Koruma Üçlüsü (&gt;%95 Canlılık):</b>
+                                <ul style="color:#CCD7E6;font-size:11px;margin:4px 0 0 16px;padding:0;line-height:1.5;">
+                                    <li><b>Sekizgen Goblet (ZCT25-002):</b> Tank dışına çıkarıldığında tabanında sıvı azot tutarak payet uçlarını sürekli &lt;-150&deg;C'de tutar.</li>
+                                    <li><b>Cryo-Box (ZCT25-010):</b> Yalıtımlı azot çalışma kutusu.</li>
+                                    <li><b>Alüminyum Blok (ZCT25-005):</b> Termal kütleli sabitleyici.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-top:12px;">
                         <div style="background:rgba(0,0,0,0.25);padding:12px;border-radius:8px;">
                             <b style="color:#38BDF8;font-size:12.5px;">📐 4 Temel Kriyobiyoloji Darboğazını Çözen Donanım:</b>
                             <ul style="color:#CCD7E6;font-size:11.5px;margin:6px 0 0 16px;padding:0;line-height:1.6;">
@@ -10985,7 +11030,6 @@ BODY:
                 </div>
                 """, unsafe_allow_html=True)
 
-            # TAB 5: 2026 OFFICIAL GLOBAL REFERENCE NETWORK (CATALOG PAGE 51)
             with dev_sub5:
                 st.markdown("""
                 <div style="background:rgba(15,25,46,0.85);border:1px solid rgba(255,184,0,0.35);border-radius:12px;padding:18px;margin-bottom:14px;">
@@ -12956,6 +13000,274 @@ elif nav_selection == "Strategic Decision Center":
 
     st.markdown("<hr style='border-color:rgba(255,255,255,0.1); margin:24px 0;'>", unsafe_allow_html=True)
 
+
+
+
+    # --------------------------------------------------------------------------
+    # STRATEGIC CONVERSION DESK: RFID (RI WITNESS) VS. ZEUS MISMATCH BLOCKER & CRYO-TOOLS
+    # --------------------------------------------------------------------------
+    st.markdown("### 🛡️ RFID (RI Witness) Pazar Dönüşümü & ZEUS Mismatch Blocker / Cryo-Tools Stratejik İkna Masası")
+    st.caption("Çoğu kliniğin kullandığı geleneksel RFID çipli şahitlik sistemlerinin (RI Witness / Matcher) maliyet ve operasyonel açıklarını (RFID Gaps) hedefleyen; sınırsız ücretsiz barkod, siklus başı kontör (coin) modeli, 7 terminalli tam dijital embriyoloji ve 4X kriyotank optimizasyonuna dayalı üst düzey ikna ve dönüşüm merkezi.")
+
+    # Top KPI Metrics for RFID Disruption
+    rfid_kpi1, rfid_kpi2, rfid_kpi3, rfid_kpi4 = st.columns(4)
+    with rfid_kpi1:
+        st.markdown("""
+        <div style="background:#0F192E;border:1px solid rgba(0,245,255,0.3);border-radius:8px;padding:12px;text-align:center;">
+            <div style="color:#8A99AD;font-size:11px;font-weight:600;">SARF TASARRUF ÇARPANI</div>
+            <div style="color:#00F5FF;font-size:22px;font-weight:800;">%70 – %80</div>
+            <div style="color:#5FD3AE;font-size:11px;">Döngü Başı Kontör vs $25 Çip</div>
+        </div>
+        """, unsafe_allow_html=True)
+    with rfid_kpi2:
+        st.markdown("""
+        <div style="background:#0F192E;border:1px solid rgba(95,211,174,0.3);border-radius:8px;padding:12px;text-align:center;">
+            <div style="color:#8A99AD;font-size:11px;font-weight:600;">DİJİTAL EMBRİYOLOJİ</div>
+            <div style="color:#5FD3AE;font-size:22px;font-weight:800;">SIFIR KAĞIT</div>
+            <div style="color:#CCD7E6;font-size:11px;">2PN, Gün 3/5 Skorlama Dokunmatik</div>
+        </div>
+        """, unsafe_allow_html=True)
+    with rfid_kpi3:
+        st.markdown("""
+        <div style="background:#0F192E;border:1px solid rgba(255,184,0,0.3);border-radius:8px;padding:12px;text-align:center;">
+            <div style="color:#8A99AD;font-size:11px;font-weight:600;">MOBİL EKOSİSTEM (3'LÜ)</div>
+            <div style="color:#FFB800;font-size:22px;font-weight:800;">7/24 MOBİL</div>
+            <div style="color:#CCD7E6;font-size:11px;">Doktor + Embriyolog + Hasta</div>
+        </div>
+        """, unsafe_allow_html=True)
+    with rfid_kpi4:
+        st.markdown("""
+        <div style="background:#0F192E;border:1px solid rgba(56,189,248,0.3);border-radius:8px;padding:12px;text-align:center;">
+            <div style="color:#8A99AD;font-size:11px;font-weight:600;">KRİYOMİMARİ & NOKTA ATIŞI</div>
+            <div style="color:#38BDF8;font-size:22px;font-weight:800;">4X KAPASİTE</div>
+            <div style="color:#5FD3AE;font-size:11px;">Sıfır Termal Şok & Nokta Atışı Adres</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.markdown("<div style='height:12px;'></div>", unsafe_allow_html=True)
+
+    # Tabbed Interface: 1) RFID Gaps vs ZEUS Matrix, 2) Interactive ROI Calculator, 3) Persuasive Executive Pitch & Email Generator
+    rfid_tab1, rfid_tab2, rfid_tab3 = st.tabs([
+        "⚖️ RFID (RI Witness) Açıkları vs. ZEUS Mismatch Blocker Karşılaştırma Matrisi",
+        "💰 Klinik Finansal ROI & Çip Tasarruf Simülatörü",
+        "✉️ Zekice Kurgulanmış Yönetici İkna E-Postası (Executive Email Pitch Generator)"
+    ])
+
+    with rfid_tab1:
+        st.markdown("""
+        <div style="background:rgba(15,25,46,0.85);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:16px;margin-bottom:14px;">
+            <h4 style="margin:0 0 8px 0;color:#FFFFFF;font-size:15px;">Neden Çoğu Klinik RI Witness (RFID) Yerine ZEUS Mismatch Blocker'ı Seçmeli?</h4>
+            <p style="color:#CCD7E6;font-size:12px;line-height:1.55;margin:0;">
+                Geleneksel RFID sistemleri (RI Witness vb.) tüp bebek laboratuvarlarında ilk nesil şahitliği başlatmış olsa da, günümüzde kliniklerin kârlılığını kemiren ağır sarf maliyetleri ($15–$30/çipli kap), sinyal karışmaları ve sadece petri kabına odaklanıp embriyoloğu kağıda elle not almaya mahkûm eden kör noktalarıyla (gaps) ciddi bir operasyonel darboğaz yaratmaktadır. <b>ZEUS Mismatch Blocker & Smart Cryo-Tools</b>, bu açıkları kökten çözer.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        comp_data = [
+            {
+                "Stratejik Boyut": "1. Sarf Maliyeti & Fiyatlandırma Modeli",
+                "Geleneksel RFID (RI Witness / Matcher)": "❌ Ağır Tekrarlayan Maliyet: Her siklusta petri/tüp başına $15–$30 RFID çipli kap zorunluluğu. Yıllık $20K–$60K döviz kaybı.",
+                "ZEUS Mismatch Blocker & Kriyomimari": "✅ Sınırsız Ücretsiz Barkod + Sanal POS Kontör (Coin) Kredisi: Siklus başına tek bir sembolik kredi; barkodlar %100 ücretsizdir. Klinik OPEX giderlerini %75 azaltır.",
+                "Klinik & Finansal Avantaj": "Sarf bağımlılığı yok; bütçe öngörülebilir ve kontrol altında."
+            },
+            {
+                "Stratejik Boyut": "2. Süreç Takip Derinliği & Kapsam",
+                "Geleneksel RFID (RI Witness / Matcher)": "❌ Sadece Kap Eşleşmesi: Yalnızca mikroskop altındaki iki kabın yan yana geldiğini teyit eder; ameliyathane veya hasta odasında kopuktur.",
+                "ZEUS Mismatch Blocker & Kriyomimari": "✅ 7-İstasyonlu Tam Klinik Ağı: Hasta Kayıt (T1), Sperm Verme (T2), OPU Ameliyathanesi Sessiz Canlı Oosit Sayacı (T3), Androloji (T4), Embriyoloji (T5), Mikromanipülatör (T6), Kriyobanka (T7).",
+                "Klinik & Finansal Avantaj": "Sadece petri kabını değil, hastanın tüm tedavi yolculuğunu uçtan uca kilitler."
+            },
+            {
+                "Stratejik Boyut": "3. Embriyoloji Veri Girişi & Kağıt İş Yükü",
+                "Geleneksel RFID (RI Witness / Matcher)": "❌ Manuel Not Tutma Zorunluluğu: Döllenme (2PN), hücre bölünmesi, Gün 3 ve Gün 5 (AA, AB, BB) skorlarını embriyolog elle ayrı kağıtlara veya EMR'ye yazmak zorundadır.",
+                "ZEUS Mismatch Blocker & Kriyomimari": "✅ Sıfır Kağıt / Tek Dokunuşla Dijital Skorlama: Standart görsel kılavuzlar üzerinden 2PN, oosit maturasyonu, embriyo morfolojisi ve transfer kararları mikroskop başındaki dokunmatik ekranda anında kaydedilir.",
+                "Klinik & Finansal Avantaj": "Embriyoloğun manuel kağıt yükünü ve yorgunluğa bağlı kayıt hatasını sıfırlar."
+            },
+            {
+                "Stratejik Boyut": "4. Mobil Ekosistem & Paydaş Erişimi",
+                "Geleneksel RFID (RI Witness / Matcher)": "❌ Kapalı Lokal Ağ: Hekimler ve hastalar laboratuvara uzaktır; doktor cep telefonundan anlık embriyo kalitesi göremez, hasta endişeli telefon bekler.",
+                "ZEUS Mismatch Blocker & Kriyomimari": "✅ 3'lü 7/24 Mobil Uygulama (Doktor + Embriyolog + Hasta): Doktorlar hastasının embriyo skorlarına cepten erişir; hastalar güven veren şeffaf aşama bildirimleriyle kliniğe bağlanır.",
+                "Klinik & Finansal Avantaj": "Kliniğe eşsiz bir hasta memnuniyeti, pazarlama gücü ve hekim sadakati kazandırır."
+            },
+            {
+                "Stratejik Boyut": "5. Kriyobank Takibi & Termal Şok Koruması",
+                "Geleneksel RFID (RI Witness / Matcher)": "❌ Tank İçi Körlük: RFID tank içine giremez; numuneler manuel aranır. Payetler çıkarıldığında ortam havasında ısınıp termal şok yaşar.",
+                "ZEUS Mismatch Blocker & Kriyomimari": "✅ 'Nokta Atışı' Dijital Adresleme & Sıfır Termal Şok: Hasta çağrıldığında sistem Tank -> Kanister -> Cane -> Sekizgen Goblet -> Straw konumunu nokta atışı verir. Sıvı azot rezervuarlı sekizgen goblet, Cryo-Box ve alüminyum blokla >%95 çözme canlılığı sağlanır.",
+                "Klinik & Finansal Avantaj": "Arama süresini %80 kısaltır; kriyohasarı ve numune kaybını tamamen engeller."
+            },
+            {
+                "Stratejik Boyut": "6. PGT Biyopsi & Oosit Aktivasyonu Entegrasyonu",
+                "Geleneksel RFID (RI Witness / Matcher)": "❌ Standart Şahitlik Dışı: Biyopsi şeritleri ve PCR tüpleri için özel donanımsal güvenlik sağlamaz; oosit aktivasyonuyla entegrasyonu yoktur.",
+                "ZEUS Mismatch Blocker & Kriyomimari": "✅ Dünyada İlk BioPSafe (ZBB25-001) & Pulse Stimulator (ZPS 26): 13 IR sensörlü ve çift kameralı PGT biyopsi şerit takip platformu ve Baltacı / Tanaka ROSI klinik kanıtlı Piezoelektrik aktivasyon ekosistemi.",
+                "Klinik & Finansal Avantaj": "Genetik tanıda %100 tüp eşleşmesi ve TFF vakalarında %62 fertilizasyon güvencesi."
+            }
+        ]
+        st.dataframe(pd.DataFrame(comp_data), use_container_width=True, hide_index=True)
+
+    with rfid_tab2:
+        st.markdown("##### 💰 Yıllık RFID Çip İsrafı vs. ZEUS Coin Tasarruf Simülatörü")
+        st.caption("Kliniğinizin mevcut veya hedef yıllık tedavi siklus hacmine göre geleneksel RFID çipli sistemlere ödenen gereksiz sarf bedeli ile ZEUS Coin modelinin sağlayacağı net tasarrufu hesaplayın.")
+
+        rc1, rc2, rc3 = st.columns(3)
+        with rc1:
+            sim_cycles = st.slider("🏥 Yıllık Tedavi Siklus Hacmi (Cycles):", min_value=100, max_value=5000, value=800, step=50, key="sim_rfid_cycles")
+        with rc2:
+            sim_rfid_cost = st.slider("💳 Mevcut RFID Çip/Sarf Maliyeti ($ / Siklus):", min_value=10, max_value=35, value=22, step=1, key="sim_rfid_chip_cost")
+        with rc3:
+            sim_zeus_coin = st.slider("🪙 ZEUS Coin Kredi Bedeli ($ / Siklus):", min_value=3, max_value=10, value=6, step=1, key="sim_zeus_coin_cost")
+
+        curr_rfid_total = sim_cycles * sim_rfid_cost
+        zeus_coin_total = sim_cycles * sim_zeus_coin
+        annual_savings = curr_rfid_total - zeus_coin_total
+        pct_savings = (annual_savings / max(1, curr_rfid_total)) * 100
+        three_yr_savings = annual_savings * 3
+        tank_capex_saving = 45000  # Smart Cryo-Tools 4X sayesinde yeni azot tankı almama tasarrufu
+
+        st.markdown(f"""
+        <div style="background:rgba(15,25,46,0.9);border:1.5px solid #00F5FF;border-radius:12px;padding:18px;margin-top:10px;">
+            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:14px;text-align:center;">
+                <div style="background:rgba(255,82,82,0.1);border:1px solid rgba(255,82,82,0.3);border-radius:8px;padding:12px;">
+                    <span style="color:#FF8A80;font-size:11.5px;font-weight:600;">MEVCUT RFID ÇİP YILLIK İSRAFI</span>
+                    <h3 style="color:#FF5252;margin:4px 0;font-size:24px;">${curr_rfid_total:,.0f} USD</h3>
+                    <span style="color:#CCD7E6;font-size:11px;">{sim_cycles:,} siklus x ${sim_rfid_cost}/çip</span>
+                </div>
+                <div style="background:rgba(0,245,255,0.1);border:1px solid rgba(0,245,255,0.3);border-radius:8px;padding:12px;">
+                    <span style="color:#80D8FF;font-size:11.5px;font-weight:600;">ZEUS COIN MODELİ MALİYETİ</span>
+                    <h3 style="color:#00F5FF;margin:4px 0;font-size:24px;">${zeus_coin_total:,.0f} USD</h3>
+                    <span style="color:#CCD7E6;font-size:11px;">Sınırsız Barkod + ${sim_zeus_coin}/kontör</span>
+                </div>
+                <div style="background:rgba(0,230,118,0.12);border:1.5px solid #00E676;border-radius:8px;padding:12px;">
+                    <span style="color:#B9F6CA;font-size:11.5px;font-weight:700;">YILLIK NET KLİNİK TASARRUFU</span>
+                    <h3 style="color:#00E676;margin:4px 0;font-size:26px;">+${annual_savings:,.0f} USD</h3>
+                    <span style="color:#5FD3AE;font-size:11px;font-weight:700;">%{pct_savings:.1f} OPEX Azalması</span>
+                </div>
+                <div style="background:rgba(255,184,0,0.1);border:1px solid rgba(255,184,0,0.3);border-radius:8px;padding:12px;">
+                    <span style="color:#FFE082;font-size:11.5px;font-weight:600;">3 YILLIK TOPLAM STRATEJİK DEĞER</span>
+                    <h3 style="color:#FFB800;margin:4px 0;font-size:24px;">+${(three_yr_savings + tank_capex_saving):,.0f} USD</h3>
+                    <span style="color:#CCD7E6;font-size:11px;">3 Yıl Sarf (${three_yr_savings:,.0f}) + 4X Tank Tasarrufu ($45K)</span>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with rfid_tab3:
+        st.markdown("##### ✉️ Zekice Kurgulanmış Yönetici İkna E-Postası (Executive Outreach Generator)")
+        st.caption("RI Witness veya başka bir RFID şahitlik sistemi kullanan bir Tüp Bebek Merkezi Direktörüne, Baş Embriyoloğuna veya Hastane Yönetim Kurulu Üyesine gönderilmek üzere hazırlanmış; nezaketle başlayıp RFID'nin açıklarını zekice yüzüne vuran ve ZEUS'un bütünleşik üstünlüğünü kanıtlayan ikna mektubu.")
+
+        e_col1, e_col2, e_col3 = st.columns([1.4, 1.2, 1.0])
+        with e_col1:
+            target_clinic_name = st.text_input("🏥 Hedef Klinik / Hastane Adı:", value="Acıbadem / Memorial / Fakih IVF / Harley Street IVF", key="inp_pitch_clinic")
+        with e_col2:
+            target_doctor_title = st.selectbox("👨‍⚕️ Muhatap Ünvanı / Rolü:", [
+                "Tüp Bebek Direktörü & Baş Embriyolog",
+                "Medical Director & IVF Center Chairman",
+                "Chief Operating Officer & Lab Director",
+                "Yönetim Kurulu Başkanı & Klinik Kurucusu"
+            ], key="sel_pitch_title")
+        with e_col3:
+            pitch_lang = st.radio("🌐 E-Posta Dili:", ["Türkçe (Resmi Yönetici Dili)", "English (International Medical Director Pitch)"], key="rad_pitch_lang")
+
+        if "Türkçe" in pitch_lang:
+            email_subject = f"RI Witness RFID Maliyetlerini %75 Azaltırken Embriyoloji İş Yükünü Sıfırlayan Yeni Nesil Şahitlik: ZEUS Mismatch Blocker & Kriyomimari"
+            email_body = f"""Sayın {target_doctor_title},
+
+{target_clinic_name} bünyesinde hasta güvenliğine, klinik akreditasyona ve laboratuvar mükemmeliyetine verdiğiniz önemi yakından takip ediyor; merkezinizde uyguladığınız elektronik şahitlik vizyonunu takdirle karşılıyoruz.
+
+Bugün dünya genelinde pek çok öncü merkez gibi, sizlerin de muhtemelen RI Witness veya benzeri bir RFID çipli şahitlik altyapısı kullandığınızı tahmin ediyoruz. Bu sistemlerin laboratuvara belirli bir güvenlik disiplini getirdiği inkâr edilemez; ancak sahada bizzat embriyologlar ve klinik direktörleriyle yürüttüğümüz çalışmalar, RFID teknolojisinin bugün artık ciddi bir operasyonel ve finansal darboğaza dönüştüğünü ortaya koymaktadır:
+
+1. Ağır ve Sürekli Sarf Kanaması (RFID Chip Drain):
+   Her siklusta petri ve tüp başına ödenen $15–$30 çip bedeli, yıllık 800–1,500 siklus yapan bir merkez için yılda $18,000–$40,000 arasında gereksiz bir sarf maliyeti yaratmaktadır. Laboratuvarınız her yıl bu bütçeyi sadece plastik çiplere aktarmak zorunda kalmaktadır.
+
+2. Sadece "Kap" Eşleşmesi ve Embriyolojide Manuel Not Tutma Stresi:
+   RFID sistemleri sadece iki kabın yan yana geldiğini teyit eder; ancak embriyoloğun 2PN döllenme sayımını, hücre bölünme aşamalarını, Gün 3 ve Gün 5 (AA, AB, BB) embriyo morfoloji skorlarını elle ayrı kağıtlara veya EMR sistemlerine manuel yazma yükünü çözmez. İnsan hatası riski tam da bu manuel kayıt esnasında devam eder.
+
+3. Hekim ve Hasta İletişiminde Kör Nokta:
+   Geleneksel sistemler kapalı lokal ağlarda çalışır. Klinisyen hekim ameliyathanede veya odasında hastasının embriyo gelişimini telefonundan anlık olarak takip edemez; hasta ise endişe içinde günlerce laboratuvardan gelecek bir telefon bildirimini bekler.
+
+4. Kriyotankın İçine Giremeyen Kör Şahitlik ve Termal Şok:
+   RFID tankın içine giremez. Dondurulan numuneler tank içinde manuel aranırken payetler ortam havasına çıkarılır ve termal dalgalanmaya maruz kalır.
+
+ZEUS BIOSCIENCE olarak geliştirdiğimiz 'Mismatch Blocker (ZMB-7T)' ve 'Smart Cryo-Tools' ekosistemi, bu 4 kritik boşluğu radikal ve zekice bir mimariyle kapatmaktadır:
+
+✔ Sınırsız Ücretsiz Barkod & Döngü Başı Kontör (Coin) Modeli:
+   Kliniğinizi pahalı çipli petri kaplarına mahkûm etmiyoruz. Barkod etiketleri %100 ücretsiz ve sınırsızdır. Sanal POS üzerinden anında tanımlanan döngü başı tek bir kontör (coin) kredisiyle şahitlik sarfiyatınızı net %75 düşürüyoruz.
+
+✔ 7 İstasyonlu Tam Dijital Ağ & Elle Not Tutmaya Son:
+   Hasta kayıt masasından OPU ameliyathanesindeki sessiz canlı oosit sayacına (doktorun karşısındaki ekran sözlü oosit bağırma hatasını bitirir), androloji kabininden mikromanipülatör başına kadar 7 terminal. Embriyolog dokunmatik ekranda tek dokunuşla 2PN, oosit maturasyonu ve Gün 3/5 AA-AB skorlarını kaydeder; sistem anında müdahale edilemez TRF raporunu üretir. Artık kağıtla not tutmak tarihe karışır.
+
+✔ 3'lü 7/24 Mobil Ekosistem (Doktor + Embriyolog + Hasta):
+   Hekimler hastalarının embriyo fotoğraflarını ve gelişim raporlarını akıllı telefonlarından anlık izler. Hastalar ise güven veren şeffaf mobil bildirimlerle her aşamadan haberdar olur; bu da {target_clinic_name}'e benzersiz bir hasta sadakati ve kurumsal itibar kazandırır.
+
+✔ Smart Cryo-Tools ile 4X Tank Kapasitesi & "Nokta Atışı" Adresleme:
+   Mevcut sıvı azot tanklarınızı değiştirmeden saklama alanınızı 4 katına (cane başına 40 payet) çıkararak $35K–$50K yeni tank yatırımını önler. Sistemden hasta çağrıldığında hedef numunenin Tank, Kanister, Cane, Sekizgen Goblet ve Straw koordinatını 'nokta atışı' gösterir. Sıvı azot rezervuarlı sekizgen goblet, Cryo-Box ve alüminyum blok üçlüsü sayesinde numuneler tank dışına çıktığında asla ortam havasına maruz kalmaz; termal şok riski sıfırlanarak >%95 çözme canlılığı garanti edilir.
+
+✔ Dünyada İlk BioPSafe (ZBB25-001) ve Kanıta Dayalı Pulse Stimulator (ZPS 26):
+   PGT biyopsisinde 13 IR sensörlü ve çift kameralı BioPSafe platformu ile sıfır PCR tüp karışıklığı; Baltacı et al. (%62 fertilizasyon) ve Tanaka et al. ROSI (90+ canlı doğum) kanıtlı Piezoelektrik oosit aktivatörü ile ekosistem tamamlanır.
+
+{target_clinic_name} için hazırladığımız 3 yıllık RFID sarf tasarruf fizibilitesini ve 15 dakikalık interaktif sistem sunumunu sizinle paylaşmaktan onur duyarız. 
+
+Önümüzdeki hafta içinde uygun göreceğiniz bir gün 15 dakikalık bir çevrim içi veya yüz yüze demo toplantısı organize edebilir miyiz?
+
+Saygılarımızla,
+
+ZEUS Bioscience Kurumsal Medikal & Stratejik Karar Masası
+Web: www.zeusbioscience.com | E-posta: clinical@zeusbioscience.com"""
+        else:
+            email_subject = f"Beyond RFID Witnessing: How ZEUS Mismatch Blocker & 4X Cryo-Tools Eliminate Recurring Chip Costs ($20K+/yr) & Manual Charting"
+            email_body = f"""Dear {target_doctor_title},
+
+We have great respect for the unwavering commitment {target_clinic_name} demonstrates toward patient biosafety and electronic witnessing excellence.
+
+Like many elite IVF institutions worldwide, you likely rely on RI Witness or a comparable RFID-chip witnessing system. While RFID served as a valuable pioneer, frontline feedback from lab directors and embryologists reveals four critical gaps inherent to RFID technology:
+
+1. The Recurring RFID Chip Tax:
+   Paying $15 to $30+ per cycle for chipped dishes or adhesive tags creates an annual operational drain of $20,000 to $50,000+ for high-volume clinics—capital repeatedly lost to proprietary consumables.
+
+2. 'Dish-Only' Witnessing & Manual Embryology Charting:
+   RFID only verifies that two vessels are in proximity. It does not record clinical embryology data. Your embryologists must still handwrite 2PN counts, cleavage timings, and Day 3/Day 5 (AA, AB, BB) blastocyst morphology onto separate paper records or hospital EMRs.
+
+3. Zero Mobile Synergy for Clinicians & Patients:
+   RFID networks are closed. Attending physicians cannot inspect embryo developmental kinetics from their mobile phones, and anxious patients are left waiting for telephone updates.
+
+4. Tank-Side Blind Spots & Thermal Shock:
+   RFID cannot function inside cryogenic storage. Searching through liquid nitrogen canisters exposes neighboring straws to ambient thermal shock, compromising post-thaw survival.
+
+ZEUS Bioscience has engineered an integrated platform that fundamentally solves these four bottlenecks:
+
+✔ Coin-Based Model with Unlimited Free Barcodes:
+   We eliminate proprietary chip dependency. All cryo-resistant 2D barcodes are 100% free of charge. Clinics purchase on-demand cycle credits (coins) via Virtual POS, slashing annual witnessing OPEX by 70% to 80%.
+
+✔ 7-Terminal Specialized Network (Zero Handwriting):
+   Covering Patient Registration (T1), Sperm Collection (T2), OPU Theater with a live silent oocyte counter display facing the surgeon (T3), Andrology (T4), Embryology (T5), Micromanipulator with single-touch standardized morphology scoring (T6), and Freezing Room (T7). Embryologists log 2PN, cleavage, and blastocyst grades digitally at the scope—paper records are permanently eliminated.
+
+✔ Tri-Party 24/7 Mobile Ecosystem:
+   Physicians review real-time embryology scorecards remotely via smartphone. Patients receive transparent, comforting cycle milestones through a dedicated mobile app, elevating clinical trust.
+
+✔ Smart Cryo-Tools: 4X Tank Capacity & Pinpoint Specimen Retrieval:
+   Quadruples your existing tank storage capacity (cane holds 40 straws vs 10 traditional), bypassing $35K-$50K in tank CAPEX. When a patient is queried, the system displays the exact pinpoint coordinates: Tank -> Canister -> Cane -> Octagonal Goblet -> Smart Straw. The liquid nitrogen-retaining octagonal goblet, cryogenic workstation, and aluminum block eliminate transient warming injury, securing >95% post-thaw survival.
+
+✔ BioPSafe PGT Verification & Pulse Stimulator (ZPS 26):
+   The world's first 13-IR sensor and dual-tablet biopsy platform (ZBB25-001) for 100% PCR tube matching, paired with published piezoelectric AOA evidence (Baltaci et al., 62% fertilization in TFF; Tanaka et al. ROSI, 90+ live births).
+
+We would be privileged to share a brief 15-minute clinical demo and a customized 3-year OPEX savings audit tailored specifically to {target_clinic_name}'s cycle volume.
+
+Would you be open to a brief introductory call next week?
+
+Warm regards,
+
+ZEUS Bioscience Global Medical & Clinical Expansion Team
+Web: www.zeusbioscience.com | Email: clinical@zeusbioscience.com"""
+
+        st.markdown(f"**Konu:** `{email_subject}`")
+        st.text_area("📄 İkna E-Postası Metni (Kopyalanabilir / Düzenlenebilir):", value=email_body, height=380, key="txt_pitch_email_body")
+        
+        col_ecopy, col_eact = st.columns([1.5, 2.5])
+        with col_ecopy:
+            st.info("💡 Yukarıdaki metni kopyalayarak doğrudan hedef klinik direktörüne iletebilirsiniz.")
+        with col_eact:
+            if st.button("📋 Bu İkna Stratejisini Stratejik Karar Masasına Onaylı Olarak Kaydet", key="btn_save_rfid_pitch_strategy", type="primary"):
+                st.success("✅ RFID Dönüşüm ve Mismatch Blocker ikna protokolü yönetim kuruluna sunulmak üzere onaylandı!")
+
+    st.markdown("<hr style='border-color:rgba(255,255,255,0.1); margin:24px 0;'>", unsafe_allow_html=True)
 
 
     # --------------------------------------------------------------------------
