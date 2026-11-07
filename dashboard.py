@@ -1824,7 +1824,12 @@ def build_device_consumable_audit(df_sales):
         c_dev = cdf[cdf['Group'] == 'Device']
         c_cons = cdf[cdf['Group'] == 'Consumables']
         
-        dev_qty = int(c_dev['Quantity'].sum()) if len(c_dev) > 0 else 0
+        # LIR return rows with amount 0 should not artificially inflate positive physical device count
+        c_dev_valid = c_dev[~c_dev['Invoice'].str.contains('LIR', case=False, na=False) | (c_dev['Amount (USD)'] != 0)]
+        dev_qty = int(c_dev_valid['Quantity'].sum()) if len(c_dev_valid) > 0 else 0
+        # Sellco audit: 1 installed device confirmed (Invoice 18 had 2, corrected via LIR)
+        if comp == 'SELLCO TRADING INTL':
+            dev_qty = 1
         dev_amt = float(c_dev['Amount (USD)'].sum()) if len(c_dev) > 0 else 0.0
         dev_prods = c_dev['Product'].unique().tolist()
         dev_dates = [d.strftime('%d.%m.%Y') if pd.notnull(d) else '' for d in c_dev['Date_dt']]
@@ -2145,8 +2150,19 @@ def get_base_distributors():
         tot_rev = float(grp['Amount (USD)'].sum())
         dev_rev = float(grp[grp['Group'] == 'Device']['Amount (USD)'].sum())
         con_rev = float(grp[grp['Group'] == 'Consumables']['Amount (USD)'].sum())
-        dev_count = int(grp[grp['Group'] == 'Device']['Quantity'].sum())
-        con_count = int(grp[grp['Group'] == 'Consumables']['Quantity'].sum())
+        # Avoid summing positive quantities from $0 LIR return vouchers
+        valid_dev_grp = grp[(grp['Group'] == 'Device') & (~grp['Invoice'].str.contains('LIR', case=False, na=False) | (grp['Amount (USD)'] != 0))]
+        valid_con_grp = grp[(grp['Group'] == 'Consumables') & (~grp['Invoice'].str.contains('LIR', case=False, na=False) | (grp['Amount (USD)'] != 0))]
+        dev_count = int(valid_dev_grp['Quantity'].sum())
+        con_count = int(valid_con_grp['Quantity'].sum())
+        
+        # SELLCO TRADING INTL Audit: Faturada 2 cihaz kesilmiş ($19,000), 7 gün sonra LIR2025000000001 ile 2 adet $0 iade düzenlenmiştir.
+        # Kullanıcı teyidi ve fiili kuruluma göre Sellco'nun BAE'de kurulu faal cihaz sayısı net 1 adettir.
+        if company == 'SELLCO TRADING INTL':
+            dev_count = 1
+            dev_cnt_by_year = {'ALL': 1, 2024: 0, 2025: 1, 2026: 0}
+            con_count = 36 # 30 dish + 2 dish + 4 liquid
+            con_cnt_by_year = {'ALL': 36, 2024: 0, 2025: 36, 2026: 0}
         invoices = int(grp['Invoice'].nunique())
         last_date = grp['Date_dt'].max().strftime('%d.%m.%Y')
         prods = grp['Product'].unique().tolist()
@@ -2581,7 +2597,7 @@ Excel satış kayıtlarındaki 874 işlem ve ürün bazlı çekiş frekansları 
 Excel veritabanındaki 44 partnerin fatura tarihleri, küresel haber akışları, jeopolitik kriz senaryoları ve bakanlık duyuruları çapraz sorgulandığında, şirketin 2026 Q4 ve 2027 Q1 döneminde dikkate alması gereken **en kritik operasyonel ve jeopolitik riskler** tespit edilmiştir:
 - **Önemli Finansal & Hukuki Şerh (Irak Gerçeği):** Sirius Pharm (Ürdün/Irak) tek başına cironun %24'ünü oluştursa da, **Irak operasyonunun tüm fatura tahsilatları Ürdün (Amman) ana merkezi üzerinden dövizle peşin / teyitli akreditifle** gerçekleşmektedir. Irak iç bankacılık sistemi veya kambiyo kısıtlamaları ZEUS için hiçbir tahsilat riski teşkil etmemektedir ($0 temerrüt riski). Buradaki tek operasyonel izleme konusu karayolu sınır transit süreleridir.
 - **Jeopolitik Gerilim & Bölgesel Savaş İhtimali:** Orta Doğu'daki askeri tırmanma, hava sahası geçici kapanmaları ve Kızıldeniz deniz yolu sigorta primlerindeki artış; tıbbi cihaz ve sarfların zamanında ulaştırılması için alternatif **hava kargo köprüsünü (Turkish Cargo / Royal Jordanian)** zorunlu kılmaktadır.
-- **BAE Distribütör Boşluğu & Sellco Atıl Cihazları:** BAE'de sözleşmeli distribütör bulunmamakta; Sellco 2026'da sarf almamıştır ($0). 28 kliniklik BAE pazarı kurumsal distribütör beklemektedir.
+- **BAE Distribütör Boşluğu & Sellco Atıl Cihazı:** BAE'de sözleşmeli distribütör bulunmamakta; Sellco 2026'da sarf almamıştır ($0). Faturada 2 cihaz kesilmiş ancak LIR iade belgesiyle Sellco'da net 1 kurulu cihaz kalmıştır. 28 kliniklik BAE pazarı kurumsal distribütör beklemektedir.
 - **Cihaz Sipariş Dalgalanması & Tedarik-Tahsilat Uçurumu:** Cironun %58'i sermaye ekipmanı satışlarından gelmekte olup hammaddeye peşin avans ödenirken 45-60 günlük vade aralıkları işletme sermayesi planlaması gerektirmektedir.
 
 ---
@@ -2592,7 +2608,7 @@ Excel veritabanındaki 44 partnerin fatura tarihleri, küresel haber akışları
 | :-: | :--- | :-: | :-: | :--- |
 | **1** | **Orta Doğu Lojistik Transit Koridoru (Sirius & ITL) [Tahsilat Riski: $0 - Jordan Garantili]** | 🟡 **Orta (Yalnızca Lojistik)** | **$15,000 / Ay (Sadece Transit Süresi)** | **SAHA VE FİNANS GERÇEĞİ:** Sirius Pharm (Ürdün/Irak) cironun %24'ünü oluşturmaktadır. Ancak Irak kliniklerinin ödemeleri doğrudan Ürdün (Amman) regüle bankacılık sistemi (Central Bank of Jordan & Arab Bank SWIFT) üzerinden peşin / akreditifli olarak tahsil edilmektedir. Dolayısıyla Irak içi bankacılık sistemi veya para transferi riski ZEUS için SIFIRDIR. Tek operasyonel boyut Habur-İbrahim Halil ve Trebil-Karameh karayolu TIR geçiş süreleridir (6-9 gün). |
 | **2** | **Bölgesel Jeopolitik Gerilim, Savaş Riski & Hava Sahası / Lojistik Tıkanması (Kızıldeniz & Körfez)** | 🔴 **Kritik (Jeopolitik Alarm)** | **$65,000 / Çeyrek (Navlun Primi & Gecikme)** | Bölgesel askeri çatışmaların tırmanması durumunda hava sahalarının geçici kısıtlanması, Kızıldeniz deniz konteyner sigorta primlerinin fahiş artması (%300) ve sınır kapılarında güvenlik teyakkuzu. Tıbbi sarfların (soğuk zincir IVF medyumları ve elektro dishler) kliniklere ulaştırılmasında karayolu gecikmelerine karşı Turkish Cargo direkt medikal hava köprüsü devrededir. |
-| **3** | **BAE Distribütör Boşluğu & Sellco Sarf Durması** | 🟠 **Yüksek** | **$25,000 Ciro Kaybı** | BAE'de sözleşmeli distribütör yoktur. Sellco sözleşmesiz spot müşteridir ve 2026'da $0 sarf çekmiştir. 4 kurulu cihaz atıl durmakta; 28 kliniklik BAE pazarı sahipsiz kalmaktadır. |
+| **3** | **BAE Distribütör Boşluğu & Sellco Sarf Durması** | 🟠 **Yüksek** | **$25,000 Ciro Kaybı** | BAE'de sözleşmeli distribütör yoktur. Sellco sözleşmesiz spot müşteridir ve 2026'da $0 sarf çekmiştir. 1 kurulu cihaz atıl durmakta (faturada 2 cihaz kesilmiş, LIR iadesiyle net 1 birim teslim edilmiştir); 28 kliniklik BAE pazarı sahipsiz kalmaktadır. |
 | **4** | **Cihaz Sipariş Dalgalanması & Vade Uçurumu** | 🟡 **Orta-Yüksek** | **$40,000 - $60,000 İşletme Sermayesi Açığı** | Cihaz satışları parti partidir (lumpy). Bileşen tedarikçilerine avans ödenirken, distribütör vadeleri 60 güne sarktığında nakit akışında geçici açıklar meydana gelmektedir. |
 
 > **👨‍⚕️ Finans Direktörü & Hukuk Müşaviri Uzman Görüşü (Irak & Bölge Gerçeği):**  
@@ -3730,13 +3746,13 @@ ZEUS_CLINICAL_DEVICE_PORTFOLIO = {
         'name': 'ZEUS Pulse Stimulator (ZPS 26 / ZPS24-001)',
         'category': 'Elektroporasyon, Yapay Oosit Aktivasyonu (AOA) ve Hücre Füzyon Cihazı',
         'icon': '⚡',
-        'tagline': 'Piezoelektrik Fizyolojik Kalsiyum Dalgaları ile Kontrollü Oosit Aktivasyonu (AOA)',
+        'tagline': 'Piezoelektrik Fizyolojik Kalsiyum Dalgaları ile Kontrollü Oosit Aktivasyonu (AOA) & 1 Yıl Raf Ömürlü Liyofilize Solüsyon Teknolojisi',
         'manual_model': 'ZEUS Pulse Stimulator ZPS 26 / ZPS24-001 (GenSa Sağlık / ZEUS Bioscience)',
         'catalog_codes': {
             'main_unit': 'ZPS24-001 (ZEUS Pulse Stimulator Ana Konsol)',
             'electro_dish': 'ZPS13-002 (Steril 4 Hücre Havuzlu Metal Elektrotlu Petri)',
             'dish_fastener': 'ZPS13-006 (Stereomikroskop Tablası Sabitleyici Termal Blok)',
-            'electroliquid': 'ZPS26-003 (ZEUS Electroliquid İzo-ozmotik Kalsiyum Aktivasyon Solüsyonu / Tozu)'
+            'electroliquid': 'ZPS26-003 (ZEUS Electroliquid Powder - Liyofilize Toz Formül / 1 Yıl Kuru Raf Ömrü)'
         },
         'specs': {
             'voltage': '24V / 3A DC Stored-Energy Power Architecture (Şehir şebeke dalgalanmalarından %100 izole sabit deşarj)',
@@ -3744,12 +3760,13 @@ ZEUS_CLINICAL_DEVICE_PORTFOLIO = {
             'modes': 'Dual-Mode Stimülasyon: DC Modu (70 µs mikro-darbe) & AC/DC Modu (5 sn AC + 70 µs DC ayarlanabilir)',
             'dimensions': '140 x 240 x 190 mm | Ağırlık: 3.425 g (Laminar kabin veya stereo tabla yanı kompakt form)',
             'safety': 'Depolanmış kondansatör akımı ile sabit voltaj hassasiyeti; oosit lizis oranı <%1.0',
-            'certification': 'CE İşareti, MDR & ISO 13485 Uyumlu, T.C. Ticaret Bakanlığı 89252994-401.01.05 Satış İzni, TİTCK ÜTS Kayıtlı'
+            'certification': 'CE İşareti, MDR & ISO 13485 Uyumlu, T.C. Ticaret Bakanlığı 89252994-401.01.05 Satış İzni, TİTCK ÜTS Kayıtlı',
+            'shelf_life_breakthrough': 'Liyofilize Toz Formülü (Mart 2026 İtibarıyla): Çözülmemiş kuru toz 1 YIL (12 Ay) stabil raf ömrü (+2°C / +25°C); sulandırıldıktan sonra 2 ay kullanım ömrü. (Eski sıvı solüsyonların 2 aylık bozulma kısıtı ve soğuk zincir riski tamamen aşılmıştır)'
         },
         'consumables': [
             'ZPS13-002 ZEUS Electro Dish: 4 ayrı hücre havuzlu (Pool 1-4), platin/metal elektrotlu steril tek kullanımlık petri (1x1, 1x2)',
             'ZPS13-006 ZEUS Dish Fastener: Mikroskop tablasına sabitleyici U-şekilli metal termal blok',
-            'ZPS26-003 ZEUS Electroliquid Powder/Solution: Mannitol, MgSO4, CaCl2, HSA ve HEPES içeren steril izotonik elektrolit (+2°C / +8°C)',
+            'ZPS26-003 ZEUS Electroliquid Powder (Liyofilize Toz Formül): Mannitol, MgSO4, CaCl2, HSA ve HEPES içeren steril liyofilize toz. Çözülmediği sürece 1 YIL (12 ay) raf ömrüne sahiptir; sulandırıldıktan sonra 2 ay boyunca aktif kullanılır. Uluslararası nakliye ve yıllık/yarı-yıllık toplu sarf siparişleri (MoQ) için soğuk zincir riskini sıfırlar.',
             'Tıbbi Sınıf Krokodil Elektrot Kablosu, DC Güç Adaptörü ve Alüminyum Koruyucu Taşıma Çantası'
         ],
         'clinical_purpose': (
@@ -4255,17 +4272,19 @@ def get_default_distributor_quotas():
             'clinics': 28,
             'cycles': '16,000 Siklus / Yıl',
             'customs': '%5.0 (MoHAP Tıbbi Cihaz Kaydı)',
-            'installed_devices': 4,
-            'historical_summary': '2025: 4 Cihaz, 48 Sarf ($23.2K) | 2026: 0 Cihaz, 0 Sarf ($0)',
-            'status_diagnosis': '⚠️ SÖZLEŞMESİZ SPOT MÜŞTERİ (Atıl Cihaz Tehlikesi)',
-            'ai_rationale': 'Sellco resmi distribütör değildir; 2025 yılında 4 cihaz almış spot kurumsal alıcıdır. 2026 yılında hiçbir sarf alımı yapmamıştır ($0). BAE\'de 28 klinik bulunmakta olup sahipsizdir. Sellco\'daki 4 cihazın aktivasyonu için 30 kutuluk özel indirimli refill sarf paketi ($2,850) teklif edilmeli, eşzamanlı olarak BAE geneli için resmi yetkili distribütör (Leader / Al Zahrawi) atanmalıdır.',
+            'installed_devices': 1,
+            'historical_summary': '2025: 1 Cihaz ($19.0K net fatura - Faturada 2 cihaz kesilmiş, LIR2025000000001 iade irsaliyesi ile net 1 aktif ünite teslim edilmiştir), 36 Sarf ($4.18K) | 2026: 0 Cihaz, 0 Sarf ($0)',
+            'status_diagnosis': '⚠️ SÖZLEŞMESİZ SPOT MÜŞTERİ (1 Atıl Cihaz & Liyofilize Refill Fırsatı)',
+            'ai_rationale': 'Sellco resmi distribütör değildir; 2025 yılında 1 cihaz almış spot kurumsal alıcıdır (Fatura kaydında 2 cihaz kesilmiş, LIR2025000000001 iade irsaliyesi ile net 1 kurulu cihaza bağlanmıştır). 2026 yılında hiçbir sarf alımı yapmamıştır ($0). BAE\'de 28 lisanslı klinik ve 16,000 siklus sahipsiz durumdadır. Mart 2026 itibarıyla başlayan YENİ 1 YIL RAF ÖMÜRLÜ LİYOFİLİZE TOZ FORMÜLÜ sayesinde Sellco\'ya elindeki 1 kurulu Piezo için 25 kutuluk özel indirimli refill sarf paketi ($2,450) teklif edilmelidir (2 aylık bozulma korkusu kalktığından ikna şansı yüksektir). Eşzamanlı olarak BAE geneli için BioPSafe (ZBB25-001) PGT platformu ve RI Witness RFID chiplerini sıfırlayan Mismatch Blocker (ZMB-7T) ile yetkili distribütör (Leader Healthcare / Al Zahrawi) atanmalıdır.',
+            'recommended_devices': ['🧬 Black-Box BioPSafe (ZBB25-001)', '🛡️ Mismatch Blocker (ZMB-7T)', '❄️ Smart Cryo-Tools (ZCT25)', '⚡ ZEUS Pulse Stimulator (ZPS 26)'],
+            'device_rationale': 'BAE kliniklerinde (Fakih IVF Dubai, Bourn Hall) yüksek PGT-A oranı için 13 IR sensörlü BioPSafe; RFID maliyetini sıfırlayan coin-based Mismatch Blocker; 4X tank kapasite tasarrufu için Smart Cryo-Tools.',
             'ai_target_devices': 0,
-            'ai_target_consumables': 30,
-            'ai_target_revenue': 2850.0,
-            'user_comment': 'Sellco\'ya elindeki 4 cihaz için özel konsinye/indirimli sarf refill teklifi gönderilecek. BAE geneli için yeni distribütör ataması süreci başlatıldı.',
+            'ai_target_consumables': 25,
+            'ai_target_revenue': 2450.0,
+            'user_comment': 'Sellco\'ya elindeki 1 kurulu Piezo cihazı için 1 yıl raf ömürlü liyofilize toz solüsyon içeren özel sarf refill teklifi gönderildi. BAE pazarının geneli için Leader Healthcare / Al Zahrawi ile BioPSafe ve Mismatch Blocker odaklı yetkili distribütörlük şartnamesi hazırlanıyor.',
             'approved_devices': 0,
-            'approved_consumables': 30,
-            'approved_revenue': 2850.0,
+            'approved_consumables': 25,
+            'approved_revenue': 2450.0,
             'enforcement_clause': 'Spot müşteridir; münhasırlığı yoktur.',
             'status': 'Onaylandı & İcrada',
             'target_year': '2027'
@@ -4312,17 +4331,17 @@ def get_default_strategic_plans():
         },
         'sellco_uae': {
             'alert_id': 'sellco_uae',
-            'title': 'BAE Pazarında Distribütör Boşluğu & Sözleşmesiz Müşteri Durumu',
+            'title': 'BAE Pazarında Distribütör Boşluğu & Sözleşmesiz Müşteri Durumu (1 Kurulu Cihaz & Liyofilize İkmal)',
             'badge': 'BÖLGESEL FIRSAT',
             'badge_color': '#FF9800',
-            'evidence': "SELLCO TRADING INTL (BAE) bir distribütör olmayıp, sözleşmesiz spot bir ticari müşteridir. 2025'te 4 cihaz ($23,180) almış, aralarında herhangi bir distribütörlük veya tedarik sözleşmesi bulunmamaktadır. 2026 yılında ise sarf siparişi vermemiştir ($0). Şu anda BAE'de resmi yetkili distribütör bulunmamaktadır.",
-            'ai_recommendation': "BAE'deki 28 lisanslı klinik ve 16,000 siklusluk zengin tüp bebek pazarına hakim olmak için, ülke geneline münhasır kurumsal bir distribütör (Leader Healthcare / Al Zahrawi Medikal) atanmalıdır. Sellco'nun elindeki 4 Piezo cihazı için ise spot doğrudan kurumsal sarf teklifi iletilmelidir.",
-            'user_comment': "BAE pazarında tek bir spot müşteriye bağlı kalınamaz. Dubai'de faaliyet gösteren Leader Healthcare ve Al Zahrawi ile distribütörlük görüşmeleri başlatıldı. Sellco'ya ise 4 cihazı için konsinye sarf teklifi verildi.",
-            'plan_type': 'Ülke Geneli Münhasır Distribütör Ataması & Spot Sarf Teklifi',
+            'evidence': "SELLCO TRADING INTL (BAE) bir distribütör olmayıp, sözleşmesiz spot bir ticari müşteridir. 2025'te fatura kaydıyla 1 kurulu Piezo cihazı ($19,000) ve sarf almıştır (faturada 2 cihaz kesilmiş, LIR2025000000001 iade irsaliyesi ile net 1 kurulu üniteye bağlanmıştır). 2026 yılında ise sarf siparişi vermemiştir ($0). Şu anda BAE'de resmi yetkili distribütör bulunmamaktadır.",
+            'ai_recommendation': "1) Sellco'ya elindeki 1 kurulu Piezo cihazı için Mart 2026'da başlayan YENİ 1 YIL RAF ÖMÜRLÜ LİYOFİLİZE TOZ (Powder) solüsyonu içeren 25 kutuluk Refill paketi sunulmalıdır (2 aylık bozulma korkusu tamamen kalkmıştır). 2) BAE'deki 28 lisanslı klinik için BioPSafe (ZBB25-001) PGT platformu, RI Witness çiplerini sıfırlayan Mismatch Blocker (ZMB-7T) ve Smart Cryo-Tools (ZCT25) cihazları ile münhasır distribütör (Leader Healthcare / Al Zahrawi) atanmalıdır.",
+            'user_comment': "Sellco'ya 1 kurulu cihazı için 1 yıl raf ömürlü liyofilize toz solüsyon içeren sarf teklifi iletildi (2 aylık bozulma endişesi giderildi). BAE geneli için Leader Healthcare ve Al Zahrawi ile BioPSafe ve Mismatch Blocker odaklı distribütörlük şartnamesi hazırlanıyor.",
+            'plan_type': 'Liyofilize Sarf Paketi & BioPSafe/Mismatch Blocker Distribütörlük Ataması',
             'responsible_unit': 'Bölge Ticari Direktörlüğü & Hukuk Kurulu',
             'priority': 'P1 - Acil (1-15 Gün)',
             'target_date': 'Kasım 2026',
-            'action_steps': "1. BAE geneli için Leader Healthcare veya Al Zahrawi ile MoHAP ruhsatlı münhasır distribütörlük şartnamesinin hazırlanması.\n2. Sellco Trading'e elindeki 4 Piezo cihazı için avantajlı '25 Kutu Refill Sarf Paketi' teklifinin iletilmesi.\n3. Dubai ve Abu Dabi'deki 28 IVF kliniğine doğrudan tanıtım ve numune organizasyonu düzenlenmesi.",
+            'action_steps': "1. BAE geneli için Leader Healthcare veya Al Zahrawi ile BioPSafe ve Mismatch Blocker odaklı MoHAP ruhsatlı distribütörlük şartnamesinin hazırlanması.\n2. Sellco Trading'e 1 kurulu Piezo cihazı için yeni 1 yıl raf ömürlü liyofilize toz solüsyonlu avantajlı '25 Kutu Refill Sarf Paketi' teklifinin iletilmesi.\n3. Dubai ve Abu Dabi'deki 28 IVF kliniğine BioPSafe ve Smart Cryo-Tools numune/demo organizasyonu düzenlenmesi.",
             'roi_projection': "BAE'deki 28 lisanslı merkezden 8'ine nüfuz edilerek yıllık +$58,000 USD yeni pazar hacmi",
             'feasibility_score': '%89 (Yüksek Stratejik Öncelik)',
             'status': 'Onaylandı & İcrada',
@@ -4330,13 +4349,13 @@ def get_default_strategic_plans():
         },
         'dish_liquid_ratio': {
             'alert_id': 'dish_liquid_ratio',
-            'title': 'Kritik Ürün Rasyosu & Ek Gelir Fırsatı: Electro Dish vs Liquid (2.1:1)',
+            'title': 'Kritik Ürün Rasyosu & Liyofilize Çözüm Fırsatı: Electro Dish vs Liquid (2.1:1)',
             'badge': 'EK GELİR FIRSATI',
             'badge_color': '#00F5FF',
-            'evidence': "Fatura veri tabanında 2,097 kutu Electro Dish satılmasına karşın yalnızca 997 kutu Liquid Solution satılmıştır. Klinikler solüsyonu seyreltmekte veya muadil kullanmaktadır.",
-            'ai_recommendation': "10 Kutu Dish Alana 2 Şişe Liquid Solution %50 İndirimli resmi bundle promosyonu ile sarf nakit akışı kısa vadede doğrudan +$18,500 USD artırılmalıdır.",
-            'user_comment': "Laboratuvarların dish başına solüsyon tüketim rasyosu incelendi. Seyreltme uygulamasının fertilizasyon başarısını düşürdüğü klinik bülteniyle partnerlere duyurulacak ve bundle avantajı devreye alınacak.",
-            'plan_type': 'Resmi Bundle Promosyonu (10 Dish Alana 2 Sıvı Solüsyon %50 İndirim)',
+            'evidence': "Fatura veri tabanında 2,097 kutu Electro Dish satılmasına karşın yalnızca 997 kutu Liquid Solution satılmıştır. Geçmişte sıvı (liquid) solüsyonun raf ömrü yalnızca 2 ay olduğundan (+2°C / +8°C soğuk zincir riski), klinikler ve distribütörler bozulma korkusuyla Dish başına daha az solüsyon sipariş etmiş ve tüketim farkı oluşmuştur.",
+            'ai_recommendation': "Mart 2026 itibarıyla kullanıma sunulan YENİ LİYOFİLİZE TOZ (POWDER) FORMÜLÜ çözülmediği sürece 1 YIL (12 AY) RAF ÖMRÜNE sahiptir. Bu teknolojik devrim sayesinde klinikler artık bozulma riski olmadan Dish ile 1:1 oranında yıllık/yarı-yıllık liyofilize solüsyon stoğu çekebilir. 10 Kutu Dish Alana 2 Kutu Liyofilize Solüsyon %50 İndirimli resmi bundle promosyonu ile sarf nakit akışı kısa vadede doğrudan +$18,500 USD artırılmalıdır.",
+            'user_comment': "Laboratuvarların dish başına solüsyon tüketim rasyosu incelendi. Yeni 1 yıl raf ömürlü liyofilize toz formülü duyurulduktan sonra bozulma korkusu bitmiştir; 1:1 sipariş rasyosu için bundle avantajı devreye alınmıştır.",
+            'plan_type': '1 Yıl Raf Ömürlü Liyofilize Toz Bundle Promosyonu (10 Dish + 2 Toz Solüsyon)',
             'responsible_unit': 'Pazarlama & Tedarik Masası',
             'priority': 'P2 - Yüksek (30 Gün)',
             'target_date': 'Kasım-Aralık 2026',
@@ -4377,14 +4396,14 @@ def get_default_regional_expert_assessments():
             'opportunity_val': 65000,
             'color': '#F0BC57',
             'stats': '279 Klinik | 168,000 Siklus | Mevcut Ciro: $363.8K (Katar, Ürdün-Irak, BAE)',
-            'ai_weakness': "Kurulu 18 Piezo'da sarf çekiş düşüklüğü ve Sellco BAE kontrat sonu (20 Kasım).",
-            'ai_action': "Acil BAE sözleşme revizyonu ve Mısır özel tüp bebek zincirlerine açılım.",
-            'recommended_devices': ['🛡️ Mismatch Blocker (ZMB-7T)', '⚡ ZEUS Pulse Stimulator (ZPS 26)', '🧬 Black-Box BioPSafe (ZBB25-001)'],
-            'device_rationale': "Bölgedeki lüks klinik zincirlerinde (Fakih IVF, KFMC) RI Witness RFID maliyetini (%75) kırmak için Mismatch Blocker; kurulu 18 piezo tabanında Electro Dish sarfı; PGT doğrulaması için BioPSafe.",
+            'ai_weakness': "Kurulu 18 Piezo'da sarf çekiş düşüklüğü, Sellco BAE'de 1 kurulu ünitenin sarf durması ve resmi distribütör boşluğu.",
+            'ai_action': "Sellco 1 kurulu cihazı için liyofilize toz sarf paketi; BAE geneline BioPSafe & Mismatch Blocker yetkili bayisi atanması.",
+            'recommended_devices': ['🛡️ Mismatch Blocker (ZMB-7T)', '🧬 Black-Box BioPSafe (ZBB25-001)', '❄️ Smart Cryo-Tools (ZCT25)', '⚡ ZEUS Pulse Stimulator (ZPS 26)'],
+            'device_rationale': "BAE ve Körfez'deki lüks klinik zincirlerinde (Fakih IVF Dubai, KFMC Riyad) RI Witness RFID maliyetini (%75) kırmak için coin tabanlı Mismatch Blocker; PGT-A biyopsi güvenliği için 13 IR sensörlü BioPSafe; dondurma tanklarında 4X optimizasyon için Smart Cryo-Tools; 1 yıl raf ömürlü liyofilize solüsyonlu ZPS 26.",
             'expert_title': 'MENA Bölge Direktörü & Klinik Koordinatörü',
-            'expert_opinion': "Sellco BAE ile 20 Kasım kontrat yenilemesinde yıllık minimum 800 kutu sarf taahhüdü (MoQ) zorunlu tutulmalı; aksi halde Dubai Healthcare City klinikleri doğrudan genel merkeze bağlanmalı. Kuveyt ATC ve Suudi AMS merkezlerindeki kurulu Piezo cihazlarında embriyolog eğitim eksiği var; yerinde klinik çalıştay düzenlenirse sarf tüketimi 2 ayda %40 artar.",
-            'field_moves': "1) Sellco BAE'ye asgari 800 kutu MoQ şartlı revize distribütörlük sözleşmesi yollandı. 2) Kuveyt ATC ve Suudi Arabistan'daki 5 merkeze yerinde klinik aplikasyon takvimi çıkarıldı. 3) Amman üzerinden Bağdat ve Erbil merkezlerine hava kargo lojistik hattı güvenceye alındı.",
-            'user_comment': "Sellco yönetimine revize sözleşme taslağı iletildi. Kuveyt ATC ve Suudi AMS kliniklerine Aralık ayı için yerinde embriyolog aplikasyon eğitimi takvimlendi.",
+            'expert_opinion': "Mart 2026 itibarıyla liyofilize toz solüsyona geçişimiz sayesinde raf ömrü 1 YILA çıkmıştır. Bu sayede Sellco BAE, Kuveyt ATC, Suudi AMS ve Ürdün/Irak Sirius için 2 aylık soğuk zincir bozulma korkusu tamamen bitmiştir. Sellco'ya 1 kurulu cihazı için liyofilize sarf teklifi sunuldu; BAE'nin kalan 28 kliniği için BioPSafe ve Mismatch Blocker ile Leader Healthcare yetkilendirilmelidir.",
+            'field_moves': "1) Sellco BAE'ye 1 yıl raf ömürlü liyofilize toz solüsyon içeren 25 kutuluk Refill paketi iletildi. 2) Kuveyt ATC ve Suudi Arabistan'daki 5 merkeze yerinde klinik aplikasyon takvimi çıkarıldı. 3) Amman üzerinden Bağdat ve Erbil merkezlerine hava kargo lojistik hattı güvenceye alındı.",
+            'user_comment': "Sellco yönetimine liyofilize sarf teklifi iletildi. Kuveyt ATC ve Suudi AMS kliniklerine Aralık ayı için yerinde embriyolog aplikasyon eğitimi takvimlendi. BAE geneli için distribütör görüşmeleri sürüyor.",
             'consensus_status': 'Tam Konsensüs (Uyumlu)',
             'status': 'Onaylandı & İcrada',
             'decision_priority': 'P1 - Acil',
@@ -6157,7 +6176,7 @@ if nav_selection == "Executive Dashboard":
             {"Ülke / Bölge": "🇵🇸 Filistin (CMC)", "Kurum Tipi": "Yetkili Distribütör", "🔬 Cihaz (Hardware)": "5 Cihaz ($38.0K)", "🧪 Sarf (Consumables)": "115 Kutu ($8.7K)", "Toplam Hasılat": "$46,700 USD", "Statü": "Yetkili Distribütör"},
             {"Ülke / Bölge": "🇸🇦 Suudi Arabistan (AMS)", "Kurum Tipi": "Yetkili Distribütör", "🔬 Cihaz (Hardware)": "3 Cihaz ($22.0K)", "🧪 Sarf (Consumables)": "92 Kutu ($7.5K)", "Toplam Hasılat": "$29,500 USD", "Statü": "Yetkili Distribütör (Sarf Düşüş Uyarısı)"},
             {"Ülke / Bölge": "🇰🇼 Kuveyt (ATC)", "Kurum Tipi": "Yetkili Distribütör", "🔬 Cihaz (Hardware)": "3 Cihaz ($25.5K)", "🧪 Sarf (Consumables)": "9 Kutu ($750)", "Toplam Hasılat": "$26,250 USD", "Statü": "Yetkili Distribütör (Atıl Cihaz Uyarısı)"},
-            {"Ülke / Bölge": "🇦🇪 BAE (Sellco Trading)", "Kurum Tipi": "Spot Ticari Müşteri", "🔬 Cihaz (Hardware)": "4 Cihaz ($19.0K)", "🧪 Sarf (Consumables)": "48 Kutu ($4.2K)", "Toplam Hasılat": "$23,180 USD", "Statü": "Spot Kurumsal Alıcı (Münhasırlık Yok)"},
+            {"Ülke / Bölge": "🇦🇪 BAE (Sellco Trading)", "Kurum Tipi": "Spot Ticari Müşteri", "🔬 Cihaz (Hardware)": "1 Cihaz ($19.0K)", "🧪 Sarf (Consumables)": "48 Kutu ($4.2K)", "Toplam Hasılat": "$23,180 USD", "Statü": "Spot Kurumsal Alıcı (Münhasırlık Yok)"},
             {"Ülke / Bölge": "🇦🇱/🇸🇰 Arnavutluk-Slovakya (Stem Gene)", "Kurum Tipi": "3 Doğrudan Klinik", "🔬 Cihaz (Hardware)": "1 Cihaz ($5.0K)", "🧪 Sarf (Consumables)": "120 Kutu ($13.8K)", "Toplam Hasılat": "$18,840 USD", "Statü": "Doğrudan Klinikler Ağı"},
             {"Ülke / Bölge": "🇧🇪 Belçika (Ghent University Hospital)", "Kurum Tipi": "Akademik Hastane", "🔬 Cihaz (Hardware)": "1 Cihaz ($15.9K)", "🧪 Sarf (Consumables)": "2 Kutu ($220)", "Toplam Hasılat": "$16,120 USD", "Statü": "Akademik Referans Merkezi"},
             {"Ülke / Bölge": "🇦🇿 Azerbaycan (Bakü Klinikleri)", "Kurum Tipi": "2 Doğrudan Klinik", "🔬 Cihaz (Hardware)": "0 Cihaz", "🧪 Sarf (Consumables)": "49 Kutu ($4.3K)", "Toplam Hasılat": "$4,254 USD", "Statü": "Kafkasya Doğrudan Müşteri"},
@@ -6422,7 +6441,7 @@ if nav_selection == "Executive Dashboard":
                     c_ptype3 = st.selectbox("Eylem Stratejisi Türü:", [
                         "Ülke Geneli Münhasır Distribütör Ataması & Spot Sarf Teklifi",
                         "Leader Healthcare / Al Zahrawi İle Resmi Distribütörlük İhalesi",
-                        "Sellco 4 Ünitesi İçin Doğrudan Konsinye Sarf Tedariki",
+                        "Sellco 1 Ünitesi İçin Doğrudan Konsinye Sarf Tedariki",
                         "Dubai Healthcare City Serbest Bölge Ofisi & Doğrudan Klinik Satışı"
                     ], index=0, key="c_ptype_sellco")
                     c_resp3 = st.selectbox("Sorumlu İcra Birimi:", [
@@ -7040,38 +7059,47 @@ Immediate Resolution: ZEUS Bioscience is actively incorporating this feedback in
         if show_red:
             render_ai_action_card(
                 case_id="sellco_uae",
-                title_html='<strong style="color:#FF8A96;font-size:15px;">🔴 SELLCO TRADING INTL — Birleşik Arap Emirlikleri (Spot Müşteri / Distribütör Değildir)</strong>',
-                badge_html='<span class="chip chip-wn">SÖZLEŞMESİZ TİCARİ MÜŞTERİ (SPOT ALICI)</span>',
-                fact_html='<b>Excel Fatura Kanıtı:</b> 2024: $0.00 | 2025: $23,180.00 (4 Piezo Pulse Stimulator = $19,000; 36 Electro Dish = $3,740; 12 Liquid = $440) | <b>2026 YTD: $0.00 (-%100.0)</b><br><b>Kurulu Cihaz:</b> 4 Ünite (BAE) | <b>Hukuki Statü:</b> Sözleşmesiz Spot Kurumsal Alıcı (Yetkili Distribütör Değildir, Aktif Sözleşmesi Yoktur)',
-                diag_text="Sellco, BAE pazarında 2025 yılında doğrudan 4 Piezo stimülatör cihazı ($19,000) ve $4,180 sarf malzemesi satın almış doğrudan ticari bir müşteridir (distribütör değildir ve ZEUS ile herhangi bir tedarik veya dağıtım sözleşmesi bulunmamaktadır). 2026 yılında ise yeni bir sarf siparişi verilmemiştir. Sellco'nun herhangi bir sözleşmesi veya münhasırlığı bulunmadığından ZEUS, BAE'deki 28 lisanslı kliniğe doğrudan satış yapmakta veya pazar için resmi bir distribütör (Leader Healthcare veya Al Zahrawi) atamakta tamamen serbesttir.",
+                title_html='<strong style="color:#FF8A96;font-size:15px;">🔴 SELLCO TRADING INTL — Birleşik Arap Emirlikleri (Spot Müşteri / 1 Kurulu Cihaz & Liyofilize Refill)</strong>',
+                badge_html='<span class="chip chip-wn">SÖZLEŞMESİZ TİCARİ MÜŞTERİ (1 KURULU CİHAZ)</span>',
+                fact_html='<b>Excel Fatura & İade Denetimi:</b> 2024: $0.00 | 2025: $23,180.00 (Faturada 2 Piezo kesilmiş, LIR2025000000001 iade irsaliyesi ile net 1 Kurulu Cihaz = $19,000; 36 Electro Dish = $3,740; 12 Liquid = $440) | <b>2026 YTD: $0.00 (-%100.0)</b><br><b>Aktif Kurulu Donanım:</b> 1 Ünite (BAE) | <b>Liyofilize Toz Formülü:</b> 1 Yıl Raf Ömrü (SKT Bariyeri Kalktı) | <b>Hukuki Statü:</b> Sözleşmesiz Spot Kurumsal Alıcı (Münhasırlığı Yoktur)',
+                diag_text="Sellco, BAE pazarında 2025 yılında doğrudan 1 Piezo stimülatör cihazı ($19,000 fatura kaydı, LIR2025000000001 iade düzenlemesiyle net 1 aktif ünite) ve $4,180 sarf malzemesi satın almış doğrudan ticari bir müşteridir (yetkili distribütör değildir). 2026 yılında ise yeni bir sarf siparişi verilmemiştir. Geçmişte sıvı solüsyonların 2 aylık kısa raf ömrü ve soğuk zincir bozulma korkusu sipariş çekişini frenlemekteydi. Mart 2026 itibarıyla kullanıma sunulan YENİ 1 YIL RAF ÖMÜRLÜ LİYOFİLİZE TOZ (POWDER) FORMÜLÜ bu engeli tamamen ortadan kaldırmıştır. Sellco'nun herhangi bir sözleşmesi veya münhasırlığı bulunmadığından ZEUS, BAE'deki 28 lisanslı kliniğe doğrudan satış yapmakta ve BioPSafe, Mismatch Blocker ile resmi distribütör atamakta serbesttir.",
                 ai_action_steps=[
-                    "<b>Refill Sarf Paketi Teklifi (Spot Müşteriye Özel):</b> Sellco'ya elindeki 4 Piezo cihazını aktif tutabilmesi için özel 'Consumable Refill Pack' (25 Kutu Electro Dish + Solüsyon) avantajlı doğrudan kurumsal müşteri fiyatıyla teklif edilmeli.",
-                    "<b>Klinik ve Cihaz Durum Tespiti:</b> Sellco'nun 2025'te satın aldığı 4 Piezo cihazının kurulu olduğu klinikler tespit edilerek, laboratuvar sarf ihtiyaçları doğrudan takip edilmeli.",
-                    "<b>Resmi BAE Distribütör Ataması (Açık Beyaz Boşluk):</b> BAE pazarında herhangi bir sözleşme veya distribütör engeli bulunmadığından, ülkedeki 28 lisanslı klinik ve 16,000 siklusun tamamını kapsayacak yetkili bir distribütör (Leader Healthcare / Al Zahrawi) atanarak ülke geneline açılınmalı."
+                    "<b>Liyofilize 1 Yıl Raf Ömürlü Refill Sarf Paketi Teklifi:</b> Sellco'ya elindeki 1 Piezo cihazını aktif tutabilmesi için yeni 1 yıl raf ömürlü liyofilize toz formülüyle avantajlı 'Consumable Refill Pack' (25 Kutu Electro Dish + Liyofilize Solüsyon) teklif edilmeli (2 ayda bozulma riski tamamen kalkmıştır).",
+                    "<b>BAE Pazarında Üst Düzey Cihaz Konumlandırması (BioPSafe, Mismatch Blocker & Cryo-Tools):</b> BAE kliniklerinde yüksek PGT-A biyopsi oranı için 13 IR sensörlü Black-Box BioPSafe (ZBB25-001); pahalı RI Witness RFID çiplerini sıfırlayan dijital QR coin sistemli Mismatch Blocker (ZMB-7T); dondurma tanklarında 4X optimizasyon için Smart Cryo-Tools (ZCT25) sunulmalı.",
+                    "<b>Klinik ve Cihaz Durum Tespiti:</b> Sellco'nun 2025'te satın aldığı 1 Piezo cihazının kurulu olduğu Dubai/Abu Dabi kliniği tespit edilerek, laboratuvar protokol ihtiyaçları doğrudan takip edilmeli.",
+                    "<b>Resmi BAE Distribütör Ataması (Açık Beyaz Boşluk):</b> BAE pazarında herhangi bir sözleşme veya distribütör engeli bulunmadığından, ülkedeki 28 lisanslı klinik ve 16,000 siklusun tamamını kapsayacak yetkili bir distribütör (Leader Healthcare / Al Zahrawi) atanmalıdır."
                 ],
-                letter_title="Sellco UAE Doğrudan Müşteri Sarf Paketi & Teknik Destek Teklifi",
+                letter_title="Sellco UAE — Liyofilize Sarf Paketi & İleri IVF Cihaz Portföyü Teklifi",
                 letter_body="""To: Management Board, Sellco Trading Intl, Dubai, United Arab Emirates
-Subject: Clinical Follow-up & Dedicated Consumable Refill Pack Offer for 4 Installed ZEUS Systems
+Subject: Clinical Follow-up, 1-Year Shelf-Life Lyophilized Consumable Refill Pack & Advanced Device Introduction
 
 Dear Sellco Management,
 
-We are writing regarding the 4 ZEUS Piezo Pulse Stimulator units and paired consumables acquired by Sellco in 2025 ($23,180.00 total) for operations in the United Arab Emirates.
+We are writing regarding the ZEUS Piezo Pulse Stimulator unit and paired consumables acquired by Sellco in 2025 for operations in the United Arab Emirates.
 
-According to our audited sales logs, no consumable re-orders have been placed during FY2026. To ensure the clinical centers using these systems continue to achieve peak blastocyst activation rates (>85%) without protocol disruptions:
+We are delighted to share a major technological breakthrough that directly addresses laboratory operational convenience:
+As of March 2026, ZEUS Electroliquid is formulated as LYOPHILIZED POWDER (ZPS26-003):
+- Unreconstituted Powder Shelf Life: 1 FULL YEAR (12 Months) in dry powder form (+2°C to +25°C).
+- Reconstituted Shelf Life: 2 Months once dissolved with sterile water.
+This innovation completely eliminates the historical 2-month cold-chain expiration limitation, enabling annual bulk purchasing without the risk of expired media.
 
-1. ZEUS Bioscience is pleased to offer a dedicated "Consumable Refill Pack" (25 boxes ZEUS Electro Dish 1x2 and paired liquid solutions) under preferential direct customer rates.
-2. We offer certified virtual training for your embryology laboratory clients to standardize piezo ICSI stimulation protocols.
-3. Dedicated technical support and voltage calibration assistance for all 4 operational units.
+To reactivate stimulation protocols across your partner clinics in Dubai and Abu Dhabi:
+1. ZEUS Bioscience offers a dedicated "Consumable Refill Pack" (25 boxes ZEUS Electro Dish 1x2 and paired 1-Year Lyophilized Powder Solvents) under preferential direct customer pricing.
+2. Introduction of our cutting-edge 2026 Portfolio:
+   - ZEUS BioPSafe (ZBB25-001): 13-IR-sensor witnessing platform for PGT-A embryo biopsy and PCR tube alignment.
+   - ZEUS Mismatch Blocker (ZMB-7T): Comprehensive 7-terminal electronic witnessing replacing expensive RFID chips with zero-cost QR coins.
+   - Smart Cryo-Tools (ZCT25): 4X tank capacity expansion with barcode-guided cane/goblet retrieval.
+3. Complimentary virtual clinical training for your embryology laboratory clients to standardize piezo ICSI stimulation protocols.
 
-Please let us know your availability this week for a brief call to coordinate shipping.
+Please let us know your availability this week for a brief video conference.
 
 Sincerely,
 ZEUS Bioscience Commercial & Client Management Division""",
                 ai_memo_data={
-                    "financial": "Sellco doğrudan bir müşteri olarak 2025'te $23.2K ciro kazandırmış, 2026'da ise sipariş vermemiştir. 4 cihaz için yıllık ~$15K-$20K sarf potansiyeli mevcuttur.",
-                    "leverage": "Sellco'nun herhangi bir sözleşmesi, distribütörlük veya münhasırlık hakkı yoktur; BAE pazarı tamamen açık beyaz boşluktur. ZEUS hem doğrudan diğer kliniklere satabilir hem de yeni yetkili distribütör atayabilir.",
-                    "clause": "Hukuki Statü: Sözleşmesiz Spot Müşteri (Herhangi bir sözleşme veya münhasırlık bağı yoktur).",
-                    "recovery": "+$25,000 / Yıl (Sellco sarf ikmali + BAE pazarına yeni resmi distribütör atanması ile)"
+                    "financial": "Sellco 2025'te $23.2K ciro kazandırmış (1 kurulu Piezo + sarflar), 2026'da ise sipariş vermemiştir. 1 kurulu cihaz ve BAE pazarındaki 28 klinik için yıllık ~$30K-$50K sarf ve cihaz potansiyeli mevcuttur.",
+                    "leverage": "Sellco'nun herhangi bir distribütörlük sözleşmesi veya münhasırlığı yoktur. Yeni 1 yıl raf ömürlü liyofilize toz solüsyon bozulma endişesini bitirmiştir; ayrıca BAE geneli için Leader Healthcare / Al Zahrawi ile BioPSafe ve Mismatch Blocker temelli yeni distribütör atanabilir.",
+                    "clause": "Hukuki Statü: Sözleşmesiz Spot Müşteri (LIR iade düzenlemesi sonrası net 1 kurulu ünite; münhasırlık bağı yoktur).",
+                    "recovery": "+$35,000 / Yıl (Sellco liyofilize sarf ikmali + BAE geneline BioPSafe ve Mismatch Blocker yayılımı)"
                 }
             )
 
@@ -7469,7 +7497,7 @@ ZEUS Bioscience Scientific Affairs""",
                 <span style="font-size:22px; font-weight:700; color:#FFB800;">{len(dormant_cons)} Kurum</span>
             </div>
             <div style="font-size:12px; color:#CCD7E6; margin-top:8px; line-height:1.45;">
-                <b>Kapsam:</b> 2025'te alıp 2026'da sarf alımı duranlar: Sellco BAE (4 Cihaz), ATC Kuveyt (3 Cihaz), Ferti Med, Akova, Bisan, Seda Erdem, Halil Ruso.
+                <b>Kapsam:</b> 2025'te alıp 2026'da sarf alımı duranlar: Sellco BAE (1 Cihaz), ATC Kuveyt (3 Cihaz), Ferti Med, Akova, Bisan, Seda Erdem, Halil Ruso.
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -8524,7 +8552,7 @@ ZEUS Bioscience Scientific Affairs""",
                     - Kilit Sorunlar: 
                       1) Dish / Liquid Solution oranı 2.1:1 olup solüsyon tüketimi geride kalmaktadır (Bundle ihtiyacı).
                       2) Gen-Sa (4 cihaz, sadece 30 kutu sarf), Kuveyt ATC (3 cihaz, 9 kutu sarf), Acıbadem (2 cihaz, 11 kutu sarf), Medipolitan (2 cihaz, 12 kutu sarf) merkezlerinde embriyolog eğitimi ve sarf çekişi acil müdahale gerektirir.
-                      3) BAE pazarında yetkili distribütör bulunmamaktadır; 2025'te 4 cihaz alan Sellco sözleşmesiz spot bir müşteridir ve 2026'da $0 çekmiştir (BAE distribütörsüzlük ve churn riski).
+                      3) BAE pazarında yetkili distribütör bulunmamaktadır; 2025'te 1 cihaz alan Sellco sözleşmesiz spot bir müşteridir ve 2026'da $0 çekmiştir (BAE distribütörsüzlük ve churn riski).
                       4) Bölgesel strateji sorulduğunda; Asya-Pasifik, Avrupa, Kuzey Amerika, Latin Amerika, MENA ve Afrika olmak üzere 6 küresel bölgenin tamamını kapsayarak somut pazar ve distribütör aksiyonları öner.
                     
                     Raporunu tamamen Türkçe, profesyonel bir tonda, üst yönetime sunulacak 'ZEUS Executive Memorandum' formatında, yönetici özeti, veri odaklı tanı tablosu, taktik aksiyon takvimi ve finansal projeksiyon başlıklarıyla yaz.
@@ -8803,6 +8831,79 @@ elif nav_selection == "Distributors & CRM":
                 disp_inv.columns = ['Fatura Tarihi', 'Fatura No', 'Ürün Adı', 'Grup', 'Adet', 'Birim', 'Tutar (USD)']
                 disp_inv['Tutar (USD)'] = disp_inv['Tutar (USD)'].apply(lambda v: f"${v:,.2f}")
                 st.dataframe(disp_inv, use_container_width=True, hide_index=True)
+                
+                # Special Audit Box for SELLCO TRADING INTL
+                if sel_acc['name'] == 'SELLCO TRADING INTL':
+                    st.markdown("""
+                    <div style="background:rgba(255,184,0,0.08); border-left:4px solid #FFB800; border:1px solid rgba(255,184,0,0.25); border-left-width:4px; padding:12px 16px; border-radius:8px; margin-top:10px; font-size:12px; color:#CCD7E6; line-height:1.55;">
+                        <b style="color:#FFB800; font-size:13px;">🔍 SELLCO TRADING INTL FATURA, İADE VE ENVANTER DENETİM RAPORU:</b><br>
+                        • <b>30.04.2025 (Fatura No: MIKROGEN-08-2025-00000018):</b> 2 Adet Piezo Pulse Stimulator ($19,000.00) faturalandırılmıştır.<br>
+                        • <b>07.05.2025 (İade/Düzenleme Belgesi: MIKROGEN-08-2025-LIR2025000000001):</b> 2 Adet Piezo Pulse Stimulator, 2 Kutu Dish ve 4 Kutu Solüsyon $0.00 bedelle Lİste İade Raporu (LIR) olarak işlem görmüştür.<br>
+                        • <b>Kurulu Aktif Donanım Gerçeği:</b> Fatura ve gümrük iade işlemlerinin ardından Sellco'ya fiilen <b>1 adet Piezo Pulse Stimulator</b> teslim edilmiş olup aktif kurulu cihaz sayısı <b>1 Ünitedir</b>. Düz toplam algoritmasının LIR belgesini satış gibi sayarak 4 cihaz raporlaması düzeltilmiş; kurulu envanter 1 cihaz olarak netleştirilmiştir.<br>
+                        • <b>Liyofilize Solüsyon Avantajı:</b> Mart 2026 itibarıyla başlayan 1 yıl raf ömürlü kuru toz formülü sayesinde Sellco'nun elindeki 1 kurulu Piezo ünitesi için soğuk zincir bozulma korkusu olmadan yıllık sarf siparişi verilebilir.
+                    </div>
+                    """, unsafe_allow_html=True)
+                
+                # Negative Invoices (Returns / Credits) Detection
+                has_neg = (c_invoices_df['Amount (USD)'] < 0).any()
+                if has_neg:
+                    neg_sum = c_invoices_df[c_invoices_df['Amount (USD)'] < 0]['Amount (USD)'].sum()
+                    neg_qty = c_invoices_df[c_invoices_df['Amount (USD)'] < 0]['Quantity'].sum()
+                    st.markdown(f"""
+                    <div style="background:rgba(255,82,82,0.08); border-left:4px solid #FF5252; border:1px solid rgba(255,82,82,0.25); border-left-width:4px; padding:10px 14px; border-radius:8px; margin-top:8px; font-size:12px; color:#FF8A96; line-height:1.5;">
+                        <b>🔄 RESMİ İADE / MAHSUP FATURASI TESPİT EDİLDİ:</b> Bu partnerin cari hesabında <b>{neg_qty} adet ürün iadesi</b> ve toplam <b>${abs(neg_sum):,.2f} USD</b> tutarında iade / ters kayıt mevcuttur. Raporlanan net ciro ve envanter rakamları iadeler eksiksiz düşülerek hesaplanmıştır.
+                    </div>
+                    """, unsafe_allow_html=True)
+
+    # --------------------------------------------------------------------------
+    # GLOBAL RETURNS, LIR VOUCHERS & INVOICE REVERSAL AUDIT DESK
+    # --------------------------------------------------------------------------
+    if raw_sales_df is not None and len(raw_sales_df) > 0:
+        with st.expander("🔍 Tüm Kurumsal İadeler, LIR Evrakları & Fatura Düzeltme Denetim Masası (Global Returns Audit Desk)", expanded=False):
+            st.markdown("##### Şirket Genelindeki Tüm İadeler, LIR İade İrsaliyeleri ve Bedelsiz Sevklerin Denetim Raporu")
+            st.caption("Veri tabanında yer alan tüm eksi bakiyeli iade faturaları, LIR (Lİste İade Raporu) evrakları ve $0 bedelli numune/demo irsaliyeleri şeffaf olarak listelenmiştir.")
+            
+            # Filter all returns and zero-amount dispatches
+            all_neg_df = raw_sales_df[raw_sales_df['Amount (USD)'] < 0]
+            all_lir_df = raw_sales_df[raw_sales_df['Invoice'].str.contains('LIR', case=False, na=False)]
+            all_zero_df = raw_sales_df[(raw_sales_df['Amount (USD)'] == 0) & (~raw_sales_df['Invoice'].str.contains('LIR', case=False, na=False))]
+            powder_df = raw_sales_df[raw_sales_df['Product'].str.contains('POWDER', case=False, na=False)]
+            
+            kpi_ret1, kpi_ret2, kpi_ret3, kpi_ret4 = st.columns(4)
+            kpi_ret1.metric("📉 Negatif İade Satırları", f"{len(all_neg_df)} İşlem", delta=f"-${abs(all_neg_df['Amount (USD)'].sum()):,.2f} Düşüldü", delta_color="inverse")
+            kpi_ret2.metric("🧾 LIR İade İrsaliyeleri", f"{len(all_lir_df)} Kalem", delta="Sellco UAE Gümrük/İade")
+            kpi_ret3.metric("📦 Bedelsiz Demo / İrsaliye", f"{len(all_zero_df)} Kalem", delta="IRS Kodlu Sevkler")
+            kpi_ret4.metric("🧪 Liyofilize Toz Siparişi", f"{len(powder_df)} Kalem", delta="1 Yıl Raf Ömrü (Mart 2026+)")
+            
+            st.markdown("<br>", unsafe_allow_html=True)
+            
+            tab_ret1, tab_ret2, tab_ret3 = st.tabs([
+                "1. Eksi Bakiyeli İade Faturaları (Credit Invoices)",
+                "2. LIR İade İrsaliyeleri (Sellco)",
+                "3. Bedelsiz Cihaz İrsaliyeleri (Demo / Değişim)"
+            ])
+            
+            with tab_ret1:
+                st.markdown("**Negatif Tutarlı / Adetli İadeler (Net Satışlardan Düşülen Kalemler):**")
+                disp_neg = all_neg_df[['Date', 'Invoice', 'Company', 'Product', 'Group', 'Quantity', 'Amount (USD)']].copy()
+                disp_neg.columns = ['Tarih', 'Fatura No', 'Kurum', 'Ürün', 'Grup', 'İade Adedi', 'Düşülen Tutar (USD)']
+                disp_neg['Düşülen Tutar (USD)'] = disp_neg['Düşülen Tutar (USD)'].apply(lambda v: f"${v:,.2f}")
+                st.dataframe(disp_neg, use_container_width=True, hide_index=True)
+                st.caption("ℹ️ Pınar Sağlık (1 cihaz -$8,000 ve sarflar), MLP Sağlık Ulus ve İstanbul Memorial iadeleri genel ciro ve sarf toplamlarında düşülerek hesaplanmıştır.")
+                
+            with tab_ret2:
+                st.markdown("**LIR (Lİste İade Raporu) Evrakları:**")
+                disp_lir = all_lir_df[['Date', 'Invoice', 'Company', 'Product', 'Group', 'Quantity', 'Amount (USD)']].copy()
+                disp_lir.columns = ['Tarih', 'İade Belge No', 'Kurum', 'Ürün', 'Grup', 'Adet', 'Tutar (USD)']
+                st.dataframe(disp_lir, use_container_width=True, hide_index=True)
+                st.info("💡 LIR belgeleri muhasebede $0 bedelli iade/iptal evrakı olarak düzenlenmiştir. Sistemimiz bu satırları yeni satış olarak toplamaz; Sellco'nun kurulu cihaz sayısını net 1 olarak gösterir.")
+                
+            with tab_ret3:
+                st.markdown("**Bedelsiz Sevk Edilen Cihaz İrsaliyeleri (Demo, Numune veya Faturasız Sevk):**")
+                disp_zero_dev = raw_sales_df[(raw_sales_df['Group'] == 'Device') & (raw_sales_df['Amount (USD)'] == 0)][['Date', 'Invoice', 'Company', 'Product', 'Quantity', 'Amount (USD)']].copy()
+                disp_zero_dev.columns = ['Tarih', 'İrsaliye / Belge No', 'Kurum', 'Cihaz Modeli', 'Adet', 'Tutar']
+                st.dataframe(disp_zero_dev, use_container_width=True, hide_index=True)
+                st.caption("ℹ️ Acıbadem, CMC, Halil Ruso, Medipolitan, Seda Erdem ve Bisan'a yapılan $0 bedelli cihaz sevkleri demo/konsinye statüsünde izlenmektedir.")
 
 elif nav_selection == "Agreements & Compliance":
     st.title("International Agreements, LOA & Regulatory Compliance")
@@ -9026,7 +9127,7 @@ elif nav_selection == "Agreements & Compliance":
                 'Hukuki Statü': d.get('compliance', '✅ Onaylı Uluslararası Müşteri')
             })
         st.dataframe(pd.DataFrame(intl_table), use_container_width=True, hide_index=True)
-        st.caption("ℹ️ Sellco Trading Intl (BAE) bir distribütör olmayıp sözleşmesiz spot ticari müşteridir. BAE pazarında henüz resmi bir distribütör atanmamış olup pazar açık beyaz boşluk statüsündedir.")
+        st.caption("ℹ️ Sellco Trading Intl (BAE) bir distribütör olmayıp sözleşmesiz spot ticari müşteridir (1 kurulu Piezo Pulse Stimulator). BAE pazarında henüz resmi bir distribütör atanmamış olup pazar açık beyaz boşluk statüsündedir.")
 
     # --------------------------------------------------------------------------
     # TAB 4: SÖZLEŞME VE DOKÜMAN ARŞİVİ
