@@ -865,6 +865,91 @@ def resolve_country_macro(c_name):
         'ivf_discount_allowance': 1.0
     })
 
+
+def get_market_customs_intelligence(c_code, c_name):
+    """
+    Returns verified customs tariff %, clearance lead time, documentation & certification barriers,
+    and official import conditions for global fertility markets.
+    """
+    code = str(c_code).upper().strip()
+    name = str(c_name).strip()
+
+    CUSTOMS_BARRIER_DB = {
+        'ES': {'tariff': 0.0, 'days': 3, 'doc_score': 2.0, 'doc_label': 'Düşük / CE-MDR Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (MDR 2017/745 & CE Belgesi Yeterli; 0% Gümrük)'},
+        'DE': {'tariff': 0.0, 'days': 2, 'doc_score': 2.0, 'doc_label': 'Düşük / CE-MDR Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (BfArM Ulusal Medikal Kaydı & 0% Gümrük)'},
+        'FR': {'tariff': 0.0, 'days': 3, 'doc_score': 2.2, 'doc_label': 'Düşük / CE-MDR Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (ANSM Medikal Bildirimi & 0% Gümrük)'},
+        'IT': {'tariff': 0.0, 'days': 4, 'doc_score': 2.5, 'doc_label': 'Düşük / CE-MDR Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (Sağlık Bakanlığı Repertuar Kaydı)'},
+        'BE': {'tariff': 0.0, 'days': 2, 'doc_score': 2.0, 'doc_label': 'Düşük / CE-MDR Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (FAGG/AFMPS Uyumu & Brüksel Hub)'},
+        'NL': {'tariff': 0.0, 'days': 2, 'doc_score': 1.8, 'doc_label': 'Düşük / CE-MDR Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (Rotterdam/Schiphol Ekspres Kargo)'},
+        'DK': {'tariff': 0.0, 'days': 2, 'doc_score': 1.8, 'doc_label': 'Düşük / CE-MDR Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (Danish Medicines Agency Kaydı)'},
+        'SE': {'tariff': 0.0, 'days': 3, 'doc_score': 2.0, 'doc_label': 'Düşük / CE-MDR Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (Läkemedelsverket Uyumu)'},
+        'NO': {'tariff': 0.0, 'days': 3, 'doc_score': 2.2, 'doc_label': 'Düşük / EFTA Uyumlu', 'cond': 'EFTA & CE Uygunluğu (Norwegian Medical Products Agency)'},
+        'PT': {'tariff': 0.0, 'days': 4, 'doc_score': 2.5, 'doc_label': 'Düşük / CE-MDR Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (Infarmed Tescili)'},
+        'AT': {'tariff': 0.0, 'days': 3, 'doc_score': 2.2, 'doc_label': 'Düşük / CE-MDR Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (BASG Tıbbi Cihaz Kaydı)'},
+        'CZ': {'tariff': 0.0, 'days': 3, 'doc_score': 2.4, 'doc_label': 'Düşük / CE-MDR Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (SUKL Medikal Sicil Kaydı)'},
+        'PL': {'tariff': 0.0, 'days': 4, 'doc_score': 2.6, 'doc_label': 'Düşük / CE-MDR Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (URPL Tescil Bildirimi)'},
+        'GR': {'tariff': 0.0, 'days': 4, 'doc_score': 2.8, 'doc_label': 'Düşük / CE-MDR Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (EOF Ulusal İlaç ve Medikal Kaydı)'},
+        'FI': {'tariff': 0.0, 'days': 3, 'doc_score': 2.0, 'doc_label': 'Düşük / CE-MDR Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (Fimea Bildirimi)'},
+        'RO': {'tariff': 0.0, 'days': 5, 'doc_score': 3.2, 'doc_label': 'Düşük-Orta / CE Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (ANMDMR Tescili)'},
+        'BG': {'tariff': 0.0, 'days': 5, 'doc_score': 3.0, 'doc_label': 'Düşük-Orta / CE Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (BDA Tıbbi Cihaz Kaydı)'},
+        'IE': {'tariff': 0.0, 'days': 3, 'doc_score': 2.0, 'doc_label': 'Düşük / CE-MDR Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (HPRA Bildirimi)'},
+        'GB': {'tariff': 2.5, 'days': 4, 'doc_score': 3.5, 'doc_label': 'Düşük-Orta / MHRA Tescili', 'cond': 'MHRA Tıbbi Cihaz Tescili & UK Responsible Person (UKRP)'},
+        'CH': {'tariff': 0.0, 'days': 3, 'doc_score': 3.0, 'doc_label': 'Düşük / Swissmedic', 'cond': 'Swissmedic Tescili & İsviçre Yetkili Temsilcisi (CH-REP)'},
+        'TR': {'tariff': 8.0, 'days': 5, 'doc_score': 4.5, 'doc_label': 'Orta / TİTCK ÜTS Kaydı', 'cond': 'TİTCK ÜTS Tekil Bildirimi, CE Uygunluk Beyanı & Türkçe Kılavuz'},
+        'AE': {'tariff': 5.0, 'days': 5, 'doc_score': 4.0, 'doc_label': 'Orta / MOHAP Tescili', 'cond': 'MOHAP Tıbbi Cihaz Tescili, FSC Belgesi & Cebel Ali / DWC Hızlı Hat'},
+        'SA': {'tariff': 5.0, 'days': 10, 'doc_score': 6.5, 'doc_label': 'Orta-Yüksek / SFDA MDMA', 'cond': 'SFDA MDMA Ruhsatı, SABER Elektronik Uygunluk & Arapça Etiket'},
+        'QA': {'tariff': 5.0, 'days': 6, 'doc_score': 4.5, 'doc_label': 'Orta / MoPH İzni', 'cond': 'MoPH İthalat İzni, Menşe Şahadetnamesi & Hamad Sağlık Akreditasyonu'},
+        'KW': {'tariff': 5.0, 'days': 8, 'doc_score': 5.0, 'doc_label': 'Orta / MoH Kuveyt', 'cond': 'MoH Medikal İthalat Lisansı & Menşe Şahadetnamesi Tasdiki'},
+        'JO': {'tariff': 6.0, 'days': 14, 'doc_score': 5.0, 'doc_label': 'Orta / JFDA Tescili', 'cond': 'JFDA-LAW-32 Direktifi, Free Sales Certificate (FSC) & Queen Alia Serbest Depo'},
+        'IQ': {'tariff': 7.0, 'days': 35, 'doc_score': 8.5, 'doc_label': 'Yüksek / KIMADIA Ruhsatı', 'cond': 'KIMADIA Acil İthalat İzni, Konsolosluk Tasdikli COO & Habur TIREPD Yeşil Hat'},
+        'EG': {'tariff': 8.5, 'days': 22, 'doc_score': 7.5, 'doc_label': 'Yüksek / EDA Tescili', 'cond': 'Egyptian Drug Authority (EDA) Tescili & Merkez Bankası Akreditif Şartı'},
+        'US': {'tariff': 2.5, 'days': 4, 'doc_score': 6.0, 'doc_label': 'Orta-Yüksek / US FDA', 'cond': 'US FDA 510(k) / Establishment Registration & Gümrük CBP Beyanı'},
+        'CA': {'tariff': 0.0, 'days': 5, 'doc_score': 5.5, 'doc_label': 'Orta / Health Canada', 'cond': 'Health Canada Medical Device Licence (MDL) & ISO 13485 MDSAP'},
+        'KR': {'tariff': 8.0, 'days': 10, 'doc_score': 6.8, 'doc_label': 'Orta-Yüksek / MFDS', 'cond': 'MFDS Sınıf II Tıbbi Cihaz Ruhsatı & KGMP Uygunluk Sertifikası'},
+        'JP': {'tariff': 0.0, 'days': 7, 'doc_score': 8.0, 'doc_label': 'Yüksek / PMDA Shonin', 'cond': 'PMDA Shonin Onayı, MAH (Marketing Authorization Holder) Şartı & J-GMP'},
+        'IN': {'tariff': 10.0, 'days': 25, 'doc_score': 8.0, 'doc_label': 'Yüksek / CDSCO Lisansı', 'cond': 'CDSCO Form MD-15 İthalat Lisansı & Gümrük Sağlık Denetimi'},
+        'PS': {'tariff': 12.0, 'days': 45, 'doc_score': 9.0, 'doc_label': 'Kritik / Çift Güvenlik Denetimi', 'cond': 'İsrail Liman Güvenlik İzni + Filistin Sağlık Bakanlığı Kaydı (Çift Onay)'},
+        'SY': {'tariff': 15.0, 'days': 50, 'doc_score': 9.5, 'doc_label': 'Kritik / Ambargo & Kambiyo', 'cond': 'Mücbir İnsani Sağlık İzni, Beyrut Transit Hattı & Kambiyo Blokajı'},
+        'AZ': {'tariff': 10.0, 'days': 14, 'doc_score': 5.5, 'doc_label': 'Orta / AEM Ruhsatı', 'cond': 'Sağlık Bakanlığı Analitik Ekspertiza Merkezi (AEM) Ruhsatı & Menşe Tasdiki'},
+        'BR': {'tariff': 12.0, 'days': 30, 'doc_score': 8.5, 'doc_label': 'Yüksek / ANVISA Sicili', 'cond': 'ANVISA Sicil Kaydı, BGMP Denetim Uyumu & Siscomex Bildirimi'},
+        'PH': {'tariff': 7.0, 'days': 18, 'doc_score': 6.5, 'doc_label': 'Orta-Yüksek / FDA Philippines', 'cond': 'FDA Certificate of Medical Device Registration (CMDR) & İthalat Vizesi'},
+        'AU': {'tariff': 0.0, 'days': 5, 'doc_score': 5.0, 'doc_label': 'Orta / TGA Tescili', 'cond': 'TGA Australian Register of Therapeutic Goods (ARTG) Kaydı'},
+        'ZA': {'tariff': 0.0, 'days': 12, 'doc_score': 5.8, 'doc_label': 'Orta / SAHPRA', 'cond': 'SAHPRA Tıbbi Cihaz İthalatçı Ruhsatı & ISO 13485 Sertifikası'},
+        'MX': {'tariff': 5.0, 'days': 14, 'doc_score': 6.5, 'doc_label': 'Orta-Yüksek / COFEPRIS', 'cond': 'COFEPRIS Sağlık Ruhsatı & Meksika Resmi Standartları (NOM)'},
+        'DZ': {'tariff': 15.0, 'days': 35, 'doc_score': 8.5, 'doc_label': 'Yüksek / MSPRH Cezayir', 'cond': 'Ulusal İlaç Kurumu (ANPP) Ruhsatı & Akreditif (LC) Zorunluluğu'},
+        'MA': {'tariff': 10.0, 'days': 16, 'doc_score': 5.5, 'doc_label': 'Orta / DMP Fas', 'cond': 'Direction du Médicament et de la Pharmacie (DMP) Tescili'},
+        'ID': {'tariff': 10.0, 'days': 28, 'doc_score': 8.0, 'doc_label': 'Yüksek / BPOM Ruhsatı', 'cond': 'Kemenkes İthalat İzni & BPOM Tıbbi Cihaz Dağıtım Lisansı'},
+        'MY': {'tariff': 0.0, 'days': 8, 'doc_score': 4.5, 'doc_label': 'Orta / MDA Malezya', 'cond': 'Medical Device Authority (MDA) Ruhsatı & GDPMD Sertifikası'},
+        'TH': {'tariff': 5.0, 'days': 14, 'doc_score': 6.0, 'doc_label': 'Orta / Thai FDA', 'cond': 'Thai FDA Tıbbi Cihaz İthalat Ruhsatı & CSDT Dosya Formatı'}
+    }
+
+    if code in CUSTOMS_BARRIER_DB:
+        res = CUSTOMS_BARRIER_DB[code].copy()
+    else:
+        macro = resolve_country_macro(name)
+        res = {
+            'tariff': macro.get('customs_tariff_pct', 6.0),
+            'days': macro.get('customs_clearance_days', 12),
+            'doc_score': 5.0,
+            'doc_label': 'Orta / Standart Sağlık İzni',
+            'cond': macro.get('import_difficulty', 'Standart Sağlık Bakanlığı İthalat Vizesi & Menşe Belgesi')
+        }
+
+    tariff_score = min(35.0, (res['tariff'] / 15.0) * 35.0)
+    doc_score_weighted = min(35.0, (res['doc_score'] / 10.0) * 35.0)
+    days_score = min(30.0, (res['days'] / 50.0) * 30.0)
+    diff_index = round(tariff_score + doc_score_weighted + days_score, 1)
+
+    return {
+        'customs_tariff_pct': float(res['tariff']),
+        'customs_clearance_days': int(res['days']),
+        'doc_barrier_score': float(res['doc_score']),
+        'doc_barrier_label': str(res['doc_label']),
+        'customs_conditions': str(res['cond']),
+        'customs_difficulty_index': float(diff_index)
+    }
+
+
 def generate_ai_pricing_bundle_recommendation(calc_d, macro, strategic_goal):
     country = calc_d.get('country_name', 'Turkey')
     partner_name = calc_d.get('name', 'Partner')
@@ -10151,6 +10236,15 @@ elif nav_selection == "Market Intelligence & Compare":
         cmp_df['clinics_per_m'] = (cmp_df['clinics'] / cmp_df['pop']).round(2)
         cmp_df['cycles_per_clinic'] = (cmp_df['cycles'] / cmp_df['clinics']).round(0)
 
+        # Gümrük vergisi, belgelendirme zorluğu ve gümrük koşulları sütunlarını dinamik ekle
+        customs_series = cmp_df.apply(lambda row: get_market_customs_intelligence(row['code'], row['name']), axis=1)
+        cmp_df['customs_tariff_pct'] = [d['customs_tariff_pct'] for d in customs_series]
+        cmp_df['customs_clearance_days'] = [d['customs_clearance_days'] for d in customs_series]
+        cmp_df['doc_barrier_score'] = [d['doc_barrier_score'] for d in customs_series]
+        cmp_df['doc_barrier_label'] = [d['doc_barrier_label'] for d in customs_series]
+        cmp_df['customs_conditions'] = [d['customs_conditions'] for d in customs_series]
+        cmp_df['customs_difficulty_index'] = [d['customs_difficulty_index'] for d in customs_series]
+
         # Tabbed Layout for Easy Exploration
         comp_tab1, comp_tab2, comp_tab3, comp_tab4 = st.tabs([
             "📊 Çok Boyutlu Grafik Analizi (Visual Analytics)",
@@ -10297,11 +10391,12 @@ elif nav_selection == "Market Intelligence & Compare":
                 cat_filter = st.selectbox(
                     "Tablo Gösterge Grubu Filtresi:",
                     [
-                        "Tüm Göstergeler (17 Metrik)",
+                        "Tüm Göstergeler (22 Metrik)",
                         "🎯 Pazar Fırsatı & ZEUS Dağıtım Ağı",
                         "🏥 Klinik Altyapı & Tedavi Kapasitesi",
                         "💰 Makroekonomik Güç & Nüfus",
-                        "🔬 Klinik Teknoloji & Regülasyon Rejimi"
+                        "🔬 Klinik Teknoloji & Regülasyon Rejimi",
+                        "🛃 Gümrük, Belgelendirme & İthalat Rejimi (Customs & Barriers)"
                     ]
                 )
 
@@ -10412,7 +10507,8 @@ elif nav_selection == "Market Intelligence & Compare":
                                 f'<td style="padding:9px 10px;font-weight:700;color:#FFFFFF;font-size:12.5px;white-space:nowrap;">'
                                 f'<span style="font-size:14px;margin-right:4px;">{flag}</span> {c_name} '
                                 f'<span style="display:inline-block;margin-left:5px;font-size:9.5px;color:{risk_col};background:{risk_col}18;border:1px solid {risk_col}44;padding:1px 5px;border-radius:4px;font-weight:600;">{risk_txt}</span>'
-                                f'<div style="font-size:9.5px;color:#94A3B8;margin-top:2px;">🏛️ Destek: <b style="color:#FFB800;">%{r.get("state_support_pct", 40):.0f}</b> | IVF/GSYİH: <b style="color:#00F5FF;">%{r.get("ivf_gdp_pct", 0.08):.2f}</b></div></td>'
+                                f'<div style="font-size:9.5px;color:#94A3B8;margin-top:2px;">🏛️ Destek: <b style="color:#FFB800;">%{r.get("state_support_pct", 40):.0f}</b> | IVF/GSYİH: <b style="color:#00F5FF;">%{r.get("ivf_gdp_pct", 0.08):.2f}</b></div>'
+                                f'<div style="font-size:9.5px;color:#8FA3C0;margin-top:1px;">📦 Gümrük: <b style="color:#FF5252;">%{r.get("customs_tariff_pct", 5.0):.1f}</b> | 📜 Belge: <b style="color:#FFB800;">{r.get("doc_barrier_label", "Orta")}</b> ({r.get("customs_clearance_days", 10):.0f}g)</div></td>'
                                 f'<td style="padding:9px 8px;text-align:center;white-space:nowrap;">'
                                 f'<span style="background:rgba(0,245,255,0.12);border:1px solid rgba(0,245,255,0.35);color:#00F5FF;font-weight:800;font-size:12px;padding:3px 8px;border-radius:6px;font-family:monospace;">{score_fmt}</span></td>'
                                 f'<td style="padding:9px 10px;text-align:right;color:#E2E8F0;font-family:monospace;font-size:12px;font-weight:600;white-space:nowrap;">{gdp_fmt}</td>'
@@ -10523,6 +10619,10 @@ elif nav_selection == "Market Intelligence & Compare":
                             "🏥 Sağlık Harcaması / GSYİH (%)",
                             "🧬 IVF & PGT Harcaması / GSYİH (%)",
                             "🏛️ IVF & PGT Devlet Desteği & Geri Ödeme (%)",
+                            "📦 Gümrük Vergisi Oranı (%) [Customs Tariff %]",
+                            "📜 Belgelendirme & Sertifikasyon Zorluğu (1-10 Skor) [Documentation Barriers]",
+                            "⏳ Gümrükleme & Çekim Süresi (Gün) [Customs Clearance Days]",
+                            "🛃 Gümrük & İthalat Şartları Zorluk Endeksi (0-100 Puan) [Customs Conditions Index]",
                             "💰 Kişi Başı GSYİH (GDP Per Capita - USD)",
                             "🏢 Lisanslı Aktif IVF Klinik Sayısı",
                             "🌐 Milyon Nüfusa Düşen Klinik Yoğunluğu",
@@ -10537,6 +10637,10 @@ elif nav_selection == "Market Intelligence & Compare":
                         "🏥 Sağlık Harcaması / GSYİH (%)": ('health_pct', '%{:.1f}', 'Sağlık Payı %', '#5FD3AE'),
                         "🧬 IVF & PGT Harcaması / GSYİH (%)": ('ivf_gdp_pct', '%{:.2f}', 'IVF/PGT GSYİH %', '#00F5FF'),
                         "🏛️ IVF & PGT Devlet Desteği & Geri Ödeme (%)": ('state_support_pct', '%{:.0f}', 'Devlet Desteği %', '#FFB800'),
+                        "📦 Gümrük Vergisi Oranı (%) [Customs Tariff %]": ('customs_tariff_pct', '%{:.1f}', 'Gümrük Vergisi %', '#FF5252'),
+                        "📜 Belgelendirme & Sertifikasyon Zorluğu (1-10 Skor) [Documentation Barriers]": ('doc_barrier_score', '{:.1f} / 10', 'Belge Zorluk Skoru (1-10)', '#FF9800'),
+                        "⏳ Gümrükleme & Çekim Süresi (Gün) [Customs Clearance Days]": ('customs_clearance_days', '{:.0f} Gün', 'Bekleme Süresi (Gün)', '#A855F7'),
+                        "🛃 Gümrük & İthalat Şartları Zorluk Endeksi (0-100 Puan) [Customs Conditions Index]": ('customs_difficulty_index', '{:.0f} Puan', 'Bileşik Zorluk Skoru', '#EC4899'),
                         "💰 Kişi Başı GSYİH (GDP Per Capita - USD)": ('gdp_pc', '${:,.0f}', 'USD Gelir', '#00E676'),
                         "🏢 Lisanslı Aktif IVF Klinik Sayısı": ('clinics', '{:,.0f} Klinik', 'Klinik', '#00F5FF'),
                         "🌐 Milyon Nüfusa Düşen Klinik Yoğunluğu": ('clinics_per_m', '{:.2f} kl./M', 'Klinik / Milyon', '#13A6B5'),
@@ -10567,6 +10671,33 @@ elif nav_selection == "Market Intelligence & Compare":
                         xaxis=dict(title="")
                     )
                     st.plotly_chart(fig_dyn, use_container_width=True)
+
+                    if any(w in dyn_metric_choice for w in ["Gümrük", "Belgelendirme", "Customs", "Documentation"]):
+                        st.markdown(f"""
+                        <div style="background:rgba(15,25,46,0.85);border:1.5px solid rgba(255,184,0,0.35);border-radius:10px;padding:12px 16px;margin-top:10px;font-size:11.8px;line-height:1.55;box-shadow:0 4px 14px rgba(0,0,0,0.3);">
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                                <b style="color:#FFB800;font-size:12.5px;">🛃 Gümrük Koşulları (Customs Conditions) & Belgelendirme (Certification) Bariyeri</b>
+                                <span style="background:rgba(255,184,0,0.15);color:#FFB800;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;">ZEUS DIŞ TİCARET & REGÜLASYON</span>
+                            </div>
+                            <div style="color:#CCD7E6;margin-bottom:6px;">
+                                Seçilen pazarlarda gümrük tarifesi, resmi medikal tescil ve çekim süreleri sevkiyat termin sürelerini ve nihai marjı belirler:
+                            </div>
+                            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));gap:8px;">
+                                <div style="background:rgba(255,255,255,0.03);padding:8px 10px;border-radius:6px;border-left:3px solid #00F5FF;">
+                                    <span style="color:#00F5FF;font-weight:700;">🇪🇺 AB / EFTA:</span> %0 Gümrük, 2-3 Gün, CE/MDR Serbest Dolaşım.
+                                </div>
+                                <div style="background:rgba(255,255,255,0.03);padding:8px 10px;border-radius:6px;border-left:3px solid #10B981;">
+                                    <span style="color:#10B981;font-weight:700;">🌴 Körfez (GCC):</span> %5 Gümrük, 5-10 Gün, SFDA/MOHAP Tescili.
+                                </div>
+                                <div style="background:rgba(255,255,255,0.03);padding:8px 10px;border-radius:6px;border-left:3px solid #FFB800;">
+                                    <span style="color:#FFB800;font-weight:700;">🇯🇴 Levant (Ürdün):</span> %6 Gümrük, 14 Gün, JFDA Tescili.
+                                </div>
+                                <div style="background:rgba(255,255,255,0.03);padding:8px 10px;border-radius:6px;border-left:3px solid #FF5252;">
+                                    <span style="color:#FF5252;font-weight:700;">🇮🇶 Irak:</span> %7 Gümrük, 35 Gün, KIMADIA Yeşil Hat & TIREPD.
+                                </div>
+                            </div>
+                        </div>
+                        """, unsafe_allow_html=True)
 
 
             st.markdown("---")
@@ -10606,7 +10737,14 @@ elif nav_selection == "Market Intelligence & Compare":
                     {'cat': '🔬 Klinik Teknoloji & Regülasyon Rejimi', 'name': 'PGT Genetik Tanı Oranı %', 'extract': lambda r: f"%{r['pgt_pct']}"},
                     {'cat': '🔬 Klinik Teknoloji & Regülasyon Rejimi', 'name': 'Kriyoprezervasyon (Dondurma) %', 'extract': lambda r: f"%{r['cryo_pct']}"},
                     {'cat': '🔬 Klinik Teknoloji & Regülasyon Rejimi', 'name': 'Medikal İthalat Rejimi', 'extract': lambda r: r['import_cond']},
-                    {'cat': '🔬 Klinik Teknoloji & Regülasyon Rejimi', 'name': 'Regülasyon Zorluk Derecesi', 'extract': lambda r: r['regulation']}
+                    {'cat': '🔬 Klinik Teknoloji & Regülasyon Rejimi', 'name': 'Regülasyon Zorluk Derecesi', 'extract': lambda r: r['regulation']},
+
+                    # Category 5: Customs & Regulatory Barriers
+                    {'cat': '🛃 Gümrük, Belgelendirme & İthalat Rejimi (Customs & Barriers)', 'name': '📦 Gümrük Vergisi Oranı % (Customs Tariff)', 'extract': lambda r: f"%{r.get('customs_tariff_pct', 5.0):.1f}"},
+                    {'cat': '🛃 Gümrük, Belgelendirme & İthalat Rejimi (Customs & Barriers)', 'name': '📜 Belgelendirme Zorluk Skoru (Documentation Barriers)', 'extract': lambda r: f"{r.get('doc_barrier_score', 5.0):.1f} / 10 ({r.get('doc_barrier_label', 'Orta')})"},
+                    {'cat': '🛃 Gümrük, Belgelendirme & İthalat Rejimi (Customs & Barriers)', 'name': '⏳ Gümrükleme & Çekim Süresi (Lead Time - Gün)', 'extract': lambda r: f"{r.get('customs_clearance_days', 10):.0f} Gün"},
+                    {'cat': '🛃 Gümrük, Belgelendirme & İthalat Rejimi (Customs & Barriers)', 'name': '🏛️ Gümrük & İthalat Şartları (Customs Conditions)', 'extract': lambda r: r.get('customs_conditions', 'Standart Sağlık İzni & Menşe Belgesi')},
+                    {'cat': '🛃 Gümrük, Belgelendirme & İthalat Rejimi (Customs & Barriers)', 'name': '🛃 Bileşik Gümrük Zorluk Endeksi (0-100 Puan)', 'extract': lambda r: f"{r.get('customs_difficulty_index', 35):.0f} Puan"}
                 ]
 
                 # Filter by category if chosen
