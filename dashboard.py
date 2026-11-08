@@ -2108,14 +2108,15 @@ def get_country_intelligence():
 country_to_region = {
     'Turkey': 'Europe', 'Belgium': 'Europe', 'Albania-Slovakia': 'Europe',
     'Bulgaria': 'Europe', 'Azerbaijan': 'Europe', 'United Kingdom': 'Europe',
-    'Jordan-Iraq': 'MENA', 'Jordan': 'MENA', 'Iraq': 'MENA', 'Qatar': 'MENA',
+    'Jordan & Iraq': 'MENA', 'Jordan & Iraq (Ürdün & Irak)': 'MENA', 'Jordan-Iraq': 'MENA',
+    'Jordan': 'MENA', 'Iraq': 'MENA', 'Qatar': 'MENA',
     'Palestine': 'MENA', 'Saudi Arabia': 'MENA', 'Kuwait': 'MENA',
     'United Arab Emirates': 'MENA', 'Syria': 'MENA',
     'South Korea': 'Asia-Pacific', 'Philippines': 'Asia-Pacific'
 }
 
 country_codes = {
-    'Turkey': 'TR', 'Jordan-Iraq': 'IQ', 'Jordan': 'JO', 'Iraq': 'IQ', 'Qatar': 'QA',
+    'Turkey': 'TR', 'Jordan & Iraq': 'IQ', 'Jordan & Iraq (Ürdün & Irak)': 'IQ', 'Jordan-Iraq': 'IQ', 'Jordan': 'JO', 'Iraq': 'IQ', 'Qatar': 'QA',
     'South Korea': 'KR', 'Palestine': 'PS', 'Saudi Arabia': 'SA',
     'Kuwait': 'KW', 'United Arab Emirates': 'AE', 'Albania-Slovakia': 'AL',
     'Belgium': 'BE', 'Azerbaijan': 'AZ', 'Bulgaria': 'BG',
@@ -2129,7 +2130,7 @@ def get_base_distributors():
         
     # Normalize Sirius country so both invoices consolidate into Jordan-Iraq
     df = df.copy()
-    df.loc[df['Company'] == 'SIRIUS PHARM COMPANY', 'Country'] = 'Jordan-Iraq' 
+    df.loc[df['Company'] == 'SIRIUS PHARM COMPANY', 'Country'] = 'Jordan & Iraq' 
     
     accounts = []
     for (country, company), grp in df.groupby(['Country', 'Company']):
@@ -2476,7 +2477,10 @@ for d in all_dists:
     item['devices_count'] = d_cnt
     item['consumables_count'] = c_cnt
     c_info = country_map.get(d['id'], {})
-    item['country_name'] = c_info.get('name', d.get('country_name', d['id']))
+    if 'SIRIUS' in d.get('name', '').upper() or d.get('country_name') in ['Jordan-Iraq', 'Jordan & Iraq', 'Jordan & Iraq (Ürdün & Irak)']:
+        item['country_name'] = 'Jordan & Iraq'
+    else:
+        item['country_name'] = d.get('country_name') or c_info.get('name', d['id'])
     
     # Ensure region is properly resolved from country_to_region without returning Unknown
     mapped_reg = c_info.get('region')
@@ -8739,7 +8743,10 @@ elif nav_selection == "Distributors & CRM":
         filtered_accounts = [d for d in filtered_accounts if d.get('account_type') == 'International Customer']
 
     if country_filter != "Tümü":
-        filtered_accounts = [d for d in filtered_accounts if d['country_name'] == country_filter]
+        if country_filter in ["Jordan", "Iraq", "Jordan & Iraq", "Jordan & Iraq (Ürdün & Irak)", "Jordan-Iraq"]:
+            filtered_accounts = [d for d in filtered_accounts if d['country_name'] == country_filter or ('SIRIUS' in d['name'].upper())]
+        else:
+            filtered_accounts = [d for d in filtered_accounts if d['country_name'] == country_filter]
 
     if type_filter == "Cihaz ve Sarf Alanlar":
         filtered_accounts = [d for d in filtered_accounts if d.get('dev_cnt_by_year', {}).get('ALL', 0) > 0 and d.get('con_cnt_by_year', {}).get('ALL', 0) > 0]
@@ -8762,7 +8769,9 @@ elif nav_selection == "Distributors & CRM":
         dc_map = d_item.get('dev_cnt_by_year', {})
         cc_map = d_item.get('con_cnt_by_year', {})
 
-        if "2026" in y_choice:
+        if "Konsolide" in y_choice or "Tüm Zamanlar" in y_choice:
+            return r_map.get('ALL', d_item.get('revenue', 0.0)), d_map.get('ALL', d_item.get('device_rev', 0.0)), c_map.get('ALL', d_item.get('consumables_rev', 0.0)), dc_map.get('ALL', d_item.get('devices_count', 0)), cc_map.get('ALL', d_item.get('consumables_count', 0)), "Tüm Zamanlar (Konsolide)"
+        elif "2026" in y_choice:
             return r_map.get(2026, 0.0), d_map.get(2026, 0.0), c_map.get(2026, 0.0), dc_map.get(2026, 0), cc_map.get(2026, 0), "2026 (YTD)"
         elif "2025" in y_choice:
             return r_map.get(2025, 0.0), d_map.get(2025, 0.0), c_map.get(2025, 0.0), dc_map.get(2025, 0), cc_map.get(2025, 0), "2025"
@@ -8806,7 +8815,7 @@ elif nav_selection == "Distributors & CRM":
     st.markdown(f"""
     <div style="background:rgba(19,166,181,0.08);border:1px solid rgba(19,166,181,0.25);border-left:4px solid #00F5FF;padding:10px 14px;border-radius:8px;margin:12px 0 16px 0;font-size:12px;color:#CCD7E6;">
         <b>📅 Analiz Edilen Dönem:</b> <span style="color:#00F5FF;font-weight:700;">{crm_year_filter}</span> &nbsp;|&nbsp; 
-        Aşağıdaki tabloda her müşterinin <b>2024, 2025, 2026 ve Toplam Konsolide ciroları</b> yan yana listelenmiştir. Önceki yıllarda cihaz satın almış ancak bu yıl henüz sipariş vermemiş müşteriler (ör. <b>Kuwait ATC: 2025'te 3 Cihaz, $26.2K</b> veya <b>UAE Sellco: 2025'te 4 Cihaz, $23.2K</b>) eksiksiz olarak raporlanmaktadır.
+        Aşağıdaki tabloda her müşterinin <b>2024, 2025, 2026 ve Toplam Konsolide ciroları</b> yan yana listelenmiştir. Önceki yıllarda cihaz satın almış ancak bu yıl henüz sipariş vermemiş müşteriler (ör. <b>Kuwait ATC: 2025'te 3 Cihaz, $26.2K</b> veya <b>UAE Sellco: 2025'te net 1 Cihaz ($19K) ve $4.1K sarf — LIR iade düşülmüş</b>) eksiksiz olarak raporlanmaktadır.
     </div>
     """, unsafe_allow_html=True)
 
@@ -8841,10 +8850,22 @@ elif nav_selection == "Distributors & CRM":
         else:
             activity_status = "⚪ Pasif / Tarihsel Kayıt"
 
+        # Determine classification label
+        if d.get('is_sister') or d.get('account_type') == 'Sister Company' or 'GEN-SA' in d['name'].upper():
+            acc_class = '🏢 Kardeş Şirket (Gen-Sa)'
+        elif d.get('account_type') == 'Distributor':
+            acc_class = '🤝 Distribütör'
+        elif d.get('account_type') == 'Local Customer':
+            acc_class = '🇹🇷 Local'
+        else:
+            acc_class = '🌍 International'
+
+        c_name_disp = 'Jordan & Iraq (Ürdün & Irak)' if 'SIRIUS' in d['name'].upper() or d.get('country_name') in ['Jordan-Iraq', 'Jordan & Iraq'] else d['country_name']
+
         table_rows.append({
             'Firma / Klinik': d['name'],
-            'Sınıf': '🏢 Distribütör' if d.get('account_type') == 'Distributor' else ('🇹🇷 Local' if d.get('account_type') == 'Local Customer' else '🌍 International'),
-            'Ülke': d['country_name'],
+            'Sınıf': acc_class,
+            'Ülke': c_name_disp,
             'Bölge': d['region'],
             '2024 Ciro ($)': format_curr(rev_24) if rev_24 > 0 else "—",
             '2025 Ciro ($)': format_curr(rev_25) if rev_25 > 0 else "—",
