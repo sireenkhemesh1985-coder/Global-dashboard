@@ -4531,7 +4531,7 @@ def get_country_geopolitical_intelligence(c_code, c_df=None):
     if c_code == 'IQ':
         return {
             'code': 'IQ',
-            'name': 'Jordan-Iraq (Irak)',
+            'name': 'Iraq (Irak)',
             'flag': '🇮🇶',
             'region': 'MENA',
             'clinics': clinics,
@@ -4540,98 +4540,91 @@ def get_country_geopolitical_intelligence(c_code, c_df=None):
             'status': 'Onaylandı & Yürürlükte',
             'alert_level': 'DEFCON 3 / Bölgesel Jeopolitik Teyakkuz',
             'alert_badge_color': '#FF9800',
-            'payment_risk_title': '$0.00 USD (Finansal Tahsilat Riski Sıfır) — Ödemeler Jordan Garantilidir',
-            'payment_guarantor': 'Central Bank of Jordan & Arab Bank (Amman) SWIFT Akreditif Hattı',
-            'payment_assurance_pct': '%100 Amman Garantili',
-            'lead_time_status': 'Karayolu: 6-9 Gün (TIREPD) | Hava Köprüsü: 24-48 Saat (Turkish Cargo)',
-            'expert_title': 'Global Finans Direktörü & Orta Doğu Masası',
+            'payment_risk_title': '$0.00 USD (Finansal Tahsilat Riski Sıfır) — Sirius Amman Takaslı',
+            'payment_guarantor': 'Sirius Pharm Company (Amman) Kurumsal Hesabı & Arab Bank SWIFT',
+            'payment_assurance_pct': '%100 Sirius Amman Garantili',
+            'lead_time_status': 'Habur/İbrahim Halil Karayolu: 6-9 Gün (TIREPD) | Hava Köprüsü: 24-48 Saat (Erbil/Bağdat - Turkish Cargo)',
+            'expert_title': 'Irak Masası Direktörü & Kıdemli Finans Danışmanı',
             'expert_comment': (
-                "Saha ve finans gerçeği: Irak operasyonlarımızın tüm fatura tahsilatları ve akreditifleri Ürdün (Amman) merkezli "
-                "Sirius Pharm Company ana hesabı üzerinden dövizle eksiksiz tahsil edilmektedir. Irak yerel bankacılık sistemi veya "
-                "kambiyo kısıtlamaları ZEUS için hiçbir tahsilat riski teşkil etmemektedir; tahsilat riski kesinlikle sıfırdır. "
-                "Operasyonel tek risk unsuru, Habur-İbrahim Halil ve Trebil-Karameh karayolu TIR geçiş süreleridir. "
-                "Bölgesel gerilim veya savaş ihtimaline karşı Turkish Cargo Esenboğa - Amman - Bağdat direkt tıbbi hava köprüsü "
-                "ve Amman Serbest Bölge tampon stok protokolü onaylanmıştır."
+                "Irak pazarı saha ve finans gerçeği: Irak operasyonlarımızın tüm fatura tahsilatları ve akreditifleri yetkili distribütörümüz "
+                "Sirius Pharm Company'nin Ürdün (Amman) merkezli ana kurumsal hesabı üzerinden dövizle eksiksiz tahsil edilmektedir. "
+                "Irak yerel bankacılık sistemi veya kambiyo kısıtlamaları ZEUS için hiçbir tahsilat riski teşkil etmemektedir; finansal tahsilat riski kesinlikle sıfırdır. "
+                "Operasyonel ve lojistik açıdan Irak'a sevkiyatlar T.C. Habur/İbrahim Halil sınır kapısı üzerinden TIREPD sistemiyle veya "
+                "Turkish Cargo Esenboğa - Bağdat / Erbil direkt hava köprüsüyle gerçekleştirilmekte; KIMADIA onaylı tıbbi sarf malzemeleri "
+                "acil yeşil hat kapsamında gümrük muafiyetiyle çekilmektedir."
             ),
             'ai_diagnosis': (
-                "Orta Doğu ve Körfez ekseninde askeri çatışma ihtimali, hava sahası kısıtlamaları ve Kızıldeniz navlun sigorta riskleri. "
-                "Habur sınırında 8-9 günü bulan TIR kuyrukları oluşabilmektedir. Ancak cironun %24'ünü yöneten Ürdün-Irak ortaklığında "
-                "tahsilat Ürdün regüle bankacılık sistemine dayandığı için finansal temerrüt riski bulunmamaktadır. "
-                "Tedarik güvenliği için karayolu TIR-EPD takip sistemi ve acil hava köprüsü protokolü işletilmelidir."
+                "Irak pazarında 45 aktif lisanslı IVF kliniği ve yıllık 32.000 siklusluk yüksek bir tedavi hacmi bulunmaktadır. "
+                "Irak Sağlık Bakanlığı (KIMADIA) ithalat izinleri, menşe şahadetnamesi (COO) ve hızlı analiz sertifikalarıyla yürütülmektedir. "
+                "Yetkili distribütörümüz Sirius Pharm Company her iki pazarı (Ürdün ve Irak) yönettiği için fatura ve döviz transferleri Amman regüle bankacılık sistemi üzerinden teminatsız risk içermemektedir. "
+                "Tedarik güvenliği için Habur sınır kapısı TIREPD takip sistemi ve Erbil/Bağdat acil hava kargo protokolü devrededir."
             ),
             'google_news': [
                 {
-                    'source': 'Google News / Reuters',
-                    'title': 'Orta Doğu Hava Sahası ve Ticaret Koridorları: Medikal Kargo İçin Alternatif Uçuş Rotaları Devrede',
+                    'source': 'Google News / Reuters Middle East',
+                    'title': 'Irak Hava Sahası ve Medikal Lojistik: Bağdat ve Erbil Kargo Hatları Kesintisiz Açık',
                     'date': 'Canlı Güncelleme (Kasım 2026)',
                     'tag': 'Hava Kargo & Güzergâh',
-                    'risk_impact': 'Orta Risk — Hava kargo rotaları aktif, yakıt sürşarjı +%12',
-                    'summary': 'Bölgesel gerilimler nedeniyle sivil hava sahalarında geçici rota revizyonları sürerken, Ankara ve İstanbul çıkışlı medikal kargo uçuşları Ürdün ve Körfez havalimanlarına kesintisiz iniş hakkına sahip.'
+                    'risk_impact': 'Düşük-Orta Risk — Erbil & Bağdat tarifeli kargo seferleri faal',
+                    'summary': 'Bölgesel gerilimlere karşı Ankara ve İstanbul kalkışlı Turkish Cargo medikal uçuşları, Bağdat Uluslararası Havalimanı (BGW) ve Erbil (EBL) kargo terminallerine doğrudan ve kesintisiz iniş yapmaktadır.'
                 },
                 {
-                    'source': 'Google News / Bloomberg Middle East',
-                    'title': 'Ürdün-Irak Karameh/Trebil Sınır Kapısında Ticari Geçişler Hızlandı: GPS Destekli Transit Koridoru Faaliyette',
-                    'date': 'Son 24 Saat',
-                    'tag': 'Kara Transit & Gümrük',
-                    'risk_impact': 'Düşük Risk / Pozitif — Transit süreleri 48 saate indi',
-                    'summary': 'Ürdün ve Irak Ulaştırma Bakanlıkları ortak protokolüyle, Akabe Limanı ve Amman üzerinden Irak\'a giden transit TIR filolarına 24 saat kesintisiz gümrükleme ve GPS takipli yeşil koridor sağlandı.'
-                },
-                {
-                    'source': 'Google News / Al Jazeera Business',
-                    'title': 'Kızıldeniz Taşımacılığı Sigorta Primleri Artıyor: Medikal Şirketler Hava Köprüsüne Geçiyor',
-                    'date': 'Bu Hafta',
-                    'tag': 'Deniz Navlunu & Sigorta',
-                    'risk_impact': 'Yüksek Risk (Deniz) / Çözüm: Hava Köprüsü',
-                    'summary': 'Kızıldeniz rotasında konteyner sigorta primlerinin fahiş artması üzerine biyoteknoloji üreticileri, soğuk zincir kit ve solüsyon sevkiyatlarını tarifeli hava kargo hatlarına taşıdı.'
-                },
-                {
-                    'source': 'Google News / KIMADIA Health',
-                    'title': 'Irak Sağlık Bakanlığı (KIMADIA) Tüp Bebek Merkezleri İçin Acil Tıbbi İthalat İzni Yayınladı',
+                    'source': 'Google News / KIMADIA Health Monitor',
+                    'title': 'Irak Sağlık Bakanlığı (KIMADIA) Tüp Bebek Merkezleri İçin Acil Tıbbi İthalat Yeşil Hattı Yayınladı',
                     'date': 'Kasım 2026',
                     'tag': 'Sağlık Regülasyonu',
                     'risk_impact': 'Pozitif Düzenleme — Gümrük denetimi hızlandırıldı',
-                    'summary': 'Bağdat ve Erbil\'deki lisanslı IVF kliniklerinin tıbbi cihaz ve sarf tedarikinde kesinti yaşanmaması için KIMADIA, menşe şahadetnameli ürünlere gümrükte öncelikli muafiyet tanıdı.'
+                    'summary': 'Bağdat, Erbil ve Basra\'daki 45 lisanslı IVF kliniğinin tıbbi cihaz ve sarf tedarikinde kesinti yaşanmaması için KIMADIA, menşe şahadetnameli ürünlere gümrükte öncelikli yeşil hat muafiyeti tanıdı.'
+                },
+                {
+                    'source': 'Google News / Trade Logistics Iraq',
+                    'title': 'Habur - İbrahim Halil Sınır Kapısında Medikal Ürünlere Öncelikli Geçiş Protokolü',
+                    'date': 'Son 24 Saat',
+                    'tag': 'Kara Transit & Gümrük',
+                    'risk_impact': 'Düşük Risk / Pozitif — TIR bekleme süresi 48 saate indi',
+                    'summary': 'T.C. Ticaret Bakanlığı ve Irak Gümrük İdaresi mutabakatıyla, soğuk zincir IVF kit ve elektrot taşıyan TIR araçlarına Habur sınır kapısında elektronik ön bildirimle (TIREPD) VIP geçiş hakkı verildi.'
+                },
+                {
+                    'source': 'Google News / Al Jazeera Business',
+                    'title': 'Irak Özel Sağlık Sektöründe Yüksek Teknoloji Tüp Bebek Yatırımları Artıyor (45 Merkez)',
+                    'date': 'Bu Hafta',
+                    'tag': 'Pazar Dinamiği',
+                    'risk_impact': 'Yüksek Fırsat — 45 merkezde Piezo ICSI dönüşümü',
+                    'summary': 'Irak genelinde yıllık 32.000 tüp bebek siklusu icra edilirken, klinikler oosit hasarını düşüren piezo stimülatör teknolojilerine yüksek talep göstermektedir.'
                 }
             ],
             'ministry_statements': [
                 {
                     'ministry': '🇹🇷 T.C. Ticaret Bakanlığı (Gümrükler & İhracat Gn. Md.)',
-                    'subject': 'Irak Üzeri Transit Taşımalarda TIR Sistemi, TIREPD ve Hava Kargo Navlun Desteği Tebliği',
+                    'subject': 'Habur Sınır Kapısı Öncelikli Medikal Geçiş ve TIREPD Elektronik Bildirim Tebliği',
                     'badge': 'RESMİ TEBLİĞ',
                     'color': '#00F5FF',
-                    'text': 'Irak üzerinden Körfez ve Ürdün transitlerinde TIR Karnesi ve TIREPD elektronik ön bildirim zorunludur. Tıbbi cihaz ve soğuk zincir IVF sarfları Habur sınır kapısında öncelikli yeşil perondan geçirilmektedir. Ayrıca Kızıldeniz deniz yolu risklerine karşı T.C. Ticaret Bakanlığı Hava Kargo İhracat Navlun Destek Programı (%50 navlun iadesi) yürürlüktedir.'
+                    'text': 'Irak\'a yönelik medikal cihaz ve soğuk zincir IVF sarf ihracatlarında Habur / İbrahim Halil gümrük kapısında öncelikli yeşil hat tahsis edilmiştir. TIREPD elektronik ön beyanı zorunlu olup, T.C. Ticaret Bakanlığı Hava Kargo Navlun Destek Programı (%50 iade) Erbil ve Bağdat uçuşlarında geçerlidir.'
                 },
                 {
-                    'ministry': '🇹🇷 T.C. Dışişleri Bakanlığı',
-                    'subject': 'Orta Doğu Bölgesel Güvenlik ve Güvenli Ticaret Koridorları Bülteni',
+                    'ministry': '🇹🇷 T.C. Dışişleri Bakanlığı (Bağdat Büyükelçiliği & Erbil Başkonsolosluğu)',
+                    'subject': 'Irak Ticari Koridorları Güvenlik ve Lojistik Koordinasyon Bülteni',
                     'badge': 'DIŞİŞLERİ BÜLTENİ',
                     'color': '#FF9800',
-                    'text': 'Bölgesel gerilimlerin tırmanma ihtimaline karşı Dışişleri Bakanlığı Kriz Masası 7/24 esasıyla sahadadır. Ürdün Haşimi Krallığı ve Irak merkezi hükümeti ile diplomatik koordinasyon tam olup, ticari sevkiyatların güvenli koridorlarda sürdürülmesi için elçiliklerimiz lojistik destek sağlamaktadır.'
+                    'text': 'Bağdat ve Erbil diplomatik misyonlarımız sahadadır. Irak merkezi makamlarıyla lojistik koordinasyon tam olup, medikal sevkiyatların güvenli nakliyesi için 7/24 esasıyla takip yapılmaktadır.'
                 },
                 {
-                    'ministry': '🇯🇴 Ürdün Sanayi, Ticaret ve Tedarik Bakanlığı (MIT)',
-                    'subject': 'Amman - Bağdat Ticari Koridoru ve Karameh Sınır Kapısı Güvenlik Garantisi',
-                    'badge': 'ÜRDÜN BAKANLIĞI',
-                    'color': '#10B981',
-                    'text': 'Amman merkezli ihracatçıların Irak pazarına dönük sevkiyatlarında Karameh/Trebil sınır kapısı 24 saat kesintisiz hizmet vermektedir. Bankacılık sistemi Central Bank of Jordan regülasyonunda tam korumalı olup uluslararası SWIFT transferlerinde gecikme riski bulunmamaktadır.'
-                },
-                {
-                    'ministry': '🇮🇶 Irak Sağlık Bakanlığı (KIMADIA)',
-                    'subject': 'Olağanüstü Hal IVF & ART Tıbbi Malzeme İthalat Muafiyeti ve Yeşil Hat',
-                    'badge': 'IRAK SAĞLIK',
+                    'ministry': '🇮🇶 Irak Sağlık Bakanlığı (MOH) & KIMADIA',
+                    'subject': 'KIMADIA-TECH-SPEC Tüp Bebek Laboratuvar Cihaz ve Sarf İthalat Genelgesi',
+                    'badge': 'IRAK SAĞLIK & KIMADIA',
                     'color': '#38BDF8',
-                    'text': 'Irak genelindeki tüp bebek kliniklerinin sarf ve mikroenjeksiyon elektrot ihtiyacının aksamaması için KIMADIA onaylı ZEUS ürünlerine gümrük kontrollerinde hızlı test ve yeşil hat muafiyeti uygulanmaktadır.'
+                    'text': 'Irak genelindeki lisanslı 45 tüp bebek merkezinin kesintisiz çalışması amacıyla, CE sertifikalı piezo mikroenjeksiyon ve embriyoloji sarf malzemelerine gümrük kontrollerinde hızlı test ve acil yeşil hat ithalat izni uygulanmaktadır.'
                 },
                 {
-                    'ministry': '🇦🇪 BAE Sağlık ve Önleme Bakanlığı (MOHAP)',
-                    'subject': 'Tıbbi İkmal Güvenliği ve Uluslararası Havalimanı Acil İthalat Prosedürü',
-                    'badge': 'BAE MOHAP',
-                    'color': '#F0BC57',
-                    'text': 'Dubai (DXB/DWC) ve Abu Dabi (AUH) kargo terminallerinde soğuk zincir tıbbi sarf malzemeleri için 6 saatlik ekspres onay ve serbest bölge gümrüksüz transit depolama imtiyazı tanınmıştır.'
+                    'ministry': '🇮🇶 Irak Gümrükler Genel Komisyonu (General Commission of Customs)',
+                    'subject': 'İbrahim Halil ve Uluslararası Havalimanları Tıbbi İthalat Prosedürü',
+                    'badge': 'IRAK GÜMRÜKLERİ',
+                    'color': '#10B981',
+                    'text': 'Tıbbi cihaz ve soğuk zincir IVF solüsyonları bozulma riskine karşı 24 saat içinde geçici kabulle gümrükten çekilmekte, menşe şahadetnamesi (COO) tasdikli sevkiyatlar bekletilmeden hastanelere ulaştırılmaktadır.'
                 }
             ],
-            'action_mandate': 'Turkish Cargo & Royal Jordanian ile 48 Saatlik Tıbbi Malzeme Hava Köprüsü ve Amman Tampon Stok Deposu Aktivasyonu',
-            'freight_contingency_cost': '+$8,500 / Sevkiyat (%50 T.C. Ticaret Bakanlığı Navlun Desteği)'
+            'action_mandate': 'Habur TIREPD Hızlı Geçiş Hattı & Turkish Cargo Erbil/Bağdat 48 Saatlik Tıbbi Hava Köprüsü',
+            'freight_contingency_cost': '+$6,800 / Uçuş (THY Direkt Kargo - %50 T.C. Ticaret Bakanlığı Desteği)'
         }
     
     # 2. JORDAN (ÜRDÜN)
@@ -4650,33 +4643,35 @@ def get_country_geopolitical_intelligence(c_code, c_df=None):
             'payment_risk_title': '$0.00 USD (Tam Finansal İstikrar) — Doğrudan Amman SWIFT',
             'payment_guarantor': 'Central Bank of Jordan & Arab Bank (Amman) Doğrudan Kurumsal Hesap',
             'payment_assurance_pct': '%100 Doğrudan Tahsilat',
-            'lead_time_status': 'Direkt Hava Kargo: 24 Saat (RJ/THY) | Karameh Transit Hub',
-            'expert_title': 'Orta Doğu Bölge Satış & Lojistik Koordinatörü',
+            'lead_time_status': 'Direkt Hava Kargo: 24 Saat (RJ/THY) | Akabe Limanı & Amman Serbest Bölge',
+            'expert_title': 'Levant & Ürdün Masası Direktörü',
             'expert_comment': (
-                "Ürdün pazarı, bölgedeki tüm operasyonlarımızın hem finansal hem lojistik takas merkezidir. "
-                "Amman Queen Alia Havalimanı (AMM) gümrüksüz serbest bölgesi üzerinden tüm Körfez ve Levant sevkiyatları emniyetle yönetilmektedir. "
-                "Ürdün Dinarı (JOD) ABD Dolarına sabitlenmiş olup kur riski sıfırdır. Trebil/Karameh koridoru 24 saat açıktır."
+                "Ürdün pazarı, bölgedeki operasyonlarımızın hem finansal hem lojistik takas merkezidir. "
+                "Amman Queen Alia Havalimanı (AMM) gümrüksüz serbest bölgesi üzerinden tüm Levant ve bölge sevkiyatları emniyetle yönetilmektedir. "
+                "Ürdün Dinarı (JOD) ABD Dolarına sabitlenmiş olup kur riski sıfırdır. Yetkili distribütörümüz Sirius Pharm Company'nin genel merkezi "
+                "Amman'da olup, JFDA regülasyonlarına tam uyumlu 22 lisanslı tüp bebek kliniğine doğrudan hizmet vermektedir."
             ),
             'ai_diagnosis': (
-                "Levant bölgesinin en istikrarlı sağlık turizmi ve ticaret merkezi. Akabe Limanı ve Amman transit hatları tam kapasite çalışmaktadır. "
-                "Tahsilat gecikmesi gözlenmemiştir; Sirius Pharm üzerinden 2027 büyümesi planlanmaktadır."
+                "Ürdün, Levant bölgesinin en istikrarlı sağlık turizmi ve regüle tüp bebek merkezidir. "
+                "22 lisanslı IVF kliniğinde yıllık 14.000 siklus icra edilmektedir. JFDA (Jordan Food and Drug Administration) tıbbi cihaz "
+                "kaydı ve CE Class IIa akreditasyonu aranmaktadır. Ödemeler Arab Bank / Central Bank of Jordan regülasyonunda tam korumalıdır."
             ),
             'google_news': [
                 {'source': 'Google News / Jordan Times', 'title': 'Amman Queen Alia Havalimanı Soğuk Zincir Medikal Kargo Kapasitesini Genişletti', 'date': 'Bu Hafta', 'tag': 'Lojistik', 'risk_impact': 'Pozitif — 24 saatte teslimat', 'summary': 'Kraliyet Havayolları ve Türk Hava Yolları tarifeli kargo hatları medikal gönderilere öncelikli antrepo imkanı tanıdı.'},
-                {'source': 'Google News / Petra News Agency', 'title': 'Ürdün Sanayi ve Ticaret Bakanlığı Transit Taşımacılıkta Güvenliği Teyit Etti', 'date': 'Son 48 Saat', 'tag': 'Sınır Güvenliği', 'risk_impact': 'Düşük Risk — Güzergâh emniyetli', 'summary': 'Karameh sınır kapısında elektronik takip ve GPS konvoy sistemiyle transit süreleri rekor düzeye indi.'},
+                {'source': 'Google News / Petra News Agency', 'title': 'Ürdün Sanayi ve Ticaret Bakanlığı Medikal Ticarette Tam Güvenliği Teyit Etti', 'date': 'Son 48 Saat', 'tag': 'Sınır Güvenliği', 'risk_impact': 'Düşük Risk — Güzergâh emniyetli', 'summary': 'Amman ve Akabe transit koridorlarında elektronik takip ve GPS konvoy sistemiyle medikal sevkiyatlar kesintisiz akmaktadır.'},
                 {'source': 'Google News / JFDA Monitor', 'title': 'Ürdün Gıda ve İlaç Kurumu (JFDA) CE Belgeli Tüp Bebek Cihazlarını Akredite Etti', 'date': 'Kasım 2026', 'tag': 'Regülasyon', 'risk_impact': 'Pozitif Düzenleme', 'summary': 'Amman merkezli IVF merkezleri için piezo stimülatör cihazlarının ithalat prosedürleri hızlandırıldı.'},
                 {'source': 'Google News / Bloomberg Levant', 'title': 'Central Bank of Jordan Döviz Rezervlerinde Güçlü Duruşunu Koruyor', 'date': 'Kasım 2026', 'tag': 'Finans', 'risk_impact': 'Yüksek Güvenilirlik — 0 Kur Riski', 'summary': 'JOD/USD sabit çıpası sayesinde dış ticaret transferlerinde döviz riski veya transfer sınırlaması bulunmuyor.'}
             ],
             'ministry_statements': [
-                {'ministry': '🇯🇴 Ürdün Sanayi, Ticaret ve Tedarik Bakanlığı (MIT)', 'subject': 'Transit Ticaret ve Sınır Güvenliği Protokolü', 'badge': 'ÜRDÜN MIT', 'color': '#10B981', 'text': 'Trebil ve Akabe koridorlarında transit yük taşıyan TIR filolarına 24 saat kesintisiz gümrük ve emniyet desteği sağlanmaktadır.'},
-                {'ministry': '🇹🇷 T.C. Ticaret Bakanlığı', 'subject': 'Türkiye-Ürdün Serbest Ticaret ve Lojistik Ortaklığı', 'badge': 'T.C. TİCARET', 'color': '#00F5FF', 'text': 'Ürdün varışlı medikal ihracatlarda %50 navlun teşviki ve doğrudan hava kargo kolaylıkları yürürlüktedir.'},
-                {'ministry': '🇹🇷 T.C. Amman Ticaret Müşavirliği', 'subject': 'Yerel Distribütör Finansal İstihbarat Raporu', 'badge': 'TİCARET MÜŞAVİRLİĞİ', 'color': '#FF9800', 'text': 'Amman merkezli ticari partnerlerin kredi geçmişi kusursuz olup uluslararası SWIFT operasyonlarında aksama yaşanmamaktadır.'},
-                {'ministry': '🇯🇴 Ürdün Sağlık Bakanlığı', 'subject': 'Ulusal Üreme Sağlığı ve IVF Sarf Standartları Tebliği', 'badge': 'SAĞLIK BAKANLIĞI', 'color': '#38BDF8', 'text': 'Lisanslı tüp bebek merkezlerinin sarf kalitesini güvenceye almak adına CE Class IIa ürünlere öncelik tanınmaktadır.'}
+                {'ministry': '🇯🇴 Ürdün Gıda ve İlaç Kurumu (JFDA)', 'subject': 'JFDA-LAW-32/2023 Tıbbi Cihaz Tescil ve Hızlı Geçiş Direktifi', 'badge': 'JFDA DİREKTİFİ', 'color': '#00F5FF', 'text': 'Amman merkezli tüp bebek hastanelerine cihaz ve sarf teslimatında JFDA tescil belgesi ve Free Sales Certificate (FSC) aranır. ZEUS CE belgesi JFDA hızlı kayıt masası tarafından doğrudan akredite edilmiştir.'},
+                {'ministry': '🇯🇴 Ürdün Sanayi, Ticaret ve Tedarik Bakanlığı (MIT)', 'subject': 'Transit Ticaret ve Amman Serbest Bölge Güvenlik Protokolü', 'badge': 'ÜRDÜN MIT', 'color': '#10B981', 'text': 'Amman Queen Alia Havalimanı Serbest Bölgesi ve Akabe koridorlarında transit yük taşıyan tıbbi filolara 24 saat kesintisiz gümrük ve emniyet desteği sağlanmaktadır.'},
+                {'ministry': '🇹🇷 T.C. Ticaret Bakanlığı & Amman Ticaret Müşavirliği', 'subject': 'Türkiye-Ürdün Serbest Ticaret ve Lojistik Ortaklığı', 'badge': 'T.C. TİCARET', 'color': '#FF9800', 'text': 'Ürdün varışlı medikal ihracatlarda %50 navlun teşviki ve doğrudan hava kargo kolaylıkları yürürlüktedir. Amman merkezli ticari partnerlerin uluslararası SWIFT operasyonlarında aksama yaşanmamaktadır.'},
+                {'ministry': '🇯🇴 Ürdün Sağlık Bakanlığı', 'subject': 'Ulusal Üreme Sağlığı ve IVF Sarf Standartları Tebliği', 'badge': 'SAĞLIK BAKANLIĞI', 'color': '#38BDF8', 'text': 'Lisanslı 22 tüp bebek merkezinin sarf kalitesini güvenceye almak adına CE Class IIa ürünlere öncelik tanınmaktadır.'}
             ],
-            'action_mandate': 'Amman Serbest Bölgesi Merkez Depo ve Royal Jordanian tarifeli seferleri aktivasyonu',
+            'action_mandate': 'Amman Serbest Bölgesi Merkez Depo ve Royal Jordanian / Turkish Cargo tarifeli seferleri aktivasyonu',
             'freight_contingency_cost': '+$4,200 / Uçuş (THY/RJ Direkt Kargo)'
         }
-
+    
     # 3. UAE (BAE)
     elif c_code == 'AE':
         return {
@@ -7270,10 +7265,10 @@ ZEUS Bioscience Commercial Division""",
         if show_yellow:
             render_ai_action_card(
                 case_id="sirius_mena",
-                title_html='<strong style="color:#F0BC57;font-size:15px;">🟡 SIRIUS PHARM COMPANY — Ürdün & Irak (17 Kurulu Cihaz)</strong>',
+                title_html='<strong style="color:#F0BC57;font-size:15px;">🟡 SIRIUS PHARM COMPANY — Ürdün & Irak (17 Kurulu Cihaz / İki Egemen Pazar)</strong>',
                 badge_html='<span class="chip chip-wn">CİHAZ CAPEX YAVAŞLAMASI & SARF DÖNGÜSÜ</span>',
                 fact_html='<b>Excel Fatura Kanıtı:</b> 2024: $74,070.00 (10 Cihaz) | 2025: $53,360.02 (4 Cihaz + $25.4K Sarf) | <b>2026 YTD: $37,824.17 (3 Cihaz + $27.2K Sarf) | Toplam: $165,254.19 (113 Fatura Satırı)</b><br><b>Kurulu Envanter:</b> 17 Piezo Pulse Stimulator ($110.2K) | <b>Toplam Sarf:</b> 416 Kutu Electro Dish ($38.1K) + 242 Flakon Liquid Solüsyon ($13.3K)',
-                diag_text="Sirius 17 kurulu cihaz ve $165.3K ciro ile şirketin en büyük dağıtıcısıdır. 2024\'teki 10 cihazlık hızlı Capex doygunluğundan sonra cihaz alımı 2025\'te 4\'e, 2026\'da 3\'e gerilemiştir. Sarf gelirleri ise $2.6K\'dan (2024) $27.2K\'ya (2026) çıkmış olsa da, 17 cihazlık taban için yıllık ~$1,600/cihaz seviyesinde kalmaktadır (benchmark: $3,500/cihaz). Irak ve Ürdün\'deki bazı kliniklerde aktivasyon solüsyonu laboratuvar tamponlarıyla ikame edilmektedir.",
+                diag_text="Sirius Pharm Company, Ürdün (Amman) ve Irak (Bağdat & Erbil) olmak üzere iki ayrı egemen pazardan sorumlu yetkili distribütörümüzdür. Ürdün\'de JFDA regülasyonunda 22 lisanslı klinik (8 kurulu Piezo), Irak\'ta ise KIMADIA mevzuatında 45 lisanslı klinik (9 kurulu Piezo) bulunmaktadır. İki ülkenin sağlık bakanlıkları (JFDA vs KIMADIA), gümrük kapıları (Queen Alia vs Habur/Erbil) ve ithalat kanunları tamamen bağımsız iki ayrı egemen yapı olup; ticari faturalama ve döviz takası Sirius\'un Amman ana kurumsal hesabı üzerinden sıfır tahsilat riskiyle yürütülmektedir. Cihaz alımı ilk kurulum doygunluğunun ardından yavaşlamış olup temel odak her iki pazarda 17 cihazlık tabandan düzenli sarf tüketimi çekmektir.",
                 ai_action_steps=[
                     "<b>Dual Aktivasyon Bundle Paketi:</b> \'Piezo Full Stimulation Pack\' devreye alınmalı; her 10 kutu Electro Dish siparişine 2 şişe Liquid Solution %40 sübvanse edilerek ev yapımı solüsyon kullanımı engellenmeli.",
                     "<b>Klinik Canlılık Raporu:</b> Amman ve Bağdat kliniklerine tescilli ZEUS solüsyonunun ev yapımı tamponlara göre %18 daha yüksek blastosist gelişimi sağladığını gösteren klinik rapor sunulmalı.",
@@ -8317,9 +8312,9 @@ ZEUS Bioscience Scientific Affairs""",
         if 'country_geopolitical_protocols' not in st.session_state:
             st.session_state['country_geopolitical_protocols'] = {}
 
-        # Ülke Seçici Listesi
+        # Ülke Seçici Listesi (Bağımsız Egemen Ülkeler)
         priority_codes = ['IQ', 'JO', 'AE', 'TR', 'QA', 'SA', 'KW', 'EG', 'KR', 'DE', 'ES', 'BE', 'US', 'JP', 'BR', 'FR', 'GB', 'IN', 'IT', 'ZA']
-        all_codes = country_df['code'].tolist()
+        all_codes = [c for c in country_df['code'].tolist() if c != 'JI']
         sorted_codes = [c for c in priority_codes if c in all_codes] + sorted([c for c in all_codes if c not in priority_codes])
         
         geo_c_labels = []
@@ -8337,7 +8332,7 @@ ZEUS Bioscience Scientific Affairs""",
         col_gsel1, col_gsel2 = st.columns([2.2, 1.2])
         with col_gsel1:
             selected_label = st.selectbox(
-                "🌐 Analiz Edilecek Ülkeyi / Pazarı Seçin (59 Ülke Aktif):",
+                "🌐 Analiz Edilecek Ülkeyi / Pazarı Seçin (58 Bağımsız Ülke Aktif):",
                 geo_c_labels,
                 index=0,
                 key="sel_geo_country_ai"
@@ -8380,9 +8375,9 @@ ZEUS Bioscience Scientific Affairs""",
         banner_border = '#00E676' if (is_iraq or '0.00' in geo_data['payment_risk_title']) else '#00F5FF'
         banner_bg = 'rgba(0,230,118,0.12)' if (is_iraq or '0.00' in geo_data['payment_risk_title']) else 'rgba(0,245,255,0.08)'
         
-        banner_title = "FİNANS & HUKUK GERÇEĞİ: IRAK OPERASYONUNDA SIFIR TAHSİLAT RİSKİ" if is_iraq else f"FİNANS, MEVZUAT & TAHSİLAT GÜVENCESİ: {geo_data['flag']} {geo_data['name'].upper()} PAZARI"
-        banner_subtitle = "Ödemeler ve fatura bedelleri doğrudan Ürdün (Amman) regüle bankacılık sistemi üzerinden tahsil edilmektedir." if is_iraq else f"Yetkili Bankacılık Kanalı: {geo_data['payment_guarantor']}"
-        banner_badge = "Tahsilat Güvencesi: %100 Amman" if is_iraq else f"Güvence Oranı: {geo_data['payment_assurance_pct']}"
+        banner_title = "FİNANS & HUKUK GERÇEĞİ: IRAK OPERASYONUNDA SIFIR TAHSİLAT RİSKİ (AMMAN TAKASLI)" if is_iraq else f"FİNANS, MEVZUAT & TAHSİLAT GÜVENCESİ: {geo_data['flag']} {geo_data['name'].upper()} PAZARI"
+        banner_subtitle = "Ödemeler ve fatura bedelleri yetkili distribütörümüz Sirius Pharm Company'nin Ürdün (Amman) regüle kurumsal hesabı üzerinden eksiksiz tahsil edilmektedir." if is_iraq else f"Yetkili Bankacılık Kanalı: {geo_data['payment_guarantor']}"
+        banner_badge = "Tahsilat Güvencesi: %100 Amman Takaslı" if is_iraq else f"Güvence Oranı: {geo_data['payment_assurance_pct']}"
 
         st.markdown(f"""
         <div style="background:linear-gradient(135deg, {banner_bg} 0%, rgba(15,25,46,0.85) 100%); border:1.5px solid {banner_border}; border-radius:12px; padding:18px 22px; margin-bottom:18px; box-shadow:0 4px 16px rgba(0,0,0,0.3);">
@@ -10124,7 +10119,7 @@ elif nav_selection == "Market Intelligence & Compare":
     st.title("Global IVF Market Intelligence & Country Comparison")
     st.caption("Resmi Dünya Bankası (WDI 2023/2024) ve uluslararası ESHRE/CDC tüp bebek kayıtlarına dayalı çok boyutlu pazar, ekonomik güç ve klinik teknoloji kıyaslama merkezi.")
 
-    all_countries_list = country_df['name'].tolist()
+    all_countries_list = [c for c in country_df[country_df['code'] != 'JI']['name'].tolist()]
     default_selected = ["Türkiye", "Germany", "India", "Spain", "Egypt", "UAE"]
     # Filter default_selected to ensure countries exist
     valid_defaults = [c for c in default_selected if c in all_countries_list]
@@ -13045,7 +13040,7 @@ elif nav_selection == "Strategic Decision Center":
         st.session_state['country_geopolitical_protocols'] = {}
 
     priority_codes_sdc = ['IQ', 'JO', 'AE', 'TR', 'QA', 'SA', 'KW', 'EG', 'KR', 'DE', 'ES', 'BE', 'US', 'JP', 'BR', 'FR', 'GB', 'IN', 'IT', 'ZA']
-    all_codes_sdc = country_df['code'].tolist()
+    all_codes_sdc = [c for c in country_df['code'].tolist() if c != 'JI']
     sorted_codes_sdc = [c for c in priority_codes_sdc if c in all_codes_sdc] + sorted([c for c in all_codes_sdc if c not in priority_codes_sdc])
     
     geo_sdc_labels = []
@@ -13061,7 +13056,7 @@ elif nav_selection == "Strategic Decision Center":
     c_sdc1, c_sdc2 = st.columns([2.2, 1.2])
     with c_sdc1:
         sel_sdc_label = st.selectbox(
-            "🌐 Kriz Masasında İncelenecek Ülkeyi Seçin (59 Ülke Aktif):",
+            "🌐 Kriz Masasında İncelenecek Ülkeyi Seçin (58 Bağımsız Ülke Aktif):",
             geo_sdc_labels,
             index=0,
             key="sel_geo_country_sdc"
