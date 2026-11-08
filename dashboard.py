@@ -2437,42 +2437,44 @@ def format_curr(usd_val):
 # Compute revenues dynamically based on verified Excel records
 def get_selected_year_metrics(d, year_choice):
     if d['status'] != 'active':
-        return 0.0, 0.0, 0.0, 0
+        return 0.0, 0.0, 0.0, 0, 0
         
     rev_map = d.get('rev_by_year', {})
     dev_map = d.get('dev_rev_by_year', {})
     con_map = d.get('con_rev_by_year', {})
     cnt_map = d.get('dev_cnt_by_year', {})
+    con_cnt_map = d.get('con_cnt_by_year', {})
     
     if "2024" in year_choice:
-        return rev_map.get(2024, 0.0), dev_map.get(2024, 0.0), con_map.get(2024, 0.0), cnt_map.get(2024, 0)
+        return rev_map.get(2024, 0.0), dev_map.get(2024, 0.0), con_map.get(2024, 0.0), cnt_map.get(2024, 0), con_cnt_map.get(2024, 0)
     elif "2025" in year_choice:
-        return rev_map.get(2025, 0.0), dev_map.get(2025, 0.0), con_map.get(2025, 0.0), cnt_map.get(2025, 0)
+        return rev_map.get(2025, 0.0), dev_map.get(2025, 0.0), con_map.get(2025, 0.0), cnt_map.get(2025, 0), con_cnt_map.get(2025, 0)
     elif "2026 (YTD Gerçekleşen" in year_choice:
-        return rev_map.get(2026, 0.0), dev_map.get(2026, 0.0), con_map.get(2026, 0.0), cnt_map.get(2026, 0)
+        return rev_map.get(2026, 0.0), dev_map.get(2026, 0.0), con_map.get(2026, 0.0), cnt_map.get(2026, 0), con_cnt_map.get(2026, 0)
     elif "Q4 Projeksiyon" in year_choice:
         r26 = rev_map.get(2026, 0.0)
         # Scaled to reach FY26 budget target ($303.4K)
         tot_proj = r26 * (303467.02 / 214967.02) if r26 > 0 else 0.0
         d_proj = dev_map.get(2026, 0.0) * (185531.53 / 131531.53) if dev_map.get(2026, 0.0) > 0 else 0.0
         c_proj = tot_proj - d_proj if tot_proj >= d_proj else 0.0
-        return tot_proj, d_proj, c_proj, int(cnt_map.get(2026, 0) * 1.35)
+        return tot_proj, d_proj, c_proj, int(cnt_map.get(2026, 0) * 1.35), int(con_cnt_map.get(2026, 0) * 1.35)
     elif "2027" in year_choice:
         r26 = rev_map.get(2026, 0.0)
         tot_27 = (r26 * 1.79) if r26 > 0 else (rev_map.get('ALL', 0.0) * 0.55)
-        return tot_27, tot_27 * 0.58, tot_27 * 0.42, max(1, int(cnt_map.get(2026, 0) * 1.4))
+        return tot_27, tot_27 * 0.58, tot_27 * 0.42, max(1, int(cnt_map.get(2026, 0) * 1.4)), max(10, int(con_cnt_map.get(2026, 0) * 1.4))
     else: # Konsolide (Tüm Zamanlar 2024-2026)
-        return rev_map.get('ALL', d['revenue']), dev_map.get('ALL', d['device_rev']), con_map.get('ALL', d['consumables_rev']), cnt_map.get('ALL', d['devices_count'])
+        return rev_map.get('ALL', d['revenue']), dev_map.get('ALL', d['device_rev']), con_map.get('ALL', d['consumables_rev']), cnt_map.get('ALL', d['devices_count']), con_cnt_map.get('ALL', d.get('consumables_count', 0))
 
 active_dists = [d for d in all_dists if d['status'] == 'active']
 dists_with_rev = []
 for d in all_dists:
     item = dict(d)
-    r, d_rev, c_rev, d_cnt = get_selected_year_metrics(d, year_sel)
+    r, d_rev, c_rev, d_cnt, c_cnt = get_selected_year_metrics(d, year_sel)
     item['revenue'] = r
     item['device_rev'] = d_rev
     item['consumables_rev'] = c_rev
     item['devices_count'] = d_cnt
+    item['consumables_count'] = c_cnt
     c_info = country_map.get(d['id'], {})
     item['country_name'] = c_info.get('name', d.get('country_name', d['id']))
     
@@ -5042,10 +5044,15 @@ if nav_selection == "Executive Dashboard":
     sc_total_dev_rev = sum(d['device_rev'] for d in sc_rows)
     sc_total_con_rev = sc_total_rev - sc_total_dev_rev
     sc_total_devices = sum(d['devices_count'] for d in sc_rows)
+    sc_total_consumables = sum(d.get('consumables_count', 0) for d in sc_rows)
     sc_avg_margin = (sum(d['margin_pct'] * d['revenue'] for d in sc_rows) / sc_total_rev) if sc_total_rev > 0 else 0.0
     sc_avg_growth = (sum(d['growth_pct'] * d['revenue'] for d in sc_rows) / sc_total_rev) if sc_total_rev > 0 else 0.0
-    sc_n_partners = len(sc_rows)
-    sc_n_countries = len(set(d['id'] for d in sc_rows))
+    
+    # Cari dönemde cirosu > 0 olan aktif partner ve ülkeler
+    active_in_period = [d for d in sc_rows if d.get('revenue', 0) > 0]
+    sc_n_partners = len(active_in_period) if ("2026" in year_sel or "2025" in year_sel or "2024" in year_sel) else len(sc_rows)
+    active_countries_set = set(d['id'] for d in active_in_period) if ("2026" in year_sel or "2025" in year_sel or "2024" in year_sel) else set(d['id'] for d in sc_rows)
+    sc_n_countries = len(active_countries_set) if active_countries_set else len(set(d['id'] for d in sc_rows))
 
     sc_dist_rows = [d for d in sc_rows if d in dist_rows]
     sc_sister_rows_curr = [d for d in sc_rows if d in sister_rows]
@@ -5053,6 +5060,19 @@ if nav_selection == "Executive Dashboard":
     sc_dist_rev = sum(d['revenue'] for d in sc_dist_rows)
     sc_sister_rev = sum(d['revenue'] for d in sc_sister_rows_curr)
     sc_clin_rev = sum(d['revenue'] for d in sc_clin_rows)
+
+    # Seçili Dönem Cihaz & Sarf Kırılımları (Dinamik ve Tutarlı)
+    sc_dist_dev = sum(d.get('devices_count', 0) for d in sc_dist_rows)
+    sc_sister_dev = sum(d.get('devices_count', 0) for d in sc_sister_rows_curr)
+    sc_clin_dev = sum(d.get('devices_count', 0) for d in sc_clin_rows)
+
+    sc_dist_con = sum(d.get('consumables_count', 0) for d in sc_dist_rows)
+    sc_sister_con = sum(d.get('consumables_count', 0) for d in sc_sister_rows_curr)
+    sc_clin_con = sum(d.get('consumables_count', 0) for d in sc_clin_rows)
+
+    # Seçili Dönem Aktif Hub ve Doğrudan Satış Ülkeleri
+    sc_dist_countries_cnt = len(set(d['id'] for d in sc_dist_rows if (d.get('revenue', 0) > 0 or "Konsolide" in year_sel)))
+    sc_clin_countries_cnt = len(set(d['id'] for d in sc_clin_rows if (d.get('revenue', 0) > 0 or "Konsolide" in year_sel)))
 
     # 🌐 2024-2026 KONSOLİDE TÜM ZAMANLAR KÜMÜLATİF VERİLERİ (874 Doğrulanmış Fatura)
     sc_all_time_rev = sum(d.get('rev_by_year', {}).get('ALL', d.get('revenue', 0.0)) for d in sc_rows)
@@ -5077,14 +5097,22 @@ if nav_selection == "Executive Dashboard":
         sc_all_time_clin_dev = sc_all_time_dev_cnt
         sc_all_time_dist_con = 0
         sc_all_time_clin_con = sc_all_time_con_cnt
+    elif "Gen-Sa" in exec_scope:
+        sc_all_time_rows = 48
+        sc_all_time_dist_rev = 0.0
+        sc_all_time_clin_rev = 0.0
+        sc_all_time_dist_dev = 0
+        sc_all_time_clin_dev = 0
+        sc_all_time_dist_con = 0
+        sc_all_time_clin_con = 0
     else:
         sc_all_time_rows = 874
         sc_all_time_dist_rev = 409121.26
         sc_all_time_clin_rev = 284766.23
         sc_all_time_dist_dev = 40
-        sc_all_time_clin_dev = 26
+        sc_all_time_clin_dev = 19
         sc_all_time_dist_con = 1538
-        sc_all_time_clin_con = 1654
+        sc_all_time_clin_con = 1624
 
     # Yıllık Kırılımlar
     sc_rev_2024 = sum(d.get('rev_by_year', {}).get(2024, 0.0) for d in sc_rows)
@@ -5108,7 +5136,7 @@ if nav_selection == "Executive Dashboard":
         f'<span style="font-size:19px;">🏛️</span>'
         f'<div>'
         f'<span style="font-size:13.5px; font-weight:800; color:#FFFFFF; letter-spacing:0.4px;">2024 - 2026 KONSOLİDE TÜM ZAMANLAR KÜMÜLATİF PERFORMANS</span>'
-        f'<span style="font-size:11px; color:#94A3B8; margin-left:8px;">(Tüm Satış Arşivi • 874 Doğrulanmış Fatura • 16 Ülke • 43 Kurumsal Partner)</span>'
+        f'<span style="font-size:11px; color:#94A3B8; margin-left:8px;">(Tüm Satış Arşivi • 874 Doğrulanmış Fatura • 15 Ülke • 43 Kurumsal Partner)</span>'
         f'</div>'
         f'</div>'
         f'<div style="display:flex; align-items:center; gap:8px;">'
@@ -5125,29 +5153,29 @@ if nav_selection == "Executive Dashboard":
         f'<div style="font-size:24px; font-weight:800; color:#00F5FF; margin-top:3px;">{format_curr(sc_all_time_rev)}</div>'
         f'<div style="font-size:10.5px; color:#E2E8F0; margin-top:3px;">🤝 Distribütör: <b>{format_curr(sc_all_time_dist_rev)}</b> <span style="color:#64748B;">|</span> 🏥 Klinik: <b>{format_curr(sc_all_time_clin_rev)}</b></div>'
         f'<div style="margin-top:6px; padding-top:5px; border-top:1px solid rgba(255,255,255,0.06); font-size:10px; color:#94A3B8; display:flex; justify-content:space-between;">'
-        f"<span>2024: <b>{format_curr(sc_rev_2024)}</b></span><span>2025: <b>{format_curr(sc_rev_2025)}</b></span><span style=\"color:#00F5FF;\">2026: <b>{format_curr(sc_rev_2026)}</b></span>"
+        f'<span>2024: <b>{format_curr(sc_rev_2024)}</b></span><span>2025: <b>{format_curr(sc_rev_2025)}</b></span><span style="color:#00F5FF;">2026: <b>{format_curr(sc_rev_2026)}</b></span>'
         f'</div>'
         f'</div>'
         f'<div style="background:rgba(15,23,42,0.75); border:1px solid rgba(56,189,248,0.22); border-left:3px solid #38BDF8; border-radius:8px; padding:10px 14px;">'
         f'<div style="display:flex; justify-content:space-between; align-items:center;">'
         f'<span style="font-size:11px; font-weight:700; color:#94A3B8; text-transform:uppercase;">🔬 2024-2026 Toplam Satılan Cihaz</span>'
-        f'<span style="font-size:9.5px; background:rgba(56,189,248,0.15); color:#38BDF8; padding:1px 5px; border-radius:3px; font-weight:700;">66 CİHAZ</span>'
+        f'<span style="font-size:9.5px; background:rgba(56,189,248,0.15); color:#38BDF8; padding:1px 5px; border-radius:3px; font-weight:700;">{sc_all_time_dev_cnt} CİHAZ</span>'
         f'</div>'
         f'<div style="font-size:24px; font-weight:800; color:#38BDF8; margin-top:3px;">{sc_all_time_dev_cnt:,} Adet Cihaz</div>'
         f'<div style="font-size:10.5px; color:#E2E8F0; margin-top:3px;">🤝 Dist Filosu: <b>{sc_all_time_dist_dev} Cihaz</b> <span style="color:#64748B;">|</span> 🏥 Klinik: <b>{sc_all_time_clin_dev} Cihaz</b></div>'
         f'<div style="margin-top:6px; padding-top:5px; border-top:1px solid rgba(255,255,255,0.06); font-size:10px; color:#94A3B8; display:flex; justify-content:space-between;">'
-        f"<span>2024: <b>{sc_dev_2024} Adet</b></span><span>2025: <b>{sc_dev_2025} Adet</b></span><span style=\"color:#38BDF8;\">2026: <b>{sc_dev_2026} Adet</b></span>"
+        f'<span>2024: <b>{sc_dev_2024} Adet</b></span><span>2025: <b>{sc_dev_2025} Adet</b></span><span style="color:#38BDF8;">2026: <b>{sc_dev_2026} Adet</b></span>'
         f'</div>'
         f'</div>'
         f'<div style="background:rgba(15,23,42,0.75); border:1px solid rgba(255,184,0,0.22); border-left:3px solid #FFB800; border-radius:8px; padding:10px 14px;">'
         f'<div style="display:flex; justify-content:space-between; align-items:center;">'
         f'<span style="font-size:11px; font-weight:700; color:#94A3B8; text-transform:uppercase;">🧪 2024-2026 Tekrar Eden Sarf</span>'
-        f'<span style="font-size:9.5px; background:rgba(255,184,0,0.15); color:#FFB800; padding:1px 5px; border-radius:3px; font-weight:700;">3,192 KUTU</span>'
+        f'<span style="font-size:9.5px; background:rgba(255,184,0,0.15); color:#FFB800; padding:1px 5px; border-radius:3px; font-weight:700;">{sc_all_time_con_cnt:,} KUTU</span>'
         f'</div>'
         f'<div style="font-size:24px; font-weight:800; color:#FFB800; margin-top:3px;">{format_curr(sc_all_time_con_rev)}</div>'
         f'<div style="font-size:10.5px; color:#E2E8F0; margin-top:3px;">🤝 Dist: <b>{sc_all_time_dist_con:,} Kutu</b> <span style="color:#64748B;">|</span> 🏥 Klinik: <b>{sc_all_time_clin_con:,} Kutu</b></div>'
         f'<div style="margin-top:6px; padding-top:5px; border-top:1px solid rgba(255,255,255,0.06); font-size:10px; color:#94A3B8; display:flex; justify-content:space-between;">'
-        f"<span>2024: <b>{sc_con_2024:,} Kutu</b></span><span>2025: <b>{sc_con_2025:,} Kutu</b></span><span style=\"color:#FFB800;\">2026: <b>{sc_con_2026:,} Kutu</b></span>"
+        f'<span>2024: <b>{sc_con_2024:,} Kutu</b></span><span>2025: <b>{sc_con_2025:,} Kutu</b></span><span style="color:#FFB800;">2026: <b>{sc_con_2026:,} Kutu</b></span>'
         f'</div>'
         f'</div>'
         f'<div style="background:rgba(15,23,42,0.75); border:1px solid rgba(16,185,129,0.22); border-left:3px solid #10B981; border-radius:8px; padding:10px 14px;">'
@@ -5156,7 +5184,7 @@ if nav_selection == "Executive Dashboard":
         f'<span style="font-size:9.5px; background:rgba(16,185,129,0.15); color:#10B981; padding:1px 5px; border-radius:3px; font-weight:700;">874 İŞLEM</span>'
         f'</div>'
         f'<div style="font-size:24px; font-weight:800; color:#10B981; margin-top:3px;">{sc_all_time_rows} Fatura</div>'
-        f'<div style="font-size:10.5px; color:#E2E8F0; margin-top:3px;">🌐 <b>16 Aktif Ülke</b> <span style="color:#64748B;">•</span> 🏢 <b>43 Kurum & Partner</b></div>'
+        f'<div style="font-size:10.5px; color:#E2E8F0; margin-top:3px;">🌐 <b>15 Aktif Ülke</b> <span style="color:#64748B;">•</span> 🏢 <b>43 Kurum & Partner</b></div>'
         f'<div style="margin-top:6px; padding-top:5px; border-top:1px solid rgba(255,255,255,0.06); font-size:10px; color:#94A3B8; display:flex; justify-content:space-between;">'
         f'<span>3 Yıllık Ort. Marj: <b style="color:#10B981;">%48.4</b></span><span>Aktif Hub: <b style="color:#FFFFFF;">6 Ülke</b></span>'
         f'</div>'
@@ -5199,6 +5227,8 @@ if nav_selection == "Executive Dashboard":
             unsafe_allow_html=True
         )
     with k2:
+        active_dist_p_cnt = len([d for d in sc_dist_rows if d.get('revenue', 0) > 0 or 'Konsolide' in year_sel])
+        active_clin_p_cnt = len([d for d in sc_clin_rows if d.get('revenue', 0) > 0 or 'Konsolide' in year_sel])
         st.markdown(
             f'<div class="kpi-container" style="border-top: 3px solid #10B981;">'
             f'<div>'
@@ -5217,8 +5247,9 @@ if nav_selection == "Executive Dashboard":
             f'🌐 2024-2026: <b>{sc_all_time_rows} Fatura</b>'
             f'</div>'
             f'<div style="margin-top:5px;padding-top:5px;border-top:1px solid rgba(255,255,255,0.08);font-size:9.5px;line-height:1.4;color:#94A3B8;">'
-            f'<div style="color:#CBD5E1;margin-bottom:2px;">• <b>{len(sc_dist_rows)}</b> Yetkili Distribütör</div>'
-            f'<div style="color:#CBD5E1;">• <b>{len(sc_clin_rows)}</b> Doğrudan Klinik</div>'
+            f'<div style="color:#CBD5E1;margin-bottom:2px;">• 🤝 <b>{active_dist_p_cnt}</b> Aktif Distribütör</div>'
+            f'<div style="color:#CBD5E1;">• 🏥 <b>{active_clin_p_cnt}</b> Doğrudan Klinik</div>'
+            + (f'<div style="color:#94A3B8;font-size:8.5px;">• 🏢 <b>1</b> Kardeş Şirket (Gen-Sa)</div>' if sc_sister_rev > 0 else '') +
             f'</div>'
             f'</div>'
             f'</div>',
@@ -5243,8 +5274,9 @@ if nav_selection == "Executive Dashboard":
             f'🌐 2024-2026: <b>{sc_all_time_dev_cnt} Cihaz</b> ({format_curr(sc_all_time_dev_rev)})'
             f'</div>'
             f'<div style="margin-top:5px;padding-top:5px;border-top:1px solid rgba(255,255,255,0.08);font-size:9.5px;line-height:1.4;color:#94A3B8;">'
-            f'<div style="color:#CBD5E1;margin-bottom:2px;">• <b>{sc_all_time_dist_dev}</b> Distribütör Tabanı</div>'
-            f'<div style="color:#CBD5E1;">• <b>{sc_all_time_clin_dev}</b> Klinik Satışı</div>'
+            f'<div style="color:#CBD5E1;margin-bottom:2px;">• 🤝 <b>{sc_dist_dev}</b> Distribütör Filosu</div>'
+            f'<div style="color:#CBD5E1;">• 🏥 <b>{sc_clin_dev}</b> Klinik Satışları</div>'
+            + (f'<div style="color:#94A3B8;font-size:8.5px;">• 🏢 <b>{sc_sister_dev}</b> Gen-Sa (Grup İçi)</div>' if sc_sister_dev > 0 else '') +
             f'</div>'
             f'</div>'
             f'</div>',
@@ -5262,15 +5294,16 @@ if nav_selection == "Executive Dashboard":
             f'<span style="font-size:8.5px;background:rgba(255,184,0,0.15);color:#FFB800;padding:2px 5px;border-radius:4px;font-weight:700;white-space:nowrap;flex-shrink:0;">{y_badge_str}</span>'
             f'</div>'
             f'<div class="kpi-val" style="font-size:23px;font-weight:800;color:#FFFFFF;margin-top:2px;">{format_curr(sc_total_con_rev)}</div>'
-            f'<div style="font-size:10px;color:#FFB800;font-weight:600;margin-top:1px;">Sarf Payı: %{(sc_total_con_rev/sc_total_rev*100) if sc_total_rev > 0 else 0:.1f}</div>'
+            f'<div style="font-size:10px;color:#FFB800;font-weight:600;margin-top:1px;">Sarf Hacmi: {sc_total_consumables:,} Kutu (%{(sc_total_con_rev/sc_total_rev*100) if sc_total_rev > 0 else 0:.1f})</div>'
             f'</div>'
             f'<div style="margin-top:6px;">'
             f'<div style="background:rgba(255,184,0,0.08);border:1px solid rgba(255,184,0,0.22);border-radius:5px;padding:3px 6px;font-size:9.5px;color:#FFB800;font-weight:700;">'
             f'🌐 2024-2026: <b>{format_curr(sc_all_time_con_rev)}</b> ({sc_all_time_con_cnt:,} Kutu)'
             f'</div>'
             f'<div style="margin-top:5px;padding-top:5px;border-top:1px solid rgba(255,255,255,0.08);font-size:9.5px;line-height:1.4;color:#94A3B8;">'
-            f'<div style="color:#CBD5E1;margin-bottom:2px;">• <b>{sc_all_time_dist_con:,}</b> Dist Çekişi</div>'
-            f'<div style="color:#CBD5E1;">• <b>{sc_all_time_clin_con:,}</b> Klinik Tüketimi</div>'
+            f'<div style="color:#CBD5E1;margin-bottom:2px;">• 🤝 <b>{sc_dist_con:,}</b> Dist Çekişi ({format_curr(sum(d.get("consumables_rev", 0) for d in sc_dist_rows))})</div>'
+            f'<div style="color:#CBD5E1;">• 🏥 <b>{sc_clin_con:,}</b> Klinik Tüketimi ({format_curr(sum(d.get("consumables_rev", 0) for d in sc_clin_rows))})</div>'
+            + (f'<div style="color:#94A3B8;font-size:8.5px;">• 🏢 <b>{sc_sister_con:,}</b> Gen-Sa ({format_curr(sum(d.get("consumables_rev", 0) for d in sc_sister_rows_curr))})</div>' if sc_sister_con > 0 else '') +
             f'</div>'
             f'</div>'
             f'</div>',
@@ -5285,18 +5318,18 @@ if nav_selection == "Executive Dashboard":
             f'<div style="font-size:13px;font-weight:800;color:#FFFFFF;line-height:1.2;">Brüt Kâr Marjı</div>'
             f'<div style="font-size:9px;color:#94A3B8;font-weight:600;letter-spacing:0.4px;">GROSS MARGIN</div>'
             f'</div>'
-            f'<span style="font-size:8.5px;background:rgba(168,85,247,0.15);color:#A855F7;padding:2px 5px;border-radius:4px;font-weight:700;white-space:nowrap;flex-shrink:0;">ORTALAMA</span>'
+            f'<span style="font-size:8.5px;background:rgba(168,85,247,0.15);color:#A855F7;padding:2px 5px;border-radius:4px;font-weight:700;white-space:nowrap;flex-shrink:0;">AĞIRLIKLI ORT.</span>'
             f'</div>'
             f'<div class="kpi-val" style="font-size:23px;font-weight:800;color:#FFFFFF;margin-top:2px;">{sc_avg_margin:.1f}%</div>'
-            f'<div style="font-size:10px;color:#00E676;font-weight:600;margin-top:1px;">+0.8 pt vs Hedef</div>'
+            f'<div style="font-size:10px;color:#00E676;font-weight:600;margin-top:1px;">+0.8 pt vs Bütçe Hedefi</div>'
             f'</div>'
             f'<div style="margin-top:6px;">'
             f'<div style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.22);border-radius:5px;padding:3px 6px;font-size:9.5px;color:#C084FC;font-weight:700;">'
             f'🌐 2024-2026: <b>%48.4 Konsolide</b>'
             f'</div>'
             f'<div style="margin-top:5px;padding-top:5px;border-top:1px solid rgba(255,255,255,0.08);font-size:9.5px;line-height:1.4;color:#94A3B8;">'
-            f'<div style="color:#CBD5E1;margin-bottom:2px;">• Distribütör Marjı: <b>%42.5</b></div>'
-            f'<div style="color:#CBD5E1;">• Klinik Marjı: <b>%51.2</b></div>'
+            f'<div style="color:#CBD5E1;margin-bottom:2px;">• Toptan Dist. Model Marjı: <b>%42.5</b></div>'
+            f'<div style="color:#CBD5E1;">• Doğrudan Klinik Model Marjı: <b>%51.2</b></div>'
             f'</div>'
             f'</div>'
             f'</div>',
@@ -5311,18 +5344,18 @@ if nav_selection == "Executive Dashboard":
             f'<div style="font-size:13px;font-weight:800;color:#FFFFFF;line-height:1.2;">Kapsanan Pazar</div>'
             f'<div style="font-size:9px;color:#94A3B8;font-weight:600;letter-spacing:0.4px;">GLOBAL COVERAGE</div>'
             f'</div>'
-            f'<span style="font-size:8.5px;background:rgba(100,116,139,0.15);color:#CBD5E1;padding:2px 5px;border-radius:4px;font-weight:700;white-space:nowrap;flex-shrink:0;">15 / 48 ÜLKE</span>'
+            f'<span style="font-size:8.5px;background:rgba(100,116,139,0.15);color:#CBD5E1;padding:2px 5px;border-radius:4px;font-weight:700;white-space:nowrap;flex-shrink:0;">{sc_n_countries} / 48 ÜLKE</span>'
             f'</div>'
             f'<div class="kpi-val" style="font-size:23px;font-weight:800;color:#FFFFFF;margin-top:2px;">{sc_n_countries} Ülke</div>'
             f'<div style="font-size:10px;color:#94A3B8;font-weight:600;margin-top:1px;">48 Takip Edilen Pazar</div>'
             f'</div>'
             f'<div style="margin-top:6px;">'
             f'<div style="background:rgba(100,116,139,0.1);border:1px solid rgba(100,116,139,0.25);border-radius:5px;padding:3px 6px;font-size:9.5px;color:#E2E8F0;font-weight:700;">'
-            f'🌐 2024-2026: <b>16 Ülke Ayak İzi</b>'
+            f'🌐 2024-2026: <b>15 Ülke Ayak İzi</b>'
             f'</div>'
             f'<div style="margin-top:5px;padding-top:5px;border-top:1px solid rgba(255,255,255,0.08);font-size:9.5px;line-height:1.4;color:#94A3B8;">'
-            f'<div style="color:#CBD5E1;margin-bottom:2px;">• <b>6</b> Distribütör Hub Ülkesi</div>'
-            f'<div style="color:#CBD5E1;">• <b>10</b> Doğrudan Satış Ülkesi</div>'
+            f'<div style="color:#CBD5E1;margin-bottom:2px;">• 🤝 <b>{sc_dist_countries_cnt}</b> Distribütör Hub Ülkesi</div>'
+            f'<div style="color:#CBD5E1;">• 🏥 <b>{sc_clin_countries_cnt}</b> Doğrudan Satış Ülkesi</div>'
             f'</div>'
             f'</div>'
             f'</div>',
