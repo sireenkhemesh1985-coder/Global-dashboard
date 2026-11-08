@@ -4981,15 +4981,16 @@ if nav_selection == "Executive Dashboard":
     </div>
     ''', unsafe_allow_html=True)
 
-    # Portföy Segmentasyonu: Distribütörler vs Herkes Dahil (Tüm Klinikler & Hastaneler)
-    c_sc1, c_sc2 = st.columns([3.2, 1.8])
+    # Portföy Segmentasyonu: Distribütörler vs Doğrudan Klinikler vs Kardeş Şirket (Gen-Sa)
+    c_sc1, c_sc2 = st.columns([3.0, 2.0])
     with c_sc1:
         exec_scope = st.radio(
             "Portföy Analiz Kapsamı",
             [
                 "🌐 Tüm Ekosistem (Herkes Dahil - 43 Kurum)",
-                "🤝 Yalnızca Yetkili Distribütörler (6 Hub)",
-                "🏥 Doğrudan Klinikler & Hastaneler (37 Kurum)"
+                "🤝 Yetkili Distribütörler (6 Hub)",
+                "🏥 Doğrudan Klinikler (36 Kurum)",
+                "🏢 Kardeş Şirket Gen-Sa (Grup İçi)"
             ],
             index=0,
             horizontal=True,
@@ -4999,31 +5000,42 @@ if nav_selection == "Executive Dashboard":
     with c_sc2:
         st.markdown('''
         <div style="text-align:right;padding-top:4px;">
-            <span style="font-size:11.5px;color:#94A3B8;">2026 Kanal Kırılımı: </span>
-            <span style="font-size:11.5px;color:#00F5FF;font-weight:700;">Distribütör: %50.1 ($107.7K)</span>
+            <span style="font-size:11px;color:#94A3B8;">2026 Kanal Kırılımı: </span>
+            <span style="font-size:11px;color:#00F5FF;font-weight:700;">Distribütör: $107.7K (%50.1)</span>
             <span style="color:#64748B;"> | </span>
-            <span style="font-size:11.5px;color:#FFB800;font-weight:700;">Klinikler: %49.9 ($107.2K)</span>
+            <span style="font-size:11px;color:#FFB800;font-weight:700;">Klinikler: $74.1K (%34.5)</span>
+            <span style="color:#64748B;"> | </span>
+            <span style="font-size:11px;color:#A0AEC0;font-weight:700;">Gen-Sa: $33.1K (%15.4)</span>
         </div>
         ''', unsafe_allow_html=True)
+
+    sister_rows = [d for d in active_rows if d.get('account_type') == 'Sister Company' or d.get('is_sister')]
+    pure_clinic_rows = [d for d in active_rows if d not in dist_rows and d not in sister_rows]
 
     if "Distribütörler" in exec_scope:
         sc_rows = dist_rows
         scope_badge_label = "YALNIZCA DİSTRİBÜTÖRLER"
         scope_badge_bg = "rgba(0,245,255,0.15)"
         scope_badge_color = "#00F5FF"
-        scope_desc_str = "6 Yetkili Distribütör Hub"
+        scope_desc_str = "6 Yetkili Distribütör Hub ($107.7K)"
     elif "Klinikler" in exec_scope:
-        sc_rows = [d for d in active_rows if d not in dist_rows]
-        scope_badge_label = "DOĞRUDAN KLİNİKLER"
+        sc_rows = pure_clinic_rows
+        scope_badge_label = "DOĞRUDAN KLİNİKLER & HASTANELER"
         scope_badge_bg = "rgba(255,184,0,0.15)"
         scope_badge_color = "#FFB800"
-        scope_desc_str = "37 Doğrudan Klinik & Hastane"
+        scope_desc_str = "36 Doğrudan Klinik & Hastane ($74.1K)"
+    elif "Gen-Sa" in exec_scope:
+        sc_rows = sister_rows
+        scope_badge_label = "KARDEŞ ŞİRKET (GEN-SA)"
+        scope_badge_bg = "rgba(160,174,192,0.15)"
+        scope_badge_color = "#A0AEC0"
+        scope_desc_str = "Grup İçi Tedarik ($33.1K)"
     else:
         sc_rows = active_rows
         scope_badge_label = "HERKES DAHİL (TÜM PORTFÖY)"
         scope_badge_bg = "rgba(16,185,129,0.15)"
         scope_badge_color = "#10B981"
-        scope_desc_str = "6 Distribütör + 37 Klinik"
+        scope_desc_str = "6 Distribütör ($107.7K) + 36 Klinik ($74.1K) + Gen-Sa ($33.1K)"
 
     # Seçili Dönem Metrikleri (Cari 2026 YTD veya Seçili Yıl)
     sc_total_rev = sum(d['revenue'] for d in sc_rows)
@@ -5036,8 +5048,10 @@ if nav_selection == "Executive Dashboard":
     sc_n_countries = len(set(d['id'] for d in sc_rows))
 
     sc_dist_rows = [d for d in sc_rows if d in dist_rows]
-    sc_clin_rows = [d for d in sc_rows if d not in dist_rows]
+    sc_sister_rows_curr = [d for d in sc_rows if d in sister_rows]
+    sc_clin_rows = [d for d in sc_rows if d in pure_clinic_rows]
     sc_dist_rev = sum(d['revenue'] for d in sc_dist_rows)
+    sc_sister_rev = sum(d['revenue'] for d in sc_sister_rows_curr)
     sc_clin_rev = sum(d['revenue'] for d in sc_clin_rows)
 
     # 🌐 2024-2026 KONSOLİDE TÜM ZAMANLAR KÜMÜLATİF VERİLERİ (874 Doğrulanmış Fatura)
@@ -5176,8 +5190,9 @@ if nav_selection == "Executive Dashboard":
             f'</div>'
             f'<div style="margin-top:5px;padding-top:5px;border-top:1px solid rgba(255,255,255,0.08);font-size:9.5px;line-height:1.4;color:#94A3B8;">'
             f'<div style="color:{scope_badge_color};font-weight:700;margin-bottom:2px;">● {scope_badge_label}</div>'
-            f'<div style="color:#CBD5E1;">🤝 Distribütör: <b>{format_curr(sc_dist_rev)}</b></div>'
-            f'<div style="color:#CBD5E1;">🏥 Klinikler: <b>{format_curr(sc_clin_rev)}</b></div>'
+            f'<div style="color:#CBD5E1;">🤝 Distribütör: <b>{format_curr(sc_dist_rev)}</b> (%{(sc_dist_rev/sc_total_rev*100) if sc_total_rev>0 else 0:.1f})</div>'
+            f'<div style="color:#CBD5E1;">🏥 Klinikler: <b>{format_curr(sc_clin_rev)}</b> (%{(sc_clin_rev/sc_total_rev*100) if sc_total_rev>0 else 0:.1f})</div>'
+            + (f'<div style="color:#94A3B8;font-size:8.5px;">🏢 Gen-Sa (Grup İçi): <b>{format_curr(sc_sister_rev)}</b></div>' if sc_sister_rev > 0 else '') +
             f'</div>'
             f'</div>'
             f'</div>',
