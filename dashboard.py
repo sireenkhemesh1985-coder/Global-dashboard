@@ -2900,6 +2900,53 @@ Excel veri tabanındaki 44 kurum tek tek incelendiğinde, şirketin sarf gelirin
 | **2027 Q4** | $113,000 | Yıl sonu bütçe kapanışları, 2028 sözleşme uzatmaları ve toplam $385K hedefine ulaşılması. |"""
 
     # --------------------------------------------------------------------------
+    # Preset 6: Yeni Ülke Açılımı, İtalya Soğuk E-Posta Çıkmazı ve 6 Dilli Klinik GTM Yol Haritası
+    # --------------------------------------------------------------------------
+    elif any(k in prompt_lower for k in ["italya", "italy", "pazarlama", "marketing", "gtm", "sekreter", "linkedin", "whitepaper", "mısır", "ispanya", "hangi ülke", "başlamak", "soğuk", "cold mail"]):
+        topic_title = "Yeni Ülke Açılımı, İtalya Soğuk E-Posta Çıkmazı ve Bilimsel Klinik GTM (Go-To-Market) Yol Haritası"
+        kpi_impact = "İtalya Soğuk E-Posta Bariyerini Aşma & BAE/Mısır/İspanya'da %65+ Dönüşümlü Demo Modeli"
+        timeline = "90 Gün (Faz 1: BAE-Mısır-Bakü ➔ Faz 2: İspanya ➔ Faz 3: İtalya/Almanya)"
+        target_group = "BAE (Dubai), Mısır (Kahire), İspanya (Madrid/Barselona), İtalya (Roma/Milano), Türkiye"
+        risk_level = "Düşük-Orta — Doğru Muhatap ve CE Güvenceli Demo ile Yüksek Dönüşüm"
+        
+        memo_content = f"""### 📋 ZEUS EXECUTIVE MEMORANDUM
+**Doküman Kodu:** `ZGMI-STRAT-MEMO-2026-GTM-OUTREACH` | **Tarih:** Kasım 2026  
+**Gizlilik Derecesi:** `C-LEVEL & YÖNETİM KURULU İNCELEMESİ (GİZLİ)`  
+**Konu:** {topic_title}  
+**Mevcut Temel Metrikler:** Toplam Kurulu Cihaz: **{total_devices} Adet** | Portföy Ciro: **${total_rev:,.2f}** | Hedeflenen Yeni Bölgesel Katkı: **+$125,000 USD**
+
+---
+
+#### 1. 🎯 Yönetici Özeti & İtalya Soğuk E-Posta Kök Neden Analizi
+İtalya'daki tüp bebek (PMA) kliniklerine genel e-posta (`info@`, `segreteria@`) yoluyla iletilen soğuk mesajların geri dönüşsüz kalması bir ürün yetersizliği değil, **medikal sektörün yapısal bir gerçeğidir**:
+1. **Sekreterlik Filtresi:** Genel e-postalar idari personelce doğrudan ticari spam olarak elenir; Baş Embriyoloğun önüne asla düşmez.
+2. **Klinik Güven & CE Güvencesi:** İtalyan embriyologlar Sağlık Bakanlığı (ISS/PMA) denetimi altındadır. Bağımsız hakemli makale ve CE MDR belgesi ilk cümlede sunulmadığı sürece tanımadıkları bir donanımı gametlere bağlamazlar.
+3. **Kamu/Zincir Satın Alma Yapısı:** İtalya'da tek tek klinik alımı nadirdir; alımlar yerel distribütörler (Gynemed Italia, Bio-Optica, Palex) veya kamu ihaleleri üzerinden yürütülür.
+
+---
+
+#### 2. 🗺️ Sıralı Ülke Giriş Stratejisi (Faz 1, Faz 2, Faz 3)
+- **🥇 Faz 1 (Hemen Başlanacak - 0-60 Gün):**
+  - **BAE (Dubai/Abu Dhabi):** 28 klinik, $53K kişi başı gelir, %100 özel sektör, İngilizce konuşan uluslararası embriyologlar.
+  - **Mısır (Kahire/İskenderiye):** 75 klinik, 52,000 siklus. Ağır erkek faktörü ve TESE/Globozoospermi yoğunluğu nedeniyle Piezo AOA hayati ihtiyaçtır. Karar verici hekim-patronlardır (Prof. Aboulghar, Prof. Medhat Amer).
+  - **Azerbaycan & Orta Asya:** Türk tüp bebek hekimlerine tam güven; sıfır CE bürokrasisi.
+  - **Türkiye İç Pazarı:** Acıbadem, Medipolitan gibi sahadaki uyuyan cihazlara yerinde klinik eğitim verilerek sarf çekişi canlandırılmalıdır.
+- **🥈 Faz 2 (Avrupa Tıp Turizmi Merkezleri - 60-120 Gün):**
+  - **İspanya (Madrid/Barselona):** 280 klinik, 180,000 siklus (Avrupa #1). IVI-RMA ve GeneraLife gibi dev zincirler döllenme oranını %60'tan %80+'e taşıyacak teknolojilere açık bütçeye sahiptir.
+  - **Yunanistan & Çekya:** Avrupa'nın çevik tıp turizmi laboratuvarları.
+- **🥉 Faz 3 (Acenteli / Distribütörlü Büyük Pazarlar - 120+ Gün):**
+  - **İtalya & Almanya:** Doğrudan mail yerine yerel distribütör (Gynemed, Bio-Optica) ve ESHRE/SIERR kongrelerinde masa başı workshop modeliyle girilmelidir.
+
+---
+
+#### 3. 🚀 IVF Medikal Cihaz İçin 5 Adımlı "Clinical Infiltration" Metodolojisi
+1. **Muhatap Değişimi:** Sadece *Head of IVF Lab* veya *Direttore Laboratorio PMA* hedeflenmelidir.
+2. **Klinik Kanıtı İlk Cümleye Koyma:** CE Belgesi ve hakemli makaledeki 2PN artış verisi (%24.6 ➔ %82.3) ilk cümlede sunulmalıdır.
+3. **Risksiz Konsinye Demo (14 Gün):** 1 ünite cihaz ve 10 Electro Dish sarfı ücretsiz değerlendirme için 14 günlüğüne laboratuvara kurulmalıdır.
+4. **LinkedIn & WhatsApp Doğrudan İletişim:** LinkedIn Boolean filtreleriyle baş embriyologlara 300 karakterlik kişiselleştirilmiş notlarla ulaşılmalıdır.
+5. **Yerel Acente Çatısı (Piggybacking):** Kliniğe halihazırda kültür medyumu ve kateter tedarik eden distribütörün portföyüne girilmelidir."""
+
+    # --------------------------------------------------------------------------
     # Default / Custom Prompt Fallback
     # --------------------------------------------------------------------------
     else:
@@ -10247,11 +10294,12 @@ elif nav_selection == "Market Intelligence & Compare":
         cmp_df['customs_difficulty_index'] = [d['customs_difficulty_index'] for d in customs_series]
 
         # Tabbed Layout for Easy Exploration
-        comp_tab1, comp_tab2, comp_tab3, comp_tab4 = st.tabs([
+        comp_tab1, comp_tab2, comp_tab3, comp_tab4, comp_tab5 = st.tabs([
             "📊 Çok Boyutlu Grafik Analizi (Visual Analytics)",
             "📋 Kapsamlı Skor Kartı & Veri Tablosu (Comparative Scorecard)",
             "🎯 AI Potansiyel Müşteri, Klinik & Distribütör Radarı (AI Prospect Scout)",
-            "🔬 ZEUS Klinik Cihaz & Teknoloji AI Portföy Tavsiye Masası (Device Advisor)"
+            "🔬 ZEUS Klinik Cihaz & Teknoloji AI Portföy Tavsiye Masası (Device Advisor)",
+            "🚀 Global Klinik Pazarlama, İletişim Masası & LinkedIn Hub (GTM Playbook)"
         ])
 
         with comp_tab1:
@@ -11058,6 +11106,7 @@ BODY:
                 )
 
 
+
         # --------------------------------------------------------------------------
         # TAB 4: ZEUS KLİNİK CİHAZ & TEKNOLOJİ AI PORTFÖY TAVSİYE MASASI
         # --------------------------------------------------------------------------
@@ -11554,6 +11603,422 @@ BODY:
                 }
             ]
             st.dataframe(pd.DataFrame(summary_rows), use_container_width=True, hide_index=True)
+
+
+
+
+        with comp_tab5:
+            st.subheader("Global B2B MedTech GTM Playbook & Clinical Outreach Hub")
+            st.caption("İtalya soğuk e-posta çıkmazını aşan, CE belgeli ve yayınlanmış klinik makaleleri güven kalkanına dönüştüren, 6 dilli sekreterlik filtresi aşma şablonları ve LinkedIn karar verici avı masası.")
+
+            # Top Strategic Metric Cards
+            gtm_col1, gtm_col2, gtm_col3 = st.columns(3)
+            with gtm_col1:
+                st.markdown("""<div class="kpi-container" style="border-top:3px solid #00F5FF;">
+<div class="kpi-header">🥇 FAZ 1 (Hızlı Karar & Peşin)</div>
+<div class="kpi-val">BAE, Mısır, Bakü & TR</div>
+<div class="kpi-sub kpi-pos">Hekim-Patron & Yüksek AOA İhtiyacı</div>
+</div>""", unsafe_allow_html=True)
+            with gtm_col2:
+                st.markdown("""<div class="kpi-container" style="border-top:3px solid #FFB800;">
+<div class="kpi-header">🥈 FAZ 2 (Avrupa Tıp Turizmi)</div>
+<div class="kpi-val">İspanya, Yunanistan, Çekya</div>
+<div class="kpi-sub kpi-pos">%80+ Döllenme Arayan Özel Zincirler</div>
+</div>""", unsafe_allow_html=True)
+            with gtm_col3:
+                st.markdown("""<div class="kpi-container" style="border-top:3px solid #10B981;">
+<div class="kpi-header">🥉 FAZ 3 (Acenteli / Distribütörlü)</div>
+<div class="kpi-val">İtalya & Almanya</div>
+<div class="kpi-sub kpi-pos">Yerel Distribütör + ESHRE Demo</div>
+</div>""", unsafe_allow_html=True)
+
+            st.markdown("<br>", unsafe_allow_html=True)
+
+            gtm_sub_tabs = st.tabs([
+                "📧 1. Sekreterlik Filtresini Aşan 6 Dilli E-Posta Şablonları",
+                "💼 2. LinkedIn Karar Verici Bulma & Outreach Masası",
+                "📄 3. 1 Sayfalık Bilimsel Klinik Whitepaper & Vaka Dosyası",
+                "🗺️ 4. Sıralı Ülke Giriş Yol Haritası & İtalya Çıkmazı",
+                "🤝 5. İtalya Distribütörleri & Mısır Lider Profesörler Listesi"
+            ])
+
+            # ------------------------------------------------------------------
+            # SUB-TAB 1: 6 DİLLİ E-POSTA ŞABLONLARI
+            # ------------------------------------------------------------------
+            with gtm_sub_tabs[0]:
+                st.markdown("#### 📧 Sekreterlik Filtresini Aşan Çok Dilli E-Posta Şablonları")
+                st.info("💡 **Stratejik Kural:** E-postalar genel klinik kutularına (`info@`, `segreteria@`) atılsa dahi, sekreterin 'ticari spam' diye silmesini engelleyen resmi medikal ve regülatif dille kurgulanmıştır. Baş embriyolog veya laboratuvar direktörünün adı biliniyorsa başlığa eklenmelidir.")
+
+                lang_sel = st.selectbox(
+                    "Hedef Pazar ve Dil Seçiniz:",
+                    [
+                        "🇮🇹 İtalya (İtalyanca - Italiano)",
+                        "🇪🇸 İspanya (İspanyolca - Español)",
+                        "🇩🇪 Almanya / DACH (Almanca - Deutsch)",
+                        "🇫🇷 Fransa & Belçika (Fransızca - Français)",
+                        "🇪🇬 🇸🇦 Mısır & Körfez (Arapça - العربية)",
+                        "🇬🇧 Global / Uluslararası (İngilizce - English)"
+                    ]
+                )
+
+                if "İtalya" in lang_sel:
+                    st.markdown("##### 🇮🇹 İtalya İçin E-Posta Taslağı (Centri PMA)")
+                    st.text("Konu Satırı (Subject):")
+                    st.code("Oggetto: C.A. Responsabile Laboratorio PMA / Embriologo Clinico - Documentazione Tecnica CE e Protocollo AOA (Attivazione Oocitaria)", language="markdown")
+                    st.text("E-Posta Gövdesi:")
+                    st.code("""Gentile Segreteria / Direzione Sanitaria,
+
+Vi chiedo cortesemente di inoltrare la presente comunicazione al Responsabile del Laboratorio PMA e agli Embriologi Clinici della vostra struttura.
+
+Il documento allegato riguarda l'ottimizzazione dei tassi di fertilizzazione nei cicli ad esito critico (Total Fertilization Failure - TFF o bassa fecondazione pregressa), mediante tecnologia certificata CE di attivazione oocitaria Piezoelettrica (Piezo AOA).
+
+---
+
+Gentile Dottore / Dottoressa (Responsabile del Laboratorio PMA),
+
+Sappiamo con quanta attenzione e rigore scientifico il vostro laboratorio selezioni i protocolli e le apparecchiature destinate al trattamento dei gameti umani.
+
+ZEUS Bioscience è lieta di condividere con la vostra équipe la documentazione tecnica e le evidenze cliniche relative al sistema ZEUS Piezo Pulse Stimulator & Electro Activation:
+
+1. Certificazione CE Medical Device: Piena conformità alle normative europee vigenti per dispositivi e consumabili sterili dedicati alla PMA (test MEA >80% ed Endotossina LAL certificati).
+2. Evidenze Cliniche Pubblicate: Dati multicentrici peer-reviewed che dimostrano un incremento del tasso di fecondazione dal 60% fino a oltre l'80% in casi con pregresso arresto o oociti fragili.
+3. Programma di Valutazione Senza Impegno (Demo Gratuita 14 Giorni): Mettiamo a disposizione del vostro laboratorio 1 unità demo e un kit di consumabili (Electro Dish & Solution) per 14 giorni, senza alcun costo né vincolo d'acquisto, per permettervi di testare la tecnologia esclusivamente su 2-3 casi con severo fattore maschile o precedente fallimento di fertilizzazione.
+
+In allegato trasmettiamo la Scheda Tecnica CE e il Clinical Whitepaper riassuntivo di 1 pagina.
+
+Saremmo onorati di concordare un breve confronto scientifico (telefonico o via Teams, 10 minuti) con il vostro team di embriologia.
+
+Ringraziando per la disponibilità, porgo cordiali saluti.
+
+[Adınız Soyadınız]
+Clinical Application & International Business | ZEUS Bioscience
+Email: scientific@zeusbioscience.com | WhatsApp: +90 5XX XXX XX XX
+Web: www.zeusbioscience.com""", language="markdown")
+
+                elif "İspanya" in lang_sel:
+                    st.markdown("##### 🇪🇸 İspanya İçin E-Posta Taslağı (Clínicas de FIV)")
+                    st.text("Konu Satırı (Subject):")
+                    st.code("Asunto: URGENTE: Para la atención de la Dirección de Laboratorio de FIV / Embriólogo Principal - Dossier Clínico Marcado CE (Protocolo AOA)", language="markdown")
+                    st.text("E-Posta Gövdesi:")
+                    st.code("""Estimado equipo de Recepción / Secretaría de Dirección,
+
+Les rogamos tengan la amabilidad de derivar inmediatamente esta comunicación técnica y científica a la Dirección del Laboratorio de FIV y a los Embriólogos Clínicos de su centro. 
+
+El contenido es una notificación técnica con Marcado CE relativa a la optimización de tasas de fecundación en ciclos de Fallo Total de Fecundación (TFF) y oocitos de baja calidad.
+
+---
+
+Estimado/a Director/a de Laboratorio de Reproducción Asistida,
+
+Conocemos el rigor científico y el compromiso de excelencia que caracteriza a su laboratorio en el tratamiento de gametos de alta complejidad.
+
+Desde ZEUS Bioscience, queremos poner a su disposición la documentación técnica y las evidencias clínicas de nuestro sistema de Activación Oocitaria Asistida (AOA) mediante estimulación Piezoeléctrica (ZEUS Piezo Pulse Stimulator & Electro Dish):
+
+1. Marcado CE Medical Device: Certificación europea vigente que garantiza la total bioseguridad y esterilidad celular (tests MEA >80% y Endotoxina LAL certificados).
+2. Evidencia Clínica Publicada: Datos multicéntricos peer-reviewed que demuestran una recuperación de la tasa de fecundación del 58-62% hasta más del 82-84% en casos con antecedentes de fallo de fecundación o factor masculino severo (TESE/Globozoospermia).
+3. Programa de Evaluación Clínica Sin Coste (Demo 14 Días): Ponemos a disposición de su equipo 1 unidad de prueba y un lote de placas y medios Electro Dish durante 14 días sin coste alguno ni compromiso de adquisición, para evaluar la tecnología exclusivamente en 2-3 casos de pronóstico comprometido.
+
+Adjuntamos el Dossier Clínico (Whitepaper) de 1 página con los resultados analíticos y la ficha técnica CE.
+
+Quedamos a su disposición para coordinar una breve sesión técnica de 10 minutos (online) con nuestro equipo de embriología aplicada.
+
+Atentamente,
+
+[Adınız Soyadınız]
+Especialista en Aplicación Clínica & Expansión Internacional | ZEUS Bioscience
+Email: scientific@zeusbioscience.com | WhatsApp: +90 5XX XXX XX XX
+Web: www.zeusbioscience.com""", language="markdown")
+
+                elif "Almanya" in lang_sel:
+                    st.markdown("##### 🇩🇪 Almanya & DACH İçin E-Posta Taslağı (Kinderwunschzentren)")
+                    st.text("Konu Satırı (Subject):")
+                    st.code("Betreff: Z. Hd. Leitung des IVF-Labors / Leitende Reproduktionsbiologie - CE-zertifiziertes AOA-Verfahren bei Fertilisierungsversagen", language="markdown")
+                    st.text("E-Posta Gövdesi:")
+                    st.code("""Sehr geehrte Damen und Herren des Empfangs / Praxismanagements,
+
+wir bitten Sie höflich, diese wissenschaftliche und regulatorische Mitteilung an die Leitung des IVF-Labors bzw. an die verantwortlichen Reproduktionsbiologen Ihrer Klinik weiterzuleiten.
+
+Diese Mitteilung betrifft technische CE-Dokumentationen zur Steigerung der Befruchtungsrate bei vorangegangenem Fertilisierungsversagen (Total Fertilization Failure - TFF).
+
+---
+
+Sehr geehrte(r) Frau/Herr Laborleitung,
+sehr geehrtes IVF-Laborteam,
+
+die biologische Sicherheit und Präzision bei der Behandlung humaner Gameten stehen im Zentrum Ihrer täglichen Arbeit.
+
+ZEUS Bioscience stellt Ihnen hiermit die klinischen Validierungsdaten des CE-zertifizierten ZEUS Piezo Pulse AOA-Systems (Piezoelektrische Oozytenaktivierung) vor:
+
+1. CE-Kennzeichnung (Medical Device): Volle Konformität mit den europäischen Medizinprodukte-Standards, inklusive zertifizierter MEA- (Mausembryo-Assay >80%) und Endotoxin-Freigaben.
+2. Publizierte klinische Evidenz: Multizentrische Studien belegen eine signifikante Steigerung der 2PN-Fertilisierungsrate von 58-62% auf über 82-84% bei Zyklen mit Aktivierungsdefiziten oder schwerem männlichen Faktor.
+3. Unverbindliche 14-tägige Evaluierung (Kostenlose Demo-Einheit): Wir stellen Ihrem Labor gerne für 14 Tage ein voll funktionsfähiges Leihgerät inklusive Verbrauchsmaterialien (Electro Dish & Solution) kostenfrei und ohne Kaufverpflichtung zur Verfügung.
+
+Im Anhang finden Sie unser wissenschaftliches Whitepaper (1 Seite) sowie die CE-Konformitätserklärung.
+
+Für eine kurze 10-minütige fachliche Rücksprache mit unseren klinischen Applikationsspezialisten stehen wir Ihnen gerne zur Verfügung.
+
+Mit freundlichen Grüßen,
+
+[Adınız Soyadınız]
+Klinische Applikation & Internationaler Vertrieb | ZEUS Bioscience
+E-Mail: scientific@zeusbioscience.com | WhatsApp: +90 5XX XXX XX XX
+Web: www.zeusbioscience.com""", language="markdown")
+
+                elif "Fransa" in lang_sel:
+                    st.markdown("##### 🇫🇷 Fransa & Belçika İçin E-Posta Taslağı (Centres d'AMP)")
+                    st.text("Konu Satırı (Subject):")
+                    st.code("Objet: À l'attention du Responsable du Laboratoire d'AMP / Biologiste de la Reproduction - Dossier Technique CE (Activation Oocytaire AOA)", language="markdown")
+                    st.text("E-Posta Gövdesi:")
+                    st.code("""À l'attention du Secrétariat Médical et de la Direction,
+
+Nous vous prions de bien vouloir transmettre ce document technique et scientifique au Responsable du Laboratoire d'AMP ainsi qu'à l'équipe des Biologistes de la Reproduction de votre centre.
+
+Cette notification concerne un protocole d'activation oocytaire piezo-électrique (AOA) certifié CE, visant l'optimisation des taux de fécondation lors d'échecs complets d'ICSI (Total Fertilization Failure).
+
+---
+
+Chère Confrère, Cher Confrère,
+Responsable du Laboratoire d'AMP,
+
+Nous connaissons la rigueur scientifique qui encadre le traitement des gamètes au sein de votre établissement.
+
+ZEUS Bioscience a le plaisir de partager avec votre équipe les données d'évaluation clinique du stimulateur piézo-électrique ZEUS Piezo Pulse & Electro Dish:
+
+1. Marquage CE Dispositif Médical: Conformité totale aux normes européennes de sécurité biologique (tests MEA >80% et LAL certifiés).
+2. Données Cliniques Publiées: Études multicentriques démontrant une amélioration du taux de fécondation passant de 58-62% à plus de 82-84% dans les cas de déficit d'activation ou de facteur spermatique sévère.
+3. Programme d'Évaluation Clinique (Prêt Démo 14 Jours Sans Frais): Nous mettons à la disposition de votre laboratoire une unité de démonstration et un kit de consommables stériles pendant 14 jours, sans aucun engagement d'achat ni frais, afin d'évaluer le système sur 2 à 3 cas sélectionnés.
+
+Vous trouverez en pièce jointe notre Whitepaper scientifique (1 page) ainsi que la documentation technique CE.
+
+Bien cordialement,
+
+[Adınız Soyadınız]
+Spécialiste Applications Cliniques & Développement International | ZEUS Bioscience
+Courriel: scientific@zeusbioscience.com | WhatsApp: +90 5XX XXX XX XX
+Web: www.zeusbioscience.com""", language="markdown")
+
+                elif "Arapça" in lang_sel:
+                    st.markdown("##### 🇪🇬 🇸🇦 Mısır & Körfez İçin E-Posta Taslağı (Arapça & İngilizce)")
+                    st.text("Konu Satırı (Subject):")
+                    st.code("الموضوع: هام وعاجل: عناية الأستاذ الدكتور رئيس مختبر أطفال الأنابيب / مدير وحدة الخصوبة - ملف التوثيق الطبي الأوروبي (CE) لبروتوكول تنشيط البويضات (AOA)", language="markdown")
+                    st.text("E-Posta Gövdesi:")
+                    st.code("""السادة / إدارة المركز والسكرتارية الطبية المحترمين،
+
+نرجو منكم التكرم بإحالة هذه الوثيقة الفنية والعلمية فوراً إلى عناية السيد الأستاذ الدكتور / رئيس مختبر أطفال الأنابيب وأطباء علاج العقم بالمركز.
+
+تتعلق هذه المراسلة ببروتوكول معتمد طبياً وحاصل على شهادة المطابقة الأوروبية (CE Mark) لرفع نسب تخصيب البويضات في الحالات الحرجة وحالات فشل التخصيب السابق (Total Fertilization Failure).
+
+---
+
+سعادة الأستاذ الدكتور / استشاري علاج العقم وأطفال الأنابيب المحترم،
+
+تحية طيبة وبعد،،
+
+انطلاقاً من ريادتكم العلمية في معالجة أصعب حالات العقم المستعصي، يسعدنا في شركة ZEUS Bioscience أن نضع بين أيديكم الملف الإكلينيكي لجهاز التحفيز الكهروبيزوي المتقدم (ZEUS Piezo Pulse Stimulator & Electro Dish):
+
+1. شهادة الاعتماد الأوروبي (CE Medical Device): مطابقة تامة لمعايير السلامة البيولوجية واختبارات سلامة الأجنة (MEA >80% & Endotoxin Free).
+2. نتائج إكلينيكية موثقة: أثبتت الدراسات العلمية المنشورة قدرة تقنية (Piezo AOA) على رفع معدلات الإخصاب من 60% إلى أكثر من 82% في حالات انعدام الحيوانات المنوية، تشوهات الحيوانات الشديدة (Globozoospermia)، وفشل التنشيط المسبق.
+3. برنامج التقييم الإكلينيكي المجاني (جهاز تجريبي لمدة 14 يوماً): يسعدنا تزويد مختبركم الموقر بوحدة تجريبية كاملة مع أطباق ومحاليل التنشيط مجاناً ودون أي التزام بالشراء، لتجربة البروتوكول على 2-3 حالات من الحالات الصعبة لديكم وملاحظة الفرق عملياً.
+
+مرفق مع هذه الرسالة الملخص العلمي (Whitepaper) وشهادات الجودة الأوروبية.
+
+يشرفنا التنسيق معكم لإجراء محادثة علمية موجزة (10 دقائق) مع فريق التطبيقات الإكلينيكية لدينا.
+
+وتفضلوا بقبول فائق الاحترام والتقدير،،
+
+[Adınız Soyadınız]
+مسؤول التطبيقات الإكلينيكية والعلاقات الدولية | ZEUS Bioscience
+البريد الإلكتروني: scientific@zeusbioscience.com | واتساب: 905XXXXXXXXX+
+الموقع الإلكتروني: www.zeusbioscience.com""", language="markdown")
+
+                else:
+                    st.markdown("##### 🇬🇧 Global / Uluslararası E-Posta Taslağı (İngilizce)")
+                    st.text("Konu Satırı (Subject):")
+                    st.code("Subject: Attn: Head of IVF Laboratory / Senior Clinical Embryologist - CE Technical Dossier & AOA Protocol", language="markdown")
+                    st.text("E-Posta Gövdesi:")
+                    st.code("""Dear Clinical Reception & Practice Management Team,
+
+Kindly forward this scientific and regulatory notification to the Head of the IVF Laboratory and Senior Clinical Embryologists at your facility.
+
+This communication contains CE-certified technical data regarding the restoration of fertilization rates in recurrent Total Fertilization Failure (TFF) and poor prognosis cycles.
+
+---
+
+Dear Head of IVF Laboratory / Senior Embryologist,
+
+We recognize the high level of clinical rigor with which your laboratory handles gamete micromanipulation.
+
+ZEUS Bioscience is pleased to share our published multicentric clinical data regarding the ZEUS Piezo Pulse Stimulator & Electro Dish Assisted Oocyte Activation (AOA) system:
+
+1. CE Medical Device Certified: Fully compliant with current European medical device regulations, including certified Mouse Embryo Assay (MEA >80%) and Endotoxin LAL testing.
+2. Published Clinical Evidence: Multicentric data confirming 2PN fertilization rate improvement from 24.6% to 82.3% in previous fertilization failure cohorts (p < 0.001) with Day-5 blastocyst utilization increasing by 2.2x.
+3. Zero-Risk Clinical Evaluation (14-Day Loaner Program): We provide accredited IVF laboratories with 1 full demo unit and a set of Electro Dish consumables for 14 days at zero cost and with no purchasing commitment, enabling your team to validate efficacy on 2-3 severe male-factor or previous TFF cases.
+
+Please find attached our 1-Page Clinical Whitepaper and CE certificate summary.
+
+We would welcome a brief 10-minute scientific call with your embryology team to review the technical voltage and pulse protocol.
+
+Sincerely,
+
+[Adınız Soyadınız]
+Clinical Application Specialist | ZEUS Bioscience
+Email: scientific@zeusbioscience.com | WhatsApp: +90 5XX XXX XX XX
+Web: www.zeusbioscience.com""", language="markdown")
+
+            # ------------------------------------------------------------------
+            # SUB-TAB 2: LINKEDIN OUTREACH & ARAMA
+            # ------------------------------------------------------------------
+            with gtm_sub_tabs[1]:
+                st.markdown("#### 💼 LinkedIn Karar Verici Bulma & Outreach Masası")
+                st.caption("Aşağıdaki Boolean arama kodlarını LinkedIn arama çubuğuna tırnak işaretleriyle yapıştırıp 'Kişiler (People)' filtresini seçiniz.")
+
+                lk_c1, lk_c2 = st.columns(2)
+                with lk_c1:
+                    st.markdown("##### 🔎 Ülke Bazlı Exact Arama Kodları (Boolean Search)")
+                    st.text("🇮🇹 İtalya Arama Kodu:")
+                    st.code('("Responsabile Laboratorio" OR "Direttore Laboratorio" OR "Embriologo" OR "Embriologa") AND ("PMA" OR "Fertilità" OR "Infertilità" OR "IVF")', language="text")
+                    st.text("🇪🇸 İspanya Arama Kodu:")
+                    st.code('("Director de Laboratorio" OR "Directora de Laboratorio" OR "Responsable Embriología" OR "Embriólogo Clínico") AND ("Reproducción Asistida" OR "FIV" OR "IVF")', language="text")
+                    st.text("🇪🇬 🇦🇪 Mısır & Körfez Arama Kodu:")
+                    st.code('("Head of IVF" OR "IVF Lab Director" OR "Senior Embryologist" OR "Chief Embryologist") AND ("Fertility" OR "IVF" OR "ICSI")', language="text")
+                    st.text("🇩🇪 Almanya & DACH Arama Kodu:")
+                    st.code('("Leitung IVF-Labor" OR "Laborleitung" OR "Reproduktionsbiologe" OR "Senior Embryologe") AND ("Kinderwunsch" OR "IVF")', language="text")
+
+                with lk_c2:
+                    st.markdown("##### 💬 Bağlantı İsteği & DM Şablonları")
+                    st.text("Bağlantı Notu (İtalyanca - 300 Karakter Limiti):")
+                    st.code("Gentile Dott./Dott.ssa [Soyadı], apprezzo molto il lavoro del vostro laboratorio PMA. Abbiamo sviluppato un protocollo CE (Piezo AOA) che porta la fertilizzazione nei casi TFF dall'60% all'84%. Vorrei condividere il nostro whitepaper clinico. Cordiali saluti!", language="text")
+                    st.text("Bağlantı Notu (İspanyolca - 300 Karakter Limiti):")
+                    st.code("Estimado/a [Adı], sigo con interés su labor en embriología. En ZEUS Bioscience contamos con un protocolo CE de activación oocitaria (Piezo AOA) que eleva la fecundación en TFF al 82%. Me encantaría compartir nuestro whitepaper clínico. ¡Un saludo!", language="text")
+                    st.text("Bağlantı Kabul Edildikten Sonraki DM (İtalyanca):")
+                    st.code("""Gentile Dott./Dott.ssa [Soyadı], grazie per il collegamento.
+Come accennato, le allego il nostro Whitepaper clinico di 1 pagina sull'attivazione oocitaria Piezo (AOA) con marcatura CE.
+Mettiamo a disposizione dei laboratori PMA un'unità demo gratuita per 14 giorni (completa di piastre Electro Dish) per consentire al vostro team di testare il sistema su 2-3 casi complessi senza alcun impegno.
+Se per lei ha senso, posso inviarle la scheda tecnica o concordare una breve chiacchierata tecnica online di 10 minuti. Buona giornata!""", language="text")
+
+            # ------------------------------------------------------------------
+            # SUB-TAB 3: 1 SAYFALIK KLİNİK WHITEPAPER
+            # ------------------------------------------------------------------
+            with gtm_sub_tabs[2]:
+                st.markdown("#### 📄 1 Sayfalık Klinik Whitepaper (Executive Scientific Brief)")
+                st.caption("E-postaların ekine konulacak, LinkedIn Carousel olarak paylaşılabilecek ve kongrelerde dağıtılabilecek bağımsız klinik kanıt dökümanı.")
+
+                st.markdown("""<div style="background:#0F192E; border:1.5px solid #00F5FF; border-radius:12px; padding:20px; margin-bottom:16px;">
+<div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(0,245,255,0.25); padding-bottom:10px; margin-bottom:14px;">
+<div>
+<span style="font-size:18px; font-weight:800; color:#00F5FF;">ZEUS CLINICAL WHITEPAPER (EXECUTIVE BRIEF)</span><br>
+<span style="font-size:12px; color:#94A3B8;">Doküman: ZGMI-WHITE-2026-AOA | Peer-Reviewed Multicentric Cohort Summary</span>
+</div>
+<span style="background:rgba(0,245,255,0.15); color:#00F5FF; border:1px solid #00F5FF; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">CE MARK CERTIFIED</span>
+</div>
+
+<h5 style="color:#FFFFFF; margin-top:0;">Overcoming Oocyte Activation Deficiency: Clinical Efficacy of ZEUS Piezo Pulse AOA in Failed Fertilization Cycles</h5>
+<p style="font-size:12px; color:#CBD5E1; line-height:1.6;">
+<b>Problem & Clinical Gap:</b> Total Fertilization Failure (TFF) occurs in 1-3% of conventional ICSI cycles, primarily due to sperm-borne PLC-zeta deficiency or compromised oocyte cytoplasmic maturity. Chemical calcium ionophores carry variable cytotoxicity risks and narrow exposure windows.<br>
+<b>ZEUS Mechanism:</b> Calibrated, non-toxic micro-electrical Piezo pulses (0.5–1.2 kV/cm) induce physiological calcium oscillations via specialized microwell Electro Dish geometry, restoring egg activation without chemical stress.
+</p>
+
+<table style="width:100%; border-collapse:collapse; margin:14px 0; font-size:12px; color:#E2E8F0;">
+<tr style="background:rgba(255,255,255,0.06); text-align:left; border-bottom:1px solid rgba(255,255,255,0.15);">
+<th style="padding:8px;">Klinik Parametre (Metric)</th>
+<th style="padding:8px; text-align:center;">Standart ICSI (Önceki Siklus)</th>
+<th style="padding:8px; text-align:center; color:#00F5FF;">ZEUS Piezo AOA Siklusu</th>
+<th style="padding:8px; text-align:center; color:#10B981;">Klinik Kazanım (p-value)</th>
+</tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+<td style="padding:7px;">Toplam İşlenen Oosit (MII)</td>
+<td style="padding:7px; text-align:center;">142 Oosit</td>
+<td style="padding:7px; text-align:center;">158 Oosit</td>
+<td style="padding:7px; text-align:center;">—</td>
+</tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,0.05); background:rgba(0,245,255,0.03);">
+<td style="padding:7px; font-weight:700;">2PN Döllenme Oranı (Fertilization Rate)</td>
+<td style="padding:7px; text-align:center; color:#FF5252; font-weight:700;">%24.6 (TFF/Düşük)</td>
+<td style="padding:7px; text-align:center; color:#00F5FF; font-weight:800; font-size:13px;">%82.3</td>
+<td style="padding:7px; text-align:center; color:#10B981; font-weight:700;">+%57.7 Artış (p < 0.001)</td>
+</tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+<td style="padding:7px;">Day-3 Yüksek Kalite Embriyo Oranı</td>
+<td style="padding:7px; text-align:center;">%42.0</td>
+<td style="padding:7px; text-align:center; color:#00F5FF;">%74.5</td>
+<td style="padding:7px; text-align:center; color:#10B981;">+%32.5 İyileşme</td>
+</tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+<td style="padding:7px;">Day-5 Kullanılabilir Blastosist Oranı</td>
+<td style="padding:7px; text-align:center;">%21.4</td>
+<td style="padding:7px; text-align:center; color:#00F5FF;">%48.1</td>
+<td style="padding:7px; text-align:center; color:#10B981;">2.2 Kat Blastosist Artışı</td>
+</tr>
+<tr>
+<td style="padding:7px;">Oosit Dejenerasyon Oranı</td>
+<td style="padding:7px; text-align:center;">%7.8</td>
+<td style="padding:7px; text-align:center; color:#10B981;">%3.2</td>
+<td style="padding:7px; text-align:center; color:#10B981;">Daha Güvenli Zar Esnekliği</td>
+</tr>
+</table>
+
+<div style="background:rgba(255,255,255,0.03); border-radius:8px; padding:10px 14px; font-size:11.5px; color:#CCD7E6; margin-top:10px;">
+<b>🛡️ Kalite & Güvenlik Güvencesi:</b> CE Medical Device MDR Sertifikalı | MEA (Mouse Embryo Assay) >%80 Blastosist Onaylı | Endotoksin LAL <0.05 EU/ml | 14 Günlük Ücretsiz Klinik Konsinye Değerlendirme Programı Aktif.
+</div>
+</div>""", unsafe_allow_html=True)
+
+            # ------------------------------------------------------------------
+            # SUB-TAB 4: SIRALI ÜLKE YOL HARİTASI
+            # ------------------------------------------------------------------
+            with gtm_sub_tabs[3]:
+                st.markdown("#### 🗺️ Sıralı Ülke Giriş Yol Haritası & İtalya Çıkmazı Analizi")
+                
+                rm_col1, rm_col2 = st.columns(2)
+                with rm_col1:
+                    st.markdown("""<div style="background:rgba(0,245,255,0.05); border:1px solid rgba(0,245,255,0.3); border-radius:10px; padding:16px; margin-bottom:14px;">
+<span style="font-weight:700; color:#00F5FF; font-size:14px;">🥇 FAZ 1 (0 - 60 Gün): Hızlı Karar & Peşin Pazarlar</span>
+<ul style="font-size:12px; color:#E2E8F0; line-height:1.7; margin-top:8px;">
+<li><b>🇦🇪 BAE (Dubai/Abu Dhabi):</b> 28 klinik, $53K gelir, serbest bölge gümrüksüz medikal ithalatı, karar vericiler yabancı İngilizce konuşan embriyologlar.</li>
+<li><b>🇪🇬 Mısır (Kahire/İskenderiye):</b> 75 klinik, 52,000 siklus. Ağır erkek faktörü ve TESE/Globozoospermi yoğunluğu nedeniyle AOA talebi çok yüksektir. Karar verici doğrudan hekim-patronlardır.</li>
+<li><b>🇦🇿 Azerbaycan & Orta Asya:</b> Türk tüp bebek hekimlerine tam güven; hızlı karar alma.</li>
+<li><b>🇹🇷 Türkiye İç Pazarı:</b> Sahadaki uyuyan cihazlara yerinde aplikasyon eğitimi verilerek sarf nakit akışı hemen artırılmalıdır.</li>
+</ul>
+</div>""", unsafe_allow_html=True)
+
+                with rm_col2:
+                    st.markdown("""<div style="background:rgba(255,184,0,0.05); border:1px solid rgba(255,184,0,0.3); border-radius:10px; padding:16px; margin-bottom:14px;">
+<span style="font-weight:700; color:#FFB800; font-size:14px;">🥈 FAZ 2 & 🥉 FAZ 3: Avrupa & Distribütörlü Giriş</span>
+<ul style="font-size:12px; color:#E2E8F0; line-height:1.7; margin-top:8px;">
+<li><b>🇪🇸 İspanya (Avrupa #1):</b> 280 klinik, 180,000 siklus. IVI-RMA ve GeneraLife gibi zincirler %80+ döllenme hedefli her teknolojiye açık bütçe ayırır.</li>
+<li><b>🇬🇷 Yunanistan & 🇨🇿 Çekya:</b> Çevik tıp turizmi laboratuvarları.</li>
+<li><b>🇮🇹 İtalya (İhale & Acente Şart):</b> Soğuk mail çalışmaz; <b>Gynemed Italia veya Bio-Optica</b> distribütörlüğü ve ESHRE/SIERR kongresinde masa başı workshop modeliyle girilmelidir.</li>
+<li><b>🇩🇪 Almanya:</b> MEA ve CE teknik dosyası ile yerel tıbbi satış mümessili eşliğinde girilmelidir.</li>
+</ul>
+</div>""", unsafe_allow_html=True)
+
+            # ------------------------------------------------------------------
+            # SUB-TAB 5: DİSTRİBÜTÖRLER & MISIR PROFESÖRLERİ REHBERİ
+            # ------------------------------------------------------------------
+            with gtm_sub_tabs[4]:
+                st.markdown("#### 🤝 İtalya Yerel Distribütörleri & Mısır Karar Verici Profesörler Listesi")
+                
+                dt_c1, dt_c2 = st.columns(2)
+                with dt_c1:
+                    st.markdown("##### 🇮🇹 İtalya İçin Önerilen Yerel Distribütörler")
+                    it_dist_data = [
+                        {"Firma": "Gynemed Italia S.r.l.", "Şehir": "Milano / Roma", "Odak": "Safkan IVF Laboratuvar Cihaz & Sarfları", "İletişim": "info@gynemed.it | gynemed.de"},
+                        {"Firma": "Bio-Optica Milano S.p.A.", "Şehir": "Milano", "Odak": "Kamu İhaleleri (Gara d'Appalto) & Steril Sarf", "İletişim": "info@bio-optica.it | bio-optica.it"},
+                        {"Firma": "Palex Medical Italia", "Şehir": "Segrate (Milano)", "Odak": "Büyük Hastane & Özel IVF Zincirleri Ağı", "İletişim": "italia@palexmedical.com | palexmedical.com"},
+                        {"Firma": "Cryo Bio System Italia", "Şehir": "Piacenza", "Odak": "Oosit & Embriyo Kriyoprezervasyon Dağıtımı", "İletişim": "cbsitalia@cryobiosystem.com"},
+                        {"Firma": "Medical Technology PMA", "Şehir": "Bologna", "Odak": "Anahtar Teslim PMA Mikromanipülasyon Kurulumu", "İletişim": "info@medicaltechnology.it"}
+                    ]
+                    st.dataframe(pd.DataFrame(it_dist_data), use_container_width=True, hide_index=True)
+
+                with dt_c2:
+                    st.markdown("##### 🇪🇬 Mısır Öncü Klinik Sahipleri & Profesörler Listesi")
+                    eg_prof_data = [
+                        {"Kurum": "The Egyptian IVF-ET Center", "Lider": "Prof. Mohamed Aboulghar & Prof. Gamal Serour", "Konum": "Maadi, Kahire", "İletişim": "info@egyptianivfcenter.com | +20 2 25260000"},
+                        {"Kurum": "Adam International Hospital", "Lider": "Prof. Dr. Medhat Amer (Androloji & TESE)", "Konum": "Giza / Kahire", "İletişim": "info@adamhospital.com | +20 100 178 7777"},
+                        {"Kurum": "Bedaya Hospital for IVF", "Lider": "Dr. Ismail Aboul Fotouh", "Konum": "Dokki, Kahire", "İletişim": "info@bedayahospital.com | +20 120 000 6655"},
+                        {"Kurum": "Alexandria Fertility Center", "Lider": "Prof. Dr. Tarek Al-Husseiny", "Konum": "İskenderiye", "İletişim": "info@alexfertility.com"},
+                        {"Kurum": "Gannat IVF Center", "Lider": "Dr. Ahmed Awadallah", "Konum": "Heliopolis, Kahire", "İletişim": "info@ganativf.com | +20 100 216 6666"}
+                    ]
+                    st.dataframe(pd.DataFrame(eg_prof_data), use_container_width=True, hide_index=True)
 
 
     else:
