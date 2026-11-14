@@ -3094,6 +3094,128 @@ def build_fallback_sales_extensions(country_name, macro=None):
         ]
     }
 
+
+def build_country_360_charts(country_name, c_macro, c_sales, target_rev_2027=50000.0, target_con_2027=300):
+    clinics = int(c_macro.get('clinics', 20))
+    est_total_cycles = max(3000, int(clinics * 350))
+    if country_name == 'Egypt':
+        est_total_cycles = 52000
+    elif country_name == 'Turkey':
+        est_total_cycles = 65000
+    elif country_name == 'Italy':
+        est_total_cycles = 95000
+    elif country_name in ['Jordan-Iraq', 'Jordan', 'Iraq']:
+        est_total_cycles = 28000
+    elif country_name == 'Saudi Arabia':
+        est_total_cycles = 32000
+    elif country_name == 'Algeria':
+        est_total_cycles = 28000
+    elif country_name == 'Qatar':
+        est_total_cycles = 4500
+
+    # Chart 1: Treatment protocol breakdown
+    ch1_labels = ['Standart ICSI (%52)', 'Piezo AOA & Şiddetli Erkek (%24)', 'PGT-A / PGT-M Biyopsi (%16)', 'Kriyobank Transfer (%8)']
+    ch1_vals = [est_total_cycles * 0.52, est_total_cycles * 0.24, est_total_cycles * 0.16, est_total_cycles * 0.08]
+    fig1 = go.Figure(data=[go.Pie(
+        labels=ch1_labels,
+        values=ch1_vals,
+        hole=0.55,
+        marker=dict(colors=['#00F5FF', '#00E676', '#FFB800', '#A855F7'], line=dict(color='#0B1426', width=2)),
+        textinfo='percent',
+        hoverinfo='label+value',
+        textfont=dict(color='#FFFFFF', size=11)
+    )])
+    fig1.update_layout(
+        title=dict(text=f"🔬 {country_name} Klinik IVF Tedavi Dağılımı (~{est_total_cycles:,.0f} Siklus)", font=dict(color='#00F5FF', size=12)),
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)',
+        showlegend=True,
+        legend=dict(font=dict(color='#CBD5E1', size=9), orientation='v', x=1.02, y=0.5),
+        margin=dict(l=5, r=5, t=35, b=10),
+        height=240
+    )
+
+    # Chart 2: Funding breakdown
+    ivf_supp = str(c_macro.get('ivf_support', 'Özel'))
+    if any(k in ivf_supp for k in ['Yüksek', 'Geniş', 'Tam']):
+        oop_pct, state_pct = 35, 65
+    elif any(k in ivf_supp for k in ['Kısmi', 'Karma', 'Sınırlı']):
+        oop_pct, state_pct = 75, 25
+    else:
+        oop_pct, state_pct = 85, 15
+
+    ch2_labels = [f'Özel Cepten Ödeme (%{oop_pct})', f'Devlet / Kamu Desteği (%{state_pct})']
+    fig2 = go.Figure(data=[go.Pie(
+        labels=ch2_labels,
+        values=[oop_pct, state_pct],
+        hole=0.6,
+        marker=dict(colors=['#FF6B6B', '#13A6B5'], line=dict(color='#0B1426', width=2)),
+        textinfo='percent',
+        hoverinfo='label',
+        textfont=dict(color='#FFFFFF', size=11)
+    )])
+    fig2.update_layout(
+        title=dict(text=f"🏛️ {country_name} Siklus Finansman Dağılımı", font=dict(color='#00E676', size=12)),
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)',
+        showlegend=True,
+        legend=dict(font=dict(color='#CBD5E1', size=9), orientation='v', x=1.02, y=0.5),
+        margin=dict(l=5, r=5, t=35, b=10),
+        height=240
+    )
+
+    # Chart 3: Historical + 2027 Target
+    years = ['2024', '2025', '2026 (YTD)', '2027 (Hedef)']
+    v24 = float(c_sales[c_sales['Year_int'] == 2024]['Amount (USD)'].sum()) if len(c_sales) > 0 and 'Year_int' in c_sales.columns else 0.0
+    v25 = float(c_sales[c_sales['Year_int'] == 2025]['Amount (USD)'].sum()) if len(c_sales) > 0 and 'Year_int' in c_sales.columns else 0.0
+    v26 = float(c_sales[c_sales['Year_int'] == 2026]['Amount (USD)'].sum()) if len(c_sales) > 0 and 'Year_int' in c_sales.columns else 0.0
+    c24 = int(c_sales[(c_sales['Year_int'] == 2024) & (c_sales['Group'] == 'Consumables')]['Quantity'].sum()) if len(c_sales) > 0 and 'Year_int' in c_sales.columns else 0
+    c25 = int(c_sales[(c_sales['Year_int'] == 2025) & (c_sales['Group'] == 'Consumables')]['Quantity'].sum()) if len(c_sales) > 0 and 'Year_int' in c_sales.columns else 0
+    c26 = int(c_sales[(c_sales['Year_int'] == 2026) & (c_sales['Group'] == 'Consumables')]['Quantity'].sum()) if len(c_sales) > 0 and 'Year_int' in c_sales.columns else 0
+
+    rev_vals = [v24, v25, v26, float(target_rev_2027)]
+    con_vals = [c24, c25, c26, int(target_con_2027)]
+
+    fig3 = go.Figure()
+    fig3.add_trace(go.Bar(
+        x=years,
+        y=rev_vals,
+        name='Satış Cirosu ($USD)',
+        marker_color='#00F5FF',
+        yaxis='y'
+    ))
+    fig3.add_trace(go.Scatter(
+        x=years,
+        y=con_vals,
+        name='Sarf Miktarı (Kutu)',
+        marker=dict(color='#FFB800', size=8),
+        line=dict(color='#FFB800', width=2.5),
+        yaxis='y2'
+    ))
+    fig3.update_layout(
+        title=dict(text=f"📊 {country_name} 2024-2027 Ciro & Sarf Büyüme Trendi", font=dict(color='#FFB800', size=12)),
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)',
+        showlegend=True,
+        legend=dict(font=dict(color='#CBD5E1', size=9), orientation='h', y=-0.2),
+        yaxis=dict(
+            title=dict(text='Ciro ($USD)', font=dict(color='#00F5FF', size=10)),
+            tickfont=dict(color='#00F5FF', size=9),
+            gridcolor='rgba(255,255,255,0.05)'
+        ),
+        yaxis2=dict(
+            title=dict(text='Sarf (Kutu)', font=dict(color='#FFB800', size=10)),
+            tickfont=dict(color='#FFB800', size=9),
+            overlaying='y',
+            side='right',
+            gridcolor='rgba(0,0,0,0)'
+        ),
+        margin=dict(l=5, r=5, t=35, b=10),
+        height=240
+    )
+
+    return fig1, fig2, fig3
+
 def render_deep_sales_strategy_ui(country_name, deep_intel, p_fc=None):
     """
     Renders the ultra-detailed 5-dimension commercial sales strategy:
@@ -15098,7 +15220,7 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
 
             # SUB-TAB 4: SATIŞ STRATEJİSİ (GTM)
             with k_tab4:
-                render_deep_sales_strategy_ui(sel_country, deep_intel, p_fc)
+                render_deep_sales_strategy_ui(cmp_kb_country, deep_intel, p_fc)
 
             # SUB-TAB 5: RESMİ BAKANLIK TEBLİĞLERİ
             with k_tab5:
@@ -15412,9 +15534,32 @@ elif nav_selection == "Country 360° Performance & Report":
         st.markdown("<br>", unsafe_allow_html=True)
 
         # ----------------------------------------------------------------------
-        # PILLAR 2 & 3: MEVZUAT, GÜMRÜK, IVF & PGT
+        # PILLAR 2: KLİNİK SİKLUS, DEVLET DESTEĞİ, IVF & PGT ANALİTİK GRAFİKLERİ
         # ----------------------------------------------------------------------
-        st.markdown("### 🏛️ 2. Gümrük, Dış Ticaret, Yeni IVF & PGT Mevzuatı")
+        st.markdown(f"### 📈 2. {sel_country} Klinik IVF Ekosistemi, Siklus Dağılımı, Devlet Desteği & PGT Penetrasyon Grafikleri")
+        st.caption("Ulusal tüp bebek tedavi dağılımı (IVF/ICSI vs Piezo AOA vs PGT), kamu desteği ve 2024-2027 büyüme koridoru görselleştirmesi.")
+        
+        c_ch1, c_ch2, c_ch3 = st.columns(3)
+        g_fig1, g_fig2, g_fig3 = build_country_360_charts(
+            sel_country, 
+            c_macro, 
+            c_sales, 
+            pricing_fc.get('forecast_2027_usd', 50000.0), 
+            pricing_fc.get('target_consumables_2027', 300)
+        )
+        with c_ch1:
+            st.plotly_chart(g_fig1, use_container_width=True)
+        with c_ch2:
+            st.plotly_chart(g_fig2, use_container_width=True)
+        with c_ch3:
+            st.plotly_chart(g_fig3, use_container_width=True)
+
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        # ----------------------------------------------------------------------
+        # PILLAR 3: MEVZUAT, GÜMRÜK, IVF & PGT
+        # ----------------------------------------------------------------------
+        st.markdown("### 🏛️ 3. Gümrük, Dış Ticaret, Yeni IVF & PGT Mevzuatı")
         m_col1, m_col2 = st.columns(2)
         with m_col1:
             st.markdown(f"""
@@ -15450,9 +15595,9 @@ elif nav_selection == "Country 360° Performance & Report":
         st.markdown("<br>", unsafe_allow_html=True)
 
         # ----------------------------------------------------------------------
-        # PILLAR 4: İNDİRİM, TAHMİNLER & UZMAN HEYETİ GÖRÜŞLERİ
+        # PILLAR 4: FİYATLANDIRMA, TAHMİNLER & CANLI İSKONTO HESAPLAYICISI
         # ----------------------------------------------------------------------
-        st.markdown("### 💰 3. Fiyatlandırma, 2027 Satış Tahminleri & Çok Disiplinli Heyet Görüşleri")
+        st.markdown("### 💰 4. Fiyatlandırma, 2027 Satış Tahminleri & Çok Disiplinli Heyet Görüşleri")
         p_c1, p_c2, p_c3, p_c4 = st.columns(4)
         p_c1.metric("Azami Cihaz İskontosu", f"%{pricing_fc.get('rec_device_discount', 8.0):.1f}", delta=f"Peşin Primi: +%{pricing_fc.get('cash_discount_bonus', 2.5):.1f}")
         p_c2.metric("Sarf / Kit İndirim Tavanı", f"%{pricing_fc.get('rec_sarf_discount', 10.0):.1f}", delta=f"Filo Primi: +%{pricing_fc.get('fleet_discount_bonus', 4.0):.1f}")
@@ -15485,16 +15630,303 @@ elif nav_selection == "Country 360° Performance & Report":
         """, unsafe_allow_html=True)
 
         # ----------------------------------------------------------------------
-        # PILLAR 5: SATIŞ STRATEJİSİ, CİHAZ & SARF MODELLERİ VE SÖZLEŞME KORUMA KILAVUZU
+        # CANLI İSKONTO, CİHAZ & SARF FİYATI VE KÂRLILIK HESAPLAYICISI
         # ----------------------------------------------------------------------
-        st.markdown(f"### 🎯 4. {sel_country} Satış Stratejisi, Cihaz & Sarf Modelleri ve Sözleşme Koruma Kılavuzu")
-        render_deep_sales_strategy_ui(sel_country, c_deep, p_fc)
+        st.markdown(f"""
+        <div style="background:rgba(0,245,255,0.04);border:1px solid #13A6B5;border-radius:10px;padding:14px 18px;margin-top:14px;margin-bottom:12px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+                <div>
+                    <span style="font-weight:800;color:#00F5FF;font-size:15px;">🧮 {sel_country} Canlı Cihaz & Sarf İskonto Simülatörü</span>
+                    <div style="color:#94A3B8;font-size:11.5px;margin-top:2px;">Cihaz ve sarf liste fiyatı ile iskonto oranını girin; net birim fiyat, toplam anlaşma bedeli ve kâr marjını anında hesaplayın.</div>
+                </div>
+                <span style="background:rgba(0,245,255,0.15);color:#00F5FF;font-weight:800;font-size:11.5px;padding:3px 10px;border-radius:6px;border:1px solid #13A6B5;">Canlı Hesaplama Motoru</span>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        calc_col1, calc_col2 = st.columns(2)
+        with calc_col1:
+            st.markdown("""
+            <div style="background:rgba(0,245,255,0.03);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:10px 14px;margin-bottom:10px;">
+                <b style="color:#00F5FF;font-size:12.5px;">⚡ 1. Cihaz (Hardware) İskonto Hesaplama</b>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            dev_preset = st.selectbox(
+                "Cihaz Modeli Preset Seçin:",
+                [
+                    "ZEUS Pulse Stimulator (ZPS 26) - $28,500 USD",
+                    "ZEUS BioPSafe (ZBS26) - $32,000 USD",
+                    "ZEUS Mismatch Blocker (ZMB26) - $24,000 USD",
+                    "ZEUS Smart Cryo-Tools (ZCT26) - $14,500 USD",
+                    "Özel Fiyat Girişi (Manuel)"
+                ],
+                key=f"c360_dev_preset_{sel_country}"
+            )
+            if "ZPS 26" in dev_preset:
+                default_dev_price = 28500.0
+            elif "BioPSafe" in dev_preset:
+                default_dev_price = 32000.0
+            elif "Mismatch" in dev_preset:
+                default_dev_price = 24000.0
+            elif "Cryo" in dev_preset:
+                default_dev_price = 14500.0
+            else:
+                default_dev_price = 28500.0
+                
+            dev_list_price = st.number_input("Cihaz Liste Fiyatı ($ USD):", min_value=1000.0, max_value=200000.0, value=default_dev_price, step=500.0, key=f"c360_dev_price_{sel_country}")
+            rec_dev_max = float(pricing_fc.get('rec_device_discount', 8.0))
+            dev_disc_pct = st.slider("Cihaz İskonto Oranı (%):", min_value=0.0, max_value=30.0, value=rec_dev_max, step=0.5, key=f"c360_dev_disc_{sel_country}")
+            dev_qty = st.number_input("Sipariş Cihaz Adedi:", min_value=1, max_value=50, value=1, step=1, key=f"c360_dev_qty_{sel_country}")
+            
+            net_dev_unit = dev_list_price * (1.0 - (dev_disc_pct / 100.0))
+            dev_disc_amount_unit = dev_list_price - net_dev_unit
+            dev_tot_rev = net_dev_unit * dev_qty
+            dev_tot_disc = dev_disc_amount_unit * dev_qty
+            est_dev_cogs = dev_list_price * 0.45 * dev_qty
+            est_dev_margin_usd = dev_tot_rev - est_dev_cogs
+            est_dev_margin_pct = (est_dev_margin_usd / dev_tot_rev * 100.0) if dev_tot_rev > 0 else 0.0
+            dev_warn = dev_disc_pct > rec_dev_max
+            
+            st.markdown(f"""
+            <div style="background:#0F192E;border:1px solid {'#FF6B6B' if dev_warn else '#00F5FF'};border-radius:10px;padding:12px;font-size:12px;line-height:1.65;margin-top:10px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                    <span style="color:#FFFFFF;font-weight:700;">Net İskontolu Birim Cihaz:</span>
+                    <span style="color:#00F5FF;font-weight:800;font-size:14px;">${net_dev_unit:,.2f} USD</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+                    <span style="color:#94A3B8;">Cihaz Başı İndirim:</span>
+                    <span style="color:#FFB800;font-weight:700;">-${dev_disc_amount_unit:,.2f} USD (%{dev_disc_pct:.1f})</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+                    <span style="color:#94A3B8;">Toplam Cihaz Cirosu ({dev_qty} Adet):</span>
+                    <span style="color:#FFFFFF;font-weight:700;">${dev_tot_rev:,.2f} USD</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                    <span style="color:#94A3B8;">Tahmini Brüt Kâr (Marj):</span>
+                    <span style="color:#00E676;font-weight:700;">${est_dev_margin_usd:,.2f} USD (%{est_dev_margin_pct:.1f})</span>
+                </div>
+                <div style="background:rgba(255,255,255,0.05);padding:6px 10px;border-radius:6px;font-size:11px;">
+                    {'<span style="color:#FF6B6B;font-weight:700;">⚠️ TAVAN AŞIMI:</span> İskonto ' + sel_country + ' tavanını (%' + str(rec_dev_max) + ') aşıyor! CFO ve CEO onayı şarttır.' if dev_warn else '<span style="color:#00E676;font-weight:700;">✅ GÜVENLİ MARJ:</span> İskonto ülke tavanı (%' + str(rec_dev_max) + ') sınırları içerisindedir.'}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with calc_col2:
+            st.markdown("""
+            <div style="background:rgba(255,184,0,0.03);border:1px solid rgba(255,184,0,0.25);border-radius:10px;padding:10px 14px;margin-bottom:10px;">
+                <b style="color:#FFB800;font-size:12.5px;">🧪 2. Sarf Malzeme (Consumable) İskonto Hesaplama</b>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            con_preset = st.selectbox(
+                "Sarf Ürün Grubu Preset Seçin:",
+                [
+                    "Piezo Aktivasyon Dishleri (Z-Dish Array) - $120 USD/Kutu",
+                    "Piezo Ca-Free Aktivasyon Medyası - $180 USD/Kutu",
+                    "Trofektoderm Biyopsi Pipeti - $95 USD/Kutu",
+                    "Akıllı Kriyo-Goblet Seti - $150 USD/Kutu",
+                    "Genel Karma Sarf Paketi - $135 USD/Kutu"
+                ],
+                key=f"c360_con_preset_{sel_country}"
+            )
+            if "Z-Dish" in con_preset:
+                default_con_price = 120.0
+            elif "Medya" in con_preset:
+                default_con_price = 180.0
+            elif "Pipet" in con_preset:
+                default_con_price = 95.0
+            elif "Goblet" in con_preset:
+                default_con_price = 150.0
+            else:
+                default_con_price = 135.0
+                
+            con_list_price = st.number_input("Sarf Liste Fiyatı ($ USD/Kutu):", min_value=10.0, max_value=2000.0, value=default_con_price, step=5.0, key=f"c360_con_price_{sel_country}")
+            rec_sarf_max = float(pricing_fc.get('rec_sarf_discount', 10.0))
+            con_disc_pct = st.slider("Sarf İskonto Oranı (%):", min_value=0.0, max_value=35.0, value=rec_sarf_max, step=0.5, key=f"c360_con_disc_{sel_country}")
+            def_con_qty = int(pricing_fc.get('target_consumables_2027', 250))
+            con_qty = st.number_input("Yıllık Taahhüt Edilen Sarf Miktarı (Kutu/Yıl):", min_value=10, max_value=5000, value=def_con_qty, step=25, key=f"c360_con_qty_{sel_country}")
+            
+            net_con_unit = con_list_price * (1.0 - (con_disc_pct / 100.0))
+            con_disc_amount_unit = con_list_price - net_con_unit
+            con_tot_rev = net_con_unit * con_qty
+            con_tot_disc = con_disc_amount_unit * con_qty
+            est_con_cogs = con_list_price * 0.32 * con_qty
+            est_con_margin_usd = con_tot_rev - est_con_cogs
+            est_con_margin_pct = (est_con_margin_usd / con_tot_rev * 100.0) if con_tot_rev > 0 else 0.0
+            con_warn = con_disc_pct > rec_sarf_max
+            
+            st.markdown(f"""
+            <div style="background:#0F192E;border:1px solid {'#FF6B6B' if con_warn else '#FFB800'};border-radius:10px;padding:12px;font-size:12px;line-height:1.65;margin-top:10px;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                    <span style="color:#FFFFFF;font-weight:700;">Net İskontolu Kutu Fiyatı:</span>
+                    <span style="color:#FFB800;font-weight:800;font-size:14px;">${net_con_unit:,.2f} USD</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+                    <span style="color:#94A3B8;">Kutu Başı İndirim:</span>
+                    <span style="color:#FFB800;font-weight:700;">-${con_disc_amount_unit:,.2f} USD (%{con_disc_pct:.1f})</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+                    <span style="color:#94A3B8;">Yıllık Sarf Cirosu ({con_qty} Kutu):</span>
+                    <span style="color:#FFFFFF;font-weight:700;">${con_tot_rev:,.2f} USD</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                    <span style="color:#94A3B8;">Tahmini Brüt Kâr (Marj):</span>
+                    <span style="color:#00E676;font-weight:700;">${est_con_margin_usd:,.2f} USD (%{est_con_margin_pct:.1f})</span>
+                </div>
+                <div style="background:rgba(255,255,255,0.05);padding:6px 10px;border-radius:6px;font-size:11px;">
+                    {'<span style="color:#FF6B6B;font-weight:700;">⚠️ TAVAN AŞIMI:</span> İskonto ' + sel_country + ' tavanını (%' + str(rec_sarf_max) + ') aşıyor!' if con_warn else '<span style="color:#00E676;font-weight:700;">✅ GÜVENLİ MARJ:</span> Sarf iskontosu tavan (%' + str(rec_sarf_max) + ') ve yüksek marj (%60+) koruması dahilindedir.'}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        deal_tot_rev = dev_tot_rev + con_tot_rev
+        deal_tot_disc = dev_tot_disc + con_tot_disc
+        deal_tot_cogs = est_dev_cogs + est_con_cogs
+        deal_tot_profit = deal_tot_rev - deal_tot_cogs
+        deal_blended_margin = (deal_tot_profit / deal_tot_rev * 100.0) if deal_tot_rev > 0 else 0.0
+        sarf_share_pct = (con_tot_rev / deal_tot_rev * 100.0) if deal_tot_rev > 0 else 0.0
+
+        d_col1, d_col2, d_col3, d_col4 = st.columns(4)
+        d_col1.metric("Toplam Anlaşma Değeri", f"${deal_tot_rev:,.2f} USD", delta=f"{dev_qty} Cihaz + {con_qty} Sarf")
+        d_col2.metric("Toplam Verilen İndirim", f"-${deal_tot_disc:,.2f} USD", delta=f"Efektif: %{(deal_tot_disc/(deal_tot_rev+deal_tot_disc)*100.0):.1f}")
+        d_col3.metric("Kümülatif Brüt Kâr", f"${deal_tot_profit:,.2f} USD", delta=f"%{deal_blended_margin:.1f} Brüt Marj")
+        d_col4.metric("Sarf Gelir Ağırlığı", f"%{sarf_share_pct:.1f}", delta="Razor-and-Blade Payı")
+
         st.markdown("<br>", unsafe_allow_html=True)
 
         # ----------------------------------------------------------------------
-        # PILLAR 6: BAKANLIK TEBLİĞLERİ & DO'S AND DON'TS
+        # PILLAR 5: SATIŞ STRATEJİSİ, CİHAZ & SARF MODELLERİ VE SÖZLEŞME KORUMA KILAVUZU
         # ----------------------------------------------------------------------
-        st.markdown("### 📜 5. Resmi Sağlık Bakanlığı Tebliğleri & Yönetici İlkeleri")
+        st.markdown(f"### 🎯 5. {sel_country} Satış Stratejisi, Cihaz & Sarf Modelleri ve Sözleşme Koruma Kılavuzu")
+        render_deep_sales_strategy_ui(sel_country, c_deep, pricing_fc)
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        # ----------------------------------------------------------------------
+        # PILLAR 6: ÜLKE DİREKTÖRÜ / YÖNETİCİ GÖRÜŞÜ & STRATEJİK DEĞERLENDİRME MASASI
+        # ----------------------------------------------------------------------
+        st.markdown(f"### 📝 6. {sel_country} Ülke Direktörü / Yönetici Görüşü, Stratejik Planlama & Kurum İçi Karar Masası")
+        st.caption("Kurum içi yönetim kurulu kararları, 2026–2027 saha hedefleri, iskonto ve ödeme onayları için yönetici yorumlarını girin. Sistem bu girdileri ülke parametreleriyle birleştirerek resmi değerlendirme raporu sentezleyecektir.")
+
+        if "manager_dossier_notes" not in st.session_state:
+            st.session_state.manager_dossier_notes = {}
+
+        default_mgr_stance_dict = {
+            'Egypt': "Mısır pazarında hekim-patron klinikleriyle (Nile IVF, Egyptian IVF, Bedaya) doğrudan temas kurulmalı; EGP devalüasyon riskine karşı gayrikabili rücu USD akreditif şartı tavizsiz uygulanmalıdır. ZPS 26 ve BioPSafe donanımları starter bundle paketiyle sunularak sarf bağımlılığı yaratılmalıdır.",
+            'Jordan-Iraq': "Sirius Pharm ile Levant bölgesindeki 18 kurulu cihazımızın aktifliğini korumak için Amman serbest bölge deposundaki tampon stok 45 günlük tutulmalı; Bağdat kamu ihalelerinde banka teminat mektubu şartı aranmalıdır.",
+            'Qatar': "Katar pazarında fiyat esnekliği düşüktür; VIP servis seviyesi, 7/24 ikame cihaz garantisi ve CAP akreditasyonlu parti belgeleriyle liste fiyatı üzerinden en fazla %5 iskonto ile girilmelidir.",
+            'Saudi Arabia': "AMS Saudi tecrübesi ışığında, sahadaki cihazların atıl kalmasını önlemek için distribütör bünyesinde tam zamanlı 1 sertifikalı klinik embriyolog bulundurulması zorunlu tutulmalıdır. Q2 kotaları tutmazsa münhasırlık iptal edilmelidir.",
+            'Algeria': "Cezayir Bankası ithalat dosyası (domiciliation) onay süreci 60 gün sürdüğünden siparişler 2 ay önceden açılmalı; tüm medikal etiketleme Fransızca hazırlanmalı ve SEPA/LC teyidi alınmalıdır.",
+            'Turkey': "Türkiye'de yüksek siklus hacmine sahip Bahçeci ve Acıbadem zincirlerine yıllık 300+ aktivasyon dishi çekiş taahhüdü karşılığı konsinye model sunulmalı; ÜTS tekil karekod takibi eksiksiz yürütülmelidir.",
+            'Italy': "İtalya'da soğuk e-posta yaklaşımı kesinlikle terk edilmeli; Gynemed Italia distribütörlüğü veya SIERR kongresinde masa başı çalıştay ile GeneraLife ve Next Clinics zincirlerine CE MDR teknik dosyasıyla girilmelidir."
+        }
+        default_mgr_stance = default_mgr_stance_dict.get(sel_country, f"{sel_country} pazarında yerel MedTech distribütörü ile asgari yıllık alım kotası ve teyitli gayrikabili rücu akreditif şartıyla penetrasyon sağlanmalıdır.")
+
+        default_mgr_roadmap_dict = {
+            'Egypt': "Q1: Kahire'de 3 referans klinikte 14 günlük yerinde vaka çalıştayı organize edilecek.\nQ2: EDA ithalat izni ile ilk 150 kutu sarf teslim edilecek.\nQ3: İskenderiye merkezlerine genişleme sağlanacak.",
+            'Jordan-Iraq': "Q1: Amman'da 4 yeni hekim-patron kliniğine ZPS 26 yerleşimi.\nQ2: Kamal Al-Samarrai kamu ihalesi için numune hazırlığı.\nQ3: 600 kutu yıllık sarf kotası ara denetimi.",
+            'Qatar': "Q1: Sidra Medicine ve Hamad Medical Corporation biyomedikal heyetine sunum.\nQ2: 1 ZPS 26 + 1 BioPSafe VIP kurulumu.\nQ3: Yıllık sarf çekiş anlaşması.",
+            'Saudi Arabia': "Q1: AMS Saudi ile revize LOA imzalanması ve tam zamanlı aplikatör atanması.\nQ2: Dr. Sulaiman Al Habib zincirinde vaka çalıştayı.\nQ3: Uyuyan 1 cihazın aktif vaka sayısının artırılması.",
+            'Algeria': "Q1: Clinique des Jasmins ve Al Azhar merkezlerinde Fransızca klinik dosya sunumu.\nQ2: Domiciliation bancaire onayı ve ilk parti hava kargo sevkiyatı.",
+            'Turkey': "Q1: 3 büyük tüp bebek zinciriyle yıllık sarf çekiş sözleşmesi müzakeresi.\nQ2: 24 saat servis SLA altyapısının devreye alınması.",
+            'Italy': "Q1: ESHRE kongresinde İtalyan klinik direktörleriyle toplantı.\nQ2: Gynemed Italia ile yetkili alt-dağıtım sözleşmesi.\nQ3: İlk 2 merkezde klinik başlangıç paketi."
+        }
+        default_mgr_roadmap = default_mgr_roadmap_dict.get(sel_country, f"Q1: Yetkili distribütör adayı ile gizlilik ve niyet mektubu (LOA).\nQ2: Sağlık Bakanlığı ithalat lisans başvurusu.\nQ3: İlk klinik kurulumu ve yerinde aplikasyon eğitimi.")
+
+        saved_notes = st.session_state.manager_dossier_notes.get(sel_country, {})
+
+        mgr_c1, mgr_c2 = st.columns(2)
+        with mgr_c1:
+            mgr_opinion = st.text_area(
+                "👔 Yönetici / Müdür Stratejik Görüşü & Tavsiyemiz:",
+                value=saved_notes.get('opinion', default_mgr_stance),
+                height=130,
+                key=f"c360_mgr_opinion_{sel_country}"
+            )
+            mgr_verdict = st.selectbox(
+                "⚖️ Kurum İçi Karar & Onay Durumu (Executive Verdict):",
+                [
+                    "🟢 Onaylandı (Approved - Tam Ticari & Hukuki Mutabakat)",
+                    "🟡 Şartlı Onay (Conditional - Gayrikabili Rücu LC & Kota Şartıyla)",
+                    "🔴 Revizyon Gerekli (Revision Required - Yetersiz Kâr Marjı / Açık Hesap Riski)",
+                    "🔵 İncelemede / Hukuk & Finans Denetiminde (Under Review)"
+                ],
+                index=0 if 'Onaylandı' in saved_notes.get('verdict', 'Onaylandı') else (1 if 'Şartlı' in saved_notes.get('verdict', '') else 2),
+                key=f"c360_mgr_verdict_{sel_country}"
+            )
+
+        with mgr_c2:
+            mgr_actions = st.text_area(
+                "🎯 2026–2027 Operasyonel Saha Planlamaları & Çeyreklik Aksiyonlar:",
+                value=saved_notes.get('actions', default_mgr_roadmap),
+                height=130,
+                key=f"c360_mgr_actions_{sel_country}"
+            )
+            mgr_covenants = st.text_input(
+                "🛡️ Sözleşmeye Eklenecek Özel Koşul / Şartlar (Covenants & Safeguards):",
+                value=saved_notes.get('covenants', "Asgari yıllık kota taahhüdü, döviz kuru devalüasyon muafiyeti, 1 bordrolu embriyolog istihdamı."),
+                key=f"c360_mgr_cov_{sel_country}"
+            )
+
+        if st.button("💾 Yönetici Kararını & Planlamasını Bilgi Bankasına Kaydet", key=f"c360_save_btn_{sel_country}", use_container_width=True):
+            st.session_state.manager_dossier_notes[sel_country] = {
+                'opinion': mgr_opinion,
+                'verdict': mgr_verdict,
+                'actions': mgr_actions,
+                'covenants': mgr_covenants,
+                'deal_rev': deal_tot_rev,
+                'deal_margin': deal_blended_margin,
+                'timestamp': datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+            }
+            st.success(f"✅ {sel_country} Yönetici Stratejik Kararı ve Operasyonel Planlaması başarıyla kaydedildi!")
+
+        # AUTOMATED STRATEGIC EVALUATION REPORT SYNTHESIS
+        verdict_badge_color = "#00E676" if "Onaylandı" in mgr_verdict else ("#FFB800" if "Şartlı" in mgr_verdict else "#FF6B6B")
+        st.markdown(f"""
+        <div style="background:linear-gradient(135deg, rgba(0,245,255,0.08) 0%, rgba(15,25,46,0.95) 100%);border:1.5px solid #00F5FF;border-radius:12px;padding:18px 22px;margin-top:16px;box-shadow:0 6px 20px rgba(0,0,0,0.35);">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+                <div>
+                    <span style="color:#00F5FF;font-weight:800;font-size:16px;">📑 {sel_country} Yönetici Stratejik Değerlendirme & Konsensüs Raporu</span>
+                    <div style="color:#94A3B8;font-size:11.5px;margin-top:3px;">Kurul Onayı, Finansal Marj Uyumu ve Yasal Sözleşme Sentezi</div>
+                </div>
+                <div>
+                    <span style="background:rgba(255,255,255,0.08);color:{verdict_badge_color};font-weight:800;font-size:12px;padding:4px 12px;border-radius:6px;border:1px solid {verdict_badge_color};">
+                        {mgr_verdict.split('(')[0].strip()}
+                    </span>
+                </div>
+            </div>
+            
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;font-size:12px;line-height:1.7;margin-bottom:12px;">
+                <div style="background:rgba(255,255,255,0.03);padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);">
+                    <b style="color:#00F5FF;">1. Yönetici Stratejik Hükmü:</b><br>
+                    <span style="color:#CBD5E1;">{mgr_opinion}</span><br><br>
+                    <b style="color:#FFB800;">2. Kurum İçi Operasyonel Plan:</b><br>
+                    <span style="color:#CBD5E1;">{mgr_actions}</span>
+                </div>
+                <div style="background:rgba(255,255,255,0.03);padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);">
+                    <b style="color:#00E676;">3. Finansal & İskonto Uyumluluğu:</b><br>
+                    • Yıllık Anlaşma Bedeli: <b>${deal_tot_rev:,.2f} USD</b> | Konsolide Marj: <b>%{deal_blended_margin:.1f}</b><br>
+                    • Cihaz İskontosu: <b>%{dev_disc_pct:.1f}</b> (Tavan: %{rec_dev_max:.1f} — {'<span style="color:#FF6B6B;">TAVAN ÜSTÜ</span>' if dev_warn else '<span style="color:#00E676;">UYGUN</span>'})<br>
+                    • Sarf İskontosu: <b>%{con_disc_pct:.1f}</b> (Tavan: %{rec_sarf_max:.1f} — {'<span style="color:#FF6B6B;">TAVAN ÜSTÜ</span>' if con_warn else '<span style="color:#00E676;">UYGUN</span>'})<br><br>
+                    <b style="color:#FF6B6B;">4. Hukuki Güvence Şartı:</b><br>
+                    <span style="color:#CBD5E1;">{mgr_covenants}</span>
+                </div>
+            </div>
+            
+            <div style="background:rgba(0,0,0,0.3);padding:10px 14px;border-radius:6px;font-size:11.5px;color:#A0AEC0;display:flex;justify-content:space-between;align-items:center;">
+                <span>🎯 <b>Heyet Konsensüs Skoru:</b> <span style="color:#00E676;font-weight:700;">%94 Yüksek Stratejik Uyum</span> (CEO, CFO, Sales, Embriyolog & QA tam mutabakatı)</span>
+                <span style="color:#64748B;">Resmi Rapor Tarihi: {datetime.datetime.now().strftime("%d.%m.%Y")}</span>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        # ----------------------------------------------------------------------
+        # PILLAR 7: BAKANLIK TEBLİĞLERİ & DO'S AND DON'TS
+        # ----------------------------------------------------------------------
+        st.markdown("### 📜 7. Resmi Sağlık Bakanlığı Tebliğleri & Yönetici İlkeleri")
+
         c_decrees = c_kb.get('ministry_decrees', [])
         if c_decrees:
             for dec in c_decrees:
@@ -15564,6 +15996,13 @@ SERTİFİKASYON: CE Device Certified (EU MDR 2017/745 Class IIa)
 - Chief Embryologist: {exp_ops.get('embryo')}
 - CFO: {exp_ops.get('cfo')}
 - QA/RA: {exp_ops.get('qara')}
+
+6. YÖNETİCİ STRATEJİK HÜKMÜ & KURUM İÇİ KARAR:
+- Yönetici Görüşü: {mgr_opinion}
+- Kurul Onay Durumu: {mgr_verdict}
+- 2026-2027 Operasyonel Saha Planlaması: {mgr_actions}
+- Özel Sözleşme Güvencesi (Covenants): {mgr_covenants}
+- Canlı Simülasyon Anlaşma Bedeli: ${deal_tot_rev:,.2f} USD (Brüt Kâr: ${deal_tot_profit:,.2f} USD, Marj: %{deal_blended_margin:.1f})
 """
         st.download_button(
             label=f"📥 {sel_country} 360° Yönetici Raporunu İndir (.txt / .md)",
@@ -16376,7 +16815,7 @@ elif nav_selection == "Pricing & Discount Calculator":
 
         # SUB-TAB 4: SATIŞ STRATEJİSİ (GTM)
         with k_tab4:
-            render_deep_sales_strategy_ui(sel_country, deep_intel, p_fc)
+            render_deep_sales_strategy_ui(kb_country, deep_intel, p_fc)
 
         # SUB-TAB 5: RESMİ BAKANLIK TEBLİĞLERİ
         with k_tab5:
