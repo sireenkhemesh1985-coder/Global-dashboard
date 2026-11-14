@@ -1098,7 +1098,7 @@ MARKET_KNOWLEDGE_BASE = {
             'customs_code': 'GTIP 9018.90 (Cihaz - %8 Gümrük) / 3822.00 (Sarf - KDV %10)',
             'cold_chain': '+2°C / +8°C medya transferinde veri kaydedicili (data-logger) yerli frigo kargo.',
             'payment_norms': 'Özel kliniklerde 30–60 gün açık hesap, kamu ihalelerinde 90–120 gün.',
-            'dos': 'Klinik embriyologlarına deneme dish numunesi ve yerinde aplikasyon demonstrasyonu sunun.',
+            'dos': 'Klinik embriyologlarına deneme dish numunesi ve yerinde aplikasyon eğitimi sunun.',
             'donts': 'TL vadeli açık hesap açmayın; döviz parite riskini şirket üzerinde tutmayın.'
         }
     },
@@ -1431,7 +1431,7 @@ MARKET_KNOWLEDGE_BASE = {
             'customs_code': 'Tarife %5.0, Kuveyt Havalimanı gümrük süresi 4–6 gün.',
             'cold_chain': 'Kuveyt Kargo medikal soğuk zincir terminali (+2°C / +8°C).',
             'payment_norms': 'K.S.C.P. kurumsal alımlarında 60 gün açık hesap, devlet ihalelerinde 90 gün.',
-            'dos': 'Kuveyt ATC kliniklerine acil yerinde aplikasyon ve taze sarf demoları sunun.',
+            'dos': 'Kuveyt ATC kliniklerine acil yerinde aplikasyon ve taze sarf numuneleri sunun.',
             'donts': 'MOH onaylı yerel temsilci olmadan Kuveyt kamu hastanelerine doğrudan teklif vermeyin.'
         }
     },
@@ -1530,7 +1530,7 @@ MARKET_KNOWLEDGE_BASE = {
             'customs_code': 'AB İçi Serbest Dolaşım (%0 Gümrük, Madrid-Barajas).',
             'cold_chain': 'Madrid Barajas Medikal Frigo Terminali (+2°C / +8°C).',
             'payment_norms': 'Özel zincirlerde 45–60 gün açık hesap.',
-            'dos': 'SEF Kongresi\'nde (Sociedad Española de Fertilidad) yerinde stant ve demonstrasyon planlayın.',
+            'dos': 'SEF Kongresi\'nde (Sociedad Española de Fertilidad) yerinde stant ve bilimsel sunum planlayın.',
             'donts': 'İspanyolca aplikasyon desteği sağlamadan büyük klinik zincirlerine girmeyin.'
         }
     },
@@ -2458,10 +2458,10 @@ USER_CREDENTIALS = {
         "role": "Commercial Operations Lead",
         "badge": "Commercial Access"
     },
-    "demo": {
-        "passwords": ["zeus2026", "demo2026"],
+    "auditor": {
+        "passwords": ["zeus2026", "auditor2026"],
         "name": "Misafir Denetçi",
-        "role": "Auditor / Demo Access",
+        "role": "Auditor Access",
         "badge": "Auditor"
     }
 }
@@ -2755,7 +2755,7 @@ def generate_zeus_executive_memo(active_prompt, total_rev, avg_margin, total_dev
 
 #### 1. 🎯 Yönetici Özeti (Executive Brief)
 Excel satış kayıtlarındaki 874 işlem ve ürün bazlı çekiş frekansları incelendiğinde, portföyde acil ticari müdahale (promosyon, bundle kampanyası veya klinik aplikasyon eğitimi) gerektiren 3 kritik ürün grubu ve müşteri kümesi tespit edilmiştir:
-- **1. Zeus Electro Fusion SET ($15,890.85):** Şu ana kadar yalnızca 1 adet satılmıştır (Ghent University, Belçika). Batı Avrupa ve Körfez'deki üst düzey akademik merkezler için demo/tanıtım kampanyası başlatılmalıdır.
+- **1. Zeus Electro Fusion SET ($15,890.85):** Şu ana kadar yalnızca 1 adet satılmıştır (Ghent University, Belçika). Batı Avrupa ve Körfez'deki üst düzey akademik merkezler için bilimsel tanıtım kampanyası başlatılmalıdır.
 - **2. Electro Liquid Solution (Powder & 2x1ml) Dengesizliği:** 2,097 kutu Electro Dish satılmasına karşın yalnızca 765 kutu Liquid Solution (2x1ml) ve 232 kutu Powder satılmıştır (**Dish / Liquid oranı ~2.1:1**). Klinikler solüsyonu ikame etmekte veya seyreltmektedir; acil **Bundle Kampanyası** gereklidir.
 - **3. Cihazı Kurulu Olup Sarf Çekişi Durmuş Klinikler (Klinik Eğitim İhtiyacı):** Acıbadem (2 cihaz - $760 sarf), Medipolitan (2 cihaz - $440 sarf), Kuveyt ATC (3 cihaz - $750 sarf) ve Ferti Med (1 cihaz - $400 sarf) merkezlerinde embriyolog eğitimi eksikliği nedeniyle sarf çekişi durmuştur. *(Not: Gen-Sa Sağlık 4 cihaz ile kardeş şirketimiz olup ticari değerlendirme dışındadır).*
 
@@ -2765,7 +2765,7 @@ Excel satış kayıtlarındaki 874 işlem ve ürün bazlı çekiş frekansları 
 
 | Ürün / Müşteri Grubu | Toplam Ciro | Satılan Adet | Teşhis Edilen Sorun | Gereken Müdahale |
 | :--- | :--- | :--- | :--- | :--- |
-| **Zeus Electro Fusion SET** | $15,890.85 | 1 Ünite | Tekil akademik satışta kaldı; ticari lansman yapılmadı. | **Uluslararası Tanıtım Kampanyası & ESHRE Canlı Demo** |
+| **Zeus Electro Fusion SET** | $15,890.85 | 1 Ünite | Tekil akademik satışta kaldı; ticari lansman yapılmadı. | **Uluslararası Tanıtım Kampanyası & ESHRE Canlı Workshop** |
 | **Electro Liquid Solution (Powder & 2x1ml)** | $53,014.00 | 997 Şişe/Kutu | Dish çekişine göre %50 geride kalıyor (Oran: 2.1 Dish : 1 Solüsyon). | **10 Dish + 2 Liquid Solution %50 İndirimli Bundle Kampanyası** |
 | **Ferti Med Özel Sağlık (Türkiye)** | $9,400.00 | 1 Piezo Cihazı | 2025'ten bu yana sarf siparişi durmuştur. | **Klinik Aplikasyon Ziyareti & Sarf Teklifi** |
 | **Advanced Tech Co (Kuveyt - ATC)** | $26,250.00 | 3 Piezo Cihazı | Cihaz başı sarf çekişi yalnızca $250 (Toplam 9 kutu). | **Körfez Bölge Aplikasyon Ziyareti & Sertifikasyon** |
@@ -2912,9 +2912,9 @@ ZEUS Bioscience'ın küresel coğrafi dağılımı analiz edildiğinde; mevcut g
 - **Aşama 2 (46 - 90 Gün) - Öncelikli Distribütör Tarama ve LOA Protokolleri:**
   - İspanya (Palex Medical), Almanya (Gynemed), Japonya (Kitazato ağı) ve Brezilya (Spectrun Bio) ile gizlilik sözleşmesi (NDA) ve Letter of Intent (LOI) imzalanacak.
   - BAE'de Sellco Trading ile acil $25,000 yıllık sarf taahhütlü yeni sözleşme imzalanacak veya Dubai Health City alternatif adayına geçilecek.
-- **Aşama 3 (91 - 135 Gün) - Uluslararası Kongrelerde Canlı Tanıtım ve Demo Yerleşimleri:**
+- **Aşama 3 (91 - 135 Gün) - Uluslararası Kongrelerde Canlı Tanıtım ve Klinik Aplikasyon:**
   - ESHRE (Avrupa), ASPIRE (Asya-Pasifik) ve ASRM (Kuzey Amerika) kongrelerinde ZEUS Piezo Pulse Stimulator ve Electro Fusion cihazları canlı biyopsi/mikromanipülasyon atölyelerinde sergilenecek.
-  - Seçilen 4 ülkede (Almanya, İspanya, Japonya, Brezilya) 2'şer referans kliniğe 60 günlük demo konsinye cihaz yerleştirilecek.
+  - Seçilen 4 ülkede (Almanya, İspanya, Japonya, Brezilya) 2'şer referans kliniğe 60 günlük klinik validasyon protokolü sunulacak.
 - **Aşama 4 (136 - 180 Gün) - Nihai Distribütörlük Sözleşmeleri ve İlk Sipariş Sevkiyatları:**
   - Yıllık asgari $35,000 - $60,000 donanım ve sarf kotası taahhütlü resmi distribütörlük sözleşmeleri yürürlüğe sokulacak.
 
@@ -3026,10 +3026,10 @@ Excel veri tabanındaki 44 kurum tek tek incelendiğinde, şirketin sarf gelirin
     # --------------------------------------------------------------------------
     elif any(k in prompt_lower for k in ["italya", "italy", "pazarlama", "marketing", "gtm", "sekreter", "linkedin", "whitepaper", "mısır", "ispanya", "hangi ülke", "başlamak", "soğuk", "cold mail"]):
         topic_title = "Yeni Ülke Açılımı, İtalya Soğuk E-Posta Çıkmazı ve Bilimsel Klinik GTM (Go-To-Market) Yol Haritası"
-        kpi_impact = "İtalya Soğuk E-Posta Bariyerini Aşma & BAE/Mısır/İspanya'da %65+ Dönüşümlü Demo Modeli"
+        kpi_impact = "İtalya Soğuk E-Posta Bariyerini Aşma & BAE/Mısır/İspanya'da Bilimsel Klinik Protokol Modeli"
         timeline = "90 Gün (Faz 1: BAE-Mısır-Bakü ➔ Faz 2: İspanya ➔ Faz 3: İtalya/Almanya)"
         target_group = "BAE (Dubai), Mısır (Kahire), İspanya (Madrid/Barselona), İtalya (Roma/Milano), Türkiye"
-        risk_level = "Düşük-Orta — Doğru Muhatap ve CE Güvenceli Demo ile Yüksek Dönüşüm"
+        risk_level = "Düşük-Orta — Doğru Muhatap ve CE Güvenceli Bilimsel Protokol ile Yüksek Dönüşüm"
         
         memo_content = f"""### 📋 ZEUS EXECUTIVE MEMORANDUM
 **Doküman Kodu:** `ZGMI-STRAT-MEMO-2026-GTM-OUTREACH` | **Tarih:** Kasım 2026  
@@ -3057,14 +3057,14 @@ Excel veri tabanındaki 44 kurum tek tek incelendiğinde, şirketin sarf gelirin
   - **İspanya (Madrid/Barselona):** 280 klinik, 180,000 siklus (Avrupa #1). IVI-RMA ve GeneraLife gibi dev zincirler döllenme oranını %60'tan %80+'e taşıyacak teknolojilere açık bütçeye sahiptir.
   - **Yunanistan & Çekya:** Avrupa'nın çevik tıp turizmi laboratuvarları.
 - **🥉 Faz 3 (Acenteli / Distribütörlü Büyük Pazarlar - 120+ Gün):**
-  - **İtalya & Almanya:** Doğrudan mail yerine yerel distribütör (Gynemed, Bio-Optica) ve ESHRE/SIERR kongrelerinde masa başı workshop modeliyle girilmelidir.
+  - **İtalya & Almanya:** Doğrudan mail yerine yerel distribütör (Gynemed, Bio-Optica) ve ESHRE/SIERR kongrelerinde bilimsel workshop modeliyle girilmelidir.
 
 ---
 
 #### 3. 🚀 IVF Medikal Cihaz İçin 5 Adımlı "Clinical Infiltration" Metodolojisi
 1. **Muhatap Değişimi:** Sadece *Head of IVF Lab* veya *Direttore Laboratorio PMA* hedeflenmelidir.
 2. **Klinik Kanıtı İlk Cümleye Koyma:** CE Belgesi ve hakemli makaledeki 2PN artış verisi (%24.6 ➔ %82.3) ilk cümlede sunulmalıdır.
-3. **Risksiz Konsinye Demo (14 Gün):** 1 ünite cihaz ve 10 Electro Dish sarfı ücretsiz değerlendirme için 14 günlüğüne laboratuvara kurulmalıdır.
+3. **Yerinde Klinik Protokol ve Bilimsel Destek:** Baş embriyoloğa ve ekibe yerinde vaka çalıştayı ve bilimsel protokol desteği sunulmalıdır.
 4. **LinkedIn & WhatsApp Doğrudan İletişim:** LinkedIn Boolean filtreleriyle baş embriyologlara 300 karakterlik kişiselleştirilmiş notlarla ulaşılmalıdır.
 5. **Yerel Acente Çatısı (Piggybacking):** Kliniğe halihazırda kültür medyumu ve kateter tedarik eden distribütörün portföyüne girilmelidir."""
 
@@ -3232,8 +3232,8 @@ Grazie al nostro programma istituzionale e alla netta riduzione dei cicli fallit
 2. Certezza di Fornitura & Tariffe Consumabili Bloccate (CE MDR):
 Forniamo micropiastre Electro Dish (1x2) e terreni di attivazione certificati CE MDR Classe IIa e ISO 13485 a prezzi bloccati pluriennali.
 
-3. Valutazione Clinica di 60 Giorni Senza Rischi:
-Installiamo presso la vostra struttura di punta 1 sistema completo ZEUS e una fornitura per 50 casi in conto visione (consignment) gratuito con affiancamento applicativo.{custom_note_it}
+3. Modello di Partnership & Supporto Applicativo Dedicato:
+Offriamo alle vostre cliniche convenzionate l'affiancamento completo dei nostri specialisti di embriologia clinica per l'avvio immediato dei protocolli piezoelettrici.{custom_note_it}
 
 Saremmo lieti di presentare il piano di ammortamento e la matrice sconti flotta alla vostra commissione acquisti.
 
@@ -3259,7 +3259,7 @@ Prezzi di cessione altamente competitivi su generatori Piezo Pulse ZPS e piastre
 Documentazione tecnica integrale, test MEA e LAL certificati, e supporto per la rapida qualificazione a gare pubbliche e forniture private.
 
 3. Esclusività Territoriale e Certificazione Tecnica di Fabbrica:
-Assegnazione di unità demo per workshop clinici, supporto co-marketing a congressi SIERR/ESHRE e training di certificazione per i vostri ingegneri biomedici.{custom_note_it}
+Supporto specialistico per workshop clinici, affiancamento co-marketing a congressi SIERR/ESHRE e training di certificazione ufficiale per i vostri specialisti di prodotto.{custom_note_it}
 
 Desideriamo concordare un incontro esecutivo riservato per illustrare il modello margini prima della chiusura delle nomine per il mercato italiano.
 
@@ -3284,11 +3284,18 @@ La modulazione assiale piezoelettrica sub-microsecondo apre la membrana senza tr
 2. Risoluzione del TFF: Tasso di Fertilizzazione 2PN dall'24.6% all'82.3% (Baltaci et al., p < 0.001):
 Studi clinici multicentrici indipendenti confermano il ripristino fisiologico delle oscillazioni di calcio nei casi di deficit di PLC-zeta spermatico, portando il tasso di blastocisti Day-5 al 48.1% (aumento di 2.2 volte, Ebner et al. / ESHRE Taskforce), senza incremento di anomalie congenite o teratogenicità (Vanden Meerschaut et al., Fertil Steril).
 
-3. Piena Integrazione Plug-and-Play & Biyogüvenlik CE MDR Classe IIa:
+3. Piena Integrazione Plug-and-Play & Biyogüvenlik CE Device Certified (MDR):
 Perfetta compatibilità con i vostri micromanipolatori in uso (Eppendorf, Narishige, Research Instruments). Ogni lotto di piastre Electro Dish è convalidato da test MEA (Mouse Embryo Assay >80%) ed endotossine LAL <0.05 EU/ml.{custom_note_it}
 
-Per consentire alla vostra équipe di embriologia di validare questi dati sui vostri casi più complessi:
-Offriamo una valutazione clinica di 45 giorni con 1 unità demo ZEUS Piezo Pulse completa e 50 piastre Electro Dish sterili a titolo interamente gratuito e senza alcun vincolo d'acquisto.
+[SINTESI EVIDENZE CLINICHE (WHITEPAPER BENCHMARK)]:
+• Tasso Fertilizzazione 2PN: 24.6% ➔ 82.3% (+57.7% incremento, p < 0.001)
+• Embrioni Alta Qualità Day-3: 42.0% ➔ 74.5% (+32.5% miglioramento)
+• Blastocisti Day-5 Utilizzabili: 21.4% ➔ 48.1% (aumento di 2.2 volte, p < 0.01)
+• Degenerazione Oocitaria Post-ICSI: ridotta dal 7.8% al 3.2% (sub-1.2% lisi piezo)
+• Standard di Sicurezza: CE Device Certified (MDR) | MEA >80% | Endotossine <0.05 EU/ml
+
+Per consentire alla vostra équipe di embriologia di approfondire questi dati clinici:
+Mettiamo a disposizione dei vostri biologi una presentazione tecnica approfondita e l'assistenza diretta del nostro team di embriologia clinica applicata.
 
 [PUBBLICAZIONI SCIENTIFICHE DI RIFERIMENTO / PEER-REVIEWED CITATIONS]:
 1. Baltaci et al. (Reprod BioMed Online / Hum Reprod) — Electrical AOA in recurrent TFF cycles (2PN: 24.6% -> 82.3%, p < 0.001).
@@ -3325,8 +3332,8 @@ Nuestra tecnología patentada Piezo Pulse y la reducción drástica de ovocitos 
 2. Seguridad de Suministro y Precio Fijo Garantizado (CE MDR):
 Suministramos placas Electro Dish (1x2) y medios de activación con certificación europea CE MDR Clase IIa e ISO 13485 bajo acuerdos plurianuales blindados.
 
-3. Evaluación Clínica Sin Riesgo Durante 60 Días:
-Instalamos 1 equipo completo ZEUS en su centro principal y aportamos 50 placas estériles en régimen de depósito/consignación sin coste ni compromiso de compra.{custom_note_es}
+3. Modelo de Alianza Institucional y Formación Especializada:
+Ofrecemos a su red de clínicas formación técnica avanzada presencial para sus embriólogos y soporte directo para la rápida integración operativa.{custom_note_es}
 
 Quedamos a su disposición para coordinar una reunión ejecutiva con su comité de adquisiciones.
 
@@ -3352,7 +3359,7 @@ Precios de transferencia sumamente atractivos con un modelo de facturación recu
 Dossiers regulatorios validados, homologación MEA/LAL y soporte directo para licitaciones y ventas corporativas.
 
 3. Exclusividad de Zona y Soporte Técnico Directo:
-Asignación de unidades de demostración, respaldo de marketing en congresos SEF/ESHRE y certificación oficial de fábrica para sus ingenieros.{custom_note_es}
+Respaldo científico en talleres clínicos, patrocinio conjunto en congresos SEF/ESHRE y certificación oficial de fábrica para sus especialistas de producto.{custom_note_es}
 
 Nos complacería mantener una reunión ejecutiva para evaluar las condiciones de distribución antes del cierre del ejercicio.
 
@@ -3377,11 +3384,18 @@ El pulso lineal piezoeléctrico en microsegundos penetra la zona pelúcida y el 
 2. Recuperación en TFF: Tasa de Fecundación 2PN del 24.6% al 82.3% (Baltaci et al., p < 0.001):
 Estudios multicéntricos peer-reviewed demuestran la restitución fisiológica de ondas de calcio en casos de deficiencia de PLC-zeta espermático, elevando el rendimiento de blastocistos transferibles Día-5 al 48.1% (aumento de 2.2x, Ebner et al. / Consenso ESHRE) sin incremento en tasas de anomalías congénitas (Vanden Meerschaut et al., Fertil Steril).
 
-3. Compatibilidad Integral y Estándares de Bioseguridad MEA >80%:
-Acoplamiento directo a sus micromanipuladores actuales (Eppendorf, Narishige, Research Instruments). Dispositivo médico certificado con endotoxinas LAL <0.05 EU/ml.{custom_note_es}
+3. Compatibilidad Integral y Estándares de Bioseguridad CE Device Certified (MDR):
+Acoplamiento directo a sus micromanipuladores actuales (Eppendorf, Narishige, Research Instruments). Certificación de bioseguridad con test MEA >80% y endotoxinas LAL <0.05 EU/ml.{custom_note_es}
 
-Para permitir a su equipo senior de embriología evaluar esta tecnología en su propia rutina de laboratorio:
-Ofrecemos un programa de evaluación clínica de 45 días sin coste ni compromiso de compra, incluyendo 1 unidad ZEUS Piezo Pulse y 50 placas Electro Dish estériles.
+[RESUMEN DE EVIDENCIA CLÍNICA (WHITEPAPER BENCHMARK)]:
+• Tasa de Fecundación 2PN: 24.6% ➔ 82.3% (+57.7% de incremento, p < 0.001)
+• Embriones de Alta Calidad Día-3: 42.0% ➔ 74.5% (+32.5% de mejora)
+• Blastocistos Útiles Día-5: 21.4% ➔ 48.1% (aumento de 2.2x en rendimiento, p < 0.01)
+• Degeneración Oocitaria Post-ICSI: reducida del 7.8% al 3.2% (sub-1.2% lisis piezo)
+• Estándares de Bioseguridad: CE Device Certified (MDR) | MEA >80% | Endotoxinas <0.05 EU/ml
+
+Para permitir a su equipo de embriología contrastar estos avances científicos:
+Ponemos a su disposición una sesión clínica monográfica y el protocolo detallado para resolver los casos de fallo total de fecundación.
 
 [PUBLICACIONES CIENTÍFICAS DE REFERENCIA / PEER-REVIEWED CITATIONS]:
 1. Baltaci et al. (Reprod BioMed Online / Hum Reprod) — AOA eléctrica en ciclos de TFF recurrente (2PN: 24.6% -> 82.3%, p < 0.001).
@@ -3411,7 +3425,7 @@ angesichts der herausragenden klinischen Bedeutung von {name} in {city} ({volume
 Das ZEUS ART-Flottenmodell bietet Ihrem Institut:
 1. 35% geringere Investitionskosten (Capex) & Amortisation in durchschnittlich 8.2 Monaten.
 2. Preisstabilität bei CE-MDR-zertifizierten Verbrauchsmaterialien (Electro Dish).
-3. 60-tägige risikofreie Evaluierung vor Ort.{custom_note_de}
+3. Fachliche Begleitung und strukturierter klinischer Einführungsworkshop.{custom_note_de}
 
 Gerne stellen wir Ihrem Vorstand unsere Wirtschaftlichkeitsrechnung vor.
 
@@ -3450,10 +3464,17 @@ Die axiale Piezo-Impulsmodulation penetriert die Zona pellucida und das Oolemm o
 2. Signifikante Steigerung der 2PN-Befruchtungsrate von 24,6% auf 82,3% (Baltaci et al., p < 0.001):
 Multizentrische Studien belegen die physiologische Wiederherstellung der Kalziumoszillation bei spermienbedingtem PLC-Zeta-Mangel. Die Ausbeute an nutzbaren Tag-5-Blastozysten steigt auf 48,1% (2,2-facher Zuwachs, Ebner et al. / ESHRE-Konsensus), ohne Erhöhung kindlicher Fehlbildungsraten (Vanden Meerschaut et al., Fertil Steril).
 
-3. Nahtlose Workflow-Integration & CE-MDR-Klasse IIa:
+3. Nahtlose Workflow-Integration & CE Device Certified (MDR):
 Kompatibel mit allen gängigen Mikromanipulatoren (Eppendorf, Narishige, RI). Chargengeprüft durch Mausembryo-Assay (MEA >80%) und Endotoxinwerte <0,05 EU/ml.{custom_note_de}
 
-Gerne stellen wir Ihrem Labor für 45 Tage ein kostenfreies Leihgerät inklusive 50 sterilen Electro Dishes zur unverbindlichen Validierung zur Verfügung.
+[KLINISCHE EVIDENZ-ÜBERSICHT (WHITEPAPER BENCHMARK)]:
+• 2PN-Befruchtungsrate: 24,6% ➔ 82,3% (+57,7% Steigerung, p < 0.001)
+• Tag-3 Hochqualitative Embryonen: 42,0% ➔ 74,5% (+32,5% Verbesserung)
+• Tag-5 Nutzbare Blastozysten: 21,4% ➔ 48,1% (2,2-facher Zuwachs, p < 0.01)
+• Oozyten-Degenerationsrate: gesenkt von 7,8% auf 3,2% (sub-1,2% Piezo-Schonung)
+• Qualitätsstandards: CE Device Certified (MDR) | MEA >80% | Endotoxin LAL <0,05 EU/ml
+
+Gerne stellen wir Ihrem Team das validierte klinische Protokoll und die wissenschaftlichen Dossiers im Rahmen einer fachlichen Konsultation vor.
 
 [WISSENSCHAFTLICHE REFERENZEN & PUBLIKATIONEN]:
 1. Baltaci et al. (Reprod BioMed Online / Hum Reprod) — Elektrische AOA bei TFF (2PN: 24,6% -> 82,3%, p < 0.001).
@@ -3481,7 +3502,7 @@ E-Mail: scientific@zeusbioscience.com | Web: www.zeusbioscience.com"""
 Compte tenu du volume clinique d'excellence de {name} à {city} ({volume}), nous vous présentons notre offre de flotte technologique:
 1. Réduction Capex de 35% et amortissement moyen en 8.2 mois.
 2. Sécurité d'approvisionnement et tarif consommables garanti CE MDR.
-3. Évaluation clinique sans risque de 60 jours.{custom_note_fr}
+3. Accompagnement clinique et intégration opérationnelle dédiée.{custom_note_fr}
 
 Bien cordialement,
 Direction Commerciale | ZEUS Bioscience Europe"""
@@ -3515,10 +3536,17 @@ Pénétration linéaire axiale de la zone pellucide sans aspiration traumatique.
 2. Restauration du Taux de Fécondation 2PN de 24.6% à 82.3% (Baltaci et al., p < 0.001):
 Amélioration cliniquement prouvée lors d'anomalies de la PLC-zeta spermatique, avec un taux de blastocystes J-5 atteignant 48.1% (facteur 2.2, Ebner et al. / ESHRE) et sécurité néonatale démontrée (Vanden Meerschaut et al., Fertil Steril).
 
-3. Intégration Immédiate & Biorisques Maîtrisés (MEA >80%):
-Compatible avec vos micromanipulateurs (Eppendorf, Narishige, RI).{custom_note_fr}
+3. Intégration Immédiate & Normes CE Device Certified (MDR):
+Compatible avec vos micromanipulateurs (Eppendorf, Narishige, RI). Conforme aux normes MEA >80% et endotoxines LAL <0.05 EU/ml.{custom_note_fr}
 
-Nous mettons à la disposition de votre équipe 1 unité de prêt complète et 50 boîtes Electro Dish pendant 45 jours sans frais ni engagement.
+[SYNTHÈSE DES DONNÉES CLINIQUES (WHITEPAPER BENCHMARK)]:
+• Taux de Fécondation 2PN: 24.6% ➔ 82.3% (+57.7% d'amélioration, p < 0.001)
+• Embryons Haute Qualité J-3: 42.0% ➔ 74.5% (+32.5% d'amélioration)
+• Blastocystes Utilisables J-5: 21.4% ➔ 48.1% (multiplié par 2.2, p < 0.01)
+• Dégénérescence Oocytaire Post-ICSI: réduite de 7.8% à 3.2% (sub-1.2% lyse piezo)
+• Sécurité Biologique: CE Device Certified (MDR) | MEA >80% | Endotoxines <0.05 EU/ml
+
+Nous mettons à la disposition de votre équipe notre protocole clinique validé et l'expertise de nos spécialistes en embryologie appliquée.
 
 [RÉFÉRENCES SCIENTIFIQUES PEER-REVIEWED]:
 1. Baltaci et al. (Reprod BioMed Online / Hum Reprod) — AOA électrique et échecs de fécondation (p < 0.001).
@@ -3543,7 +3571,7 @@ scientific@zeusbioscience.com | www.zeusbioscience.com"""
 انطلاقاً من المكانة المتميزة لمركز {name} في {city} ({volume})، يسعدنا تقديم نموذج الشراكة المؤسسية المعتمد:
 1. تخفيض تكلفة الاستثمار الرأسمالي (Capex) بنسبة 35% مع استرداد الاستثمار خلال 8.2 أشهر.
 2. ضمان توريد مستلزمات التنشيط (Electro Dish) بأسعار ثابتة ومعتمدة أوروبياً (CE MDR).
-3. تقييم إكلينيكي مجاني لمدة 60 يوماً دون أي التزام.{custom_note_ar}
+3. دعم تطبيقي واعتماد بروتوكول إكلينيكي متقدم بإشراف خبرائنا.{custom_note_ar}
 
 وتفضلوا بقبول فائق الاحترام والتقدير،
 الإدارة التجارية والمشتريات المؤسسية | ZEUS Bioscience"""
@@ -3576,9 +3604,17 @@ scientific@zeusbioscience.com | www.zeusbioscience.com"""
 2. رفع نسبة التخصيب (2PN) من 24.6% إلى 82.3% (Baltaci et al., p < 0.001):
 إثبات استعادة تذبذبات الكالسيوم الفسيولوجية في حالات نقص إنزيم PLC-zeta، ومضاعفة أجنة اليوم الخامس الصالحة للنقل بمقدار 2.2 ضعف (Ebner et al. / ESHRE)، مع أمان تام للأجنة والمواليد (Vanden Meerschaut et al., Fertil Steril).
 
-3. توافق تام مع أجهزة الميكرومانيبيوليتور في مختبركم (MEA >80% & LAL <0.05 EU/ml).{custom_note_ar}
+3. توافق تشغيلي تام واعتمادات CE Device Certified (MDR):
+توافق مباشر مع أجهزة الحقن المجهري بمختبركم (Eppendorf, Narishige, RI)، مع اختبارات أمان الأجنة MEA >80% ومستويات endotoxin أقل من 0.05 EU/ml.{custom_note_ar}
 
-يسعدنا تزويد مختبركم بجهاز تجريبي كامل مع 50 طبق تنشيط معقم لمدة 45 يوماً دون أي تكلفة أو التزام بالشراء.
+[ملخص المؤشرات الإكلينيكية (WHITEPAPER BENCHMARK)]:
+• نسبة التخصيب (2PN): ارتفعت من 24.6% إلى 82.3% (فارق إحصائي +57.7%، p < 0.001)
+• أجنة اليوم الثالث عالية الجودة: ارتفعت من 42.0% إلى 74.5% (+32.5% تحسن)
+• أجنة اليوم الخامس صالحة للنقل (Day-5 Blastocysts): ارتفعت من 21.4% إلى 48.1% (زيادة 2.2 ضعف، p < 0.01)
+• نسبة تلف أو تحلل البويضات: انخفضت من 7.8% إلى 3.2% (أمان غشائي بيزوي فائق)
+• معايير الجودة: شهادة المطابقة الأوروبية CE Device Certified | فحص MEA >80% | إندوتوكسين <0.05 EU/ml
+
+يسعدنا تقديم جلسة علمية متخصصة ومشاركة البروتوكول الإكلينيكي المعتمد لتقييم النتائج مباشرة مع فريق أطباء وأجنة المركز الموقر.
 
 [المراجع العلمية المحكمة / PEER-REVIEWED REFERENCES]:
 1. Baltaci et al. (Reprod BioMed Online / Hum Reprod) — Electrical AOA in severe TFF cycles (2PN: 24.6% -> 82.3%, p < 0.001).
@@ -3609,7 +3645,7 @@ Geleneksel ithal mikromanipülasyon donanımlarının yüksek ilk yatırım (Cap
 ZEUS Bioscience olarak kurumunuza özel geliştirdiğimiz filo amortisman modelini sunuyoruz:
 1. %35 Daha Düşük İlk Yatırım & 8.2 Ayda Hızlı Geri Dönüş (ROI): Artan blastokist gelişim oranları ve azalan siklus iptalleriyle sistem yatırımı hızla kendini amorti eder.
 2. Entegre Sarf Güvencesi ve Sabit Fiyat Protokolü: CE/MDR ve ISO 13485 sertifikalı tek kullanımlık Electro Dish (1x2) ve aktivasyon solüsyonlarını sabit fiyat garantisiyle sunuyoruz.
-3. 60 Günlük Kurumsal Risksiz Konsinye Deneme: Merkezinize 1 adet tam teşekküllü ZEUS Piezo sistemini ve test sarflarını ücretsiz kuruyoruz.{custom_note_tr}
+3. Kurumsal Teknoloji Entegrasyonu ve Yerinde Eğitim: Embriyoloji ekibinize yerinde klinik protokol eğitimi ve vaka çalıştayı desteği sağlıyoruz.{custom_note_tr}
 
 Kurumsal teklifimizi satınalma heyetinize sunmak üzere kısa bir toplantı planlamaktan onur duyarız.
 
@@ -3625,7 +3661,7 @@ ZEUS Bioscience Kurumsal Satınalma & Medikal Direktörlüğü | www.zeus-bio.co
 Kliniklerin Piezo-ICSI ve AOA teknolojilerine yöneldiği bu dönemde, yüksek brüt marjlı (%42+) portföyümüzü dağıtım ağınıza kazandırmak istiyoruz:
 1. Yüksek Brüt Marj & Düzenli Sarf Geliri: Donanımda cazip bayi transfer fiyatı ve düzenli sarf taahhüdü.
 2. Tam Ruhsatlandırma ve Teknik Destek: CE/MDR 2017/745 teknik dosyaları, ÜTS kayıt desteği ve sertifikalı teknik servis eğitimi.
-3. Bölge Koruması ve Yerel Pazarlama Desteği: Kongre katılım ve demo cihaz tahsisi.{custom_note_tr}
+3. Bölge Koruması ve Yerel Pazarlama Desteği: Kongre katılım ve yerinde klinik aplikasyon desteği.{custom_note_tr}
 
 Yetkili bayilik şartlarımızı değerlendirmek üzere bir toplantı organize etmeyi arzu ederiz.
 
@@ -3648,11 +3684,18 @@ Patentli mikrosaniye piezoelektrik puls modülasyonu, oolemma zarını mekanik �
 2. TFF Vakalarında 2PN Döllenme Oranının %24.6'dan %82.3'e Yükselmesi (Baltaci et al., p < 0.001):
 Bağımsız çok merkezli klinik çalışmalarda, sperm kaynaklı PLC-zeta eksikliğinde elektriksel piezo pulsların fizyolojik kalsiyum salınımını tetikleyerek Day-5 kullanılabilir blastosist oranını %21.4'ten %48.1'e (2.2 kat artış, Ebner et al. / ESHRE) çıkardığı ve ilave konjenital anomali riski yaratmadığı (Vanden Meerschaut et al., Fertil Steril) ispatlanmıştır.
 
-3. Mevcut Mikromanipülatörlerle Tam Uyum & CE MDR Sınıf IIa Güvencesi:
+3. Mevcut Mikromanipülatörlerle Tam Uyum & CE Device Certified Güvencesi:
 Eppendorf, Narishige ve Research Instruments sistemlerinizle doğrudan entegre olur. Tüm sarflar MEA (>%80 blastosist) ve LAL (<0.05 EU/ml) test onaylıdır.{custom_note_tr}
 
-Bu klinik üstünlüğü kendi laboratuvarınızda bizzat test etmeniz adına:
-Merkezinize 45 günlük bilimsel değerlendirme kapsamında 1 adet ZEUS Piezo Pulse Stimulator cihazını ve 50 adet steril Electro Dish tabağını bedelsiz konsinye olarak kurmayı teklif ediyoruz.
+[BİLİMSEL KLİNİK VERİ ÖZETİ (WHITEPAPER BENCHMARK)]:
+• 2PN Döllenme Oranı: %24.6 ➔ %82.3 (+%57.7 Artış, p < 0.001)
+• Day-3 Yüksek Kalite Embriyo Oranı: %42.0 ➔ %74.5 (+%32.5 İyileşme)
+• Day-5 Kullanılabilir Blastosist Oranı: %21.4 ➔ %48.1 (2.2 Kat Artış, p < 0.01)
+• Oosit Dejenerasyon Oranı: %7.8'den %3.2'ye Düşüş (sub-%1.2 Piezo Zar Bütünlüğü)
+• Kalite & Biyouyumluluk: CE Device Certified (MDR) | MEA >%80 | Endotoksin <0.05 EU/ml
+
+Bu klinik üstünlüğü kendi laboratuvarınızda değerlendirmeniz adına:
+Merkezinize bilimsel iş birliği kapsamında yerinde klinik aplikasyon sunumu ve doğrulanmış protokol desteği sunmayı teklif ediyoruz.
 
 [HAKEMLİ BİLİMSEL LİTERATÜR KAYNAKLARI / PEER-REVIEWED CITATIONS]:
 1. Baltaci et al. (Reprod BioMed Online / Hum Reprod) — TFF vakalarında elektriksel AOA protokolü (2PN: %24.6 -> %82.3, p < 0.001).
@@ -3689,8 +3732,8 @@ Our enterprise fleet tier substantially lowers the upfront capital barrier. By d
 2. Supply-Chain Certainty & Fixed Unit Consumable Economics (CE MDR Class IIa):
 We supply ISO 13485 and CE/MDR-certified sterile Electro Dishes (1x2) and dual-activation solutions under predictable multi-year volume contracts, shielding your balance sheet from spot-market price fluctuations.
 
-3. 60-Day Risk-Free Institutional Evaluation Agreement:
-We offer a 60-day risk-free pilot deployment at your flagship facility, including hardware installation, full staff training, and test media. Capital commitment is contingent upon fulfilling mutual clinical survival benchmarks (>98% oocyte integrity).{custom_note_en}
+3. Dedicated Institutional Integration & Application Support:
+We offer comprehensive on-site clinical embryology training, protocol validation, and dedicated technical workflow integration for your affiliated centers.{custom_note_en}
 
 We would welcome the opportunity to present our financial feasibility model and volume discount matrix to your procurement committee.
 
@@ -3718,7 +3761,7 @@ We provide exceptionally attractive distributor transfer pricing on capital Piez
 Our in-house regulatory department provides full technical files, CE/MDR certificates, MEA >80% and LAL <0.05 EU/ml validations to accelerate national medical device registration and tender qualification.
 
 3. Protected Territory & Local Clinical Training:
-We guarantee rigorous territorial exclusivity, dedicated demonstration hardware allocation, co-branded marketing support at regional reproductive congresses, and factory certification for your technical engineers.{custom_note_en}
+We guarantee rigorous territorial exclusivity, dedicated clinical workshop support, co-branded marketing at regional reproductive congresses, and factory certification for your technical product specialists.{custom_note_en}
 
 Before finalizing our regional distribution appointments for the forthcoming fiscal period, we would be delighted to review our commercial distributor agreement and margin model with your board.
 
@@ -3730,7 +3773,7 @@ International Business Development Directorate
 ZEUS Bioscience Europe | Email: distribution@zeus-bio.com | Web: www.zeus-bio.com"""
 
         else: # clinical
-            subject = f"Scientific Partnership & Clinical Demonstration: Peer-Reviewed AOA Protocol & Sub-1.2% Lysis — {name}"
+            subject = f"Scientific Partnership & Clinical Protocol Review: Peer-Reviewed AOA Protocol & Sub-1.2% Lysis — {name}"
             body = f"""{salutation}
 
 As {name} stands at the forefront of reproductive medicine in {city} with an impressive clinical volume of {volume}, we follow your ongoing contributions to embryological excellence with the highest regard.
@@ -3745,11 +3788,18 @@ Our patented sub-microsecond linear axial piezoelectric pulse enables ultra-prec
 2. TFF Rescue: 2PN Fertilization Rate Improvement from 24.6% to 82.3% (Baltaci et al., p < 0.001):
 Independent multicenter trials confirm physiological restoration of calcium oscillations in cases of sperm-borne PLC-zeta deficiency, expanding Day-5 usable blastocysts to 48.1% (a 2.2x increase, Ebner et al. / ESHRE Taskforce Consensus) with zero increase in congenital abnormalities or teratogenicity (Vanden Meerschaut et al., Fertil Steril).
 
-3. Seamless Plug-and-Play Workflow Integration & CE MDR Class IIa Certification:
+3. Seamless Plug-and-Play Workflow Integration & CE Device Certified Standards:
 Engineered for immediate synchronization with existing inverted microscope micromanipulators (Eppendorf, Narishige, Research Instruments) without requiring lab recalibration. Validated by Mouse Embryo Assay (MEA >80%) and Endotoxin LAL <0.05 EU/ml testing.{custom_note_en}
 
+[CLINICAL EVIDENCE SUMMARY (WHITEPAPER BENCHMARK)]:
+• 2PN Fertilization Rate: 24.6% ➔ 82.3% (+57.7% increase, p < 0.001)
+• Day-3 High-Quality Embryos: 42.0% ➔ 74.5% (+32.5% improvement)
+• Day-5 Usable Blastocysts: 21.4% ➔ 48.1% (2.2x yield expansion, p < 0.01)
+• Oocyte Degeneration Rate: reduced from 7.8% down to 3.2% (sub-1.2% piezo membrane preservation)
+• Quality & Compliance: CE Device Certified (MDR) | MEA >80% | Endotoxin LAL <0.05 EU/ml
+
 To allow your senior embryology team to objectively evaluate this technology within your clinical workflow:
-ZEUS Bioscience offers a 45-day scientific evaluation placement at {name}, including 1 complete ZEUS Piezo Pulse Stimulator unit and 50 complimentary CE/MDR-certified ZEUS Electro Dishes on a risk-free evaluation basis.
+ZEUS Bioscience offers a comprehensive scientific briefing and detailed clinical protocol consultation conducted by our European Clinical Embryology Specialist.
 
 [PEER-REVIEWED SCIENTIFIC CITATIONS & CLINICAL BENCHMARKS]:
 1. Baltaci et al. (Reprod BioMed Online / Hum Reprod) — Electrical AOA in recurrent TFF cycles (2PN: 24.6% -> 82.3%, p < 0.001).
@@ -3786,7 +3836,7 @@ GLOBAL_PROSPECT_RADAR = {
             "product_match": "🛡️ ZEUS Mismatch Blocker (7 Terminal) + 🧬 BioPSafe (ZBS26) Biyopsi İstasyonu",
             "est_revenue": "$120,000 USD / Yıl",
             "why_target": "İleri anne yaşı ve oosit aktivasyon yetmezliği vakalarında Piezo ICSI ile fertilizasyon oranlarını %18 artırma arayışı; Avrupa'nın en yüksek hasta akışı.",
-            "pitch_template": "Sayın Bilimsel Direktör ve Laboratuvar Heyeti,\n\nIVI-RMA'nın oosit aktivasyonu ve mikroenjeksiyon teknolojilerindeki dünya lideri klinik araştırmalarını yakından takip ediyoruz. ZEUS Bioscience tarafından geliştirilen Piezo Pulse Stimulator sistemimiz, patentli mikrosaniye piezoelektrik darbe modülasyonu ile oosit lizis oranlarını %1.2'nin altına düşürürken, fertilizasyon oranlarında %15-20 klinik artış sağlamaktadır. Ghent Üniversitesi'nde valide edilen klinik verilerimizi merkezinizde 60 günlük konsinye demo kapsamında test etmeniz için bir sunum planlamayı arzu ederiz."
+            "pitch_template": "Sayın Bilimsel Direktör ve Laboratuvar Heyeti,\n\nIVI-RMA'nın oosit aktivasyonu ve mikroenjeksiyon teknolojilerindeki dünya lideri klinik araştırmalarını yakından takip ediyoruz. ZEUS Bioscience tarafından geliştirilen Piezo Pulse Stimulator sistemimiz, patentli mikrosaniye piezoelektrik darbe modülasyonu ile oosit lizis oranlarını %1.2'nin altına düşürürken, fertilizasyon oranlarında %15-20 klinik artış sağlamaktadır. Ghent Üniversitesi'nde valide edilen klinik verilerimizi merkezinizde klinik protokol incelemesi kapsamında değerlendirmeniz için bir sunum planlamayı arzu ederiz."
         },
         {
             "name": "Instituto Bernabeu (Alicante, Madrid, Mallorca)",
@@ -4066,7 +4116,7 @@ GLOBAL_PROSPECT_RADAR = {
             "product_match": "ZEUS Piezo Stimulator + Sarf Aboneliği",
             "est_revenue": "$65,000 USD / Yıl",
             "why_target": "Körfez bölgesinin en yüksek hasta hacimli referans merkezi; ileri genetik ve aktivasyon odaklı.",
-            "pitch_template": "Sayın Medikal Direktör,\n\nFakih IVF'in Körfez'deki liderliği ışığında, ZEUS Piezoelektrik oosit stimülatörümüzün Katar ITL Medical ve Türkiye merkezlerimizdeki kanıtlanmış klinik verilerini paylaşmak ve Dubai laboratuvarınızda demo çalıştırmak isteriz."
+            "pitch_template": "Sayın Medikal Direktör,\n\nFakih IVF'in Körfez'deki liderliği ışığında, ZEUS Piezoelektrik oosit stimülatörümüzün Katar ITL Medical ve Türkiye merkezlerimizdeki kanıtlanmış klinik verilerini paylaşmak ve Dubai laboratuvarınızda klinik aplikasyon çalıştayı düzenlemek isteriz."
         },
         {
             "name": "Leader Healthcare UAE / Al Zahrawi Medical",
@@ -4142,7 +4192,7 @@ GLOBAL_PROSPECT_RADAR = {
             "product_match": "ZEUS Piezo Stimulator + Sarf Kiti",
             "est_revenue": "$45,000 USD / Yıl",
             "why_target": "Arap dünyasının bilimsel referans öncüsü; Mısır genelindeki hekimleri eğiten merkez.",
-            "pitch_template": "Dear Medical Director,\n\nHonoring the pioneering legacy of The Egyptian IVF-ET Center, ZEUS Bioscience would be privileged to demonstrate our Piezo Pulse Stimulation platform for complex oocyte activation and ICSI integrity in your Maadi laboratories."
+            "pitch_template": "Dear Medical Director,\n\nHonoring the pioneering legacy of The Egyptian IVF-ET Center, ZEUS Bioscience would be privileged to present our Piezo Pulse Stimulation platform for complex oocyte activation and ICSI integrity in your Maadi laboratories."
         },
         {
             "name": "Technomed Egypt for Medical Equipment",
@@ -5056,7 +5106,7 @@ def get_default_strategic_plans():
             'responsible_unit': 'Bölge Ticari Direktörlüğü & Hukuk Kurulu',
             'priority': 'P1 - Acil (1-15 Gün)',
             'target_date': 'Kasım 2026',
-            'action_steps': "1. BAE geneli için Leader Healthcare veya Al Zahrawi ile BioPSafe ve Mismatch Blocker odaklı MoHAP ruhsatlı distribütörlük şartnamesinin hazırlanması.\n2. Sellco Trading'e 1 kurulu Piezo cihazı için yeni 1 yıl raf ömürlü liyofilize toz solüsyonlu avantajlı '25 Kutu Refill Sarf Paketi' teklifinin iletilmesi.\n3. Dubai ve Abu Dabi'deki 28 IVF kliniğine BioPSafe ve Smart Cryo-Tools numune/demo organizasyonu düzenlenmesi.",
+            'action_steps': "1. BAE geneli için Leader Healthcare veya Al Zahrawi ile BioPSafe ve Mismatch Blocker odaklı MoHAP ruhsatlı distribütörlük şartnamesinin hazırlanması.\n2. Sellco Trading'e 1 kurulu Piezo cihazı için yeni 1 yıl raf ömürlü liyofilize toz solüsyonlu avantajlı '25 Kutu Refill Sarf Paketi' teklifinin iletilmesi.\n3. Dubai ve Abu Dabi'deki 28 IVF kliniğine BioPSafe ve Smart Cryo-Tools numune ve yerinde aplikasyon çalıştayı düzenlenmesi.",
             'roi_projection': "BAE'deki 28 lisanslı merkezden 8'ine nüfuz edilerek yıllık +$58,000 USD yeni pazar hacmi",
             'feasibility_score': '%89 (Yüksek Stratejik Öncelik)',
             'status': 'Onaylandı & İcrada',
@@ -5097,8 +5147,8 @@ def get_default_regional_expert_assessments():
             'device_rationale': "Doğu Asya'da Tanaka ROSI protokolü (90+ canlı doğum) ve Japonya/Kore yüksek yoğunluklu kriyobankaları için ZPS 26 ve Smart Cryo-Tools 4X tank optimizasyonu önceliklidir.",
             'expert_title': 'Kıdemli Medikal Direktör & APAC Pazar Danışmanı',
             'expert_opinion': "Japonya'da Kato Ladies Clinic (KLC) ekolü Piezo stimülasyonuna son derece yatkın ancak yerel PMDA onayı olmadan doğrudan donanım satışı yavaş ilerler. Kitazato ile OEM sarf partnerliği kurulursa Kore'deki SJNU başarısı doğrudan Tokyo ve Osaka'ya replike edilebilir. Hindistan pazarı ise yüksek volümlü düşük maliyetli sarf talep ediyor; piezo cihazı konsinye verilip dish ve aktivasyon solüsyonu üzerinden 3 yıllık kontrat bağlanmalı.",
-            'field_moves': "1) G. Kore SJNU üzerinden Seul Maria Hospital referans ziyareti yapıldı. 2) Kitazato Ar-Ge ekibine demo Pulse Stimulator teslim edildi. 3) Hindistan Apollo Fertility zincirine konsinye cihaz + 3 yıllık sarf teklifi sunuldu.",
-            'user_comment': "SJNU Seul ekibi ile görüşüldü; Kitazato Ar-Ge direktörüne demo ünitesi gönderildi. Hindistan için Apollo Fertility zinciriyle pilot çalışma planlanıyor.",
+            'field_moves': "1) G. Kore SJNU üzerinden Seul Maria Hospital referans ziyareti yapıldı. 2) Kitazato Ar-Ge ekibine validasyon Pulse Stimulator ünitesi teslim edildi. 3) Hindistan Apollo Fertility zincirine konsinye cihaz + 3 yıllık sarf teklifi sunuldu.",
+            'user_comment': "SJNU Seul ekibi ile görüşüldü; Kitazato Ar-Ge direktörüne klinik validasyon ünitesi gönderildi. Hindistan için Apollo Fertility zinciriyle pilot çalışma planlanıyor.",
             'consensus_status': 'Tam Konsensüs (Uyumlu)',
             'status': 'Onaylandı & İcrada',
             'decision_priority': 'P1 - Yüksek Öncelik',
@@ -5136,9 +5186,9 @@ def get_default_regional_expert_assessments():
             'recommended_devices': ['🧬 Black-Box BioPSafe (ZBB25-001)', '❄️ Smart Cryo-Tools (ZCT25)', '⚡ ZPS 26 Pulse Stimulator'],
             'device_rationale': "İspanya ve İngiltere'de katı PGT-A biyopsi regülasyonları için 13 IR sensörlü BioPSafe; yüksek sikluslu merkezlerde tank CAPEX tasarrufu ($45K) için Smart Cryo-Tools.",
             'expert_title': 'Avrupa Regülasyon & Satış Masası Direktörü',
-            'expert_opinion': "MDR Class IIa sertifikasyonumuz Ghent Üniversitesi validasyon verileriyle tam uyumlu. İspanya'da IVI-RMA zinciri 30'dan fazla kliniğe sahip; doğrudan kurumsal satın alma masasıyla demo anlaşması yapılmalı. Almanya (DACH) için Gynemed hazır bir dağıtım ağı sunuyor; CE belgeleriyle birlikte Q1'de distribütörlük sözleşmesi imzalanması durumunda yıllık $120K hedefi rahat aşılır.",
-            'field_moves': "1) IVI-RMA Valencia ve Madrid merkezlerine BioPSafe ve Cryo-Tools demo protokolü sunuldu. 2) Gynemed DACH ile master distribütörlük NDA'sı imzalandı. 3) Londra Harley Street referans kliniğine numune Smart Straw setleri ulaştırıldı.",
-            'user_comment': "IVI-RMA Valencia merkezine demo cihaz protokolü sunuldu; Gynemed ile NDA imzalandı ve 2027 DACH master distribütörlük görüşmeleri başlatıldı.",
+            'expert_opinion': "MDR Class IIa sertifikasyonumuz Ghent Üniversitesi validasyon verileriyle tam uyumlu. İspanya'da IVI-RMA zinciri 30'dan fazla kliniğe sahip; doğrudan kurumsal satın alma masasıyla klinik protokol anlaşması yapılmalı. Almanya (DACH) için Gynemed hazır bir dağıtım ağı sunuyor; CE belgeleriyle birlikte Q1'de distribütörlük sözleşmesi imzalanması durumunda yıllık $120K hedefi rahat aşılır.",
+            'field_moves': "1) IVI-RMA Valencia ve Madrid merkezlerine BioPSafe ve Cryo-Tools klinik protokolü sunuldu. 2) Gynemed DACH ile master distribütörlük NDA'sı imzalandı. 3) Londra Harley Street referans kliniğine numune Smart Straw setleri ulaştırıldı.",
+            'user_comment': "IVI-RMA Valencia merkezine klinik aplikasyon protokolü sunuldu; Gynemed ile NDA imzalandı ve 2027 DACH master distribütörlük görüşmeleri başlatıldı.",
             'consensus_status': 'Tam Konsensüs (Uyumlu)',
             'status': 'Onaylandı & İcrada',
             'decision_priority': 'P2 - Stratejik Büyüme',
@@ -5177,7 +5227,7 @@ def get_default_regional_expert_assessments():
             'device_rationale': "Brezilya ve Meksika'da pahalı RFID çipleri yerine döngü başı kontör modeli; yüksek ICSI adaptasyonu (%80+) için piezo oosit aktivatörü.",
             'expert_title': 'LATAM Ticari Operasyonlar Danışmanı',
             'expert_opinion': "Brezilya ve Meksika'da yüksek gümrük tarifeleri (%28-35) nedeniyle doğrudan donanım ithalatı zor. Sao Paulo merkezli Spectrun Bio yerel ANVISA ruhsatını üstlenmeye istekli. REDLARA kongresinde piezo ICSI başarı oranları sunulursa Kolombiya ve Şili klinikleri de bu master distribütör üzerinden hızla portföye katılabilir.",
-            'field_moves': "1) Sao Paulo merkezli Spectrun Bio ile ANVISA ruhsatlandırma ve dağıtım niyet mektubu (LoI) imzalandı. 2) REDLARA kongresi için piezo ICSI bildiri özeti kabul edildi. 3) Kolombiya ve Şili merkezlerine online demo verildi.",
+            'field_moves': "1) Sao Paulo merkezli Spectrun Bio ile ANVISA ruhsatlandırma ve dağıtım niyet mektubu (LoI) imzalandı. 2) REDLARA kongresi için piezo ICSI bildiri özeti kabul edildi. 3) Kolombiya ve Şili merkezlerine online teknik sunum yapıldı.",
             'user_comment': "Spectrun Bio ile ön niyet mektubu (LoI) teatisi yapıldı. ANVISA dosya hazırlığı için teknik dokümantasyon Portekizceye çevriliyor.",
             'consensus_status': 'Tam Konsensüs (Uyumlu)',
             'status': 'Onaylandı & İcrada',
@@ -5196,7 +5246,7 @@ def get_default_regional_expert_assessments():
             'recommended_devices': ['⚡ ZEUS Pulse Stimulator (ZPS 26)', '❄️ Smart Cryo-Tools (ZCT25)'],
             'device_rationale': "Kahire ve Johannesburg'daki merkezlerde TFF fertilizasyon artışı için ZPS 26; yeni kriyotank alamayan kliniklere 4X kapasite sağlayan Smart Cryo-Tools.",
             'expert_title': 'Afrika & Gelişen Pazarlar Medikal Misyon Sorumlusu',
-            'expert_opinion': "Mısır (Kahire/İskenderiye) ve Güney Afrika (Johannesburg) dışındaki pazarlarda döviz konvertibilitesi ve akreditif riski yüksek. Bu nedenle sadece peşin ödemeli veya IFC destekli özel IVF projeleri kabul edilmeli. Vitalab grubu 4 cihazlık paket alımına sıcak bakıyor; Johannesburg merkezli demo ünitesi kurulursa çevre ülkelere referans olur.",
+            'expert_opinion': "Mısır (Kahire/İskenderiye) ve Güney Afrika (Johannesburg) dışındaki pazarlarda döviz konvertibilitesi ve akreditif riski yüksek. Bu nedenle sadece peşin ödemeli veya IFC destekli özel IVF projeleri kabul edilmeli. Vitalab grubu 4 cihazlık paket alımına sıcak bakıyor; Johannesburg merkezli referans merkezi kurulursa çevre ülkelere referans olur.",
             'field_moves': "1) Vitalab Grubu medikal direktörü ile 4 cihazlık paket alım protokolü görüşüldü. 2) Mısır Nile IVF zinciri için peşin ödemeli proforma fatura düzenlendi. 3) Kenya Sağlık Bakanlığı ihale teknik şartnamesi incelendi.",
             'user_comment': "Vitalab Grubu medikal direktörü ile online sunum yapıldı. Mısır için ise Nile IVF zinciri ile peşin ödemeli 2 ünite Piezo cihazı teklifi hazırlandı.",
             'consensus_status': 'Tam Konsensüs (Uyumlu)',
@@ -6131,7 +6181,7 @@ if nav_selection == "Executive Dashboard":
         'PSE': ('🇵🇸 Filistin (CMC)', '#38BDF8', '$46.7K', '120 Ünite', 'Yetkili Distribütör (5 Cihaz)'),
         'BEL': ('🇧🇪 Belçika (Ghent Univ / UGent)', '#C084FC', '$16.1K', '3 Cihaz', 'Akademik & Klinik Referans Merkezi'),
         'ALB': ('🇦🇱/🇸🇰 Arnavutluk-Slovakya (Stem Gene)', '#E879F9', '$18.8K', '121 Ünite', 'Özel IVF Klinikleri Ağı'),
-        'GBR': ('🇬🇧 İngiltere (Londra Demo)', '#818CF8', '$0.0', '6 Cihaz', 'Validasyon & Klinik Demo Donanımı'),
+        'GBR': ('🇬🇧 İngiltere (Londra Klinik Validasyon)', '#818CF8', '$0.0', '6 Cihaz', 'Validasyon & Referans Klinik Donanımı'),
         'AZE': ('🇦🇿 Azerbaycan (Bakü Klinikleri)', '#FB7185', '$4.3K', '49 Ünite', 'Doğrudan Klinik Tedariki'),
         'BGR': ('🇧🇬 Bulgaristan (Sofya)', '#F87171', '$1.6K', '11 Ünite', 'Doğrudan Klinik Tedariki'),
         'PHL': ('🇵🇭 Filipinler (Manila)', '#FBBF24', '$1.2K', '44 Ünite', 'Spot Medikal Alıcı'),
@@ -6149,7 +6199,7 @@ if nav_selection == "Executive Dashboard":
         '🇵🇸 Filistin (CMC)': '#38BDF8',
         '🇧🇪 Belçika (Ghent Univ / UGent)': '#C084FC',
         '🇦🇱/🇸🇰 Arnavutluk-Slovakya (Stem Gene)': '#E879F9',
-        '🇬🇧 İngiltere (Londra Demo)': '#818CF8',
+        '🇬🇧 İngiltere (Londra Klinik Validasyon)': '#818CF8',
         '🇦🇿 Azerbaycan (Bakü Klinikleri)': '#FB7185',
         '🇧🇬 Bulgaristan (Sofya)': '#F87171',
         '🇵🇭 Filipinler (Manila)': '#FBBF24',
@@ -6939,7 +6989,7 @@ if nav_selection == "Executive Dashboard":
             {"Ülke / Bölge": "🇧🇬 Bulgaristan (Sofya - Meyona)", "Kurum Tipi": "Klinik Dağıtım", "🔬 Cihaz (Hardware)": "0 Cihaz", "🧪 Sarf (Consumables)": "11 Kutu ($1.6K)", "Toplam Hasılat": "$1,580 USD", "Statü": "Balkanlar Spot İkmal"},
             {"Ülke / Bölge": "🇵🇭 Filipinler (Manila IVF Corp)", "Kurum Tipi": "Özel IVF Kliniği", "🔬 Cihaz (Hardware)": "0 Cihaz", "🧪 Sarf (Consumables)": "44 Kutu ($1.2K)", "Toplam Hasılat": "$1,228 USD", "Statü": "Asya-Pasifik Doğrudan Klinik"},
             {"Ülke / Bölge": "🇸🇾 Suriye (Şam - Bisan Co)", "Kurum Tipi": "Spot Medikal Alıcı", "🔬 Cihaz (Hardware)": "0 Cihaz", "🧪 Sarf (Consumables)": "10 Kutu ($480)", "Toplam Hasılat": "$480 USD", "Statü": "Spot Klinik Alımı"},
-            {"Ülke / Bölge": "🇬🇧 İngiltere (Londra NHS Demo)", "Kurum Tipi": "Validasyon Merkezi", "🔬 Cihaz (Hardware)": "6 Demo Cihazı", "🧪 Sarf (Consumables)": "Klinik Test Sarfı", "Toplam Hasılat": "Klinik Demo", "Statü": "Avrupa İnceleme Süreci"}
+            {"Ülke / Bölge": "🇬🇧 İngiltere (Londra Klinik Validasyon)", "Kurum Tipi": "Validasyon Merkezi", "🔬 Cihaz (Hardware)": "6 Validasyon Cihazı", "🧪 Sarf (Consumables)": "Klinik Test Sarfı", "Toplam Hasılat": "Klinik Validasyon", "Statü": "Avrupa İnceleme Süreci"}
         ]
         st.dataframe(pd.DataFrame(zeus_table_data), use_container_width=True, hide_index=True)
 
@@ -7662,7 +7712,7 @@ elif nav_selection == "AI Intelligence & Forecasting":
             elif has_staff or has_training:
                 revised_steps.append(f"<b>Acil Yerinde Klinik Eğitim & Validasyon ({role} Talebi):</b> Laboratuvardaki yeni embriyoloji ekibine 48 saat içinde 1-1 hands-on Piezo ICSI voltaj ve solüsyon protokolü eğitimi verilmeli.")
             elif has_competitor:
-                revised_steps.append(f"<b>Rakip İkamesine Karşı Klinik Kanıt & Karşı Teklif:</b> ZEUS'un blastosist gelişiminde sağladığı %18.4 klinik üstünlük verileri sunulmalı; rakip geçişini durdurmak için anında konsinye demo seti ulaştırılmalı.")
+                revised_steps.append(f"<b>Rakip İkamesine Karşı Klinik Kanıt & Karşı Teklif:</b> ZEUS'un blastosist gelişiminde sağladığı %18.4 klinik üstünlük verileri sunulmalı; rakip geçişini durdurmak için anında klinik numune seti ulaştırılmalı.")
             elif has_price:
                 revised_steps.append(f"<b>Maliyet Bariyeri İçin Esnek İskonto & Kota Modeli:</b> Uzman notundaki bütçe kısıtına yanıt olarak, 2027 yıllık sarf taahhüdü karşılığında %12 kademeli hacim iskontosu ve esnek ödeme vadesi tanımlanmalı.")
             elif has_customs:
@@ -7775,7 +7825,7 @@ Immediate Resolution: ZEUS Bioscience is actively incorporating this high-level 
                 user_expert_note = st.text_area(
                     "Uzman Görüşü / Saha İstihbaratı Notu (Specialist Field Observation):",
                     value=cur_note,
-                    placeholder="Örn: 'Klinik baş embriyoloğu değişti, yeni ekip piezo mikroenjeksiyon voltaj ayarlarını bilmiyor; acil 1 günlük yerinde klinik eğitim verilirse ayda 25 kutu tüketirler.' veya 'Rakip firma konsinye numune bıraktı, fiyat eşitlemesi ve 20 kutuluk demo seti talep ediliyor.'",
+                    placeholder="Örn: 'Klinik baş embriyoloğu değişti, yeni ekip piezo mikroenjeksiyon voltaj ayarlarını bilmiyor; acil 1 günlük yerinde klinik eğitim verilirse ayda 25 kutu tüketirler.' veya 'Rakip firma konsinye numune bıraktı, fiyat eşitlemesi ve 20 kutuluk test numune kiti talep ediliyor.'",
                     height=90,
                     key=f"inp_note_{case_id}"
                 )
@@ -8066,7 +8116,7 @@ ZEUS Bioscience Management""",
                 ai_action_steps=[
                     "<b>Kamu Sağlık İhalesi (Hamad & Sidra):</b> Katar Sağlık Bakanlığı ve Hamad Medical Corporation tüp bebek merkezi ihalelerine ITL üzerinden ZEUS Piezo sistemleri sokulmalı.",
                     "<b>2027 Konsinye Sarf Kotası:</b> Çeyreklik 50 kutu Electro Dish taahhüdüne karşılık %8 lojistik navlun desteği tanımlanmalı.",
-                    "<b>2. Nesil Cihaz Değişim Kampanyası:</b> Mevcut 4 merkeze ek olarak 2 yeni özel tüp bebek kliniğine demo cihaz yerleştirilmesi."
+                    "<b>2. Nesil Cihaz Değişim Kampanyası:</b> Mevcut 4 merkeze ek olarak 2 yeni özel tüp bebek kliniğine klinik validasyon cihazı tahsisi."
                 ],
                 letter_title="ITL Katar 2027 Sarf Tedarik ve Kamu İhalesi Ortaklık Protokolü",
                 letter_body="""To: Commercial Directorate, International Technical Legacy (ITL), Doha, State of Qatar
@@ -8081,7 +8131,7 @@ With 4 ZEUS Piezo Pulse Stimulator units actively running in Doha fertility cent
 To leverage this foundation for our 2027 operational roadmap:
 1. Public Tender Consortium: We will collaborate with ITL to prepare registration dossiers for upcoming Hamad Medical Corporation (HMC) and Sidra Medicine ART tenders.
 2. Scheduled Restocking: A quarterly consignment schedule of 50 Electro Dish units paired with liquid media will receive an 8% logistics freight subsidy.
-3. Fleet Expansion: Allocation of 2 additional Piezo Pulse Stimulator demo units for upcoming private clinical openings in Doha.
+3. Fleet Expansion: Allocation of 2 additional Piezo Pulse Stimulator clinical validation units for upcoming private clinical openings in Doha.
 
 We look forward to confirming our joint strategy meeting in Doha next month.
 
@@ -8960,7 +9010,7 @@ ZEUS Bioscience Scientific Affairs""",
                         )
                         
                         new_moves = st.text_area(
-                            "🚀 Yürütülen Saha Hamleleri & Aksiyonlar (Klinik Temasları, Kongre, Demo vb.):",
+                            "🚀 Yürütülen Saha Hamleleri & Aksiyonlar (Klinik Temasları, Kongre, Çalıştay vb.):",
                             value=r_item.get('field_moves', ''),
                             height=70,
                             key=f"inp_moves_tab2_{rk}"
@@ -9675,7 +9725,7 @@ elif nav_selection == "Distributors & CRM":
     if raw_sales_df is not None and len(raw_sales_df) > 0:
         with st.expander("🔍 Tüm Kurumsal İadeler, LIR Evrakları & Fatura Düzeltme Denetim Masası (Global Returns Audit Desk)", expanded=False):
             st.markdown("##### Şirket Genelindeki Tüm İadeler, LIR İade İrsaliyeleri ve Bedelsiz Sevklerin Denetim Raporu")
-            st.caption("Veri tabanında yer alan tüm eksi bakiyeli iade faturaları, LIR (Lİste İade Raporu) evrakları ve $0 bedelli numune/demo irsaliyeleri şeffaf olarak listelenmiştir.")
+            st.caption("Veri tabanında yer alan tüm eksi bakiyeli iade faturaları, LIR (Lİste İade Raporu) evrakları ve $0 bedelli numune/konsinye irsaliyeleri şeffaf olarak listelenmiştir.")
             
             # Filter all returns and zero-amount dispatches
             all_neg_df = raw_sales_df[raw_sales_df['Amount (USD)'] < 0]
@@ -9686,7 +9736,7 @@ elif nav_selection == "Distributors & CRM":
             kpi_ret1, kpi_ret2, kpi_ret3, kpi_ret4 = st.columns(4)
             kpi_ret1.metric("📉 Negatif İade Satırları", f"{len(all_neg_df)} İşlem", delta=f"-${abs(all_neg_df['Amount (USD)'].sum()):,.2f} Düşüldü", delta_color="inverse")
             kpi_ret2.metric("🧾 LIR İade İrsaliyeleri", f"{len(all_lir_df)} Kalem", delta="Sellco UAE Gümrük/İade")
-            kpi_ret3.metric("📦 Bedelsiz Demo / İrsaliye", f"{len(all_zero_df)} Kalem", delta="IRS Kodlu Sevkler")
+            kpi_ret3.metric("📦 Bedelsiz Konsinye / İrsaliye", f"{len(all_zero_df)} Kalem", delta="IRS Kodlu Sevkler")
             kpi_ret4.metric("🧪 Liyofilize Toz Siparişi", f"{len(powder_df)} Kalem", delta="1 Yıl Raf Ömrü (Mart 2026+)")
             
             st.markdown("<br>", unsafe_allow_html=True)
@@ -9694,7 +9744,7 @@ elif nav_selection == "Distributors & CRM":
             tab_ret1, tab_ret2, tab_ret3 = st.tabs([
                 "1. Eksi Bakiyeli İade Faturaları (Credit Invoices)",
                 "2. LIR İade İrsaliyeleri (Sellco)",
-                "3. Bedelsiz Cihaz İrsaliyeleri (Demo / Değişim)"
+                "3. Bedelsiz Cihaz İrsaliyeleri (Konsinye / Değişim)"
             ])
             
             with tab_ret1:
@@ -9713,11 +9763,11 @@ elif nav_selection == "Distributors & CRM":
                 st.info("💡 LIR belgeleri muhasebede $0 bedelli iade/iptal evrakı olarak düzenlenmiştir. Sistemimiz bu satırları yeni satış olarak toplamaz; Sellco'nun kurulu cihaz sayısını net 1 olarak gösterir.")
                 
             with tab_ret3:
-                st.markdown("**Bedelsiz Sevk Edilen Cihaz İrsaliyeleri (Demo, Numune veya Faturasız Sevk):**")
+                st.markdown("**Bedelsiz Sevk Edilen Cihaz İrsaliyeleri (Konsinye, Numune veya Faturasız Sevk):**")
                 disp_zero_dev = raw_sales_df[(raw_sales_df['Group'] == 'Device') & (raw_sales_df['Amount (USD)'] == 0)][['Date', 'Invoice', 'Company', 'Product', 'Quantity', 'Amount (USD)']].copy()
                 disp_zero_dev.columns = ['Tarih', 'İrsaliye / Belge No', 'Kurum', 'Cihaz Modeli', 'Adet', 'Tutar']
                 st.dataframe(disp_zero_dev, use_container_width=True, hide_index=True)
-                st.caption("ℹ️ Acıbadem, CMC, Halil Ruso, Medipolitan, Seda Erdem ve Bisan'a yapılan $0 bedelli cihaz sevkleri demo/konsinye statüsünde izlenmektedir.")
+                st.caption("ℹ️ Acıbadem, CMC, Halil Ruso, Medipolitan, Seda Erdem ve Bisan'a yapılan $0 bedelli cihaz sevkleri klinik konsinye statüsünde izlenmektedir.")
 
 elif nav_selection == "Agreements & Compliance":
     st.title("International Agreements, LOA & Regulatory Compliance")
@@ -9788,7 +9838,7 @@ elif nav_selection == "Agreements & Compliance":
                 doc_types = [
                     "Uluslararası Doğrudan İhracat & Tedarik Sözleşmesi",
                     "Akademik İşbirliği ve Araştırma Protokolü",
-                    "Konsinye / Demo Cihaz Devir Sözleşmesi",
+                    "Klinik Konsinye & Cihaz Tahsis Sözleşmesi",
                     "CE / ISO Kalite Uygunluk Sertifikası",
                     "NDA (Gizlilik Anlaşması)"
                 ]
@@ -11626,12 +11676,13 @@ Tahmini Potansiyel: {p.get('est_revenue')}
 Stratejik Gerekçe: {p.get('why_target')}
 
 İletişim Stratejisi: {strat_mode}
-Özel Not: {user_custom_note if user_custom_note else "Klinik veri, sub-1.2% lizis, Baltaci ve Ebner hakemli makaleleri ve 45 günlük konsinye demo teklifini vurgula."}
+Özel Not: {user_custom_note if user_custom_note else "Klinik veri, sub-1.2% lizis, Baltaci ve Ebner hakemli makaleleri ve yerinde klinik protokol sunumunu vurgula."}
 Hedef Dil: {target_lang_full}
 
 KRİTİK KURALLAR:
 1. DİL KURALI: Mektup ve konu başlığı KESİNLİKLE {target_lang_full} dilinde yazılmalıdır! Muhatap hitapları dahil asla Türkçe veya uygunsuz İngilizce bırakılmamalıdır.
-2. BİLİMSEL DAYANAK KURALI: Eğer strateji "clinical" (Bilimsel & Klinik İkna) ise; mutlaka hakemli yayın kaynaklarını (Baltaci et al. RBM Online - p<0.001 fertilizasyon artışı, Ebner et al. Hum Reprod Update / ESHRE - 2.2 kat blastosist artışı, Vanden Meerschaut et al. Fertil Steril - biyogüvenlik ve anomali yokluğu) ve CE MDR Class IIa (MEA >%80, LAL <0.05 EU/ml) kalite standartlarını açıkça referans göstererek metne bilimsel ağırlık kazandır ve mektubun sonuna [Scientific References / Pubblicazioni di Riferimento] künyesini ekle.
+2. BİLİMSEL DAYANAK KURALI: Eğer strateji "clinical" (Bilimsel & Klinik İkna) ise; mutlaka hakemli yayın kaynaklarını (Baltaci et al. RBM Online - p<0.001 fertilizasyon artışı, Ebner et al. Hum Reprod Update / ESHRE - 2.2 kat blastosist artışı, Day-3 kaliteli embriyo %74.5, lizis <%1.2, Vanden Meerschaut et al. Fertil Steril - biyogüvenlik ve anomali yokluğu) ve CE Device Certified (MDR Class IIa, MEA >%80, LAL <0.05 EU/ml) standartlarını açıkça referans göstererek metne bilimsel ağırlık kazandır ve mektubun sonuna [Scientific References / Pubblicazioni di Riferimento] künyesini ekle.
+3. KESİNLİKLE DEMO YOK KURALI: ZEUS Bioscience politikası gereği demo cihaz / ücretsiz deneme cihazı VERİLMEMEKTEDİR. Asla mektupta "demo", "demo unit", "ücretsiz deneme cihazı", "loaner" ifadelerini kullanma! Bunun yerine "bilimsel protokol sunumu", "yerinde aplikasyon eğitimi" ve "vaka çalıştayı" öner.
 
 Çıktıyı tam olarak şu formatta ver:
 SUBJECT: [Konu başlığı]
@@ -12237,7 +12288,7 @@ BODY:
                 st.markdown("""<div class="kpi-container" style="border-top:3px solid #10B981;">
 <div class="kpi-header">🥉 FAZ 3 (Acenteli / Distribütörlü)</div>
 <div class="kpi-val">İtalya & Almanya</div>
-<div class="kpi-sub kpi-pos">Yerel Distribütör + ESHRE Demo</div>
+<div class="kpi-sub kpi-pos">Yerel Distribütör + ESHRE Workshop & Kongre</div>
 </div>""", unsafe_allow_html=True)
 
             st.markdown("<br>", unsafe_allow_html=True)
@@ -12340,9 +12391,9 @@ Sappiamo con quanta attenzione e rigore scientifico il vostro laboratorio selezi
 
 ZEUS Bioscience è lieta di condividere con la vostra équipe la documentazione tecnica e le evidenze cliniche relative al sistema ZEUS Piezo Pulse Stimulator & Electro Activation:
 
-1. Certificazione CE Medical Device: Piena conformità alle normative europee vigenti per dispositivi e consumabili sterili dedicati alla PMA (test MEA >80% ed Endotossina LAL certificati).
+1. Certificazione CE Device Certified: Piena conformità alle normative europee vigenti per dispositivi e consumabili sterili dedicati alla PMA (test MEA >80% ed Endotossina LAL certificati).
 2. Evidenze Cliniche Pubblicate: Dati multicentrici peer-reviewed che dimostrano un incremento del tasso di fecondazione dal 24.6% fino a oltre l'82.3% (p < 0.001) in casi con pregresso arresto o oociti fragili.{table_snip_it}
-3. Programma di Valutazione Senza Impegno (Demo Gratuita 14 Giorni): Mettiamo a disposizione del vostro laboratorio 1 unità demo e un kit di consumabili (Electro Dish & Solution) per 14 giorni, senza alcun costo né vincolo d'acquisto, per permettervi di testare la tecnologia esclusivamente su 2-3 casi con severo fattore maschile o precedente fallimento di fertilizzazione.
+3. Valutazione Clinica su Casi Complessi: Mettiamo a disposizione del vostro laboratorio il protocollo applicativo dedicato e il supporto specialistico in affiancamento per valutare la tecnologia sui vostri casi con severo fattore maschile o pregresso Total Fertilization Failure (TFF).
 
 In allegato trasmettiamo la Scheda Tecnica CE e il Clinical Whitepaper riassuntivo di 1 pagina.
 
@@ -12374,9 +12425,9 @@ Conocemos el rigor científico y el compromiso de excelencia que caracteriza a s
 
 Desde ZEUS Bioscience, queremos poner a su disposición la documentación técnica y las evidencias clínicas de nuestro sistema de Activación Oocitaria Asistida (AOA) mediante estimulación Piezoeléctrica (ZEUS Piezo Pulse Stimulator & Electro Dish):
 
-1. Marcado CE Medical Device: Certificación europea vigente que garantiza la total bioseguridad y esterilidad celular (tests MEA >80% y Endotoxina LAL certificados).
+1. Marcado CE Device Certified: Certificación europea vigente que garantiza la total bioseguridad y esterilidad celular (tests MEA >80% y Endotoxina LAL certificados).
 2. Evidencia Clínica Publicada: Datos multicéntricos peer-reviewed que demuestran una recuperación de la tasa de fecundación del 24.6% hasta más del 82.3% (p < 0.001) en casos con antecedentes de fallo de fecundación o factor masculino severo (TESE/Globozoospermia).{table_snip_es}
-3. Programa de Evaluación Clínica Sin Coste (Demo 14 Días): Ponemos a disposición de su equipo 1 unidad de prueba y un lote de placas y medios Electro Dish durante 14 días sin coste alguno ni compromiso de adquisición, para evaluar la tecnología exclusivamente en 2-3 casos de pronóstico comprometido.
+3. Evaluación Clínica en Casos de Pronóstico Comprometido: Ponemos a disposición de su equipo el protocolo clínico homologado y el soporte de especialistas en aplicaciones para validar el sistema en ciclos con antecedentes de fallo de fecundación.
 
 Adjuntamos el Dossier Clínico (Whitepaper) de 1 página con los resultados analíticos y la ficha técnica CE.
 
@@ -12411,7 +12462,7 @@ ZEUS Bioscience stellt Ihnen hiermit die klinischen Validierungsdaten des CE-zer
 
 1. CE-Kennzeichnung (Medical Device): Volle Konformität mit den europäischen Medizinprodukte-Standards, inklusive zertifizierter MEA- (Mausembryo-Assay >80%) und Endotoxin-Freigaben.
 2. Publizierte klinische Evidenz: Multizentrische Studien belegen eine signifikante Steigerung der 2PN-Fertilisierungsrate von 24,6% auf über 82,3% (p < 0.001) bei Zyklen mit Aktivierungsdefiziten oder schwerem männlichen Faktor.{table_snip_de}
-3. Unverbindliche 14-tägige Evaluierung (Kostenlose Demo-Einheit): Wir stellen Ihrem Labor gerne für 14 Tage ein voll funktionsfähiges Leihgerät inklusive Verbrauchsmaterialien (Electro Dish & Solution) kostenfrei und ohne Kaufverpflichtung zur Verfügung.
+3. Klinische Protokoll-Validierung: Wir stellen Ihrem Labor unser validiertes Anwendungsprotokoll und die fachliche Begleitung zur Verfügung, um das Verfahren bei komplexen Indikationen gezielt in Ihrer klinischen Routine zu prüfen.
 
 Im Anhang finden Sie unser wissenschaftliches Whitepaper (1 Seite) sowie die CE-Konformitätserklärung.
 
@@ -12446,7 +12497,7 @@ ZEUS Bioscience a le plaisir de partager avec votre équipe les données d'éval
 
 1. Marquage CE Dispositif Médical: Conformité totale aux normes européennes de sécurité biologique (tests MEA >80% et LAL certifiés).
 2. Données Cliniques Publiées: Études multicentriques démontrant une amélioration du taux de fécondation passant de 24.6% à plus de 82.3% (p < 0.001) dans les cas de déficit d'activation ou de facteur spermatique sévère.{table_snip_fr}
-3. Programme d'Évaluation Clinique (Prêt Démo 14 Jours Sans Frais): Nous mettons à la disposition de votre laboratoire une unité de démonstration et un kit de consommables stériles pendant 14 jours, sans aucun engagement d'achat ni frais, afin d'évaluer le système sur 2 à 3 cas sélectionnés.
+3. Validation Clinique sur Cas Complexes: Nous mettons à la disposition de votre laboratoire le protocole technique validé et l'accompagnement de nos spécialistes d'application pour analyser l'efficacité sur vos cas sélectionnés.
 
 Vous trouverez en pièce jointe notre Whitepaper scientifique (1 page) ainsi que la documentation technique CE.
 
@@ -12476,9 +12527,9 @@ Web: www.zeusbioscience.com""", language="markdown")
 
 انطلاقاً من ريادتكم العلمية في معالجة أصعب حالات العقم المستعصي، يسعدنا في شركة ZEUS Bioscience أن نضع بين أيديكم الملف الإكلينيكي لجهاز التحفيز الكهروبيزوي المتقدم (ZEUS Piezo Pulse Stimulator & Electro Dish):
 
-1. شهادة الاعتماد الأوروبي (CE Medical Device): مطابقة تامة لمعايير السلامة البيولوجية واختبارات سلامة الأجنة (MEA >80% & Endotoxin Free).
+1. شهادة الاعتماد الأوروبي (CE Device Certified): مطابقة تامة لمعايير السلامة البيولوجية واختبارات سلامة الأجنة (MEA >80% & Endotoxin Free).
 2. نتائج إكلينيكية موثقة: أثبتت الدراسات العلمية المنشورة قدرة تقنية (Piezo AOA) على رفع معدلات الإخصاب من 24.6% إلى أكثر من 82.3% (p < 0.001) في حالات انعدام الحيوانات المنوية، تشوهات الحيوانات الشديدة (Globozoospermia)، وفشل التنشيط المسبق.{table_snip_ar}
-3. برنامج التقييم الإكلينيكي المجاني (جهاز تجريبي لمدة 14 يوماً): يسعدنا تزويد مختبركم الموقر بوحدة تجريبية كاملة مع أطباق ومحاليل التنشيط مجاناً ودون أي التزام بالشراء، لتجربة البروتوكول على 2-3 حالات من الحالات الصعبة لديكم وملاحظة الفرق عملياً.
+3. التقييم الإكلينيكي للحالات المستعصية: يسعدنا تزويد مختبركم الموقر بالبروتوكول التطبيقي المعتمد وتوفير جلسة استشارية علمية مع فريق التطبيقات الإكلينيكية لدينا لمراجعة النتائج على الحالات المعقدة.
 
 مرفق مع هذه الرسالة الملخص العلمي (Whitepaper) وشهادات الجودة الأوروبية.
 
@@ -12510,9 +12561,9 @@ We recognize the high level of clinical rigor with which your laboratory handles
 
 ZEUS Bioscience is pleased to share our published multicentric clinical data regarding the ZEUS Piezo Pulse Stimulator & Electro Dish Assisted Oocyte Activation (AOA) system:
 
-1. CE Medical Device Certified: Fully compliant with current European medical device regulations, including certified Mouse Embryo Assay (MEA >80%) and Endotoxin LAL testing.
+1. CE Device Certified: Fully compliant with current European medical device regulations, including certified Mouse Embryo Assay (MEA >80%) and Endotoxin LAL testing.
 2. Published Clinical Evidence: Multicentric data confirming 2PN fertilization rate improvement from 24.6% to 82.3% in previous fertilization failure cohorts (p < 0.001) with Day-5 blastocyst utilization increasing by 2.2x.{table_snip_en}
-3. Zero-Risk Clinical Evaluation (14-Day Loaner Program): We provide accredited IVF laboratories with 1 full demo unit and a set of Electro Dish consumables for 14 days at zero cost and with no purchasing commitment, enabling your team to validate efficacy on 2-3 severe male-factor or previous TFF cases.
+3. Clinical Protocol Validation: We provide accredited IVF laboratories with our dedicated clinical application protocol and expert embryology support to evaluate efficacy on severe male-factor or recurrent TFF cases.
 
 Please find attached our 1-Page Clinical Whitepaper and CE certificate summary.
 
@@ -12553,7 +12604,7 @@ Web: www.zeusbioscience.com""", language="markdown")
                     st.text("Bağlantı Kabul Edildikten Sonraki DM (İtalyanca):")
                     st.code("""Gentile Dott./Dott.ssa [Soyadı], grazie per il collegamento.
 Come accennato, le allego il nostro Whitepaper clinico di 1 pagina sull'attivazione oocitaria Piezo (AOA) con marcatura CE.
-Mettiamo a disposizione dei laboratori PMA un'unità demo gratuita per 14 giorni (completa di piastre Electro Dish) per consentire al vostro team di testare il sistema su 2-3 casi complessi senza alcun impegno.
+Condividiamo volentieri con la vostra équipe il nostro Clinical Whitepaper e il protocollo applicativo CE per valutare i dati di recupero della fertilizzazione sui casi più complessi.
 Se per lei ha senso, posso inviarle la scheda tecnica o concordare una breve chiacchierata tecnica online di 10 minuti. Buona giornata!""", language="text")
 
             # ------------------------------------------------------------------
@@ -12641,7 +12692,7 @@ Se per lei ha senso, posso inviarle la scheda tecnica o concordare una breve chi
 </table>
 
 <div style="background:rgba(255,255,255,0.03); border-radius:8px; padding:10px 14px; font-size:11.5px; color:#CCD7E6; margin-top:10px;">
-<b>🛡️ Kalite & Güvenlik Güvencesi:</b> CE Medical Device MDR Sertifikalı | MEA (Mouse Embryo Assay) >%80 Blastosist Onaylı | Endotoksin LAL <0.05 EU/ml | 14 Günlük Ücretsiz Klinik Konsinye Değerlendirme Programı Aktif.
+<b>🛡️ Kalite & Güvenlik Güvencesi:</b> CE Device Certified (MDR) | MEA (Mouse Embryo Assay) >%80 Blastosist Onaylı | Endotoksin LAL <0.05 EU/ml | Doğrulanmış Klinik Aplikasyon ve Protokol Desteği Aktif.
 </div>
 </div>""", unsafe_allow_html=True)
 
@@ -12687,10 +12738,10 @@ Calibrated, non-toxic micro-electrical Piezo pulses (0.5-1.2 kV/cm) induce physi
 - Oocyte Degeneration Rate: 7.8% -> 3.2% (59% cell damage reduction)
 
 4. QUALITY ASSURANCE & COMPLIANCE:
-- CE Medical Device MDR Certified (Class IIa)
+- CE Device Certified (MDR) (Class IIa)
 - MEA (Mouse Embryo Assay) > 80% Blastocyst Confirmed
 - Endotoxin LAL < 0.05 EU/ml
-- 14-Day Free Clinical Consignment Evaluation Available
+- Peer-Reviewed Clinical Protocol & Application Specialist Support Active
 
 5. SCIENTIFIC REFERENCES:
 - Baltaci et al., Reprod Biomed Online (AOA via electrical stimulation in TFF cycles, p<0.001)
@@ -14308,7 +14359,7 @@ elif nav_selection == "Performance Evaluator":
             <div style="color:#CCD7E6;font-size:13px;line-height:1.6;margin-top:6px;">
                 <b>Teşhis:</b> CMC, 2024 ve 2025 yıllarında toplam <b>5 adet ZEUS Piezo Pulse</b> cihazı alarak Filistin'deki referans klinik altyapısını tamamlamıştır. 2026 yılında yeni cihaz alımı yapılmaması toplam ciroda %71.8 düşüş gibi görünse de, <b>46 kutuluk sarf alımı</b> cihazların tam kapasite çalıştığını teyit etmektedir.<br>
                 <b>Kritik Risk:</b> Siparişlerin çeyreklik düzenli açılmaması (2025Q2 ve 2026Q2'de sıfır sipariş); kliniklerin sarf stoku tükenene kadar beklediğini göstermektedir.<br>
-                <b>Eylem Reçetesi:</b> CMC ile 6 aylık toplu sipariş yerine <b>çeyreklik otomatik yenilenen sarf sevkiyat protokolü</b> imzalanmalı; 2027 başında Batı Şeria'daki yeni bir merkez için 6. Piezo cihazı demo teklifi sunulmalıdır.
+                <b>Eylem Reçetesi:</b> CMC ile 6 aylık toplu sipariş yerine <b>çeyreklik otomatik yenilenen sarf sevkiyat protokolü</b> imzalanmalı; 2027 başında Batı Şeria'daki yeni bir merkez için 6. Piezo cihazı kurumsal filo teklifi sunulmalıdır.
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -14851,7 +14902,7 @@ ZEUS BIOSCIENCE olarak geliştirdiğimiz 'Mismatch Blocker (ZMB-7T)' ve 'Smart C
 
 {target_clinic_name} için hazırladığımız 3 yıllık RFID sarf tasarruf fizibilitesini ve 15 dakikalık interaktif sistem sunumunu sizinle paylaşmaktan onur duyarız. 
 
-Önümüzdeki hafta içinde uygun göreceğiniz bir gün 15 dakikalık bir çevrim içi veya yüz yüze demo toplantısı organize edebilir miyiz?
+Önümüzdeki hafta içinde uygun göreceğiniz bir gün 15 dakikalık bir çevrim içi veya yüz yüze teknik bilgilendirme toplantısı organize edebilir miyiz?
 
 Saygılarımızla,
 
@@ -14894,7 +14945,7 @@ ZEUS Bioscience has engineered an integrated platform that fundamentally solves 
 ✔ BioPSafe PGT Verification & Pulse Stimulator (ZPS 26):
    The world's first 13-IR sensor and dual-tablet biopsy platform (ZBB25-001) for 100% PCR tube matching, paired with published piezoelectric AOA evidence (Baltaci et al., 62% fertilization in TFF; Tanaka et al. ROSI, 90+ live births).
 
-We would be privileged to share a brief 15-minute clinical demo and a customized 3-year OPEX savings audit tailored specifically to {target_clinic_name}'s cycle volume.
+We would be privileged to share a brief 15-minute clinical protocol presentation and a customized 3-year OPEX savings audit tailored specifically to {target_clinic_name}'s cycle volume.
 
 Would you be open to a brief introductory call next week?
 
