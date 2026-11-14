@@ -13133,7 +13133,7 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
 <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.12); padding-bottom:10px; margin-bottom:12px;">
 <div>
 <span style="font-size:17px; font-weight:800; color:#FFFFFF;">{prof['flag']} {c_name} — GTM Stratejisi & Pazar Bariyeri Analizi</span><br>
-<span style="font-size:11.5px; color:#94A3B8;">Pazar Ölçeği: {prof['market_size']} | İthalat/Gümrük Koşulu: {c_row.get('import_cond', 'Standart') if c_row else 'Standart'}</span>
+<span style="font-size:11.5px; color:#94A3B8;">Pazar Ölçeği: {prof['market_size']} | İthalat/Gümrük Koşulu: {c_row.get('import_cond', 'Standart') if c_row is not None else 'Standart'}</span>
 </div>
 <span style="background:rgba(255,255,255,0.08); color:{prof['color']}; border:1px solid {prof['color']}; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">{prof['phase_label']}</span>
 </div>
@@ -13176,8 +13176,8 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
                 with col_sel_info:
                     c_code_cur = country_df.loc[country_df['name']==sel_gtm_dir_country, 'code'].values[0] if len(country_df.loc[country_df['name']==sel_gtm_dir_country])>0 else ''
                     c_row_cur = country_map.get(c_code_cur)
-                    clinics_num = c_row_cur['clinics'] if c_row_cur else '—'
-                    cycles_num = f"{c_row_cur['cycles']:,}" if c_row_cur else '—'
+                    clinics_num = c_row_cur['clinics'] if c_row_cur is not None else '—'
+                    cycles_num = f"{c_row_cur['cycles']:,}" if c_row_cur is not None else '—'
                     phase_cur = classify_gtm_phase(sel_gtm_dir_country)
                     st.info(f"📍 **{sel_gtm_dir_country} (Faz {phase_cur}) Pazar Özeti:** Toplam **{clinics_num} Klinik**, yıllık **{cycles_num} Siklus**. Yerel medikal cihaz dağıtım ağı ve öncü merkezler aşağıda listelenmiştir.")
 
