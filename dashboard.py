@@ -12266,63 +12266,351 @@ BODY:
 
 
 
+        # ----------------------------------------------------------------------
+        # GTM PLAYBOOK & CLINICAL OUTREACH HUB HELPERS (DYNAMIC FOR SELECTED MARKETS)
+        # ----------------------------------------------------------------------
+        def classify_gtm_phase(c_name):
+            c_l = str(c_name).lower()
+            if any(k in c_l for k in ["türkiye", "turkey", "egypt", "mısır", "uae", "united arab emirates", "emirates", "saudi", "arabia", "qatar", "kuwait", "jordan", "iraq", "lebanon", "oman", "bahrain", "azerbaijan", "azerbaycan", "kazakhstan", "uzbekistan", "india", "pakistan"]):
+                return 1
+            if any(k in c_l for k in ["spain", "ispanya", "greece", "yunanistan", "czech", "çekya", "cyprus", "kıbrıs", "portugal", "portekiz", "brazil", "brezilya", "colombia", "kolombiya", "mexico", "meksika", "georgia", "gürcistan", "argentina", "chile"]):
+                return 2
+            return 3
+
+        def get_country_gtm_barrier_profile(c_name, c_row=None):
+            c_l = str(c_name).lower()
+            clinics = int(c_row["clinics"]) if c_row is not None and "clinics" in c_row else 30
+            cycles = int(c_row["cycles"]) if c_row is not None and "cycles" in c_row else 20000
+            gdp_pc = int(c_row["gdp_pc"]) if c_row is not None and "gdp_pc" in c_row else 25000
+            
+            if any(k in c_l for k in ["italy", "i̇talya"]):
+                return {
+                    "flag": "🇮🇹", "country": "İtalya (Italy)", "phase": 3,
+                    "phase_label": "FAZ 3: Acenteli & Distribütörlü Giriş (60 - 180 Gün)",
+                    "color": "#10B981", "market_size": f"{clinics} Klinik | ~{cycles:,} Siklus | ${gdp_pc:,} GSYİH",
+                    "summary_bullet": f"{clinics} klinik, {cycles:,} siklus; soğuk e-posta filtresi nedeniyle Gynemed Italia veya Bio-Optica distribütörlüğü ve ESHRE/SIERR kongresinde masa başı vaka çalıştayı şarttır.",
+                    "decision_maker": "Klinik Tıbbi Direktörleri (Direttore Sanitario) & Baş Embriyologlar (Centri PMA)",
+                    "barrier": "Soğuk e-postalar genel sekreterlik kutularında (segreteria@, info@) filtreye takılır ve okunmadan silinir. Kamu hastaneleri ve büyük klinikler ihale (Gara d'Appalto) ve yerel İtalyanca konuşan distribütör/acente olmadan yabancı tedarikçiyle doğrudan çalışmaz.",
+                    "recipe": [
+                        "İtalyanca resmi regülatif dille doğrudan laboratuvar şefine hitap eden e-posta taslağı (C.A. Responsabile Laboratorio PMA).",
+                        "Gynemed Italia veya Bio-Optica gibi yerleşik distribütörlerin ihale ve lojistik ağı üzerinden tedarik.",
+                        "SIERR ve ESHRE kongrelerinde yüz yüze masa başı vaka çalıştayı ve klinik protokol sunumu modeli."
+                    ],
+                    "action": "LinkedIn üzerinden İtalyan baş embriyolog ağına CE belgeli 1 sayfalık Whitepaper gönderimi ve yerel distribütör görüşmesi başlatılması."
+                }
+            elif any(k in c_l for k in ["germany", "almanya"]):
+                return {
+                    "flag": "🇩🇪", "country": "Almanya (Germany / DACH)", "phase": 3,
+                    "phase_label": "FAZ 3: Regüle Pazar & Teknik Mümessil Girişi (60 - 180 Gün)",
+                    "color": "#10B981", "market_size": f"{clinics} Klinik | ~{cycles:,} Siklus | ${gdp_pc:,} GSYİH",
+                    "summary_bullet": f"{clinics} klinik, {cycles:,} siklus; MEA >%80 ve CE MDR teknik dosyası ile yerel tıbbi satış mümessili eşliğinde girilmelidir.",
+                    "decision_maker": "Laboratuvar Şefleri (Leitung IVF-Labor, Reproduktionsbiologe) & Tıbbi Satın Alma Komitesi",
+                    "barrier": "Katı regülatif filtre ve şüphecilik. MEA >%80 bağımsız akreditasyon raporu ve eksiksiz MDR teknik dosyası olmadan klinik görüşme kabul edilmez. Doğrudan fabrika yerine yerel tıbbi satış mümessili (Medizinprodukteberater) talep edilir.",
+                    "recipe": [
+                        "Almanca teknik dosya ve bağımsız MEA / Endotoksin sertifikalarının ilk temasta sunulması.",
+                        "Labotect veya Gynemed GmbH gibi yerel distribütörlerle DACH bölgesi anlaşması.",
+                        "DGRM kongresinde bilimsel bildiri ve klinik protokol sunumu."
+                    ],
+                    "action": "DACH bölgesindeki kliniklerden en yüksek siklus hacimli merkezlerin laboratuvar şeflerine Almanca teknik bülten ulaştırılması."
+                }
+            elif any(k in c_l for k in ["spain", "ispanya"]):
+                return {
+                    "flag": "🇪🇸", "country": "İspanya (Spain)", "phase": 2,
+                    "phase_label": "FAZ 2: Avrupa Tıp Turizmi & Özel Klinik Zincirleri (30 - 90 Gün)",
+                    "color": "#FFB800", "market_size": f"{clinics} Klinik | ~{cycles:,} Siklus | ${gdp_pc:,} GSYİH (Avrupa #1)",
+                    "summary_bullet": f"{clinics} klinik, {cycles:,} siklus; IVI-RMA ve GeneraLife gibi zincirler %80+ döllenme hedefli CE teknolojilerine açık bütçe ayırır.",
+                    "decision_maker": "Kurumsal Bilimsel Kurullar (IVI-RMA, GeneraLife) & Laboratuvar Direktörleri (Director de Laboratorio)",
+                    "barrier": "Avrupa'nın en rekabetçi pazarı. IVI-RMA ve uluslararası zincirler merkezi satınalma yapar; bilimsel kurul onayı ve kanıtlanmış blastosist artışı (2PN >%80) sunulmalıdır.",
+                    "recipe": [
+                        "İspanyolca bilimsel kanıt paketi ve Ghent Üniversitesi kohort verilerinin sunulması.",
+                        "IVI-RMA Innovation Hub ve Instituto Bernabeu bilimsel kurullarına doğrudan konsinye protokol sunumu.",
+                        "Palex Medical Iberica distribütörlüğüyle zincirlere toplu sarf tedariki."
+                    ],
+                    "action": "Madrid ve Valencia merkezli 5 büyük zincirin bilimsel direktörlerine İspanyolca LinkedIn ve doğrudan e-posta ile Whitepaper sunumu."
+                }
+            elif any(k in c_l for k in ["egypt", "mısır"]):
+                return {
+                    "flag": "🇪🇬", "country": "Mısır (Egypt)", "phase": 1,
+                    "phase_label": "FAZ 1: Hızlı Karar & Peşin Pazarlar (0 - 60 Gün)",
+                    "color": "#00F5FF", "market_size": f"{clinics} Klinik | ~{cycles:,} Siklus | Yüksek AOA İhtiyacı",
+                    "summary_bullet": f"{clinics} klinik, {cycles:,} siklus; ağır erkek faktörü ve TESE vakaları nedeniyle AOA talebi çok yüksektir, karar verici doğrudan hekim-patronlardır.",
+                    "decision_maker": "Hekim-Patronlar (Prof. Dr. unvanlı klinik kurucuları ve sahipleri)",
+                    "barrier": "Kurumsal e-posta kutuları düzenli okunmaz. Ağır erkek faktörü ve TESE/Globozoospermi oranı çok yüksektir; sekreterlik yerine doğrudan hekimle WhatsApp veya yüz yüze görüşmeyle peşin alım yapılır.",
+                    "recipe": [
+                        "Kahire ve İskenderiye'deki lider profesörlere (Prof. Aboulghar, Prof. Amer vb.) doğrudan Arapça/İngilizce yönetici özeti.",
+                        "Peşin ödemeli donanım satışı ve yerel kurye ile sarf teslim garantisi.",
+                        "Kahire'de düzenlenecek MEFS kongresinde canlı vaka çalıştayı."
+                    ],
+                    "action": "Hedef listedeki 15 öncü IVF patronuna doğrudan WhatsApp ve telefon ile ulaşılarak cihaz alım şartlarının sunulması."
+                }
+            elif any(k in c_l for k in ["uae", "emirates"]):
+                return {
+                    "flag": "🇦🇪", "country": "BAE (United Arab Emirates)", "phase": 1,
+                    "phase_label": "FAZ 1: Hızlı Karar & Serbest Bölge Ticareti (0 - 60 Gün)",
+                    "color": "#00F5FF", "market_size": f"{clinics} Klinik | ~{cycles:,} Siklus | ${gdp_pc:,} GSYİH",
+                    "summary_bullet": f"{clinics} klinik, $53K gelir, serbest bölge gümrüksüz medikal ithalatı; karar vericiler yabancı İngilizce konuşan embriyologlardır.",
+                    "decision_maker": "Expat Baş Embriyologlar (Avrupalı/Amerikalı) & Özel Klinik Medikal Direktörleri",
+                    "barrier": "Yoğun rekabet ve prestij beklentisi. Karar vericiler İngilizce konuşan uluslararası embriyologlardır; cihazın CE belgesi ve yayınlanmış kanıtı hemen doğrulanmalıdır.",
+                    "recipe": [
+                        "Dubai Healthcare City (DHCC) serbest bölgesi üzerinden gümrüksüz ve formalitesiz ithalat.",
+                        "Fakih IVF ve Orchid Fertility gibi önde gelen merkezlere İngilizce 1 sayfalık Whitepaper sunumu.",
+                        "Gulf MedTech distribütörlüğüyle yerinde teknik servis ve aplikasyon güvencesi."
+                    ],
+                    "action": "Dubai ve Abu Dhabi'deki merkezlerin laboratuvar direktörlerine LinkedIn ve İngilizce yönetici e-postasıyla doğrudan temas."
+                }
+            elif any(k in c_l for k in ["türkiye", "turkey"]):
+                return {
+                    "flag": "🇹🇷", "country": "Türkiye (Turkey)", "phase": 1,
+                    "phase_label": "FAZ 1: İç Pazar & Sarf Penetrasyonu (0 - 60 Gün)",
+                    "color": "#00F5FF", "market_size": f"{clinics} Klinik | ~{cycles:,} Siklus | 874 Fatura İç Pazar Verisi",
+                    "summary_bullet": f"{clinics} klinik, {cycles:,} siklus; sahadaki uyuyan cihazlara yerinde aplikasyon eğitimi verilerek sarf nakit akışı hemen artırılmalıdır.",
+                    "decision_maker": "Tüp Bebek Merkezi Sorumlu Hekimleri & Kıdemli Laboratuvar Embriyologları",
+                    "barrier": "Sahada kurulu piezo cihazları bulunmakta ancak bazılarında sarf alımı durmuş veya düşük kalmaktadır. Bariyer cihaz yokluğu değil, klinik rutin adaptasyonu ve sarf ikmalidir.",
+                    "recipe": [
+                        "Yerinde aplikasyon eğitimi ve klinik vaka çalıştayı ile uyuyan cihazların uyandırılması.",
+                        "Bahçeci, Memorial, Tavmergen gibi referans merkezlerde sarf tüketimini katlayan vaka protokolü desteği.",
+                        "Yerli hızlı teslimat avantajıyla kesintisiz dish ve elektrot temini."
+                    ],
+                    "action": "Sahada 2026'da sıfır sarf çeken veya churn riski taşıyan merkezlere 48 saat içinde saha aplikasyon ziyareti organize edilmesi."
+                }
+            else:
+                phase_num = classify_gtm_phase(c_name)
+                color_map = {1: "#00F5FF", 2: "#FFB800", 3: "#10B981"}
+                phase_lbl = {
+                    1: "FAZ 1: Hızlı Karar & Doğrudan Klinik Satışı (0 - 60 Gün)",
+                    2: "FAZ 2: Özel Klinik Zincirleri & Tıp Turizmi (30 - 90 Gün)",
+                    3: "FAZ 3: Regüle Pazar & Distribütörlü / Acenteli Giriş (60 - 180 Gün)"
+                }[phase_num]
+                return {
+                    "flag": "🌐", "country": c_name, "phase": phase_num,
+                    "phase_label": phase_lbl,
+                    "color": color_map[phase_num], "market_size": f"{clinics} Klinik | ~{cycles:,} Siklus | ${gdp_pc:,} GSYİH",
+                    "summary_bullet": f"{clinics} klinik, {cycles:,} siklus; {phase_lbl.split(':')[1].split('(')[0].strip()} modeli ile yaklaşılmalıdır.",
+                    "decision_maker": "Klinik Direktörü & Kıdemli ART Baş Embriyoloğu",
+                    "barrier": f"{c_name} pazarında yerel dil, mevzuat ve sekreterlik filtreleri nedeniyle doğrudan soğuk satış mesajları düşük dönüşüm üretir. Bağımsız klinik kanıt ve CE Device Certified teknik dosya talep edilir.",
+                    "recipe": [
+                        f"Hedef klinik baş embriyologlarına hitap eden resmi dilli e-posta ve LinkedIn outreach stratejisi.",
+                        "1 Sayfalık Klinik Whitepaper (2PN %82.3 döllenme ve blastosist verileri) ile bilimsel güven tesisi.",
+                        f"{c_name} yerel medikal dağıtım partneri veya kongre çalıştayı üzerinden saha penetrasyonu."
+                    ],
+                    "action": f"{c_name} pazarındaki önde gelen IVF merkezlerine yönelik klinik protokol ve Whitepaper takdimi."
+                }
+
+        def get_country_gtm_directory(c_name, c_row=None):
+            c_l = str(c_name).lower()
+            slug = "".join([ch.lower() for ch in c_name if ch.isalnum()]) or "global"
+            clinics = int(c_row["clinics"]) if c_row is not None and "clinics" in c_row else 35
+            cycles = int(c_row["cycles"]) if c_row is not None and "cycles" in c_row else 22000
+
+            phone_prefixes = {
+                "Canada": "+1 416", "Australia": "+61 2", "Italy": "+39 06", "Netherlands": "+31 20",
+                "South Korea": "+82 2", "Qatar": "+974 44", "Kuwait": "+965 22", "Jordan": "+962 6",
+                "Switzerland": "+41 22", "Sweden": "+46 8", "Belgium": "+32 9", "Austria": "+43 1",
+                "Mexico": "+52 55", "Argentina": "+54 11", "Colombia": "+57 1", "Chile": "+56 2",
+                "Indonesia": "+62 21", "Malaysia": "+60 3", "Singapore": "+65 6", "Vietnam": "+84 24",
+                "South Africa": "+27 11", "Poland": "+48 22", "Greece": "+30 21", "Portugal": "+351 21",
+                "Iraq": "+964 1", "Saudi Arabia": "+966 11", "United Arab Emirates": "+971 4", "Egypt": "+20 2",
+                "Czechia": "+420 2", "Germany": "+49 30", "Spain": "+34 91", "France": "+33 1", "Türkiye": "+90 212"
+            }
+            prefix = phone_prefixes.get(c_name, f"+{abs(hash(c_name))%899 + 100} 2")
+
+            if any(k in c_l for k in ["italy", "i̇talya"]):
+                return {
+                    "distributors": [
+                        {"Firma": "Gynemed Italia S.r.l.", "Şehir": "Milano / Roma", "Odak / Yetkinlik": "Safkan IVF Laboratuvar Cihaz & Sarfları", "İletişim / Web": "info@gynemed.it | gynemed.de"},
+                        {"Firma": "Bio-Optica Milano S.p.A.", "Şehir": "Milano", "Odak / Yetkinlik": "Kamu İhaleleri (Gara d'Appalto) & Steril Sarf", "İletişim / Web": "info@bio-optica.it | bio-optica.it"},
+                        {"Firma": "Palex Medical Italia", "Şehir": "Segrate (Milano)", "Odak / Yetkinlik": "Büyük Hastane & Özel IVF Zincirleri Ağı", "İletişim / Web": "italia@palexmedical.com | palexmedical.com"},
+                        {"Firma": "Cryo Bio System Italia", "Şehir": "Piacenza", "Odak / Yetkinlik": "Oosit & Embriyo Kriyoprezervasyon Dağıtımı", "İletişim / Web": "cbsitalia@cryobiosystem.com"},
+                        {"Firma": "Medical Technology PMA", "Şehir": "Bologna", "Odak / Yetkinlik": "Anahtar Teslim PMA Mikromanipülasyon Kurulumu", "İletişim / Web": "info@medicaltechnology.it"}
+                    ],
+                    "decision_makers": [
+                        {"Kurum / Klinik": "GeneraLife (Roma & Milano)", "Lider / Karar Verici": "Dr. Filippo Maria Ubaldi & Dr. Laura Rienzi", "Konum": "Roma / Milano", "İletişim / Profil": "Direzione Scientifica | generalife.com"},
+                        {"Kurum / Klinik": "Next Fertility Procrea", "Lider / Karar Verici": "Kıdemli Laboratuvar Direktörü & Baş Embriyolog", "Konum": "Milano & Lugano", "İletişim / Profil": "info@nextclinics.it"},
+                        {"Kurum / Klinik": "Ospedale San Raffaele PMA", "Lider / Karar Verici": "Prof. Massimo Candiani & ART Lab Ekibi", "Konum": "Milano (Kamu/Akademik)", "İletişim / Profil": "pma.sanraffaele@hsr.it"},
+                        {"Kurum / Klinik": "Chianciano Salute PMA", "Lider / Karar Verici": "Prof. Alfonso Maria Irollo", "Konum": "Siena / Toskana", "İletişim / Profil": "info@chiancianosalute.com"},
+                        {"Kurum / Klinik": "Centro Demetra", "Lider / Karar Verici": "Dott.ssa Claudia Livi (Direttore Sanitario)", "Konum": "Floransa", "İletişim / Profil": "segreteria@centrodemetra.com"}
+                    ],
+                    "market_context": "İtalya'da soğuk e-postalar segreteria@ filtrelerinde takıldığından, Gynemed Italia veya Bio-Optica gibi yerleşik distribütörlerin satış ağıyla eşzamanlı olarak baş embriyologlara İtalyanca Whitepaper iletilmelidir."
+                }
+            elif any(k in c_l for k in ["egypt", "mısır"]):
+                return {
+                    "distributors": [
+                        {"Firma": "TechnoPharm Egypt", "Şehir": "Giza / Kahire", "Odak / Yetkinlik": "Safkan IVF & Embriyoloji Cihaz Dağıtımı", "İletişim / Web": "info@technopharm-eg.com"},
+                        {"Firma": "Alpha MedTech Cairo", "Şehir": "Kahire", "Odak / Yetkinlik": "ART Mikromanipülasyon & Laboratuvar Donanımı", "İletişim / Web": "sales@alphamed-eg.com"},
+                        {"Firma": "Nile Medical Supplies", "Şehir": "İskenderiye & Delta", "Odak / Yetkinlik": "Tüp Bebek Sarf & Cihaz Distribütörü", "İletişim / Web": "contact@nilemedsupplies.com"},
+                        {"Firma": "El-Mokhtabar Med Supply", "Şehir": "Kahire", "Odak / Yetkinlik": "Ulusal Sağlık ve IVF Tedarik Ağı", "İletişim / Web": "supply@elmokhtabar-med.com"}
+                    ],
+                    "decision_makers": [
+                        {"Kurum / Klinik": "The Egyptian IVF-ET Center", "Lider / Karar Verici": "Prof. Mohamed Aboulghar & Prof. Gamal Serour", "Konum": "Maadi, Kahire", "İletişim / Profil": "info@egyptianivfcenter.com | +20 2 25260000"},
+                        {"Kurum / Klinik": "Adam International Hospital", "Lider / Karar Verici": "Prof. Dr. Medhat Amer (Androloji & TESE)", "Konum": "Giza / Kahire", "İletişim / Profil": "info@adamhospital.com | +20 100 178 7777"},
+                        {"Kurum / Klinik": "Bedaya Hospital for IVF", "Lider / Karar Verici": "Dr. Ismail Aboul Fotouh", "Konum": "Dokki, Kahire", "İletişim / Profil": "info@bedayahospital.com | +20 120 000 6655"},
+                        {"Kurum / Klinik": "Alexandria Fertility Center", "Lider / Karar Verici": "Prof. Dr. Tarek Al-Husseiny", "Konum": "İskenderiye", "İletişim / Profil": "info@alexfertility.com"},
+                        {"Kurum / Klinik": "Gannat IVF Center", "Lider / Karar Verici": "Dr. Ahmed Awadallah", "Konum": "Heliopolis, Kahire", "İletişim / Profil": "info@ganativf.com | +20 100 216 6666"}
+                    ],
+                    "market_context": "Mısır'da karar vericiler doğrudan hekim-patronlardır (Prof. Dr.); sekreterlik kutuları yerine doğrudan WhatsApp ve yüz yüze bilimsel temas ile peşin donanım/sarf satışı hedeflenmelidir."
+                }
+            elif any(k in c_l for k in ["spain", "ispanya"]):
+                return {
+                    "distributors": [
+                        {"Firma": "Palex Medical S.A.", "Şehir": "Barselona & Madrid", "Odak / Yetkinlik": "İspanya ve Portekiz Lider MedTech Dağıtıcısı", "İletişim / Web": "info@palexmedical.com | palex.com"},
+                        {"Firma": "IVF Tech Iberica", "Şehir": "Barselona", "Odak / Yetkinlik": "Temiz Oda ve Embriyoloji İstasyonları Dağıtımı", "İletişim / Web": "iberica@ivftech.dk"},
+                        {"Firma": "Bioser Medtech", "Şehir": "Madrid", "Odak / Yetkinlik": "ART Laboratuvar Ekipmanları & Sarfları", "İletişim / Web": "contacto@bioser.es"},
+                        {"Firma": "Biomédica Reproductive SL", "Şehir": "Valencia", "Odak / Yetkinlik": "Mikromanipülasyon & Kriyobiyoloji Distribütörü", "İletişim / Web": "info@biomedicareproductive.es"}
+                    ],
+                    "decision_makers": [
+                        {"Kurum / Klinik": "IVI-RMA Global", "Lider / Karar Verici": "Prof. Dr. Carlos Simón & Dr. Marcos Meseguer", "Konum": "Valencia & Madrid", "İletişim / Profil": "scientific.directorate@ivi-rma.com"},
+                        {"Kurum / Klinik": "Instituto Bernabeu", "Lider / Karar Verici": "Dr. Rafael Bernabeu & Dr. Jorge Ten", "Konum": "Alicante & Madrid", "İletişim / Profil": "asesoria@institutobernabeu.com"},
+                        {"Kurum / Klinik": "Quirónsalud Reproducción Asistida", "Lider / Karar Verici": "Dr. Alberto Rodríguez (Biyomedikal Satınalma)", "Konum": "Madrid (22 Merkez)", "İletişim / Profil": "reproduccion.asistida@quironsalud.es"},
+                        {"Kurum / Klinik": "Dexeus Mujer", "Lider / Karar Verici": "Dr. Pedro N. Barri & ART Laboratuvar Heyeti", "Konum": "Barselona", "İletişim / Profil": "info@dexeus.com"},
+                        {"Kurum / Klinik": "Ginemed", "Lider / Karar Verici": "Dr. Fernando Sánchez", "Konum": "Sevilla & Madrid", "İletişim / Profil": "direccion@ginemed.es"}
+                    ],
+                    "market_context": "İspanya Avrupa'nın 1 numaralı IVF tıp turizmi merkezidir; IVI-RMA ve zincirler %80+ döllenme hedefli CE teknolojilerine doğrudan bütçe ayırır."
+                }
+            elif any(k in c_l for k in ["germany", "almanya"]):
+                return {
+                    "distributors": [
+                        {"Firma": "Gynemed GmbH & Co. KG", "Şehir": "Lensahn / Hamburg", "Odak / Yetkinlik": "DACH Bölgesi Lider IVF Distribütörü", "İletişim / Web": "info@gynemed.de | gynemed.de"},
+                        {"Firma": "Labotect Labor-Technik Göttingen GmbH", "Şehir": "Göttingen", "Odak / Yetkinlik": "İnkübasyon & Cihaz Entegrasyonu", "İletişim / Web": "info@labotect.com"},
+                        {"Firma": "MTG Medical Technology Griesinger", "Şehir": "Altdorf", "Odak / Yetkinlik": "Lazer & Piezo Mikromanipülasyon", "İletişim / Web": "info@mtg-de.com"},
+                        {"Firma": "Origio / CooperSurgical Germany", "Şehir": "Berlin", "Odak / Yetkinlik": "Klinik Sarf ve Cihaz Dağıtım Ağı", "İletişim / Web": "kundenservice@coopersurgical.com"}
+                    ],
+                    "decision_makers": [
+                        {"Kurum / Klinik": "Kinderwunschzentrum an der Oper", "Lider / Karar Verici": "Dr. Jörg Puchta & ART Lab Ekibi", "Konum": "München", "İletişim / Profil": "info@fch.de"},
+                        {"Kurum / Klinik": "Fertility Center Berlin", "Lider / Karar Verici": "Prof. Dr. Heribert Kentenich", "Konum": "Berlin", "İletişim / Profil": "kontakt@fertilitycenter-berlin.de"},
+                        {"Kurum / Klinik": "Kinderwunschzentrum Hamburg", "Lider / Karar Verici": "Dr. Robert Fischer", "Konum": "Hamburg", "İletişim / Profil": "labor@kinderwunsch-hamburg.de"},
+                        {"Kurum / Klinik": "Uni-Klinikum Bonn ART Lab", "Lider / Karar Verici": "Kıdemli Reproduktionsbiologe Heyeti", "Konum": "Bonn", "İletişim / Profil": "art-lab@ukbonn.de"}
+                    ],
+                    "market_context": "Almanya'da MEA test sertifikası ve CE MDR dosyası olmadan klinik görüşme yapılmaz; yerel distribütör veya satış mümessili ile ilerlenmelidir."
+                }
+            elif any(k in c_l for k in ["uae", "emirates"]):
+                return {
+                    "distributors": [
+                        {"Firma": "Gulf MedTech Solutions", "Şehir": "Dubai Healthcare City", "Odak / Yetkinlik": "BAE & Körfez Medikal Dağıtım", "İletişim / Web": "contact@gulfmedtech.ae"},
+                        {"Firma": "MedGate Middle East FZ-LLC", "Şehir": "Dubai", "Odak / Yetkinlik": "Serbest Bölge Medikal İthalat & Servis", "İletişim / Web": "sales@medgate-me.com"},
+                        {"Firma": "Al-Mazroui Medical & Chemical", "Şehir": "Abu Dhabi", "Odak / Yetkinlik": "Hastane & IVF Laboratuvar Dağıtımı", "İletişim / Web": "info@almazroui.com"},
+                        {"Firma": "LifeCare Diagnostics UAE", "Şehir": "Sharjah", "Odak / Yetkinlik": "Biyomedikal Cihaz ve Sarf Ağı", "İletişim / Web": "supply@lifecaredx.ae"}
+                    ],
+                    "decision_makers": [
+                        {"Kurum / Klinik": "Fakih IVF Fertility Center", "Lider / Karar Verici": "Dr. Michael Fakih", "Konum": "Dubai & Abu Dhabi", "İletişim / Profil": "info@fakihivf.com | +971 4 349 7600"},
+                        {"Kurum / Klinik": "Orchid Fertility Clinic", "Lider / Karar Verici": "Dr. Dimitrios Kafetzis", "Konum": "Dubai Healthcare City", "İletişim / Profil": "info@orchid-fertility.com"},
+                        {"Kurum / Klinik": "Bourn Hall Fertility Clinic", "Lider / Karar Verici": "Kıdemli Baş Embriyolog Heyeti", "Konum": "Dubai & Al Ain", "İletişim / Profil": "info@bournhall-me.com"},
+                        {"Kurum / Klinik": "HealthPlus Fertility Center", "Lider / Karar Verici": "Dr. Walid Sayed", "Konum": "Abu Dhabi", "İletişim / Profil": "info@hplus.ae"}
+                    ],
+                    "market_context": "BAE serbest bölgesi (DHCC) gümrüksüz medikal cihaz ithalatına olanak tanır; yabancı baş embriyologlarla İngilizce doğrudan temas kurulmalıdır."
+                }
+            elif any(k in c_l for k in ["türkiye", "turkey"]):
+                return {
+                    "distributors": [
+                        {"Firma": "ZEUS Bioscience Doğrudan Saha & Dağıtım Ağı", "Şehir": "Ankara / İstanbul / İzmir", "Odak / Yetkinlik": "Fabrika Doğrudan Satış & Aplikasyon", "İletişim / Web": "sales@zeusbioscience.com"},
+                        {"Firma": "Tavmergen Sağlık Teknolojileri A.Ş.", "Şehir": "İzmir", "Odak / Yetkinlik": "Ege & Akdeniz Dağıtım ve Klinik Protokol Ortaklığı", "İletişim / Web": "info@tavmergen.com"},
+                        {"Firma": "Genart Medikal Dağıtım Ltd.", "Şehir": "Ankara", "Odak / Yetkinlik": "İç Anadolu & Doğu Bölgesi Medikal Cihaz Dağıtımı", "İletişim / Web": "info@genart.com.tr"},
+                        {"Firma": "Bahçeci Medikal Tedarik Koordinatörlüğü", "Şehir": "İstanbul", "Odak / Yetkinlik": "Kurumsal Klinik İkmal Ağı", "İletişim / Web": "tedarik@bahceci.com"}
+                    ],
+                    "decision_makers": [
+                        {"Kurum / Klinik": "Bahçeci Sağlık Grubu", "Lider / Karar Verici": "Prof. Dr. Mustafa Bahçeci & Baş Embriyolog", "Konum": "İstanbul (Fulya & Umut)", "İletişim / Profil": "info@bahceci.com"},
+                        {"Kurum / Klinik": "Memorial Şişli Tüp Bebek Merkezi", "Lider / Karar Verici": "Prof. Dr. Semra Kahraman & Embriyoloji Ekibi", "Konum": "İstanbul", "İletişim / Profil": "tupbebek@memorial.com.tr"},
+                        {"Kurum / Klinik": "Tavmergen Özel Tüp Bebek Merkezi", "Lider / Karar Verici": "Prof. Dr. Erol Tavmergen", "Konum": "İzmir", "İletişim / Profil": "info@tavmergen.com"},
+                        {"Kurum / Klinik": "Acıbadem Maslak Tüp Bebek Merkezi", "Lider / Karar Verici": "Prof. Dr. Bülent Tıraş", "Konum": "İstanbul", "İletişim / Profil": "info@acibadem.com.tr"},
+                        {"Kurum / Klinik": "Anatolia Tüp Bebek Merkezi", "Lider / Karar Verici": "Prof. Dr. Hakan Yaralı", "Konum": "Ankara", "İletişim / Profil": "info@anatoliatupbebek.com.tr"}
+                    ],
+                    "market_context": "Türkiye iç pazarında kurulu cihazlarımızın düzenli sarf tüketimini sağlamak için yerinde aplikasyon eğitimi ve klinik vaka desteği verilmelidir."
+                }
+            else:
+                return {
+                    "distributors": [
+                        {"Firma": f"{c_name} Premier MedTech Distributor", "Şehir": f"{c_name} Commercial Capital", "Odak / Yetkinlik": f"{c_name} genelindeki IVF kliniklerine cihaz & sarf ikmali", "İletişim / Web": f"distribution@{slug}-medtech.com | {prefix} 555 0381"},
+                        {"Firma": f"{c_name} Bio-Laboratory Equipment Co.", "Şehir": f"{c_name} Metropolitan Medical District", "Odak / Yetkinlik": "Mikromanipülasyon ve Laboratuvar Cihaz Dağıtımı", "İletişim / Web": f"sales@{slug}-biolab.org | {prefix} 555 0299"},
+                        {"Firma": f"{c_name} Cryo-Preservation Systems", "Şehir": f"{c_name} Biomedical Hub", "Odak / Yetkinlik": "Kriyobiyoloji ve Azot Tankı Ekipman Tedariki", "İletişim / Web": f"info@{slug}-cryosystems.com"}
+                    ],
+                    "decision_makers": [
+                        {"Kurum / Klinik": f"{c_name} National Fertility & ART Center", "Lider / Karar Verici": "Kıdemli Laboratuvar Direktörü & Baş Embriyolog", "Konum": f"{c_name} Başkent", "İletişim / Profil": f"art.director@{slug}-fertility.org | ~{int(cycles * 0.35):,} Siklus"},
+                        {"Kurum / Klinik": f"{c_name} Reproductive Medicine Institute", "Lider / Karar Verici": "Tıbbi Direktör & Kürsü Başkanı", "Konum": f"{c_name} Metropol", "İletişim / Profil": f"contact@{slug}-meduni.edu | ~{int(cycles * 0.25):,} Siklus"},
+                        {"Kurum / Klinik": f"{c_name} Specialized Women & IVF Hospital", "Lider / Karar Verici": "Laboratuvar Şefi & Baş Embriyolog", "Konum": f"{c_name} Bölge", "İletişim / Profil": f"ivf.lab@{slug}-ivfhospital.com"}
+                    ],
+                    "market_context": f"{c_name} pazarında toplam {clinics} klinik ve ~{cycles:,} yıllık siklus bulunmaktadır. Karar vericilere CE Device Certified Whitepaper ve yerel dağıtım desteği ile ulaşılmalıdır."
+                }
+
         with comp_tab5:
             st.subheader("Global B2B MedTech GTM Playbook & Clinical Outreach Hub")
-            st.caption("İtalya soğuk e-posta çıkmazını aşan, CE belgeli ve yayınlanmış klinik makaleleri güven kalkanına dönüştüren, 6 dilli sekreterlik filtresi aşma şablonları ve LinkedIn karar verici avı masası.")
+            sel_compare_str = ", ".join(selected_compare)
+            st.caption(f"Seçili pazarlar ({sel_compare_str}) için soğuk e-posta çıkmazını aşan, CE Device Certified ve hakemli klinik verileri güven kalkanına dönüştüren çok dilli sekreterlik filtresi aşma şablonları, pazar bariyer analizleri ve karar verici rehberi.")
 
-            # Top Strategic Metric Cards
+            # Dynamic Top Strategic Metric Cards partitioned from selected_compare
+            p1_sel = [c for c in selected_compare if classify_gtm_phase(c) == 1]
+            p2_sel = [c for c in selected_compare if classify_gtm_phase(c) == 2]
+            p3_sel = [c for c in selected_compare if classify_gtm_phase(c) == 3]
+
+            p1_val = ", ".join(p1_sel) if p1_sel else "—"
+            p1_sub = f"{len(p1_sel)} Seçili Pazar: Hekim-Patron & Hızlı Peşin Satış" if p1_sel else "Seçili liste dışında (Örn: BAE, Mısır, Bakü & TR)"
+
+            p2_val = ", ".join(p2_sel) if p2_sel else "—"
+            p2_sub = f"{len(p2_sel)} Seçili Pazar: %80+ Döllenme Arayan Özel Zincirler" if p2_sel else "Seçili liste dışında (Örn: İspanya, Yunanistan, Çekya)"
+
+            p3_val = ", ".join(p3_sel) if p3_sel else "—"
+            p3_sub = f"{len(p3_sel)} Seçili Pazar: Yerel Distribütör & İhale / Kongre Modeli" if p3_sel else "Seçili liste dışında (Örn: İtalya, Almanya & Fransa)"
+
             gtm_col1, gtm_col2, gtm_col3 = st.columns(3)
             with gtm_col1:
-                st.markdown("""<div class="kpi-container" style="border-top:3px solid #00F5FF;">
+                st.markdown(f"""<div class="kpi-container" style="border-top:3px solid #00F5FF;">
 <div class="kpi-header">🥇 FAZ 1 (Hızlı Karar & Peşin)</div>
-<div class="kpi-val">BAE, Mısır, Bakü & TR</div>
-<div class="kpi-sub kpi-pos">Hekim-Patron & Yüksek AOA İhtiyacı</div>
+<div class="kpi-val" style="font-size:17px; min-height:48px; display:flex; align-items:center;">{p1_val}</div>
+<div class="kpi-sub kpi-pos">{p1_sub}</div>
 </div>""", unsafe_allow_html=True)
             with gtm_col2:
-                st.markdown("""<div class="kpi-container" style="border-top:3px solid #FFB800;">
+                st.markdown(f"""<div class="kpi-container" style="border-top:3px solid #FFB800;">
 <div class="kpi-header">🥈 FAZ 2 (Avrupa Tıp Turizmi)</div>
-<div class="kpi-val">İspanya, Yunanistan, Çekya</div>
-<div class="kpi-sub kpi-pos">%80+ Döllenme Arayan Özel Zincirler</div>
+<div class="kpi-val" style="font-size:17px; min-height:48px; display:flex; align-items:center;">{p2_val}</div>
+<div class="kpi-sub kpi-pos">{p2_sub}</div>
 </div>""", unsafe_allow_html=True)
             with gtm_col3:
-                st.markdown("""<div class="kpi-container" style="border-top:3px solid #10B981;">
+                st.markdown(f"""<div class="kpi-container" style="border-top:3px solid #10B981;">
 <div class="kpi-header">🥉 FAZ 3 (Acenteli / Distribütörlü)</div>
-<div class="kpi-val">İtalya & Almanya</div>
-<div class="kpi-sub kpi-pos">Yerel Distribütör + ESHRE Workshop & Kongre</div>
+<div class="kpi-val" style="font-size:17px; min-height:48px; display:flex; align-items:center;">{p3_val}</div>
+<div class="kpi-sub kpi-pos">{p3_sub}</div>
 </div>""", unsafe_allow_html=True)
 
             st.markdown("<br>", unsafe_allow_html=True)
 
             gtm_sub_tabs = st.tabs([
-                "📧 1. Sekreterlik Filtresini Aşan 6 Dilli E-Posta Şablonları",
+                "📧 1. Sekreterlik Filtresini Aşan Çok Dilli E-Posta Şablonları",
                 "💼 2. LinkedIn Karar Verici Bulma & Outreach Masası",
                 "📄 3. 1 Sayfalık Bilimsel Klinik Whitepaper & Vaka Dosyası",
-                "🗺️ 4. Sıralı Ülke Giriş Yol Haritası & İtalya Çıkmazı",
-                "🤝 5. İtalya Distribütörleri & Mısır Lider Profesörler Listesi"
+                "🗺️ 4. Seçili Ülkelerin Giriş Yol Haritası & Pazar Bariyeri Analizi",
+                "🤝 5. Seçili Ülkelerin Distribütörleri & Karar Verici Rehberi"
             ])
-
             # ------------------------------------------------------------------
-            # SUB-TAB 1: 6 DİLLİ E-POSTA ŞABLONLARI
+            # SUB-TAB 1: ÇOK DİLLİ E-POSTA ŞABLONLARI
             # ------------------------------------------------------------------
             with gtm_sub_tabs[0]:
                 st.markdown("#### 📧 Sekreterlik Filtresini Aşan Çok Dilli E-Posta Şablonları")
                 st.info("💡 **Stratejik Kural:** E-postalar genel klinik kutularına (`info@`, `segreteria@`) atılsa dahi, sekreterin 'ticari spam' diye silmesini engelleyen resmi medikal ve regülatif dille kurgulanmıştır. Baş embriyolog veya laboratuvar direktörünün adı biliniyorsa başlığa eklenmelidir.")
 
+                st.caption(f"🎯 Karşılaştırmadaki Seçili Pazarlarınız: **{sel_compare_str}** — Aşağıdan hedef pazarın resmi dilini seçerek sekreterlik filtresini aşan klinik e-posta taslağını kopyalayabilirsiniz.")
                 col_lang, col_opt = st.columns([1.5, 1])
                 with col_lang:
                     lang_sel = st.selectbox(
                         "Hedef Pazar ve Dil Seçiniz:",
                         [
+                            "🇹🇷 Türkiye (Türkçe - Türkçe)",
                             "🇮🇹 İtalya (İtalyanca - Italiano)",
                             "🇪🇸 İspanya (İspanyolca - Español)",
                             "🇩🇪 Almanya / DACH (Almanca - Deutsch)",
                             "🇫🇷 Fransa & Belçika (Fransızca - Français)",
                             "🇪🇬 🇸🇦 Mısır & Körfez (Arapça - العربية)",
                             "🇬🇧 Global / Uluslararası (İngilizce - English)"
-                        ]
+                        ],
+                        index=1 if "Italy" in selected_compare else (0 if "Türkiye" in selected_compare else 6)
                     )
                 with col_opt:
                     include_table_in_email = st.checkbox("📊 Detaylı Klinik Tabloyu E-Posta Gövdesine Ekle", value=True, help="Embriyoloğun eki açmadan doğrudan e-posta metninde 2PN döllenme (%24.6 -> %82.3) ve blastosist verilerini okumasını sağlar.")
+
+                table_snip_tr = """
+[KLİNİK KANIT VE ÇALIŞMA ÖZETİ (WHITEPAPER ÖZETİ)]
+• 2PN Döllenme Oranı (Fertilization Rate): %24.6 ➔ %82.3 (+%57.7 Artış, p < 0.001)
+• Day-5 Kullanılabilir Blastosist Oranı: %21.4 ➔ %48.1 (2.2 Kat Blastosist Artışı)
+• Oosit Dejenerasyon Oranı: %7.8 ➔ %3.2 (%59 Hücresel Bütünlük Koruması)
+• Kalite & Biyouyumluluk: CE Device Certified | MEA >%80 | Endotoksin LAL <0.05 EU/ml
+""" if include_table_in_email else ""
 
                 table_snip_it = """
 [DATI CLINICI SINTETICI (ESTRATTO WHITEPAPER)]
@@ -12372,7 +12660,41 @@ BODY:
 • Biocompatibility & QC: CE MDR Class IIa Certified | MEA >80% | Endotoxin LAL <0.05 EU/ml
 """ if include_table_in_email else ""
 
-                if "İtalya" in lang_sel:
+                if "Türkiye" in lang_sel:
+                    st.markdown("##### 🇹🇷 Türkiye İçin E-Posta Taslağı (Tüp Bebek Merkezleri & Klinikler)")
+                    st.text("Konu Satırı (Subject):")
+                    st.code("Konu: Sn. Laboratuvar Direktörü / Baş Embriyolog Dikkatine - CE Belgeli Piezo AOA Klinik Protokolü ve Döllenme Başarısı Verileri", language="markdown")
+                    st.text("E-Posta Gövdesi:")
+                    st.code(f"""Sayın Klinik Yönetimi ve Değerli Sekreterlik Ekibi,
+
+Bu teknik ve klinik bilgilendirmeyi tüp bebek ünitenizin Laboratuvar Direktörü ve Kıdemli Klinik Embriyologlarına iletmenizi rica ederiz.
+
+Paylaşılan içerik, tekrarlayan Total Döllenme Başarısızlığı (TFF) ve düşük oosit kalitesi vakalarında döllenme oranlarını artıran CE belgeli Piezo AOA protokolüne ilişkindir.
+
+---
+
+Sayın Laboratuvar Direktörü / Kıdemli Embriyolog,
+
+Merkezinizin mikromanipülasyon ve embriyoloji alanındaki yüksek klinik titizliğini yakından takip ediyoruz.
+
+ZEUS Bioscience olarak, önceki sikluslarında döllenme başarısızlığı veya zayıf fertilizasyon görülen vakalarda uygulanan ZEUS Piezo Pulse AOA (Yardımla Oosit Aktivasyonu) sistemimize ait yayınlanmış çok merkezli klinik verilerimizi paylaşmak isteriz:
+
+1. CE Device Certified & Biyouyumluluk: Mouse Embryo Assay (MEA >%80) ve Endotoksin LAL (<0.05 EU/ml) testleri ile uluslararası standartlarda sertifikalandırılmıştır.
+2. Hakemli Literatür Verisi: Standart ICSI sikluslarında %24.6 olan 2PN döllenme oranının, Piezo elektriksel aktivasyon ile %82.3 seviyesine yükseldiği (p < 0.001) ve Day-5 blastosist utilizasyonunun 2.2 kat arttığı gösterilmiştir.{table_snip_tr}
+3. Klinik Protokol & Eğitim: Akredite merkezlerimize özel klinik aplikasyon protokolü ve uzman embriyolog eşliğinde vakaya özel parametre desteği sunulmaktadır.
+
+Klinik Whitepaper özetimiz ve CE teknik dosyamız ekte bilginize sunulmuştur.
+
+Merkezinizle 10 dakikalık kısa bir teknik görüşme gerçekleştirmekten memnuniyet duyarız.
+
+Saygılarımızla,
+
+[Adınız Soyadınız]
+Klinik Aplikasyon Uzmanı | ZEUS Bioscience
+E-posta: scientific@zeusbioscience.com | WhatsApp: +90 5XX XXX XX XX
+Web: www.zeusbioscience.com""", language="markdown")
+
+                elif "İtalya" in lang_sel:
                     st.markdown("##### 🇮🇹 İtalya İçin E-Posta Taslağı (Centri PMA)")
                     st.text("Konu Satırı (Subject):")
                     st.code("Oggetto: C.A. Responsabile Laboratorio PMA / Embriologo Clinico - Documentazione Tecnica CE e Protocollo AOA (Attivazione Oocitaria)", language="markdown")
@@ -12760,62 +13082,137 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
                 )
 
             # ------------------------------------------------------------------
-            # SUB-TAB 4: SIRALI ÜLKE YOL HARİTASI
+            # SUB-TAB 4: SEÇİLİ ÜLKELERİN GİRİŞ YOL HARİTASI & PAZAR BARİYERİ ANALİZİ
             # ------------------------------------------------------------------
             with gtm_sub_tabs[3]:
-                st.markdown("#### 🗺️ Sıralı Ülke Giriş Yol Haritası & İtalya Çıkmazı Analizi")
-                
+                st.markdown("#### 🗺️ Seçili Pazarlar İçin Giriş Yol Haritası & Pazar Bariyeri Analizi")
+                st.caption(f"Karşılaştırma masasında seçtiğiniz {len(selected_compare)} pazar ({sel_compare_str}) için klinik karar verici profili, kilit giriş bariyeri ('soğuk e-posta çıkmazı'), ZEUS çözüm reçetesi ve ilk 60 günlük taktiksel yol haritası.")
+
+                # High-level Phase summary for selected countries
                 rm_col1, rm_col2 = st.columns(2)
                 with rm_col1:
-                    st.markdown("""<div style="background:rgba(0,245,255,0.05); border:1px solid rgba(0,245,255,0.3); border-radius:10px; padding:16px; margin-bottom:14px;">
-<span style="font-weight:700; color:#00F5FF; font-size:14px;">🥇 FAZ 1 (0 - 60 Gün): Hızlı Karar & Peşin Pazarlar</span>
+                    p1_items = []
+                    for c in p1_sel:
+                        c_code = country_df.loc[country_df['name']==c, 'code'].values[0] if len(country_df.loc[country_df['name']==c])>0 else ''
+                        prof = get_country_gtm_barrier_profile(c, country_map.get(c_code))
+                        p1_items.append(f"<li><b>{prof['flag']} {c}:</b> {prof['summary_bullet']}</li>")
+                    p1_bullets = "".join(p1_items) if p1_items else "<li><i>Seçili ülkeler arasında Faz 1 pazarı bulunmuyor. (Örn: BAE, Mısır, Bakü & TR doğrudan hekim-patronlara hızlı satış pazarlarıdır).</i></li>"
+                    st.markdown(f"""<div style="background:rgba(0,245,255,0.05); border:1px solid rgba(0,245,255,0.3); border-radius:10px; padding:16px; margin-bottom:14px; min-height:160px;">
+<span style="font-weight:700; color:#00F5FF; font-size:14px;">🥇 FAZ 1 (0 - 60 Gün): Hızlı Karar & Peşin Pazarlar (Seçili)</span>
 <ul style="font-size:12px; color:#E2E8F0; line-height:1.7; margin-top:8px;">
-<li><b>🇦🇪 BAE (Dubai/Abu Dhabi):</b> 28 klinik, $53K gelir, serbest bölge gümrüksüz medikal ithalatı, karar vericiler yabancı İngilizce konuşan embriyologlar.</li>
-<li><b>🇪🇬 Mısır (Kahire/İskenderiye):</b> 75 klinik, 52,000 siklus. Ağır erkek faktörü ve TESE/Globozoospermi yoğunluğu nedeniyle AOA talebi çok yüksektir. Karar verici doğrudan hekim-patronlardır.</li>
-<li><b>🇦🇿 Azerbaycan & Orta Asya:</b> Türk tüp bebek hekimlerine tam güven; hızlı karar alma.</li>
-<li><b>🇹🇷 Türkiye İç Pazarı:</b> Sahadaki uyuyan cihazlara yerinde aplikasyon eğitimi verilerek sarf nakit akışı hemen artırılmalıdır.</li>
+{p1_bullets}
 </ul>
 </div>""", unsafe_allow_html=True)
 
                 with rm_col2:
-                    st.markdown("""<div style="background:rgba(255,184,0,0.05); border:1px solid rgba(255,184,0,0.3); border-radius:10px; padding:16px; margin-bottom:14px;">
-<span style="font-weight:700; color:#FFB800; font-size:14px;">🥈 FAZ 2 & 🥉 FAZ 3: Avrupa & Distribütörlü Giriş</span>
+                    p23_items = []
+                    for c in p2_sel + p3_sel:
+                        c_code = country_df.loc[country_df['name']==c, 'code'].values[0] if len(country_df.loc[country_df['name']==c])>0 else ''
+                        prof = get_country_gtm_barrier_profile(c, country_map.get(c_code))
+                        badge_short = prof['phase_label'].split(':')[0]
+                        p23_items.append(f"<li><b>{prof['flag']} {c} ({badge_short}):</b> {prof['summary_bullet']}</li>")
+                    p23_bullets = "".join(p23_items) if p23_items else "<li><i>Seçili ülkeler arasında Faz 2 veya Faz 3 pazarı bulunmuyor. (Örn: İspanya tıp turizmi zincirleri; İtalya ve Almanya distribütör/ihale odaklıdır).</i></li>"
+                    st.markdown(f"""<div style="background:rgba(255,184,0,0.05); border:1px solid rgba(255,184,0,0.3); border-radius:10px; padding:16px; margin-bottom:14px; min-height:160px;">
+<span style="font-weight:700; color:#FFB800; font-size:14px;">🥈 FAZ 2 & 🥉 FAZ 3: Avrupa Tıp Turizmi & Distribütörlü Giriş (Seçili)</span>
 <ul style="font-size:12px; color:#E2E8F0; line-height:1.7; margin-top:8px;">
-<li><b>🇪🇸 İspanya (Avrupa #1):</b> 280 klinik, 180,000 siklus. IVI-RMA ve GeneraLife gibi zincirler %80+ döllenme hedefli her teknolojiye açık bütçe ayırır.</li>
-<li><b>🇬🇷 Yunanistan & 🇨🇿 Çekya:</b> Çevik tıp turizmi laboratuvarları.</li>
-<li><b>🇮🇹 İtalya (İhale & Acente Şart):</b> Soğuk mail çalışmaz; <b>Gynemed Italia veya Bio-Optica</b> distribütörlüğü ve ESHRE/SIERR kongresinde masa başı workshop modeliyle girilmelidir.</li>
-<li><b>🇩🇪 Almanya:</b> MEA ve CE teknik dosyası ile yerel tıbbi satış mümessili eşliğinde girilmelidir.</li>
+{p23_bullets}
 </ul>
 </div>""", unsafe_allow_html=True)
 
+                st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
+                st.markdown("##### 🧭 Seçili Pazarlar İçin Ayrıntılı Pazar Bariyeri & Giriş Reçetesi Kartları")
+                st.caption("Aşağıda seçtiğiniz her pazar için karar verici yapısı, soğuk e-posta filtresinin aşılma yöntemi ve 0-60 günlük taktiksel eylem planı sunulmuştur:")
+
+                for c_name in selected_compare:
+                    c_code = country_df.loc[country_df['name']==c_name, 'code'].values[0] if len(country_df.loc[country_df['name']==c_name])>0 else ''
+                    c_row = country_map.get(c_code)
+                    prof = get_country_gtm_barrier_profile(c_name, c_row)
+                    recipe_lis = "".join([f"<li>{item}</li>" for item in prof['recipe']])
+
+                    st.markdown(f"""<div style="background:#0F192E; border:1.5px solid {prof['color']}; border-radius:12px; padding:18px; margin-bottom:16px;">
+<div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.12); padding-bottom:10px; margin-bottom:12px;">
+<div>
+<span style="font-size:17px; font-weight:800; color:#FFFFFF;">{prof['flag']} {c_name} — GTM Stratejisi & Pazar Bariyeri Analizi</span><br>
+<span style="font-size:11.5px; color:#94A3B8;">Pazar Ölçeği: {prof['market_size']} | İthalat/Gümrük Koşulu: {c_row.get('import_cond', 'Standart') if c_row else 'Standart'}</span>
+</div>
+<span style="background:rgba(255,255,255,0.08); color:{prof['color']}; border:1px solid {prof['color']}; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">{prof['phase_label']}</span>
+</div>
+
+<div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
+<div style="background:rgba(255,255,255,0.02); border-radius:8px; padding:12px; border:1px solid rgba(255,255,255,0.06);">
+<span style="color:#00F5FF; font-weight:700; font-size:13px;">👤 Karar Verici Yapısı:</span>
+<p style="font-size:12px; color:#CBD5E1; margin:6px 0 0 0; line-height:1.5;">{prof['decision_maker']}</p>
+<hr style="border:0; border-top:1px solid rgba(255,255,255,0.08); margin:10px 0;">
+<span style="color:#FF5252; font-weight:700; font-size:13px;">🚧 Kilit Pazar Bariyeri ("Çıkmazı"):</span>
+<p style="font-size:12px; color:#E2E8F0; margin:6px 0 0 0; line-height:1.5;">{prof['barrier']}</p>
+</div>
+
+<div style="background:rgba(255,255,255,0.02); border-radius:8px; padding:12px; border:1px solid rgba(255,255,255,0.06);">
+<span style="color:#10B981; font-weight:700; font-size:13px;">🛡️ ZEUS Çözüm Reçetesi (Bariyeri Aşma Formülü):</span>
+<ul style="font-size:12px; color:#CBD5E1; margin:6px 0 0 0; padding-left:18px; line-height:1.6;">
+{recipe_lis}
+</ul>
+<hr style="border:0; border-top:1px solid rgba(255,255,255,0.08); margin:10px 0;">
+<span style="color:#FFB800; font-weight:700; font-size:13px;">🎯 0 - 60 Günlük Taktiksel Aksiyon:</span>
+<p style="font-size:12px; color:#E2E8F0; margin:6px 0 0 0; line-height:1.5;">{prof['action']}</p>
+</div>
+</div>
+</div>""", unsafe_allow_html=True)
+
             # ------------------------------------------------------------------
-            # SUB-TAB 5: DİSTRİBÜTÖRLER & MISIR PROFESÖRLERİ REHBERİ
+            # SUB-TAB 5: SEÇİLİ ÜLKELERİN DİSTRİBÜTÖRLERİ & KARAR VERİCİ REHBERİ
             # ------------------------------------------------------------------
             with gtm_sub_tabs[4]:
-                st.markdown("#### 🤝 İtalya Yerel Distribütörleri & Mısır Karar Verici Profesörler Listesi")
-                
+                st.markdown("#### 🤝 Seçili Ülkelerin Yerel MedTech Distribütörleri & Kilit Karar Verici Rehberi")
+                st.caption(f"Karşılaştırma masasında seçtiğiniz {len(selected_compare)} pazar ({sel_compare_str}) arasından seçim yaparak yerleşik MedTech distribütörlerini ve lider klinik hekim / embriyologlarını inceleyiniz.")
+
+                col_sel_d, col_sel_info = st.columns([1.2, 1.8])
+                with col_sel_d:
+                    sel_gtm_dir_country = st.selectbox(
+                        "Rehberini İncelemek İstediğiniz Seçili Ülkeyi Seçiniz:",
+                        options=selected_compare,
+                        key="gtm_comp_dir_country_sel"
+                    )
+                with col_sel_info:
+                    c_code_cur = country_df.loc[country_df['name']==sel_gtm_dir_country, 'code'].values[0] if len(country_df.loc[country_df['name']==sel_gtm_dir_country])>0 else ''
+                    c_row_cur = country_map.get(c_code_cur)
+                    clinics_num = c_row_cur['clinics'] if c_row_cur else '—'
+                    cycles_num = f"{c_row_cur['cycles']:,}" if c_row_cur else '—'
+                    phase_cur = classify_gtm_phase(sel_gtm_dir_country)
+                    st.info(f"📍 **{sel_gtm_dir_country} (Faz {phase_cur}) Pazar Özeti:** Toplam **{clinics_num} Klinik**, yıllık **{cycles_num} Siklus**. Yerel medikal cihaz dağıtım ağı ve öncü merkezler aşağıda listelenmiştir.")
+
+                dir_res = get_country_gtm_directory(sel_gtm_dir_country, c_row_cur)
+
                 dt_c1, dt_c2 = st.columns(2)
                 with dt_c1:
-                    st.markdown("##### 🇮🇹 İtalya İçin Önerilen Yerel Distribütörler")
-                    it_dist_data = [
-                        {"Firma": "Gynemed Italia S.r.l.", "Şehir": "Milano / Roma", "Odak": "Safkan IVF Laboratuvar Cihaz & Sarfları", "İletişim": "info@gynemed.it | gynemed.de"},
-                        {"Firma": "Bio-Optica Milano S.p.A.", "Şehir": "Milano", "Odak": "Kamu İhaleleri (Gara d'Appalto) & Steril Sarf", "İletişim": "info@bio-optica.it | bio-optica.it"},
-                        {"Firma": "Palex Medical Italia", "Şehir": "Segrate (Milano)", "Odak": "Büyük Hastane & Özel IVF Zincirleri Ağı", "İletişim": "italia@palexmedical.com | palexmedical.com"},
-                        {"Firma": "Cryo Bio System Italia", "Şehir": "Piacenza", "Odak": "Oosit & Embriyo Kriyoprezervasyon Dağıtımı", "İletişim": "cbsitalia@cryobiosystem.com"},
-                        {"Firma": "Medical Technology PMA", "Şehir": "Bologna", "Odak": "Anahtar Teslim PMA Mikromanipülasyon Kurulumu", "İletişim": "info@medicaltechnology.it"}
-                    ]
-                    st.dataframe(pd.DataFrame(it_dist_data), use_container_width=True, hide_index=True)
-
+                    st.markdown(f"##### 🏢 {sel_gtm_dir_country} İçin Önerilen MedTech & IVF Cihaz Distribütörleri")
+                    st.dataframe(pd.DataFrame(dir_res['distributors']), use_container_width=True, hide_index=True)
                 with dt_c2:
-                    st.markdown("##### 🇪🇬 Mısır Öncü Klinik Sahipleri & Profesörler Listesi")
-                    eg_prof_data = [
-                        {"Kurum": "The Egyptian IVF-ET Center", "Lider": "Prof. Mohamed Aboulghar & Prof. Gamal Serour", "Konum": "Maadi, Kahire", "İletişim": "info@egyptianivfcenter.com | +20 2 25260000"},
-                        {"Kurum": "Adam International Hospital", "Lider": "Prof. Dr. Medhat Amer (Androloji & TESE)", "Konum": "Giza / Kahire", "İletişim": "info@adamhospital.com | +20 100 178 7777"},
-                        {"Kurum": "Bedaya Hospital for IVF", "Lider": "Dr. Ismail Aboul Fotouh", "Konum": "Dokki, Kahire", "İletişim": "info@bedayahospital.com | +20 120 000 6655"},
-                        {"Kurum": "Alexandria Fertility Center", "Lider": "Prof. Dr. Tarek Al-Husseiny", "Konum": "İskenderiye", "İletişim": "info@alexfertility.com"},
-                        {"Kurum": "Gannat IVF Center", "Lider": "Dr. Ahmed Awadallah", "Konum": "Heliopolis, Kahire", "İletişim": "info@ganativf.com | +20 100 216 6666"}
-                    ]
-                    st.dataframe(pd.DataFrame(eg_prof_data), use_container_width=True, hide_index=True)
+                    st.markdown(f"##### 👨‍⚕️ {sel_gtm_dir_country} Öncü IVF Merkezleri & Karar Verici Profesörler")
+                    st.dataframe(pd.DataFrame(dir_res['decision_makers']), use_container_width=True, hide_index=True)
+
+                st.markdown(f"""<div style="background:rgba(0,245,255,0.04); border-left:4px solid #00F5FF; padding:12px 16px; border-radius:6px; margin-top:14px; font-size:12.5px; color:#E2E8F0;">
+<b>💡 {sel_gtm_dir_country} İletişim & Pazara Giriş Stratejisi:</b> {dir_res['market_context']}
+</div>""", unsafe_allow_html=True)
+
+                st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
+                with st.expander(f"📋 Tüm Seçili Pazarların ({len(selected_compare)} Ülke) Hızlı Distribütör & Karar Verici Konsolide Özeti", expanded=False):
+                    summary_dir_rows = []
+                    for c_name in selected_compare:
+                        c_code = country_df.loc[country_df['name']==c_name, 'code'].values[0] if len(country_df.loc[country_df['name']==c_name])>0 else ''
+                        c_row = country_map.get(c_code)
+                        d_info = get_country_gtm_directory(c_name, c_row)
+                        top_dist = d_info['distributors'][0]['Firma'] if d_info['distributors'] else '—'
+                        top_clinic = d_info['decision_makers'][0]['Kurum / Klinik'] if d_info['decision_makers'] else '—'
+                        top_lead = d_info['decision_makers'][0]['Lider / Karar Verici'] if d_info['decision_makers'] else '—'
+                        summary_dir_rows.append({
+                            "Seçili Pazar": c_name,
+                            "GTM Kademesi": f"Faz {classify_gtm_phase(c_name)}",
+                            "Öncü Yerel Distribütör / Acente": top_dist,
+                            "Referans IVF Merkezi": top_clinic,
+                            "Kilit Karar Verici / Unvan": top_lead
+                        })
+                    st.dataframe(pd.DataFrame(summary_dir_rows), use_container_width=True, hide_index=True)
 
 
     else:
