@@ -3216,6 +3216,227 @@ def build_country_360_charts(country_name, c_macro, c_sales, target_rev_2027=500
 
     return fig1, fig2, fig3
 
+
+def render_country_discount_calculator_widget(target_country, pricing_fc, key_prefix="calc"):
+    st.markdown(f"""
+    <div style="background:rgba(0,245,255,0.05);border:1.5px solid #13A6B5;border-radius:12px;padding:16px 20px;margin-top:16px;margin-bottom:14px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div>
+                <span style="font-weight:800;color:#00F5FF;font-size:15.5px;">🧮 {target_country} Canlı Cihaz & Sarf İskonto ve Kârlılık Hesaplayıcısı</span>
+                <div style="color:#94A3B8;font-size:12px;margin-top:3px;">
+                    Cihaz ve sarf fiyatlarını elle giriniz; sistem {target_country} için önerilen indirim tavanlarıyla tek tek ve toplam indirimi hesaplar.
+                </div>
+            </div>
+            <span style="background:rgba(0,245,255,0.18);color:#00F5FF;font-weight:800;font-size:11px;padding:5px 12px;border-radius:20px;border:1px solid rgba(0,245,255,0.4);">
+                Canlı Hesaplama Motoru
+            </span>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+    
+    col_c1, col_c2 = st.columns(2)
+    
+    rec_dev_max = float(pricing_fc.get('rec_device_discount', 10.0))
+    rec_sarf_max = float(pricing_fc.get('rec_sarf_discount', 12.0))
+    
+    with col_c1:
+        st.markdown("""
+        <div style="background:rgba(0,245,255,0.03);border:1px solid rgba(0,245,255,0.25);border-radius:8px;padding:8px 12px;margin-bottom:10px;">
+            <b style="color:#00F5FF;font-size:12.5px;">⚡ 1. Cihaz (Hardware) İskonto Hesaplama</b>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        dev_preset = st.selectbox(
+            "Cihaz Modeli Preset Seçin:",
+            [
+                "ZEUS Pulse Stimulator (ZPS 26) — Piezo Oosit Aktivasyon",
+                "ZEUS BioPSafe (ZBS26) — Embriyo Biyopsi & PCR Tubing İstasyonu",
+                "ZEUS Mismatch Blocker (ZMB26) — RFID & Elektronik Numune Şahitliği",
+                "ZEUS Smart Cryo-Tools (ZCT26) — Vitrifikasyon & Kriyo Yönetimi",
+                "Özel Donanım / Manuel Giriş"
+            ],
+            key=f"{key_prefix}_dev_model_{target_country}"
+        )
+        
+        dev_price = st.number_input(
+            "Cihaz Liste Fiyatı ($ USD — Elle Giriniz):",
+            min_value=0.0,
+            max_value=1000000.0,
+            value=0.0,
+            step=100.0,
+            placeholder="Cihaz birim fiyatını elle yazınız...",
+            key=f"{key_prefix}_dev_price_{target_country}"
+        )
+        
+        dev_disc_pct = st.slider(
+            f"Cihaz İskonto Oranı (%) — [Önerilen Tavan: %{rec_dev_max:.1f}]:",
+            min_value=0.0,
+            max_value=35.0,
+            value=float(rec_dev_max),
+            step=0.5,
+            key=f"{key_prefix}_dev_disc_slider_{target_country}"
+        )
+        
+        dev_qty = st.number_input(
+            "Sipariş Cihaz Adedi:",
+            min_value=1,
+            max_value=100,
+            value=int(pricing_fc.get('target_devices_2027', 2)),
+            step=1,
+            key=f"{key_prefix}_dev_qty_{target_country}"
+        )
+        
+        dev_gross = dev_price * dev_qty
+        dev_disc_unit = dev_price * (dev_disc_pct / 100.0)
+        net_dev_unit = dev_price - dev_disc_unit
+        dev_tot_disc = dev_disc_unit * dev_qty
+        dev_tot_net = net_dev_unit * dev_qty
+        est_dev_cogs = (dev_price * 0.45 * dev_qty) if dev_price > 0 else 0.0
+        dev_margin_usd = (dev_tot_net - est_dev_cogs) if dev_price > 0 else 0.0
+        dev_margin_pct = (dev_margin_usd / dev_tot_net * 100.0) if dev_tot_net > 0 else 0.0
+        dev_over_ceiling = dev_disc_pct > rec_dev_max
+        
+        st.markdown(f"""
+        <div style="background:#0F192E;border:1px solid {'#FF6B6B' if dev_over_ceiling else '#13A6B5'};border-radius:10px;padding:12px 16px;margin-top:10px;font-size:12px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                <span style="color:#FFFFFF;font-weight:700;">Net İskontolu Birim Cihaz:</span>
+                <span style="color:#00F5FF;font-weight:800;font-size:15px;">${net_dev_unit:,.2f} USD</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+                <span style="color:#94A3B8;">Cihaz Başı İndirim:</span>
+                <span style="color:#FFB800;font-weight:700;">-${dev_disc_unit:,.2f} USD (%{dev_disc_pct:.1f})</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+                <span style="color:#94A3B8;">Toplam Cihaz Cirosu ({dev_qty} Adet):</span>
+                <span style="color:#FFFFFF;font-weight:700;">${dev_tot_net:,.2f} USD</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                <span style="color:#94A3B8;">Tahmini Brüt Kâr (Marj):</span>
+                <span style="color:#00E676;font-weight:700;">${dev_margin_usd:,.2f} USD (%{dev_margin_pct:.1f})</span>
+            </div>
+            <div style="background:rgba(255,255,255,0.05);padding:6px 10px;border-radius:6px;font-size:11px;">
+                {'<span style="color:#FF6B6B;font-weight:700;">⚠️ TAVAN AŞIMI:</span> İskonto ülke tavanı (%' + f'{rec_dev_max:.1f}) üzerindedir!' if dev_over_ceiling else '<span style="color:#00E676;font-weight:700;">✅ GÜVENLİ MARJ:</span> İskonto ülke tavanı (%' + f'{rec_dev_max:.1f}) sınırları içerisindedir.'}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+    with col_c2:
+        st.markdown("""
+        <div style="background:rgba(255,184,0,0.03);border:1px solid rgba(255,184,0,0.25);border-radius:8px;padding:8px 12px;margin-bottom:10px;">
+            <b style="color:#FFB800;font-size:12.5px;">🧪 2. Sarf Malzeme (Consumable) İskonto Hesaplama</b>
+        </div>
+        """, unsafe_allow_html=True)
+        
+        sarf_preset = st.selectbox(
+            "Sarf Ürün Grubu Preset Seçin:",
+            [
+                "Piezo Aktivasyon Dishleri (Z-Dish Array)",
+                "Piezo Ca-Free Aktivasyon Medyası",
+                "BioPSafe Trofektoderm Biyopsi Pipeti",
+                "ZEUS Mismatch Blocker RFID Etiket & Çip Seti",
+                "CryoProtect Vitrifikasyon & Çözme Kiti",
+                "Özel Sarf / Manuel Giriş"
+            ],
+            key=f"{key_prefix}_sarf_model_{target_country}"
+        )
+        
+        sarf_price = st.number_input(
+            "Sarf Liste Fiyatı ($ USD/Kutu — Elle Giriniz):",
+            min_value=0.0,
+            max_value=50000.0,
+            value=0.0,
+            step=10.0,
+            placeholder="Sarf kutu fiyatını elle yazınız...",
+            key=f"{key_prefix}_sarf_price_{target_country}"
+        )
+        
+        sarf_disc_pct = st.slider(
+            f"Sarf İskonto Oranı (%) — [Önerilen Tavan: %{rec_sarf_max:.1f}]:",
+            min_value=0.0,
+            max_value=40.0,
+            value=float(rec_sarf_max),
+            step=0.5,
+            key=f"{key_prefix}_sarf_disc_slider_{target_country}"
+        )
+        
+        sarf_qty = st.number_input(
+            "Yıllık Taahhüt Edilen Sarf Miktarı (Kutu/Yıl):",
+            min_value=1,
+            max_value=50000,
+            value=int(pricing_fc.get('target_consumables_2027', 250)),
+            step=10,
+            key=f"{key_prefix}_sarf_qty_{target_country}"
+        )
+        
+        sarf_gross = sarf_price * sarf_qty
+        sarf_disc_unit = sarf_price * (sarf_disc_pct / 100.0)
+        net_sarf_unit = sarf_price - sarf_disc_unit
+        sarf_tot_disc = sarf_disc_unit * sarf_qty
+        sarf_tot_net = net_sarf_unit * sarf_qty
+        est_sarf_cogs = (sarf_price * 0.35 * sarf_qty) if sarf_price > 0 else 0.0
+        sarf_margin_usd = (sarf_tot_net - est_sarf_cogs) if sarf_price > 0 else 0.0
+        sarf_margin_pct = (sarf_margin_usd / sarf_tot_net * 100.0) if sarf_tot_net > 0 else 0.0
+        sarf_over_ceiling = sarf_disc_pct > rec_sarf_max
+        
+        st.markdown(f"""
+        <div style="background:#0F192E;border:1px solid {'#FF6B6B' if sarf_over_ceiling else '#13A6B5'};border-radius:10px;padding:12px 16px;margin-top:10px;font-size:12px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                <span style="color:#FFFFFF;font-weight:700;">Net İskontolu Kutu Fiyatı:</span>
+                <span style="color:#FFB800;font-weight:800;font-size:15px;">${net_sarf_unit:,.2f} USD</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+                <span style="color:#94A3B8;">Kutu Başı İndirim:</span>
+                <span style="color:#FFB800;font-weight:700;">-${sarf_disc_unit:,.2f} USD (%{sarf_disc_pct:.1f})</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
+                <span style="color:#94A3B8;">Yıllık Sarf Cirosu ({sarf_qty} Kutu):</span>
+                <span style="color:#FFFFFF;font-weight:700;">${sarf_tot_net:,.2f} USD</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
+                <span style="color:#94A3B8;">Tahmini Brüt Kâr (Marj):</span>
+                <span style="color:#00E676;font-weight:700;">${sarf_margin_usd:,.2f} USD (%{sarf_margin_pct:.1f})</span>
+            </div>
+            <div style="background:rgba(255,255,255,0.05);padding:6px 10px;border-radius:6px;font-size:11px;">
+                {'<span style="color:#FF6B6B;font-weight:700;">⚠️ TAVAN AŞIMI:</span> İskonto ülke tavanı (%' + f'{rec_sarf_max:.1f}) üzerindedir!' if sarf_over_ceiling else '<span style="color:#00E676;font-weight:700;">✅ GÜVENLİ MARJ:</span> Sarf iskontosu tavanı (%' + f'{rec_sarf_max:.1f}) ve yüksek marj koruması dahilindedir.'}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+        
+    # Consolidated Combined Totals Bar
+    tot_gross = dev_gross + sarf_gross
+    tot_discount = dev_tot_disc + sarf_tot_disc
+    tot_net = dev_tot_net + sarf_tot_net
+    eff_disc_pct = (tot_discount / tot_gross * 100.0) if tot_gross > 0 else 0.0
+    tot_profit = dev_margin_usd + sarf_margin_usd
+    tot_margin_pct = (tot_profit / tot_net * 100.0) if tot_net > 0 else 0.0
+    sarf_rev_share = (sarf_tot_net / tot_net * 100.0) if tot_net > 0 else 0.0
+    
+    st.markdown(f"""
+    <div style="display:grid;grid-template-columns:repeat(4, 1fr);gap:12px;margin-top:14px;margin-bottom:12px;">
+        <div style="background:rgba(19,166,181,0.08);border:1px solid rgba(0,245,255,0.3);border-radius:10px;padding:12px 14px;text-align:center;">
+            <div style="font-size:11px;font-weight:700;color:#8FA3C0;text-transform:uppercase;">Toplam Anlaşma Değeri</div>
+            <div style="font-size:20px;font-weight:800;color:#00F5FF;margin-top:2px;">${tot_net:,.2f} USD</div>
+            <div style="font-size:10px;color:#94A3B8;">Liste: ${tot_gross:,.2f} USD</div>
+        </div>
+        <div style="background:rgba(255,184,0,0.08);border:1px solid rgba(255,184,0,0.3);border-radius:10px;padding:12px 14px;text-align:center;">
+            <div style="font-size:11px;font-weight:700;color:#8FA3C0;text-transform:uppercase;">Toplam Verilen İndirim</div>
+            <div style="font-size:20px;font-weight:800;color:#FFB800;margin-top:2px;">-${tot_discount:,.2f} USD</div>
+            <div style="font-size:10px;color:#FFB800;">Efektif İskonto: %{eff_disc_pct:.1f}</div>
+        </div>
+        <div style="background:rgba(0,230,118,0.08);border:1px solid rgba(0,230,118,0.3);border-radius:10px;padding:12px 14px;text-align:center;">
+            <div style="font-size:11px;font-weight:700;color:#8FA3C0;text-transform:uppercase;">Kümülatif Brüt Kâr</div>
+            <div style="font-size:20px;font-weight:800;color:#00E676;margin-top:2px;">${tot_profit:,.2f} USD</div>
+            <div style="font-size:10px;color:#00E676;">Brüt Marj: %{tot_margin_pct:.1f}</div>
+        </div>
+        <div style="background:rgba(186,104,200,0.08);border:1px solid rgba(186,104,200,0.3);border-radius:10px;padding:12px 14px;text-align:center;">
+            <div style="font-size:11px;font-weight:700;color:#8FA3C0;text-transform:uppercase;">Sarf Gelir Ağırlığı</div>
+            <div style="font-size:20px;font-weight:800;color:#BA68C8;margin-top:2px;">%{sarf_rev_share:.1f}</div>
+            <div style="font-size:10px;color:#CBD5E1;">Yıllık Tekrarlayan Nakit</div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+
 def render_deep_sales_strategy_ui(country_name, deep_intel=None, p_fc=None):
     if deep_intel is None:
         deep_intel = {}
@@ -15693,11 +15914,12 @@ Web: www.zeusbioscience.com""", language="markdown")
                 lk_dms = lk_dir_data.get('decision_makers', [])
 
                 if lk_dms:
+                    c_slug = "".join([ch.lower() for ch in lk_country if ch.isalnum()]) or "global"
                     for dm_item in lk_dms:
                         dm_leader = dm_item.get('Lider / Karar Verici', 'Tıbbi Direktör')
                         dm_inst = dm_item.get('Kurum / Klinik', 'Öncü IVF Merkezi')
                         dm_loc = dm_item.get('Konum', lk_country)
-                        dm_email = dm_item.get('Email', f"info@{slug}-clinic.org")
+                        dm_email = dm_item.get('Email', f"info@{c_slug}-clinic.org")
 
                         # Personal search URL
                         person_clean = dm_leader.split('&')[0].replace('Prof.', '').replace('Dr.', '').replace('Dott.', '').replace('Dott.ssa', '').strip()
@@ -16215,6 +16437,9 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
+
+                # Dynamic Discount & Margin Calculator for Selected Market Intelligence Country
+                render_country_discount_calculator_widget(cmp_kb_country, pricing_fc, key_prefix="mic_ktab3")
 
             # SUB-TAB 4: SATIŞ STRATEJİSİ (GTM)
             with k_tab4:
@@ -17854,6 +18079,9 @@ elif nav_selection == "Pricing & Discount Calculator":
                 </div>
             </div>
             """, unsafe_allow_html=True)
+
+            # Dynamic Discount & Margin Calculator for Selected Pricing & Discount Country
+            render_country_discount_calculator_widget(kb_country, pricing_fc, key_prefix="pricing_ktab3")
 
         # SUB-TAB 4: SATIŞ STRATEJİSİ (GTM)
         with k_tab4:
