@@ -4557,7 +4557,7 @@ def load_audit_state():
             {
                 "author": "Yönetici Heyeti",
                 "platform": "Genel",
-                "date": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
+                "date": datetime.now().strftime("%Y-%m-%d %H:%M"),
                 "note": "İlk sosyal medya denetimi tamamlandı. YouTube'daki 49 dakikalık videonun başlığı ve LinkedIn biyografi optimizasyonu 1. öncelik olarak belirlendi."
             }
         ],
@@ -4574,7 +4574,7 @@ def save_audit_state(state):
 def run_live_social_scan():
     headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'}
     results = {
-        "scan_time": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "scan_time": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         "youtube": {},
         "linkedin": {},
         "gap_summary": []
@@ -4830,7 +4830,7 @@ def render_social_media_hub():
                 new_comm = {
                     "author": inp_author.strip(),
                     "platform": inp_plat,
-                    "date": datetime.datetime.now().strftime("%Y-%m-%d %H:%M"),
+                    "date": datetime.now().strftime("%Y-%m-%d %H:%M"),
                     "note": inp_note.strip()
                 }
                 audit_state["comments"].insert(0, new_comm)
@@ -17152,7 +17152,7 @@ elif nav_selection == "Country 360° Performance & Report":
                 'covenants': mgr_covenants,
                 'deal_rev': deal_tot_rev,
                 'deal_margin': deal_blended_margin,
-                'timestamp': datetime.datetime.now().strftime("%Y-%m-%d %H:%M")
+                'timestamp': datetime.now().strftime("%Y-%m-%d %H:%M")
             }
             st.success(f"✅ {sel_country} Yönetici Stratejik Kararı ve Operasyonel Planlaması başarıyla kaydedildi!")
 
@@ -17191,7 +17191,7 @@ elif nav_selection == "Country 360° Performance & Report":
             
             <div style="background:rgba(0,0,0,0.3);padding:10px 14px;border-radius:6px;font-size:11.5px;color:#A0AEC0;display:flex;justify-content:space-between;align-items:center;">
                 <span>🎯 <b>Heyet Konsensüs Skoru:</b> <span style="color:#00E676;font-weight:700;">%94 Yüksek Stratejik Uyum</span> (CEO, CFO, Sales, Embriyolog & QA tam mutabakatı)</span>
-                <span style="color:#64748B;">Resmi Rapor Tarihi: {datetime.datetime.now().strftime("%d.%m.%Y")}</span>
+                <span style="color:#64748B;">Resmi Rapor Tarihi: {datetime.now().strftime("%d.%m.%Y")}</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
