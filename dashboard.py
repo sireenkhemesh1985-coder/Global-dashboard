@@ -2437,17 +2437,139 @@ country_map = {row['code']: row for _, row in country_df.iterrows()}
 
 
 # ==============================================================================
+# 2.5. ENTERPRISE AUTHENTICATION & LOGIN GATE
+# ==============================================================================
+USER_CREDENTIALS = {
+    "sireen": {
+        "passwords": ["zeus2026", "sireen2026", "123456"],
+        "name": "Sireen Khemesh",
+        "role": "Global Market Intelligence Lead",
+        "badge": "C-Level / Executive"
+    },
+    "admin": {
+        "passwords": ["zeus2026", "admin2026"],
+        "name": "Sistem Yöneticisi (Admin)",
+        "role": "Global System Administrator",
+        "badge": "Superadmin"
+    },
+    "zeus": {
+        "passwords": ["zeus2026"],
+        "name": "ZEUS Commercial Team",
+        "role": "Commercial Operations Lead",
+        "badge": "Commercial Access"
+    },
+    "demo": {
+        "passwords": ["zeus2026", "demo2026"],
+        "name": "Misafir Denetçi",
+        "role": "Auditor / Demo Access",
+        "badge": "Auditor"
+    }
+}
+
+def render_login_gate():
+    if not st.session_state.get("authenticated", False):
+        # Hide sidebar and collapsed controls when not authenticated
+        st.markdown("""
+        <style>
+            [data-testid="stSidebar"] { display: none !important; }
+            [data-testid="collapsedControl"] { display: none !important; }
+        </style>
+        """, unsafe_allow_html=True)
+
+        col_l, col_m, col_r = st.columns([1, 1.8, 1])
+        with col_m:
+            st.markdown("""
+            <div style="text-align: center; margin-top: 35px; margin-bottom: 20px;">
+                <div style="display: inline-block; padding: 6px 16px; background: rgba(0, 245, 255, 0.08); border: 1px solid rgba(0, 245, 255, 0.3); border-radius: 20px; margin-bottom: 14px;">
+                    <span style="font-size: 11px; font-weight: 700; color: #00F5FF; letter-spacing: 0.12em; text-transform: uppercase;">🔒 ZEUS BIOSCIENCE SECURE GATEWAY</span>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            # Display Logo
+            if os.path.exists("assets/zeus_logo_white.png"):
+                st.image("assets/zeus_logo_white.png", use_container_width=True)
+            elif os.path.exists("zeus_logo_white.png"):
+                st.image("zeus_logo_white.png", use_container_width=True)
+
+            st.markdown("""
+            <div style="text-align: center; margin-top: 10px; margin-bottom: 24px;">
+                <h3 style="color: #FFFFFF; font-weight: 800; font-size: 20px; margin-bottom: 4px;">Global Market Intelligence (ZGMI)</h3>
+                <p style="color: #8FA3C0; font-size: 12.5px; margin: 0;">Lütfen panele erişmek için kurumsal kullanıcı adı ve şifrenizi giriniz.</p>
+            </div>
+            """, unsafe_allow_html=True)
+
+            with st.form("zgmi_login_form", clear_on_submit=False):
+                inp_user = st.text_input("Kullanıcı Adı (Username):", placeholder="Örn: sireen veya admin", key="inp_login_user")
+                inp_pass = st.text_input("Şifre (Password):", type="password", placeholder="••••••••", key="inp_login_pass")
+                st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
+                login_clicked = st.form_submit_button("🔐 Güvenli Giriş Yap (Sign In)", use_container_width=True)
+
+            if login_clicked:
+                u_clean = inp_user.strip().lower()
+                p_clean = inp_pass.strip()
+                if u_clean in USER_CREDENTIALS and p_clean in USER_CREDENTIALS[u_clean]["passwords"]:
+                    st.session_state["authenticated"] = True
+                    st.session_state["auth_user"] = u_clean
+                    st.session_state["auth_name"] = USER_CREDENTIALS[u_clean]["name"]
+                    st.session_state["auth_role"] = USER_CREDENTIALS[u_clean]["role"]
+                    st.session_state["auth_badge"] = USER_CREDENTIALS[u_clean]["badge"]
+                    st.success("✅ Giriş doğrulandı! Yönlendiriliyorsunuz...")
+                    st.rerun()
+                else:
+                    st.error("❌ Hatalı kullanıcı adı veya şifre! Lütfen bilgilerinizi kontrol ediniz.")
+
+            st.markdown("""
+            <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 14px 18px; margin-top: 24px; font-size: 11.5px; color: #8FA3C0; line-height: 1.6;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+                    <b style="color: #00F5FF;">ℹ️ Yetkili Giriş Bilgileri (Default Access):</b>
+                    <span style="font-size: 9.5px; background: rgba(0, 245, 255, 0.12); color: #00F5FF; padding: 2px 6px; border-radius: 4px; font-weight: 700;">256-Bit SSL</span>
+                </div>
+                • <b>Kullanıcı Adı:</b> <code style="color:#FFF;">sireen</code> &nbsp;|&nbsp; <b>Şifre:</b> <code style="color:#00F5FF;">zeus2026</code><br>
+                • <b>Yönetici:</b> <code style="color:#FFF;">admin</code> &nbsp;|&nbsp; <b>Şifre:</b> <code style="color:#00F5FF;">zeus2026</code>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.stop()
+
+render_login_gate()
+
+# ==============================================================================
 # 3. SIDEBAR NAVIGATION & GLOBAL CONTROLS
 # ==============================================================================
 with st.sidebar:
     # Official ZEUS Bioscience Logo
     st.image("assets/zeus_logo_white.png")
     st.markdown('''
-    <div style="margin-top: -6px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid rgba(19, 166, 181, 0.25); text-align: center;">
+    <div style="margin-top: -6px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid rgba(19, 166, 181, 0.25); text-align: center;">
         <div style="font-size: 11px; font-weight: 700; color: #00F5FF; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px;">Global Market Intelligence</div>
         <div style="font-size: 13px; font-weight: 600; color: #FFFFFF; letter-spacing: 0.04em;">Sireen Khemesh</div>
     </div>
     ''', unsafe_allow_html=True)
+
+    # Active Session Profile & Sign Out Button
+    auth_user_name = st.session_state.get("auth_name", "Sireen Khemesh")
+    auth_user_role = st.session_state.get("auth_role", "Executive")
+    auth_user_badge = st.session_state.get("auth_badge", "C-Level")
+    
+    st.markdown(f'''
+    <div style="background: rgba(0, 245, 255, 0.05); border: 1px solid rgba(0, 245, 255, 0.22); border-radius: 8px; padding: 8px 12px; margin-top: -6px; margin-bottom: 12px; font-size: 11.5px;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <span style="color: #8FA3C0;">Oturum Açık:</span>
+            <span style="background: rgba(0, 230, 118, 0.15); color: #00E676; font-size: 9.5px; font-weight: 700; padding: 1px 6px; border-radius: 4px;">● {auth_user_badge}</span>
+        </div>
+        <div style="font-weight: 700; color: #FFFFFF; font-size: 12.5px; margin-top: 2px;">👤 {auth_user_name}</div>
+        <div style="color: #00F5FF; font-size: 10.5px;">{auth_user_role}</div>
+    </div>
+    ''', unsafe_allow_html=True)
+    
+    if st.button("🚪 Çıkış Yap (Sign Out)", use_container_width=True, key="btn_signout_top"):
+        for k in ["authenticated", "auth_user", "auth_name", "auth_role", "auth_badge"]:
+            if k in st.session_state:
+                del st.session_state[k]
+        st.rerun()
+    
+    st.markdown("<div style='height: 4px;'></div>", unsafe_allow_html=True)
     
     nav_selection = st.radio(
         "Navigation",
