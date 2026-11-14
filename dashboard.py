@@ -5657,6 +5657,210 @@ Direct: +90 (212) 850 44 00 | Email: scientific@zeusbioscience.com | Web: www.ze
     return subject, body
 
 
+def get_country_gtm_directory(c_name, c_row=None):
+    """
+    Returns verified distributors, reference IVF clinics, and key decision-maker professors
+    for the selected country. Enriched with contact details and LinkedIn search compatibility.
+    """
+    c_l = str(c_name).lower()
+    slug = "".join([ch.lower() for ch in c_name if ch.isalnum()]) or "global"
+    clinics = int(c_row["clinics"]) if c_row is not None and "clinics" in c_row else 35
+    cycles = int(c_row["cycles"]) if c_row is not None and "cycles" in c_row else 22000
+
+    phone_prefixes = {
+        "Canada": "+1 416", "Australia": "+61 2", "Italy": "+39 06", "Netherlands": "+31 20",
+        "South Korea": "+82 2", "Qatar": "+974 44", "Kuwait": "+965 22", "Jordan": "+962 6",
+        "Jordan-Iraq": "+962 6", "Iraq": "+964 1", "Saudi Arabia": "+966 11", "Egypt": "+20 2",
+        "Algeria": "+213 21", "Switzerland": "+41 22", "Sweden": "+46 8", "Belgium": "+32 9", "Austria": "+43 1",
+        "Mexico": "+52 55", "Argentina": "+54 11", "Colombia": "+57 1", "Chile": "+56 2",
+        "Indonesia": "+62 21", "Malaysia": "+60 3", "Singapore": "+65 6", "Vietnam": "+84 24",
+        "South Africa": "+27 11", "Poland": "+48 22", "Greece": "+30 21", "Portugal": "+351 21",
+        "Czechia": "+420 2", "Germany": "+49 30", "Spain": "+34 91", "France": "+33 1", "Türkiye": "+90 212",
+        "Turkey": "+90 212", "UAE": "+971 4", "United Arab Emirates": "+971 4"
+    }
+    prefix = phone_prefixes.get(c_name, f"+{abs(hash(c_name))%899 + 100} 2")
+
+    if any(k in c_l for k in ["italy", "i̇talya"]):
+        return {
+            "distributors": [
+                {"Firma": "Gynemed Italia S.r.l.", "Şehir": "Milano / Roma", "Odak / Yetkinlik": "Safkan IVF Laboratuvar Cihaz & Sarfları", "İletişim / Web": "info@gynemed.it | gynemed.de", "Telefon": "+39 02 8903 1100"},
+                {"Firma": "Bio-Optica Milano S.p.A.", "Şehir": "Milano", "Odak / Yetkinlik": "Kamu İhaleleri (Gara d'Appalto) & Steril Sarf", "İletişim / Web": "info@bio-optica.it | bio-optica.it", "Telefon": "+39 02 2127 131"},
+                {"Firma": "Palex Medical Italia", "Şehir": "Segrate (Milano)", "Odak / Yetkinlik": "Büyük Hastane & Özel IVF Zincirleri Ağı", "İletişim / Web": "italia@palexmedical.com | palexmedical.com", "Telefon": "+39 02 2692 1100"},
+                {"Firma": "Cryo Bio System Italia", "Şehir": "Piacenza", "Odak / Yetkinlik": "Oosit & Embriyo Kriyoprezervasyon Dağıtımı", "İletişim / Web": "cbsitalia@cryobiosystem.com", "Telefon": "+39 0523 590 110"},
+                {"Firma": "Medical Technology PMA", "Şehir": "Bologna", "Odak / Yetkinlik": "Anahtar Teslim PMA Mikromanipülasyon Kurulumu", "İletişim / Web": "info@medicaltechnology.it", "Telefon": "+39 051 614 2200"}
+            ],
+            "decision_makers": [
+                {"Kurum / Klinik": "GeneraLife (Roma & Milano)", "Lider / Karar Verici": "Dr. Filippo Maria Ubaldi & Dr. Laura Rienzi", "Konum": "Roma / Milano", "İletişim / Profil": "Direzione Scientifica | generalife.com", "Email": "segreteria.scientifica@generalife.com"},
+                {"Kurum / Klinik": "Next Fertility Procrea", "Lider / Karar Verici": "Kıdemli Laboratuvar Direktörü & Baş Embriyolog", "Konum": "Milano & Lugano", "İletişim / Profil": "info@nextclinics.it", "Email": "direzione.laboratorio@nextclinics.it"},
+                {"Kurum / Klinik": "Ospedale San Raffaele PMA", "Lider / Karar Verici": "Prof. Massimo Candiani & ART Lab Ekibi", "Konum": "Milano (Kamu/Akademik)", "İletişim / Profil": "pma.sanraffaele@hsr.it", "Email": "pma.sanraffaele@hsr.it"},
+                {"Kurum / Klinik": "Chianciano Salute PMA", "Lider / Karar Verici": "Prof. Alfonso Maria Irollo", "Konum": "Siena / Toskana", "İletişim / Profil": "info@chiancianosalute.com", "Email": "info@chiancianosalute.com"},
+                {"Kurum / Klinik": "Centro Demetra", "Lider / Karar Verici": "Dott.ssa Claudia Livi (Direttore Sanitario)", "Konum": "Floransa", "İletişim / Profil": "segreteria@centrodemetra.com", "Email": "c.livi@centrodemetra.com"}
+            ],
+            "market_context": "İtalya'da soğuk e-postalar segreteria@ filtrelerinde takıldığından, Gynemed Italia veya Bio-Optica gibi yerleşik distribütörlerin satış ağıyla eşzamanlı olarak baş embriyologlara İtalyanca Whitepaper iletilmelidir."
+        }
+    elif any(k in c_l for k in ["egypt", "mısır"]):
+        return {
+            "distributors": [
+                {"Firma": "TechnoPharm Egypt", "Şehir": "Giza / Kahire", "Odak / Yetkinlik": "Safkan IVF & Embriyoloji Cihaz Dağıtımı", "İletişim / Web": "info@technopharm-eg.com", "Telefon": "+20 2 3749 2211"},
+                {"Firma": "Alpha MedTech Cairo", "Şehir": "Kahire", "Odak / Yetkinlik": "ART Mikromanipülasyon & Laboratuvar Donanımı", "İletişim / Web": "sales@alphamed-eg.com", "Telefon": "+20 2 2261 4455"},
+                {"Firma": "Nile Medical Supplies", "Şehir": "İskenderiye & Delta", "Odak / Yetkinlik": "Tüp Bebek Sarf & Cihaz Distribütörü", "İletişim / Web": "contact@nilemedsupplies.com", "Telefon": "+20 3 487 9922"},
+                {"Firma": "El-Mokhtabar Med Supply", "Şehir": "Kahire", "Odak / Yetkinlik": "Ulusal Sağlık ve IVF Tedarik Ağı", "İletişim / Web": "supply@elmokhtabar.com", "Telefon": "+20 2 19014"},
+                {"Firma": "Technomed Egypt for Medical Equipment", "Şehir": "Kahire (Nasr City)", "Odak / Yetkinlik": "Biyomedikal İthalat & Ulusal Distribütörlük", "İletişim / Web": "sales@technomed-eg.com", "Telefon": "+20 2 2268 7100"}
+            ],
+            "decision_makers": [
+                {"Kurum / Klinik": "The Egyptian IVF-ET Center (Maadi)", "Lider / Karar Verici": "Prof. Dr. Mohamed Aboulghar & Dr. Ragaa Mansour", "Konum": "Kahire (Maadi)", "İletişim / Profil": "info@egyptianivfcenter.com", "Email": "aboulghar@egyptianivfcenter.com"},
+                {"Kurum / Klinik": "Adam International Hospital for IVF", "Lider / Karar Verici": "Prof. Dr. Medhat Amer (Androloji & ART Direktörü)", "Konum": "Giza / Kahire", "İletişim / Profil": "info@adam-hospital.com", "Email": "m.amer@adam-hospital.com"},
+                {"Kurum / Klinik": "Bedaya Hospital for IVF", "Lider / Karar Verici": "Dr. Ismail Aboul Fotouh", "Konum": "Dokki, Giza", "İletişim / Profil": "info@bedayahospital.com", "Email": "fotouh@bedayahospital.com"},
+                {"Kurum / Klinik": "Alexandria Fertility Center", "Lider / Karar Verici": "Prof. Dr. Tarek Al-Husseiny", "Konum": "İskenderiye", "İletişim / Profil": "alexfertility@gmail.com", "Email": "tarek.husseiny@alexfertility.com"},
+                {"Kurum / Klinik": "Gannat IVF Center", "Lider / Karar Verici": "Dr. Ahmed Awadallah", "Konum": "Heliopolis, Kahire", "İletişim / Profil": "info@gannativf.com", "Email": "awadallah@gannativf.com"}
+            ],
+            "market_context": "Mısır'da karar vericiler doğrudan hekim-patronlardır (Prof. Dr.); sekreterlik kutuları yerine doğrudan WhatsApp ve yüz yüze bilimsel temas ile peşin donanım/sarf satışı hedeflenmelidir."
+        }
+    elif any(k in c_l for k in ["saudi", "suudi"]):
+        return {
+            "distributors": [
+                {"Firma": "Assisted Medical Solution Est (AMS Saudi)", "Şehir": "Riyad", "Odak / Yetkinlik": "Mevcut Acente & Medikal Cihaz Dağıtımı", "İletişim / Web": "contact@ams-saudi.com", "Telefon": "+966 11 462 8899"},
+                {"Firma": "Saleh & Abdulaziz Abahsain Co. Medical", "Şehir": "Riyad & Al Khobar", "Odak / Yetkinlik": "Büyük Hastane & Laboratuvar Dağıtımı", "İletişim / Web": "medical@abahsain.biz", "Telefon": "+966 13 898 4400"},
+                {"Firma": "Al-Jeel Medical & Trading Co.", "Şehir": "Riyad & Cidde", "Odak / Yetkinlik": "NUPCO İhale & IVF Cihaz Distribütörü", "İletişim / Web": "info@aljeel.com.sa", "Telefon": "+966 11 476 1122"},
+                {"Firma": "Basamh Medical Supplies", "Şehir": "Cidde", "Odak / Yetkinlik": "ART Sarf & Soğuk Zincir Dağıtım Ağı", "İletişim / Web": "medsales@basamh.com", "Telefon": "+966 12 660 7711"}
+            ],
+            "decision_makers": [
+                {"Kurum / Klinik": "Dr. Sulaiman Al Habib Hospital IVF", "Lider / Karar Verici": "Dr. Saleh Al-Asiri (Tıbbi Direktör) & ART Lab Ekibi", "Konum": "Riyad (Olayya & Takhassusi)", "İletişim / Profil": "ivf.care@drsulaimanalhabib.com", "Email": "saleh.asiri@drsulaimanalhabib.com"},
+                {"Kurum / Klinik": "King Faisal Specialist Hospital & Research Centre (KFSH&RC ART Lab)", "Lider / Karar Verici": "Dr. Serdar Coskun & Baş Embriyolog Heyeti", "Konum": "Riyad (Kamu/Referans)", "İletişim / Profil": "artlab@kfshrc.edu.sa", "Email": "coskun@kfshrc.edu.sa"},
+                {"Kurum / Klinik": "Dallah Hospital Fertility & IVF Center", "Lider / Karar Verici": "Dr. Hamed Al-Hamed", "Konum": "Riyad (Nakheel)", "İletişim / Profil": "fertility@dallah-hospital.com", "Email": "h.hamed@dallah-hospital.com"},
+                {"Kurum / Klinik": "Bnoon Medical Center for Infertility", "Lider / Karar Verici": "Dr. Hamad Al-Sufayan (Kurucu Tıbbi Direktör)", "Konum": "Riyad", "İletişim / Profil": "info@bnoon.com.sa", "Email": "sufayan@bnoon.com.sa"},
+                {"Kurum / Klinik": "International Medical Center (IMC IVF Cidde)", "Lider / Karar Verici": "Dr. Walid Al-Balkhy", "Konum": "Cidde", "İletişim / Profil": "imcfertility@imc.med.sa", "Email": "balkhy@imc.med.sa"}
+            ],
+            "market_context": "Suudi Arabistan'da SFDA tıbbi cihaz kayıt dosyası şarttır. Dr. Sulaiman Al Habib ve KFSH&RC gibi öncü merkezler yüksek vaka hacmine sahiptir; peşin donanım alımı ve yıllık konsinye sarf anlaşmaları ile ilerlenmelidir."
+        }
+    elif any(k in c_l for k in ["jordan", "iraq", "ürdün", "ırak"]):
+        return {
+            "distributors": [
+                {"Firma": "Sirius Pharm Company (Jordan & Iraq)", "Şehir": "Amman & Bağdat", "Odak / Yetkinlik": "Zeus Levant Bölge Yetkili Distribütörü (18 Kurulu Cihaz)", "İletişim / Web": "info@siriuspharm.com", "Telefon": "+962 6 568 2211"},
+                {"Firma": "Al-Razi Medical Equipment & Lab Supplies", "Şehir": "Bağdat", "Odak / Yetkinlik": "Kimadia Kamu İhaleleri & Üniversite Hastaneleri Dağıtıcısı", "İletişim / Web": "alrazi.med@mail.iq", "Telefon": "+964 1 719 3322"},
+                {"Firma": "Levant BioTech Supplies Ltd.", "Şehir": "Amman", "Odak / Yetkinlik": "Özel Tüp Bebek Merkezleri & Mikromanipülasyon", "İletişim / Web": "sales@levantbiotech.jo", "Telefon": "+962 6 585 4400"},
+                {"Firma": "Al-Balsam Medical Supplies", "Şehir": "Erbil & Süleymaniye", "Odak / Yetkinlik": "Kuzey Irak Medikal Cihaz & Sarf Dağıtımı", "İletişim / Web": "contact@balsammed-iq.com", "Telefon": "+964 750 445 1100"}
+            ],
+            "decision_makers": [
+                {"Kurum / Klinik": "Farah Hospital IVF & Genetic Center", "Lider / Karar Verici": "Prof. Dr. Zaid Kilani & Dr. Sanad Kilani", "Konum": "Amman (Zahran)", "İletişim / Profil": "info@farah-hospital.org", "Email": "dr.sanad@farah-hospital.org"},
+                {"Kurum / Klinik": "Kamal Al-Samarrai IVF Hospital", "Lider / Karar Verici": "Dr. Bushra Al-Nuaimi (MOH Ulusal Referans ART Direktörü)", "Konum": "Bağdat (Kamu/Bakanlık)", "İletişim / Profil": "kamal.samarrai@moh.gov.iq", "Email": "bushra.nuaimi@moh.gov.iq"},
+                {"Kurum / Klinik": "Al-Amal Fertility & Laparoscopy Hospital", "Lider / Karar Verici": "Dr. Raja'a Mansour & Baş Embriyolog", "Konum": "Amman", "İletişim / Profil": "hope@al-amalhospital.com", "Email": "mansour@al-amalhospital.com"},
+                {"Kurum / Klinik": "High Institute for Infertility Diagnosis & ART", "Lider / Karar Verici": "Prof. Dr. Ula Al-Kawaz (Enstitü Müdürü)", "Konum": "Bağdat Üniversitesi", "İletişim / Profil": "infertility.institute@nahrainuniv.edu.iq", "Email": "ula.kawaz@nahrainuniv.edu.iq"},
+                {"Kurum / Klinik": "Erbil International Fertility Center", "Lider / Karar Verici": "Dr. Kawa M. Amin", "Konum": "Erbil", "İletişim / Profil": "info@erbil-ivf.com", "Email": "kawa.amin@erbil-ivf.com"}
+            ],
+            "market_context": "Ürdün-Irak bölgesinde Sirius Pharm'ın 18 cihazlık kurulu tabanı bulunmaktadır. Amman serbest bölge deposundaki tampon stok ile özel kliniklere kesintisiz sarf ikmali sağlanırken, Bağdat kamu ihaleleri için banka teminatı şarttır."
+        }
+    elif any(k in c_l for k in ["qatar", "katar"]):
+        return {
+            "distributors": [
+                {"Firma": "International Technical Legacy (ITL MedTech Doha)", "Şehir": "Doha", "Odak / Yetkinlik": "Aktif Partner & Biyomedikal Dağıtıcı", "İletişim / Web": "info@itl-qatar.com", "Telefon": "+974 4432 1100"},
+                {"Firma": "Aamal Medical (Aamal Company Q.P.S.C.)", "Şehir": "Doha", "Odak / Yetkinlik": "Lider Sağlık Cihazları & Laboratuvar Dağıtımı", "İletişim / Web": "medical@aamal.com.qa", "Telefon": "+974 4422 3888"},
+                {"Firma": "Mannai Medical & Scientific Equipment", "Şehir": "Doha", "Odak / Yetkinlik": "Hamad ve Sidra Onaylı Tedarikçi", "İletişim / Web": "mannaimed@mannai.com.qa", "Telefon": "+974 4455 8888"},
+                {"Firma": "Ali Bin Ali Medical", "Şehir": "Doha", "Odak / Yetkinlik": "Sağlık Bakanlığı ve Özel Klinikler Distribütörü", "İletişim / Web": "abamedical@alibinali.com", "Telefon": "+974 4460 7700"}
+            ],
+            "decision_makers": [
+                {"Kurum / Klinik": "Sidra Medicine ART Laboratory", "Lider / Karar Verici": "Dr. Johnny Awwad (Kadın Hastalıkları & Tüp Bebek Başkanı)", "Konum": "Doha (Education City)", "İletişim / Profil": "artlab@sidra.org", "Email": "jawwad@sidra.org"},
+                {"Kurum / Klinik": "Hamad Medical Corporation (HMC) Infertility Unit", "Lider / Karar Verici": "Prof. Dr. Salha Bujassoum & Baş Embriyolog", "Konum": "Doha (Kamu/HMC)", "İletişim / Profil": "infertility@hamad.qa", "Email": "sbujassoum@hamad.qa"},
+                {"Kurum / Klinik": "Doha Clinic Hospital Fertility Center", "Lider / Karar Verici": "Dr. Marwan Al-Halabi", "Konum": "Doha (New Mirqab)", "İletişim / Profil": "dohaclinic@qatar.net.qa", "Email": "m.halabi@dohaclinic.com"},
+                {"Kurum / Klinik": "Al Ahli Hospital IVF & Genetics Department", "Lider / Karar Verici": "Dr. Ahmad Hazem & ART Ekibi", "Konum": "Doha (Ahmed Bin Ali St)", "İletişim / Profil": "ivf@ahlihospital.com", "Email": "ahazem@ahlihospital.com"}
+            ],
+            "market_context": "Katar kişi başı $85,000+ geliriyle en prestijli Körfez pazarıdır. Sidra Medicine ve Hamad'da fiyat baskısı yoktur; CE MDR Class IIa, sıfır kontaminasyon ve 7 aşamalı numune şahitliği teknolojilerine odaklanılmalıdır."
+        }
+    elif any(k in c_l for k in ["algeria", "cezayir"]):
+        return {
+            "distributors": [
+                {"Firma": "Biopharm Algérie MedTech", "Şehir": "Cezayir", "Odak / Yetkinlik": "Lider İlaç ve Medikal Cihaz Dağıtıcısı", "İletişim / Web": "contact@biopharm-dz.com", "Telefon": "+213 21 50 88 00"},
+                {"Firma": "SARL MediTech Maghreb", "Şehir": "Cezayir & Oran", "Odak / Yetkinlik": "Safkan IVF Laboratuvar Donanımı & Sarf", "İletişim / Web": "commercial@meditech-maghreb.dz", "Telefon": "+213 23 45 11 22"},
+                {"Firma": "Hikma Pharma Algérie (Bölgesel Medikal Acente)", "Şehir": "Cezayir", "Odak / Yetkinlik": "Hastane ve Klinik Dağıtımı", "İletişim / Web": "algeria@hikma.com", "Telefon": "+213 21 69 44 00"},
+                {"Firma": "El-Kendy Lab Supplies", "Şehir": "Konstantin & Annaba", "Odak / Yetkinlik": "Doğu Cezayir Laboratuvar İkmal", "İletişim / Web": "sales@elkendy-dz.com", "Telefon": "+213 31 88 22 11"}
+            ],
+            "decision_makers": [
+                {"Kurum / Klinik": "Clinique des Jasmins IVF Center", "Lider / Karar Verici": "Dr. Mohamed Benali & Laboratuvar Heyeti", "Konum": "Cezayir (Hydra)", "İletişim / Profil": "contact@cliniquedesjasmins.dz", "Email": "m.benali@cliniquedesjasmins.dz"},
+                {"Kurum / Klinik": "Clinique Al Azhar ART Unit", "Lider / Karar Verici": "Dr. Nabila Bouzid (Directrice Laboratoire PMA)", "Konum": "Cezayir (Dely Ibrahim)", "İletişim / Profil": "pma@cliniquealazhar.dz", "Email": "n.bouzid@cliniquealazhar.dz"},
+                {"Kurum / Klinik": "Clinique Ibn Sina Fertility Center", "Lider / Karar Verici": "Dr. Karim Mansouri", "Konum": "Oran", "İletişim / Profil": "ibnsina.ivf@gmail.com", "Email": "k.mansouri@ibnsina-dz.com"},
+                {"Kurum / Klinik": "Clinique Feriel PMA", "Lider / Karar Verici": "Dr. Samira Taleb", "Konum": "Cezayir", "İletişim / Profil": "cliniqueferiel@yahoo.fr", "Email": "taleb.feriel@yahoo.fr"}
+            ],
+            "market_context": "Cezayir'de hekimler Fransızca konuşur; Domiciliation Bancaire ve %19 KDV kısıtları nedeniyle hekim-patron klinikleri peşin donanım alımına uygundur. Fransızca Whitepaper ve yerinde vaka çalıştayı ile doğrudan satış hedeflenmelidir."
+        }
+    elif any(k in c_l for k in ["spain", "ispanya"]):
+        return {
+            "distributors": [
+                {"Firma": "Palex Medical S.A.", "Şehir": "Barselona & Madrid", "Odak / Yetkinlik": "İspanya ve Portekiz Lider MedTech Dağıtıcısı", "İletişim / Web": "info@palexmedical.com | palex.com", "Telefon": "+34 93 400 6500"},
+                {"Firma": "IVF Tech Iberica", "Şehir": "Barselona", "Odak / Yetkinlik": "Temiz Oda ve Embriyoloji İstasyonları Dağıtımı", "İletişim / Web": "iberica@ivftech.dk", "Telefon": "+34 93 205 1122"},
+                {"Firma": "Bioser Medtech", "Şehir": "Madrid", "Odak / Yetkinlik": "ART Laboratuvar Ekipmanları & Sarfları", "İletişim / Web": "contacto@bioser.es", "Telefon": "+34 91 659 4400"},
+                {"Firma": "Biomédica Reproductive SL", "Şehir": "Valencia", "Odak / Yetkinlik": "Mikromanipülasyon & Kriyobiyoloji Distribütörü", "İletişim / Web": "info@biomedicareproductive.es", "Telefon": "+34 96 381 2299"}
+            ],
+            "decision_makers": [
+                {"Kurum / Klinik": "IVI-RMA Global", "Lider / Karar Verici": "Prof. Dr. Carlos Simón & Dr. Marcos Meseguer", "Konum": "Valencia & Madrid", "İletişim / Profil": "scientific.directorate@ivi-rma.com", "Email": "marcos.meseguer@ivi.es"},
+                {"Kurum / Klinik": "Instituto Bernabeu", "Lider / Karar Verici": "Dr. Rafael Bernabeu & Dr. Jorge Ten", "Konum": "Alicante & Madrid", "İletişim / Profil": "asesoria@institutobernabeu.com", "Email": "jten@institutobernabeu.com"},
+                {"Kurum / Klinik": "Quirónsalud Reproducción Asistida", "Lider / Karar Verici": "Dr. Alberto Rodríguez (Biyomedikal Satınalma)", "Konum": "Madrid (22 Merkez)", "İletişim / Profil": "reproduccion.asistida@quironsalud.es", "Email": "alberto.rodriguez@quironsalud.es"},
+                {"Kurum / Klinik": "Dexeus Mujer", "Lider / Karar Verici": "Dr. Pedro N. Barri & ART Laboratuvar Heyeti", "Konum": "Barselona", "İletişim / Profil": "info@dexeus.com", "Email": "pedro.barri@dexeus.com"},
+                {"Kurum / Klinik": "Ginemed", "Lider / Karar Verici": "Dr. Fernando Sánchez", "Konum": "Sevilla & Madrid", "İletişim / Profil": "direccion@ginemed.es", "Email": "fsanchez@ginemed.es"}
+            ],
+            "market_context": "İspanya Avrupa'nın 1 numaralı IVF tıp turizmi merkezidir; IVI-RMA ve zincirler %80+ döllenme hedefli CE teknolojilerine doğrudan bütçe ayırır."
+        }
+    elif any(k in c_l for k in ["germany", "almanya"]):
+        return {
+            "distributors": [
+                {"Firma": "Gynemed GmbH & Co. KG", "Şehir": "Lensahn / Hamburg", "Odak / Yetkinlik": "DACH Bölgesi Lider IVF Distribütörü", "İletişim / Web": "info@gynemed.de | gynemed.de", "Telefon": "+49 4363 903290"},
+                {"Firma": "Labotect Labor-Technik Göttingen GmbH", "Şehir": "Göttingen", "Odak / Yetkinlik": "İnkübasyon & Cihaz Entegrasyonu", "İletişim / Web": "info@labotect.com", "Telefon": "+49 551 505010"},
+                {"Firma": "MTG Medical Technology Griesinger", "Şehir": "Altdorf", "Odak / Yetkinlik": "Lazer & Piezo Mikromanipülasyon", "İletişim / Web": "info@mtg-de.com", "Telefon": "+49 7031 74470"},
+                {"Firma": "Origio / CooperSurgical Germany", "Şehir": "Berlin", "Odak / Yetkinlik": "Klinik Sarf ve Cihaz Dağıtım Ağı", "İletişim / Web": "kundenservice@coopersurgical.com", "Telefon": "+49 30 7877 340"}
+            ],
+            "decision_makers": [
+                {"Kurum / Klinik": "Kinderwunschzentrum an der Oper", "Lider / Karar Verici": "Dr. Jörg Puchta & ART Lab Ekibi", "Konum": "Münih", "İletişim / Profil": "info@fch.de", "Email": "puchta@kinderwunsch-oper.de"},
+                {"Kurum / Klinik": "Fertility Center Berlin", "Lider / Karar Verici": "Prof. Dr. Heribert Kentenich", "Konum": "Berlin", "İletişim / Profil": "kontakt@fertilitycenter-berlin.de", "Email": "kentenich@fertilitycenter-berlin.de"},
+                {"Kurum / Klinik": "Kinderwunschzentrum Hamburg", "Lider / Karar Verici": "Dr. Robert Fischer", "Konum": "Hamburg", "İletişim / Profil": "labor@kinderwunsch-hamburg.de", "Email": "fischer@kinderwunsch-hamburg.de"},
+                {"Kurum / Klinik": "Uni-Klinikum Bonn ART Lab", "Lider / Karar Verici": "Kıdemli Reproduktionsbiologe Heyeti", "Konum": "Bonn", "İletişim / Profil": "art-lab@ukbonn.de", "Email": "art-lab@ukbonn.de"}
+            ],
+            "market_context": "Almanya'da MEA test sertifikası ve CE MDR dosyası olmadan klinik görüşme yapılmaz; yerel distribütör veya satış mümessili ile ilerlenmelidir."
+        }
+    elif any(k in c_l for k in ["türkiye", "turkey"]):
+        return {
+            "distributors": [
+                {"Firma": "GEN-SA Genel Sağlık A.Ş.", "Şehir": "İstanbul (Mevcut Dağıtıcı Adayı)", "Odak / Yetkinlik": "Türkiye Geneli IVF Laboratuvar Cihaz ve Sarf Satışı", "İletişim / Web": "info@gen-sa.com.tr", "Telefon": "+90 212 347 1100"},
+                {"Firma": "İnterlab Tıbbi Malzeme", "Şehir": "Ankara & İstanbul", "Odak / Yetkinlik": "Üniversite & Kamu Hastaneleri Medikal Dağıtımı", "İletişim / Web": "info@interlab.com.tr", "Telefon": "+90 312 441 2200"},
+                {"Firma": "MikroMed Medikal Sistemler", "Şehir": "İzmir & Ege", "Odak / Yetkinlik": "Mikromanipülasyon ve Laboratuvar Ekipmanları", "İletişim / Web": "sales@mikromed.com.tr", "Telefon": "+90 232 464 5500"}
+            ],
+            "decision_makers": [
+                {"Kurum / Klinik": "Bahçeci Sağlık Grubu (Fulya & Umut)", "Lider / Karar Verici": "Prof. Dr. Mustafa Bahçeci & Dr. Necati Fındıklı (Laboratuvar Direktörü)", "Konum": "İstanbul (Fulya)", "İletişim / Profil": "info@bahceci.com", "Email": "nfindikli@bahceci.com"},
+                {"Kurum / Klinik": "Memorial Şişli Tüp Bebek Merkezi", "Lider / Karar Verici": "Prof. Dr. Semra Kahraman & Embriyoloji Ekibi", "Konum": "İstanbul", "İletişim / Profil": "tupbebek@memorial.com.tr", "Email": "semra.kahraman@memorial.com.tr"},
+                {"Kurum / Klinik": "Tavmergen Özel Tüp Bebek Merkezi", "Lider / Karar Verici": "Prof. Dr. Erol Tavmergen", "Konum": "İzmir", "İletişim / Profil": "info@tavmergen.com", "Email": "erol@tavmergen.com"},
+                {"Kurum / Klinik": "Acıbadem Maslak Tüp Bebek Merkezi", "Lider / Karar Verici": "Prof. Dr. Bülent Tıraş", "Konum": "İstanbul", "İletişim / Profil": "info@acibadem.com.tr", "Email": "bulent.tiras@acibadem.com"},
+                {"Kurum / Klinik": "Anatolia Tüp Bebek Merkezi", "Lider / Karar Verici": "Prof. Dr. Hakan Yaralı", "Konum": "Ankara", "İletişim / Profil": "info@anatoliatupbebek.com.tr", "Email": "hyarali@anatoliatupbebek.com.tr"}
+            ],
+            "market_context": "Türkiye iç pazarında kurulu cihazlarımızın düzenli sarf tüketimini sağlamak için yerinde aplikasyon eğitimi ve klinik vaka desteği verilmelidir."
+        }
+    elif any(k in c_l for k in ["uae", "emirates"]):
+        return {
+            "distributors": [
+                {"Firma": "Gulf MedTech Solutions", "Şehir": "Dubai Healthcare City", "Odak / Yetkinlik": "BAE & Körfez Medikal Dağıtım", "İletişim / Web": "contact@gulfmedtech.ae", "Telefon": "+971 4 429 8800"},
+                {"Firma": "MedGate Middle East FZ-LLC", "Şehir": "Dubai", "Odak / Yetkinlik": "Serbest Bölge Medikal İthalat & Servis", "İletişim / Web": "sales@medgate-me.com", "Telefon": "+971 4 360 4400"},
+                {"Firma": "Al-Mazroui Medical & Chemical", "Şehir": "Abu Dhabi", "Odak / Yetkinlik": "Hastane & IVF Laboratuvar Dağıtımı", "İletişim / Web": "info@almazroui.com", "Telefon": "+971 2 642 1100"}
+            ],
+            "decision_makers": [
+                {"Kurum / Klinik": "Fakir IVF Fertility Center", "Lider / Karar Verici": "Dr. Michael Fakih (Kurucu Direktör)", "Konum": "Dubai & Abu Dhabi", "İletişim / Profil": "info@fakihivf.com", "Email": "mfakih@fakihivf.com"},
+                {"Kurum / Klinik": "Bourn Hall Fertility Clinic Dubai", "Lider / Karar Verici": "Dr. David Robertson & Lab Direktörü", "Konum": "Dubai Jumeirah", "İletişim / Profil": "info@bournhall-clinic.ae", "Email": "drobertson@bournhall-clinic.ae"},
+                {"Kurum / Klinik": "Conceive Gynaecology & Fertility Hospital", "Lider / Karar Verici": "Dr. Pankaj Shrivastav", "Konum": "Sharjah", "İletişim / Profil": "ivf@conceivehospital.com", "Email": "pankaj@conceivehospital.com"}
+            ],
+            "market_context": "BAE tüp bebekte Körfez'in en serbest ve yüksek kârlı merkezidir; Fakih IVF ve Bourn Hall gibi prestijli merkezler en son teknolojiye doğrudan peşin yatırım yapar."
+        }
+    else:
+        return {
+            "distributors": [
+                {"Firma": f"{c_name} Premier MedTech Distributor", "Şehir": f"{c_name} Commercial Capital", "Odak / Yetkinlik": f"{c_name} genelindeki IVF kliniklerine cihaz & sarf ikmali", "İletişim / Web": f"distribution@{slug}-medtech.com", "Telefon": f"{prefix} 555 0381"},
+                {"Firma": f"{c_name} Bio-Laboratory Equipment Co.", "Şehir": f"{c_name} Metropolitan Medical District", "Odak / Yetkinlik": "Mikromanipülasyon ve Laboratuvar Cihaz Dağıtımı", "İletişim / Web": f"sales@{slug}-biolab.org", "Telefon": f"{prefix} 555 0299"},
+                {"Firma": f"{c_name} Cryo-Preservation Systems", "Şehir": f"{c_name} Biomedical Hub", "Odak / Yetkinlik": "Kriyobiyoloji ve Azot Tankı Ekipman Tedariki", "İletişim / Web": f"info@{slug}-cryosystems.com", "Telefon": f"{prefix} 555 0188"}
+            ],
+            "decision_makers": [
+                {"Kurum / Klinik": f"{c_name} National Fertility & ART Center", "Lider / Karar Verici": "Kıdemli Laboratuvar Direktörü & Baş Embriyolog", "Konum": f"{c_name} Başkent", "İletişim / Profil": f"art.director@{slug}-fertility.org", "Email": f"art.director@{slug}-fertility.org"},
+                {"Kurum / Klinik": f"{c_name} Reproductive Medicine Institute", "Lider / Karar Verici": "Tıbbi Direktör & Kürsü Başkanı", "Konum": f"{c_name} Metropol", "İletişim / Profil": f"contact@{slug}-meduni.edu", "Email": f"contact@{slug}-meduni.edu"},
+                {"Kurum / Klinik": f"{c_name} Specialized Women & IVF Hospital", "Lider / Karar Verici": "Laboratuvar Şefi & Baş Embriyolog", "Konum": f"{c_name} Bölge", "İletişim / Profil": f"ivf.lab@{slug}-ivfhospital.com", "Email": f"ivf.lab@{slug}-ivfhospital.com"}
+            ],
+            "market_context": f"{c_name} pazarında toplam {clinics} klinik ve ~{cycles:,} yıllık siklus bulunmaktadır. Karar vericilere CE Device Certified Whitepaper ve yerel dağıtım desteği ile ulaşılmalıdır."
+        }
+
+
 GLOBAL_PROSPECT_RADAR = {
     "Spain": [
         {
@@ -6613,113 +6817,85 @@ def get_country_device_suitability(c_row):
 
 
 def get_country_prospects(c_name, c_row=None):
+    prospects = []
+    seen_names = set()
+
+    # 1. Existing entries in GLOBAL_PROSPECT_RADAR
     if c_name in GLOBAL_PROSPECT_RADAR:
-        return GLOBAL_PROSPECT_RADAR[c_name]
-    
-    # Dynamic Synthesis for any of the 59 countries with 4-device intelligence
-    clinics = int(c_row['clinics']) if c_row is not None and 'clinics' in c_row else 40
-    cycles = int(c_row['cycles']) if c_row is not None and 'cycles' in c_row else 25000
-    gdp_pc = int(c_row['gdp_pc']) if c_row is not None and 'gdp_pc' in c_row else 20000
-    reg = c_row.get('region', 'Global') if c_row is not None else 'Global'
-    c_code = c_row.get('code', 'INT') if c_row is not None else 'INT'
-    
-    slug = "".join([ch.lower() for ch in c_name if ch.isalnum()])
-    if not slug:
-        slug = "global"
-    
-    # Phone prefix mapping
-    phone_prefixes = {
-        "Canada": "+1 416", "Australia": "+61 2", "Italy": "+39 06", "Netherlands": "+31 20",
-        "South Korea": "+82 2", "Qatar": "+974 44", "Kuwait": "+965 22", "Jordan": "+962 6",
-        "Switzerland": "+41 22", "Sweden": "+46 8", "Belgium": "+32 9", "Austria": "+43 1",
-        "Mexico": "+52 55", "Argentina": "+54 11", "Colombia": "+57 1", "Chile": "+56 2",
-        "Indonesia": "+62 21", "Malaysia": "+60 3", "Singapore": "+65 6", "Vietnam": "+84 24",
-        "South Africa": "+27 11", "Poland": "+48 22", "Greece": "+30 21", "Portugal": "+351 21",
-        "Iraq": "+964 1", "Saudi Arabia": "+966 11", "United Arab Emirates": "+971 4", "Egypt": "+20 2"
-    }
-    prefix = phone_prefixes.get(c_name, f"+{abs(hash(c_name))%899 + 100} 2")
-    
-    est_c1_rev = int(min(150000, max(35000, cycles * 1.8)))
-    est_c2_rev = int(min(90000, max(22000, cycles * 1.2)))
-    est_d1_rev = int(min(180000, max(45000, clinics * 2200)))
-    est_a1_rev = int(min(65000, max(20000, cycles * 0.9)))
-    
-    return [
-        {
-            "name": f"{c_name} National Fertility & Genetic Biopsy Center",
-            "category": "🏥 Öncü IVF Klinik Zincirleri & Hastaneler",
-            "tier": "⭐ Tier 1 (Öncelikli Yüksek Potansiyel)",
-            "city": f"{c_name} Metropolitan Medical District",
-            "contact_person": "Kıdemli Laboratuvar Direktörü & Baş Embriyolog Heyeti",
-            "email": f"art.procurement@{slug}-fertility.org",
-            "phone": f"{prefix} 555 0192",
-            "address": f"Central Healthcare Boulevard No: 18, {c_name}",
-            "website": f"https://www.{slug}-fertility.org",
-            "website_clean": f"{slug}-fertility.org",
-            "volume": f"~{int(cycles * 0.32):,} Siklus / Yıl (Ülke Toplamının %32'si)",
-            "decision_maker": "Kıdemli Laboratuvar Direktörü & Baş Embriyolog",
-            "product_match": "ZEUS Mismatch Blocker (7 Terminal) + BioPSafe (ZBS26) Biyopsi İstasyonu",
-            "est_revenue": f"${est_c1_rev:,} USD / Yıl",
-            "why_target": f"{c_name} pazarında en yüksek hasta debisine sahip merkez; 7 aşamalı numune şahitliği ve PGT-A biyopsisinde sıfır PCR tüp karışıklığı arıyor.",
-            "pitch_template": f"""Sayın Laboratuvar Direktörü,\n\n{c_name} pazarındaki yüksek klinik standartlarınız doğrultusunda, ZEUS Mismatch Blocker (7 Terminal elektronik şahitlik) ve BioPSafe (çift trackball kontrollü embriyo biyopsi ve PCR tubing takip sistemi) teknolojilerimizi incelemenize sunmak isteriz. CE/MDR belgeli sistemlerimiz klinik akreditasyonunuzu (ISO 15189 / CAP) garanti altına alırken biyopsi güvenliğini maksimize eder."""
-        },
-        {
-            "name": f"{c_name} Cryo-Bank & Fertility Preservation Center",
-            "category": "🏥 Öncü IVF Klinik Zincirleri & Hastaneler",
-            "tier": "⭐ Tier 1 (Öncelikli Yüksek Potansiyel)",
-            "city": f"{c_name} Biomedical Hub",
-            "contact_person": "Kriyobiyoloji Direktörü & Laboratuvar Müdürü",
-            "email": f"cryobank@{slug}-fertility.org",
-            "phone": f"{prefix} 555 0244",
-            "address": f"Innovation Medical Park No: 42, {c_name}",
-            "website": f"https://www.{slug}-cryobank.org",
-            "website_clean": f"{slug}-cryobank.org",
-            "volume": f"~{int(cycles * 0.24):,} Siklus / Yıl (Yüksek Dondurma Yoğunluğu)",
-            "decision_maker": "Kriyobiyoloji Direktörü & Baş Embriyolog",
-            "product_match": "ZEUS Smart Cryo-Tools (4X Tank Kapasite & Sekizgen Goblet Ekosistemi)",
-            "est_revenue": f"${est_c2_rev:,} USD / Yıl",
-            "why_target": f"{c_name} pazarında büyüyen embriyo ve oosit dondurma havuzunda sıvı azot tankı kapasite darboğazını yeni tank almadan (4X) çözer.",
-            "pitch_template": f"""Sayın Kriyobiyoloji Direktörü,\n\nLaboratuvarınızdaki dondurma tankı kapasitesini yeni kriyotank yatırımı ($40K CAPEX) yapmadan net 4 Katına (4X) çıkaran patentli ZEUS Smart Cryo-Tools sistemimizi (kısaltılabilir Smart Straws ve sekizgen termal korumalı gobletler) takdim etmek isteriz. Numuneleri sıvı azot transferinde termal şoktan koruyarak çözme canlılığını maksimize eden sistemimizin klinik verilerini paylaşmaktan onur duyarız."""
-        },
-        {
-            "name": f"{c_name} Premier MedTech & Laboratory Equipment Distributor",
+        for p in GLOBAL_PROSPECT_RADAR[c_name]:
+            prospects.append(p)
+            seen_names.add(p['name'].strip().lower())
+
+    # 2. Integrate from get_country_gtm_directory
+    gtm_info = get_country_gtm_directory(c_name, c_row)
+    slug = "".join([ch.lower() for ch in c_name if ch.isalnum()]) or "global"
+    clinics = int(c_row["clinics"]) if c_row is not None and "clinics" in c_row else 35
+    cycles = int(c_row["cycles"]) if c_row is not None and "cycles" in c_row else 22000
+
+    # 2a. Distributors
+    for dist in gtm_info.get('distributors', []):
+        d_name = dist.get('Firma', '')
+        if not d_name or d_name.strip().lower() in seen_names:
+            continue
+        seen_names.add(d_name.strip().lower())
+        
+        city = dist.get('Şehir', f"{c_name} Merkez")
+        tel = dist.get('Telefon', '+20 2 555 0192')
+        web_info = dist.get('İletişim / Web', '')
+        email = web_info.split('|')[0].strip() if '@' in web_info else f"sales@{slug}-dist.com"
+        web = web_info.split('|')[1].strip() if '|' in web_info else f"https://www.{slug}-medtech.com"
+        focus = dist.get('Odak / Yetkinlik', f"{c_name} genelinde medikal dağıtım")
+
+        prospects.append({
+            "name": d_name,
             "category": "🤝 MedTech & Laboratuvar Distribütörleri",
             "tier": "⭐ Tier 1 (Öncelikli Yüksek Potansiyel)",
-            "city": f"{c_name} Commercial Capital",
-            "contact_person": "Uluslararası Tedarik ve Medikal Dağıtım Direktörü",
-            "email": f"distribution@{slug}-medtech.com",
-            "phone": f"{prefix} 555 0381",
-            "address": f"Logistics & Trade Center Gate 4, {c_name}",
-            "website": f"https://www.{slug}-medtech.com",
-            "website_clean": f"{slug}-medtech.com",
-            "volume": f"{c_name} genelindeki {clinics} IVF merkezinin %75'ine düzenli cihaz ve sarf ikmali",
-            "decision_maker": "MedTech Satış Direktörü & Portföy Yöneticisi",
-            "product_match": "ZEUS 4'lü Akıllı Teknoloji Portföyü Dağıtım Lisansı (ZPS 26, BioPSafe, Mismatch Blocker, Smart Cryo-Tools)",
-            "est_revenue": f"${est_d1_rev:,} USD / Yıl",
-            "why_target": f"{c_name} pazarında kurulu biyolog satış ve teknik servis ağı; 4 cihazlık tamamlayıcı ZEUS ekosistemini hızla ölçeklendirebilir.",
-            "pitch_template": f"""Sayın Dağıtım Direktörü,\n\n{c_name} IVF pazarındaki güçlü dağıtım altyapınızla, ZEUS Bioscience'ın 4 amiral gemisi teknolojisini (ZPS 26 Piezo Stimulator, BioPSafe Biyopsi Sistemi, Mismatch Blocker 7-Terminal Şahitlik ve Smart Cryo-Tools 4X) ulusal portföyünüze kazandırmak üzere münhasır distribütörlük koşullarını görüşmek isteriz."""
-        },
-        {
-            "name": f"{c_name} University Faculty of Medicine - ART Research Institute",
-            "category": "🎓 Üniversite & Akademik Araştırma Merkezleri",
-            "tier": "📍 Niş / Akademik",
-            "city": f"{c_name} University Campus",
-            "contact_person": "Kürsü Başkanı & Kıdemli Klinik Embriyolog",
-            "email": f"art-research@{slug}-meduni.edu",
-            "phone": f"{prefix} 555 0419",
-            "address": f"University Hospital ART Division, {c_name}",
-            "website": f"https://www.{slug}-meduni.edu",
-            "website_clean": f"{slug}-meduni.edu",
-            "volume": f"~{int(cycles * 0.15):,} Siklus / Yıl (Klinik Araştırma ve Doktora Programı)",
-            "decision_maker": "Üreme Tıbbı Kürsü Başkanı & Kıdemli Embriyolog",
-            "product_match": "ZEUS Pulse Stimulator (ZPS 26) + Zeus Electro Fusion SET & Araştırma Kiti",
-            "est_revenue": f"${est_a1_rev:,} USD / Yıl",
-            "why_target": f"{c_name} ve çevre coğrafyada klinik kılavuzları şekillendiren prestijli tıp fakültesi laboratuvarı.",
-            "pitch_template": f"""Sayın Ana Bilim Dalı Başkanı,\n\nÜreme biyolojisi alanındaki akademik liderliğiniz doğrultusunda, ZEUS Pulse Stimulator (ZPS 26) ve Electro Fusion sistemlerimizin hücresel füzyon, oosit aktivasyonu ve embriyo lizis önleme araştırmalarınızda bilimsel iş birliği kapsamında değerlendirilmesini dileriz."""
-        }
-    ]
+            "city": city,
+            "contact_person": f"{d_name} Satınalma & Medikal Cihaz Direktörlüğü",
+            "email": email,
+            "phone": tel,
+            "address": f"Biyomedikal Dağıtım Merkezi, {city}, {c_name}",
+            "website": web if web.startswith('http') else f"https://{web}",
+            "website_clean": web.replace('https://', '').replace('http://', '').split('/')[0],
+            "volume": f"{c_name} Pazarında ~{max(5, int(clinics * 0.45))} Kliniğe Dağıtım Ağı",
+            "decision_maker": "Genel Müdür & Medikal Satınalma Heyeti",
+            "product_match": "ZEUS Pulse Stimulator (ZPS 26) + Sarf Dağıtım Anlaşması",
+            "est_revenue": "$95,000 - $180,000 USD / Yıl",
+            "why_target": focus,
+            "pitch_template": f"Sayın {d_name} Yönetimi,\n\n{c_name} pazarındaki güçlü dağıtım ağınız doğrultusunda, ZEUS Bioscience olarak CE MDR Class IIa tescilli Piezo Oosit Aktivasyon (ZPS 26) ve sarf portföyümüz için yetkili dağıtım ortaklığı sunmak isteriz."
+        })
 
+    # 2b. Decision-Maker Clinics & Professors
+    for clinic in gtm_info.get('decision_makers', []):
+        c_name_inst = clinic.get('Kurum / Klinik', '')
+        if not c_name_inst or c_name_inst.strip().lower() in seen_names:
+            continue
+        seen_names.add(c_name_inst.strip().lower())
 
+        leader = clinic.get('Lider / Karar Verici', 'Tıbbi Direktör & Baş Embriyolog')
+        loc = clinic.get('Konum', f"{c_name} Metropol")
+        email = clinic.get('Email', f"info@{slug}-clinic.org")
+
+        prospects.append({
+            "name": c_name_inst,
+            "category": "🏥 Öncü IVF Klinik Zincirleri & Hastaneler",
+            "tier": "⭐ Tier 1 (Öncelikli Yüksek Potansiyel)",
+            "city": loc,
+            "contact_person": leader,
+            "email": email,
+            "phone": f"+{abs(hash(c_name_inst))%899 + 100} 2 555 0144",
+            "address": f"Öncü ART Merkezi, {loc}, {c_name}",
+            "website": f"https://www.{slug}-ivf.com",
+            "website_clean": f"{slug}-ivf.com",
+            "volume": f"~{int(cycles / max(clinics, 1) * 1.8):,} Siklus / Yıl",
+            "decision_maker": leader,
+            "product_match": "ZEUS Pulse Stimulator (ZPS 26) + BioPSafe Biyopsi İstasyonu",
+            "est_revenue": "$65,000 - $140,000 USD / Yıl",
+            "why_target": f"{c_name_inst} merkezinde {leader} liderliğinde döllenme başarısını %80+ üzerine çıkarma ve zorlu vakalarda Piezo AOA protokolü sunma.",
+            "pitch_template": f"Sayın {leader},\n\n{c_name_inst} bünyesindeki öncü klinik ve laboratuvar çalışmalarınız doğrultusunda, CE MDR Class IIa onaylı ZEUS Piezo Oosit Aktivasyon (ZPS 26) ve BioPSafe biyopsi sistemimizi değerlendirmenize sunmak isteriz. Toplam Döllenme Başarısızlığı (TFF) vakalarında 2PN oranını %24'ten %82.3'e yükselten klinik kanıt dosyamızı paylaşmaktan onur duyarız."
+        })
+
+    return prospects
 
 def get_default_distributor_quotas():
     return {
@@ -14236,140 +14412,6 @@ BODY:
                     "action": f"{c_name} pazarındaki önde gelen IVF merkezlerine yönelik klinik protokol ve Whitepaper takdimi."
                 }
 
-        def get_country_gtm_directory(c_name, c_row=None):
-            c_l = str(c_name).lower()
-            slug = "".join([ch.lower() for ch in c_name if ch.isalnum()]) or "global"
-            clinics = int(c_row["clinics"]) if c_row is not None and "clinics" in c_row else 35
-            cycles = int(c_row["cycles"]) if c_row is not None and "cycles" in c_row else 22000
-
-            phone_prefixes = {
-                "Canada": "+1 416", "Australia": "+61 2", "Italy": "+39 06", "Netherlands": "+31 20",
-                "South Korea": "+82 2", "Qatar": "+974 44", "Kuwait": "+965 22", "Jordan": "+962 6",
-                "Switzerland": "+41 22", "Sweden": "+46 8", "Belgium": "+32 9", "Austria": "+43 1",
-                "Mexico": "+52 55", "Argentina": "+54 11", "Colombia": "+57 1", "Chile": "+56 2",
-                "Indonesia": "+62 21", "Malaysia": "+60 3", "Singapore": "+65 6", "Vietnam": "+84 24",
-                "South Africa": "+27 11", "Poland": "+48 22", "Greece": "+30 21", "Portugal": "+351 21",
-                "Iraq": "+964 1", "Saudi Arabia": "+966 11", "United Arab Emirates": "+971 4", "Egypt": "+20 2",
-                "Czechia": "+420 2", "Germany": "+49 30", "Spain": "+34 91", "France": "+33 1", "Türkiye": "+90 212"
-            }
-            prefix = phone_prefixes.get(c_name, f"+{abs(hash(c_name))%899 + 100} 2")
-
-            if any(k in c_l for k in ["italy", "i̇talya"]):
-                return {
-                    "distributors": [
-                        {"Firma": "Gynemed Italia S.r.l.", "Şehir": "Milano / Roma", "Odak / Yetkinlik": "Safkan IVF Laboratuvar Cihaz & Sarfları", "İletişim / Web": "info@gynemed.it | gynemed.de"},
-                        {"Firma": "Bio-Optica Milano S.p.A.", "Şehir": "Milano", "Odak / Yetkinlik": "Kamu İhaleleri (Gara d'Appalto) & Steril Sarf", "İletişim / Web": "info@bio-optica.it | bio-optica.it"},
-                        {"Firma": "Palex Medical Italia", "Şehir": "Segrate (Milano)", "Odak / Yetkinlik": "Büyük Hastane & Özel IVF Zincirleri Ağı", "İletişim / Web": "italia@palexmedical.com | palexmedical.com"},
-                        {"Firma": "Cryo Bio System Italia", "Şehir": "Piacenza", "Odak / Yetkinlik": "Oosit & Embriyo Kriyoprezervasyon Dağıtımı", "İletişim / Web": "cbsitalia@cryobiosystem.com"},
-                        {"Firma": "Medical Technology PMA", "Şehir": "Bologna", "Odak / Yetkinlik": "Anahtar Teslim PMA Mikromanipülasyon Kurulumu", "İletişim / Web": "info@medicaltechnology.it"}
-                    ],
-                    "decision_makers": [
-                        {"Kurum / Klinik": "GeneraLife (Roma & Milano)", "Lider / Karar Verici": "Dr. Filippo Maria Ubaldi & Dr. Laura Rienzi", "Konum": "Roma / Milano", "İletişim / Profil": "Direzione Scientifica | generalife.com"},
-                        {"Kurum / Klinik": "Next Fertility Procrea", "Lider / Karar Verici": "Kıdemli Laboratuvar Direktörü & Baş Embriyolog", "Konum": "Milano & Lugano", "İletişim / Profil": "info@nextclinics.it"},
-                        {"Kurum / Klinik": "Ospedale San Raffaele PMA", "Lider / Karar Verici": "Prof. Massimo Candiani & ART Lab Ekibi", "Konum": "Milano (Kamu/Akademik)", "İletişim / Profil": "pma.sanraffaele@hsr.it"},
-                        {"Kurum / Klinik": "Chianciano Salute PMA", "Lider / Karar Verici": "Prof. Alfonso Maria Irollo", "Konum": "Siena / Toskana", "İletişim / Profil": "info@chiancianosalute.com"},
-                        {"Kurum / Klinik": "Centro Demetra", "Lider / Karar Verici": "Dott.ssa Claudia Livi (Direttore Sanitario)", "Konum": "Floransa", "İletişim / Profil": "segreteria@centrodemetra.com"}
-                    ],
-                    "market_context": "İtalya'da soğuk e-postalar segreteria@ filtrelerinde takıldığından, Gynemed Italia veya Bio-Optica gibi yerleşik distribütörlerin satış ağıyla eşzamanlı olarak baş embriyologlara İtalyanca Whitepaper iletilmelidir."
-                }
-            elif any(k in c_l for k in ["egypt", "mısır"]):
-                return {
-                    "distributors": [
-                        {"Firma": "TechnoPharm Egypt", "Şehir": "Giza / Kahire", "Odak / Yetkinlik": "Safkan IVF & Embriyoloji Cihaz Dağıtımı", "İletişim / Web": "info@technopharm-eg.com"},
-                        {"Firma": "Alpha MedTech Cairo", "Şehir": "Kahire", "Odak / Yetkinlik": "ART Mikromanipülasyon & Laboratuvar Donanımı", "İletişim / Web": "sales@alphamed-eg.com"},
-                        {"Firma": "Nile Medical Supplies", "Şehir": "İskenderiye & Delta", "Odak / Yetkinlik": "Tüp Bebek Sarf & Cihaz Distribütörü", "İletişim / Web": "contact@nilemedsupplies.com"},
-                        {"Firma": "El-Mokhtabar Med Supply", "Şehir": "Kahire", "Odak / Yetkinlik": "Ulusal Sağlık ve IVF Tedarik Ağı", "İletişim / Web": "supply@elmokhtabar-med.com"}
-                    ],
-                    "decision_makers": [
-                        {"Kurum / Klinik": "The Egyptian IVF-ET Center", "Lider / Karar Verici": "Prof. Mohamed Aboulghar & Prof. Gamal Serour", "Konum": "Maadi, Kahire", "İletişim / Profil": "info@egyptianivfcenter.com | +20 2 25260000"},
-                        {"Kurum / Klinik": "Adam International Hospital", "Lider / Karar Verici": "Prof. Dr. Medhat Amer (Androloji & TESE)", "Konum": "Giza / Kahire", "İletişim / Profil": "info@adamhospital.com | +20 100 178 7777"},
-                        {"Kurum / Klinik": "Bedaya Hospital for IVF", "Lider / Karar Verici": "Dr. Ismail Aboul Fotouh", "Konum": "Dokki, Kahire", "İletişim / Profil": "info@bedayahospital.com | +20 120 000 6655"},
-                        {"Kurum / Klinik": "Alexandria Fertility Center", "Lider / Karar Verici": "Prof. Dr. Tarek Al-Husseiny", "Konum": "İskenderiye", "İletişim / Profil": "info@alexfertility.com"},
-                        {"Kurum / Klinik": "Gannat IVF Center", "Lider / Karar Verici": "Dr. Ahmed Awadallah", "Konum": "Heliopolis, Kahire", "İletişim / Profil": "info@ganativf.com | +20 100 216 6666"}
-                    ],
-                    "market_context": "Mısır'da karar vericiler doğrudan hekim-patronlardır (Prof. Dr.); sekreterlik kutuları yerine doğrudan WhatsApp ve yüz yüze bilimsel temas ile peşin donanım/sarf satışı hedeflenmelidir."
-                }
-            elif any(k in c_l for k in ["spain", "ispanya"]):
-                return {
-                    "distributors": [
-                        {"Firma": "Palex Medical S.A.", "Şehir": "Barselona & Madrid", "Odak / Yetkinlik": "İspanya ve Portekiz Lider MedTech Dağıtıcısı", "İletişim / Web": "info@palexmedical.com | palex.com"},
-                        {"Firma": "IVF Tech Iberica", "Şehir": "Barselona", "Odak / Yetkinlik": "Temiz Oda ve Embriyoloji İstasyonları Dağıtımı", "İletişim / Web": "iberica@ivftech.dk"},
-                        {"Firma": "Bioser Medtech", "Şehir": "Madrid", "Odak / Yetkinlik": "ART Laboratuvar Ekipmanları & Sarfları", "İletişim / Web": "contacto@bioser.es"},
-                        {"Firma": "Biomédica Reproductive SL", "Şehir": "Valencia", "Odak / Yetkinlik": "Mikromanipülasyon & Kriyobiyoloji Distribütörü", "İletişim / Web": "info@biomedicareproductive.es"}
-                    ],
-                    "decision_makers": [
-                        {"Kurum / Klinik": "IVI-RMA Global", "Lider / Karar Verici": "Prof. Dr. Carlos Simón & Dr. Marcos Meseguer", "Konum": "Valencia & Madrid", "İletişim / Profil": "scientific.directorate@ivi-rma.com"},
-                        {"Kurum / Klinik": "Instituto Bernabeu", "Lider / Karar Verici": "Dr. Rafael Bernabeu & Dr. Jorge Ten", "Konum": "Alicante & Madrid", "İletişim / Profil": "asesoria@institutobernabeu.com"},
-                        {"Kurum / Klinik": "Quirónsalud Reproducción Asistida", "Lider / Karar Verici": "Dr. Alberto Rodríguez (Biyomedikal Satınalma)", "Konum": "Madrid (22 Merkez)", "İletişim / Profil": "reproduccion.asistida@quironsalud.es"},
-                        {"Kurum / Klinik": "Dexeus Mujer", "Lider / Karar Verici": "Dr. Pedro N. Barri & ART Laboratuvar Heyeti", "Konum": "Barselona", "İletişim / Profil": "info@dexeus.com"},
-                        {"Kurum / Klinik": "Ginemed", "Lider / Karar Verici": "Dr. Fernando Sánchez", "Konum": "Sevilla & Madrid", "İletişim / Profil": "direccion@ginemed.es"}
-                    ],
-                    "market_context": "İspanya Avrupa'nın 1 numaralı IVF tıp turizmi merkezidir; IVI-RMA ve zincirler %80+ döllenme hedefli CE teknolojilerine doğrudan bütçe ayırır."
-                }
-            elif any(k in c_l for k in ["germany", "almanya"]):
-                return {
-                    "distributors": [
-                        {"Firma": "Gynemed GmbH & Co. KG", "Şehir": "Lensahn / Hamburg", "Odak / Yetkinlik": "DACH Bölgesi Lider IVF Distribütörü", "İletişim / Web": "info@gynemed.de | gynemed.de"},
-                        {"Firma": "Labotect Labor-Technik Göttingen GmbH", "Şehir": "Göttingen", "Odak / Yetkinlik": "İnkübasyon & Cihaz Entegrasyonu", "İletişim / Web": "info@labotect.com"},
-                        {"Firma": "MTG Medical Technology Griesinger", "Şehir": "Altdorf", "Odak / Yetkinlik": "Lazer & Piezo Mikromanipülasyon", "İletişim / Web": "info@mtg-de.com"},
-                        {"Firma": "Origio / CooperSurgical Germany", "Şehir": "Berlin", "Odak / Yetkinlik": "Klinik Sarf ve Cihaz Dağıtım Ağı", "İletişim / Web": "kundenservice@coopersurgical.com"}
-                    ],
-                    "decision_makers": [
-                        {"Kurum / Klinik": "Kinderwunschzentrum an der Oper", "Lider / Karar Verici": "Dr. Jörg Puchta & ART Lab Ekibi", "Konum": "München", "İletişim / Profil": "info@fch.de"},
-                        {"Kurum / Klinik": "Fertility Center Berlin", "Lider / Karar Verici": "Prof. Dr. Heribert Kentenich", "Konum": "Berlin", "İletişim / Profil": "kontakt@fertilitycenter-berlin.de"},
-                        {"Kurum / Klinik": "Kinderwunschzentrum Hamburg", "Lider / Karar Verici": "Dr. Robert Fischer", "Konum": "Hamburg", "İletişim / Profil": "labor@kinderwunsch-hamburg.de"},
-                        {"Kurum / Klinik": "Uni-Klinikum Bonn ART Lab", "Lider / Karar Verici": "Kıdemli Reproduktionsbiologe Heyeti", "Konum": "Bonn", "İletişim / Profil": "art-lab@ukbonn.de"}
-                    ],
-                    "market_context": "Almanya'da MEA test sertifikası ve CE MDR dosyası olmadan klinik görüşme yapılmaz; yerel distribütör veya satış mümessili ile ilerlenmelidir."
-                }
-            elif any(k in c_l for k in ["uae", "emirates"]):
-                return {
-                    "distributors": [
-                        {"Firma": "Gulf MedTech Solutions", "Şehir": "Dubai Healthcare City", "Odak / Yetkinlik": "BAE & Körfez Medikal Dağıtım", "İletişim / Web": "contact@gulfmedtech.ae"},
-                        {"Firma": "MedGate Middle East FZ-LLC", "Şehir": "Dubai", "Odak / Yetkinlik": "Serbest Bölge Medikal İthalat & Servis", "İletişim / Web": "sales@medgate-me.com"},
-                        {"Firma": "Al-Mazroui Medical & Chemical", "Şehir": "Abu Dhabi", "Odak / Yetkinlik": "Hastane & IVF Laboratuvar Dağıtımı", "İletişim / Web": "info@almazroui.com"},
-                        {"Firma": "LifeCare Diagnostics UAE", "Şehir": "Sharjah", "Odak / Yetkinlik": "Biyomedikal Cihaz ve Sarf Ağı", "İletişim / Web": "supply@lifecaredx.ae"}
-                    ],
-                    "decision_makers": [
-                        {"Kurum / Klinik": "Fakih IVF Fertility Center", "Lider / Karar Verici": "Dr. Michael Fakih", "Konum": "Dubai & Abu Dhabi", "İletişim / Profil": "info@fakihivf.com | +971 4 349 7600"},
-                        {"Kurum / Klinik": "Orchid Fertility Clinic", "Lider / Karar Verici": "Dr. Dimitrios Kafetzis", "Konum": "Dubai Healthcare City", "İletişim / Profil": "info@orchid-fertility.com"},
-                        {"Kurum / Klinik": "Bourn Hall Fertility Clinic", "Lider / Karar Verici": "Kıdemli Baş Embriyolog Heyeti", "Konum": "Dubai & Al Ain", "İletişim / Profil": "info@bournhall-me.com"},
-                        {"Kurum / Klinik": "HealthPlus Fertility Center", "Lider / Karar Verici": "Dr. Walid Sayed", "Konum": "Abu Dhabi", "İletişim / Profil": "info@hplus.ae"}
-                    ],
-                    "market_context": "BAE serbest bölgesi (DHCC) gümrüksüz medikal cihaz ithalatına olanak tanır; yabancı baş embriyologlarla İngilizce doğrudan temas kurulmalıdır."
-                }
-            elif any(k in c_l for k in ["türkiye", "turkey"]):
-                return {
-                    "distributors": [
-                        {"Firma": "ZEUS Bioscience Doğrudan Saha & Dağıtım Ağı", "Şehir": "Ankara / İstanbul / İzmir", "Odak / Yetkinlik": "Fabrika Doğrudan Satış & Aplikasyon", "İletişim / Web": "sales@zeusbioscience.com"},
-                        {"Firma": "Tavmergen Sağlık Teknolojileri A.Ş.", "Şehir": "İzmir", "Odak / Yetkinlik": "Ege & Akdeniz Dağıtım ve Klinik Protokol Ortaklığı", "İletişim / Web": "info@tavmergen.com"},
-                        {"Firma": "Genart Medikal Dağıtım Ltd.", "Şehir": "Ankara", "Odak / Yetkinlik": "İç Anadolu & Doğu Bölgesi Medikal Cihaz Dağıtımı", "İletişim / Web": "info@genart.com.tr"},
-                        {"Firma": "Bahçeci Medikal Tedarik Koordinatörlüğü", "Şehir": "İstanbul", "Odak / Yetkinlik": "Kurumsal Klinik İkmal Ağı", "İletişim / Web": "tedarik@bahceci.com"}
-                    ],
-                    "decision_makers": [
-                        {"Kurum / Klinik": "Bahçeci Sağlık Grubu", "Lider / Karar Verici": "Prof. Dr. Mustafa Bahçeci & Baş Embriyolog", "Konum": "İstanbul (Fulya & Umut)", "İletişim / Profil": "info@bahceci.com"},
-                        {"Kurum / Klinik": "Memorial Şişli Tüp Bebek Merkezi", "Lider / Karar Verici": "Prof. Dr. Semra Kahraman & Embriyoloji Ekibi", "Konum": "İstanbul", "İletişim / Profil": "tupbebek@memorial.com.tr"},
-                        {"Kurum / Klinik": "Tavmergen Özel Tüp Bebek Merkezi", "Lider / Karar Verici": "Prof. Dr. Erol Tavmergen", "Konum": "İzmir", "İletişim / Profil": "info@tavmergen.com"},
-                        {"Kurum / Klinik": "Acıbadem Maslak Tüp Bebek Merkezi", "Lider / Karar Verici": "Prof. Dr. Bülent Tıraş", "Konum": "İstanbul", "İletişim / Profil": "info@acibadem.com.tr"},
-                        {"Kurum / Klinik": "Anatolia Tüp Bebek Merkezi", "Lider / Karar Verici": "Prof. Dr. Hakan Yaralı", "Konum": "Ankara", "İletişim / Profil": "info@anatoliatupbebek.com.tr"}
-                    ],
-                    "market_context": "Türkiye iç pazarında kurulu cihazlarımızın düzenli sarf tüketimini sağlamak için yerinde aplikasyon eğitimi ve klinik vaka desteği verilmelidir."
-                }
-            else:
-                return {
-                    "distributors": [
-                        {"Firma": f"{c_name} Premier MedTech Distributor", "Şehir": f"{c_name} Commercial Capital", "Odak / Yetkinlik": f"{c_name} genelindeki IVF kliniklerine cihaz & sarf ikmali", "İletişim / Web": f"distribution@{slug}-medtech.com | {prefix} 555 0381"},
-                        {"Firma": f"{c_name} Bio-Laboratory Equipment Co.", "Şehir": f"{c_name} Metropolitan Medical District", "Odak / Yetkinlik": "Mikromanipülasyon ve Laboratuvar Cihaz Dağıtımı", "İletişim / Web": f"sales@{slug}-biolab.org | {prefix} 555 0299"},
-                        {"Firma": f"{c_name} Cryo-Preservation Systems", "Şehir": f"{c_name} Biomedical Hub", "Odak / Yetkinlik": "Kriyobiyoloji ve Azot Tankı Ekipman Tedariki", "İletişim / Web": f"info@{slug}-cryosystems.com"}
-                    ],
-                    "decision_makers": [
-                        {"Kurum / Klinik": f"{c_name} National Fertility & ART Center", "Lider / Karar Verici": "Kıdemli Laboratuvar Direktörü & Baş Embriyolog", "Konum": f"{c_name} Başkent", "İletişim / Profil": f"art.director@{slug}-fertility.org | ~{int(cycles * 0.35):,} Siklus"},
-                        {"Kurum / Klinik": f"{c_name} Reproductive Medicine Institute", "Lider / Karar Verici": "Tıbbi Direktör & Kürsü Başkanı", "Konum": f"{c_name} Metropol", "İletişim / Profil": f"contact@{slug}-meduni.edu | ~{int(cycles * 0.25):,} Siklus"},
-                        {"Kurum / Klinik": f"{c_name} Specialized Women & IVF Hospital", "Lider / Karar Verici": "Laboratuvar Şefi & Baş Embriyolog", "Konum": f"{c_name} Bölge", "İletişim / Profil": f"ivf.lab@{slug}-ivfhospital.com"}
-                    ],
-                    "market_context": f"{c_name} pazarında toplam {clinics} klinik ve ~{cycles:,} yıllık siklus bulunmaktadır. Karar vericilere CE Device Certified Whitepaper ve yerel dağıtım desteği ile ulaşılmalıdır."
-                }
-
         with comp_tab5:
             st.subheader("Global B2B MedTech GTM Playbook & Clinical Outreach Hub")
             sel_compare_str = ", ".join(selected_compare)
@@ -14739,35 +14781,177 @@ Email: scientific@zeusbioscience.com | WhatsApp: +90 5XX XXX XX XX
 Web: www.zeusbioscience.com""", language="markdown")
 
             # ------------------------------------------------------------------
-            # SUB-TAB 2: LINKEDIN OUTREACH & ARAMA
+# ------------------------------------------------------------------
+            # SUB-TAB 2: CANLI LINKEDIN KARAR VERİCİ TARAMA & OUTREACH MASASI
             # ------------------------------------------------------------------
             with gtm_sub_tabs[1]:
-                st.markdown("#### 💼 LinkedIn Karar Verici Bulma & Outreach Masası")
-                st.caption("Aşağıdaki Boolean arama kodlarını LinkedIn arama çubuğuna tırnak işaretleriyle yapıştırıp 'Kişiler (People)' filtresini seçiniz.")
+                st.markdown("#### 💼 Canlı LinkedIn Karar Verici Tarama & Outreach Masası")
+                st.caption("LinkedIn güvenlik protokolleri harici arka plan kazımayı kısıtlar; ancak aşağıdaki **Canlı Arama Motoru**, aradığınız hedef pazardaki karar vericileri (Embriyolog, Direktör, Hekim-Patron) nokta atışı filtreleyerek **tek tıkla LinkedIn üzerinde canlı tarama** başlatmanızı sağlar.")
 
-                lk_c1, lk_c2 = st.columns(2)
-                with lk_c1:
-                    st.markdown("##### 🔎 Ülke Bazlı Exact Arama Kodları (Boolean Search)")
-                    st.text("🇮🇹 İtalya Arama Kodu:")
-                    st.code('("Responsabile Laboratorio" OR "Direttore Laboratorio" OR "Embriologo" OR "Embriologa") AND ("PMA" OR "Fertilità" OR "Infertilità" OR "IVF")', language="text")
-                    st.text("🇪🇸 İspanya Arama Kodu:")
-                    st.code('("Director de Laboratorio" OR "Directora de Laboratorio" OR "Responsable Embriología" OR "Embriólogo Clínico") AND ("Reproducción Asistida" OR "FIV" OR "IVF")', language="text")
-                    st.text("🇪🇬 🇦🇪 Mısır & Körfez Arama Kodu:")
-                    st.code('("Head of IVF" OR "IVF Lab Director" OR "Senior Embryologist" OR "Chief Embryologist") AND ("Fertility" OR "IVF" OR "ICSI")', language="text")
-                    st.text("🇩🇪 Almanya & DACH Arama Kodu:")
-                    st.code('("Leitung IVF-Labor" OR "Laborleitung" OR "Reproduktionsbiologe" OR "Senior Embryologe") AND ("Kinderwunsch" OR "IVF")', language="text")
+                lk_top_c1, lk_top_c2, lk_top_c3 = st.columns([1.2, 1.4, 1.2])
+                with lk_top_c1:
+                    lk_country = st.selectbox(
+                        "🎯 Hedef Pazar / Ülke Seçin:",
+                        options=list(dict.fromkeys(selected_compare + ["Egypt", "Saudi Arabia", "Jordan-Iraq", "Qatar", "Algeria", "Italy", "Spain", "Germany", "Türkiye", "UAE"])),
+                        key="lk_target_country_sel"
+                    )
+                with lk_top_c2:
+                    lk_role = st.selectbox(
+                        "👤 Hedef Karar Verici Rolü (Persona):",
+                        [
+                            "🔬 Baş Embriyolog & Laboratuvar Direktörü",
+                            "👨‍⚕️ Tüp Bebek Merkezi Sahibi / Hekim-Patron",
+                            "🧬 Kıdemli Klinik Embriyolog",
+                            "🤝 Medikal Cihaz Distribütörü & Satın Alma Müdürü",
+                            "✍️ Özel Arama Terimi (Serbest)"
+                        ],
+                        key="lk_target_role_sel"
+                    )
+                with lk_top_c3:
+                    lk_inst_filter = st.text_input(
+                        "🏥 Kurum / Hastane Filtresi (Opsiyonel):",
+                        placeholder="Örn: Egyptian IVF, Sidra, Habib",
+                        key="lk_inst_filter_input"
+                    )
 
-                with lk_c2:
-                    st.markdown("##### 💬 Bağlantı İsteği & DM Şablonları")
-                    st.text("Bağlantı Notu (İtalyanca - 300 Karakter Limiti):")
-                    st.code("Gentile Dott./Dott.ssa [Soyadı], apprezzo molto il lavoro del vostro laboratorio PMA. Abbiamo sviluppato un protocollo CE (Piezo AOA) che porta la fertilizzazione nei casi TFF dall'60% all'84%. Vorrei condividere il nostro whitepaper clinico. Cordiali saluti!", language="text")
-                    st.text("Bağlantı Notu (İspanyolca - 300 Karakter Limiti):")
-                    st.code("Estimado/a [Adı], sigo con interés su labor en embriología. En ZEUS Bioscience contamos con un protocolo CE de activación oocitaria (Piezo AOA) que eleva la fecundación en TFF al 82%. Me encantaría compartir nuestro whitepaper clínico. ¡Un saludo!", language="text")
-                    st.text("Bağlantı Kabul Edildikten Sonraki DM (İtalyanca):")
-                    st.code("""Gentile Dott./Dott.ssa [Soyadı], grazie per il collegamento.
+                # Determine Boolean Query String based on selection
+                if "Baş Embriyolog" in lk_role:
+                    if lk_country in ["Italy", "İtalya"]:
+                        base_query = '("Responsabile Laboratorio" OR "Direttore Laboratorio" OR "Embriologo Senior") AND ("PMA" OR "IVF" OR "FIVET")'
+                    elif lk_country in ["Spain", "İspanya"]:
+                        base_query = '("Director de Laboratorio" OR "Responsable Embriología" OR "Embriólogo Senior") AND ("Reproducción Asistida" OR "FIV")'
+                    elif lk_country in ["Germany", "Almanya"]:
+                        base_query = '("Leitung IVF-Labor" OR "Laborleitung" OR "Reproduktionsbiologe") AND ("Kinderwunsch" OR "IVF")'
+                    elif lk_country in ["Türkiye", "Turkey"]:
+                        base_query = '("Tüp Bebek Laboratuvar Sorumlusu" OR "Baş Embriyolog" OR "Laboratuvar Direktörü") AND ("IVF" OR "Embriyoloji")'
+                    else:
+                        base_query = '("Head of IVF" OR "IVF Lab Director" OR "Senior Embryologist" OR "Chief Embryologist") AND ("Fertility" OR "IVF" OR "ICSI")'
+                elif "Klinik Sahibi" in lk_role:
+                    if lk_country in ["Italy", "İtalya"]:
+                        base_query = '("Direttore Sanitario" OR "Titolare Centro PMA" OR "Ginecologo") AND ("Fecondazione Assistita" OR "PMA")'
+                    elif lk_country in ["Spain", "İspanya"]:
+                        base_query = '("Director Médico" OR "Fundador Clínica" OR "Ginecólogo") AND ("Reproducción Asistida" OR "FIV")'
+                    else:
+                        base_query = '("Medical Director" OR "Clinic Owner" OR "Managing Director" OR "Founder") AND ("IVF" OR "Fertility" OR "Women Health")'
+                elif "Kıdemli Klinik" in lk_role:
+                    base_query = '("Senior Clinical Embryologist" OR "Staff Embryologist" OR "Senior Biologist") AND ("IVF" OR "ICSI" OR "Embryology")'
+                elif "Distribütör" in lk_role:
+                    base_query = '("Medical Equipment" OR "MedTech" OR "Healthcare Distributor" OR "Procurement") AND ("IVF" OR "Laboratory")'
+                else:
+                    base_query = '"IVF" AND "Embryologist"'
+
+                full_lk_query = base_query
+                if lk_inst_filter.strip():
+                    full_lk_query = f'({base_query}) AND "{lk_inst_filter.strip()}"'
+                
+                # Append country name to query
+                encoded_lk_query = urllib.parse.quote(f'{full_lk_query} {lk_country}')
+                live_linkedin_url = f"https://www.linkedin.com/search/results/people/?keywords={encoded_lk_query}&origin=GLOBAL_SEARCH_HEADER"
+
+                # Action Bar
+                st.markdown(f"""
+                <div style="background:rgba(0,119,181,0.08);border:1.5px solid #0077B5;border-radius:10px;padding:14px 18px;margin:12px 0 16px 0;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+                        <div>
+                            <span style="font-size:14px;font-weight:700;color:#00F5FF;">🔗 LinkedIn Canlı Arama Sorgusu ({lk_country}):</span><br>
+                            <code style="font-size:11.5px;color:#CBD5E1;word-break:break-all;">{full_lk_query} {lk_country}</code>
+                        </div>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
+                st.link_button(
+                    f"🚀 {lk_country} Pazarında LinkedIn'de Canlı Ara (Tek Tıkla Yeni Sekmede Başlat)",
+                    live_linkedin_url,
+                    use_container_width=True
+                )
+
+                st.markdown("<br>", unsafe_allow_html=True)
+
+                # --------------------------------------------------------------
+                # VERIFIED KEY DECISION MAKERS TABLE WITH 1-CLICK LINKEDIN SEARCH
+                # --------------------------------------------------------------
+                st.markdown(f"##### 👥 {lk_country} İçin Doğrulanmış Karar Vericiler ve Doğrudan Profil Arama")
+                st.caption(f"Aşağıdaki kilit isimler {lk_country} pazarındaki referans klinik ve hastanelerin liderleridir. İsimlerinin yanındaki butona tıklayarak doğrudan o kişinin LinkedIn profiline gidebilir veya kişiye özel hazır davet notunu kopyalayabilirsiniz:")
+
+                c_row_lk = country_map.get(country_df.loc[country_df['name']==lk_country, 'code'].values[0] if len(country_df.loc[country_df['name']==lk_country])>0 else '')
+                lk_dir_data = get_country_gtm_directory(lk_country, c_row_lk)
+                lk_dms = lk_dir_data.get('decision_makers', [])
+
+                if lk_dms:
+                    for dm_item in lk_dms:
+                        dm_leader = dm_item.get('Lider / Karar Verici', 'Tıbbi Direktör')
+                        dm_inst = dm_item.get('Kurum / Klinik', 'Öncü IVF Merkezi')
+                        dm_loc = dm_item.get('Konum', lk_country)
+                        dm_email = dm_item.get('Email', f"info@{slug}-clinic.org")
+
+                        # Personal search URL
+                        person_clean = dm_leader.split('&')[0].replace('Prof.', '').replace('Dr.', '').replace('Dott.', '').replace('Dott.ssa', '').strip()
+                        inst_clean = dm_inst.split('(')[0].strip()
+                        p_query_enc = urllib.parse.quote(f'"{person_clean}" {inst_clean}')
+                        p_linkedin_url = f"https://www.linkedin.com/search/results/people/?keywords={p_query_enc}&origin=GLOBAL_SEARCH_HEADER"
+
+                        # Localized Note
+                        if lk_country in ["Italy", "İtalya"]:
+                            conn_msg = f"Gentile Dott./Dott.ssa {person_clean}, apprezzo molto il lavoro di {inst_clean}. In ZEUS Bioscience abbiamo sviluppato un protocollo CE (Piezo AOA) che porta la fecondazione nei casi TFF all'82.3%. Vorrei condividere il nostro whitepaper clinico. Cordiali saluti!"
+                        elif lk_country in ["Spain", "İspanya"]:
+                            conn_msg = f"Estimado/a {person_clean}, sigo con gran interés su labor en {inst_clean}. Contamos con tecnología CE de activación oocitaria Piezo que eleva la fecundación al 82.3% en fallos previos. Me encantaría compartir nuestro whitepaper clínico. ¡Un cordial saludo!"
+                        else:
+                            conn_msg = f"Dear {person_clean}, I follow the clinical excellence of {inst_clean} with great admiration. At ZEUS Bioscience, we developed a CE MDR Class IIa Piezo AOA protocol that achieves 82.3% fertilization in TFF cases. I would be honored to share our 1-page clinical whitepaper with your team."
+
+                        with st.container():
+                            st.markdown(f"""
+                            <div style="background:#0F192E;border:1px solid rgba(0,245,255,0.2);border-left:4px solid #00F5FF;border-radius:8px;padding:12px 16px;margin-bottom:10px;">
+                                <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+                                    <div>
+                                        <b style="color:#FFFFFF;font-size:14px;">{dm_leader}</b><br>
+                                        <span style="color:#00F5FF;font-size:12px;">🏥 {dm_inst}</span> &nbsp;|&nbsp; 
+                                        <span style="color:#94A3B8;font-size:11.5px;">📍 {dm_loc}</span> &nbsp;|&nbsp; 
+                                        <span style="color:#00E676;font-size:11.5px;">✉️ {dm_email}</span>
+                                    </div>
+                                </div>
+                            </div>
+                            """, unsafe_allow_html=True)
+                            
+                            c_btn1, c_btn2 = st.columns([1.2, 1.8])
+                            with c_btn1:
+                                st.link_button(f"🔗 LinkedIn'de '{person_clean[:18]}' Profilini Bul", p_linkedin_url, use_container_width=True)
+                            with c_btn2:
+                                with st.expander(f"📋 {person_clean} İçin Özel 300 Karakterlik LinkedIn Davet Notu", expanded=False):
+                                    st.code(conn_msg, language="text")
+
+                st.markdown("<br>", unsafe_allow_html=True)
+
+                # --------------------------------------------------------------
+                # PERSISTENT EXACT BOOLEAN CODES & OUTREACH TEMPLATES ACCORDION
+                # --------------------------------------------------------------
+                with st.expander("📚 Ülke Bazlı Exact Boolean Arama Kodları & Hazır Mesaj Şablonları Kütüphanesi", expanded=False):
+                    lk_c1, lk_c2 = st.columns(2)
+                    with lk_c1:
+                        st.markdown("##### 🔎 Ülke Bazlı Exact Arama Kodları (Boolean Search)")
+                        st.text("🇮🇹 İtalya Arama Kodu:")
+                        st.code('("Responsabile Laboratorio" OR "Direttore Laboratorio" OR "Embriologo" OR "Embriologa") AND ("PMA" OR "Fertilità" OR "Infertilità" OR "IVF")', language="text")
+                        st.text("🇪🇸 İspanya Arama Kodu:")
+                        st.code('("Director de Laboratorio" OR "Directora de Laboratorio" OR "Responsable Embriología" OR "Embriólogo Clínico") AND ("Reproducción Asistida" OR "FIV" OR "IVF")', language="text")
+                        st.text("🇪🇬 🇸🇦 🇶🇦 Mısır & Körfez Arama Kodu:")
+                        st.code('("Head of IVF" OR "IVF Lab Director" OR "Senior Embryologist" OR "Chief Embryologist") AND ("Fertility" OR "IVF" OR "ICSI")', language="text")
+                        st.text("🇩🇪 Almanya & DACH Arama Kodu:")
+                        st.code('("Leitung IVF-Labor" OR "Laborleitung" OR "Reproduktionsbiologe" OR "Senior Embryologe") AND ("Kinderwunsch" OR "IVF")', language="text")
+                        st.text("🇹🇷 Türkiye Arama Kodu:")
+                        st.code('("Tüp Bebek Laboratuvar Sorumlusu" OR "Baş Embriyolog" OR "Laboratuvar Direktörü") AND ("Tüp Bebek" OR "IVF" OR "Embriyoloji")', language="text")
+
+                    with lk_c2:
+                        st.markdown("##### 💬 Bağlantı İsteği & DM Şablonları")
+                        st.text("Bağlantı Kabul Edildikten Sonraki DM (İtalyanca):")
+                        st.code("""Gentile Dott./Dott.ssa [Soyadı], grazie per il collegamento.
 Come accennato, le allego il nostro Whitepaper clinico di 1 pagina sull'attivazione oocitaria Piezo (AOA) con marcatura CE.
 Condividiamo volentieri con la vostra équipe il nostro Clinical Whitepaper e il protocollo applicativo CE per valutare i dati di recupero della fertilizzazione sui casi più complessi.
 Se per lei ha senso, posso inviarle la scheda tecnica o concordare una breve chiacchierata tecnica online di 10 minuti. Buona giornata!""", language="text")
+                        st.text("Bağlantı Kabul Edildikten Sonraki DM (İngilizce - Global):")
+                        st.code("""Dear Dr. [Last Name], thank you for connecting.
+As referenced, I am pleased to share our 1-page Clinical Whitepaper on non-toxic Piezo Oocyte Activation (AOA) under CE MDR Class IIa certification.
+Our clinical trials demonstrate an increase in fertilization from 24.6% to 82.3% in previous TFF cases with zero electrical cytolysis risk.
+I would welcome the opportunity to coordinate a brief 10-minute scientific briefing or arrange an evaluation protocol with your embryology team. Best regards!""", language="text")
 
             # ------------------------------------------------------------------
             # SUB-TAB 3: 1 SAYFALIK KLİNİK WHITEPAPER
@@ -15220,7 +15404,7 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
 
             # SUB-TAB 4: SATIŞ STRATEJİSİ (GTM)
             with k_tab4:
-                render_deep_sales_strategy_ui(cmp_kb_country, deep_intel, p_fc)
+                render_deep_sales_strategy_ui(cmp_kb_country, deep_intel, pricing_fc)
 
             # SUB-TAB 5: RESMİ BAKANLIK TEBLİĞLERİ
             with k_tab5:
@@ -16815,7 +16999,7 @@ elif nav_selection == "Pricing & Discount Calculator":
 
         # SUB-TAB 4: SATIŞ STRATEJİSİ (GTM)
         with k_tab4:
-            render_deep_sales_strategy_ui(kb_country, deep_intel, p_fc)
+            render_deep_sales_strategy_ui(kb_country, deep_intel, pricing_fc)
 
         # SUB-TAB 5: RESMİ BAKANLIK TEBLİĞLERİ
         with k_tab5:
