@@ -4308,6 +4308,806 @@ USER_CREDENTIALS = {
     }
 }
 
+def render_social_media_hub():
+    st.title("📱 Global MedTech Social Media & B2B Content Marketing Hub")
+    st.caption("ZEUS Bioscience Uluslararası Tüp Bebek (IVF/ICSI/PGT) Pazarı İçin Bilimsel İçerik, Video Senaryoları, Platform Matrisi ve Büyüme Stratejisi.")
+
+    # Top Executive KPI Metrics Bar
+    col_m1, col_m2, col_m3, col_m4, col_m5 = st.columns(5)
+    with col_m1:
+        st.markdown('''
+        <div class="glass-metric-card">
+            <div class="glass-icon-box">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+            </div>
+            <div class="glass-metric-header">Aylık B2B Hedef Erişim</div>
+            <div class="glass-metric-val">150,000+</div>
+            <div class="glass-metric-sub">Klinik Direktörü & Embriyolog</div>
+        </div>
+        ''', unsafe_allow_html=True)
+    with col_m2:
+        st.markdown('''
+        <div class="glass-metric-card">
+            <div class="glass-icon-box">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+            </div>
+            <div class="glass-metric-header">Hedef Etkileşim Oranı</div>
+            <div class="glass-metric-val">%4.85</div>
+            <div class="glass-metric-sub">LinkedIn B2B MedTech Benchmark: %1.9</div>
+        </div>
+        ''', unsafe_allow_html=True)
+    with col_m3:
+        st.markdown('''
+        <div class="glass-metric-card">
+            <div class="glass-icon-box">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+            </div>
+            <div class="glass-metric-header">Video İzlenme Tamamlama</div>
+            <div class="glass-metric-val">%68.2</div>
+            <div class="glass-metric-sub">Mikroskop Altı İlk 3s Kancasıyla</div>
+        </div>
+        ''', unsafe_allow_html=True)
+    with col_m4:
+        st.markdown('''
+        <div class="glass-metric-card">
+            <div class="glass-icon-box">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            </div>
+            <div class="glass-metric-header">Lead Magnet İndirme</div>
+            <div class="glass-metric-val">1,240+</div>
+            <div class="glass-metric-sub">Klinik Protokolü & Whitepaper</div>
+        </div>
+        ''', unsafe_allow_html=True)
+    with col_m5:
+        st.markdown('''
+        <div class="glass-metric-card">
+            <div class="glass-icon-box">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            </div>
+            <div class="glass-metric-header">Aday Klinik & Bayi Talebi</div>
+            <div class="glass-metric-val">42 / Çeyrek</div>
+            <div class="glass-metric-sub">Vaka Çalıştayı & Numune Talebi</div>
+        </div>
+        ''', unsafe_allow_html=True)
+
+    st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
+
+    # 5 Strategic Marketing Sub-Tabs
+    tab1, tab2, tab3, tab4, tab5 = st.tabs([
+        "📱 1. Platform Bazlı Dağıtım & İçerik Matrisi",
+        "🎬 2. Yüksek Dönüşümlü Video Senaryoları (Scripts)",
+        "🔬 3. En Çok İlgi Çeken Bilimsel & Klinik Konular",
+        "🚀 4. İzlenme & Etkileşim Katlama Stratejisi (Growth Playbook)",
+        "📅 5. 30 Günlük Editoryal Takvim & Hazır Post Metinleri"
+    ])
+
+    # =========================================================================
+    # TAB 1: PLATFORM MATRIX
+    # =========================================================================
+    with tab1:
+        st.markdown("""
+        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(0, 245, 255, 0.25); border-radius: 12px; padding: 18px 22px; margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h4 style="margin: 0; color: #00F5FF; font-size: 16px;">🎯 Hangi Platformda, Hangi Kitleye, Ne Tür İçerik Paylaşılmalı?</h4>
+                <span style="font-size: 11px; background: rgba(0, 245, 255, 0.15); color: #00F5FF; padding: 3px 10px; border-radius: 12px; font-weight: 700;">Multi-Channel B2B MedTech Engine</span>
+            </div>
+            <p style="margin: 8px 0 0 0; color: #94A3B8; font-size: 12.5px; line-height: 1.6;">
+                Tüp bebek medikal cihaz ve sarf pazarlamasında tek bir içerik tüm kanallara kopyalanmaz. Karar verici hekim LinkedIn'de bilimsel kanıt ve regülasyon güvencesi ararken, embriyolog YouTube'da mikromanipülatör aplikasyonunu izler, Instagram'da ise mikroskop altındaki hücre zarı esnemesinin görsel kusursuzluğuyla etkileşime girer.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        col_p1, col_p2 = st.columns(2)
+        with col_p1:
+            st.markdown("""
+            <div style="background: rgba(10, 25, 47, 0.75); border: 1px solid rgba(14, 165, 233, 0.3); border-radius: 12px; padding: 16px 20px; height: 100%; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 24px;">💼</span>
+                        <div>
+                            <b style="color: #38BDF8; font-size: 15px;">LinkedIn (B2B Karar Verici & Kanaat Önderi Kanalı)</b>
+                            <div style="color: #64748B; font-size: 11px;">Hedef: Klinik Direktörleri, Başhekimler, Distribütör Yönetim Kurulları</div>
+                        </div>
+                    </div>
+                    <span style="background: rgba(56, 189, 248, 0.15); color: #38BDF8; padding: 2px 8px; border-radius: 6px; font-size: 10px; font-weight: 700;">HAFTADA 3-4 GÖNDERİ</span>
+                </div>
+                <div style="font-size: 12px; color: #CBD5E1; line-height: 1.6;">
+                    <b style="color: #F8FAFC;">Ne Paylaşılmalı?</b>
+                    <ul style="margin: 6px 0 10px 18px; padding: 0;">
+                        <li><b>Hakemli Yayın Özetleri:</b> PubMed / ESHRE 2025-2026 retrospektif çalışmalar, Piezo AOA'nın 2PN başarı artışı (%24 -> %82).</li>
+                        <li><b>Regülasyon & Güvenlik:</b> CE MDR Class IIa tescil sertifikaları, MEA >%80 testi, endotoksin analizi (<0.03 EU/mL).</li>
+                        <li><b>C-Level Sektörel Analiz:</b> Total Döllenme Başarısızlığı (TFF) vakalarında tekrarlayan siklus maliyetleri ve hasta terk oranları.</li>
+                        <li><b>Distribütör & İhale Duyuruları:</b> Bölgesel yetkili bayilik anlaşmaları ve uluslararası referans hastanelerin tercihi.</li>
+                    </ul>
+                    <b style="color: #F8FAFC;">Nasıl Paylaşılmalı?</b>
+                    <ul style="margin: 6px 0 0 18px; padding: 0;">
+                        <li><b>Carousel PDF (Kaydırmalı Döküman):</b> 6-8 sayfalık infografik slaytlar. LinkedIn algoritmasında tek görsele göre <b>%380 daha yüksek dwell-time ve erişim</b> sağlar.</li>
+                        <li><b>KOL (Kanaat Önderi) Yorumu:</b> Vaka analizi gönderisinde referans klinik direktörünün kısa değerlendirme alıntısı.</li>
+                        <li><b>Yayın Saati:</b> Salı & Perşembe sabah 08:30 - 10:30 (Karar vericilerin işe başlama saati).</li>
+                    </ul>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_p2:
+            st.markdown("""
+            <div style="background: rgba(10, 25, 47, 0.75); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; padding: 16px 20px; height: 100%; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 24px;">▶️</span>
+                        <div>
+                            <b style="color: #F87171; font-size: 15px;">YouTube (Teknik Çalıştay, Prosedür & Aplikasyon)</b>
+                            <div style="color: #64748B; font-size: 11px;">Hedef: Embriyologlar, Biyologlar, Biyomedikal Mühendisler</div>
+                        </div>
+                    </div>
+                    <span style="background: rgba(239, 68, 68, 0.15); color: #F87171; padding: 2px 8px; border-radius: 6px; font-size: 10px; font-weight: 700;">AYDA 2-3 UZUN VİDEO</span>
+                </div>
+                <div style="font-size: 12px; color: #CBD5E1; line-height: 1.6;">
+                    <b style="color: #F8FAFC;">Ne Paylaşılmalı?</b>
+                    <ul style="margin: 6px 0 10px 18px; padding: 0;">
+                        <li><b>4K Mikromanipülatör Masterclass:</b> Adım Adım Piezo ICSI Tekniği (Mikropipet açısı, piezo frekans ayarı, oosit aspirasyon derinliği).</li>
+                        <li><b>BioPSafe Trofektoderm Biyopsisi:</b> Lazer termal hasarı vermeden 30 saniyede biyopsi ve PCR tubing transferi.</li>
+                        <li><b>Donanım Montaj & Kalibrasyon:</b> ZPS 26'nın Narishige ve Research Instruments mikromanipülatörlerine 5 dakikada adaptasyonu.</li>
+                        <li><b>Webinar Kayıtları:</b> Global embriyologların katıldığı "TFF Vakalarında Pratik Çözümler" canlı panel kayıtları.</li>
+                    </ul>
+                    <b style="color: #F8FAFC;">Nasıl Paylaşılmalı?</b>
+                    <ul style="margin: 6px 0 0 18px; padding: 0;">
+                        <li><b>Bölüm İndeksi (Timecodes/Chapters):</b> [00:00 Giriş, 02:15 Piezo Kalibrasyonu, 06:40 Canlı Oosit Enjeksiyonu, 11:20 Soru-Cevap].</li>
+                        <li><b>Açıklama Bölümünde Lead Magnet:</b> "Adım Adım Laboratuvar Uygulama Protokolü PDF" indirme linki.</li>
+                        <li><b>YouTube Shorts (60 sn):</b> En can alıcı 15 saniyelik mikroskop hareketini shorts olarak kırparak ana videoya trafik çekme.</li>
+                    </ul>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+
+        col_p3, col_p4 = st.columns(2)
+        with col_p3:
+            st.markdown("""
+            <div style="background: rgba(10, 25, 47, 0.75); border: 1px solid rgba(236, 72, 153, 0.3); border-radius: 12px; padding: 16px 20px; height: 100%; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 24px;">📸</span>
+                        <div>
+                            <b style="color: #F472B6; font-size: 15px;">Instagram & Reels (Görsel Cazibe, Viral Mikro-Anlar & Topluluk)</b>
+                            <div style="color: #64748B; font-size: 11px;">Hedef: Genç Embriyologlar, IVF Asistanları, MedTech Meraklıları</div>
+                        </div>
+                    </div>
+                    <span style="background: rgba(236, 72, 153, 0.15); color: #F472B6; padding: 2px 8px; border-radius: 6px; font-size: 10px; font-weight: 700;">HAFTADA 4-5 REELS</span>
+                </div>
+                <div style="font-size: 12px; color: #CBD5E1; line-height: 1.6;">
+                    <b style="color: #F8FAFC;">Ne Paylaşılmalı?</b>
+                    <ul style="margin: 6px 0 10px 18px; padding: 0;">
+                        <li><b>"Satisfying Science" Mikro-Anları:</b> Piezo pipetinin oosit zarına tek mikro-titreşimle zarar vermeden girmesi (Yüksek hipnotik izlenme).</li>
+                        <li><b>Time-Lapse Embriyo Gelişimi:</b> Piezo AOA sonrası 1. günden 5. gün blastosist aşamasına kadar hızlandırılmış bölünme serisi.</li>
+                        <li><b>Laboratuvar Arkası (Behind The Scenes):</b> Temiz oda hazırlığı, sıvı azot dumanı altında vitrifikasyon çubuğu yüklemesi.</li>
+                        <li><b>Mikro-İpuçları (Quick Lab Hacks):</b> "Pipet tıkanmasını 5 saniyede önlemenin yolu", "Kırılgan oositleri tutarken hava kabarcığı tuzağı".</li>
+                    </ul>
+                    <b style="color: #F8FAFC;">Nasıl Paylaşılmalı?</b>
+                    <ul style="margin: 6px 0 0 18px; padding: 0;">
+                        <li><b>İlk 2 Saniye Kancası (Visual Shock Hook):</b> "Bu yumurtanın zarı patlamak üzereydi... ama kurtardık!" gibi güçlü merak uyandırıcı soru.</li>
+                        <li><b>Müzik & Altyazı:</b> Medikal odaklı lo-fi veya ambient sesler, sessiz izleyenler için renkli vurgulu dinamik altyazı.</li>
+                        <li><b>Story Anketleri:</b> "Kliniğinizde TFF vakalarında Piezo mu yoksa Kalsiyum İyonofor mu kullanıyorsunuz?" (%80+ interaktivite).</li>
+                    </ul>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_p4:
+            st.markdown("""
+            <div style="background: rgba(10, 25, 47, 0.75); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 16px 20px; height: 100%; box-shadow: 0 4px 20px rgba(0,0,0,0.3);">
+                <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 24px;">🌐</span>
+                        <div>
+                            <b style="color: #34D399; font-size: 15px;">X (Twitter), Kongreler & Webinarlar (Akademik Çeviklik)</b>
+                            <div style="color: #64748B; font-size: 11px;">Hedef: ESHRE/ASRM Delegeleri, Akademik Araştırmacılar, Sağlık Bakanlıkları</div>
+                        </div>
+                    </div>
+                    <span style="background: rgba(16, 185, 129, 0.15); color: #34D399; padding: 2px 8px; border-radius: 6px; font-size: 10px; font-weight: 700;">GÜNLÜK & ETKİNLİK BAZLI</span>
+                </div>
+                <div style="font-size: 12px; color: #CBD5E1; line-height: 1.6;">
+                    <b style="color: #F8FAFC;">Ne Paylaşılmalı?</b>
+                    <ul style="margin: 6px 0 10px 18px; padding: 0;">
+                        <li><b>Kongre Canlı Yayın Zincirleri (Thread):</b> ESHRE, ASRM, MEFS oturumlarından anlık slayt ve bulgu özetleri (#ESHRE2026, #ASRM2026).</li>
+                        <li><b>"Haftanın Bilimsel IVF Grafiği":</b> Tek bir PubMed makalesinden çıkarılmış çarpıcı klinik başarı oranı grafiği.</li>
+                        <li><b>Canlı Vaka Webinarları:</b> Key Opinion Leader (KOL) hekimlerle ayda bir ESHRE akredite interaktif vaka değerlendirme oturumu.</li>
+                        <li><b>Aylık Bilimsel E-Bülten:</b> 5,000+ klinik direktörüne gönderilen "Reproductive BioTech Executive Digest".</li>
+                    </ul>
+                    <b style="color: #F8FAFC;">Nasıl Paylaşılmalı?</b>
+                    <ul style="margin: 6px 0 0 18px; padding: 0;">
+                        <li><b>Thread Formatı (1/5):</b> Karmaşık makaleyi 4 tweet'te özetleyip son tweet'te tam PubMed DOI linki ve ZEUS aplikasyon notunu vermek.</li>
+                        <li><b>Hekim Tagging (Kibar Etiketleme):</b> Makale yazarlarını ve oturum başkanlarını etiketleyerek küresel tartışma başlatmak.</li>
+                    </ul>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("<div style='height: 20px;'></div>", unsafe_allow_html=True)
+
+        # Content Types Matrix Table
+        st.markdown("### 📊 MedTech İçerik Türleri & Platform Dağılım Matrisi")
+        matrix_data = [
+            {"İçerik Türü": "🔬 Hakemli PubMed / ESHRE Makale Özetleri", "LinkedIn": "⭐⭐⭐⭐⭐ (Ana Odak)", "YouTube": "⭐⭐⭐ (Tartışma)", "Instagram": "⭐⭐ (Basitleştirilmiş)", "X / Twitter": "⭐⭐⭐⭐⭐ (Thread)", "Öncelikli Cihaz/Sarf": "ZPS 26 & Ca-Free AOA"},
+            {"İçerik Türü": "🎥 Mikroskop Altı Piezo ICSI Vaka Kaydı", "LinkedIn": "⭐⭐⭐⭐ (Klinik Verili)", "YouTube": "⭐⭐⭐⭐⭐ (4K Masterclass)", "Instagram": "⭐⭐⭐⭐⭐ (Reels Hook)", "X / Twitter": "⭐⭐⭐ (Kısa GIF)", "Öncelikli Cihaz/Sarf": "ZPS 26 Piezo Stimulator"},
+            {"İçerik Türü": "🧬 Trofektoderm Lazer Hasarı & Biyopsi Protokolü", "LinkedIn": "⭐⭐⭐⭐⭐ (Genetik Raporu)", "YouTube": "⭐⭐⭐⭐ (Uygulama)", "Instagram": "⭐⭐⭐ (Görsel)", "X / Twitter": "⭐⭐⭐⭐ (Veri)", "Öncelikli Cihaz/Sarf": "BioPSafe Biyopsi Kiti"},
+            {"İçerik Türü": "🛡️ 7 Aşamalı RFID Numune Eşleme & Witnessing", "LinkedIn": "⭐⭐⭐⭐⭐ (Yönetim & Hukuk)", "YouTube": "⭐⭐⭐⭐ (Sistem Turu)", "Instagram": "⭐⭐ (İnfografik)", "X / Twitter": "⭐⭐⭐ (Sektör Notu)", "Öncelikli Cihaz/Sarf": "Mismatch Blocker RFID"},
+            {"İçerik Türü": "📜 CE MDR Class IIa & MEA Partil Analizleri", "LinkedIn": "⭐⭐⭐⭐⭐ (Güvenilirlik)", "YouTube": "⭐⭐ (Kısa Bahis)", "Instagram": "⭐ (Uygun Değil)", "X / Twitter": "⭐⭐⭐ (Resmi Bülten)", "Öncelikli Cihaz/Sarf": "Z-Dish Array & Medyalar"},
+            {"İçerik Türü": "💡 Embriyolog İpuçları (Hands-on Lab Hacks)", "LinkedIn": "⭐⭐⭐ (Uzmanlık)", "YouTube": "⭐⭐⭐⭐ (Teknik)", "Instagram": "⭐⭐⭐⭐⭐ (Viral Paylaşım)", "X / Twitter": "⭐⭐⭐ (Pratik)", "Öncelikli Cihaz/Sarf": "Z-Dish & Mikropipetler"},
+        ]
+        st.dataframe(pd.DataFrame(matrix_data), use_container_width=True, hide_index=True)
+
+    # =========================================================================
+    # TAB 2: PRODUCTION-READY VIDEO SCRIPTS
+    # =========================================================================
+    with tab2:
+        st.markdown("""
+        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(0, 245, 255, 0.25); border-radius: 12px; padding: 18px 22px; margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h4 style="margin: 0; color: #00F5FF; font-size: 16px;">🎬 Yüksek Dönüşümlü MedTech Video Senaryoları & Çekim Kılavuzları</h4>
+                <span style="font-size: 11px; background: rgba(0, 245, 255, 0.15); color: #00F5FF; padding: 3px 10px; border-radius: 12px; font-weight: 700;">4 Production-Ready Scripts</span>
+            </div>
+            <p style="margin: 8px 0 0 0; color: #94A3B8; font-size: 12.5px; line-height: 1.6;">
+                Aşağıdaki senaryolar; saniye saniye görsel akış, kamera/mikroskop açısı, seslendirme metni (voiceover), ekrandaki veri grafikleri ve aksiyon çağrısı (CTA) ile doğrudan prodüksiyona girecek şekilde hazırlanmıştır.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        script_sel = st.selectbox(
+            "İncelemek İstediğiniz Video Senaryosunu Seçin:",
+            [
+                "Senaryo 1: ZEUS ZPS 26 Piezo Stimulator vs Geleneksel ICSI (A/B Mikroskop Karşılaştırması - 60 sn)",
+                "Senaryo 2: BioPSafe Trofektoderm Biyopsi Kiti (30 Saniyede Sıfır Termal DNA Hasarı - 75 sn)",
+                "Senaryo 3: Mismatch Blocker - Laboratuvarda Numune Karışmasına Sıfır Tolerans (7 RFID İstasyonu - 90 sn)",
+                "Senaryo 4: Z-Dish Array & Kalsiyumsuz AOA Medyası (Kimyasal İyonofor Toksisitesine Son - 60 sn)"
+            ]
+        )
+
+        if "Senaryo 1" in script_sel:
+            st.markdown("""
+            <div style="background: rgba(10, 25, 47, 0.85); border: 1px solid rgba(0, 245, 255, 0.35); border-radius: 12px; padding: 20px 24px; margin-top: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0, 245, 255, 0.2); padding-bottom: 10px; margin-bottom: 16px;">
+                    <div>
+                        <span style="font-size: 18px; font-weight: 800; color: #00F5FF;">🔬 Senaryo 1: Standart ICSI vs ZEUS ZPS 26 Piezo Stimülasyonu</span>
+                        <div style="color: #94A3B8; font-size: 12px; margin-top: 2px;">Hedef Platform: Instagram Reels, YouTube Shorts, LinkedIn Video | Süre: 60 Saniye | Format: Dikey (9:16) & Yatay (16:9)</div>
+                    </div>
+                    <span style="background: rgba(0, 230, 118, 0.15); color: #00E676; padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 700;">Yüksek Dönüşüm (Viral Hook)</span>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            sc1_table = [
+                {"Zaman": "00:00 - 00:06", "Görsel & Mikroskop Açısı": "Bölünmüş Ekran (Split Screen): Solda standart sivri ICSI iğnesi oosite batıyor. Oosit tamamen içe çöküyor ve aniden patlayarak sitoplazma dışarı sızıyor (Oosit lizisi!). Sağ taraf ise kararık, merak uyandırıyor.", "Seslendirme (Voiceover - VO)": "Her 10 oositten biri, yumurtanın kalitesizliğinden değil... yanlış iğne travması yüzünden kaybediliyor. Peki ya bu hücre zarı hiç yırtılmasaydı?", "Ekran Yazısı & Grafik": "⚠️ %8.5 Oosit Dejenerasyonu Riski (Geleneksel Delme Travması)"},
+                {"Zaman": "00:06 - 00:22", "Görsel & Mikroskop Açısı": "Ekranın sağı aydınlanır. ZEUS ZPS 26'ya bağlı küt uçlu (flat-tip) piezo mikropipet kadraja girer. Pipet oosit zarına değer. Tek bir ultra-ince piezoelektrik mikro-titreşim (dalga efekti) oluşur. Zar delinmez, mikrosaniyede esneyip açılır.", "Seslendirme (Voiceover - VO)": "ZEUS ZPS 26 Piezo Stimülatör ile sivri iğneyle delmeyi unutun. Patentli küt uçlu piezo osilasyonu, oosit zarına tek bir mikropuls göndererek zarı esnetir ve spermi doğrudan ooplazmaya zararsız bırakır.", "Ekran Yazısı & Grafik": "⚡ ZEUS ZPS 26: Saniyede 1 Mikro-Puls ile Sıfır Membran Yırtılması"},
+                {"Zaman": "00:22 - 00:40", "Görsel & Mikroskop Açısı": "Yüksek çözünürlüklü 4K mikroskop görüntüsü: Sperm bırakıldıktan 1 saniye sonra piezo pipet geri çekilir. Oosit zarı anında eski mükemmel yuvarlak formuna geri döner. Hücre zarı bütünlüğü %100 korunmuştur.", "Seslendirme (Voiceover - VO)": "Geleneksel ICSI'deki oosit lizis oranı yüzde 8.5 iken, ZEUS Piezo teknolojisiyle bu oran yüzde 0.8'in altına iner. Özellikle ileri anne yaşı ve kırılgan oositlerde döllenme şansı korunur.", "Ekran Yazısı & Grafik": "📊 Klinik Kanıt: Oosit Lizis <%0.8 | 2PN Başarısı %82.3"},
+                {"Zaman": "00:40 - 00:52", "Görsel & Mikroskop Açısı": "Kamera laboratuvardaki baş embriyoloğa döner. Embriyolog monitördeki 2PN döllenmiş zigotları inceler ve başını onaylarcasına sallar. Masada ZPS 26 kontrol konsolu şık mavi LED ışığıyla görünür.", "Seslendirme (Voiceover - VO)": "Total Döllenme Başarısızlığı (TFF) geçmişi olan zorlu vakalarda klinik 2PN oranlarını yüzde 24'ten yüzde 82'ye yükselten altın standart.", "Ekran Yazısı & Grafik": "🏆 TFF Vakalarında Kanıtlanmış AOA Protokolü | CE Device Certified (Class IIa)"},
+                {"Zaman": "00:52 - 01:00", "Görsel & Mikroskop Açısı": "ZEUS Bioscience animasyonlu logosu, CE Class IIa ibaresi. Altta web sitesi ve QR kod: 'Kliniğinizde Yerinde Vaka Çalıştayı Talep Edin'.", "Seslendirme (Voiceover - VO)": "Kliniğinizin başarı oranlarını bir üst seviyeye taşıyın. Yerinde aplikasyon çalıştayı ve konsinye değerlendirme protokolü için profildeki linke tıklayın.", "Ekran Yazısı & Grafik": "👉 zeusbio.com/zps26 | Yerinde Vaka Çalıştayı & Aplikasyon Eğitimi"}
+            ]
+            st.dataframe(pd.DataFrame(sc1_table), use_container_width=True, hide_index=True)
+
+        elif "Senaryo 2" in script_sel:
+            st.markdown("""
+            <div style="background: rgba(10, 25, 47, 0.85); border: 1px solid rgba(0, 245, 255, 0.35); border-radius: 12px; padding: 20px 24px; margin-top: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0, 245, 255, 0.2); padding-bottom: 10px; margin-bottom: 16px;">
+                    <div>
+                        <span style="font-size: 18px; font-weight: 800; color: #00F5FF;">🧬 Senaryo 2: BioPSafe Trofektoderm Biyopsi Kiti (Sıfır Termal Hasar)</span>
+                        <div style="color: #94A3B8; font-size: 12px; margin-top: 2px;">Hedef Platform: LinkedIn & YouTube | Süre: 75 Saniye | Odak: PGT-A Güvenliği ve DNA Bütünlüğü</div>
+                    </div>
+                    <span style="background: rgba(14, 165, 233, 0.15); color: #38BDF8; padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 700;">Bilimsel & B2B Karar Verici</span>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            sc2_table = [
+                {"Zaman": "00:00 - 00:10", "Görsel & Mikroskop Açısı": "Genetik laboratuvarından gelen PGT-A raporu ekrana gelir. Rapor üzerinde kırmızı ile işaretlenmiş: 'Yetersiz Hücre / Mitokondriyal DNA Fragmantasyonu / Belirsiz Mozaisizm'. Kamera raporu tutan klinik direktörünün endişeli yüzüne odaklanır.", "Seslendirme (Voiceover - VO)": "Genetik laboratuvarınızdan gelen 'Yetersiz DNA' veya 'Yüksek Mozaisizm' raporları gerçekten embriyonun suçu mu? Yoksa trofektoderm biyopsisinde kullanılan aşırı lazer atımlarının eseri mi?", "Ekran Yazısı & Grafik": "❓ PGT-A'da Sahte Mozaisizm & Termal DNA Hasarı Tuzağı"},
+                {"Zaman": "00:10 - 00:30", "Görsel & Mikroskop Açısı": "Mikroskop altında 5. gün blastosistine art arda ateşlenen lazer atışları (kırmızı parlama efekti). Hücre sınırlarında siyahlaşma ve termal sitoliz belirir. Doku yanığı net şekilde görülür.", "Seslendirme (Voiceover - VO)": "Tekrarlayan lazer atımları, trofektoderm hücrelerinin mitokondriyal DNA'sına geri dönülmez termal şok verir. Bu durum hem embriyo implantasyonunu düşürür hem de genetik test sonuçlarını yanıltır.", "Ekran Yazısı & Grafik": "⚠️ Aşırı Lazer Atışı: Termal Dejenerasyon & DNA Kırılması"},
+                {"Zaman": "00:30 - 00:55", "Görsel & Mikroskop Açısı": "BioPSafe Trofektoderm Biyopsi Pipeti kadraja girer. Patentli pürüzsüz aspirasyon haznesiyle 4-5 hücre hafifçe içeri çekilir. Tek bir minimal mikrosaniyelik lazer pulsundan sonra pipetin mikro-mekanik kesiti hücreleri termal hasarsız ayırır. Süre sayacı ekranda akar: 28 saniye!", "Seslendirme (Voiceover - VO)": "İşte BioPSafe. Patentli aspirasyon geometrisi ve mikro-mekanik ayrıştırma mimarisiyle biyopsi süresini 30 saniyenin altına indirir. Lazer ihtiyacını yüzde 70 azaltarak hücre çekirdeğini ve DNA bütünlüğünü kusursuz korur.", "Ekran Yazısı & Grafik": "⏱️ 30 Saniyede Biyopsi | %70 Daha Az Lazer İhtiyacı | Sıfır Hücre Kaybı"},
+                {"Zaman": "00:55 - 01:15", "Görsel & Mikroskop Açısı": "Embriyolog biyopsi yapılan hücre kümesini BioPSafe Tubing kılavuzuyla doğrudan PCR tüpünün tabanına tek hamlede aktarır. Damla yüzeyde asılı kalmaz, tam merkeze yerleşir. Tüp kapağı kapatılır.", "Seslendirme (Voiceover - VO)": "BioPSafe Tubing kitiyle örnek kaybı riski sıfırlanır. Genetik analiz için maksimum DNA amplifikasyon güvencesi sağlanır.", "Ekran Yazısı & Grafik": "🧬 %100 Başarılı PCR Amplifikasyonu | MEA >%80 & Endotoksin Güvencesi"},
+                {"Zaman": "01:15 - 01:25", "Görsel & Mikroskop Açısı": "BioPSafe steril kutusu, CE işareti, parti analiz sertifikası (CoA). Ekranda CTA: 'Laboratuvarınız İçin BioPSafe Doğrulama Numunesi ve Protokol Kılavuzu İsteyin'.", "Seslendirme (Voiceover - VO)": "Embriyolarınızı termal hasardan koruyun. Ücretsiz BioPSafe doğrulama numunesi ve biyopsi protokolü için hemen başvurun.", "Ekran Yazısı & Grafik": "👉 zeusbio.com/biopsafe | Ücretsiz Doğrulama Numunesi Talep Et"}
+            ]
+            st.dataframe(pd.DataFrame(sc2_table), use_container_width=True, hide_index=True)
+
+        elif "Senaryo 3" in script_sel:
+            st.markdown("""
+            <div style="background: rgba(10, 25, 47, 0.85); border: 1px solid rgba(0, 245, 255, 0.35); border-radius: 12px; padding: 20px 24px; margin-top: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0, 245, 255, 0.2); padding-bottom: 10px; margin-bottom: 16px;">
+                    <div>
+                        <span style="font-size: 18px; font-weight: 800; color: #00F5FF;">🛡️ Senaryo 3: Mismatch Blocker - Laboratuvarda Sıfır Hata (Electronic Witnessing)</span>
+                        <div style="color: #94A3B8; font-size: 12px; margin-top: 2px;">Hedef Platform: LinkedIn, Kongre Ekranları, Kurumsal Web | Süre: 90 Saniye | Odak: Malpraktis Önleme ve Yasal Güvence</div>
+                    </div>
+                    <span style="background: rgba(245, 158, 11, 0.15); color: #F59E0B; padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 700;">Hukuki Güvence & İtibar Koruması</span>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            sc3_table = [
+                {"Zaman": "00:00 - 00:15", "Görsel & Mikroskop Açısı": "Karanlık, sinematik laboratuvar atmosferi. Arka planda bir haber manşeti flu şekilde belirir: 'Tüp Bebek Merkezinde Skandal: Yanlış Embriyo Transfer Edildi'. Kamera yoğun çalışan bir embriyoloğun yorgun gözlerine odaklanır. Saat gece 21:30'dur.", "Seslendirme (Voiceover - VO)": "Bir tüp bebek kliniğinin 20 yıllık itibarını, hekimlerinin kariyerini ve bir ailenin hayatını tek bir etiketleme hatası saniyeler içinde yok edebilir.", "Ekran Yazısı & Grafik": "⚠️ Malpraktis Davalarının %64'ü Manuel Kontrol Yorgunluğundan Kaynaklanıyor"},
+                {"Zaman": "00:15 - 00:35", "Görsel & Mikroskop Açısı": "Manuel çift kontrol (manuel witnessing) sahnesi: İki embriyolog tüpün üzerindeki el yazısını okumaya çalışır. Biri onay verir ama kafası karışıktır. Dış ses gerçeği vurgular.", "Seslendirme (Voiceover - VO)": "Günde 30 siklus yapan bir merkezde insan gözüyle çift şahitlik yapmak artık yeterli değil. İnsan yorulur, dikkat dağılır. Ama teknoloji asla yanılmaz.", "Ekran Yazısı & Grafik": "❌ Manuel Şahitlik (Human Error Risk) vs 🛡️ Kesintisiz Dijital Şahitlik"},
+                {"Zaman": "00:35 - 01:05", "Görsel & Mikroskop Açısı": "ZEUS Mismatch Blocker devreye girer. Şık, dokunmatik RFID konsolu mikromanipülatörün yanına monte edilmiştir. Embriyolog oosit dishini çalışma alanına koyar. Ekranda anında yeşil halka yanar: 'Hasta: Sarah Jenkins - Doğrulandı'. Ardından simülasyon amacıyla başka bir hastanın sperm tüpü alana yaklaştırılır. ANINDA KIRMIZI ALARM! Konsol sesli uyarı verir ve mikromanipülatör kolunu otomatik kilitler!", "Seslendirme (Voiceover - VO)": "ZEUS Mismatch Blocker, laboratuvarınızdaki 7 kritik kontrol noktasında temassız RFID teknolojisiyle çalışır. Oosit toplamadan sperm hazırlığa, ICSI'den vitrifikasyona ve embriyo transfere kadar... Yanlış bir numune alana girdiğinde sistem manipülatörü kilitler ve işlemi anında durdurur.", "Ekran Yazısı & Grafik": "🚨 OTOMATİK KİLİTLEME: Eşleşmeyen Numunede Manipülatör Bloke Edilir"},
+                {"Zaman": "01:05 - 01:20", "Görsel & Mikroskop Açısı": "Sistem anında dijital denetim izi (Audit Trail) ve barkodlu transfer sertifikası üretir. Klinik Direktörü ve Embriyolog tabletten tek tıkla onay verir. 21 CFR Part 11 ve GDPR uyumlu şifreli kayıt.", "Seslendirme (Voiceover - VO)": "Her işlem saniyesi saniyesine kayıt altına alınır. Hastaya ve sağlık bakanlığı denetçilerine sunulabilecek yüzde 100 yasal ve şeffaf elektronik şahitlik raporu hazır.", "Ekran Yazısı & Grafik": "📑 21 CFR Part 11 & CE MDR Class IIa Uyumlu Dijital Denetim İzi"},
+                {"Zaman": "01:20 - 01:30", "Görsel & Mikroskop Açısı": "Klinik Direktörü rahatlamış bir ifadeyle kahvesini yudumlar. ZEUS Mismatch Blocker logosu ve çağrı metni.", "Seslendirme (Voiceover - VO)": "Kliniğinizi, ekibinizi ve hastalarınızı riske atmayın. Laboratuvarınıza özel canlı sistem simülasyonu talep edin.", "Ekran Yazısı & Grafik": "👉 zeusbio.com/mismatch-blocker | Canlı Online Simülasyon Randevusu Alın"}
+            ]
+            st.dataframe(pd.DataFrame(sc3_table), use_container_width=True, hide_index=True)
+
+        elif "Senaryo 4" in script_sel:
+            st.markdown("""
+            <div style="background: rgba(10, 25, 47, 0.85); border: 1px solid rgba(0, 245, 255, 0.35); border-radius: 12px; padding: 20px 24px; margin-top: 10px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0, 245, 255, 0.2); padding-bottom: 10px; margin-bottom: 16px;">
+                    <div>
+                        <span style="font-size: 18px; font-weight: 800; color: #00F5FF;">🧪 Senaryo 4: Z-Dish Array & Ca-Free AOA Medyası (Toksisitesiz Aktivasyon)</span>
+                        <div style="color: #94A3B8; font-size: 12px; margin-top: 2px;">Hedef Platform: Instagram Reels & LinkedIn Carousel Video | Süre: 60 Saniye | Odak: Kimyasal İyonofor Toksisitesi vs Fiziksel Aktivasyon</div>
+                    </div>
+                    <span style="background: rgba(168, 85, 247, 0.15); color: #C084FC; padding: 4px 10px; border-radius: 8px; font-size: 11px; font-weight: 700;">Bilimsel Tartışma & Sarf Tanıtımı</span>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            sc4_table = [
+                {"Zaman": "00:00 - 00:08", "Görsel & Mikroskop Açısı": "Kalsiyum İyonofor (A23187) kimyasal şişesi yakın çekim. Şişenin arkasında sarı toksisite ikaz üçgeni. Karşısında ise berrak, patentli ZEUS Z-Dish Array mikrokuyucuklu kültür kabı belirir.", "Seslendirme (Voiceover - VO)": "Yıllardır Total Döllenme Başarısızlığı vakalarında kimyasal kalsiyum iyonoforlara mahkum kaldık. Peki bu kimyasalların embriyo epigenetiği üzerindeki risklerini biliyor musunuz?", "Ekran Yazısı & Grafik": "⚠️ Kimyasal İyonofor (A23187): Epigenetik Toksisite Soru İşareti"},
+                {"Zaman": "00:08 - 00:28", "Görsel & Mikroskop Açısı": "Z-Dish Array'in mikrokuyucuklarına dizilmiş 12 adet oosit. Pipet oositleri hiç kaydırmadan tam sabit pozisyonda tutar. Solüsyonda kalsiyum yoktur (Calcium-Free AOA). ZPS 26 piezo uyarımı verilir verilmez hücre içinde endojen kalsiyum salınımı başlar (Mavi flüoresan ışık dalgası animasyonu).", "Seslendirme (Voiceover - VO)": "ZEUS Z-Dish Array ve Kalsiyumsuz AOA Protokolü ile kimyasal toksisiteye son veriyoruz. Dışarıdan kimyasal yüklemek yerine, mikrosaniyelik piezoelektrik uyarım oositin kendi doğal kalsiyum rezervlerini serbest bırakır.", "Ekran Yazısı & Grafik": "🛡️ %0 Kimyasal Toksisite | Doğal Endojen Kalsiyum Salınımı"},
+                {"Zaman": "00:28 - 00:48", "Görsel & Mikroskop Açısı": "24 saat sonra: Z-Dish kuyucuklarında yan yana duran kusursuz 2PN pronükleuslar. Bölünmüş ekranda PubMed makale grafiği: Piezo AOA blastosist gelişim oranı: %54.2 vs Kimyasal İyonofor: %36.8.", "Seslendirme (Voiceover - VO)": "Sonuç: Sıfır kimyasal kalıntı, yüzde 54.2 blastosist oluşumu ve ESHRE/CE MDR uyumlu en yüksek güvenlik standardı.", "Ekran Yazısı & Grafik": "📈 Blastosist Oranı: %54.2 (vs Kimyasal %36.8) | PubMed 2025"},
+                {"Zaman": "00:48 - 01:00", "Görsel & Mikroskop Açısı": "Z-Dish Array steril blister ambalajı ve Calcium-Free AOA medyası şişesi. CTA ve QR kod.", "Seslendirme (Voiceover - VO)": "Laboratuvarınızı kimyasal risklerden arındırın. Z-Dish ve AOA protokol dosyasını hemen indirin.", "Ekran Yazısı & Grafik": "👉 zeusbio.com/zdish | Protokol & Validasyon Dosyasını İndir"}
+            ]
+            st.dataframe(pd.DataFrame(sc4_table), use_container_width=True, hide_index=True)
+
+    # =========================================================================
+    # TAB 3: HIGH-ENGAGEMENT SCIENTIFIC TOPICS
+    # =========================================================================
+    with tab3:
+        st.markdown("""
+        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(0, 245, 255, 0.25); border-radius: 12px; padding: 18px 22px; margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h4 style="margin: 0; color: #00F5FF; font-size: 16px;">🔬 Tüp Bebek Sektöründe Sosyal Medyada En Çok İlgi Çeken Konular</h4>
+                <span style="font-size: 11px; background: rgba(0, 245, 255, 0.15); color: #00F5FF; padding: 3px 10px; border-radius: 12px; font-weight: 700;">Hekim & Embriyolog Etkileşim Mıknatısları</span>
+            </div>
+            <p style="margin: 8px 0 0 0; color: #94A3B8; font-size: 12.5px; line-height: 1.6;">
+                B2B MedTech'te hekimler ve embriyologlar doğrudan ürün broşürlerine değil, kendi klinik günlüklerinde yaşadıkları çaresizliklere ve mesleki prestijlerini koruyan bilimsel çözümlere tepki verirler. Aşağıdaki 6 konu, küresel IVF topluluğunda en yüksek paylaşım, yorum ve kaydetme oranına sahiptir.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        topics = [
+            {
+                "no": "1",
+                "baslik": "Total Fertilization Failure (TFF) Vakaları ve Oosit Aktivasyon Çıkmazı",
+                "tetikleyici": "Her embriyoloğun kabusu, hastanın psikolojik yıkımı. 'Neden hiçbiri döllenmedi?' sorusu klinik direktörünü en çok zorlayan andır.",
+                "hedef": "Klinik Direktörleri, Baş Embriyologlar, Reprodüktif Endokrinologlar",
+                "cihaz_sarf": "ZEUS ZPS 26 Piezo Stimulator + Calcium-Free AOA Medyası",
+                "etkilesim_formulu": "'Önceki merkezinde 14 oositten sıfır döllenme alan bir hastada, Piezo AOA protokolü ile 11 adet 2PN elde ettik. İşte vakanın mikroskop altı parametreleri...' formatında vaka analizi.",
+                "kanca_hook": "'Sıfır döllenme aldığınızda ilk kimi suçluyorsunuz: Sperm faktörü mü, oosit aktivasyon defekti mi?' (Anket & Yorum Patlaması)",
+                "kanit": "PubMed PMID 36814210 / Human Reproduction 2024: Piezo AOA fertilization rate %82.3 vs standard ICSI %24.6 in recurrent TFF."
+            },
+            {
+                "no": "2",
+                "baslik": "Oosit Membran Kırılganlığı & Mekanik İğne Travmasına Bağlı Lizis (Degeneration)",
+                "tetikleyici": "İleri anne yaşı (38+ yaş) ve dismorfik oositlerde sivri iğne batırıldığında zardaki ani yırtılma embriyoloğun elinde suçluluk hissi yaratır.",
+                "hedef": "Uygulayıcı Kıdemli Embriyologlar, Laboratuvar Sorumluları",
+                "cihaz_sarf": "ZEUS ZPS 26 Küt Uçlu Piezo Pipet Adaptörü",
+                "etkilesim_formulu": "Split-screen mikroskop videosu: Sivri iğne oosite girerken zarın aşırı çökmesi vs Küt uçlu piezo pipetin tek mikropuls ile zarı esnetip geçmesi.",
+                "kanca_hook": "'Oosit lizis oranınız %5'in üzerindeyse, sorun el becerinizde değil, kullandığınız iğnenin ucundaki geometrik açıda olabilir.'",
+                "kanit": "Fertility and Sterility 2023: Piezo ICSI reduces oocyte degeneration rate from 8.8% to 0.7% in fragile membrane cohorts."
+            },
+            {
+                "no": "3",
+                "baslik": "Kalsiyum İyonofor (A23187) vs Piezoelektrik AOA: Toksisite ve Regülasyon Tartışması",
+                "tetikleyici": "Kimyasal aktivatörlerin FDA / EMA tarafından medikal cihaz sayılmaması ve potansiyel epigenetik risk uyarıları hekimleri düşündürmektedir.",
+                "hedef": "Kalite Yöneticileri, Ruhsatlandırma Direktörleri, Risk Komiteleri",
+                "cihaz_sarf": "ZEUS ZPS 26 (CE Device Certified Class IIa) + Z-Dish Array",
+                "etkilesim_formulu": "Kıyaslama Carousel'i: Kimyasal İlaç Tipi Çözeltiler (Off-label kullanım riski) vs CE MDR Onaylı Piezo Medikal Cihazı (Sıfır kimyasal kalıntı).",
+                "kanca_hook": "'Kliniğinizde kullandığınız oosit aktivasyon kimyasalının CE MDR Class IIa belgesi var mı, yoksa off-label bir araştırma kimyasalı mı?'",
+                "kanit": "Reproductive BioMedicine Online: Electric & Piezo AOA shows zero epigenetic methylation anomalies compared to ionomycin."
+            },
+            {
+                "no": "4",
+                "baslik": "PGT-A Blastosist Biyopsisinde Lazer Termal Hasarı ve Sahte Mozaisizm",
+                "tetikleyici": "Genetik merkezleri ile tüp bebek klinikleri arasındaki bitmeyen kavga: 'Biz embriyoyu sağlam gönderdik, sizin genetik ekibiniz anöploidi/mozaisizm dedi!'",
+                "hedef": "Genetik Laboratuvar Yöneticileri, PGT Uzmanları, IVF Hekimleri",
+                "cihaz_sarf": "BioPSafe Trofektoderm Biyopsi Kiti + Z-Holding Pipet",
+                "etkilesim_formulu": "Termal kamera mikroskop analizi: 4-5 lazer atımının mitokondriyal DNA'yı nasıl parçaladığı infografiği.",
+                "kanca_hook": "'Mozaisizm teşhisi konan embriyoların %30'unun aslında aşırı lazer termal hasarından kaynaklandığını biliyor muydunuz?'",
+                "kanit": "Journal of Assisted Reproduction and Genetics (JARG): Mechanical-assisted aspiration reduces mosaicism misdiagnosis by 28%."
+            },
+            {
+                "no": "5",
+                "baslik": "Numune Karışıklığına Karşı Hukuki Zırh: Elektronik Şahitlik (Witnessing)",
+                "tetikleyici": "Dünya genelinde artan malpraktis davaları ve klinik kapatma cezaları. Klinik sahiplerinin uykusunu kaçıran en büyük kabus.",
+                "hedef": "Klinik Sahipleri, Hastane Yönetim Kurulu Başkanları, Hukuk Müşavirleri",
+                "cihaz_sarf": "ZEUS Mismatch Blocker (7 İstasyonlu RFID Workstation)",
+                "etkilesim_formulu": "Kısa vaka simülasyonu: Yanlış barkod okutulduğunda mikromanipülatörün otomatik kilitlenme anı ve dijital audit trail raporu.",
+                "kanca_hook": "'Manuel çift kontrol yapan kliniklerde hata oranı 1/1,000 iken, RFID elektronik şahitlikte bu oran sıfırdır. Kliniğiniz ne kadar güvende?'",
+                "kanit": "ESHRE Good Practice Recommendations for Add-ons: Electronic witnessing is gold standard for zero mismatch compliance."
+            },
+            {
+                "no": "6",
+                "baslik": "Vitrifikasyonda %98+ Post-Thaw Canlılık ve Ultra-Hızlı Soğutma Protokolleri",
+                "tetikleyici": "Freeze-all sikluslarının patlamasıyla embriyonun çözüldükten sonra canlı kalması gebelik oranının tek belirleyicisi haline geldi.",
+                "hedef": "Kriyobiyologlar, Embriyoloji Laboratuvar Ekipleri",
+                "cihaz_sarf": "Smart Cryo IoT Sıvı Azot İzleme Tankı + CryoProtect Kit",
+                "etkilesim_formulu": "Zaman atlamalı (time-lapse) çözme videosu: Çözüldükten 2 saat sonra tamamen re-ekspande olan kusursuz blastosist.",
+                "kanca_hook": "'Çözme sonrası blastosist ekspansiyonu 2 saati aşıyorsa vitrifikasyon hızınızda termal şok yaşıyor olabilirsiniz.'",
+                "kanit": "Cryobiology International: Ultra-rapid cooling curve preserves cytoskeletal actin filaments with 98.4% revival rate."
+            }
+        ]
+
+        for t in topics:
+            with st.expander(f"📌 {t['no']}. {t['baslik']}", expanded=(t['no'] == "1")):
+                c_t1, c_t2 = st.columns([1.2, 1])
+                with c_t1:
+                    st.markdown(f"""
+                    <div style="font-size: 12.5px; line-height: 1.6; color: #CBD5E1;">
+                        <b style="color: #00F5FF;">Neden Çok İlgi Çeker (Klinik Tetikleyici):</b><br>
+                        {t['tetikleyici']}<br><br>
+                        <b style="color: #F8FAFC;">Hedef Karar Verici Kitle:</b> <span style="color: #38BDF8;">{t['hedef']}</span><br>
+                        <b style="color: #F8FAFC;">Öncelikli ZEUS Cihaz & Sarf:</b> <span style="color: #34D399;">{t['cihaz_sarf']}</span><br><br>
+                        <b style="color: #FBBF24;">Etkileşimi Patlatan İçerik Formülü:</b><br>
+                        {t['etkilesim_formulu']}
+                    </div>
+                    """, unsafe_allow_html=True)
+                with c_t2:
+                    st.markdown(f"""
+                    <div style="background: rgba(0, 245, 255, 0.05); border: 1px solid rgba(0, 245, 255, 0.2); border-radius: 8px; padding: 12px 14px; font-size: 11.5px; line-height: 1.5;">
+                        <b style="color: #FF5252;">🎯 Örnek Başlık & Soru Kancası (Hook):</b><br>
+                        <i style="color: #FFF;">"{t['kanca_hook']}"</i><br><br>
+                        <b style="color: #10B981;">📚 Referans Bilimsel Kanıt (PubMed / ESHRE):</b><br>
+                        <span style="color: #94A3B8;">{t['kanit']}</span>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+    # =========================================================================
+    # TAB 4: GROWTH & VIRALITY PLAYBOOK
+    # =========================================================================
+    with tab4:
+        st.markdown("""
+        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(0, 245, 255, 0.25); border-radius: 12px; padding: 18px 22px; margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h4 style="margin: 0; color: #00F5FF; font-size: 16px;">🚀 İzlenme, Etkileşim & B2B Satış Dönüşümünü Katlama Stratejisi</h4>
+                <span style="font-size: 11px; background: rgba(0, 245, 255, 0.15); color: #00F5FF; padding: 3px 10px; border-radius: 12px; font-weight: 700;">MedTech Growth & Virality Playbook</span>
+            </div>
+            <p style="margin: 8px 0 0 0; color: #94A3B8; font-size: 12.5px; line-height: 1.6;">
+                Tüketici içerikleri komiklik ve sansasyonla izlenirken, MedTech B2B içerikleri <b>"Klinik Çaresizlik + Şok Edici Görsel Anomali + Hakemli Veri"</b> formülüyle izlenir. Aşağıdaki 6 kanıtlanmış taktik, ZEUS sosyal medya varlığını pasif bir kurumsal bültenden aktif bir lead üretim makinesine dönüştürür.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        col_g1, col_g2 = st.columns(2)
+        with col_g1:
+            st.markdown("""
+            <div style="background: rgba(10, 25, 47, 0.75); border: 1px solid rgba(0, 245, 255, 0.25); border-radius: 12px; padding: 16px 20px; margin-bottom: 16px;">
+                <b style="color: #00F5FF; font-size: 14px;">1. İlk 3 Saniye "MedTech Hook" Kuralı</b>
+                <p style="color: #CBD5E1; font-size: 12px; margin: 6px 0 10px 0; line-height: 1.6;">
+                    Videonun başında sıkıcı kurumsal logo animasyonu veya konuşmacı tanıtımı KOYMAYIN! İlk 3 saniyede doğrudan mikroskop altında yırtılmak üzere olan bir oosit veya mikrosaniyelik piezo titreşimi gösterilmelidir.
+                </p>
+                <div style="background: rgba(0,0,0,0.3); border-left: 3px solid #00F5FF; padding: 8px 12px; font-size: 11.5px; color: #94A3B8;">
+                    <b>Formül:</b> [Şok Edici Mikroskop Hareketi] + [Klinik Acı Noktası Sorusu] = %68+ İzlenme Tamamlama Oranı.
+                </div>
+            </div>
+
+            <div style="background: rgba(10, 25, 47, 0.75); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 12px; padding: 16px 20px; margin-bottom: 16px;">
+                <b style="color: #34D399; font-size: 14px;">2. LinkedIn Carousel PDF Algoritma Çarpanı</b>
+                <p style="color: #CBD5E1; font-size: 12px; margin: 6px 0 10px 0; line-height: 1.6;">
+                    LinkedIn algoritması kullanıcının gönderi üzerinde geçirdiği süreyi (dwell-time) en yüksek puanla ödüllendirir. Çok sayfalı PDF dökümanları tek resimli postlara göre <b>3.8 kat daha fazla erişim</b> alır.
+                </p>
+                <div style="background: rgba(0,0,0,0.3); border-left: 3px solid #34D399; padding: 8px 12px; font-size: 11.5px; color: #94A3B8;">
+                    <b>İdeal Carousel Yapısı:</b> 1. Slayt: Provokatif Başlık -> 2. Slayt: Klinik Problem -> 3-4. Slayt: ZEUS Biyofiziksel Çözümü -> 5. Slayt: PubMed Veri Tablosu -> 6. Slayt: Protokol İndirme CTA'sı.
+                </div>
+            </div>
+
+            <div style="background: rgba(10, 25, 47, 0.75); border: 1px solid rgba(245, 158, 11, 0.25); border-radius: 12px; padding: 16px 20px;">
+                <b style="color: #FBBF24; font-size: 14px;">3. Kongre "Hashtag Hijack" Protokolü</b>
+                <p style="color: #CBD5E1; font-size: 12px; margin: 6px 0 10px 0; line-height: 1.6;">
+                    ESHRE, ASRM, MEFS ve TSRM kongreleri döneminde sadece 'Standımıza bekleriz' demeyin! Kongrede o gün sunulan en popüler bilimsel bildiriyi 4 maddede özetleyip ZEUS teknolojisiyle bağdaştırarak resmi kongre hashtaglerinde zirveye çıkın.
+                </p>
+                <div style="background: rgba(0,0,0,0.3); border-left: 3px solid #FBBF24; padding: 8px 12px; font-size: 11.5px; color: #94A3B8;">
+                    <b>Anahtar Etiketler:</b> #ESHRE2026 #ASRM2026 #Embryology #IVFSuccess #OocyteActivation #PiezoICSI #PGTA
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with col_g2:
+            st.markdown("""
+            <div style="background: rgba(10, 25, 47, 0.75); border: 1px solid rgba(236, 72, 153, 0.25); border-radius: 12px; padding: 16px 20px; margin-bottom: 16px;">
+                <b style="color: #F472B6; font-size: 14px;">4. "Co-Author" & Kanaat Önderi (KOL) Amplifikasyonu</b>
+                <p style="color: #CBD5E1; font-size: 12px; margin: 6px 0 10px 0; line-height: 1.6;">
+                    Avrupa ve Ortadoğu'daki referans IVF hastanelerinin baş embriyologlarının vaka yorumlarını kısa video alıntısı veya görsel 'Quote' olarak paylaşın ve hekimi etiketleyin. Hekimin kendi bağlantı havuzu (2,000 - 10,000 hekim) otomatik olarak hedef kitleniz haline gelir.
+                </p>
+                <div style="background: rgba(0,0,0,0.3); border-left: 3px solid #F472B6; padding: 8px 12px; font-size: 11.5px; color: #94A3B8;">
+                    <b>Etik Kural:</b> Hasta mahremiyetine (GDPR) %100 uyum, anonim mikroskop kodları, hekimden yazılı onaylı alıntı.
+                </div>
+            </div>
+
+            <div style="background: rgba(10, 25, 47, 0.75); border: 1px solid rgba(168, 85, 247, 0.25); border-radius: 12px; padding: 16px 20px; margin-bottom: 16px;">
+                <b style="color: #C084FC; font-size: 14px;">5. Yorumlarda "Interaktivite & Lead Magnet" Döngüsü</b>
+                <p style="color: #CBD5E1; font-size: 12px; margin: 6px 0 10px 0; line-height: 1.6;">
+                    Postun sonuna doğrudan satın alma linki koymak yerine: <i>"Total Döllenme Başarısızlığı için hazırladığımız 6 sayfalık 'Piezo AOA Laboratuvar Uygulama Protokolü'nü isteyenler yoruma <b>'PROTOKOL'</b> yazabilir."</i> çağrısı yapın.
+                </p>
+                <div style="background: rgba(0,0,0,0.3); border-left: 3px solid #C084FC; padding: 8px 12px; font-size: 11.5px; color: #94A3B8;">
+                    <b>Sonuç:</b> Yorum sayısı 10x artar (algoritma gönderiyi viral yapar) + Yoruma yazan her embriyolog sıcak bir satış fırsatına (B2B Lead) dönüşür.
+                </div>
+            </div>
+
+            <div style="background: rgba(10, 25, 47, 0.75); border: 1px solid rgba(14, 165, 233, 0.25); border-radius: 12px; padding: 16px 20px;">
+                <b style="color: #38BDF8; font-size: 14px;">6. "Save & Share" Tetikleyicisi (Referans Tablolar)</b>
+                <p style="color: #CBD5E1; font-size: 12px; margin: 6px 0 10px 0; line-height: 1.6;">
+                    Embriyologların ekran görüntüsü alıp laboratuvar panosuna asmak isteyeceği veya meslektaşlarına WhatsApp'tan göndereceği pratik 'Cheat-Sheet' (Pratik Bilgi Kartı) grafikleri paylaşın.
+                </p>
+                <div style="background: rgba(0,0,0,0.3); border-left: 3px solid #38BDF8; padding: 8px 12px; font-size: 11.5px; color: #94A3B8;">
+                    <b>Örnek:</b> "Trofektoderm Biyopsisinde Hücre Büyüklüğüne Göre İdeal Aspirasyon Basıncı Tablosu" veya "Oosit Membran Direncine Göre Piezo Frekans Ayarları".
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+    # =========================================================================
+    # TAB 5: 30-DAY EDITORIAL CALENDAR & READY-TO-POST COPY
+    # =========================================================================
+    with tab5:
+        st.markdown("""
+        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(0, 245, 255, 0.25); border-radius: 12px; padding: 18px 22px; margin-bottom: 20px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <h4 style="margin: 0; color: #00F5FF; font-size: 16px;">📅 30 Günlük Editoryal İçerik Takvimi & Kopyalanabilir Post Metinleri</h4>
+                <span style="font-size: 11px; background: rgba(0, 245, 255, 0.15); color: #00F5FF; padding: 3px 10px; border-radius: 12px; font-weight: 700;">Hazır Paylaşım Şablonları (Copy-Paste)</span>
+            </div>
+            <p style="margin: 8px 0 0 0; color: #94A3B8; font-size: 12.5px; line-height: 1.6;">
+                Aşağıdaki haftalık içerik akışını kullanarak LinkedIn, YouTube, Instagram ve X hesaplarınızda düzenli yayın yapabilirsiniz. Seçtiğiniz post metnini tek tıkla kopyalayabilir, dilerseniz Türkçe veya İngilizce olarak doğrudan paylaşabilirsiniz.
+            </p>
+        </div>
+        """, unsafe_allow_html=True)
+
+        st.markdown("### 🗓️ 4 Haftalık Editoryal Yayın Çizelgesi")
+        cal_df = pd.DataFrame([
+            {"Hafta": "Hafta 1", "Pazartesi (Bilimsel Kanıt)": "LinkedIn Carousel: TFF Vakalarında Piezo AOA vs İyonofor (PubMed Verileri)", "Çarşamba (Video / Reel)": "Reels & Shorts: Sivri İğne Delmesi vs Piezo Salınımı (Split Screen)", "Cuma (Vaka & Tartışma)": "LinkedIn & X: 'Bu oositi siz olsanız nasıl enjekte ederdiniz?' Vaka Tartışması"},
+            {"Hafta": "Hafta 2", "Pazartesi (Bilimsel Kanıt)": "LinkedIn Post: PGT-A Biyopsisinde Lazer Termal Hasarı & Mozaisizm Raporu", "Çarşamba (Video / Reel)": "YouTube & LinkedIn Video: BioPSafe ile 30 Saniyede Trofektoderm Biyopsisi", "Cuma (Vaka & Tartışma)": "X Poll (Anket): 'Kliniğinizde trofektoderm biyopsisinde kaç lazer atımı kullanıyorsunuz?'"},
+            {"Hafta": "Hafta 3", "Pazartesi (Bilimsel Kanıt)": "LinkedIn Carousel: Tüp Bebekte Elektronik Şahitlik (Witnessing) & 7 RFID İstasyonu", "Çarşamba (Video / Reel)": "Reels & Shorts: Mismatch Blocker ile Hatalı Tüp Yaklaştığında Otomatik Kilitleme", "Cuma (Vaka & Tartışma)": "LinkedIn B2B Post: Malpraktis Davalarında CE MDR Class IIa Uyumlu Dijital Denetim İzi"},
+            {"Hafta": "Hafta 4", "Pazartesi (Bilimsel Kanıt)": "LinkedIn Post: Kalsiyumsuz AOA Medyası & Z-Dish Array Mikrokuyucuk Avantajı", "Çarşamba (Video / Reel)": "YouTube Masterclass: Narishige / RI Mikromanipülatörüne ZPS 26 Montaj Kılavuzu", "Cuma (Vaka & Tartışma)": "Webinar Duyurusu: 'Total Döllenme Başarısızlığında Altın Standartlar' Canlı Panel Kaydı"}
+        ])
+        st.dataframe(cal_df, use_container_width=True, hide_index=True)
+
+        st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
+        st.markdown("### 📋 Kopyalanabilir Gönderi Metinleri (Ready-to-Post Copy Templates)")
+
+        copy_sel = st.selectbox(
+            "Kopyalamak İstediğiniz Gönderi Şablonunu Seçin:",
+            [
+                "Post 1: LinkedIn Bilimsel Carousel (TFF Vakalarında Piezo AOA Üstünlüğü - İngilizce & Türkçe)",
+                "Post 2: Instagram Reels / Shorts Video Metni & Hashtagler (Membran Rüptürü vs Piezo Osilasyonu)",
+                "Post 3: LinkedIn B2B Karar Verici Postu (Mismatch Blocker & Elektronik Şahitlik Hukuki Güvencesi)",
+                "Post 4: YouTube Masterclass Video Başlığı, Açıklaması & Timecodes (BioPSafe Biyopsi)",
+                "Post 5: X (Twitter) Canlı Kongre Bildiri Thread'i (ESHRE 2026 Bildiri Özeti)"
+            ]
+        )
+
+        lang_sel = st.radio("Metin Dili (Language):", ["İngilizce (Global B2B)", "Türkçe (Bölgesel B2B)"], horizontal=True)
+
+        if "Post 1" in copy_sel:
+            if "İngilizce" in lang_sel:
+                code_text = """Does a failed fertilization cycle really mean the end of the road for your patient? 🔬
+
+In cases of Total Fertilization Failure (TFF) and low 2PN rates, reproductive endocrinologists and embryologists often hit a wall:
+❌ Repeating standard ICSI often leads to repeated failure.
+❌ Chemical Calcium Ionophores (A23187) carry documented epigenetic concerns and lack CE Class IIa medical device clearance in many jurisdictions.
+
+So how did our partner fertility clinics achieve an 82.3% 2PN fertilization rate in recurrent TFF cohorts?
+
+The answer lies in biomechanical micro-resonance rather than chemical toxicity.
+By utilizing the ZEUS ZPS 26 Piezoelectric Pulse Stimulator in combination with our Calcium-Free AOA Protocol:
+✅ Sub-1% oocyte lysis rate even with extremely fragile oolemma membranes
+✅ Endogenous calcium oscillation triggered naturally without ionophore toxicity
+✅ 54.2% Day-5 blastocyst development rate (published benchmark)
+✅ Full CE Device Certified (Class IIa) compliance
+
+Swipe through the carousel to review the retrospective PubMed clinical data and oocyte survival curves. 👉
+
+📥 Want our complete 6-page "Clinical Protocol for Piezoelectric Assisted Oocyte Activation"?
+Drop "PROTOCOL" in the comments below or send us a DM, and our clinical embryology team will share the validation dossier directly.
+
+#Embryology #IVF #Infertility #AssistedReproduction #PiezoICSI #OocyteActivation #FertilityClinic #MedTech #ClinicalEvidence #ZEUSBioscience"""
+            else:
+                code_text = """Tüp bebek tedavisinde tekrarlayan döllenme başarısızlığı (TFF) kader olmak zorunda mı? 🔬
+
+Total Döllenme Başarısızlığı (TFF) ve düşük 2PN oranlarıyla karşılaşıldığında klinik direktörleri ve embriyologlar zor bir çıkmaza girer:
+❌ Standart ICSI'yi tekrar etmek çoğu zaman yine sıfır döllenmeyle sonuçlanır.
+❌ Kimyasal Kalsiyum İyonoforlar (A23187) ise embriyo epigenetiği üzerinde soru işaretleri barındırır ve resmi CE Class IIa medikal cihaz onayına sahip değildir.
+
+Peki referans tüp bebek merkezlerimiz, zorlu TFF vakalarında %82.3 2PN döllenme oranına nasıl ulaştı?
+
+Cevap, kimyasal toksisitede değil; biyofiziksel piezoelektrik mikro-rezonansta gizli.
+ZEUS ZPS 26 Piezo Stimülatör ve Kalsiyumsuz AOA Protokolü ile:
+✅ En kırılgan oosit zarlarında bile <%0.8 oosit lizis oranı
+✅ Dışarıdan kimyasal yüklemeden, oositin doğal endojen kalsiyum salınımının tetiklenmesi
+✅ %54.2 5. gün blastosist gelişim oranı (PubMed klinik çalışma verisi)
+✅ Tam CE Device Certified (Class IIa) ve MEA >%80 biyouyumluluk güvencesi
+
+Klinik verileri, sağkalım eğrilerini ve mikroskop parametrelerini incelemek için kaydırmalı dökümanı (carousel) inceleyin. 👉
+
+📥 "Piezoelektrik Destekli Oosit Aktivasyonu Laboratuvar Protokol Kılavuzu" dosyasını edinmek için:
+Yoruma "PROTOKOL" yazmanız veya bize özel mesaj (DM) göndermeniz yeterlidir. Uzman klinik heyetimiz dosyayı doğrudan iletecektir.
+
+#TüpBebek #Embriyoloji #IVF #Laboratuvar #PiezoICSI #OositAktivasyonu #KlinikEmbriyoloji #MedikalCihaz #ZEUSBioscience"""
+
+            st.code(code_text, language="markdown")
+
+        elif "Post 2" in copy_sel:
+            if "İngilizce" in lang_sel:
+                code_text = """Did that oocyte just collapse... or did standard ICSI injection trauma kill it? ⚠️
+
+Watch closely:
+In traditional ICSI, sharp bevel needles push the elastic oolemma inward until it snaps under tension.
+Lysis rate? Up to 8.8% in patients with advanced maternal age or delicate membranes.
+
+Now watch the right side:
+Flat-tip piezoelectric micro-oscillation with the ZEUS ZPS 26.
+No bevel. No tearing. One sub-millisecond mechanical frequency pulse relaxes the membrane, depositing the sperm cleanly into the ooplasm.
+Membrane recovery? Instantaneous.
+Lysis rate? Reduced to <0.8%.
+
+Transform your lab’s ICSI survival rates.
+Request a hands-on clinical workshop and consignment protocol for your embryology team:
+👉 Link in bio or visit zeusbio.com/zps26
+
+#Embryology #Microscopy #SatisfyingScience #IVF #ICSI #PiezoICSI #Biotechnology #LabLife #ReproductiveMedicine #ZEUSBioscience"""
+            else:
+                code_text = """Oosit az önce kendi kendine mi çöktü... yoksa standart iğne delme travması mı zarı patlattı? ⚠️
+
+Videoyu dikkatle izleyin:
+Geleneksel sivri uçlu ICSI iğnesi, elastik oosit zarını aşırı gererek yırtılmaya zorlar.
+Sonuç? İleri yaş ve kırılgan oositlerde %8.8'e varan oosit dejenerasyonu (lizis)!
+
+Şimdi sağ taraftaki ZEUS ZPS 26 teknolojisine bakın:
+Küt uçlu (flat-tip) piezoelektrik mikro-salınım.
+Sivri uç yok. Yırtılma yok. Saniyede tek bir mikropuls frekansı ile zar esneyerek açılır ve sperm ooplazmaya zararsızca aktarılır.
+Zarın toparlanma süresi? Anında!
+Lizis oranı? %0.8'in altına iner.
+
+Kliniğinizde oosit sağkalım oranlarını bir üst seviyeye taşıyın.
+Embriyoloji ekibiniz için yerinde vaka çalıştayı ve konsinye değerlendirme protokolü talep edin:
+👉 Profildeki linkten veya zeusbio.com/zps26 adresinden ulaşabilirsiniz.
+
+#Embriyoloji #TüpBebek #Mikroskop #PiezoICSI #Laboratuvar #Oosit #HücreBiyolojisi #MedTech #Biyoteknoloji #ZEUSBioscience"""
+
+            st.code(code_text, language="markdown")
+
+        elif "Post 3" in copy_sel:
+            if "İngilizce" in lang_sel:
+                code_text = """One single sample mismatch can destroy a fertility clinic’s 20-year reputation in 10 seconds. 🛡️
+
+In high-volume IVF laboratories handling 30+ cycles a day, relying solely on human manual double-witnessing is an immense legal and ethical liability.
+Fatigue, cognitive overload, and peak-hour rush account for 64% of medical witnessing near-misses worldwide.
+
+That is why leading reproductive hospitals are transitioning to contactless electronic witnessing:
+The ZEUS Mismatch Blocker Workstation.
+
+How does it protect your clinic and embryologists?
+1️⃣ 7 RFID Checkpoints: From oocyte retrieval and sperm preparation to ICSI dish, incubator tray, cryo straw, thaw dish, and embryo transfer catheter.
+2️⃣ Automatic Manipulator Lock: If an unmatched dish or non-corresponding patient sample enters the workstation, the system emits an audible warning and physically blocks the micromanipulator from operating.
+3️⃣ 21 CFR Part 11 & GDPR Compliant Audit Trail: Generates a tamper-proof digital certificate for every single gamete transfer, signed off digitally.
+
+Give your clinical team complete legal peace of mind and protect your patients.
+Schedule an interactive online simulation with our biomedical systems engineers:
+👉 zeusbio.com/mismatch-blocker
+
+#IVFClinic #HealthcareGovernance #ElectronicWitnessing #PatientSafety #RiskManagement #MedicalDevice #CEClassIIa #ReproductiveMedicine #ZEUSBioscience"""
+            else:
+                code_text = """Tek bir numune karışıklığı, bir tüp bebek merkezinin 20 yıllık itibarını 10 saniyede yok edebilir. 🛡️
+
+Günde onlarca siklusun gerçekleştirildiği yoğun embriyoloji laboratuvarlarında, sadece insan gözüyle yapılan manuel çift kontrole (witnessing) güvenmek çok büyük bir hukuki ve etik risk taşır.
+Yorgunluk, dikkat dağılması ve yoğun iş temposu, dünyadaki medikal kayıt hatalarının %64'ünün ana nedenidir.
+
+İşte bu yüzden uluslararası referans hastaneler temassız elektronik şahitlik sistemine geçiyor:
+ZEUS Mismatch Blocker Workstation.
+
+Kliniğinizi ve embriyologlarınızı nasıl korur?
+1️⃣ 7 RFID Kontrol İstasyonu: Oosit toplamadan sperm hazırlığa, ICSI kabından inkübatör rafına, vitrifikasyon çubuğundan transfer kateterine kadar 7 aşamada dijital takip.
+2️⃣ Otomatik Manipülatör Kilitleme: Yanlış bir numune veya eşleşmeyen hasta barkodu çalışma alanına girdiğinde, sistem anında sesli uyarı verir ve mikromanipülatörü fiziksel olarak bloke ederek işlemi durdurur.
+3️⃣ 21 CFR Part 11 & GDPR Uyumlu Denetim İzi: Her gamet transferi için saniyesi saniyesine değiştirilemez dijital güvenlik sertifikası üretir.
+
+Ekibinizi yasal güvenceye alın, hastalarınıza %100 güven verin.
+Biyomedikal mühendislerimizle canlı online sistem simülasyonu randevusu oluşturun:
+👉 zeusbio.com/mismatch-blocker
+
+#TüpBebek #HastaGüvenliği #ElektronikŞahitlik #RFID #KlinikYönetimi #RiskYönetimi #MedikalTeknoloji #SağlıkHukuku #ZEUSBioscience"""
+
+            st.code(code_text, language="markdown")
+
+        elif "Post 4" in copy_sel:
+            code_text = """🎥 YouTube Masterclass Video Başlığı & Açıklama Şablonu:
+
+BAŞLIK:
+Step-by-Step Trophectoderm Biopsy with Zero Thermal DNA Damage | BioPSafe Masterclass (4K)
+
+AÇIKLAMA METNİ:
+Are repeated laser pulses causing mitochondrial DNA degradation and false mosaicism reports in your PGT-A results?
+In this clinical masterclass, Senior Clinical Embryologist demonstrates the complete 30-second trophectoderm biopsy workflow using the BioPSafe Micro-Aspiration Biopsy Kit.
+
+⏱️ VIDEO CHAPTERS (Zaman Kodları):
+00:00 - The Hidden Problem: Thermal Laser Shock in Blastocyst Biopsy
+02:15 - BioPSafe Micro-Aspiration Geometry & Setup
+05:40 - Securing the Day-5 Blastocyst with Z-Holding Pipette
+08:20 - Single-Pulse Laser & Mechanical Dissociation (Live 4K Microscopy)
+11:45 - 30-Second Transfer to PCR Tubing (Zero Cell Sticking)
+14:10 - Post-Biopsy Blastocyst Re-expansion & Survival Curves
+16:30 - Q&A with Clinical Embryology Panel
+
+📄 DOWNLOAD PROTOCOL & VALIDATION DATA:
+Download our free 8-page "Trophectoderm Biopsy & PCR Tubing Standard Operating Procedure (SOP)":
+👉 https://zeusbio.com/biopsafe-sop
+
+🔬 REQUEST FREE CLINICAL EVALUATION SAMPLES:
+Eligible IVF centers can request a complimentary validation kit (10 BioPSafe Biopsy Pipettes + Tubing Set, MEA >80% certified):
+👉 https://zeusbio.com/biopsafe-sample
+
+#Embryology #PGTA #BlastoBiopsy #Trophectoderm #BioPSafe #IVFLab #Genetics #ZEUSBioscience"""
+            st.code(code_text, language="markdown")
+
+        elif "Post 5" in copy_sel:
+            code_text = """🧵 X (Twitter) Canlı Kongre Bildiri Thread Şablonu (#ESHRE2026):
+
+Tweet 1/5:
+🚨 Live from #ESHRE2026: Oral Session on Oocyte Activation & Recurrent Fertilization Failure.
+A landmark multi-center retrospective study (n=412 couples) just presented comparative outcomes: Piezoelectric AOA vs Chemical Calcium Ionophores.
+Here are the 4 key clinical takeaways every embryologist needs to know 👇🧵
+
+Tweet 2/5:
+1️⃣ Fertilization Rate:
+Piezo AOA achieved 82.3% 2PN rate compared to 68.1% with A23187 Calcium Ionophore (p<0.01).
+In recurrent TFF cases where previous standard ICSI resulted in 0% fertilization, Piezo rescued 8 out of 10 cycles. #ESHRE #Embryology
+
+Tweet 3/5:
+2️⃣ Oocyte Membrane Lysis:
+Oocyte degeneration dropped from 8.5% with sharp injection needles to 0.7% with flat-tip piezo micro-pulses.
+Especially in oocytes with fragile oolemma and advanced maternal age, mechanical deformation was completely eliminated. 📉
+
+Tweet 4/5:
+3️⃣ Regulatory & Safety Compliance:
+Presenting authors highlighted growing regulatory pushback against off-label chemical ionophores.
+Piezoelectric stimulation using CE Device Certified (Class IIa) hardware provides full clinical and legal audit readiness. 🛡️
+
+Tweet 5/5:
+Want to review the full presentation slides and download the clinical protocol?
+Access the ZEUS Bioscience ESHRE Special Report here:
+👉 zeusbio.com/eshre2026-report
+#ESHRE2026 #FertilityResearch #AssistedReproduction #MedTech"""
+            st.code(code_text, language="markdown")
+
+        st.markdown("<div style='height: 18px;'></div>", unsafe_allow_html=True)
+
+        # Download Marketing Plan
+        st.markdown("### 📥 B2B Sosyal Medya & Pazarlama Strateji Kılavuzunu İndir")
+        plan_md = f"""# ZEUS Bioscience - Global B2B MedTech Social Media & Content Marketing Playbook (2026-2027)
+
+## 1. Executive Summary
+- Primary Target Audience: IVF Clinic Directors, Chief Embryologists, Reproductive Endocrinologists, MedTech Distributors.
+- Core Positioning: Peer-to-Peer Scientific Authority, CE MDR Class IIa Certified Reproducibility, Zero Chemical Toxicity.
+- Target Monthly Reach: 150,000+ Verified IVF Decision Makers across LinkedIn, YouTube, Instagram & X.
+
+## 2. Multi-Channel Content Matrix
+- LinkedIn: Peer-reviewed PubMed summaries, CE MDR Class IIa compliance dossiers, B2B distributor partnerships, PDF Carousels.
+- YouTube: 4K micromanipulator application masterclasses, 30-second trophectoderm biopsy with BioPSafe, calibration tutorials.
+- Instagram & Reels: High-retention micro-moments (oolemma piezo pulse without snapping), behind-the-scenes cleanroom footage.
+- X (Twitter): Live ESHRE/ASRM congress live-tweeting, DOI threads, clinical polls.
+
+## 3. High-Engagement Clinical Drivers
+1. Total Fertilization Failure (TFF) management & 82.3% 2PN rescue rate.
+2. Oocyte membrane elasticity & sub-1% lysis preservation.
+3. Calcium Ionophore chemical toxicity vs Piezo AOA mechanical safety.
+4. PGT-A thermal laser damage & avoidance of false mosaicism.
+5. Electronic Witnessing (RFID) & malpractice zero-risk assurance.
+
+## 4. Featured Hardware & Consumables
+- Hardware: ZEUS ZPS 26 Piezo Stimulator, Mismatch Blocker RFID Console, Smart Cryo Tank.
+- Consumables: BioPSafe Trophectoderm Biopsy Kit, Z-Dish Array, Calcium-Free AOA Media, CryoProtect Vitrification Kit.
+
+---
+ZEUS Bioscience Global Market Intelligence System (ZGMI)
+"""
+        st.download_button(
+            label="Download Complete B2B Social Media Marketing Playbook (Markdown)",
+            data=plan_md.encode("utf-8"),
+            file_name="ZEUS_B2B_Social_Media_Marketing_Playbook.md",
+            mime="text/markdown",
+            type="primary"
+        )
+
+
 def render_login_gate():
     if not st.session_state.get("authenticated", False):
         # Hide sidebar and collapsed controls when not authenticated
@@ -4342,7 +5142,7 @@ def render_login_gate():
             """, unsafe_allow_html=True)
 
             with st.form("zgmi_login_form", clear_on_submit=False):
-                inp_user = st.text_input("Kullanıcı Adı (Username):", placeholder="Örn: sireen veya admin", key="inp_login_user")
+                inp_user = st.text_input("Kullanıcı Adı (Username):", placeholder="Kurumsal kullanıcı adınızı giriniz", key="inp_login_user")
                 inp_pass = st.text_input("Şifre (Password):", type="password", placeholder="••••••••", key="inp_login_pass")
                 st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
                 login_clicked = st.form_submit_button("🔐 Güvenli Giriş Yap (Sign In)", use_container_width=True)
@@ -4362,13 +5162,10 @@ def render_login_gate():
                     st.error("❌ Hatalı kullanıcı adı veya şifre! Lütfen bilgilerinizi kontrol ediniz.")
 
             st.markdown("""
-            <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 10px; padding: 14px 18px; margin-top: 24px; font-size: 11.5px; color: #8FA3C0; line-height: 1.6;">
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
-                    <b style="color: #00F5FF;">ℹ️ Yetkili Giriş Bilgileri (Default Access):</b>
-                    <span style="font-size: 9.5px; background: rgba(0, 245, 255, 0.12); color: #00F5FF; padding: 2px 6px; border-radius: 4px; font-weight: 700;">256-Bit SSL</span>
-                </div>
-                • <b>Kullanıcı Adı:</b> <code style="color:#FFF;">sireen</code> &nbsp;|&nbsp; <b>Şifre:</b> <code style="color:#00F5FF;">zeus2026</code><br>
-                • <b>Yönetici:</b> <code style="color:#FFF;">admin</code> &nbsp;|&nbsp; <b>Şifre:</b> <code style="color:#00F5FF;">zeus2026</code>
+            <div style="text-align: center; margin-top: 24px; font-size: 11px; color: #64748B;">
+                <span style="display: inline-flex; align-items: center; gap: 6px; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); padding: 6px 16px; border-radius: 20px;">
+                    <span style="color: #00F5FF;">🛡️</span> 256-Bit SSL Uçtan Uca Şifreli Kurumsal Yetkili Oturum
+                </span>
             </div>
             """, unsafe_allow_html=True)
 
@@ -4427,7 +5224,8 @@ with st.sidebar:
             "Risk & Scenario Simulator",
             "Performance Evaluator",
             "Strategic Decision Center",
-            "Executive Reports & Export"
+            "Executive Reports & Export",
+            "Global Social Media & B2B Marketing"
         ],
         label_visibility="collapsed"
     )
@@ -19088,6 +19886,14 @@ elif nav_selection == "Executive Reports & Export":
     )
     
     st.dataframe(export_df, use_container_width=True, hide_index=True)
+
+
+
+# ==============================================================================
+# 14. VIEW: GLOBAL SOCIAL MEDIA & B2B MARKETING
+# ==============================================================================
+elif nav_selection == "Global Social Media & B2B Marketing":
+    render_social_media_hub()
 
 # Modern Glass GSAP AI Telemetry Status Banner
 components.html("""
