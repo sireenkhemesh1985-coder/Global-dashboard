@@ -3216,7 +3216,11 @@ def build_country_360_charts(country_name, c_macro, c_sales, target_rev_2027=500
 
     return fig1, fig2, fig3
 
-def render_deep_sales_strategy_ui(country_name, deep_intel, p_fc=None):
+def render_deep_sales_strategy_ui(country_name, deep_intel=None, p_fc=None):
+    if deep_intel is None:
+        deep_intel = {}
+    if p_fc is None:
+        p_fc = deep_intel.get('pricing_forecasts', {})
     """
     Renders the ultra-detailed 5-dimension commercial sales strategy:
     1. GTM Overview (Customer, Channel, Clinical Pitch, Objection)
@@ -15404,7 +15408,10 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
 
             # SUB-TAB 4: SATIŞ STRATEJİSİ (GTM)
             with k_tab4:
-                render_deep_sales_strategy_ui(cmp_kb_country, deep_intel, pricing_fc)
+                try:
+                    render_deep_sales_strategy_ui(cmp_kb_country, deep_intel, pricing_fc)
+                except Exception as e:
+                    st.error(f"Satış stratejisi yüklenirken bir istisna oluştu: {e}")
 
             # SUB-TAB 5: RESMİ BAKANLIK TEBLİĞLERİ
             with k_tab5:
@@ -15681,14 +15688,68 @@ elif nav_selection == "Country 360° Performance & Report":
         </div>
         """, unsafe_allow_html=True)
 
-        # 6 KPI Glass Metric Cards
-        kpi_c1, kpi_c2, kpi_c3, kpi_c4, kpi_c5, kpi_c6 = st.columns(6)
-        kpi_c1.metric("Kayıtlı Toplam Ciro", f"${tot_rev:,.0f} USD" if tot_rev > 0 else "$0 USD", delta=f"{tot_invs} Fatura Satırı" if tot_invs > 0 else "Genişleme Pazarı")
-        kpi_c2.metric("Kurulu Cihaz Filosu", f"{tot_devs} Cihaz", delta="Piezo Stimülatör" if tot_devs > 0 else "Giriş Hedefi: 2")
-        kpi_c3.metric("Tüketilen Sarf Kiti", f"{tot_cons} Kutu", delta="Kümülatif Çekiş" if tot_cons > 0 else "Hedef: 100+")
-        kpi_c4.metric("YoY Satış Büyümesi", f"%{yoy_val:+.1f}" if tot_rev > 0 else "Potansiyel: Yüksek", delta="Yıllık Trend")
-        kpi_c5.metric("Kişi Başı GSYİH", f"${c_macro['gdp_pc']:,} USD", delta=c_macro['gdp_tier'])
-        kpi_c6.metric("Gümrük & Bekleme", f"%{c_macro['customs_tariff_pct']:.1f}", delta=f"{c_macro['customs_clearance_days']} Gün Tampon")
+        # Resolve Market Intelligence Cycles & Partner context for Country 360
+        est_total_cycles = max(3000, int(c_macro.get('clinics', 20) * 350))
+        if sel_country == 'Egypt':
+            est_total_cycles = 52000
+        elif sel_country in ['Turkey', 'Türkiye']:
+            est_total_cycles = 65000
+        elif sel_country == 'Italy':
+            est_total_cycles = 95000
+        elif sel_country in ['Jordan-Iraq', 'Jordan', 'Iraq']:
+            est_total_cycles = 28000
+        elif sel_country == 'Saudi Arabia':
+            est_total_cycles = 32000
+        elif sel_country == 'Algeria':
+            est_total_cycles = 28000
+        elif sel_country == 'Qatar':
+            est_total_cycles = 4500
+
+        if sel_country in ['Jordan-Iraq', 'Jordan', 'Iraq']:
+            c_partner_label = "Sirius Pharm (Levant Yetkili Distribütörü)"
+        elif sel_country == 'Qatar':
+            c_partner_label = "ITL MedTech Doha (Aktif Acente / Dağıtıcı)"
+        elif sel_country == 'Saudi Arabia':
+            c_partner_label = "AMS Saudi (Assisted Medical Solution)"
+        elif sel_country == 'Egypt':
+            c_partner_label = "TechnoPharm / Technomed Egypt (Ulusal Acente)"
+        elif sel_country == 'Algeria':
+            c_partner_label = "Biopharm Algérie / MediTech Maghreb"
+        elif sel_country in ['Turkey', 'Türkiye']:
+            c_partner_label = "GEN-SA Genel Sağlık A.Ş. (Doğrudan Kanal)"
+        elif sel_country == 'Italy':
+            c_partner_label = "Gynemed Italia / Bio-Optica Milano"
+        else:
+            c_partner_label = f"{sel_country} Yerel MedTech Dağıtım Ağı"
+
+        # ----------------------------------------------------------------------
+        # EXECUTIVE MARKET INTELLIGENCE & KLİNİK KAPASİTE GÖSTERGELERİ
+        # ----------------------------------------------------------------------
+        st.markdown(f"""
+        <div style="background:rgba(0,245,255,0.03);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:8px 14px;margin-bottom:12px;">
+            <span style="color:#00F5FF;font-weight:800;font-size:13.5px;">📊 {sel_country} Market Intelligence & Makro Klinik Kapasite Göstergeleri</span>
+            <span style="color:#94A3B8;font-size:11.5px;margin-left:10px;">Dünya Bankası (WDI) ve ESHRE resmi kayıtlarına dayalı ulusal pazar büyüklüğü</span>
+        </div>
+        """, unsafe_allow_html=True)
+
+        kpi_m1, kpi_m2, kpi_m3, kpi_m4 = st.columns(4)
+        kpi_m1.metric("Lisanslı IVF Kliniği", f"{c_macro['clinics']} Klinik", delta=f"{c_macro['gdp_tier']}")
+        kpi_m2.metric("Yıllık Tedavi Siklusu", f"{est_total_cycles:,.0f} Siklus", delta=f"Klinik Başı: ~{int(est_total_cycles / max(c_macro['clinics'], 1)):,} Siklus")
+        kpi_m3.metric("Kişi Başı GSYİH (GDP pc)", f"${c_macro['gdp_pc']:,} USD", delta=f"Alım Gücü: {c_macro.get('living_standard', 'Standart')}")
+        kpi_m4.metric("ICSI & AOA Adaptasyonu", f"%{c_macro.get('icsi_pct', 82)}%", delta="Total Tedavi Penetrasyonu")
+
+        st.markdown(f"""
+        <div style="background:rgba(255,184,0,0.03);border:1px solid rgba(255,184,0,0.25);border-radius:10px;padding:8px 14px;margin-top:10px;margin-bottom:12px;">
+            <span style="color:#FFB800;font-weight:800;font-size:13.5px;">📦 {sel_country} Dış Ticaret, Gümrük & Dağıtım Altyapısı</span>
+            <span style="color:#94A3B8;font-size:11.5px;margin-left:10px;">Liman rejimi, tescil mevzuatı ve gerçekleşen Excel ERP satışları</span>
+        </div>
+        """, unsafe_allow_html=True)
+
+        kpi_t1, kpi_t2, kpi_t3, kpi_t4 = st.columns(4)
+        kpi_t1.metric("Gümrük Vergisi", f"%{c_macro['customs_tariff_pct']:.1f}", delta=f"{cust_reg.get('vat_rate', '%14 KDV')}")
+        kpi_t2.metric("Liman Bekleme Süresi", f"{c_macro['customs_clearance_days']} Gün", delta="Gümrük Tamponu")
+        kpi_t3.metric("Mevcut Dağıtıcı / Kanal", c_partner_label[:22] + "...", delta="Yetkili Acente / Aday")
+        kpi_t4.metric("Kayıtlı ERP Satışı", f"${tot_rev:,.0f} USD" if tot_rev > 0 else "$0 USD", delta=f"{tot_devs} Cihaz / {tot_cons} Kutu" if tot_rev > 0 else "Genişleme Bölgesi")
 
         st.markdown("<hr style='border-color:rgba(19,166,181,0.25);margin:18px 0;'>", unsafe_allow_html=True)
 
@@ -15837,28 +15898,26 @@ elif nav_selection == "Country 360° Performance & Report":
             """, unsafe_allow_html=True)
             
             dev_preset = st.selectbox(
-                "Cihaz Modeli Preset Seçin:",
+                "Cihaz Modeli Seçin:",
                 [
-                    "ZEUS Pulse Stimulator (ZPS 26) - $28,500 USD",
-                    "ZEUS BioPSafe (ZBS26) - $32,000 USD",
-                    "ZEUS Mismatch Blocker (ZMB26) - $24,000 USD",
-                    "ZEUS Smart Cryo-Tools (ZCT26) - $14,500 USD",
-                    "Özel Fiyat Girişi (Manuel)"
+                    "ZEUS Pulse Stimulator (ZPS 26) — Piezo Oosit Aktivasyon",
+                    "ZEUS BioPSafe (ZBS26) — Embriyo Biyopsi & PCR Tubing İstasyonu",
+                    "ZEUS Mismatch Blocker (ZMB26) — RFID & Elektronik Numune Şahitliği",
+                    "ZEUS Smart Cryo-Tools (ZCT26) — Vitrifikasyon & Kriyo Yönetimi",
+                    "Özel Donanım / Manuel Giriş"
                 ],
                 key=f"c360_dev_preset_{sel_country}"
             )
-            if "ZPS 26" in dev_preset:
-                default_dev_price = 28500.0
-            elif "BioPSafe" in dev_preset:
-                default_dev_price = 32000.0
-            elif "Mismatch" in dev_preset:
-                default_dev_price = 24000.0
-            elif "Cryo" in dev_preset:
-                default_dev_price = 14500.0
-            else:
-                default_dev_price = 28500.0
-                
-            dev_list_price = st.number_input("Cihaz Liste Fiyatı ($ USD):", min_value=1000.0, max_value=200000.0, value=default_dev_price, step=500.0, key=f"c360_dev_price_{sel_country}")
+            
+            dev_list_price = st.number_input(
+                "Cihaz Birim Fiyatı ($ USD — Elle Giriniz):", 
+                min_value=0.0, 
+                max_value=500000.0, 
+                value=0.0, 
+                step=100.0, 
+                placeholder="Fiyatı buraya elle giriniz ($ USD)...",
+                key=f"c360_dev_price_{sel_country}"
+            )
             rec_dev_max = float(pricing_fc.get('rec_device_discount', 8.0))
             dev_disc_pct = st.slider("Cihaz İskonto Oranı (%):", min_value=0.0, max_value=30.0, value=rec_dev_max, step=0.5, key=f"c360_dev_disc_{sel_country}")
             dev_qty = st.number_input("Sipariş Cihaz Adedi:", min_value=1, max_value=50, value=1, step=1, key=f"c360_dev_qty_{sel_country}")
@@ -15904,28 +15963,26 @@ elif nav_selection == "Country 360° Performance & Report":
             """, unsafe_allow_html=True)
             
             con_preset = st.selectbox(
-                "Sarf Ürün Grubu Preset Seçin:",
+                "Sarf Ürün Grubu Seçin:",
                 [
-                    "Piezo Aktivasyon Dishleri (Z-Dish Array) - $120 USD/Kutu",
-                    "Piezo Ca-Free Aktivasyon Medyası - $180 USD/Kutu",
-                    "Trofektoderm Biyopsi Pipeti - $95 USD/Kutu",
-                    "Akıllı Kriyo-Goblet Seti - $150 USD/Kutu",
-                    "Genel Karma Sarf Paketi - $135 USD/Kutu"
+                    "Piezo Aktivasyon Dishleri (Z-Dish Array)",
+                    "Piezo Ca-Free Aktivasyon Medyası",
+                    "Trofektoderm Biyopsi Pipeti",
+                    "Akıllı Kriyo-Goblet Seti",
+                    "Genel Karma / Özel Sarf Paketi"
                 ],
                 key=f"c360_con_preset_{sel_country}"
             )
-            if "Z-Dish" in con_preset:
-                default_con_price = 120.0
-            elif "Medya" in con_preset:
-                default_con_price = 180.0
-            elif "Pipet" in con_preset:
-                default_con_price = 95.0
-            elif "Goblet" in con_preset:
-                default_con_price = 150.0
-            else:
-                default_con_price = 135.0
-                
-            con_list_price = st.number_input("Sarf Liste Fiyatı ($ USD/Kutu):", min_value=10.0, max_value=2000.0, value=default_con_price, step=5.0, key=f"c360_con_price_{sel_country}")
+            
+            con_list_price = st.number_input(
+                "Sarf Kutu Fiyatı ($ USD/Kutu — Elle Giriniz):", 
+                min_value=0.0, 
+                max_value=50000.0, 
+                value=0.0, 
+                step=5.0, 
+                placeholder="Kutu fiyatını buraya elle giriniz ($ USD)...",
+                key=f"c360_con_price_{sel_country}"
+            )
             rec_sarf_max = float(pricing_fc.get('rec_sarf_discount', 10.0))
             con_disc_pct = st.slider("Sarf İskonto Oranı (%):", min_value=0.0, max_value=35.0, value=rec_sarf_max, step=0.5, key=f"c360_con_disc_{sel_country}")
             def_con_qty = int(pricing_fc.get('target_consumables_2027', 250))
@@ -16494,35 +16551,26 @@ elif nav_selection == "Pricing & Discount Calculator":
             init_ship = float(st.session_state.get('applied_ai_ship', 900.0))
 
             device_template = st.selectbox(
-                "🎯 Fiyatlandırılacak ZEUS Teknoloji & Cihaz Paketi:",
+                "🎯 Fiyatlandırılacak ZEUS Teknoloji & Cihaz / Sarf Paketi:",
                 [
-                    "⚡ ZEUS Pulse Stimulator (ZPS 26) — AOA & Piezo ICSI ($18,500)",
-                    "🧬 ZEUS BioPSafe (ZBS26) — Embriyo Biyopsi & PCR Tubing İstasyonu ($24,500)",
-                    "🛡️ ZEUS Mismatch Blocker — 7-Terminal Elektronik Şahitlik ($32,000)",
-                    "❄️ ZEUS Smart Cryo-Tools — 4X Tank Kapasite & Sekizgen Goblet Kiti ($9,800)",
-                    "🧪 Standart IVF Sarf Paketi — Electro Dish & Solüsyon ($4,200)",
-                    "✏️ Özel / Manuel Fiyat Girişi"
+                    "⚡ ZEUS Pulse Stimulator (ZPS 26) — AOA & Piezo ICSI Donanımı",
+                    "🧬 ZEUS BioPSafe (ZBS26) — Embriyo Biyopsi & PCR Tubing İstasyonu",
+                    "🛡️ ZEUS Mismatch Blocker — 7-Terminal Elektronik Numune Şahitliği",
+                    "❄️ ZEUS Smart Cryo-Tools — Vitrifikasyon & Kriyo Yönetim Sistemi",
+                    "🧪 Standart IVF Sarf Paketi — Electro Dish & Aktivasyon Medyası",
+                    "✏️ Özel Donanım / Manuel Fiyat Girişi"
                 ],
                 index=0,
                 key="sel_device_pricing_template"
             )
 
-            if "ZPS 26" in device_template:
-                def_qty, def_price, def_cogs = 2, 18500.0, 9200.0
-            elif "BioPSafe" in device_template:
-                def_qty, def_price, def_cogs = 1, 24500.0, 12800.0
-            elif "Mismatch Blocker" in device_template:
-                def_qty, def_price, def_cogs = 1, 32000.0, 16500.0
-            elif "Smart Cryo" in device_template:
-                def_qty, def_price, def_cogs = 5, 9800.0, 4200.0
-            elif "Standart IVF Sarf" in device_template:
-                def_qty, def_price, def_cogs = 25, 4200.0, 2300.0
-            else:
-                def_qty, def_price, def_cogs = 10, 5000.0, 2500.0
+            def_qty = 1
+            def_price = 0.0
+            def_cogs = 0.0
 
             calc_qty = st.number_input("Sipariş Adedi / Hacmi (Order Quantity - Units)", min_value=1, value=def_qty, step=1)
-            calc_price = st.number_input("Sözleşme Liste Fiyatı (Contractual List Price - USD)", min_value=100.0, value=def_price, step=100.0)
-            calc_cogs = st.number_input("Birim Üretim Maliyeti (Unit COGS - USD)", min_value=0.0, value=def_cogs, step=50.0)
+            calc_price = st.number_input("Sözleşme Liste Fiyatı ($ USD — Elle Giriniz):", min_value=0.0, value=0.0, step=100.0, placeholder="Liste fiyatını elle giriniz...")
+            calc_cogs = st.number_input("Birim Maliyet (Unit COGS $ USD — Elle Giriniz):", min_value=0.0, value=0.0, step=50.0, placeholder="Birim maliyeti giriniz...")
             calc_disc = st.slider("Talep Edilen İskonto (Requested Discount - %)", min_value=0.0, max_value=40.0, value=init_disc, step=0.5)
             calc_freight = st.number_input("Navlun & Lojistik Payı (Freight Allowance - USD)", min_value=0.0, value=init_ship, step=50.0)
             calc_rep = st.slider("Distribütör Temsilci Primi (Rep Commission - %)", min_value=0.0, max_value=15.0, value=3.0, step=0.5)
@@ -16999,7 +17047,10 @@ elif nav_selection == "Pricing & Discount Calculator":
 
         # SUB-TAB 4: SATIŞ STRATEJİSİ (GTM)
         with k_tab4:
-            render_deep_sales_strategy_ui(kb_country, deep_intel, pricing_fc)
+            try:
+                render_deep_sales_strategy_ui(kb_country, deep_intel, pricing_fc)
+            except Exception as e:
+                st.error(f"Satış stratejisi yüklenirken bir istisna oluştu: {e}")
 
         # SUB-TAB 5: RESMİ BAKANLIK TEBLİĞLERİ
         with k_tab5:
