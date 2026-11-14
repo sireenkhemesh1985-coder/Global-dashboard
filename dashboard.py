@@ -5478,6 +5478,14 @@ with st.sidebar:
         index=0
     )
     
+    st.markdown('''
+    <div style="margin-top: 26px; padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, 0.08); text-align: center;">
+        <div style="font-size: 11px; font-weight: 600; color: #94A3B8; letter-spacing: 0.03em;">Conceived & Directed by</div>
+        <div style="font-size: 12.5px; font-weight: 700; color: #00F5FF; letter-spacing: 0.04em; margin-top: 2px; margin-bottom: 5px;">Sireen Khemesh</div>
+        <div style="font-size: 10px; color: #64748B; letter-spacing: 0.02em;">© 2026 ZEUS Bioscience. All rights reserved</div>
+    </div>
+    ''', unsafe_allow_html=True)
+    
     currency_rate = {"USD ($)": 1.0, "EUR (€)": 0.92, "TRY (₺)": 41.2}[currency]
     currency_symbol = {"USD ($)": "$", "EUR (€)": "€", "TRY (₺)": "₺"}[currency]
     # Selected Year and Forecast Mode
@@ -20221,3 +20229,17 @@ components.html("""
         });
     </script>
 """, height=110)
+
+# ==========================================
+# EXECUTIVE ATTRIBUTION & COPYRIGHT FOOTER
+# ==========================================
+st.markdown('''
+<div style="text-align: center; margin-top: 36px; margin-bottom: 24px; padding: 22px 16px 16px 16px; border-top: 1px solid rgba(255, 255, 255, 0.08); background: linear-gradient(180deg, rgba(15, 23, 42, 0) 0%, rgba(15, 23, 42, 0.5) 100%); border-radius: 12px; font-family: 'Inter', system-ui, -apple-system, sans-serif;">
+    <div style="font-size: 13.5px; font-weight: 600; color: #E2E8F0; letter-spacing: 0.04em; margin-bottom: 5px;">
+        Conceived & Directed by <span style="color: #00F5FF; font-weight: 700; text-shadow: 0 0 12px rgba(0, 245, 255, 0.35);">Sireen Khemesh</span>
+    </div>
+    <div style="font-size: 11.5px; color: #64748B; letter-spacing: 0.02em; font-weight: 500;">
+        © 2026 ZEUS Bioscience. All rights reserved
+    </div>
+</div>
+''', unsafe_allow_html=True)
