@@ -3940,6 +3940,7 @@ MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec
 @st.cache_data
 def get_excel_sales_df():
     excel_file = "Zeus_Sales_Export_2026-11-03.xlsx"
+    csv_file = "Zeus_Sales_Export_2026-11-03.csv"
     if os.path.exists(excel_file):
         try:
             df_sales = pd.read_excel(excel_file)
@@ -3947,6 +3948,16 @@ def get_excel_sales_df():
             df_sales["Year_int"] = df_sales["Date_dt"].dt.year
             df_sales["Month_int"] = df_sales["Date_dt"].dt.month
             # Unify SIRIUS PHARM COMPANY country records under 'Jordan-Iraq'
+            df_sales.loc[df_sales['Company'] == 'SIRIUS PHARM COMPANY', 'Country'] = 'Jordan-Iraq'
+            return df_sales
+        except Exception:
+            pass
+    if os.path.exists(csv_file):
+        try:
+            df_sales = pd.read_csv(csv_file)
+            df_sales["Date_dt"] = pd.to_datetime(df_sales["Date"], format="%d.%m.%Y", errors="coerce")
+            df_sales["Year_int"] = df_sales["Date_dt"].dt.year
+            df_sales["Month_int"] = df_sales["Date_dt"].dt.month
             df_sales.loc[df_sales['Company'] == 'SIRIUS PHARM COMPANY', 'Country'] = 'Jordan-Iraq'
             return df_sales
         except Exception:
@@ -20134,6 +20145,38 @@ elif nav_selection == "Executive Reports & Export":
     )
     
     st.dataframe(export_df, use_container_width=True, hide_index=True)
+
+    # Primary ERP Sales Ledger Export Section (.XLSX & .CSV)
+    st.markdown("---")
+    st.markdown("### 📥 Primary ERP Audited Sales Ledger (Zeus_Sales_Export_2026-11-03)")
+    st.caption("Tam 874 satırlık resmi finansal ERP satış kütüğünü doğrudan Excel (.xlsx) veya evrensel CSV formatında indirin.")
+    
+    col_dl_x, col_dl_c = st.columns(2)
+    erp_xlsx_path = "Zeus_Sales_Export_2026-11-03.xlsx"
+    erp_csv_path = "Zeus_Sales_Export_2026-11-03.csv"
+    
+    with col_dl_x:
+        if os.path.exists(erp_xlsx_path):
+            with open(erp_xlsx_path, "rb") as fx:
+                xlsx_bytes = fx.read()
+            st.download_button(
+                label="📊 Orijinal ERP Satış Kütüğünü İndir (.XLSX)",
+                data=xlsx_bytes,
+                file_name="Zeus_Sales_Export_2026-11-03.xlsx",
+                mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                key="btn_dl_erp_xlsx"
+            )
+    with col_dl_c:
+        if os.path.exists(erp_csv_path):
+            with open(erp_csv_path, "rb") as fc:
+                csv_bytes = fc.read()
+            st.download_button(
+                label="📑 Evrensel ERP Satış Kütüğünü İndir (UTF-8 CSV)",
+                data=csv_bytes,
+                file_name="Zeus_Sales_Export_2026-11-03.csv",
+                mime="text/csv",
+                key="btn_dl_erp_csv"
+            )
 
 
 

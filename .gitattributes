@@ -1,0 +1,9 @@
+# Preserve binary files exactly without CRLF modification
+* text=auto
+*.xlsx binary
+*.docx binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.pdf binary
+*.pyc binary

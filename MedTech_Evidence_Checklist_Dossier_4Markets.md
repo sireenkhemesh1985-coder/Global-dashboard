@@ -42,7 +42,7 @@ The ZEUS MedTech Market Intelligence Platform operates on a secure, modular Pyth
                                           v
 +-----------------------------------------------------------------------------------+
 |                        AUDITED DATA & TRANSACTION REPOSITORY                      |
-|  - Primary ERP Invoices (Zeus_Sales_Export_2026-11-03.xlsx - 699 Audited Records)  |
+|  - Primary ERP Invoices (Zeus_Sales_Export_2026-11-03.xlsx / .csv - 874 Records)|
 |  - World Bank World Development Indicators (WDI) Macroeconomic Registry          |
 |  - ESHRE EIM & Regional IVF Clinic Registry (National Center Counts & Cycles)     |
 |  - Verified Distributor Agreements & Official Letters of Authorization (LOAs)     |
@@ -335,9 +335,9 @@ TERRITORY: ALGERIA (EXPANSION TERRITORY RFP)
 For independent validation, scientific journal peer reviewers and regulatory auditors are directed to the following certified artifacts and contract records:
 
 1. **Audited Financial Ledger:**
-   - File: `Zeus_Sales_Export_2026-11-03.xlsx`
+   - Files: `Zeus_Sales_Export_2026-11-03.xlsx` and `Zeus_Sales_Export_2026-11-03.csv` (UTF-8 with BOM, native Excel compatible)
    - Filter criteria: `Country` IN (`Jordan-Iraq`, `Jordan`, `Qatar`, `Saudi Arabia`).
-   - Reconciled Total: **151 line-item invoices** totaling **$267,621.26 USD**.
+   - Reconciled Total: **151 line-item invoices** totaling **$267,621.26 USD** across the 3 historical focus markets (Consolidated dataset: **874 line-item invoices** totaling **$693,887.49 USD** across all global territories).
 
 2. **Legal Distribution Agreements and Letters of Authorization:**
    - Jordan & Iraq: `ZEUS_LOA_Sirius_Pharm_2026_2027.pdf` (Document `ZEUS-LOA-SIRIUS-2026`).
