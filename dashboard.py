@@ -1,4 +1,4 @@
-# ZEUS Global Market Intelligence (ZGMI) — Live Production Build: v2.8.6 (2026-11-15 - Mobile Edition)
+# ZEUS Global Market Intelligence (ZGMI) — Live Production Build: v2.9.0 (2026-11-15 - Unified 4-Hub Architecture)
 from datetime import datetime
 import re
 import json
@@ -5634,19 +5634,10 @@ with st.sidebar:
     nav_selection = st.radio(
         "Navigation",
         [
-            "Executive Dashboard",
-            "Country 360° Performance & Report",
-            "AI Intelligence & Forecasting",
-            "Distributors & CRM",
-            "Agreements & Compliance",
-            "Sales & Product Analytics",
-            "Market Intelligence & Compare",
-            "Pricing & Discount Calculator",
-            "Risk & Scenario Simulator",
-            "Performance Evaluator",
-            "Strategic Decision Center",
-            "Executive Reports & Export",
-            "Global Social Media & B2B Marketing"
+            "🌐 Global Cockpit & Country 360°",
+            "💼 Commercial Hub & Client 360°",
+            "🧠 AI Risk, Security & Forecasting",
+            "⚖️ Executive Governance, B2B Studio & Reports"
         ],
         label_visibility="collapsed"
     )
@@ -8932,7 +8923,97 @@ def get_default_geopolitical_crisis_protocol():
 
 
 
-if nav_selection == "Executive Dashboard":
+ZEUS_HUB_SUBVIEWS = {
+    "🌐 Global Cockpit & Country 360°": [
+        "🧭 Executive Overview & 3D Globe",
+        "🌍 Country 360° Performance & Report",
+        "🛃 Market Intelligence & Compare"
+    ],
+    "💼 Commercial Hub & Client 360°": [
+        "🏢 Distributors & CRM",
+        "📜 Agreements & Compliance",
+        "📊 Sales & Product Analytics",
+        "🧮 Pricing & Discount Calculator"
+    ],
+    "🧠 AI Risk, Security & Forecasting": [
+        "🚨 AI Intelligence & Forecasting",
+        "🎲 Risk & Scenario Simulator",
+        "📈 Performance Evaluator"
+    ],
+    "⚖️ Executive Governance, B2B Studio & Reports": [
+        "🏛️ Strategic Decision Center",
+        "📱 Global Social Media & B2B Marketing",
+        "📑 Executive Reports & Export"
+    ]
+}
+
+active_subviews = ZEUS_HUB_SUBVIEWS.get(nav_selection, [
+    "🧭 Executive Overview & 3D Globe",
+    "🌍 Country 360° Performance & Report",
+    "🛃 Market Intelligence & Compare"
+])
+
+# Universal Hub Header & Subview Switcher
+st.markdown("""
+<style>
+    div[data-testid="stPills"] {
+        margin-bottom: 14px !important;
+    }
+    div[data-testid="stPills"] button {
+        background: rgba(15, 23, 42, 0.65) !important;
+        border: 1px solid rgba(0, 245, 255, 0.22) !important;
+        color: #E2E8F0 !important;
+        border-radius: 20px !important;
+        padding: 6px 16px !important;
+        font-size: 13px !important;
+        font-weight: 500 !important;
+        transition: all 0.2s ease !important;
+    }
+    div[data-testid="stPills"] button:hover {
+        border-color: rgba(0, 245, 255, 0.6) !important;
+        background: rgba(0, 245, 255, 0.1) !important;
+        box-shadow: 0 0 12px rgba(0, 245, 255, 0.2) !important;
+    }
+    div[data-testid="stPills"] button[aria-selected="true"] {
+        background: linear-gradient(90deg, rgba(0, 245, 255, 0.25) 0%, rgba(19, 166, 181, 0.15) 100%) !important;
+        border: 1px solid #00F5FF !important;
+        color: #00F5FF !important;
+        font-weight: 700 !important;
+        box-shadow: 0 0 16px rgba(0, 245, 255, 0.3) !important;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+col_hub_hdr1, col_hub_hdr2 = st.columns([3.2, 1.2])
+with col_hub_hdr1:
+    active_view = st.pills(
+        "Görünüm Seçin",
+        options=active_subviews,
+        default=active_subviews[0],
+        label_visibility="collapsed",
+        key=f"pills_hub_{nav_selection[:8]}"
+    )
+with col_hub_hdr2:
+    omni_search_q = st.text_input(
+        "Omni-Search",
+        placeholder="🔍 Firma, Ülke veya Cihaz...",
+        label_visibility="collapsed",
+        key="omni_search_input"
+    )
+
+if not active_view:
+    active_view = active_subviews[0]
+
+# Quick Omni-Search Match Alert
+if omni_search_q and omni_search_q.strip():
+    q_term = omni_search_q.strip()
+    st.markdown(f"""
+    <div style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(0, 245, 255, 0.4); border-radius: 10px; padding: 10px 16px; margin-bottom: 14px;">
+        <b style="color: #00F5FF; font-size: 13px;">🔍 Omni-Search Aktif: '{q_term}'</b> | <span style="font-size: 12px; color: #CBD5E1;">İlgili modüllere doğrudan erişmek için yukarıdaki alt sekmeleri kullanabilirsiniz.</span>
+    </div>
+    """, unsafe_allow_html=True)
+
+if active_view == "🧭 Executive Overview & 3D Globe":
     # Header Banner
     col_h1, col_h2 = st.columns([3, 1])
     with col_h1:
@@ -10640,7 +10721,7 @@ if nav_selection == "Executive Dashboard":
 # ==============================================================================
 
 
-elif nav_selection == "AI Intelligence & Forecasting":
+elif active_view == "🚨 AI Intelligence & Forecasting":
     st.title("AI Commercial Intelligence & Predictive Analytics")
     st.caption("Yapay zeka ve makine öğrenmesi destekli kurumsal satış projeksiyonu, anomali tespiti ve pazar optimizasyonu.")
 
@@ -12692,7 +12773,7 @@ ZEUS Bioscience Scientific Affairs""",
 # 5. VIEW: DISTRIBUTORS & CRM
 # ==============================================================================
 
-elif nav_selection == "Distributors & CRM":
+elif active_view == "🏢 Distributors & CRM":
     def format_partner_device_distribution(dev_cnt_by_yr):
         """Formats device count by year like '3 Adet (3x\'25)' or '18 Adet (9x\'24, 5x\'25, 4x\'26)'"""
         tot = dev_cnt_by_yr.get('ALL', 0)
@@ -13015,7 +13096,7 @@ elif nav_selection == "Distributors & CRM":
                 st.dataframe(disp_zero_dev, use_container_width=True, hide_index=True)
                 st.caption("ℹ️ Acıbadem, CMC, Halil Ruso, Medipolitan, Seda Erdem ve Bisan'a yapılan $0 bedelli cihaz sevkleri klinik konsinye statüsünde izlenmektedir.")
 
-elif nav_selection == "Agreements & Compliance":
+elif active_view == "📜 Agreements & Compliance":
     st.title("International Agreements, LOA & Regulatory Compliance")
     st.caption("Distribütörlük sözleşmeleri, LOA yetki belgeleri, yerel (Türkiye) ve uluslararası müşteri tedarik protokolleri yönetimi.")
 
@@ -13272,7 +13353,7 @@ elif nav_selection == "Agreements & Compliance":
 # ==============================================================================
 # 7. VIEW: SALES & PRODUCT ANALYTICS
 # ==============================================================================
-elif nav_selection == "Sales & Product Analytics":
+elif active_view == "📊 Sales & Product Analytics":
     st.title("Multi-Dimensional Sales & Product Analytics")
     st.caption("Excel satış veri tabanındaki (874 fatura satırı) doğrulanmış cihaz/sarf dökümleri, ürün bazlı hasılat ve distribütör performans analitiği.")
 
@@ -14120,7 +14201,7 @@ elif nav_selection == "Sales & Product Analytics":
                 'Durum': 'Aktif' if d.get('status') == 'active' else 'Pasif'
             })
         st.dataframe(pd.DataFrame(all_table), use_container_width=True, hide_index=True)
-elif nav_selection == "Market Intelligence & Compare":
+elif active_view == "🛃 Market Intelligence & Compare":
     st.title("Global IVF Market Intelligence & Country Comparison")
     st.caption("Resmi Dünya Bankası (WDI 2023/2024) ve uluslararası ESHRE/CDC tüp bebek kayıtlarına dayalı çok boyutlu pazar, ekonomik güç ve klinik teknoloji kıyaslama merkezi.")
 
@@ -16796,7 +16877,7 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
 # ==============================================================================
 # VIEW: COUNTRY 360° PERFORMANCE & INTELLIGENCE REPORT
 # ==============================================================================
-elif nav_selection == "Country 360° Performance & Report":
+elif active_view == "🌍 Country 360° Performance & Report":
     st.title("🌍 Country 360° Performance & Intelligence Dossier")
     st.caption("Tek ekranda bütünleşik ülke karnesi: Gerçekleşen satışlar ve filo büyüklüğü, makroekonomi, gümrük GTİP ve ithalat mevzuatı, yeni IVF & PGT biyoetik kuralları, iskonto-tahmin matrisleri, 5 kişilik uzman heyeti görüşleri ve satış stratejisi.")
 
@@ -17625,7 +17706,7 @@ SERTİFİKASYON: CE Device Certified (EU MDR 2017/745 Class IIa)
 # ==============================================================================
 # 9. VIEW: PRICING & DISCOUNT CALCULATOR
 # ==============================================================================
-elif nav_selection == "Pricing & Discount Calculator":
+elif active_view == "🧮 Pricing & Discount Calculator":
     st.title("Commercial Discount & Margin Impact Calculator")
     st.caption("Çok Boyutlu Fiyatlandırma ve İskonto Karar Motoru: Ülke GSYİH (GDP), Yaşam Standardı, Ulusal IVF Destek Rejimi, AI Algoritmik Analitiği ve Uzman Görüşü / Bilgi Bankası (Knowledge Base) ile sentezlenmiş stratejik karar merkezi.")
 
@@ -18439,7 +18520,7 @@ elif nav_selection == "Pricing & Discount Calculator":
 
 # 10. VIEW: RISK & SCENARIO SIMULATOR
 # ==============================================================================
-elif nav_selection == "Risk & Scenario Simulator":
+elif active_view == "🎲 Risk & Scenario Simulator":
     st.title("Commercial Risk & Financial Scenario Simulator")
     st.caption("ZEUS Ticari Risk Simülatörü: Satış senaryoları, döviz & talep şokları, teslimat gecikmesi ve sözleşme bazlı tahsilat modellemesi.")
 
@@ -18784,7 +18865,7 @@ Modellenen senaryoda; **%{sim_fx} kur baskısı**, **%{sim_demand} talep dalgala
 # ==============================================================================
 # 11. VIEW: DISTRIBUTOR PERFORMANCE EVALUATOR
 # ==============================================================================
-elif nav_selection == "Performance Evaluator":
+elif active_view == "📈 Performance Evaluator":
     st.title("Partner Operational & Strategic Performance Scorecard")
     st.caption("Excel satış kayıtlarındaki gerçek yıllık cihaz/sarf dökümleri, gerçek YoY büyüme oranları ve çeyreklik sipariş düşüş analizi.")
 
@@ -19251,7 +19332,7 @@ elif nav_selection == "Performance Evaluator":
 # ==============================================================================
 # 12. VIEW: STRATEGIC DECISION CENTER
 # ==============================================================================
-elif nav_selection == "Strategic Decision Center":
+elif active_view == "🏛️ Strategic Decision Center":
     st.title("Strategic Decision Center")
     st.caption("Configurable weighted multi-criteria assessment framework for critical corporate authorizations and commercial expansion.")
 
@@ -20158,7 +20239,7 @@ Web: www.zeusbioscience.com | Email: clinical@zeusbioscience.com"""
 # ==============================================================================
 # 13. VIEW: EXECUTIVE REPORTS & EXPORT
 # ==============================================================================
-elif nav_selection == "Executive Reports & Export":
+elif active_view == "📑 Executive Reports & Export":
     st.title("Executive Governance Reports & Export Center")
     st.caption("Generate formal distribution audit briefings and export certified commercial datasets.")
 
@@ -20360,7 +20441,7 @@ elif nav_selection == "Executive Reports & Export":
 # ==============================================================================
 # 14. VIEW: GLOBAL SOCIAL MEDIA & B2B MARKETING
 # ==============================================================================
-elif nav_selection == "Global Social Media & B2B Marketing":
+elif active_view == "📱 Global Social Media & B2B Marketing":
     render_social_media_hub()
 
 # Modern Glass GSAP AI Telemetry Status Banner

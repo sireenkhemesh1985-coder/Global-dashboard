@@ -8,60 +8,34 @@ Repository: [https://github.com/sireenkhemesh1985-coder/Global-dashboard](https:
 
 ---
 
-## 🌟 Key Modules & Advanced Capabilities
+## 🌟 Unified 4-Hub Architecture (Konsolide Komuta Merkezi)
 
-### 1. ◈ Executive Command Center
-- **Verified Financial Integrity:** Tracks 874 verified invoice transactions across 43 active client institutions, distributors, and sibling entities (Gen-Sa).
-- **Dynamic 2026 & All-Time KPI Engine:** Real-time visibility into channel breakdowns:
-  - *Distributors:* $107.7K (2026) / $264.5K (All-time, 40 partner pool, 1,538 pull-through boxes).
-  - *Direct Clinics:* $107.2K (2026) / $429.4K (All-time, 26 clinic network, 1,654 clinical consumption boxes).
-  - *Sibling Company (Gen-Sa):* $0.1K (2026) / $5.6K (All-time).
-- **3D Cyber Hologram Earth Globe (WebGL 360°):** Interactive orthographic sphere visualizing distributor hubs, clinic territories, and risk ratings across 6 global regions.
+ZGMI v2.9.0 introduces a streamlined **Unified 4-Hub Architecture** replacing 13 fragmented navigation pages with four cohesive, 360-degree command centers powered by an integrated **Omni-Search Bar** and dynamic pill navigation:
 
-### 2. ✦ AI Intelligence, Geopolitical Risk & Forecasting
-- **🚨 Geopolitical Security & War Risk Desk (DEFCON Radar):** Independent sovereign risk assessment across 58 nations with live Google News streams and official ministry communiqués.
-  - *Sovereign Country Separation:* Full regulatory and logistical independence between **Jordan (Ürdün - JFDA)** and **Iraq (Irak - KIMADIA)**, serviced under shared authorized distributor **SIRIUS PHARM COMPANY**.
-  - *T.C. Ticaret Bakanlığı & Dışişleri Bakanlığı Integration:* Habur / İbrahim Halil border post priority medical lane (TIREPD electronic pre-declaration) and Turkish Cargo direct medical air bridge (ESB/IST to AMM/BGW/EBL).
-  - *Payment Assurance:* Zero financial credit risk for Levant/Iraq transactions via Central Bank of Jordan & Arab Bank (Amman) SWIFT clearing.
-- **Automated Anomaly & Capex Tapering Detection:** Case management for top partners (e.g. Sirius Pharm Jordan & Iraq, Sellco UAE, ITL Qatar, CMC Palestine).
-- **Consumable Formulation & Shelf-Life Intelligence:** Incorporates the March 2026 technological breakthrough transitioning from liquid media (2-month shelf life) to **Lyophilized Electroliquid Powder (1-Year Shelf Life)**.
-- **Next Month & Quarter Predictive Forecasting:** Multi-order polynomial regressions with seasonal smoothing.
+### 🌐 Hub 1: Global Cockpit & Country 360°
+Consolidates *Executive Dashboard*, *Country 360° Performance*, and *Market Intelligence & Compare*:
+- **3D Cyber Hologram Earth Globe (WebGL 360°):** Interactive orthographic sphere visualizing distributor hubs and clinical penetration.
+- **Real-Time Financial Integrity:** 874 verified invoice transactions across 43 client institutions ($264.5K Distributor / $429.4K Direct Clinic lifetime).
+- **Country 360° & Customs Tariff Engine:** Instant sovereign dossiers combining GDP per capita, IVF cycle volumes, CE/MDR regulatory mandates, customs duty % (0% EU up to 15% Levant), and clearance lead times (2 to 35 days).
 
-### 3. 🛃 Market Intelligence & Country Benchmark
-- **Customs Tariffs, Barriers & Conditions Engine:**
-  - *Customs Tariff %:* From 0% (EU/MDR free circulation) to 5% (GCC/SFDA/MOHAP), 6% (Jordan JFDA), 7% (Iraq KIMADIA), 8% (Turkey/South Korea), up to 15% (Syria/sanction zones).
-  - *Documentation & Certification Barriers (1–10 Score):* Quantified bureaucratic and regulatory hurdles.
-  - *Customs Clearance Lead Time (Days):* Port-to-clinic transit tracking (2 days in EU up to 35 days in Iraq).
-  - *Customs Conditions (İthalat Şartları):* Direct regulatory decrees (CE/MDR, SFDA MDMA & SABER, JFDA-LAW-32, KIMADIA emergency decrees).
-- **Multi-Factor Clinical Benchmark:** Compare up to 6 nations simultaneously across clinic density per million, ICSI adoption rates, PGT penetration, and state reimbursement frameworks.
-
-### 4. ⚖️ Strategic Decision Center & Specialist Consensus
-- **5 Executive Roles Consensus System:**
-  1. *Genel Müdür (General Manager)*
-  2. *Uluslararası İlişkiler Müdürü (International Relations Director)*
-  3. *Satın Alma Sorumlusu (Procurement Head)*
-  4. *Finans Müdürü (Finance Director)*
-  5. *Kıdemli Klinik Embriyolog (Senior Clinical Embryologist)*
-- Interactive field observations, AI diagnosis revisions, and protocol sign-offs.
-
-### 5. ◇ Distributors, CRM & Compliance
-- **Account Directory:** Multi-filter CRM classifying Authorized Distributors, Sister Companies, Local Turkish Clinics, and International Clients.
+### 💼 Hub 2: Commercial Hub & Client 360°
+Consolidates *Distributors & CRM*, *Agreements & Compliance*, *Sales & Product Analytics*, and *Pricing & Discount Calculator*:
+- **Client 360° Profile:** Unified view of client classification, invoice history, installed device footprints (ZPS 26, BioPSafe, Mismatch Blocker), and consumable pull-through rates.
 - **Agreements & LOA Governance:** Exclusivity enforcement, Letter of Authorization renewal alerts, and digital contract archives.
+- **Interactive Margin & Discount Simulator:** Instant Capex discount modeling, freight contingency pass-through, and net margin verification.
 
-### 6. 📱 Global MedTech Social Media & B2B Content Marketing Hub
-- **Canlı Sayfa Denetimi (Live Audit Engine):** Real-time diagnostic tracking for YouTube (@ZeusBioscience) and LinkedIn (Company ID: 66880793), identifying gaps in titles, playlist structures, chapters, and lead magnets.
-- **High-Converting Video Script Studio:** Production-ready video scripts (45s–75s) with split-screen visual hooks, voiceover narratives, CE Class IIa evidence, and lead collection call-to-actions:
-  - *Senaryo 1:* ZEUS ZPS 26 Piezo Stimulator vs Geleneksel ICSI (A/B Mikroskop Karşılaştırması).
-  - *Senaryo 2:* BioPSafe Trofektoderm Biyopsi Kiti (30 Saniyede Sıfır Termal DNA Hasarı).
-  - *Senaryo 3:* Mismatch Blocker (Laboratuvarda Numune Karışmasına Sıfır Tolerans & 7 RFID İstasyonu).
-  - *Senaryo 4:* Z-Dish Array & Kalsiyumsuz AOA Medyası (Kimyasal İyonofor Toksisitesine Son).
-  - *Senaryo 5:* ZEUS ZPS 26 & Liyofilize Solüsyon - Total Döllenme Başarısızlığı (TFF) Kapsamlı B2B Lead Senaryosu (75 sn).
-  - *Senaryo 6 (Dikey Mobil 9:16):* ZEUS ZPS 26 - Reels & Shorts Ultra-Dinamik Mobil Kurgu (45 sn) with safe zones and auto-captions.
-- **📱 Mobile Responsive & Touch Engine:** Complete viewport adaptation (@media max-width: 768px) with 44px+ Apple Touch Targets, vertical card stacking, horizontal touch tabs, and overflow protection across iOS/Android.
-- **Interactive Growth & B2B Lead Magnet Engine:**
-  - *"PROTOKOL" Lead Funnel:* Automated DM delivery of peer-reviewed clinical data and CE MDR technical specifications upon comment trigger.
-  - *Visual Shock Retention:* Sub-3s split-screen oocyte membrane micro-rupture hook to achieve >85% audience retention.
-  - *49-Minute Masterclass Rescue:* Chaptered timecodes and cross-linking funnel from short-form videos to the full-length YouTube clinical webinar.
+### 🧠 Hub 3: AI Risk, Security & Forecasting Desk
+Consolidates *AI Intelligence & Forecasting*, *Risk & Scenario Simulator*, and *Performance Evaluator*:
+- **DEFCON Geopolitical Desk:** Live tracking of war risks, Red Sea maritime premiums, and official Turkish Ministry (Ticaret & Dışişleri) communiqués.
+- **Sovereign Separation:** Full logistical and regulatory independence between **Jordan (JFDA)** and **Iraq (KIMADIA)** under shared distributor Sirius Pharm.
+- **Consumable Formulation Intelligence:** Tracks the technological breakthrough from 2-month liquid media to **1-Year Shelf Life Lyophilized Electroliquid Powder**.
+- **Multi-Order Predictive Regressions:** Seasonal demand forecasting, logistics contingency budgeting, and growth trajectories.
+
+### ⚖️ Hub 4: Executive Governance, B2B Studio & Reports
+Consolidates *Strategic Decision Center*, *Global Social Media & B2B Marketing*, and *Executive Reports & Export*:
+- **5-Role Executive Consensus System:** Collaborative sign-off across General Manager, International Relations, Procurement, Finance, and Senior Embryologist.
+- **Global Social Media & Video Production Studio:** Real-time YouTube/LinkedIn audits, 6 production-ready video scripts (including 9:16 vertical Reels/Shorts), and the "PROTOKOL" comment-loop lead funnel.
+- **Executive Dossier Export:** One-click generation of board-ready PDF, universal CSV (with UTF-8 BOM), and Excel BOM exports.
 
 ---
 
