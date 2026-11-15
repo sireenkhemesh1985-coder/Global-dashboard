@@ -48,6 +48,19 @@ Repository: [https://github.com/sireenkhemesh1985-coder/Global-dashboard](https:
 - **Account Directory:** Multi-filter CRM classifying Authorized Distributors, Sister Companies, Local Turkish Clinics, and International Clients.
 - **Agreements & LOA Governance:** Exclusivity enforcement, Letter of Authorization renewal alerts, and digital contract archives.
 
+### 6. 📱 Global MedTech Social Media & B2B Content Marketing Hub
+- **Canlı Sayfa Denetimi (Live Audit Engine):** Real-time diagnostic tracking for YouTube (@ZeusBioscience) and LinkedIn (Company ID: 66880793), identifying gaps in titles, playlist structures, chapters, and lead magnets.
+- **High-Converting Video Script Studio:** Production-ready video scripts (45s–75s) with split-screen visual hooks, voiceover narratives, CE Class IIa evidence, and lead collection call-to-actions:
+  - *Senaryo 1:* ZEUS ZPS 26 Piezo Stimulator vs Geleneksel ICSI (A/B Mikroskop Karşılaştırması).
+  - *Senaryo 2:* BioPSafe Trofektoderm Biyopsi Kiti (30 Saniyede Sıfır Termal DNA Hasarı).
+  - *Senaryo 3:* Mismatch Blocker (Laboratuvarda Numune Karışmasına Sıfır Tolerans & 7 RFID İstasyonu).
+  - *Senaryo 4:* Z-Dish Array & Kalsiyumsuz AOA Medyası (Kimyasal İyonofor Toksisitesine Son).
+  - *Senaryo 5:* ZEUS ZPS 26 & Liyofilize Solüsyon - Total Döllenme Başarısızlığı (TFF) Kapsamlı B2B Lead Senaryosu (75 sn).
+- **Interactive Growth & B2B Lead Magnet Engine:**
+  - *"PROTOKOL" Lead Funnel:* Automated DM delivery of peer-reviewed clinical data and CE MDR technical specifications upon comment trigger.
+  - *Visual Shock Retention:* Sub-3s split-screen oocyte membrane micro-rupture hook to achieve >85% audience retention.
+  - *49-Minute Masterclass Rescue:* Chaptered timecodes and cross-linking funnel from short-form videos to the full-length YouTube clinical webinar.
+
 ---
 
 ## 🚀 Getting Started

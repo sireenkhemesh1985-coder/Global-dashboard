@@ -1,4 +1,4 @@
-# ZEUS Global Market Intelligence (ZGMI) — Live Production Build: v2.8.4 (2026-11-08)
+# ZEUS Global Market Intelligence (ZGMI) — Live Production Build: v2.8.5 (2026-11-15)
 from datetime import datetime
 import re
 import json
@@ -5049,7 +5049,8 @@ def render_social_media_hub():
                 "Senaryo 1: ZEUS ZPS 26 Piezo Stimulator vs Geleneksel ICSI (A/B Mikroskop Karşılaştırması - 60 sn)",
                 "Senaryo 2: BioPSafe Trofektoderm Biyopsi Kiti (30 Saniyede Sıfır Termal DNA Hasarı - 75 sn)",
                 "Senaryo 3: Mismatch Blocker - Laboratuvarda Numune Karışmasına Sıfır Tolerans (7 RFID İstasyonu - 90 sn)",
-                "Senaryo 4: Z-Dish Array & Kalsiyumsuz AOA Medyası (Kimyasal İyonofor Toksisitesine Son - 60 sn)"
+                "Senaryo 4: Z-Dish Array & Kalsiyumsuz AOA Medyası (Kimyasal İyonofor Toksisitesine Son - 60 sn)",
+                "Senaryo 5: ZEUS ZPS 26 & Liyofilize Solüsyon - Total Döllenme Başarısızlığı (TFF) Kapsamlı B2B Lead Senaryosu (75 sn)"
             ],
             key="sb_video_script"
         )
@@ -5090,6 +5091,39 @@ def render_social_media_hub():
                 {"Zaman": "00:28 - 01:00", "Görsel & Mikroskop Açısı": "Z-Dish kuyucuklarında yan yana duran kusursuz 2PN pronükleuslar.", "Seslendirme (Voiceover - VO)": "Sonuç: Sıfır kimyasal kalıntı, yüzde 54.2 blastosist oluşumu ve CE MDR uyumlu en yüksek güvenlik standardı.", "Ekran Yazısı & Grafik": "👉 zeusbio.com/zdish | Protokol & Validasyon Dosyasını İndir"}
             ]
             st.dataframe(pd.DataFrame(sc4_table), use_container_width=True, hide_index=True)
+
+        elif "Senaryo 5" in script_sel:
+            sc5_table = [
+                {"Zaman": "00:00 - 00:08 (Kanca / Hook)", "Görsel & Mikroskop Açısı": "Bölünmüş Ekran (Split Screen): Solda standart sivri ICSI iğnesi oosite batıyor. Oosit aşırı gerilip aniden patlıyor (Sitoplazma dışarı sızıyor / Lizis). Sağ ekran ise kararık ve merak uyandırıcı.", "Seslendirme (Voiceover - VO)": "Her 10 oositten biri, yumurtanın kalitesizliğinden değil... mekanik delme travması yüzünden kaybediliyor. Peki ya bu hücre zarı hiç yırtılmasaydı?", "Ekran Yazısı & Grafik": "⚠️ %8.5 Oosit Dejenerasyon Riski (Geleneksel Delme Travması)"},
+                {"Zaman": "00:08 - 00:25 (Problem & Kök Neden)", "Görsel & Mikroskop Açısı": "Kamera laboratuvara geçer. Embriyolog başarısız döllenmiş mikrokuyucuklara bakar. Ekranda kimyasal kalsiyum iyonofor şişesi ve soru işareti belirir.", "Seslendirme (Voiceover - VO)": "Özellikle ileri anne yaşı ve Total Döllenme Başarısızlığı (TFF) vakalarında başvurulan kimyasal iyonoforlar, hücrede kontrolsüz toksisiteye ve sitoplazmik strese yol açabiliyor.", "Ekran Yazısı & Grafik": "🧪 Kimyasal İyonofor Toksisitesi & Kontrolsüz Ca2+ Girişi"},
+                {"Zaman": "00:25 - 00:50 (Çözüm & Cihaz)", "Görsel & Mikroskop Açısı": "Sağ ekran aydınlanır: ZEUS ZPS 26 küt uçlu piezo iğnesi kadraja girer. ZPS 26 konsolundan tek bir 24V/3A mikro-darbe verilir; zar delinmeden esneyerek açılır, sperm içeri bırakılır ve zar 1 saniyede kendini onarır. Yanında 1 Yıl Raf Ömürlü Liyofilize Toz Flakonu gösterilir.", "Seslendirme (Voiceover - VO)": "ZEUS Pulse Stimulator ZPS 26, sivri iğne travmasını ve kimyasal solüsyon riskini tarihe gömüyor. Patentli piezoelektrik mikro-salınımı ve kalsiyumsuz liyofilize toz medyasıyla, oosite tek bir mikropuls ile fizyolojik aktivasyon sağlar.", "Ekran Yazısı & Grafik": "⚡ ZEUS ZPS 26: 70 µs Mikropuls | %0 Mekanik Lizis | 1 Yıl Raf Ömürlü Toz Medya"},
+                {"Zaman": "00:50 - 01:05 (Klinik Kanıt)", "Görsel & Mikroskop Açısı": "4K mikroskop altında bölünmüş ve 5. güne ulaşmış harika kalitede bir blastosist embriyo gösterilir. Sağ altta CE MDR Class IIa ve ISO 13485 hologramları parlar.", "Seslendirme (Voiceover - VO)": "Sonuç? Geleneksel ICSI'deki yüzde 8.5 lizis oranı yüzde 0.8'in altına inerken; TFF vakalarında 2PN döllenme oranı yüzde 82'ye, blastosist dönüşümü ise artı yüzde 18.4'e ulaşıyor.", "Ekran Yazısı & Grafik": "📈 Klinik Veri: 2PN Başarısı %24 ➔ %82 | Blastosist +%18.4 | CE Class IIa"},
+                {"Zaman": "01:05 - 01:15 (Bitiş & Lead Magnet)", "Görsel & Mikroskop Açısı": "ZEUS Bioscience kurumsal logosu ve ZPS 26 cihazı. Ekranda indirme butonu simgesi ve QR kod belirir.", "Seslendirme (Voiceover - VO)": "Kliniğinizin başarı oranlarını yükseltecek hakemli klinik çalışma protokolünü ve ZPS 26 teknik şartnamesini inceleyin. Yorumlara 'PROTOKOL' yazın, klinik çalışma dosyasını size hemen gönderelim.", "Ekran Yazısı & Grafik": "👉 Yorumlara 'PROTOKOL' Yazın | DM ile Klinik Dosyayı Alın | zeusbio.com"}
+            ]
+            st.dataframe(pd.DataFrame(sc5_table), use_container_width=True, hide_index=True)
+
+        # B2B Growth & Viral Interactivity Guide
+        st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+        with st.expander("🚀 B2B Video Büyüme Rehberi: 'En Çok Nasıl İzlenir ve İnteraktif Olunur?'", expanded=True):
+            col_v1, col_v2 = st.columns(2)
+            with col_v1:
+                st.markdown("""
+                <div style="background: rgba(10, 25, 47, 0.7); border: 1px solid rgba(0, 245, 255, 0.25); border-radius: 10px; padding: 14px 18px; font-size: 12px; line-height: 1.6;">
+                    <b style="color: #00F5FF; font-size: 13px;">🔥 Algoritma & Yüksek Tutma (Retention) Taktikleri</b><br><br>
+                    • <b>İlk 3 Saniye Mikroskop Kancası (The Visual Shock):</b> Girişte asla şirket logosu veya konuşmacı yüzü koymayın. Doğrudan sivri iğneyle patlayan hücre zarı ile başlayın. Embriyologlar bu görüntüyü gördüğü an kaydırmayı durdurur (%92 retention).<br>
+                    • <b>Klinik İkilem / Tartışma Tetikleyici (Debate):</b> Açıklamaya <i>"Kliniğinizde TFF vakalarında kimyasal iyonofor mu yoksa elektriksel aktivasyon mu tercih ediyorsunuz?"</i> sorusunu sabitleyin.<br>
+                    • <b>LinkedIn Golden Hour Kuralı:</b> Paylaşımın ilk 60 dakikasında şirket ve bayi ekibinin hekim gözüyle profesyonel yorum yazması içeriği feed'in zirvesine taşır.
+                </div>
+                """, unsafe_allow_html=True)
+            with col_v2:
+                st.markdown("""
+                <div style="background: rgba(10, 25, 47, 0.7); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 10px; padding: 14px 18px; font-size: 12px; line-height: 1.6;">
+                    <b style="color: #10B981; font-size: 13px;">💼 Yorum Döngüsü Lead Magneti ('PROTOKOL' Kuralı)</b><br><br>
+                    • <b>Etkileşim Çağrısı:</b> İzleyiciden <i>"Yorumlara 'PROTOKOL' yazın"</i> demesini isteyin.<br>
+                    • <b>Otomatik B2B Dönüşüm:</b> Yoruma 'PROTOKOL' yazan her hekime ZEUS ZPS 26'nın 12 sayfalık CE MDR onaylı klinik vaka raporu ve aplikasyon parametreleri PDF olarak otomatik DM ile iletilir.<br>
+                    • <b>49 Dakikalık Ana Videoya Köprü:</b> Shorts videosunun sabitlenen yorumuna: <i>"Bu vakanın tüm aşamalarını içeren 49 dakikalık Masterclass videomuzu profil linkinden izleyebilirsiniz."</i> bağlantısını ekleyin.
+                </div>
+                """, unsafe_allow_html=True)
 
     # =========================================================================
     # TAB 5: SCIENTIFIC TOPICS & PLATFORM BREAKDOWN
