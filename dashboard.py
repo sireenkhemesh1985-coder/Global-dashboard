@@ -1,4 +1,4 @@
-# ZEUS Global Market Intelligence (ZGMI) — Live Production Build: v2.8.5 (2026-11-15)
+# ZEUS Global Market Intelligence (ZGMI) — Live Production Build: v2.8.6 (2026-11-15 - Mobile Edition)
 from datetime import datetime
 import re
 import json
@@ -514,6 +514,114 @@ st.markdown("""
         opacity: 0 !important;
         margin: 0 !important;
         padding: 0 !important;
+    }
+
+    /* ==========================================================================
+       MOBILE RESPONSIVE & TOUCH OPTIMIZATION (Smartphones & Tablets <= 768px)
+       ========================================================================== */
+    @media (max-width: 768px) {
+        /* Container padding scaling */
+        .main .block-container {
+            padding-top: 1.0rem !important;
+            padding-left: 0.6rem !important;
+            padding-right: 0.6rem !important;
+            padding-bottom: 2.5rem !important;
+            max-width: 100% !important;
+        }
+
+        /* Top Executive KPI Cards & Columns - Mobile Stack */
+        [data-testid="stHorizontalBlock"] {
+            flex-wrap: wrap !important;
+            gap: 8px !important;
+        }
+        [data-testid="stHorizontalBlock"] > div[data-testid="column"] {
+            min-width: 100% !important;
+            flex: 1 1 100% !important;
+            margin-bottom: 6px !important;
+        }
+
+        /* Metric Cards Touch Optimization */
+        .glass-metric-card {
+            padding: 12px 14px !important;
+            border-radius: 12px !important;
+            margin-bottom: 8px !important;
+        }
+        .glass-metric-val {
+            font-size: 20px !important;
+        }
+        .glass-metric-header {
+            font-size: 11px !important;
+        }
+        .glass-metric-sub {
+            font-size: 10px !important;
+        }
+
+        /* Sidebar Navigation - Mobile Touch Friendly (Apple Touch Target 44px+) */
+        [data-testid="stSidebar"] {
+            width: 86vw !important;
+            max-width: 320px !important;
+        }
+        [data-testid="stSidebar"] [data-testid="stRadio"] label {
+            padding: 12px 14px !important;
+            min-height: 44px !important;
+            margin-bottom: 4px !important;
+        }
+        [data-testid="stSidebar"] [data-testid="stRadio"] label span,
+        [data-testid="stSidebar"] [data-testid="stRadio"] label p {
+            font-size: 13.5px !important;
+        }
+
+        /* Tabs Navigation - Smooth Mobile Horizontal Touch Scrolling */
+        .stTabs [data-baseweb="tab-list"] {
+            overflow-x: auto !important;
+            flex-wrap: nowrap !important;
+            scrollbar-width: thin !important;
+            -webkit-overflow-scrolling: touch !important;
+            gap: 6px !important;
+            padding-bottom: 6px !important;
+        }
+        .stTabs [data-baseweb="tab"] {
+            white-space: nowrap !important;
+            font-size: 12px !important;
+            padding: 8px 12px !important;
+        }
+
+        /* Dataframes & Tables - Touch Smooth Scroll */
+        .stDataFrame, div[data-testid="stTable"] {
+            overflow-x: auto !important;
+            -webkit-overflow-scrolling: touch !important;
+            width: 100% !important;
+        }
+
+        /* Headings & Typography Responsive Scaling */
+        h1, .stApp h1 {
+            font-size: 1.4rem !important;
+            line-height: 1.3 !important;
+        }
+        h2, .stApp h2 {
+            font-size: 1.2rem !important;
+        }
+        h3, .stApp h3 {
+            font-size: 1.05rem !important;
+        }
+        h4, .stApp h4 {
+            font-size: 0.95rem !important;
+        }
+
+        /* Plotly Charts & Iframes Responsive */
+        .js-plotly-plot, .plotly {
+            max-width: 100% !important;
+            overflow-x: hidden !important;
+        }
+
+        /* Selectboxes & Buttons Mobile Touch Sizing */
+        div[data-baseweb="select"] {
+            min-height: 44px !important;
+        }
+        button[kind="primary"], button[kind="secondary"] {
+            min-height: 44px !important;
+            font-size: 13px !important;
+        }
     }
 
 </style>
@@ -5050,7 +5158,8 @@ def render_social_media_hub():
                 "Senaryo 2: BioPSafe Trofektoderm Biyopsi Kiti (30 Saniyede Sıfır Termal DNA Hasarı - 75 sn)",
                 "Senaryo 3: Mismatch Blocker - Laboratuvarda Numune Karışmasına Sıfır Tolerans (7 RFID İstasyonu - 90 sn)",
                 "Senaryo 4: Z-Dish Array & Kalsiyumsuz AOA Medyası (Kimyasal İyonofor Toksisitesine Son - 60 sn)",
-                "Senaryo 5: ZEUS ZPS 26 & Liyofilize Solüsyon - Total Döllenme Başarısızlığı (TFF) Kapsamlı B2B Lead Senaryosu (75 sn)"
+                "Senaryo 5: ZEUS ZPS 26 & Liyofilize Solüsyon - Total Döllenme Başarısızlığı (TFF) Kapsamlı B2B Lead Senaryosu (75 sn)",
+                "Senaryo 6 (Dikey Mobil 9:16): ZEUS ZPS 26 - Reels & Shorts Ultra-Dinamik Mobil Kurgu (45 sn)"
             ],
             key="sb_video_script"
         )
@@ -5101,6 +5210,40 @@ def render_social_media_hub():
                 {"Zaman": "01:05 - 01:15 (Bitiş & Lead Magnet)", "Görsel & Mikroskop Açısı": "ZEUS Bioscience kurumsal logosu ve ZPS 26 cihazı. Ekranda indirme butonu simgesi ve QR kod belirir.", "Seslendirme (Voiceover - VO)": "Kliniğinizin başarı oranlarını yükseltecek hakemli klinik çalışma protokolünü ve ZPS 26 teknik şartnamesini inceleyin. Yorumlara 'PROTOKOL' yazın, klinik çalışma dosyasını size hemen gönderelim.", "Ekran Yazısı & Grafik": "👉 Yorumlara 'PROTOKOL' Yazın | DM ile Klinik Dosyayı Alın | zeusbio.com"}
             ]
             st.dataframe(pd.DataFrame(sc5_table), use_container_width=True, hide_index=True)
+
+        elif "Senaryo 6" in script_sel:
+            sc6_table = [
+                {"Zaman": "00:00 - 00:04 (Stop-Scroll Hook)", "Dikey 9:16 Kadraj & Güvenli Alan": "Dikey Split Screen: Üst %45'te sivri ICSI iğnesi oosite batar ve zar anında patlar (Lizis!). Alt %45 kararık. Merkezde büyük neon font: 'YUMURTANIN SUÇU DEĞİL!'.", "Seslendirme (Voiceover - VO)": "Her 10 oositten birini iğne travması yüzünden kaybettiğinizi biliyor muydunuz?", "Mobil Ekran Altyazısı (Auto-Cap)": "🚨 %8.5 Oosit Delme Travması (Sivri İğne Lizisi)"},
+                {"Zaman": "00:04 - 00:16 (Dikey Split Karşılaştırma)", "Dikey 9:16 Kadraj & Güvenli Alan": "Alt %45 aydınlanır: ZEUS ZPS 26 küt uçlu piezo pipet kadrajda. 1 mikropuls dalga efekti: Zar esneyerek spermi içine alır, sıfır yırtılma!", "Seslendirme (Voiceover - VO)": "ZEUS ZPS 26 Piezo osilasyonuyla delmeyi unutun. Tek bir mikro-titreşimle hücre zarı yırtılmadan esner; oosit lizis oranı yüzde 0.8'in altına iner.", "Mobil Ekran Altyazısı (Auto-Cap)": "⚡ ZEUS ZPS 26: 70 µs Mikropuls | Sıfır Membran Yırtılması"},
+                {"Zaman": "00:16 - 00:28 (Medya & İnovasyon)", "Dikey 9:16 Kadraj & Güvenli Alan": "ZPS 26 kontrol paneli ve yanında 1 Yıl Raf Ömürlü Liyofilize Toz Flakonu yakın çekim. Yeşil onay tiki hologramı.", "Seslendirme (Voiceover - VO)": "Kimyasal iyonofor toksisitesine son. 1 yıl raf ömürlü liyofilize toz medyasıyla Total Döllenme Başarısızlığı vakalarında 2PN döllenme oranı yüzde 82.", "Mobil Ekran Altyazısı (Auto-Cap)": "🛡️ 1 Yıl Raf Ömrü (Liyofilize Toz) | 2PN Başarısı %82.3"},
+                {"Zaman": "00:28 - 00:38 (Klinik Kanıt)", "Dikey 9:16 Kadraj & Güvenli Alan": "4K time-lapse ile bölünen 5. gün blastosisti. Sağ köşede CE MDR Class IIa hologram damgası.", "Seslendirme (Voiceover - VO)": "Blastosist gelişiminde net artı yüzde 18.4 artış. CE MDR Class IIa onaylı küresel altın standart.", "Mobil Ekran Altyazısı (Auto-Cap)": "📈 Blastosist Artışı +%18.4 | CE MDR Class IIa"},
+                {"Zaman": "00:38 - 00:45 (Başparmakla Mobil Eylem)", "Dikey 9:16 Kadraj & Güvenli Alan": "ZEUS Bioscience logosu, animasyonlu parmak klavyede 'P-R-O-T-O-K-O-L' yazar ve DM ikonuna tıklar.", "Seslendirme (Voiceover - VO)": "Klinik çalışma ve aplikasyon protokolünü hemen almak için yoruma 'PROTOKOL' yazın, DM ile anında iletelim!", "Mobil Ekran Altyazısı (Auto-Cap)": "👇 Yoruma 'PROTOKOL' Yazın | DM ile Anında Gelsin"}
+            ]
+            st.dataframe(pd.DataFrame(sc6_table), use_container_width=True, hide_index=True)
+
+        # 9:16 Vertical Mobile Production Guide
+        st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
+        with st.expander("📱 9:16 Dikey Mobil Ekran (Instagram Reels, Shorts & TikTok) Prodüksiyon & Safe-Zone Rehberi", expanded=False):
+            col_m1, col_m2 = st.columns(2)
+            with col_m1:
+                st.markdown("""
+                <div style="background: rgba(10, 25, 47, 0.7); border: 1px solid rgba(0, 245, 255, 0.25); border-radius: 10px; padding: 14px 18px; font-size: 12px; line-height: 1.6;">
+                    <b style="color: #00F5FF; font-size: 13px;">📐 Dikey 9:16 Safe Zone (Güvenli Alan) Kuralları</b><br><br>
+                    • <b>Üst %15 (150px) Boşluk:</b> Platformun arama çubuğu ve ses simgesiyle çakışmaması için metinsiz bırakılır.<br>
+                    • <b>Alt %20 (240px) Boşluk:</b> Profil ismi, video açıklaması ve müzik şeridi yazıları kapatmasın diye boş bırakılır.<br>
+                    • <b>Sağ %15 (120px) Boşluk:</b> Beğeni, yorum, kaydet ve paylaş butonlarının altında kalmayacak şekilde merkezlenir.<br>
+                    • <b>Merkez 1080x1350px Alanı:</b> Tüm mikroskop görüntüleri, hücre lizisi ve kritik veriler bu güvenli pencereye oturtulur.
+                </div>
+                """, unsafe_allow_html=True)
+            with col_m2:
+                st.markdown("""
+                <div style="background: rgba(10, 25, 47, 0.7); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 10px; padding: 14px 18px; font-size: 12px; line-height: 1.6;">
+                    <b style="color: #10B981; font-size: 13px;">🔇 Sessiz İzleme & Mobil Başparmak Kancası</b><br><br>
+                    • <b>Sessiz İzleme Standardı (%76 Kuralı):</b> Hekimlerin %76'sı videoları klinikte sessiz izler. Dinamik, kelime kelime yanan büyük altyazı (CapCut / Premiere Auto-Cap) şarttır.<br>
+                    • <b>Neon Klinik Vurgular:</b> <i>'%8.5 Lizis', 'ZPS 26', '%82.3 2PN', 'CE Class IIa'</i> kelimeleri neon sarı ve yeşil renkle patlatılır.<br>
+                    • <b>Tek Başparmak Hareketi (1-Thumb CTA):</b> Kullanıcıyı link aramaya zorlamayın. Sadece yoruma <i>'PROTOKOL'</i> yazmasını isteyin; otomasyon DM'den PDF dosyasını iletsin.
+                </div>
+                """, unsafe_allow_html=True)
 
         # B2B Growth & Viral Interactivity Guide
         st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
