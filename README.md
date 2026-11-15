@@ -14,6 +14,7 @@ ZGMI v2.9.0 introduces a streamlined **Unified 4-Hub Architecture** replacing 13
 
 ### 🌐 Hub 1: Global Cockpit & Country 360°
 Consolidates *Executive Dashboard*, *Country 360° Performance*, and *Market Intelligence & Compare*:
+- **🎬 Interactive Video Tour & Simulation:** Built-in 60-second animated portal walkthrough with synchronized voiceover karaoke, chapter scrubber (1.0x-2.0x), and animated virtual cursor workflow.
 - **3D Cyber Hologram Earth Globe (WebGL 360°):** Interactive orthographic sphere visualizing distributor hubs and clinical penetration.
 - **Real-Time Financial Integrity:** 874 verified invoice transactions across 43 client institutions ($264.5K Distributor / $429.4K Direct Clinic lifetime).
 - **Country 360° & Customs Tariff Engine:** Instant sovereign dossiers combining GDP per capita, IVF cycle volumes, CE/MDR regulatory mandates, customs duty % (0% EU up to 15% Levant), and clearance lead times (2 to 35 days).

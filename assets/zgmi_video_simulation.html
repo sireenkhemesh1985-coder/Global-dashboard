@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZGMI Portal Video Simülasyonu</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+    @keyframes pulse-cyan {
+      0%, 100% { box-shadow: 0 0 15px rgba(0, 245, 255, 0.4), inset 0 0 10px rgba(0, 245, 255, 0.2); }
+      50% { box-shadow: 0 0 30px rgba(0, 245, 255, 0.8), inset 0 0 20px rgba(0, 245, 255, 0.4); }
+    }
+    @keyframes scanline {
+      0% { transform: translateY(-100%); }
+      100% { transform: translateY(1000%); }
+    }
+    .scan-line {
+      animation: scanline 8s linear infinite;
+    }
+    .cursor-pointer-sim {
+      transition: all 0.7s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+  </style>
+</head>
+<body class="bg-[#070B14] text-[#E2E8F0] antialiased p-2 sm:p-4 font-sans min-h-screen flex flex-col items-center justify-center">
+
+  <!-- Main Video Player Container -->
+  <div class="w-full max-w-4xl bg-[#0B1426] border border-[#00F5FF]/30 rounded-2xl overflow-hidden shadow-2xl flex flex-col">
+    
+    <!-- Player Top Chrome / Title Bar -->
+    <div class="bg-[#0D1B33] px-4 py-2.5 border-b border-[#00F5FF]/20 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="w-3 h-3 rounded-full bg-[#EF4444]"></div>
+        <div class="w-3 h-3 rounded-full bg-[#F59E0B]"></div>
+        <div class="w-3 h-3 rounded-full bg-[#10B981]"></div>
+        <span class="ml-2 text-xs font-semibold text-[#00F5FF] tracking-wider uppercase">ZEUS BIOSCIENCE — ZGMI v2.9.0 PORTAL WALKTHROUGH</span>
+      </div>
+      <div class="flex items-center gap-2">
+        <span class="inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-[#10B981]/20 text-[#10B981] border border-[#10B981]/40">
+          ● CANLI SİMÜLASYON
+        </span>
+        <span id="speedBadge" class="text-xs text-[#94A3B8] font-mono">1.0x</span>
+      </div>
+    </div>
+
+    <!-- Video Canvas Screen (Interactive Simulated UI) -->
+    <div class="relative w-full aspect-[16/9] bg-[#070B14] overflow-hidden select-none border-b border-[#00F5FF]/20 flex flex-col">
+      
+      <!-- Scanline FX overlay -->
+      <div class="absolute inset-0 pointer-events-none bg-gradient-to-b from-transparent via-[#00F5FF]/5 to-transparent h-12 scan-line z-20"></div>
+
+      <!-- Virtual Mouse Cursor Pointer -->
+      <div id="simCursor" class="absolute z-30 cursor-pointer-sim pointer-events-none transform -translate-x-1/2 -translate-y-1/2 opacity-0 transition-opacity duration-300" style="left: 10%; top: 20%;">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" class="drop-shadow-[0_2px_8px_rgba(0,245,255,0.8)]">
+          <path d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87a.5.5 0 0 0 .35-.85L6.35 2.85a.5.5 0 0 0-.85.36z" fill="#00F5FF" stroke="#070B14" stroke-width="1.5"/>
+        </svg>
+        <div id="cursorRipple" class="absolute -top-2 -left-2 w-8 h-8 rounded-full border-2 border-[#00F5FF] animate-ping opacity-0"></div>
+      </div>
+
+      <!-- SCENE 1: GLOBAL COCKPIT & 3D GLOBE -->
+      <div id="scene1" class="absolute inset-0 p-4 sm:p-5 flex flex-col justify-between transition-opacity duration-500 opacity-100 z-10">
+        <div class="flex items-center justify-between border-b border-white/10 pb-2">
+          <div class="flex items-center gap-3">
+            <span class="px-2.5 py-1 rounded-md text-xs font-bold bg-[#00F5FF]/20 text-[#00F5FF] border border-[#00F5FF]/40">
+              HUB 1: 🌐 Global Cockpit & Country 360°
+            </span>
+            <span class="text-xs text-[#94A3B8]">Mevcut Görünüm: <b>🧭 Executive Overview & 3D Globe</b></span>
+          </div>
+          <div class="text-xs font-mono text-[#10B981] bg-[#10B981]/10 px-2 py-1 rounded border border-[#10B981]/30">
+            ✓ 874 Canlı Fatura | 43 Partner
+          </div>
+        </div>
+
+        <div class="grid grid-cols-12 gap-3 flex-1 items-center my-1.5">
+          <!-- Left: 3D Hologram Globe Simulator -->
+          <div class="col-span-5 flex flex-col items-center justify-center p-2.5 rounded-xl bg-[#0F1D38]/60 border border-[#00F5FF]/30 relative overflow-hidden">
+            <div class="relative w-28 h-28 sm:w-36 sm:h-36 rounded-full border border-[#00F5FF]/40 flex items-center justify-center" style="animation: pulse-cyan 3s infinite;">
+              <div class="w-20 h-20 sm:w-28 sm:h-28 rounded-full border border-dashed border-[#00F5FF]/60 animate-spin" style="animation-duration: 20s;"></div>
+              <!-- Glowing Hub Markers -->
+              <div class="absolute top-8 left-10 w-2.5 h-2.5 bg-[#00E676] rounded-full shadow-[0_0_8px_#00E676] animate-ping"></div>
+              <div class="absolute top-8 left-10 w-2.5 h-2.5 bg-[#00E676] rounded-full"></div>
+              <span class="absolute top-4 left-4 text-[10px] font-bold text-[#00E676]">Ankara (HQ)</span>
+              
+              <div class="absolute bottom-8 right-8 w-2.5 h-2.5 bg-[#00F5FF] rounded-full shadow-[0_0_8px_#00F5FF] animate-pulse"></div>
+              <span class="absolute bottom-4 right-4 text-[10px] font-bold text-[#00F5FF]">Bağdat/Amman</span>
+            </div>
+            <div class="mt-1.5 text-center text-xs font-semibold text-[#00F5FF]">WebGL Cyber Hologram 360°</div>
+          </div>
+
+          <!-- Right: Key KPI Tiles -->
+          <div class="col-span-7 flex flex-col gap-2">
+            <div class="grid grid-cols-3 gap-1.5">
+              <div class="p-2 rounded-lg bg-[#0F192E] border border-white/10">
+                <div class="text-[10px] text-[#94A3B8]">Distribütör Cirosu</div>
+                <div class="text-xs sm:text-sm font-bold text-[#00F5FF] font-mono">$264.5K</div>
+                <div class="text-[9px] text-[#10B981]">↑ 40 Yetkili Bayi</div>
+              </div>
+              <div class="p-2 rounded-lg bg-[#0F192E] border border-white/10">
+                <div class="text-[10px] text-[#94A3B8]">Direkt Klinikler</div>
+                <div class="text-xs sm:text-sm font-bold text-[#10B981] font-mono">$429.4K</div>
+                <div class="text-[9px] text-[#10B981]">↑ 26 Klinik Ağı</div>
+              </div>
+              <div class="p-2 rounded-lg bg-[#0F192E] border border-white/10">
+                <div class="text-[10px] text-[#94A3B8]">Kurulu Donanım</div>
+                <div class="text-xs sm:text-sm font-bold text-[#F59E0B] font-mono">21 Adet</div>
+                <div class="text-[9px] text-[#94A3B8]">ZPS 26 & BioPSafe</div>
+              </div>
+            </div>
+
+            <!-- Country 360 Highlight Card -->
+            <div id="s1Card" class="p-2.5 rounded-lg bg-[#112240] border border-[#00F5FF]/40 transform transition-all duration-500 scale-95 opacity-80">
+              <div class="flex items-center justify-between mb-1">
+                <div class="flex items-center gap-1.5">
+                  <span class="text-sm">🇮🇶 🇯🇴</span>
+                  <b class="text-xs text-white">Irak & Ürdün (SIRIUS PHARM)</b>
+                </div>
+                <span class="text-[10px] px-1.5 py-0.5 rounded bg-[#00E676]/20 text-[#00E676] font-bold">Tek Tıkla Ülke 360°</span>
+              </div>
+              <div class="grid grid-cols-2 gap-1.5 text-[10.5px] text-[#CBD5E1]">
+                <div>• Gümrük: <b class="text-[#00F5FF]">%6 (Ürdün) / %7 (Irak)</b></div>
+                <div>• Otorite: <b class="text-white">JFDA / KIMADIA İzinli</b></div>
+                <div>• Sevkiyat: <b class="text-[#10B981]">Habur Sınırı + ESB Hava</b></div>
+                <div>• Ödeme Riski: <b class="text-[#10B981]">%0 (Arab Bank Amman)</b></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-[10.5px] text-[#94A3B8] flex items-center justify-between border-t border-white/10 pt-1.5">
+          <span>🎯 Haritadan herhangi bir ülkeye tıklandığında tüm gümrük ve pazar verisi aynı ekranda açılır.</span>
+          <span class="text-[#00F5FF] font-semibold">Sahne 1 / 4 (00:00 - 00:15)</span>
+        </div>
+      </div>
+
+      <!-- SCENE 2: COMMERCIAL HUB & CLIENT 360° -->
+      <div id="scene2" class="absolute inset-0 p-4 sm:p-5 flex flex-col justify-between transition-opacity duration-500 opacity-0 z-10 pointer-events-none">
+        <div class="flex items-center justify-between border-b border-white/10 pb-2">
+          <div class="flex items-center gap-3">
+            <span class="px-2.5 py-1 rounded-md text-xs font-bold bg-[#10B981]/20 text-[#10B981] border border-[#10B981]/40">
+              HUB 2: 💼 Commercial Hub & Client 360°
+            </span>
+            <span class="text-xs text-[#94A3B8]">Mevcut Görünüm: <b>🏢 Distributors & CRM</b></span>
+          </div>
+          <div class="text-xs font-mono text-[#00F5FF] bg-[#00F5FF]/10 px-2 py-1 rounded border border-[#00F5FF]/30">
+            Firma Arama: 'SIRIUS PHARM'
+          </div>
+        </div>
+
+        <!-- Simulated CRM Card -->
+        <div class="p-3 rounded-xl bg-[#0E1A33] border border-[#10B981]/40 my-auto shadow-lg">
+          <div class="flex items-center justify-between border-b border-white/10 pb-2 mb-2">
+            <div>
+              <div class="text-sm font-bold text-white flex items-center gap-2">
+                🏛️ SIRIUS PHARM COMPANY 
+                <span class="text-[10px] bg-[#00F5FF]/20 text-[#00F5FF] px-2 py-0.5 rounded font-mono">Yetkili Distribütör</span>
+              </div>
+              <div class="text-[11px] text-[#94A3B8]">Bağdat, Irak & Amman, Ürdün Bölge Tek Yetkilisi</div>
+            </div>
+            <div class="text-right">
+              <div class="text-sm sm:text-base font-bold text-[#10B981] font-mono">$215,000</div>
+              <div class="text-[9px] text-[#94A3B8]">Konsolide Ciro (2024-2026)</div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-4 gap-2 mb-2 text-center">
+            <div class="p-1.5 rounded bg-[#070D1A] border border-white/5">
+              <div class="text-[10px] text-[#94A3B8]">ZPS 26 Stimulator</div>
+              <div class="text-xs font-bold text-[#00F5FF]">6 Cihaz Kurulu</div>
+            </div>
+            <div class="p-1.5 rounded bg-[#070D1A] border border-white/5">
+              <div class="text-[10px] text-[#94A3B8]">BioPSafe Biyopsi</div>
+              <div class="text-xs font-bold text-[#00E676]">4 Sistem Kurulu</div>
+            </div>
+            <div class="p-1.5 rounded bg-[#070D1A] border border-white/5">
+              <div class="text-[10px] text-[#94A3B8]">Sarf Tüketimi</div>
+              <div class="text-xs font-bold text-[#F59E0B]">1,053 Kutu</div>
+            </div>
+            <div class="p-1.5 rounded bg-[#070D1A] border border-white/5">
+              <div class="text-[10px] text-[#94A3B8]">LOA Sözleşme</div>
+              <div class="text-xs font-bold text-[#38BDF8]">2027'ye Kadar Geçerli</div>
+            </div>
+          </div>
+
+          <!-- Bottom: Integrated Pricing Calculator preview -->
+          <div class="p-2 rounded bg-[#10223D] border border-dashed border-[#10B981]/30 flex items-center justify-between text-[11px]">
+            <span class="text-[#CBD5E1]">🧮 Entegre İskonto Hesaplayıcı: <b>%15 Standart Bayi İskontosu</b> (Hedef Brüt Marj: %42.8)</span>
+            <span class="px-2 py-0.5 rounded bg-[#10B981] text-black font-bold text-[10px]">Teklif Hazır</span>
+          </div>
+        </div>
+
+        <div class="text-[10.5px] text-[#94A3B8] flex items-center justify-between border-t border-white/10 pt-1.5">
+          <span>💼 4 ayrı sekme yerine: Müşteri bilgisi, sözleşme, kurulu donanım ve iskonto tek kartta.</span>
+          <span class="text-[#10B981] font-semibold">Sahne 2 / 4 (00:15 - 00:30)</span>
+        </div>
+      </div>
+
+      <!-- SCENE 3: AI RISK & FORECASTING DESK -->
+      <div id="scene3" class="absolute inset-0 p-4 sm:p-5 flex flex-col justify-between transition-opacity duration-500 opacity-0 z-10 pointer-events-none">
+        <div class="flex items-center justify-between border-b border-white/10 pb-2">
+          <div class="flex items-center gap-3">
+            <span class="px-2.5 py-1 rounded-md text-xs font-bold bg-[#EF4444]/20 text-[#EF4444] border border-[#EF4444]/40">
+              HUB 3: 🧠 AI Risk, Security & Forecasting Desk
+            </span>
+            <span class="text-xs text-[#94A3B8]">Mevcut Görünüm: <b>🚨 Geopolitical Security & DEFCON Radar</b></span>
+          </div>
+          <div class="text-xs font-mono text-[#F59E0B] bg-[#F59E0B]/10 px-2 py-1 rounded border border-[#F59E0B]/30">
+            DEFCON 3: Orta Jeopolitik Alarm
+          </div>
+        </div>
+
+        <div class="grid grid-cols-12 gap-3 my-auto">
+          <!-- Left: War Risk & Ministry Dispatch -->
+          <div class="col-span-6 p-2.5 rounded-xl bg-[#1A1218] border border-[#EF4444]/40">
+            <div class="text-xs font-bold text-[#F87171] mb-1.5 flex items-center gap-1.5">
+              <span>⚠️ T.C. Ticaret Bakanlığı & Dışişleri Lojistik Tebliği</span>
+            </div>
+            <div class="text-[10.5px] text-[#E2E8F0] space-y-1">
+              <p>• <b>Habur Sınır Kapısı:</b> TIREPD elektronik ön bildirimli medikal cihazlara öncelikli yeşil peron tahsisi.</p>
+              <p>• <b>Kızıldeniz Navlun Muafiyeti:</b> Ankara - Bağdat/Amman THY direkt kargo hattına %50 devlet navlun desteği.</p>
+            </div>
+          </div>
+
+          <!-- Right: Shelf-Life Breakthrough & Forecast -->
+          <div class="col-span-6 p-2.5 rounded-xl bg-[#0D2235] border border-[#00F5FF]/40">
+            <div class="text-xs font-bold text-[#00F5FF] mb-1.5 flex items-center justify-between">
+              <span>🔬 Mart 2026 Liyofilize Toz Medya</span>
+              <span class="text-[9px] px-1 py-0.5 rounded bg-[#00E676]/20 text-[#00E676]">Patentli</span>
+            </div>
+            <div class="text-[10.5px] text-[#E2E8F0] space-y-1">
+              <p>• <b>Raf Ömrü Artışı:</b> 2 aylık sıvı medya ➔ <b class="text-[#00E676]">1 Yıl Raf Ömürlü Liyofilize Toz</b>.</p>
+              <p>• <b>TFF Kurtarma:</b> Total Döllenme Başarısızlığında 2PN döllenme oranı <b class="text-[#00F5FF]">%24'ten %82'ye</b> çıktı.</p>
+              <p>• <b>2027 AI Talep Projeksiyonu:</b> Sipariş hacminde <b class="text-[#F59E0B]">+%26.9 büyüme</b>.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-[10.5px] text-[#94A3B8] flex items-center justify-between border-t border-white/10 pt-1.5">
+          <span>🧠 Kriz senaryoları simüle edilir, liyofilize toz medya ile stok riski sıfırlanır.</span>
+          <span class="text-[#EF4444] font-semibold">Sahne 3 / 4 (00:30 - 00:45)</span>
+        </div>
+      </div>
+
+      <!-- SCENE 4: EXECUTIVE GOVERNANCE & B2B STUDIO -->
+      <div id="scene4" class="absolute inset-0 p-4 sm:p-5 flex flex-col justify-between transition-opacity duration-500 opacity-0 z-10 pointer-events-none">
+        <div class="flex items-center justify-between border-b border-white/10 pb-2">
+          <div class="flex items-center gap-3">
+            <span class="px-2.5 py-1 rounded-md text-xs font-bold bg-[#A855F7]/20 text-[#A855F7] border border-[#A855F7]/40">
+              HUB 4: ⚖️ Executive Governance, B2B Studio & Reports
+            </span>
+            <span class="text-xs text-[#94A3B8]">Mevcut Görünüm: <b>📱 B2B Video Studio & Consensus</b></span>
+          </div>
+          <div class="text-xs font-mono text-[#00F5FF] bg-[#00F5FF]/10 px-2 py-1 rounded border border-[#00F5FF]/30">
+            5 Rol Onaylandı | B2B Funnel Aktif
+          </div>
+        </div>
+
+        <div class="grid grid-cols-12 gap-3 my-auto">
+          <!-- 5 Executive Roles Consensus -->
+          <div class="col-span-6 p-2.5 rounded-xl bg-[#141026] border border-[#A855F7]/40">
+            <div class="text-xs font-bold text-[#C084FC] mb-1.5">⚖️ 5 Yönetici Rolü Konsensüs Kararı</div>
+            <div class="space-y-1 text-[10.5px] text-[#E2E8F0]">
+              <div class="flex items-center justify-between"><span>✓ Genel Müdür (GM)</span> <span class="text-[#10B981]">Onaylandı</span></div>
+              <div class="flex items-center justify-between"><span>✓ Uluslararası İlişkiler</span> <span class="text-[#10B981]">Onaylandı</span></div>
+              <div class="flex items-center justify-between"><span>✓ Satın Alma & Lojistik</span> <span class="text-[#10B981]">Onaylandı</span></div>
+              <div class="flex items-center justify-between"><span>✓ Finans Müdürü</span> <span class="text-[#10B981]">Onaylandı</span></div>
+              <div class="flex items-center justify-between"><span>✓ Kıdemli Embriyolog</span> <span class="text-[#10B981]">Onaylandı</span></div>
+            </div>
+          </div>
+
+          <!-- Video Production & 1-Click Export -->
+          <div class="col-span-6 p-2.5 rounded-xl bg-[#0F1E36] border border-[#00F5FF]/40 flex flex-col justify-between">
+            <div>
+              <div class="text-xs font-bold text-[#00F5FF] mb-1">🎬 B2B MedTech Video Studio</div>
+              <p class="text-[10.5px] text-[#CBD5E1]">• <b>ZPS 26 & Liyofilize Senaryo (75s):</b> 'PROTOKOL' yorum lead döngüsü.</p>
+              <p class="text-[10.5px] text-[#CBD5E1]">• <b>Dikey 9:16 Kurgu (45s):</b> Reels/Shorts güvenli alan & altyazı.</p>
+            </div>
+            <div class="mt-2 pt-1.5 border-t border-white/10 flex items-center justify-between">
+              <span class="text-[10px] text-[#94A3B8]">Resmi Yönetim Dosyası:</span>
+              <span class="px-2 py-0.5 rounded bg-[#00F5FF] text-black font-bold text-xs shadow-md">
+                📥 Tek Tıkla PDF / BOM İndir
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div class="text-[10.5px] text-[#94A3B8] flex items-center justify-between border-t border-white/10 pt-1.5">
+          <span>🚀 Yönetim kurulu konsensüsü, viral B2B stratejisi ve resmi raporlama tek merkezde.</span>
+          <span class="text-[#C084FC] font-semibold">Sahne 4 / 4 (00:45 - 01:00)</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Voiceover Subtitle & Karaoke Text Bar -->
+    <div class="bg-[#0A1428] px-4 py-2.5 border-b border-[#00F5FF]/20 flex items-center gap-3">
+      <div class="w-7 h-7 rounded-full bg-[#00F5FF]/10 border border-[#00F5FF]/30 flex items-center justify-center shrink-0">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path><path d="M19 10v2a7 7 0 0 1-14 0v-2"></path><line x1="12" y1="19" x2="12" y2="23"></line><line x1="8" y1="23" x2="16" y2="23"></line></svg>
+      </div>
+      <div class="flex-1">
+        <div class="text-[10px] uppercase font-bold text-[#00F5FF] tracking-wider mb-0.5">🎙️ SESLENDİRME & ANLATIM (VOICEOVER)</div>
+        <p id="voText" class="text-xs font-medium text-white transition-all duration-300">
+          "Hoş geldiniz. ZEUS Global Market Intelligence, 43 uluslararası partner ve 874 doğrulanmış faturayı tek bir 360° komuta merkezinde toplar..."
+        </p>
+      </div>
+    </div>
+
+    <!-- Timeline Scrubber & Player Controls -->
+    <div class="bg-[#080E1C] px-4 py-2.5 flex flex-col gap-2">
+      <!-- Scrubber Bar -->
+      <div class="relative w-full h-2 bg-gray-800 rounded-full cursor-pointer overflow-hidden group" id="progressBarContainer">
+        <div id="progressBar" class="absolute top-0 left-0 bottom-0 bg-gradient-to-r from-[#00F5FF] via-[#00E676] to-[#A855F7] w-0 transition-all duration-100"></div>
+        <!-- Chapter Markers on timeline -->
+        <div class="absolute top-0 bottom-0 left-[25%] w-0.5 bg-white/40"></div>
+        <div class="absolute top-0 bottom-0 left-[50%] w-0.5 bg-white/40"></div>
+        <div class="absolute top-0 bottom-0 left-[75%] w-0.5 bg-white/40"></div>
+      </div>
+
+      <div class="flex items-center justify-between text-xs">
+        <!-- Play / Pause & Time -->
+        <div class="flex items-center gap-3">
+          <button id="btnPlay" class="w-7 h-7 rounded-full bg-[#00F5FF] text-black font-bold flex items-center justify-center hover:bg-[#38BDF8] transition shadow-md text-xs">
+            ▶
+          </button>
+          <button id="btnRestart" class="text-[#94A3B8] hover:text-white transition" title="Başa Sar">
+            ↺
+          </button>
+          <span id="timeDisplay" class="font-mono text-[#00F5FF] font-semibold">00:00 / 01:00</span>
+        </div>
+
+        <!-- Chapter Jump Buttons -->
+        <div class="hidden sm:flex items-center gap-1.5">
+          <button onclick="seekTo(0)" class="px-2 py-0.5 rounded text-[11px] font-medium bg-white/5 hover:bg-[#00F5FF]/20 hover:text-[#00F5FF] transition border border-white/10">1. Global Cockpit</button>
+          <button onclick="seekTo(15)" class="px-2 py-0.5 rounded text-[11px] font-medium bg-white/5 hover:bg-[#10B981]/20 hover:text-[#10B981] transition border border-white/10">2. Commercial</button>
+          <button onclick="seekTo(30)" class="px-2 py-0.5 rounded text-[11px] font-medium bg-white/5 hover:bg-[#EF4444]/20 hover:text-[#EF4444] transition border border-white/10">3. AI Risk</button>
+          <button onclick="seekTo(45)" class="px-2 py-0.5 rounded text-[11px] font-medium bg-white/5 hover:bg-[#A855F7]/20 hover:text-[#A855F7] transition border border-white/10">4. Executive</button>
+        </div>
+
+        <!-- Speed Selector -->
+        <div class="flex items-center gap-1">
+          <button onclick="toggleSpeed()" class="px-2 py-0.5 rounded text-[11px] font-mono bg-white/5 hover:bg-white/10 text-[#94A3B8] hover:text-white transition border border-white/10">
+            Hız: <span id="btnSpeedVal">1.0x</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Interactive JavaScript Engine -->
+  <script>
+    const TOTAL_DURATION = 60; // 60 seconds simulation
+    let currentTime = 0;
+    let isPlaying = false;
+    let playSpeed = 1.0;
+    let intervalId = null;
+
+    const voScripts = [
+      { start: 0, end: 15, text: "🌐 1. Global Cockpit: Harita üzerinden herhangi bir ülkeye tıklandığında, hem 3D hologram dünya parlar hem de gümrük tarifesi (%0-%15) ve klinik pazar payı aynı ekranda açılır." },
+      { start: 15, end: 30, text: "💼 2. Commercial Hub: Dağınık sekmeler kalktı. Sirius Pharm gibi bir ortağı seçtiğinizde ciro geçmişi, kurulu ZPS 26 cihazları, sözleşme ve iskonto hesaplayıcı tek ekranda toplanır." },
+      { start: 30, end: 45, text: "🧠 3. AI Risk Desk: DEFCON radarı Habur sınır kapısı ve hava köprüsünü canlı izlerken, Mart 2026 liyofilize toz medya devrimi sarf raf ömrünü 1 yıla çıkararak kriz riskini sıfırlar." },
+      { start: 45, end: 60, text: "⚖️ 4. Executive Governance: 5 üst yöneticinin konsensüs onayı, 'PROTOKOL' yorum döngülü B2B video stüdyosu ve tek tıkla resmi yönetim kurulu raporu hazır!" }
+    ];
+
+    const cursorWaypoints = [
+      { t: 2, x: 25, y: 40 },
+      { t: 6, x: 70, y: 75, click: true },
+      { t: 15, x: 20, y: 20 },
+      { t: 20, x: 50, y: 50, click: true },
+      { t: 30, x: 30, y: 20 },
+      { t: 36, x: 75, y: 45, click: true },
+      { t: 45, x: 40, y: 20 },
+      { t: 54, x: 80, y: 75, click: true }
+    ];
+
+    const btnPlay = document.getElementById('btnPlay');
+    const btnRestart = document.getElementById('btnRestart');
+    const progressBar = document.getElementById('progressBar');
+    const progressBarContainer = document.getElementById('progressBarContainer');
+    const timeDisplay = document.getElementById('timeDisplay');
+    const voText = document.getElementById('voText');
+    const simCursor = document.getElementById('simCursor');
+    const cursorRipple = document.getElementById('cursorRipple');
+
+    const scenes = [
+      document.getElementById('scene1'),
+      document.getElementById('scene2'),
+      document.getElementById('scene3'),
+      document.getElementById('scene4')
+    ];
+
+    function updateUI() {
+      // Update Scrubber
+      const pct = (currentTime / TOTAL_DURATION) * 100;
+      progressBar.style.width = pct + '%';
+
+      // Format Time
+      const m = Math.floor(currentTime / 60);
+      const s = Math.floor(currentTime % 60);
+      timeDisplay.innerText = `00:${s < 10 ? '0' + s : s} / 01:00`;
+
+      // Update Scenes
+      let activeSceneIndex = 0;
+      if (currentTime >= 45) activeSceneIndex = 3;
+      else if (currentTime >= 30) activeSceneIndex = 2;
+      else if (currentTime >= 15) activeSceneIndex = 1;
+      else activeSceneIndex = 0;
+
+      scenes.forEach((sc, idx) => {
+        if (idx === activeSceneIndex) {
+          sc.style.opacity = '1';
+          sc.style.pointerEvents = 'auto';
+        } else {
+          sc.style.opacity = '0';
+          sc.style.pointerEvents = 'none';
+        }
+      });
+
+      // Update Voiceover text
+      const vo = voScripts.find(v => currentTime >= v.start && currentTime < v.end);
+      if (vo && voText.innerText !== vo.text) {
+        voText.style.opacity = '0';
+        setTimeout(() => {
+          voText.innerText = vo.text;
+          voText.style.opacity = '1';
+        }, 150);
+      }
+
+      // Cursor animation
+      simCursor.style.opacity = '1';
+      let currWp = cursorWaypoints[0];
+      for (let wp of cursorWaypoints) {
+        if (currentTime >= wp.t) currWp = wp;
+      }
+      simCursor.style.left = currWp.x + '%';
+      simCursor.style.top = currWp.y + '%';
+
+      if (currWp.click && Math.abs(currentTime - currWp.t) < 0.8) {
+        cursorRipple.classList.remove('opacity-0');
+        setTimeout(() => cursorRipple.classList.add('opacity-0'), 400);
+      }
+
+      // Scene 1 card highlight
+      const s1Card = document.getElementById('s1Card');
+      if (s1Card) {
+        if (currentTime >= 6 && currentTime < 15) {
+          s1Card.classList.remove('scale-95', 'opacity-80');
+          s1Card.classList.add('scale-100', 'opacity-100', 'border-[#00F5FF]');
+        } else {
+          s1Card.classList.add('scale-95', 'opacity-80');
+          s1Card.classList.remove('scale-100', 'opacity-100');
+        }
+      }
+    }
+
+    function togglePlay() {
+      isPlaying = !isPlaying;
+      if (isPlaying) {
+        btnPlay.innerHTML = '❚❚';
+        if (currentTime >= TOTAL_DURATION) currentTime = 0;
+        intervalId = setInterval(() => {
+          currentTime += 0.25 * playSpeed;
+          if (currentTime >= TOTAL_DURATION) {
+            currentTime = TOTAL_DURATION;
+            togglePlay();
+          }
+          updateUI();
+        }, 250);
+      } else {
+        btnPlay.innerHTML = '▶';
+        clearInterval(intervalId);
+      }
+    }
+
+    function seekTo(sec) {
+      currentTime = sec;
+      updateUI();
+      if (!isPlaying) togglePlay();
+    }
+
+    function toggleSpeed() {
+      if (playSpeed === 1.0) playSpeed = 1.5;
+      else if (playSpeed === 1.5) playSpeed = 2.0;
+      else playSpeed = 1.0;
+      document.getElementById('speedBadge').innerText = playSpeed.toFixed(1) + 'x';
+      document.getElementById('btnSpeedVal').innerText = playSpeed.toFixed(1) + 'x';
+      if (isPlaying) {
+        clearInterval(intervalId);
+        intervalId = setInterval(() => {
+          currentTime += 0.25 * playSpeed;
+          if (currentTime >= TOTAL_DURATION) {
+            currentTime = TOTAL_DURATION;
+            togglePlay();
+          }
+          updateUI();
+        }, 250);
+      }
+    }
+
+    btnPlay.addEventListener('click', togglePlay);
+    btnRestart.addEventListener('click', () => {
+      currentTime = 0;
+      updateUI();
+      if (!isPlaying) togglePlay();
+    });
+
+    progressBarContainer.addEventListener('click', (e) => {
+      const rect = progressBarContainer.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const pct = clickX / rect.width;
+      currentTime = pct * TOTAL_DURATION;
+      updateUI();
+    });
+
+    // Auto-start on load
+    updateUI();
+    setTimeout(() => {
+      togglePlay();
+    }, 600);
+  </script>
+</body>
+</html>
