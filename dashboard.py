@@ -18054,6 +18054,10 @@ elif active_view == "🛃 Market Intelligence & Compare":
                                 
                             pitch_state_key = f"pitch_data_{radar_country}_{idx}_{strat_mode}_{eff_selected_lang}"
                             
+                            # Determine language-specific keys
+                            widget_subj_key = f"subj_input_{radar_country}_{idx}_{strat_mode}_{eff_selected_lang}"
+                            widget_body_key = f"body_input_{radar_country}_{idx}_{strat_mode}_{eff_selected_lang}"
+
                             if ai_gen_btn or pitch_state_key not in st.session_state:
                                 active_api_key = os.environ.get("GEMINI_API_KEY", "")
                                 gen_success = False
@@ -18104,6 +18108,8 @@ BODY:
                                             p_subj = p_parts[0].replace("SUBJECT:", "").strip()
                                             p_body = p_parts[1].strip()
                                             st.session_state[pitch_state_key] = (p_subj, p_body)
+                                            st.session_state[widget_subj_key] = p_subj
+                                            st.session_state[widget_body_key] = p_body
                                             gen_success = True
                                     except Exception:
                                         gen_success = False
@@ -18111,11 +18117,13 @@ BODY:
                                 if not gen_success:
                                     p_subj, p_body = build_executive_pitch(p, radar_country, strat_mode, user_custom_note, eff_selected_lang)
                                     st.session_state[pitch_state_key] = (p_subj, p_body)
+                                    st.session_state[widget_subj_key] = p_subj
+                                    st.session_state[widget_body_key] = p_body
                             
                             curr_subj, curr_body = st.session_state.get(pitch_state_key, build_executive_pitch(p, radar_country, strat_mode, user_custom_note, eff_selected_lang))
                             
-                            edited_subj = st.text_input("📌 E-posta Konu Başlığı (Subject):", value=curr_subj, key=f"subj_input_{radar_country}_{idx}_{strat_mode}")
-                            edited_body = st.text_area("Özelleştirilmiş İletişim Metni (Email Body):", value=curr_body, height=270, key=f"body_input_{radar_country}_{idx}_{strat_mode}")
+                            edited_subj = st.text_input("📌 E-posta Konu Başlığı (Subject):", value=curr_subj, key=widget_subj_key)
+                            edited_body = st.text_area("Özelleştirilmiş İletişim Metni (Email Body):", value=curr_body, height=270, key=widget_body_key)
                             
                             mail_subj_enc = urllib.parse.quote(edited_subj)
                             mail_body_enc = urllib.parse.quote(edited_body)
@@ -18150,9 +18158,23 @@ BODY:
                                 lk_card_kw = p.get('linkedin_query', f"{c_person} {p['name']}")
                                 lk_card_url = f"https://www.linkedin.com/search/results/people/?keywords={urllib.parse.quote(lk_card_kw)}"
                                 lk_clean_name = c_person.split('(')[0].strip()
-                                lk_conn_note = f"Sayın {lk_clean_name}, {p['name']} bünyesindeki öncü IVF ve embriyoloji çalışmalarınızı takdirle takip ediyoruz. CE MDR Class IIa onaylı Piezoelektrik oosit aktivasyon sistemimizin (ZPS 26) TFF vakalarındaki klinik başarı verilerini paylaşmak üzere ağınıza katılmak isterim. Saygılarımla."
                                 
-                                st.text_area("📋 300 Karakterlik LinkedIn Bağlantı İsteği Notu (Kopyalayabilirsiniz):", value=lk_conn_note[:300], height=85, key=f"lk_conn_note_{p['name'][:10]}_{idx}")
+                                if eff_selected_lang == "it":
+                                    lk_conn_note = f"Gentile {lk_clean_name}, seguiamo con stima l'eccellenza clinica di {p['name']} nella PMA. Vorrei collegarmi per condividere i dati clinici peer-reviewed sul sistema di attivazione oocitaria Piezo (ZPS 26, CE MDR) con tasso di fecondazione all'82.3% nei casi TFF. Cordiali saluti."
+                                elif eff_selected_lang == "es":
+                                    lk_conn_note = f"Estimado/a {lk_clean_name}, seguimos con gran interés el trabajo de excelencia de {p['name']} en reproducción asistida. Me gustaría conectar para compartir la evidencia clínica con marcado CE MDR sobre activación piezoeléctrica (ZPS 26) y fertilización del 82.3% en TFF. Saludos cordiales."
+                                elif eff_selected_lang == "de":
+                                    lk_conn_note = f"Sehr geehrte(r) {lk_clean_name}, wir schätzen die führende Arbeit von {p['name']} in der Reproduktionsmedizin sehr. Gerne möchte ich mich vernetzen, um klinische Daten zur CE-MDR-zertifizierten piezoelektrischen Oozytenaktivierung (ZPS 26, Befruchtungsrate 82.3% bei TFF) zu teilen. Beste Grüße."
+                                elif eff_selected_lang == "fr":
+                                    lk_conn_note = f"Cher/Chère {lk_clean_name}, nous suivons avec intérêt l'excellence des travaux de {p['name']} en PMA. Je souhaite me connecter afin de partager nos données cliniques publiées sur l'activation ovocytaire piézoélectrique (ZPS 26, CE MDR), atteignant 82.3% de fécondation en TFF. Cordialement."
+                                elif eff_selected_lang == "ar":
+                                    lk_conn_note = f"سعادة {lk_clean_name}، نتابع بتقدير تميزكم في {p['name']} بمجال علاج العقم. يشرفني التواصل لمشاركتكم النتائج الإكلينيكية الموثقة لتقنية التنشيط الكهروبيزوي للبويضات (ZPS 26 المعتمدة أوروبياً CE MDR) بمعدل إخصاب 82.3% في حالات فشل التنشيط. مع خالص التحية."
+                                elif eff_selected_lang == "tr":
+                                    lk_conn_note = f"Sayın {lk_clean_name}, {p['name']} bünyesindeki öncü IVF ve embriyoloji çalışmalarınızı takdirle takip ediyoruz. CE MDR Class IIa onaylı Piezoelektrik oosit aktivasyon sistemimizin (ZPS 26) TFF vakalarındaki %82.3 klinik başarı verilerini paylaşmak üzere ağınıza katılmak isterim. Saygılarımla."
+                                else: # en (English)
+                                    lk_conn_note = f"Dear {lk_clean_name}, we closely follow {p['name']}'s leadership in reproductive medicine. I would welcome connecting to share our peer-reviewed clinical evidence on CE MDR Class IIa Piezoelectric Oocyte Activation (ZPS 26), restoring 2PN rates to 82.3% in TFF cohorts. Kind regards."
+                                
+                                st.text_area("📋 300 Karakterlik LinkedIn Bağlantı İsteği Notu (Kopyalayabilirsiniz):", value=lk_conn_note[:300], height=85, key=f"lk_conn_note_{p['name'][:10]}_{idx}_{eff_selected_lang}")
                                 
                                 st.link_button(
                                     f"🚀 {lk_clean_name} için LinkedIn Profilini Aç & Bağlantı Kur",
