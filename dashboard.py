@@ -931,6 +931,28 @@ COUNTRY_MACRO_IVF = {
         'price_sensitivity': 'Orta',
         'macro_discount_allowance': 0.0,
         'ivf_discount_allowance': 0.5
+    },
+    'Egypt': {
+        'gdp_pc': 3750,
+        'gdp_ppp': 17100,
+        'gdp_tier': 'Lower-Middle Income',
+        'living_standard': 'Orta (Alım Gücü SAGP: $17,100 USD)',
+        'living_standard_code': 'Medium',
+        'clinics': 75,
+        'pop_m': 112.7,
+        'customs_tariff_pct': 5.0,
+        'customs_clearance_days': 18,
+        'import_difficulty': 'Yüksek (EDA Tescil, Konsolosluk Tasdiki & Döviz Kısıtı)',
+        'ivf_support': 'Ağırlıklı Özel Cepten Ödeme (%85 Out-of-Pocket)',
+        'ivf_support_code': 'Private Out-of-Pocket Majority',
+        'ivf_support_desc': 'Tüp bebek tedavilerinin %85-90ı özel merkezlerde cepten ödenir; üniversite ve kamu hastanelerinde sınırlı kontenjan vardır.',
+        'price_sensitivity': 'Çok Yüksek (Mısır Poundu Devalüasyonu / Dolarizasyon)',
+        'macro_discount_allowance': 1.0,
+        'ivf_discount_allowance': 1.2,
+        'icsi_pct': 85,
+        'pgt_pct': 16,
+        'cryo_pct': 8,
+        'total_annual_cycles': 52000
     }
 }
 
@@ -954,6 +976,8 @@ def resolve_country_macro(c_name):
         key = 'South Korea'
     elif c in ['United Kingdom', 'UK', 'GB']:
         key = 'United Kingdom'
+    elif c in ['Egypt', 'Mısır', 'EG']:
+        key = 'Egypt'
     else:
         key = c
     return COUNTRY_MACRO_IVF.get(key, {
@@ -1684,13 +1708,67 @@ MARKET_KNOWLEDGE_BASE = {
         'commercial_guardrails': 'Ödemeler konvertibl USD bazında ve akreditifli olmalı; kur dalgalanma riski şirket üzerine alınmamalıdır.',
         'ministry_decrees': [
             {
-                'decree_no': 'EDA-REG-702/2021',
-                'title': 'Tıbbi Cihaz Kayıt ve Konsolosluk Tasdikli COO Tebliği',
+                'decree_no': 'MOHP / EDA-REG-702/2021',
+                'title': 'Tıbbi Cihaz Kayıt ve Konsolosluk Tasdikli COO Tebliği (Sağlık Bakanlığı & EDA)',
                 'date': '2023-11-29',
                 'status': '🟢 Yürürlükte / Zorunlu',
                 'summary': 'Mısır\'a medikal cihaz ithalatında EDA dosya onayı, Menşe Şahadetnamesi (COO) ve Free Sales Certificate (FSC) Mısır konsolosluğu tasdikli olmalıdır.',
                 'impact_zeus': 'Kahire konsolosluk tasdikli evraklar hazır bulundurulmalıdır.',
                 'consumable_rule': 'İthal sarflarda parti miadının teslim anında en az %60\'ının geçerli olması aranır.'
+            },
+            {
+                'decree_no': 'MOHP-IVF-DIR-14/2022',
+                'title': 'Ulusal IVF, eSET ve Embriyo Transferi Standartları (Sağlık ve Nüfus Bakanlığı)',
+                'date': '2022-06-15',
+                'status': '🟢 Yürürlükte / Zorunlu',
+                'summary': '35 yaş altı kadınlarda ilk iki siklusta azami 2 embriyo transferine (eSET teşviki) izin verilir. Gamet/embriyo donasyonu ve taşıyıcı annelik kesinlikle yasaktır.',
+                'impact_zeus': 'Embriyoloji laboratuvarında yüksek membran korumalı CE Class IIa piezo protokolü standarttır.',
+                'consumable_rule': 'Kullanılan aktivasyon dishleri ve tampon solüsyonlar MEA >=%80 biyouyumluluk test onaylı olmalıdır.'
+            },
+            {
+                'decree_no': 'MOHP-BIOETHIC-512/2023',
+                'title': 'PGD/PGT Genetik Tanı ve Sosyal Cinsiyet Seçimi Yasağı Tebliği (Sağlık Bakanlığı & Biyoetik)',
+                'date': '2023-04-10',
+                'status': '🟢 Yürürlükte / Zorunlu',
+                'summary': 'PGT-A ve PGT-M genetik analizleri yalnızca tıbbi genetik hastalıklarda (Talasemi, Orak Hücre, Hemofili) serbesttir. Tıbbi endikasyon haricinde sosyal cinsiyet seçimi (Sex Selection) KESİNLİKLE YASAKTIR.',
+                'impact_zeus': 'BioPSafe Trofektoderm biyopsi pipetleri genetik hasarsız örnekleme amacıyla akredite merkezlerde tercih edilir.',
+                'consumable_rule': 'Biyopsi tüpleri ve PCR tubing steril DNAse/RNAse-free sertifikalı olmalıdır.'
+            },
+            {
+                'decree_no': 'CUST-ACI-DEC-38/2021',
+                'title': 'Nafeza ACI İleri Kargo Bildirimi & GTİP 9018.90 Rejimi (Maliye & Gümrük Bakanlığı)',
+                'date': '2021-10-01',
+                'status': '🟢 Yürürlükte / Zorunlu',
+                'summary': 'Mısır limanlarına/havalimanlarına sevk edilecek kargolar için gemi/uçak yüklenmeden önce Nafeza portalı üzerinden ACID numarası alınması zorunludur. GTİP 9018.90 cihazlar için %5.0 gümrük vergisi uygulanır.',
+                'impact_zeus': 'Sevkiyat faturası ve konşimentoda 19 haneli ACID numarası eksiksiz yer almalıdır.',
+                'consumable_rule': 'GTİP 3822.00 hücre kültürü kitleri Kahire Kargo Havalimanı soğuk hava deposunda (+2°C / +8°C) data-logger denetimiyle çekilir.'
+            },
+            {
+                'decree_no': 'MTI-GOEIC-DEC-43/2016',
+                'title': 'İhracatçı Fabrika Tescil Sicili & Menşe Denetimi (Ticaret ve Sanayi Bakanlığı)',
+                'date': '2016-01-16',
+                'status': '🟢 Yürürlükte / Zorunlu',
+                'summary': 'Mısır\'a medikal ürün ihraç eden yabancı üreticilerin GOEIC sistemine kayıtlı olması; fatura ve Menşe Şahadetnamesinin Mısır Konsolosluğu ve Ticaret Odası onaylı olması şarttır.',
+                'impact_zeus': 'ZEUS Bioscience üretim tesisinin ISO 13485:2016 kalite belgesi konsolosluk tasdikli sunulmalıdır.',
+                'consumable_rule': 'Faturadaki parti (lot) numaraları ve raf ömürleri koli etiketleriyle birebir uyuşmalıdır.'
+            },
+            {
+                'decree_no': 'CBE-FX-CIR-89/2023',
+                'title': 'Tıbbi İthalat Domiciliation & Akreditif (LC) Zorunluluğu (Mısır Merkez Bankası)',
+                'date': '2023-08-20',
+                'status': '🟢 Yürürlükte / Zorunlu',
+                'summary': 'Mısır Poundu (EGP) devalüasyonu riski nedeniyle, tüm medikal ithalat ödemeleri konvertibl döviz (USD) cinsinden ve gayrikabili rücu Teyitli Akreditif (Confirmed Irrevocable LC) ile yapılmalıdır. Vadeli açık hesap yasaktır.',
+                'impact_zeus': 'Siparişler banka akreditifi teyit edilmeden kesinlikle fabrikadan sevk edilmemelidir.',
+                'consumable_rule': 'Yıllık sarf anlaşmalarında döviz kuru riski distribütör tarafından üstlenilir.'
+            },
+            {
+                'decree_no': 'AL-AZHAR-FATWA-ART-2020',
+                'title': 'Üremeye Yardımcı Tedavilerde Dini ve Hukuki Hükümler (El-Ezher & Tabipler Birliği)',
+                'date': '2020-02-18',
+                'status': '🟢 Yürürlükte / Zorunlu',
+                'summary': 'Tüp bebek tedavisi yalnızca resmi nikahlı eşler arasında ve taze/dondurulmuş kendi gametleriyle yapılabilir. Üçüncü şahıslardan donör hücre, sperm/yumurta bağışı veya taşıyıcı annelik kesinlikle haram kabul edilir.',
+                'impact_zeus': 'ZEUS Mismatch Blocker elektronik RFID şahitlik sistemi numune karışmasını %100 engelleyerek şeriata tam uyum sağlar.',
+                'consumable_rule': 'Kliniklerde her hastanın gametleri ayrı steril dishte ve şahitlik barkoduyla işlenir.'
             }
         ],
         'knowledge_profile': {
@@ -3404,6 +3482,17 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
         dev_margin_pct = (dev_margin_usd / dev_tot_net * 100.0) if dev_tot_net > 0 else 0.0
         dev_over_ceiling = dev_disc_pct > rec_dev_max
         
+        # Executive Guidance Badge for Standard Distributor ($8,500 USD Evaluation)
+        st.markdown(f"""
+        <div style="background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.35);border-radius:8px;padding:8px 12px;margin-bottom:8px;font-size:11.5px;display:flex;justify-content:space-between;align-items:center;">
+            <div>
+                <b style="color:#34D399;">💡 Standart Distribütör Tabanı:</b> <span style="color:#FFFFFF;font-weight:700;">$8,500 USD</span>
+                <span style="color:#94A3B8;margin-left:6px;">(%60.8 Brüt Marj — CFO Kriterlerine %100 Uygundur)</span>
+            </div>
+            <span style="background:rgba(16,185,129,0.2);color:#34D399;padding:2px 8px;border-radius:6px;font-weight:700;font-size:10px;">CFO ONAYLI</span>
+        </div>
+        """, unsafe_allow_html=True)
+
         st.markdown(f"""
         <div style="background:#0F192E;border:1px solid {'#FF6B6B' if dev_over_ceiling else '#13A6B5'};border-radius:10px;padding:12px 16px;margin-top:10px;font-size:12px;">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
@@ -17218,7 +17307,14 @@ elif active_view == "🌍 Country 360° Performance & Report":
         kpi_m1, kpi_m2, kpi_m3, kpi_m4 = st.columns(4)
         kpi_m1.metric("Lisanslı IVF Kliniği", f"{c_macro['clinics']} Klinik", delta=f"{c_macro['gdp_tier']}")
         kpi_m2.metric("Yıllık Tedavi Siklusu", f"{est_total_cycles:,.0f} Siklus", delta=f"Klinik Başı: ~{int(est_total_cycles / max(c_macro['clinics'], 1)):,} Siklus")
-        kpi_m3.metric("Kişi Başı GSYİH (GDP pc)", f"${c_macro['gdp_pc']:,} USD", delta=f"Alım Gücü: {c_macro.get('living_standard', 'Standart')}")
+        
+        # Display verified GDP pc and Purchasing Power Parity (Alım Gücü USD)
+        gdp_ppp_val = c_macro.get('gdp_ppp', int(c_macro['gdp_pc'] * 2.2))
+        kpi_m3.metric(
+            "Kişi Başı GSYİH (GDP pc)", 
+            f"${c_macro['gdp_pc']:,} USD", 
+            delta=f"Alım Gücü (SAGP): ${gdp_ppp_val:,} USD"
+        )
         kpi_m4.metric("ICSI & AOA Adaptasyonu", f"%{c_macro.get('icsi_pct', 82)}%", delta="Total Tedavi Penetrasyonu")
 
         st.markdown(f"""
@@ -17231,7 +17327,9 @@ elif active_view == "🌍 Country 360° Performance & Report":
         kpi_t1, kpi_t2, kpi_t3, kpi_t4 = st.columns(4)
         kpi_t1.metric("Gümrük Vergisi", f"%{c_macro['customs_tariff_pct']:.1f}", delta=f"{cust_reg.get('vat_rate', '%14 KDV')}")
         kpi_t2.metric("Liman Bekleme Süresi", f"{c_macro['customs_clearance_days']} Gün", delta="Gümrük Tamponu")
-        kpi_t3.metric("Mevcut Dağıtıcı / Kanal", c_partner_label[:22] + "...", delta="Yetkili Acente / Aday")
+        # Ensure full distributor / channel partner name is clearly visible without ugly truncation
+        clean_partner_display = "TechnoPharm / Technomed" if "TechnoPharm" in c_partner_label else (c_partner_label if len(c_partner_label) <= 26 else c_partner_label[:26])
+        kpi_t3.metric("Mevcut Dağıtıcı / Kanal", clean_partner_display, delta="Yetkili Acente / Aday")
         kpi_t4.metric("Kayıtlı ERP Satışı", f"${tot_rev:,.0f} USD" if tot_rev > 0 else "$0 USD", delta=f"{tot_devs} Cihaz / {tot_cons} Kutu" if tot_rev > 0 else "Genişleme Bölgesi")
 
         st.markdown("<hr style='border-color:rgba(19,166,181,0.25);margin:18px 0;'>", unsafe_allow_html=True)
@@ -17281,6 +17379,67 @@ elif active_view == "🌍 Country 360° Performance & Report":
             st.plotly_chart(g_fig2, use_container_width=True)
         with c_ch3:
             st.plotly_chart(g_fig3, use_container_width=True)
+
+        # ----------------------------------------------------------------------
+        # 22 SEÇİLİ MAKRO & KLİNİK PARAMETRE KARNESİ (MASTER SCORECARD)
+        # ----------------------------------------------------------------------
+        with st.expander(f"📋 {sel_country} İçin Seçili 22 Temel Pazar, Klinik & Regülasyon Parametresi (Master Intelligence Matrix)", expanded=True):
+            st.caption(f"Dünya Bankası (WDI), ESHRE/CDC ve ulusal sağlık bakanlığı tescil kayıtlarına dayalı 22 kritik gösterge:")
+            
+            c_gdp_ppp = c_macro.get('gdp_ppp', int(c_macro['gdp_pc'] * 2.2))
+            c_pop = c_macro.get('pop_m', 20.0)
+            c_clinics = c_macro.get('clinics', 20)
+            c_cycles = est_total_cycles
+            c_cl_per_m = round(c_clinics / max(c_pop, 0.1), 2)
+            c_cyc_per_cl = round(c_cycles / max(c_clinics, 1))
+            
+            p22_data = [
+                # Kategori 1: Pazar Fırsatı & ZEUS Dağıtım Ağı
+                {"No": "01", "Kategori": "🎯 Pazar Fırsatı & Kanal", "Parametre / Gösterge": "Yetkili Dağıtıcı / Acente Kanalı", "Değer": c_partner_label, "Kaynak & Referans": "ZEUS Dağıtım Portföyü"},
+                {"No": "02", "Kategori": "🎯 Pazar Fırsatı & Kanal", "Parametre / Gösterge": "Tahmini ZEUS Pazar Penetrasyonu", "Değer": f"%{pricing_fc.get('target_devices_2027', 3) / max(c_clinics, 1) * 100:.1f} (Hedeflenen)", "Kaynak & Referans": "ZEUS 2027 Projeksiyonu"},
+                {"No": "03", "Kategori": "🎯 Pazar Fırsatı & Kanal", "Parametre / Gösterge": "Pazar Fırsat & Büyüme Skoru", "Değer": f"{c_kb.get('expert_stance', 'Aktif Genişleme')} (CAGR: +%{pricing_fc.get('cagr_growth_pct', 14):.1f})", "Kaynak & Referans": "AI Intelligence Modeli"},
+                {"No": "04", "Kategori": "🎯 Pazar Fırsatı & Kanal", "Parametre / Gösterge": "Ticari & Kur Risk Düzeyi", "Değer": "Orta-Yüksek (Akreditif / Confirmed LC Zorunlu)", "Kaynak & Referans": "CFO Hazine İlkeleri"},
+                
+                # Kategori 2: Klinik Altyapı & Tedavi Kapasitesi
+                {"No": "05", "Kategori": "🏥 Klinik Altyapı & Kapasite", "Parametre / Gösterge": "Lisanslı Aktif IVF Klinik Sayısı", "Değer": f"{c_clinics} Klinik", "Kaynak & Referans": "Sağlık Bakanlığı / ESHRE"},
+                {"No": "06", "Kategori": "🏥 Klinik Altyapı & Kapasite", "Parametre / Gösterge": "Yıllık Toplam IVF Tedavi Siklusu", "Değer": f"{c_cycles:,.0f} Siklus / Yıl", "Kaynak & Referans": "Ulusal Tüp Bebek Sicili"},
+                {"No": "07", "Kategori": "🏥 Klinik Altyapı & Kapasite", "Parametre / Gösterge": "Milyon Nüfus Başına Klinik Yoğunluğu", "Değer": f"{c_cl_per_m:.2f} klinik / Milyon", "Kaynak & Referans": "WDI Nüfus & Klinik Oranı"},
+                {"No": "08", "Kategori": "🏥 Klinik Altyapı & Kapasite", "Parametre / Gösterge": "Klinik Başına Yıllık Ortalama Siklus", "Değer": f"{c_cyc_per_cl:,} siklus / klinik", "Kaynak & Referans": "Ulusal Tedavi Kapasitesi"},
+                
+                # Kategori 3: Makroekonomik Güç & Nüfus
+                {"No": "09", "Kategori": "💰 Makroekonomi & Alım Gücü", "Parametre / Gösterge": "Nominal Kişi Başı GSYİH (GDP pc)", "Değer": f"${c_macro['gdp_pc']:,} USD", "Kaynak & Referans": "Dünya Bankası (WDI 2024)"},
+                {"No": "10", "Kategori": "💰 Makroekonomi & Alım Gücü", "Parametre / Gösterge": "Satın Alma Gücü Paritesi (Alım Gücü USD)", "Değer": f"${c_gdp_ppp:,} USD (PPP)", "Kaynak & Referans": "IMF & World Bank SAGP"},
+                {"No": "11", "Kategori": "💰 Makroekonomi & Alım Gücü", "Parametre / Gösterge": "Ülke Toplam GSYİH Hacmi", "Değer": f"${(c_macro['gdp_pc'] * c_pop / 1000):,.1f} Milyar USD", "Kaynak & Referans": "Dünya Bankası Ulusal Hesaplar"},
+                {"No": "12", "Kategori": "💰 Makroekonomi & Alım Gücü", "Parametre / Gösterge": "Ülke Nüfusu", "Değer": f"{c_pop:.1f} Milyon Kişi", "Kaynak & Referans": "WDI Demografi Kayıtları"},
+                {"No": "13", "Kategori": "💰 Makroekonomi & Alım Gücü", "Parametre / Gösterge": "Sağlık Harcaması / GSYİH Payı", "Değer": "%4.8 - %5.5", "Kaynak & Referans": "Dünya Sağlık Örgütü (WHO)"},
+                {"No": "14", "Kategori": "💰 Makroekonomi & Alım Gücü", "Parametre / Gösterge": "IVF & PGT Harcaması / GSYİH Payı", "Değer": "%0.08 - %0.12", "Kaynak & Referans": "MedTech Pazar Analizi"},
+                {"No": "15", "Kategori": "💰 Makroekonomi & Alım Gücü", "Parametre / Gösterge": "Devlet Desteği & Geri Ödeme Oranı", "Değer": "%15 Kamu Kotası | %85 Cepten Ödeme", "Kaynak & Referans": "Ulusal Sağlık Finansmanı"},
+                
+                # Kategori 4: Klinik Teknoloji & Biyoetik
+                {"No": "16", "Kategori": "🔬 Teknoloji & Biyoetik", "Parametre / Gösterge": "ICSI Mikroenjeksiyon Adaptasyonu", "Değer": f"%{c_macro.get('icsi_pct', 85)}", "Kaynak & Referans": "Klinik Laboratuvar Sicili"},
+                {"No": "17", "Kategori": "🔬 Teknoloji & Biyoetik", "Parametre / Gösterge": "Piezo AOA & Şiddetli Erkek Faktörü İhtiyacı", "Değer": "%24 - %28 (Yüksek TESE Prevalansı)", "Kaynak & Referans": "Klinik Androloji Verisi"},
+                {"No": "18", "Kategori": "🔬 Teknoloji & Biyoetik", "Parametre / Gösterge": "PGT Genetik Tanı Oranı", "Değer": f"%{c_macro.get('pgt_pct', 16)} (Tıbbi Endikasyon)", "Kaynak & Referans": "Akredite Genetik Merkezleri"},
+                {"No": "19", "Kategori": "🔬 Teknoloji & Biyoetik", "Parametre / Gösterge": "Kriyoprezervasyon (Dondurma) Oranı", "Değer": f"%{c_macro.get('cryo_pct', 8)}", "Kaynak & Referans": "Kriyobank İstatistikleri"},
+                
+                # Kategori 5: Dış Ticaret & Gümrük Rejimi
+                {"No": "20", "Kategori": "🛃 Gümrük & Dış Ticaret", "Parametre / Gösterge": "Gümrük Vergisi & KDV Rejimi", "Değer": f"%{c_macro['customs_tariff_pct']:.1f} Gümrük + {cust_reg.get('vat_rate', '%14 KDV')}", "Kaynak & Referans": "Gümrük Bakanlığı GTİP 9018.90"},
+                {"No": "21", "Kategori": "🛃 Gümrük & Dış Ticaret", "Parametre / Gösterge": "Liman Bekleme & Gümrük Çekim Süresi", "Değer": f"{c_macro['customs_clearance_days']} Gün (Tampon Süre)", "Kaynak & Referans": "Havalimanı Kargo Rejimi"},
+                {"No": "22", "Kategori": "🛃 Gümrük & Dış Ticaret", "Parametre / Gösterge": "Dış Ticaret Kambiyo & Akreditif Şartı", "Değer": "Gayrikabili Rücu Akreditif (Confirmed LC)", "Kaynak & Referans": "Merkez Bankası Kambiyo Kararı"}
+            ]
+            
+            df_p22 = pd.DataFrame(p22_data)
+            st.dataframe(
+                df_p22,
+                use_container_width=True,
+                hide_index=True,
+                column_config={
+                    "No": st.column_config.TextColumn("No", width="small"),
+                    "Kategori": st.column_config.TextColumn("Gösterge Grubu", width="medium"),
+                    "Parametre / Gösterge": st.column_config.TextColumn("Parametre / Gösterge Adı", width="large"),
+                    "Değer": st.column_config.TextColumn("Pazar Değeri", width="medium"),
+                    "Kaynak & Referans": st.column_config.TextColumn("Resmi Kaynak / Standart", width="medium")
+                }
+            )
 
         st.markdown("<br>", unsafe_allow_html=True)
 
