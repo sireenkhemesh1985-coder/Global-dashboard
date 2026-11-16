@@ -4362,6 +4362,34 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
             step=1,
             key=f"{key_prefix}_dev_qty_{target_country}"
         )
+
+        # Dynamic Volume Tier Advice Inline
+        if dev_qty == 1:
+            dev_inline_msg = "<span style='color:#EF4444;font-weight:700;'>❌ 1 Cihaz Kuralı:</span> İndirim ÖNERİLMEZ (%0). Liste fiyatı ($8,500 USD) tavizsiz korunmalıdır."
+            dev_inline_bg = "rgba(239,68,68,0.12)"
+            dev_inline_border = "#EF4444"
+        elif dev_qty == 2:
+            dev_inline_msg = "<span style='color:#FBBF24;font-weight:700;'>ℹ️ 2 Cihaz:</span> Filo sayılmaz. Yalnızca peşin ödemede sembolik azami %2-3 verilebilir."
+            dev_inline_bg = "rgba(255,184,0,0.12)"
+            dev_inline_border = "#F59E0B"
+        elif 3 <= dev_qty <= 5:
+            dev_inline_msg = "<span style='color:#00E676;font-weight:700;'>✅ Küçük Filo (3-5):</span> %5 - %8 İskonto önerilir ($7,820 - $8,075 USD)."
+            dev_inline_bg = "rgba(0,230,118,0.12)"
+            dev_inline_border = "#00E676"
+        elif 6 <= dev_qty <= 9:
+            dev_inline_msg = "<span style='color:#00F5FF;font-weight:700;'>🏢 Büyük Filo (6-9):</span> %8 - %10 İskonto önerilir ($7,650 - $7,820 USD)."
+            dev_inline_bg = "rgba(0,245,255,0.12)"
+            dev_inline_border = "#00F5FF"
+        else:
+            dev_inline_msg = "<span style='color:#C084FC;font-weight:700;'>🏆 İhale Tavanı (10+):</span> Azami %10 - %12 İskonto ($7,480 - $7,650 USD). Cihaz marjı >%50 kalmalıdır."
+            dev_inline_bg = "rgba(168,85,247,0.12)"
+            dev_inline_border = "#A855F7"
+
+        st.markdown(f"""
+        <div style="background:{dev_inline_bg};border:1px solid {dev_inline_border};border-radius:6px;padding:6px 10px;margin-top:4px;margin-bottom:8px;font-size:11px;color:#E2E8F0;">
+            {dev_inline_msg}
+        </div>
+        """, unsafe_allow_html=True)
         
         dev_gross = dev_price * dev_qty
         dev_disc_unit = dev_price * (dev_disc_pct / 100.0)
@@ -4456,6 +4484,31 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
             step=10,
             key=f"{key_prefix}_sarf_qty_{target_country}"
         )
+
+        # Dynamic Consumable Volume Threshold Advice Inline
+        if sarf_qty < 150:
+            sarf_inline_msg = "<span style='color:#EF4444;font-weight:700;'>🚫 150 Kutu Altı Kuralı:</span> KESİNLİKLE İNDİRİM UYGULAMAYINIZ! Kutu başı $100.00 USD sabit tutulmalıdır."
+            sarf_inline_bg = "rgba(239,68,68,0.12)"
+            sarf_inline_border = "#EF4444"
+        elif 150 <= sarf_qty < 300:
+            sarf_inline_msg = "<span style='color:#FBBF24;font-weight:700;'>⚖️ Standart Tüketim (150-299):</span> Liste fiyatı ($100 USD) korunmalı veya azami %5 şartlı indirim."
+            sarf_inline_bg = "rgba(255,184,0,0.12)"
+            sarf_inline_border = "#F59E0B"
+        elif 300 <= sarf_qty < 500:
+            sarf_inline_msg = "<span style='color:#00E676;font-weight:700;'>✅ Yüksek Hacim (300-499):</span> %6 - %8 İskonto uygulanabilir ($92 - $94 USD/kutu)."
+            sarf_inline_bg = "rgba(0,230,118,0.12)"
+            sarf_inline_border = "#00E676"
+        else:
+            sarf_inline_msg = "<span style='color:#C084FC;font-weight:700;'>💎 Dev Zincir / İhale (500+):</span> Azami %10 - %12 İskonto ($88 - $90 USD). Sarf marjı >%60 kalmalıdır."
+            sarf_inline_bg = "rgba(168,85,247,0.12)"
+            sarf_inline_border = "#A855F7"
+
+        st.markdown(f"""
+        <div style="background:{sarf_inline_bg};border:1px solid {sarf_inline_border};border-radius:6px;padding:6px 10px;margin-top:4px;margin-bottom:8px;font-size:11px;color:#E2E8F0;">
+            {sarf_inline_msg}
+            <div style="font-size:10px;color:#94A3B8;margin-top:2px;">🧪 <b>Siklüs Eşdeğeri:</b> {sarf_qty:,} Kutu = ~{sarf_qty * 10:,} Tedavi Siklüsü (1 Kutu = 10 Vaka)</div>
+        </div>
+        """, unsafe_allow_html=True)
         
         sarf_gross = sarf_price * sarf_qty
         sarf_disc_unit = sarf_price * (sarf_disc_pct / 100.0)
@@ -4526,22 +4579,202 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
     """, unsafe_allow_html=True)
 
     # --------------------------------------------------------------------------
-    # DİNAMİK ÜLKE FİYAT UYGUNLUK KONTROLÜ & AKILLI İSKONTO ÖNERİSİ MOTORU
+    # 1. ÜLKE İNDİRİM GEREKLİLİK VE KARAR MOTORU (İndirim Gerekli mi / Gereksiz mi?)
     # --------------------------------------------------------------------------
     macro = resolve_country_macro(target_country)
-    gdp_val = macro.get('gdp_pc', 12000)
+    
+    # Resolve real country code & accurate cycle & clinics data
+    matched_code = None
+    for c_tuple in COUNTRIES_RAW:
+        if target_country.lower() in [c_tuple[1].lower(), c_tuple[0].lower()] or (target_country in ['Turkey', 'Türkiye', 'TR'] and c_tuple[0] == 'TR'):
+            matched_code = c_tuple[0]
+            break
+            
+    real_stat = REAL_WORLD_BANK_IVF_DATA.get(matched_code, {})
+    gdp_val = real_stat.get('gdp_pc', macro.get('gdp_pc', 12000))
+    country_cycles = real_stat.get('cycles', macro.get('total_annual_cycles', 25000))
+    clinics_num = real_stat.get('clinics', macro.get('clinics', 20))
     customs_val = macro.get('customs_tariff_pct', 5.0)
     living_code = macro.get('living_standard_code', 'Middle Income')
-    clinics_num = macro.get('clinics', 20)
+
+    # Income Tier Segmentation for Discount Necessity
+    is_high_income = gdp_val >= 25000 or target_country in ['Kuwait', 'Qatar', 'UAE', 'Germany', 'Switzerland', 'USA', 'Spain', 'United Kingdom', 'Australia', 'Saudi Arabia', 'Belgium', 'Netherlands']
+    is_mid_income = (10000 <= gdp_val < 25000) and not is_high_income
+    is_low_income = gdp_val < 10000 and not is_high_income
+
+    if is_high_income:
+        country_disc_verdict = "❌ İNDİRİM GEREKSİZ / LİSTE FİYATINI KORUYUN ($8,500 USD)"
+        country_disc_badge = "background:rgba(239,68,68,0.18);color:#F87171;border:1px solid #EF4444;"
+        country_disc_summary = (
+            f"<b>{target_country} Yüksek Alım Gücü Pazarı (Kişi Başı GSYİH: ${gdp_val:,} USD):</b> "
+            f"Özel IVF kliniklerinde tek bir hasta tedavi döngüsü ücreti ortalama $3,500 - $8,500 USD aralığındadır. "
+            f"Klinik, $8,500 USD'lik standart ZEUS donanım yatırımını yalnızca <b>1-2 hasta tedavisinde</b> tamamen amorti eder. "
+            f"Bu pazarda gereksiz indirim yapmak ZEUS'un CE MDR Class IIa premium teknoloji algısını zedeler ve kârlılığı eritir. "
+            f"Tekil veya 2-3 cihazlık standart alımlarda liste fiyatı tavizsiz uygulanmalıdır."
+        )
+        when_to_discount = (
+            "• <b>Ne Zaman İndirim Yapılabilir? (İstisnai Şartlar):</b><br>"
+            "&nbsp;&nbsp;1. Tek seferde <b>6+ Cihazlık filo</b> veya büyük zincir hastane grubu (örn. NMC Health, Vivantes, GeneraLife) anlaşması yapılıyorsa (Azami %3 - %5 sembolik indirim).<br>"
+            "&nbsp;&nbsp;2. En az 2 yıllık münhasır sarf alım sözleşmesi imzalanması ve yıllık 350+ kutu Z-Dish çekiş taahhüdü verilmesi durumunda.<br>"
+            "&nbsp;&nbsp;3. Aksi halde tekil klinik alımlarında <b>%0 İSKONTO ($8,500 USD LİSTE FİYATI)</b> kesin kural olarak şart koşulmalıdır."
+        )
+    elif is_mid_income:
+        country_disc_verdict = "⚖️ SEÇİCİ / ŞARTLI İNDİRİM UYGULANABİLİR (%0 - %6)"
+        country_disc_badge = "background:rgba(255,184,0,0.18);color:#FBBF24;border:1px solid #F59E0B;"
+        country_disc_summary = (
+            f"<b>{target_country} Dengeli Pazar (Kişi Başı GSYİH: ${gdp_val:,} USD):</b> "
+            f"Pazar rekabetçi ve döviz kuru hassasiyeti mevcuttur. Standart tekil alımlarda $8,500 USD liste fiyatı korunmalı; "
+            f"ancak distribütörün pazara ilk girişi ve lansman penetrasyonunu hızlandırmak için şartlı teşvikler sunulabilir."
+        )
+        when_to_discount = (
+            "• <b>Ne Zaman İndirim Yapılmalı?:</b><br>"
+            "&nbsp;&nbsp;1. Sipariş bedelinin %100 peşin nakit (T/T Advance) veya teyitli akreditif ile ödenmesi durumunda (Azami %5).<br>"
+            "&nbsp;&nbsp;2. Distribütörün yıllık asgari 200+ kutu Z-Dish sarf çekişini 4 çeyrek düzenli takvime bağlaması durumunda.<br>"
+            "&nbsp;&nbsp;3. Ulusal üreme tıbbı kongresinde (örn. TSRM) ZEUS adına canlı demo ve workshop sponsorluğu üstlenmesi şartıyla."
+        )
+    else:
+        country_disc_verdict = "🎯 STRATEJİK GİRİŞ İNDİRİMİ ÖNERİLİR (%8 - %12)"
+        country_disc_badge = "background:rgba(0,230,118,0.18);color:#34D399;border:1px solid #10B981;"
+        country_disc_summary = (
+            f"<b>{target_country} Fiyat Hassas Pazar (Kişi Başı GSYİH: ${gdp_val:,} USD, Gümrük: %{customs_val:.1f}):</b> "
+            f"Yerel para birimi devalüasyonu, yüksek ithalat masrafları ve klinik bütçe baskısı mevcuttur. "
+            f"Pazara giriş bariyerini kırmak ve rakip eski sistemleri (Eppendorf / Prime Tech) sahada devirmek için kontrollü bir ilk alım teşviki şarttır."
+        )
+        when_to_discount = (
+            "• <b>Ne Zaman İndirim Yapılmalı?:</b><br>"
+            "&nbsp;&nbsp;1. Cihazda liste fiyatı $8,500 USD üzerinden %8-%12 iskonto ($7,480 - $7,820 USD) verilebilir — ANCAK bu indirim mutlaka yıllık asgari 200+ kutu sarf taahhüdüne bağlanmalıdır (Razor-and-Blade modeli).<br>"
+            "&nbsp;&nbsp;2. Distribütör yerel tescil (EDA, CDSCO vb.) ve gümrük masraflarını kendi bütçesinden karşıladığında.<br>"
+            "&nbsp;&nbsp;3. İlk sipariş peşin çekildiğinde."
+        )
+
+    # --------------------------------------------------------------------------
+    # 2. CİHAZ VE SARF SİPARİŞ ADEDİ KADEMELERİ & EŞİK KURALLARI
+    # --------------------------------------------------------------------------
+    # Cihaz Adet Kademesi
+    if dev_qty == 1:
+        dev_qty_action = "❌ 1 Cihaz İçin İndirim ÖNERİLMEZ (%0)"
+        dev_qty_badge = "background:rgba(239,68,68,0.15);color:#EF4444;border:1px solid #EF4444;"
+        dev_qty_advice = (
+            "1 adetlik alım tekil klinik veya numune/pilot sipariştir. "
+            "Tek cihazda iskonto vermek liste fiyat otoritesini yok eder ve marj kaybı yaratır. "
+            "Birim fiyat <b>$8,500 USD (%0 İskonto)</b> olarak tavizsiz korunmalıdır."
+        )
+        rec_dev_disc_calc = 0.0 if not is_low_income else 4.0
+    elif dev_qty == 2:
+        dev_qty_action = "❌ 2 Cihaz: İndirim ÖNERİLMEZ (Azami %0 - %3)"
+        dev_qty_badge = "background:rgba(255,184,0,0.15);color:#FBBF24;border:1px solid #F59E0B;"
+        dev_qty_advice = (
+            "2 cihazlık sipariş henüz filo oluşturmaz. Liste fiyatı ($8,500 USD) korunmalıdır. "
+            "Yalnızca peşin ödemede sembolik azami %2 - %3 erken ödeme indirimi verilebilir."
+        )
+        rec_dev_disc_calc = 2.0 if not is_high_income else 0.0
+    elif 3 <= dev_qty <= 5:
+        dev_qty_action = "✅ Küçük Filo İndirimi Önerilir (%5 - %8)"
+        dev_qty_badge = "background:rgba(0,230,118,0.15);color:#00E676;border:1px solid #00E676;"
+        dev_qty_advice = (
+            f"<b>{dev_qty} Cihazlık Sipariş:</b> Bölgesel 2-3 kliniğe yayılım veya özel klinik zinciri kurulumudur. "
+            f"Distribütörü sahaya yayılmaya teşvik etmek için birim fiyatta <b>%5 - %8 iskonto (${dev_price * 0.92:,.0f} - ${dev_price * 0.95:,.0f} USD)</b> uygulanabilir. "
+            f"Şart: Tek parti çekim ve %50 peşin ödeme."
+        )
+        rec_dev_disc_calc = 6.0 if not is_high_income else 3.5
+    elif 6 <= dev_qty <= 9:
+        dev_qty_action = "🏢 Büyük Filo / Zincir Hastane İndirimi (%8 - %10)"
+        dev_qty_badge = "background:rgba(0,245,255,0.15);color:#00F5FF;border:1px solid #00F5FF;"
+        dev_qty_advice = (
+            f"<b>{dev_qty} Cihazlık Hacim:</b> Önemli bir pazar payı kazanımı ve büyük zincir hastane penetrasyonudur. "
+            f"Birim fiyat <b>${dev_price * 0.90:,.0f} - ${dev_price * 0.92:,.0f} USD (%8 - %10)</b> seviyesine inebilir. "
+            f"Şart: Her cihaz başına yıllık asgari 40 kutu Z-Dish sarf taahhüdü sözleşmeye yazılmalıdır."
+        )
+        rec_dev_disc_calc = 8.5 if not is_high_income else 5.0
+    else:
+        dev_qty_action = "🏆 Stratejik İhale & Dağıtım Tavan İndirimi (%10 - %12)"
+        dev_qty_badge = "background:rgba(168,85,247,0.15);color:#C084FC;border:1px solid #A855F7;"
+        dev_qty_advice = (
+            f"<b>{dev_qty} Adet Cihaz:</b> Ulusal dağıtım projesi veya merkezi kamu ihalesidir (NUPCO, UPA vb.). "
+            f"CFO onaylı azami güvenli tavan olan <b>%10 - %12 iskonto (${dev_price * 0.88:,.0f} - ${dev_price * 0.90:,.0f} USD)</b> verilebilir. "
+            f"<b>Kırmızı Çizgi:</b> %12 üzeri kesinlikle yasaktır; cihaz brüt marjı %50 altına düşürülemez!"
+        )
+        rec_dev_disc_calc = 10.5 if not is_high_income else 7.0
+
+    # Sarf Adet Eşiği Kuralları
+    if sarf_qty < 150:
+        sarf_qty_action = "🚫 150 KUTU ALTINDA KESİNLİKLE İNDİRİM UYGULAMAYINIZ (%0)"
+        sarf_qty_badge = "background:rgba(239,68,68,0.15);color:#EF4444;border:1px solid #EF4444;"
+        sarf_qty_advice = (
+            f"<b>Yıllık {sarf_qty} Kutu (Aylık <12 Kutu):</b> Düşük hacimli mikro tüketimdir. "
+            f"Küçük partilerde soğuk zincir ambalajlama, hava kargo ve gümrük masrafları kutu başına maliyeti katlar. "
+            f"Kutu başı <b>${sarf_price:,.2f} USD liste fiyatı tavizsiz korunmalı</b>, kesinlikle indirim uygulanmamalıdır!"
+        )
+        rec_sarf_disc_calc = 0.0
+    elif 150 <= sarf_qty < 300:
+        sarf_qty_action = "⚖️ Standart Klinik Tüketimi (150 - 299 Kutu): Azami %0 - %5 İndirim"
+        sarf_qty_badge = "background:rgba(255,184,0,0.15);color:#FBBF24;border:1px solid #F59E0B;"
+        sarf_qty_advice = (
+            f"<b>{sarf_qty} Kutu Hacmi:</b> 1-2 orta ölçekli kliniğin yıllık rutin sarf ihtiyacıdır. "
+            f"Liste fiyatı ($100 USD) korunmalıdır. Sadece distribütör 4 çeyreğe bölünmüş düzenli çekiş takvimi taahhüt ederse "
+            f"sembolik <b>%3 - %5 iskonto (${sarf_price * 0.95:,.2f} USD/Kutu)</b> tanınabilir."
+        )
+        rec_sarf_disc_calc = 4.0 if not is_high_income else 0.0
+    elif 300 <= sarf_qty < 500:
+        sarf_qty_action = "✅ Yüksek Hacimli Merkez (300 - 499 Kutu): %6 - %8 İndirim"
+        sarf_qty_badge = "background:rgba(0,230,118,0.15);color:#00E676;border:1px solid #00E676;"
+        sarf_qty_advice = (
+            f"<b>{sarf_qty} Kutu Yıllık Taahhüt:</b> ZEUS'a düzenli ve yüksek öngörülebilirlikte tekrarlayan nakit akışı sağlar. "
+            f"Kutu başı <b>${sarf_price * 0.92:,.2f} - ${sarf_price * 0.94:,.2f} USD (%6 - %8)</b> seviyesine inilebilir. "
+            f"Sarf brüt kâr marjı %65 seviyesinde güvenle kalır."
+        )
+        rec_sarf_disc_calc = 7.0 if not is_high_income else 5.0
+    else:
+        sarf_qty_action = "💎 Dev Zincir / İhale Hacmi (500+ Kutu): %10 - %12 İskonto (Azami %12)"
+        sarf_qty_badge = "background:rgba(168,85,247,0.15);color:#C084FC;border:1px solid #A855F7;"
+        sarf_qty_advice = (
+            f"<b>{sarf_qty} Kutu:</b> Çoklu klinik ağı veya kamu ihalesi kapsamındaki dev üretim partisidir. "
+            f"Kutu başı <b>${sarf_price * 0.88:,.2f} - ${sarf_price * 0.90:,.2f} USD (%10 - %12)</b> seviyesine inilebilir. "
+            f"<b>Kırmızı Çizgi:</b> Sarf marjı asla %60'ın altına düşürülemez; %12 üzeri indirim yasaktır!"
+        )
+        rec_sarf_disc_calc = 11.0 if not is_high_income else 8.0
+
+    # --------------------------------------------------------------------------
+    # 3. KLİNİK SİKLÜS BAZLI SARF DOĞRULAMASI & KAPASİTE KALİBRASYONU
+    # --------------------------------------------------------------------------
+    patient_cycles = sarf_qty * 10 # 1 box = 10 dishes = 10 patient cycles
+    avg_clinic_cycles = round(country_cycles / clinics_num) if clinics_num > 0 else 500
+    avg_clinic_boxes = round(avg_clinic_cycles / 10)
+    covered_clinics = round(patient_cycles / avg_clinic_cycles, 1) if avg_clinic_cycles > 0 else 1.0
     
+    min_needed_boxes = dev_qty * 25 # 250 cycles/machine/yr
+    opt_needed_boxes = dev_qty * 45 # 450 cycles/machine/yr
+    
+    if sarf_qty < min_needed_boxes:
+        cycle_status_badge = "background:rgba(239,68,68,0.15);color:#EF4444;border:1px solid #EF4444;"
+        cycle_status_text = (
+            f"⚠️ <b>YETERSİZ SARF TAAHHÜDÜ UYARISI:</b> "
+            f"{dev_qty} adet cihaz yılda en az {min_needed_boxes} kutu ({min_needed_boxes * 10:,} siklüs) tüketmelidir. "
+            f"Girilen {sarf_qty} kutu sarf (cihaz başı yalnızca {round(sarf_qty/dev_qty)} kutu / {round(patient_cycles/dev_qty)} siklüs), "
+            f"cihazların yılda sadece birkaç ay çalışıp atıl kalacağını gösterir! Distribütörden cihaz başına asgari 30-50 kutu taahhüt talep ediniz."
+        )
+    elif country_cycles > 0 and sarf_qty > (country_cycles / 10) * 0.85:
+        cycle_status_badge = "background:rgba(255,184,0,0.15);color:#FBBF24;border:1px solid #F59E0B;"
+        cycle_status_text = (
+            f"⚠️ <b>PAZAR TAVANI UYARISI:</b> "
+            f"{sarf_qty:,} kutu sarf ({patient_cycles:,} hasta siklüsü), "
+            f"{target_country} toplam yıllık IVF pazar hacminin ({country_cycles:,} siklüs) <b>%{round(patient_cycles/country_cycles*100)}'ine</b> denk gelmektedir. "
+            f"Tek bir distribütörün tüm ülke pazarının neredeyse tamamını tek başına yönetmesi operasyonel olarak güçtür; kademeli sipariş planı önerilir."
+        )
+    else:
+        cycle_status_badge = "background:rgba(0,230,118,0.15);color:#00E676;border:1px solid #00E676;"
+        cycle_status_text = (
+            f"✅ <b>KLİNİK SİKLÜS KAPASİTESİYLE TAM UYUMLU:</b> "
+            f"{dev_qty} adet ZPS 26 cihazı için taahhüt edilen {sarf_qty:,} kutu sarf ({patient_cycles:,} tedavi siklüsü), "
+            f"cihaz başına yıllık <b>{round(patient_cycles/dev_qty):,} siklüslük</b> (%{min(100, round((sarf_qty / (dev_qty * 45)) * 100))} kapasite) "
+            f"ideal bir klinik çalışma temposunu ve kesintisiz sarf akışını doğrulamaktadır."
+        )
+
     # 1. Cihaz Fiyat Uygunluğu Analizi
     landed_factor = 1.0 + (customs_val / 100.0) + 0.04 # Gümrük + Navlun
     landed_dev_cost = net_dev_unit * landed_factor
     rec_clinic_retail = landed_dev_cost * 1.50 # Distribütör %35-%50 marj koyarak kliniğe satar
     eppendorf_bench = 18500.0 if gdp_val < 15000 else 22000.0
-    
-    # Is it a fleet / multi-unit deal?
-    is_fleet_order = dev_qty >= 4 or (dev_gross >= 50000.0)
     
     # Evaluate device suitability
     if dev_price <= 0:
@@ -4554,39 +4787,23 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
         dev_suit_text = (
             f"<b>$8,500 USD Bandı ({target_country} Dağıtıcı Alışı):</b> Gümrük (%{customs_val:.1f}) ve navlunla dağıtıcıya <b>${landed_dev_cost:,.0f} USD</b>'ye mal olur. "
             f"Dağıtıcı yerel özel tüp bebek merkezlerine <b>${rec_clinic_retail:,.0f} USD</b> seviyesinde (%35-%45 marjla) rahatça satabilir. "
-            f"Rakip Eppendorf'a (${eppendorf_bench:,.0f} USD) kıyasla <b>%25 daha ekonomiktir</b>. "
-            f"Bir klinik bu cihaz bedelini yalnızca <b>8-10 IVF tedavisinde</b> tamamen amorti eder."
+            f"Rakip Eppendorf'a (${eppendorf_bench:,.0f} USD) kıyasla <b>%54 daha ekonomiktir</b>. "
+            f"Bir klinik bu cihaz bedelini yalnızca <b>1-8 hasta tedavisinde</b> tamamen amorti eder."
         )
     elif dev_price < 7000.0:
         dev_suit_status = f"⚠️ DÜŞÜK FİYAT / DÜŞÜK MARJ UYARISI"
         dev_suit_badge = "background:rgba(255,184,0,0.18);color:#FFB800;border:1px solid #FFB800;"
         dev_suit_text = (
-            f"<b>${dev_price:,.0f} USD Fiyatı:</b> {target_country} kliniği için çok cazip olsa da ZEUS üretici marjını (%{dev_margin_pct:.1f}) daraltmaktadır. "
+            f"<b>${dev_price:,.0f} USD Fiyatı:</b> {target_country} kliniği için cazip olsa da ZEUS üretici marjını (%{dev_margin_pct:.1f}) daraltmaktadır. "
             f"Yalnızca yüksek adetli (10+ cihaz) veya sarf kilitlemeli kamu ihalelerinde uygulanması önerilir."
         )
-    elif dev_price <= 22000.0:
-        if is_fleet_order:
-            dev_suit_status = f"🏢 KURUMSAL FİLO / İHALE PAKETİ İÇİN UYGUN"
-            dev_suit_badge = "background:rgba(0,245,255,0.18);color:#00F5FF;border:1px solid #00F5FF;"
-            dev_suit_text = (
-                f"<b>{dev_qty} Adet Cihaz ({target_country} Filo Hacmi):</b> Toplam ${dev_tot_net:,.0f} USD cihaz anlaşması, "
-                f"büyük özel hastane zincirleri (Cleopatra, Bahçeci, Dr. Sulaiman Al Habib) ve kamu üniversite ihaleleri (UPA, NUPCO, KHGM) bütçe limitlerine tam uygundur."
-            )
-        else:
-            dev_suit_status = f"ℹ️ KLİNİK SON KULLANICI / PERAKENDE FİYATI"
-            dev_suit_badge = "background:rgba(56,189,248,0.18);color:#38BDF8;border:1px solid #38BDF8;"
-            dev_suit_text = (
-                f"<b>${dev_price:,.0f} USD:</b> Doğrudan hastane satışları için uygundur; ancak yerel distribütöre veriliyorsa distribütör marj ekleyemeyeceği için sahada zorlanır."
-            )
     else:
-        if is_fleet_order:
-            dev_suit_status = f"🏢 ÇOKLU FİLO / ANAHTAR TESLİM LABORATUVAR PAKETİ"
-            dev_suit_badge = "background:rgba(168,85,247,0.18);color:#C084FC;border:1px solid #A855F7;"
-            dev_suit_text = f"Toplam ${dev_tot_net:,.0f} USD tutarındaki {dev_qty} cihazlık paket kurumsal ihale standartlarındadır."
-        else:
-            dev_suit_status = f"🔴 TEK CİHAZ İÇİN FAHİŞ"
-            dev_suit_badge = "background:rgba(239,68,68,0.18);color:#EF4444;border:1px solid #EF4444;"
-            dev_suit_text = f"Tek bir Piezo mikro-puls cihazı için ${dev_price:,.0f} USD {target_country} pazar tavanının ($22,000 USD) çok üzerindedir. Müşteri teklifi reddeder."
+        dev_suit_status = f"🏢 KURUMSAL FİLO / DOĞRUDAN KLİNİK FİYATI"
+        dev_suit_badge = "background:rgba(0,245,255,0.18);color:#00F5FF;border:1px solid #00F5FF;"
+        dev_suit_text = (
+            f"<b>${dev_price:,.0f} USD:</b> Doğrudan hastane satışları veya anahtar teslim kurumsal paketler için uygundur; "
+            f"yerel distribütöre veriliyorsa distribütör marj ekleyebilmek için transfer fiyatının $8,500 USD seviyesine çekilmesini talep edecektir."
+        )
 
     # 2. Sarf Fiyat & Miktar Uygunluğu Analizi
     if sarf_price <= 0:
@@ -4599,8 +4816,8 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
         sarf_suit_badge = "background:rgba(0,230,118,0.18);color:#00E676;border:1px solid #00E676;"
         sarf_suit_text = (
             f"<b>${net_sarf_unit:,.2f} USD/Kutu ({vaka_basi_sarf:,.2f} USD/Vaka):</b> Kutu başına 10 aktivasyon dishi ile vaka başı sarf maliyeti "
-            f"yalnızca <b>${vaka_basi_sarf:,.2f} USD</b> olmaktadır. {target_country} ortalama IVF tedavi ücreti (~$1,200-$1,800 USD) içinde bu maliyet <b><%1 pay</b> alır "
-            f"ve klinik bütçesini hiç sarsmaz. <b>{sarf_qty} Kutu Yıllık Taahhüt</b>, yılda {sarf_qty * 10:,} vakayı kapsayarak ZEUS'a <b>${sarf_tot_net:,.2f} USD/Yıl</b> "
+            f"yalnızca <b>${vaka_basi_sarf:,.2f} USD</b> olmaktadır. {target_country} ortalama IVF tedavi ücreti içinde bu maliyet <b><%1 pay</b> alır "
+            f"ve klinik bütçesini hiç sarsmaz. <b>{sarf_qty} Kutu Yıllık Taahhüt</b>, yılda {patient_cycles:,} vakayı kapsayarak ZEUS'a <b>${sarf_tot_net:,.2f} USD/Yıl</b> "
             f"kesintisiz, yüksek kârlı (%{sarf_margin_pct:.1f}) nakit akışı sağlar."
         )
     elif sarf_price < 65.0:
@@ -4612,105 +4829,157 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
         sarf_suit_badge = "background:rgba(239,68,68,0.18);color:#EF4444;border:1px solid #EF4444;"
         sarf_suit_text = f"${sarf_price:,.2f} USD/kutu fiyatı {target_country} kliniklerinde rutin Piezo AOA kullanımını kısıtlayabilir; sarf çekişini düşürür."
 
-    # 3. Akıllı İskonto Önerisi Motoru (Calculation of Recommended Discounts)
-    base_dev_rec = 5.0
-    if dev_qty >= 16:
-        dev_vol_add = 7.0
-    elif dev_qty >= 8:
-        dev_vol_add = 5.0
-    elif dev_qty >= 4:
-        dev_vol_add = 3.5
-    elif dev_qty >= 2:
-        dev_vol_add = 2.0
-    else:
-        dev_vol_add = 0.0
-
-    cross_sub_add = 1.0 if sarf_qty >= 300 else 0.0
-    macro_adj = 1.0 if gdp_val < 10000 else (0.5 if gdp_val < 20000 else 0.0)
-
-    rec_optimum_dev_disc = round(min(15.0, base_dev_rec + dev_vol_add + cross_sub_add + macro_adj), 1)
-    rec_max_safe_dev_disc = round(min(20.0, rec_optimum_dev_disc + 2.5), 1)
-
-    base_sarf_rec = 6.0
-    if sarf_qty >= 1000:
-        sarf_vol_add = 8.0
-    elif sarf_qty >= 500:
-        sarf_vol_add = 6.0
-    elif sarf_qty >= 250:
-        sarf_vol_add = 4.0
-    elif sarf_qty >= 100:
-        sarf_vol_add = 2.0
-    else:
-        sarf_vol_add = 0.0
-
-    fleet_sarf_add = 2.0 if dev_qty >= 5 else (1.0 if dev_qty >= 2 else 0.0)
-    rec_optimum_sarf_disc = round(min(20.0, base_sarf_rec + sarf_vol_add + fleet_sarf_add), 1)
-    rec_max_safe_sarf_disc = round(min(25.0, rec_optimum_sarf_disc + 3.0), 1)
-
-    # Render Suitability and Recommendation Card
+    # Render Comprehensive Decision & Intelligence Card
     st.markdown(f"""
-    <div style="background:linear-gradient(135deg, rgba(15,23,42,0.95) 0%, rgba(19,166,181,0.08) 100%);border:1.5px solid #00F5FF;border-radius:12px;padding:18px 20px;margin-top:16px;box-shadow:0 8px 25px rgba(0,0,0,0.4);">
-        <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:10px;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
-            <div>
-                <span style="font-size:15px;font-weight:800;color:#00F5FF;">🎯 {target_country} Pazar Uygunluk Kararı & Akıllı İskonto Tavsiyesi</span>
-                <div style="font-size:11.5px;color:#94A3B8;margin-top:2px;">Girilen fiyat ({dev_price:,.0f} USD Cihaz / {sarf_price:,.0f} USD Sarf) ve sipariş büyüklüğü ({dev_qty} Cihaz + {sarf_qty} Sarf) ülke makroekonomisi ve klinik alım gücüyle kıyaslandı.</div>
+    <div style="background:linear-gradient(135deg, rgba(15,23,42,0.98) 0%, rgba(19,166,181,0.08) 100%);border:1.5px solid #00F5FF;border-radius:12px;padding:18px 20px;margin-top:16px;box-shadow:0 8px 25px rgba(0,0,0,0.4);">
+        
+        <!-- ÜST PANEL: Ülke İskonto Karar Motoru (İndirim Gerekli mi / Gereksiz mi?) -->
+        <div style="border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:12px;margin-bottom:14px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+                <div>
+                    <span style="font-size:15px;font-weight:800;color:#00F5FF;">🎯 {target_country} İskonto Karar Motoru: İndirim Gerekli mi?</span>
+                    <div style="font-size:11.5px;color:#94A3B8;margin-top:2px;">Ülke alım gücü (GSYİH: ${gdp_val:,} USD), klinik döngü ücretleri ve ithalat rejimine dayalı yönetici kararı.</div>
+                </div>
+                <span style="{country_disc_badge}padding:5px 14px;border-radius:8px;font-weight:800;font-size:12px;">
+                    {country_disc_verdict}
+                </span>
             </div>
-            <span style="{dev_suit_badge}padding:4px 12px;border-radius:8px;font-weight:800;font-size:11.5px;">
-                {dev_suit_status}
-            </span>
+            <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.07);border-radius:8px;padding:10px 14px;margin-top:10px;font-size:12px;line-height:1.65;color:#E2E8F0;">
+                {country_disc_summary}
+                <div style="border-top:1px dashed rgba(255,255,255,0.1);padding-top:8px;margin-top:8px;color:#CBD5E1;font-size:11.5px;">
+                    {when_to_discount}
+                </div>
+            </div>
         </div>
 
+        <!-- ORTA PANEL 1: Cihaz ve Sarf Hacim Kademeleri (2 Sütun) -->
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
-            <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(0,245,255,0.2);border-radius:10px;padding:12px 14px;font-size:12px;line-height:1.7;">
+            <!-- Cihaz Kademesi -->
+            <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:12px 14px;font-size:12px;line-height:1.7;">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                    <b style="color:#00F5FF;font-size:13px;">⚡ Cihaz Fiyatı & Hacim Uygunluğu:</b>
-                    <span style="{dev_suit_badge}font-size:10px;padding:1px 6px;border-radius:4px;font-weight:700;">{dev_qty} Adet</span>
+                    <b style="color:#00F5FF;font-size:13px;">⚡ Cihaz Sipariş Hacim Kuralı:</b>
+                    <span style="{dev_qty_badge}font-size:10.5px;padding:2px 8px;border-radius:6px;font-weight:700;">{dev_qty} Cihaz</span>
                 </div>
-                {dev_suit_text}
+                <div style="color:#CBD5E1;margin-bottom:6px;"><b>Öneri:</b> {dev_qty_advice}</div>
+                <div style="background:rgba(0,0,0,0.25);border-radius:6px;padding:6px 10px;font-size:11px;color:#94A3B8;">
+                    <b>Fiyat Değerlendirmesi:</b> {dev_suit_text}
+                </div>
             </div>
-            <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,215,0,0.2);border-radius:10px;padding:12px 14px;font-size:12px;line-height:1.7;">
+            <!-- Sarf Kademesi -->
+            <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,215,0,0.25);border-radius:10px;padding:12px 14px;font-size:12px;line-height:1.7;">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                    <b style="color:#FFD700;font-size:13px;">🧪 Sarf Fiyatı & Taahhüt Uygunluğu:</b>
-                    <span style="{sarf_suit_badge}font-size:10px;padding:1px 6px;border-radius:4px;font-weight:700;">{sarf_qty} Kutu/Yıl</span>
+                    <b style="color:#FFD700;font-size:13px;">🧪 Sarf Taahhüt Eşik Kuralı:</b>
+                    <span style="{sarf_qty_badge}font-size:10.5px;padding:2px 8px;border-radius:6px;font-weight:700;">{sarf_qty} Kutu/Yıl</span>
                 </div>
-                {sarf_suit_text}
+                <div style="color:#CBD5E1;margin-bottom:6px;"><b>Öneri:</b> {sarf_qty_advice}</div>
+                <div style="background:rgba(0,0,0,0.25);border-radius:6px;padding:6px 10px;font-size:11px;color:#94A3B8;">
+                    <b>Birim Maliyet:</b> {sarf_suit_text}
+                </div>
             </div>
         </div>
 
-        <div style="background:rgba(0,0,0,0.35);border:1px solid rgba(0,245,255,0.3);border-radius:10px;padding:14px 16px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px;">
+        <!-- ORTA PANEL 2: Klinik Siklüs Doğrulaması & Gerçekçilik Analizi -->
+        <div style="background:rgba(0,0,0,0.35);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:12px 16px;margin-bottom:14px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:6px;">
+                <span style="font-weight:800;color:#00F5FF;font-size:13px;">🧪 Klinik Siklüs Doğrulaması (1 Kutu = 10 Tedavi Siklüsü)</span>
+                <span style="{cycle_status_badge}font-size:10.5px;padding:2px 8px;border-radius:6px;font-weight:700;">{sarf_qty * 10:,} Siklüs Eşdeğeri</span>
+            </div>
+            <div style="font-size:12px;color:#CBD5E1;line-height:1.65;margin-bottom:8px;">
+                • <b>Kutu / Siklüs Dönüşümü:</b> 1 kutu Z-Dish (10 dish) = <b>10 Hasta Tedavisi (Siklüs)</b>. Taahhüt edilen <b>{sarf_qty:,} Kutu</b>, tam <b>{patient_cycles:,} hasta siklüsünü</b> kapsar.<br>
+                • <b>{target_country} Pazar Karşılaştırması:</b> Ülkede yılda tahmini <b>{country_cycles:,} siklüs</b> gerçekleşir ({clinics_num} klinik, merkez başı ortalama ~<b>{avg_clinic_cycles:,} siklüs / ~{avg_clinic_boxes} kutu/yıl</b>). Bu taahhüt yaklaşık <b>{covered_clinics} kliniğin</b> tüm yıllık tüketimini karşılar.<br>
+                • <b>Cihaz / Sarf Orantısı:</b> {dev_qty} adet ZPS 26 cihazı aktif çalıştırıldığında yılda en az <b>{min_needed_boxes} kutu ({min_needed_boxes * 10:,} siklüs)</b> çekmelidir.
+            </div>
+            <div style="background:rgba(255,255,255,0.03);padding:6px 10px;border-radius:6px;font-size:11px;">
+                {cycle_status_text}
+            </div>
+        </div>
+
+        <!-- ORTA PANEL 3: Sistemin Tavsiye Ettiği İskonto Oranları -->
+        <div style="background:rgba(0,0,0,0.4);border:1px solid rgba(0,230,118,0.3);border-radius:10px;padding:12px 16px;margin-bottom:14px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
                 <div>
                     <span style="font-weight:800;color:#00E676;font-size:13.5px;">💡 {target_country} İçin Sistemin Tavsiye Ettiği Optimum İskonto</span>
-                    <div style="font-size:11px;color:#94A3B8;">{dev_qty} Adet Cihaz Filosu ve {sarf_qty} Kutu Yıllık Taahhüt Hacmi Göz Önüne Alınarak Hesaplanmıştır.</div>
+                    <div style="font-size:11px;color:#94A3B8;">{dev_qty} Adet Cihaz ve {sarf_qty} Kutu Sarf Hacmi & Ülke Alım Gücü Göz Önüne Alınarak Hesaplanmıştır.</div>
                 </div>
                 <div style="display:flex;gap:12px;font-size:12px;">
                     <div style="background:rgba(0,245,255,0.12);padding:6px 12px;border-radius:8px;border:1px solid #00F5FF;">
                         <span style="color:#8FA3C0;font-size:10px;">ÖNERİLEN CİHAZ İSKONTOSU:</span><br>
-                        <b style="color:#00F5FF;font-size:15px;">%{rec_optimum_dev_disc:.1f}</b> <span style="color:#94A3B8;font-size:10.5px;">(Azami Tavan: %{rec_max_safe_dev_disc:.1f})</span>
+                        <b style="color:#00F5FF;font-size:15px;">%{rec_dev_disc_calc:.1f}</b> <span style="color:#94A3B8;font-size:10px;">(Taban: $8,500 USD)</span>
                     </div>
                     <div style="background:rgba(255,184,0,0.12);padding:6px 12px;border-radius:8px;border:1px solid #FFD700;">
                         <span style="color:#8FA3C0;font-size:10px;">ÖNERİLEN SARF İSKONTOSU:</span><br>
-                        <b style="color:#FFD700;font-size:15px;">%{rec_optimum_sarf_disc:.1f}</b> <span style="color:#94A3B8;font-size:10.5px;">(Azami Tavan: %{rec_max_safe_sarf_disc:.1f})</span>
+                        <b style="color:#FFD700;font-size:15px;">%{rec_sarf_disc_calc:.1f}</b> <span style="color:#94A3B8;font-size:10px;">(Taban: $100 USD)</span>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div style="font-size:11.5px;color:#CBD5E1;line-height:1.6;border-top:1px dashed rgba(255,255,255,0.1);padding-top:8px;">
-                <b>📌 Neden Bu İskonto Öneriliyor?</b><br>
-                • <b>Filo Hacim Primi:</b> Tekil sipariş yerine <b>{dev_qty} adetlik</b> toplu alım yapıldığı için cihaza taban (%5.0) üzerine <b>+%{dev_vol_add:.1f}</b> hacim teşviki verilmesi dağıtıcıyı motive eder.<br>
-                • <b>Razor-and-Blade Koruması:</b> Yıllık <b>{sarf_qty} kutu sarf taahhüdü</b> verildiği için şirket asıl kârı sarftan elde edecektir. Bu nedenle sarfa <b>%{rec_optimum_sarf_disc:.1f}</b> iskonto tanınırken, şirketin toplam brüt kârı <b>%{tot_margin_pct:.1f}</b> ile CFO kırmızı çizgisinin (%35) çok üzerinde kalmaya devam eder.<br>
-                • <b>CFO Kararı:</b> {'✅ İŞLEM ONAYLANABİLİR: Toplam kâr $' + f'{tot_profit:,.0f} USD ve brüt marj %{tot_margin_pct:.1f} ile tam uyumludur.' if tot_margin_pct >= 35.0 else '⚠️ MARJ DÜŞÜK: Brüt marj %35 eşiğinin altında kalmaktadır. İskontoyu düşürünüz.'}
+        <!-- ALT PANEL: RAKİP İSTİHBARATI & TEKNİK YAKINLIK ANALİZİ (Eppendorf, Prime Tech, RI Witness, Vitrolife) -->
+        <div style="border-top:1px solid rgba(255,255,255,0.1);padding-top:12px;">
+            <div style="font-size:13.5px;font-weight:800;color:#00F5FF;margin-bottom:8px;">
+                🔍 {target_country} Rakip İstihbaratı: Ne Satıyorlar & ZEUS Cihazlarıyla Ne Kadar Yakınlar?
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
+                <!-- Eppendorf -->
+                <div style="background:#0B132B;border:1px solid rgba(0,245,255,0.3);border-radius:8px;padding:10px 12px;font-size:11.5px;line-height:1.6;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                        <b style="color:#00F5FF;font-size:12px;">🇩🇪 Eppendorf — PiezoXpert & TransferMan</b>
+                        <span style="background:rgba(0,245,255,0.15);color:#00F5FF;font-size:9.5px;padding:1px 6px;border-radius:4px;font-weight:700;">%78 TEKNİK YAKINLIK</span>
+                    </div>
+                    • <b>Ne Satıyor?:</b> PiezoXpert aktüatör ($16,500 - $19,500 USD) + TransferMan kollar ($18,000 USD).<br>
+                    • <b>ZEUS ZPS 26 ile Farkı:</b> Eppendorf genel hücre delme cihazıdır; insan oositi Piezo-AOA için optimize edilmiş dikdörtgen dalga (rectangular pulse) formu yoktur.<br>
+                    • <b>Kritik Risk:</b> Kontrolsüz harmonik dalgası oositte <b>%4 - %8 lizis (zar yırtılması)</b> riski yaratır. ZEUS ZPS 26'da lizis <b><%1.2</b> ile ultra güvenlidir.<br>
+                    • <b>Klinik Kanıt:</b> ZEUS Baltacı/Ebner TFF vakalarında <b>%82.3 fertilizasyon</b> başarısı sunar.<br>
+                    • <b>Fiyat Üstünlüğü:</b> ZEUS ($8,500 USD) Eppendorf'a kıyasla <b>%54 daha ekonomiktir</b>. Ayrıca Eppendorf'un sarf kiti yoktur; ZEUS Z-Dish ile tekrarlayan gelir sağlar.
+                </div>
+                <!-- Prime Tech -->
+                <div style="background:#0B132B;border:1px solid rgba(255,107,107,0.3);border-radius:8px;padding:10px 12px;font-size:11.5px;line-height:1.6;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                        <b style="color:#FF6B6B;font-size:12px;">🇯🇵 Prime Tech — PMM Piezo Impact (PMAS)</b>
+                        <span style="background:rgba(255,107,107,0.15);color:#FF6B6B;font-size:9.5px;padding:1px 6px;border-radius:4px;font-weight:700;">%85 TEKNİK YAKINLIK (DOĞRUDAN RAKİP)</span>
+                    </div>
+                    • <b>Ne Satıyor?:</b> PMM Piezo-ICSI sürücüsü ($22,000 - $28,000 USD).<br>
+                    • <b>Zehirli Madde Tehlikesi (Fluorinert):</b> Prime Tech darbeyi iletmek için mikropipet içine <b>Fluorinert FC-770 (toksik florokimyasal)</b> konulmasını zorunlu kılar. Pipetten oosite kimyasal bulaşma riski embriyologların en büyük korkusudur.<br>
+                    • <b>ZEUS Üstünlüğü:</b> ZEUS ZPS 26, <b>Fluorinert-FREE (Kimyasalsız Doğrudan Elektronik Piezo)</b> teknolojisiyle çalışır; embriyoya kimyasal sızıntı riski %0'dır.<br>
+                    • <b>Sertifikasyon & Servis:</b> Prime Tech yedek parça ve piezo kafaları Japonya'dan fahiş fiyata gelir ve CE MDR eksiktir. ZEUS tam CE MDR Class IIa tescillidir.
+                </div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+                <!-- RI Witness -->
+                <div style="background:#0B132B;border:1px solid rgba(255,184,0,0.3);border-radius:8px;padding:10px 12px;font-size:11.5px;line-height:1.6;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                        <b style="color:#FFB800;font-size:12px;">🇬🇧 CooperSurgical / RI — RI Witness RFID</b>
+                        <span style="background:rgba(255,184,0,0.15);color:#FFB800;font-size:9.5px;padding:1px 6px;border-radius:4px;font-weight:700;">%90 YAKINLIK (ZMB BLOCKER RAKİBİ)</span>
+                    </div>
+                    • <b>Ne Satıyor?:</b> RFID Elektronik Numune Şahitliği ($50,000 - $65,000 USD + $8,000/yıl lisans).<br>
+                    • <b>ZEUS Mismatch Blocker Üstünlüğü:</b> RI Witness orta/küçük klinikler için ulaşılamaz bütçededir ve kliniği yıllık yazılım lisansına mahkum eder. ZEUS Mismatch Blocker bağımsız kompakt okuyucular ve düşük maliyetli RFID çiplerle yıllık lisans esaretini ortadan kaldırır.
+                </div>
+                <!-- Vitrolife / Octax -->
+                <div style="background:#0B132B;border:1px solid rgba(168,85,247,0.3);border-radius:8px;padding:10px 12px;font-size:11.5px;line-height:1.6;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                        <b style="color:#C084FC;font-size:12px;">🇸🇪 Vitrolife / Octax — NaviLase Laser</b>
+                        <span style="background:rgba(168,85,247,0.15);color:#C084FC;font-size:9.5px;padding:1px 6px;border-radius:4px;font-weight:700;">%70 YAKINLIK (BIOPSAFE RAKİBİ)</span>
+                    </div>
+                    • <b>Ne Satıyor?:</b> Lazer Trofektoderm Biyopsi İstasyonu ($38,000 - $48,000 USD).<br>
+                    • <b>ZEUS BioPSafe Üstünlüğü:</b> Lazer atışı zona pellucidada termal harabiyet ve embriyo ısınma riski yaratır. ZEUS BioPSafe kontrollü mikro-vakum ve piezo kesme ile termal şok olmadan kusursuz biyopsi sağlar.
+                </div>
             </div>
         </div>
+
     </div>
     """, unsafe_allow_html=True)
 
     # 1-Click apply recommendation button
-    disc_btn_c1, disc_btn_c2 = st.columns([1.5, 2.5])
+    disc_btn_c1, disc_btn_c2 = st.columns([1.8, 2.2])
     with disc_btn_c1:
-        if st.button(f"🎯 Önerilen İskontoyu Uygula (%{rec_optimum_dev_disc:.1f} Cihaz / %{rec_optimum_sarf_disc:.1f} Sarf)", key=f"btn_apply_rec_disc_{key_prefix}_{target_country}", type="primary", use_container_width=True):
-            st.session_state[f"{key_prefix}_dev_disc_slider_{target_country}"] = float(rec_optimum_dev_disc)
-            st.session_state[f"{key_prefix}_sarf_disc_slider_{target_country}"] = float(rec_optimum_sarf_disc)
+        if rec_dev_disc_calc == 0.0 and rec_sarf_disc_calc == 0.0:
+            btn_label = f"🛡️ Liste Fiyatını Koru (%0.0 Cihaz / %0.0 Sarf — $8,500 USD Tabanı)"
+        else:
+            btn_label = f"🎯 Önerilen İskontoyu Uygula (%{rec_dev_disc_calc:.1f} Cihaz / %{rec_sarf_disc_calc:.1f} Sarf)"
+            
+        if st.button(btn_label, key=f"btn_apply_rec_disc_{key_prefix}_{target_country}", type="primary", use_container_width=True):
+            st.session_state[f"{key_prefix}_dev_disc_slider_{target_country}"] = float(rec_dev_disc_calc)
+            st.session_state[f"{key_prefix}_sarf_disc_slider_{target_country}"] = float(rec_sarf_disc_calc)
             st.rerun()
 
 
