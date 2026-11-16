@@ -459,18 +459,55 @@ st.markdown("""
         background: rgba(0, 245, 255, 0.5);
     }
 
+    /* Prevent Text Truncation in Checklists, Inputs, and Labels */
+    [data-testid="stCheckbox"] label,
+    [data-testid="stCheckbox"] label p,
+    [data-testid="stCheckbox"] label span,
+    [data-testid="stCheckbox"] label [data-testid="stMarkdownContainer"] p {
+        white-space: normal !important;
+        word-break: break-word !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        line-height: 1.45 !important;
+        font-size: 12.5px !important;
+    }
+    [data-testid="stCheckbox"] {
+        margin-bottom: 8px !important;
+        padding: 3px 0 !important;
+    }
+
+    /* Streamlit Tabs Flexible Wrap & Sizing */
+    [data-testid="stTabs"] [data-baseweb="tab-list"] {
+        gap: 8px !important;
+        flex-wrap: wrap !important;
+        height: auto !important;
+        border-bottom: 1px solid rgba(0, 245, 255, 0.2) !important;
+    }
+    [data-testid="stTabs"] button[data-baseweb="tab"] {
+        white-space: normal !important;
+        height: auto !important;
+        padding: 8px 14px !important;
+        border-radius: 8px !important;
+        font-size: 13px !important;
+        letter-spacing: 0.02em !important;
+    }
+
     /* Glass Metric Card Grid */
     .glass-metric-card {
         background: linear-gradient(145deg, rgba(16, 26, 46, 0.72) 0%, rgba(9, 16, 30, 0.86) 100%) !important;
         border: 1px solid rgba(0, 245, 255, 0.16) !important;
         border-top: 1px solid rgba(0, 245, 255, 0.35) !important;
         border-radius: 14px !important;
-        padding: 16px 18px !important;
+        padding: 14px 16px !important;
         backdrop-filter: blur(16px) !important;
         -webkit-backdrop-filter: blur(16px) !important;
         box-shadow: 0 6px 22px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
         transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
         margin-bottom: 12px !important;
+        min-height: 140px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
     }
     .glass-metric-card:hover {
         transform: translateY(-3px) !important;
@@ -6540,12 +6577,12 @@ def render_social_media_hub():
 
     # 6 Strategic Marketing Tabs
     tab1, tab2, tab3, tab4, tab5, tab6 = st.tabs([
-        "🔍 1. Canlı Sayfa Denetimi, İlerleme Notları & Yeniden Tarama Motoru",
-        "📺 2. YouTube Kanal Stratejisi (@ZeusBioscience) & 5 Eylem Planı",
-        "💼 3. LinkedIn B2B Büyüme & Lead Dönüşüm Stratejisi (ID: 66880793)",
-        "🎬 4. Yüksek Dönüşümlü Video Senaryoları (Scripts)",
-        "🔬 5. Bilimsel Konular & Platform Dağıtım Matrisi",
-        "📅 6. 30 Günlük Editoryal Takvim & Kopyalanabilir Post Taslakları"
+        "🔍 1. Canlı Denetim & İlerleme",
+        "📺 2. YouTube Stratejisi",
+        "💼 3. LinkedIn B2B Büyüme",
+        "🎬 4. Video Senaryoları",
+        "🔬 5. Bilimsel Dağıtım Matrisi",
+        "📅 6. 30 Günlük İçerik Takvimi"
     ])
 
     # =========================================================================
@@ -6625,7 +6662,7 @@ def render_social_media_hub():
         st.markdown("---")
 
         # Checklist and Notes section
-        col_chk, col_not = st.columns([1.2, 1])
+        col_chk, col_not = st.columns([1.4, 1])
 
         with col_chk:
             st.markdown("#### ✅ İyileştirme Kontrol Listesi (Action Checklist)")
@@ -7662,14 +7699,25 @@ with st.sidebar:
     st.markdown("---")
     st.caption("GLOBAL PARAMETERS")
     
-    col_c1, col_c2 = st.columns(2)
-    with col_c1:
-        currency = st.selectbox("Currency", ["USD ($)", "EUR (€)", "TRY (₺)"], index=0)
-    with col_c2:
-        year_sel = st.selectbox("Year", ["2026 (YTD Gerçekleşen Actuals)", "2026 (YTD + Q4 Projeksiyon)", "2025 (Tüm Yıl Gerçekleşen)", "2024 (Tüm Yıl Gerçekleşen)", "Konsolide (Tüm Zamanlar 2024-2026)", "2027 (AI Stratejik Hedef)"], index=0)
-        
+    currency = st.selectbox(
+        "Para Birimi (Currency)",
+        ["USD ($) - US Dollar", "EUR (€) - Euro", "TRY (₺) - Türk Lirası"],
+        index=0
+    )
+    year_sel = st.selectbox(
+        "Mali Dönem & Kapsam (Fiscal Scope)",
+        [
+            "2026 (YTD Gerçekleşen Actuals)",
+            "2026 (YTD + Q4 Projeksiyon)",
+            "2025 (Tüm Yıl Gerçekleşen)",
+            "2024 (Tüm Yıl Gerçekleşen)",
+            "Konsolide (Tüm Zamanlar 2024-2026)",
+            "2027 (AI Stratejik Hedef)"
+        ],
+        index=0
+    )
     range_sel = st.selectbox(
-        "Date Scope",
+        "Zaman Aralığı (Date Scope)",
         ["Last 12 months", "Year to date (10m)", "Last 6 months", "Last 3 months"],
         index=0
     )
@@ -7682,8 +7730,8 @@ with st.sidebar:
     </div>
     ''', unsafe_allow_html=True)
     
-    currency_rate = {"USD ($)": 1.0, "EUR (€)": 0.92, "TRY (₺)": 41.2}[currency]
-    currency_symbol = {"USD ($)": "$", "EUR (€)": "€", "TRY (₺)": "₺"}[currency]
+    currency_rate = 1.0 if "USD" in currency else (0.92 if "EUR" in currency else 41.2)
+    currency_symbol = "$" if "USD" in currency else ("€" if "EUR" in currency else "₺")
     # Selected Year and Forecast Mode
     is_forecast_mode = "2027" in year_sel
     is_2026_mode = "2026" in year_sel
@@ -11033,10 +11081,10 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, active_s
     st.markdown("<br>", unsafe_allow_html=True)
 
     c_desk_tab1, c_desk_tab2, c_desk_tab3, c_desk_tab4 = st.tabs([
-        "🏢 1. Rakipler Ne Satıyor & Bizim Cihazlarla Yakınlık Analizi",
-        "🎯 2. Sahada Rakipleri Eleme & Satış Kazanma Stratejileri",
-        "📜 3. Tavsiye Edilen Distribütör & Klinik Sözleşme Hükümleri",
-        "✍️ 4. Yönetici Karar Not Defteri & Karar Masası"
+        "🏢 1. Rakipler & Yakınlık",
+        "🎯 2. Satış Kazanma Stratejisi",
+        "📜 3. Sözleşme Hükümleri",
+        "✍️ 4. Karar Masası & Notlar"
     ])
 
     # --------------------------------------------------------------------------
@@ -13552,11 +13600,11 @@ def render_tenders_hub():
     t_specs = t_intel.get("technical_specifications", {})
 
     t_tab1, t_tab2, t_tab3, t_tab4, t_tab5 = st.tabs([
-        "📋 1. Açık & Planlanan Kamu İhaleleri Listesi",
-        "📑 2. Teknik Şartname Maddeleri & Laboratuvar Kriterleri",
-        "📂 3. İhale Başvuru Dosyası & Zorunlu Evraklar",
-        "💰 4. İhale Fiyatlandırma & $85,000 USD Turnkey Filo Paket Teklifi",
-        "➕ 5. Sahadan Yeni İhale Bildirimi Ekle"
+        "📋 1. Aktif İhaleler",
+        "📑 2. Teknik Şartname",
+        "📂 3. İhale Dosyası",
+        "💰 4. Filo Teklifi ($85k)",
+        "➕ 5. Yeni İhale Ekle"
     ])
 
     with t_tab1:
@@ -13841,11 +13889,11 @@ def render_regulations_hub():
 
     # 5 Strategic Regulatory Tabs
     reg_tab1, reg_tab2, reg_tab3, reg_tab4, reg_tab5 = st.tabs([
-        "📦 1. Gümrük Vergileri, GTİP Kodları & İthalat Rejimleri",
-        "🏛️ 2. Sağlık Bakanlıkları, Tescil Masrafları & Zorunlu Evraklar",
-        "⚖️ 3. Yeni IVF & PGT / Embriyo Transferi Biyoetik Mevzuatı",
-        "📜 4. Resmi Sağlık Bakanlığı Tebliğleri & Yönetici İlkeleri",
-        "➕ 5. Sahadan Yeni Bakanlık Kararı Ekle"
+        "📦 1. Gümrük & GTİP",
+        "🏛️ 2. Sağlık Bakanlıkları & Tescil",
+        "⚖️ 3. IVF, PGT & Biyoetik",
+        "📜 4. Resmi Tebliğler",
+        "➕ 5. Yeni Karar Ekle"
     ])
 
     with reg_tab1:
@@ -15536,11 +15584,18 @@ if active_view == "🧭 Executive Overview & 3D Globe":
         fig_trend.add_trace(go.Bar(name='Tekrar Eden Sarf (Consumables)', x=x_ax, y=y_con, marker_color='#FFB800'))
         fig_trend.update_layout(
             barmode='stack',
-            height=320,
+            height=340,
             paper_bgcolor='rgba(0,0,0,0)',
             plot_bgcolor='rgba(0,0,0,0)',
-            margin=dict(l=20, r=20, t=10, b=20),
-            legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+            margin=dict(l=20, r=20, t=15, b=55),
+            legend=dict(
+                orientation="h",
+                yanchor="top",
+                y=-0.22,
+                xanchor="center",
+                x=0.5,
+                font=dict(size=11, color='#CBD5E1')
+            ),
             yaxis=dict(gridcolor='rgba(255,255,255,0.08)', title=f"Revenue ({currency_symbol})")
         )
         st.plotly_chart(fig_trend, use_container_width=True)
@@ -17237,12 +17292,23 @@ ZEUS Bioscience Scientific Affairs""",
         ))
 
         fig_fc.update_layout(
-            title=f"Satış Trendi ve AI Projeksiyonu ({currency_symbol})",
-            height=380,
+            title=dict(
+                text=f"<b>Satış Trendi ve AI Projeksiyonu ({currency_symbol})</b>",
+                font=dict(size=14, color='#FFFFFF')
+            ),
+            height=390,
             paper_bgcolor='rgba(0,0,0,0)',
             plot_bgcolor='rgba(0,0,0,0)',
-            margin=dict(l=20, r=20, t=40, b=20),
-            legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+            margin=dict(l=20, r=20, t=45, b=55),
+            legend=dict(
+                orientation="h",
+                yanchor="top",
+                y=-0.18,
+                xanchor="center",
+                x=0.5,
+                title_text="",
+                font=dict(size=11, color='#CBD5E1')
+            ),
             yaxis=dict(gridcolor='rgba(255,255,255,0.08)', title=f"Satış Hacmi ({currency_symbol})"),
             xaxis=dict(title="Dönem")
         )
@@ -18960,7 +19026,7 @@ elif active_view == "📊 Sales & Product Analytics":
             paper_bgcolor='rgba(0,0,0,0)',
             plot_bgcolor='rgba(0,0,0,0)',
             height=430,
-            margin=dict(l=140, r=20, t=10, b=40),
+            margin=dict(l=140, r=20, t=45, b=30),
             xaxis=dict(
                 title="Toplam Hasılat ($ USD)",
                 gridcolor='rgba(0, 245, 255, 0.08)',
@@ -18974,10 +19040,10 @@ elif active_view == "📊 Sales & Product Analytics":
             legend=dict(
                 orientation="h",
                 yanchor="bottom",
-                y=1.03,
+                y=1.06,
                 xanchor="center",
                 x=0.5,
-                bgcolor='rgba(15,23,42,0.6)',
+                bgcolor='rgba(15,23,42,0.85)',
                 bordercolor='rgba(0,245,255,0.2)',
                 borderwidth=1,
                 font=dict(color="#E2E8F0", size=11)
@@ -19023,11 +19089,11 @@ elif active_view == "📊 Sales & Product Analytics":
     ''', unsafe_allow_html=True)
 
     lead_tab1, lead_tab_quota, lead_tab2, lead_tab3, lead_tab4 = st.tabs([
-        "Yetkili Uluslararası Distribütörler (6 Distribütör)",
-        "🎯 Yıllık Pazar Kapasitesi & AI Sipariş İsteme Masası (Kotalar & Aktivasyon)",
-        "Uluslararası Doğrudan Müşteriler & Klinikler (12 Müşteri)",
-        "Türkiye Pazarı Klinik & Müşterileri (25 Yerli Hesap)",
-        "Konsolide Tüm Portföy (43 Kurum)"
+        "Yetkili Distribütörler (6)",
+        "🎯 Yıllık Kapasite & Kotalar",
+        "Doğrudan Klinikler (12)",
+        "Türkiye Pazarı (25)",
+        "Konsolide Portföy (43)"
     ])
 
     # 1. Official International Distributors
@@ -19335,13 +19401,13 @@ elif active_view == "🛃 Market Intelligence & Compare":
 
         # Tabbed Layout for Easy Exploration
         comp_tab1, comp_tab2, comp_tab3, comp_tab4, comp_tab5, comp_tab6, comp_tab7 = st.tabs([
-            "📊 Çok Boyutlu Grafik Analizi (Visual Analytics)",
-            "📋 Kapsamlı Skor Kartı & Veri Tablosu (Comparative Scorecard)",
-            "🎯 AI Potansiyel Müşteri, Klinik & Distribütör Radarı (AI Prospect Scout)",
-            "🔬 ZEUS Klinik Cihaz & Teknoloji AI Portföy Tavsiye Masası (Device Advisor)",
-            "🚀 Global Klinik Pazarlama, İletişim Masası & LinkedIn Hub (GTM Playbook)",
-            "🏛️ Sağlık Bakanlığı Kararları, Mevzuat & Sektörel Uzman Notları (Regulatory & Market KB)",
-            "⚔️ ZEUS vs. Küresel Rakipler, Fark Analizi & Sözleşme Stratejisi (Competitor Battlecard)"
+            "📊 Grafik Analizi",
+            "📋 Kıyaslama Skor Kartı",
+            "🎯 Klinik & Distribütör Radarı",
+            "🔬 Cihaz Portföy Masası",
+            "🚀 B2B Pazarlama & LinkedIn",
+            "🏛️ Sağlık Mevzuatı & KB",
+            "⚔️ Rakip Kıyaslama & Sözleşme"
         ])
 
         with comp_tab1:
@@ -19421,9 +19487,24 @@ elif active_view == "🛃 Market Intelligence & Compare":
                     color_discrete_sequence=['#00F5FF', '#FFB800', '#00E676']
                 )
                 fig_tech.update_layout(
-                    template='plotly_dark', height=330,
-                    margin=dict(t=40, b=20, l=10, r=10),
-                    legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
+                    template='plotly_dark',
+                    height=360,
+                    margin=dict(t=50, b=65, l=10, r=10),
+                    title=dict(
+                        text="<b>Klinik Teknoloji & Yöntem Adaptasyon Oranları (%)</b>",
+                        font=dict(size=13, color='#FFFFFF')
+                    ),
+                    legend=dict(
+                        orientation="h",
+                        yanchor="top",
+                        y=-0.22,
+                        xanchor="center",
+                        x=0.5,
+                        title_text="",
+                        font=dict(size=11, color='#CBD5E1')
+                    ),
+                    yaxis=dict(gridcolor='rgba(255,255,255,0.08)', range=[0, 105]),
+                    xaxis=dict(title="Ülke")
                 )
                 st.plotly_chart(fig_tech, use_container_width=True)
 
@@ -19435,7 +19516,18 @@ elif active_view == "🛃 Market Intelligence & Compare":
                     labels={'clinics_per_m': 'Klinik / Milyon Nüfus', 'name': 'Ülke'}
                 )
                 fig_dens.update_traces(texttemplate='%{text:.2f} klinik/M', textposition='outside')
-                fig_dens.update_layout(template='plotly_dark', showlegend=False, height=330, margin=dict(t=40, b=20, l=10, r=10))
+                fig_dens.update_layout(
+                    template='plotly_dark',
+                    showlegend=False,
+                    height=360,
+                    margin=dict(t=50, b=65, l=10, r=10),
+                    title=dict(
+                        text="<b>Pazar Doygunluğu (Milyon Nüfus Başına Lisanslı Klinik Sayısı)</b>",
+                        font=dict(size=13, color='#FFFFFF')
+                    ),
+                    yaxis=dict(gridcolor='rgba(255,255,255,0.08)'),
+                    xaxis=dict(title="Ülke")
+                )
                 st.plotly_chart(fig_dens, use_container_width=True)
 
             # ------------------------------------------------------------------
@@ -19602,11 +19694,23 @@ elif active_view == "🛃 Market Intelligence & Compare":
                     )
                     fig_score.update_traces(texttemplate='  %{text} / 100', textposition='outside')
                     fig_score.update_layout(
-                        template='plotly_dark', height=330,
-                        margin=dict(t=40, b=20, l=10, r=40),
+                        template='plotly_dark', height=350,
+                        margin=dict(t=45, b=55, l=10, r=40),
+                        title=dict(
+                            text="<b>Pazar Fırsat Skoru (0-100) & Ticari Risk</b>",
+                            font=dict(size=13, color='#FFFFFF')
+                        ),
                         xaxis=dict(range=[0, 105], gridcolor='rgba(255,255,255,0.08)'),
                         yaxis=dict(title=""),
-                        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1)
+                        legend=dict(
+                            orientation="h",
+                            yanchor="top",
+                            y=-0.20,
+                            xanchor="center",
+                            x=0.5,
+                            title_text="",
+                            font=dict(size=11, color='#CBD5E1')
+                        )
                     )
                     st.plotly_chart(fig_score, use_container_width=True)
 
@@ -25203,11 +25307,18 @@ elif active_view == "📈 Performance Evaluator":
 
     fig_ord.update_layout(
         barmode='stack',
-        height=380,
+        height=390,
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
-        margin=dict(l=10, r=10, t=30, b=10),
-        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+        margin=dict(l=10, r=10, t=45, b=55),
+        legend=dict(
+            orientation="h",
+            yanchor="top",
+            y=-0.20,
+            xanchor="center",
+            x=0.5,
+            font=dict(size=11, color='#CBD5E1')
+        ),
         yaxis=dict(gridcolor='rgba(255,255,255,0.08)', title=f"Sipariş Tutarı ({currency_symbol})"),
         xaxis=dict(title="Dönem (Çeyrekler)")
     )
