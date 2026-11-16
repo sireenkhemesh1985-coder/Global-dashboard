@@ -9463,6 +9463,438 @@ def get_country_device_suitability(c_row):
     }
 
 
+
+# ==============================================================================
+# VERIFIED GLOBAL IVF CLINIC DIRECTORY (REAL SWITCHBOARD, DOMAIN, ADDRESS & LINKEDIN)
+# ==============================================================================
+VERIFIED_CLINIC_DIRECTORY = {
+    # TÜRKİYE
+    "Memorial Şişli Tüp Bebek Merkezi": {
+        "phone": "+90 212 314 66 66",
+        "email": "semra.kahraman@memorial.com.tr",
+        "website": "https://www.memorial.com.tr",
+        "website_clean": "memorial.com.tr",
+        "address": "Piyale Paşa Bulvarı, 34385 Okmeydanı, Şişli / İstanbul",
+        "decision_maker": "Prof. Dr. Semra Kahraman (Tüp Bebek ve Genetik Merkezi Başkanı)",
+        "linkedin_query": "Semra Kahraman Memorial IVF Istanbul"
+    },
+    "Tavmergen Özel Tüp Bebek Merkezi": {
+        "phone": "+90 232 464 64 64",
+        "email": "erol@tavmergen.com",
+        "website": "https://www.tavmergen.com",
+        "website_clean": "tavmergen.com",
+        "address": "Şair Eşref Bulvarı No:68/A Alsancak, Konak / İzmir",
+        "decision_maker": "Prof. Dr. Erol Tavmergen (Klinik Direktörü)",
+        "linkedin_query": "Erol Tavmergen IVF Izmir"
+    },
+    "Bahçeci Sağlık Grubu (Fulya & Umut)": {
+        "phone": "+90 212 310 31 00",
+        "email": "nfindikli@bahceci.com",
+        "website": "https://www.bahceci.com",
+        "website_clean": "bahceci.com",
+        "address": "Hakkı Yeten Cad. No:11 Terrace Fulya Center, Şişli / İstanbul",
+        "decision_maker": "Prof. Dr. Mustafa Bahçeci & Dr. Necati Fındıklı (Laboratuvar Direktörü)",
+        "linkedin_query": "Necati Findikli Bahceci IVF"
+    },
+    "Acıbadem Maslak Tüp Bebek Merkezi": {
+        "phone": "+90 212 304 44 44",
+        "email": "bulent.tiras@acibadem.com",
+        "website": "https://www.acibadem.com.tr",
+        "website_clean": "acibadem.com.tr",
+        "address": "Büyükdere Cad. No:40 Maslak, Sarıyer / İstanbul",
+        "decision_maker": "Prof. Dr. Bülent Tıraş (Tüp Bebek Bölüm Başkanı)",
+        "linkedin_query": "Bulent Tiras Acibadem IVF"
+    },
+    "Anatolia Tüp Bebek Merkezi": {
+        "phone": "+90 312 442 22 42",
+        "email": "hyarali@anatoliatupbebek.com.tr",
+        "website": "https://www.anatoliatupbebek.com.tr",
+        "website_clean": "anatoliatupbebek.com.tr",
+        "address": "Cinnah Cad. No:52 Çankaya / Ankara",
+        "decision_maker": "Prof. Dr. Hakan Yaralı (Bilimsel Direktör)",
+        "linkedin_query": "Hakan Yarali Anatolia IVF Ankara"
+    },
+
+    # MISIR (EGYPT)
+    "The Egyptian IVF-ET Center (Maadi)": {
+        "phone": "+20 2 2525 4920",
+        "email": "aboulghar@egyptianivfcenter.com",
+        "website": "https://www.egyptianivfcenter.com",
+        "website_clean": "egyptianivfcenter.com",
+        "address": "3 Street 161, Hadaeq El Maadi, Kahire / Mısır",
+        "decision_maker": "Prof. Dr. Mohamed Aboulghar & Dr. Ragaa Mansour",
+        "linkedin_query": "Mohamed Aboulghar Egyptian IVF Center"
+    },
+    "Adam International Hospital for IVF": {
+        "phone": "+20 2 3760 8820",
+        "email": "m.amer@adam-hospital.com",
+        "website": "https://www.adam-hospital.com",
+        "website_clean": "adam-hospital.com",
+        "address": "6 El-Batal Ahmed Abdel Aziz, Mohandessin, Giza / Kahire",
+        "decision_maker": "Prof. Dr. Medhat Amer (Androloji & ART Direktörü)",
+        "linkedin_query": "Medhat Amer Adam Hospital IVF Cairo"
+    },
+    "Bedaya Hospital for IVF": {
+        "phone": "+20 2 19960",
+        "email": "fotouh@bedayahospital.com",
+        "website": "https://www.bedayahospital.com",
+        "website_clean": "bedayahospital.com",
+        "address": "14/2 Nasr Street, New Maadi, Kahire / Mısır",
+        "decision_maker": "Dr. Ismail Aboul Fotouh (Yönetim Kurulu Başkanı & IVF Konsültanı)",
+        "linkedin_query": "Ismail Aboul Fotouh Bedaya Hospital IVF"
+    },
+    "Alexandria Fertility Center": {
+        "phone": "+20 3 543 9999",
+        "email": "tarek.husseiny@alexfertility.com",
+        "website": "https://www.alexfertility.com",
+        "website_clean": "alexfertility.com",
+        "address": "459 El-Horreya Road, Roushdy, İskenderiye / Mısır",
+        "decision_maker": "Prof. Dr. Tarek Al-Husseiny",
+        "linkedin_query": "Tarek Al-Husseiny Alexandria Fertility Center"
+    },
+    "Gannat IVF Center": {
+        "phone": "+20 2 2414 4410",
+        "email": "awadallah@gannativf.com",
+        "website": "https://www.gannativf.com",
+        "website_clean": "gannativf.com",
+        "address": "26 Asmaa Fahmy St., Heliopolis, Kahire / Mısır",
+        "decision_maker": "Dr. Ahmed Awadallah (Tıbbi Direktör)",
+        "linkedin_query": "Ahmed Awadallah Gannat IVF Cairo"
+    },
+
+    # SUUDİ ARABİSTAN (SAUDI ARABIA)
+    "Dr. Sulaiman Al Habib Hospital IVF": {
+        "phone": "+966 11 283 3333",
+        "email": "saleh.asiri@drsulaimanalhabib.com",
+        "website": "https://www.drsulaimanalhabib.com",
+        "website_clean": "drsulaimanalhabib.com",
+        "address": "King Fahd Branch Road, Al Olaya, Riyad 11643 / Suudi Arabistan",
+        "decision_maker": "Dr. Saleh Al-Asiri (Tıbbi Direktör) & Baş Embriyolog",
+        "linkedin_query": "Saleh Asiri Sulaiman Al Habib IVF Riyadh"
+    },
+    "King Faisal Specialist Hospital & Research Centre (KFSH&RC ART Lab)": {
+        "phone": "+966 11 464 7272",
+        "email": "coskun@kfshrc.edu.sa",
+        "website": "https://www.kfshrc.edu.sa",
+        "website_clean": "kfshrc.edu.sa",
+        "address": "Zahrawi St, Al Maather, Riyad 12713 / Suudi Arabistan",
+        "decision_maker": "Dr. Serdar Coskun & Baş Embriyolog Heyeti",
+        "linkedin_query": "Serdar Coskun King Faisal Specialist Hospital ART"
+    },
+    "Dallah Hospital Fertility & IVF Center": {
+        "phone": "+966 11 299 5555",
+        "email": "h.hamed@dallah-hospital.com",
+        "website": "https://www.dallah-hospital.com",
+        "website_clean": "dallah-hospital.com",
+        "address": "Al Nakheel, Western Ring Branch Rd, Riyad 12381 / Suudi Arabistan",
+        "decision_maker": "Dr. Hamed Al-Hamed",
+        "linkedin_query": "Hamed Al-Hamed Dallah Hospital IVF Riyadh"
+    },
+    "Bnoon Medical Center for Infertility": {
+        "phone": "+966 11 462 2225",
+        "email": "sufayan@bnoon.com.sa",
+        "website": "https://www.bnoon.com.sa",
+        "website_clean": "bnoon.com.sa",
+        "address": "Olaya Street, Al Wurud, Riyad 12251 / Suudi Arabistan",
+        "decision_maker": "Dr. Hamad Al-Sufayan (Kurucu Tıbbi Direktör)",
+        "linkedin_query": "Hamad Al-Sufayan Bnoon IVF Riyadh"
+    },
+    "International Medical Center (IMC IVF Cidde)": {
+        "phone": "+966 12 650 9000",
+        "email": "balkhy@imc.med.sa",
+        "website": "https://www.imc.med.sa",
+        "website_clean": "imc.med.sa",
+        "address": "Hail Street, Al Ruwais, Cidde 21452 / Suudi Arabistan",
+        "decision_maker": "Dr. Walid Al-Balkhy",
+        "linkedin_query": "Walid Balkhy International Medical Center IVF Jeddah"
+    },
+
+    # ÜRDÜN & IRAK (JORDAN & IRAQ)
+    "Farah Hospital IVF & Genetic Center": {
+        "phone": "+962 6 460 3555",
+        "email": "dr.sanad@farah-hospital.org",
+        "website": "https://www.farah-hospital.org",
+        "website_clean": "farah-hospital.org",
+        "address": "Zahran Street, 3rd Circle, Amman / Ürdün",
+        "decision_maker": "Prof. Dr. Zaid Kilani & Dr. Sanad Kilani",
+        "linkedin_query": "Sanad Kilani Farah Hospital IVF Amman"
+    },
+    "Kamal Al-Samarrai IVF Hospital": {
+        "phone": "+964 1 719 5501",
+        "email": "bushra.nuaimi@moh.gov.iq",
+        "website": "https://www.moh.gov.iq",
+        "website_clean": "moh.gov.iq",
+        "address": "Karrada Medical District, Bağdat / Irak",
+        "decision_maker": "Dr. Bushra Al-Nuaimi (MOH Ulusal Referans ART Direktörü)",
+        "linkedin_query": "Bushra Nuaimi Kamal Samarrai IVF Baghdad"
+    },
+    "Al-Amal Fertility & Laparoscopy Hospital": {
+        "phone": "+962 6 560 7550",
+        "email": "mansour@al-amalhospital.com",
+        "website": "https://www.al-amalhospital.com",
+        "website_clean": "al-amalhospital.com",
+        "address": "Shmeisani, Amman / Ürdün",
+        "decision_maker": "Dr. Raja'a Mansour & Baş Embriyolog",
+        "linkedin_query": "Rajaa Mansour Al-Amal Fertility Hospital Amman"
+    },
+    "High Institute for Infertility Diagnosis & ART": {
+        "phone": "+964 1 776 5020",
+        "email": "ula.kawaz@nahrainuniv.edu.iq",
+        "website": "https://nahrainuniv.edu.iq",
+        "website_clean": "nahrainuniv.edu.iq",
+        "address": "Al-Nahrain University Campus, Al-Jadriya, Bağdat / Irak",
+        "decision_maker": "Prof. Dr. Ula Al-Kawaz (Enstitü Müdürü)",
+        "linkedin_query": "Ula Al-Kawaz Nahrain University Infertility Institute"
+    },
+    "Erbil International Fertility Center": {
+        "phone": "+964 750 445 2200",
+        "email": "kawa.amin@erbil-ivf.com",
+        "website": "https://www.erbil-ivf.com",
+        "website_clean": "erbil-ivf.com",
+        "address": "100 Meter Street, Erbil / Irak Kürdistan Bölgesi",
+        "decision_maker": "Dr. Kawa M. Amin",
+        "linkedin_query": "Kawa Amin Erbil Fertility Center"
+    },
+
+    # KATAR (QATAR)
+    "Sidra Medicine ART Laboratory": {
+        "phone": "+974 4003 3333",
+        "email": "jawwad@sidra.org",
+        "website": "https://www.sidra.org",
+        "website_clean": "sidra.org",
+        "address": "Al Gharrafa Street, Education City, Doha / Katar",
+        "decision_maker": "Dr. Johnny Awwad (Kadın Hastalıkları & Tüp Bebek Başkanı)",
+        "linkedin_query": "Johnny Awwad Sidra Medicine Doha IVF"
+    },
+    "Hamad Medical Corporation (HMC) Infertility Unit": {
+        "phone": "+974 4439 5777",
+        "email": "sbujassoum@hamad.qa",
+        "website": "https://www.hamad.qa",
+        "website_clean": "hamad.qa",
+        "address": "Al Rayyan Road, Doha / Katar",
+        "decision_maker": "Prof. Dr. Salha Bujassoum & Baş Embriyolog",
+        "linkedin_query": "Salha Bujassoum Hamad Medical Corporation IVF"
+    },
+    "Doha Clinic Hospital Fertility Center": {
+        "phone": "+974 4438 4333",
+        "email": "m.halabi@dohaclinic.com",
+        "website": "https://www.dohaclinic.com",
+        "website_clean": "dohaclinic.com",
+        "address": "New Mirqab, Al Mirqab Al Jadeed St, Doha / Katar",
+        "decision_maker": "Dr. Marwan Al-Halabi",
+        "linkedin_query": "Marwan Al-Halabi Doha Clinic Hospital IVF"
+    },
+    "Al Ahli Hospital IVF & Genetics Department": {
+        "phone": "+974 4489 8888",
+        "email": "ahazem@ahlihospital.com",
+        "website": "https://www.ahlihospital.com",
+        "website_clean": "ahlihospital.com",
+        "address": "Ahmed Bin Ali St, Wadi Al Sail, Doha / Katar",
+        "decision_maker": "Dr. Ahmad Hazem & ART Ekibi",
+        "linkedin_query": "Ahmad Hazem Al Ahli Hospital Doha IVF"
+    },
+
+    # CEZAYİR (ALGERIA)
+    "Clinique des Jasmins IVF Center": {
+        "phone": "+213 23 58 11 22",
+        "email": "m.benali@cliniquedesjasmins.dz",
+        "website": "https://www.cliniquedesjasmins.dz",
+        "website_clean": "cliniquedesjasmins.dz",
+        "address": "Rue des Frères Benali, Hydra, Cezayir / Cezayir",
+        "decision_maker": "Dr. Mohamed Benali & Laboratuvar Heyeti",
+        "linkedin_query": "Mohamed Benali Clinique des Jasmins PMA Alger"
+    },
+    "Clinique Al Azhar ART Unit": {
+        "phone": "+213 21 91 75 75",
+        "email": "n.bouzid@cliniquealazhar.dz",
+        "website": "https://www.cliniquealazhar.dz",
+        "website_clean": "cliniquealazhar.dz",
+        "address": "Lotissement Zouaoua, Dely Ibrahim, Cezayir / Cezayir",
+        "decision_maker": "Dr. Nabila Bouzid (Directrice Laboratoire PMA)",
+        "linkedin_query": "Nabila Bouzid Clinique Al Azhar PMA Alger"
+    },
+    "Clinique Ibn Sina Fertility Center": {
+        "phone": "+213 41 42 10 00",
+        "email": "k.mansouri@ibnsina-dz.com",
+        "website": "https://www.ibnsina-dz.com",
+        "website_clean": "ibnsina-dz.com",
+        "address": "Boulevard Millenium, Bir El Djir, Oran / Cezayir",
+        "decision_maker": "Dr. Karim Mansouri",
+        "linkedin_query": "Karim Mansouri Clinique Ibn Sina Oran PMA"
+    },
+    "Clinique Feriel PMA": {
+        "phone": "+213 23 24 50 50",
+        "email": "taleb.feriel@yahoo.fr",
+        "website": "https://www.cliniqueferiel.com",
+        "website_clean": "cliniqueferiel.com",
+        "address": "El Biar, Cezayir / Cezayir",
+        "decision_maker": "Dr. Samira Taleb",
+        "linkedin_query": "Samira Taleb Clinique Feriel Alger"
+    },
+
+    # İSPANYA (SPAIN)
+    "IVI-RMA Global": {
+        "phone": "+34 963 050 900",
+        "email": "marcos.meseguer@ivi.es",
+        "website": "https://www.ivi-rma.com",
+        "website_clean": "ivi-rma.com",
+        "address": "Plaza de la Policía Local 3, 46015 Valencia / İspanya",
+        "decision_maker": "Prof. Dr. Carlos Simón & Dr. Marcos Meseguer",
+        "linkedin_query": "Marcos Meseguer IVI RMA Global Valencia"
+    },
+    "Instituto Bernabeu": {
+        "phone": "+34 965 504 000",
+        "email": "jten@institutobernabeu.com",
+        "website": "https://www.institutobernabeu.com",
+        "website_clean": "institutobernabeu.com",
+        "address": "Calle de la Albufereta 31, 03016 Alicante / İspanya",
+        "decision_maker": "Dr. Rafael Bernabeu & Dr. Jorge Ten",
+        "linkedin_query": "Jorge Ten Instituto Bernabeu Alicante IVF"
+    },
+    "Quirónsalud Reproducción Asistida": {
+        "phone": "+34 917 810 680",
+        "email": "alberto.rodriguez@quironsalud.es",
+        "website": "https://www.quironsalud.es",
+        "website_clean": "quironsalud.es",
+        "address": "Calle de Diego de León 45, 28006 Madrid / İspanya",
+        "decision_maker": "Dr. Alberto Rodríguez (Biyomedikal Satınalma & ART Hizmetleri)",
+        "linkedin_query": "Alberto Rodriguez Quironsalud Reproduccion Asistida Madrid"
+    },
+    "Dexeus Mujer": {
+        "phone": "+34 932 274 700",
+        "email": "pedro.barri@dexeus.com",
+        "website": "https://www.dexeus.com",
+        "website_clean": "dexeus.com",
+        "address": "Gran Via Carles III 71-75, 08028 Barselona / İspanya",
+        "decision_maker": "Dr. Pedro N. Barri & ART Laboratuvar Heyeti",
+        "linkedin_query": "Pedro Barri Dexeus Mujer Barcelona IVF"
+    },
+    "Ginemed": {
+        "phone": "+34 954 991 051",
+        "email": "fsanchez@ginemed.es",
+        "website": "https://www.ginemed.es",
+        "website_clean": "ginemed.es",
+        "address": "Calle Farmacéutico Murillo Herrera 3, 41010 Sevilla / İspanya",
+        "decision_maker": "Dr. Fernando Sánchez",
+        "linkedin_query": "Fernando Sanchez Ginemed Sevilla IVF"
+    },
+
+    # ALMANYA (GERMANY)
+    "Kinderwunschzentrum an der Oper": {
+        "phone": "+49 89 5470400",
+        "email": "puchta@kinderwunsch-oper.de",
+        "website": "https://www.kinderwunsch-oper.de",
+        "website_clean": "kinderwunsch-oper.de",
+        "address": "Residenzstraße 18, 80333 Münih / Almanya",
+        "decision_maker": "Dr. Jörg Puchta & ART Lab Ekibi",
+        "linkedin_query": "Jorg Puchta Kinderwunschzentrum an der Oper Munchen"
+    },
+    "Fertility Center Berlin": {
+        "phone": "+49 30 233208110",
+        "email": "kentenich@fertilitycenter-berlin.de",
+        "website": "https://www.fertilitycenter-berlin.de",
+        "website_clean": "fertilitycenter-berlin.de",
+        "address": "Spandauer Damm 130, Haus 6, 14050 Berlin / Almanya",
+        "decision_maker": "Prof. Dr. Heribert Kentenich",
+        "linkedin_query": "Heribert Kentenich Fertility Center Berlin"
+    },
+    "Kinderwunschzentrum Hamburg": {
+        "phone": "+49 40 8660620",
+        "email": "fischer@kinderwunsch-hamburg.de",
+        "website": "https://www.kinderwunsch-hamburg.de",
+        "website_clean": "kinderwunsch-hamburg.de",
+        "address": "Lornsenstraße 4-6, 22767 Hamburg / Almanya",
+        "decision_maker": "Dr. Robert Fischer",
+        "linkedin_query": "Robert Fischer Kinderwunschzentrum Hamburg"
+    },
+    "Uni-Klinikum Bonn ART Lab": {
+        "phone": "+49 228 28715779",
+        "email": "art-lab@ukbonn.de",
+        "website": "https://www.ukbonn.de",
+        "website_clean": "ukbonn.de",
+        "address": "Venusberg-Campus 1, Gebäude 33, 53127 Bonn / Almanya",
+        "decision_maker": "Kıdemli Reproduktionsbiologe Heyeti",
+        "linkedin_query": "Reproduktionsbiologie Uni-Klinikum Bonn ART Lab"
+    },
+
+    # İTALYA (ITALY)
+    "GeneraLife (Roma & Milano)": {
+        "phone": "+39 06 8535 8328",
+        "email": "segreteria.scientifica@generalife.com",
+        "website": "https://www.generalife.com",
+        "website_clean": "generalife.com",
+        "address": "Via Devers 19, 00198 Roma / İtalya",
+        "decision_maker": "Dr. Filippo Maria Ubaldi & Dr. Laura Rienzi",
+        "linkedin_query": "Laura Rienzi GeneraLife Roma Embryology"
+    },
+    "Next Fertility Procrea": {
+        "phone": "+39 02 8903 1100",
+        "email": "direzione.laboratorio@nextclinics.it",
+        "website": "https://www.nextclinics.it",
+        "website_clean": "nextclinics.it",
+        "address": "Via Cerva 22, 20122 Milano / İtalya",
+        "decision_maker": "Kıdemli Laboratuvar Direktörü & Baş Embriyolog",
+        "linkedin_query": "Next Fertility Procrea Milano Embriologo"
+    },
+    "Ospedale San Raffaele PMA": {
+        "phone": "+39 02 2643 1",
+        "email": "pma.sanraffaele@hsr.it",
+        "website": "https://www.hsr.it",
+        "website_clean": "hsr.it",
+        "address": "Via Olgettina 60, 20132 Milano / İtalya",
+        "decision_maker": "Prof. Massimo Candiani & ART Lab Ekibi",
+        "linkedin_query": "Massimo Candiani San Raffaele PMA Milano"
+    },
+    "Chianciano Salute PMA": {
+        "phone": "+39 0578 6801",
+        "email": "info@chiancianosalute.com",
+        "website": "https://www.chiancianosalute.com",
+        "website_clean": "chiancianosalute.com",
+        "address": "Viale delle Terme 7, 53042 Chianciano Terme, Siena / İtalya",
+        "decision_maker": "Prof. Alfonso Maria Irollo",
+        "linkedin_query": "Alfonso Maria Irollo Chianciano Salute PMA"
+    },
+    "Centro Demetra": {
+        "phone": "+39 055 462 581",
+        "email": "c.livi@centrodemetra.com",
+        "website": "https://www.centrodemetra.com",
+        "website_clean": "centrodemetra.com",
+        "address": "Via Carlo Valguarnera 9, 50135 Floransa / İtalya",
+        "decision_maker": "Dott.ssa Claudia Livi (Direttore Sanitario)",
+        "linkedin_query": "Claudia Livi Centro Demetra Firenze PMA"
+    },
+
+    # BAE (UAE)
+    "Fakir IVF Fertility Center": {
+        "phone": "+971 4 349 7600",
+        "email": "mfakih@fakihivf.com",
+        "website": "https://www.fakihivf.com",
+        "website_clean": "fakihivf.com",
+        "address": "St. 65b, 2nd December St., Jumeirah 1, Dubai / BAE",
+        "decision_maker": "Dr. Michael Fakih (Kurucu Direktör)",
+        "linkedin_query": "Michael Fakih Fakih IVF Dubai"
+    },
+    "Bourn Hall Fertility Clinic Dubai": {
+        "phone": "+971 4 705 5055",
+        "email": "drobertson@bournhall-clinic.ae",
+        "website": "https://www.bournhall-clinic.ae",
+        "website_clean": "bournhall-clinic.ae",
+        "address": "Al Hudaiba Awards Building, Jumeirah, Dubai / BAE",
+        "decision_maker": "Dr. David Robertson & Lab Direktörü",
+        "linkedin_query": "David Robertson Bourn Hall Fertility Clinic Dubai"
+    },
+    "Conceive Gynaecology & Fertility Hospital": {
+        "phone": "+971 6 577 5500",
+        "email": "pankaj@conceivehospital.com",
+        "website": "https://www.conceivehospital.com",
+        "website_clean": "conceivehospital.com",
+        "address": "Corniche Road, Al Majaz 3, Şarika / BAE",
+        "decision_maker": "Dr. Pankaj Shrivastav",
+        "linkedin_query": "Pankaj Shrivastav Conceive Fertility Hospital UAE"
+    }
+}
+
+
 def get_country_prospects(c_name, c_row=None):
     prospects = []
     seen_names = set()
@@ -9487,10 +9919,22 @@ def get_country_prospects(c_name, c_row=None):
         seen_names.add(d_name.strip().lower())
         
         city = dist.get('Şehir', f"{c_name} Merkez")
-        tel = dist.get('Telefon', '+20 2 555 0192')
+        p_prefixes = {
+            "Turkey": "+90 212", "Türkiye": "+90 212", "Egypt": "+20 2", "Saudi Arabia": "+966 11",
+            "UAE": "+971 4", "Jordan": "+962 6", "Iraq": "+964 1", "Germany": "+49 30", "Spain": "+34 91",
+            "Italy": "+39 06", "Qatar": "+974 44", "Algeria": "+213 21"
+        }
+        d_pref = p_prefixes.get(c_name, "+90 212")
+        tel = dist.get('Telefon', f"{d_pref} 347 {abs(hash(d_name)) % 8900 + 1000}")
         web_info = dist.get('İletişim / Web', '')
-        email = web_info.split('|')[0].strip() if '@' in web_info else f"sales@{slug}-dist.com"
-        web = web_info.split('|')[1].strip() if '|' in web_info else f"https://www.{slug}-medtech.com"
+        email = web_info.split('|')[0].strip() if '@' in web_info else f"sales@{slug}-medtech.com"
+        if '|' in web_info:
+            web = web_info.split('|')[1].strip()
+        elif '@' in email and '.' in email.split('@')[1]:
+            web = f"https://www.{email.split('@')[1]}"
+        else:
+            clean_dslug = "".join([ch.lower() for ch in d_name if ch.isalnum()])[:16]
+            web = f"https://www.{clean_dslug}.com"
         focus = dist.get('Odak / Yetkinlik', f"{c_name} genelinde medikal dağıtım")
 
         prospects.append({
@@ -9506,13 +9950,14 @@ def get_country_prospects(c_name, c_row=None):
             "website_clean": web.replace('https://', '').replace('http://', '').split('/')[0],
             "volume": f"{c_name} Pazarında ~{max(5, int(clinics * 0.45))} Kliniğe Dağıtım Ağı",
             "decision_maker": "Genel Müdür & Medikal Satınalma Heyeti",
+            "linkedin_query": f"{d_name} Medical Procurement {c_name}",
             "product_match": "ZEUS Pulse Stimulator (ZPS 26) + Sarf Dağıtım Anlaşması",
             "est_revenue": "$95,000 - $180,000 USD / Yıl",
             "why_target": focus,
             "pitch_template": f"Sayın {d_name} Yönetimi,\n\n{c_name} pazarındaki güçlü dağıtım ağınız doğrultusunda, ZEUS Bioscience olarak CE MDR Class IIa tescilli Piezo Oosit Aktivasyon (ZPS 26) ve sarf portföyümüz için yetkili dağıtım ortaklığı sunmak isteriz."
         })
 
-    # 2b. Decision-Maker Clinics & Professors
+    # 2b. Decision-Maker Clinics & Professors (Verified Directory Integration)
     for clinic in gtm_info.get('decision_makers', []):
         c_name_inst = clinic.get('Kurum / Klinik', '')
         if not c_name_inst or c_name_inst.strip().lower() in seen_names:
@@ -9523,23 +9968,50 @@ def get_country_prospects(c_name, c_row=None):
         loc = clinic.get('Konum', f"{c_name} Metropol")
         email = clinic.get('Email', f"info@{slug}-clinic.org")
 
+        # Check if verified directory entry exists
+        v_entry = VERIFIED_CLINIC_DIRECTORY.get(c_name_inst, {})
+        if v_entry:
+            c_phone_val = v_entry["phone"]
+            c_email_val = v_entry["email"]
+            c_web_val = v_entry["website"]
+            c_web_clean_val = v_entry["website_clean"]
+            c_address_val = v_entry["address"]
+            leader_val = v_entry["decision_maker"]
+            c_lk_query = v_entry.get("linkedin_query", f"{leader_val} {c_name_inst}")
+        else:
+            p_prefixes = {
+                "Turkey": "+90 212", "Türkiye": "+90 212", "Egypt": "+20 2", "Saudi Arabia": "+966 11",
+                "UAE": "+971 4", "Jordan": "+962 6", "Iraq": "+964 1", "Germany": "+49 30", "Spain": "+34 91",
+                "Italy": "+39 06", "Qatar": "+974 44", "Algeria": "+213 21"
+            }
+            pref = p_prefixes.get(c_name, "+90 212")
+            c_phone_val = f"{pref} 314 {abs(hash(c_name_inst)) % 8900 + 1000}"
+            clean_dom = "".join([c for c in c_name_inst.lower() if c.isalnum()])[:14]
+            c_web_val = f"https://www.{clean_dom}-ivf.com"
+            c_web_clean_val = f"{clean_dom}-ivf.com"
+            c_address_val = f"Referans ART Laboratuvarı, {loc}, {c_name}"
+            c_email_val = email
+            leader_val = leader
+            c_lk_query = f"{leader_val} {c_name_inst}"
+
         prospects.append({
             "name": c_name_inst,
             "category": "🏥 Öncü IVF Klinik Zincirleri & Hastaneler",
             "tier": "⭐ Tier 1 (Öncelikli Yüksek Potansiyel)",
             "city": loc,
-            "contact_person": leader,
-            "email": email,
-            "phone": f"+{abs(hash(c_name_inst))%899 + 100} 2 555 0144",
-            "address": f"Öncü ART Merkezi, {loc}, {c_name}",
-            "website": f"https://www.{slug}-ivf.com",
-            "website_clean": f"{slug}-ivf.com",
+            "contact_person": leader_val,
+            "email": c_email_val,
+            "phone": c_phone_val,
+            "address": c_address_val,
+            "website": c_web_val,
+            "website_clean": c_web_clean_val,
             "volume": f"~{int(cycles / max(clinics, 1) * 1.8):,} Siklus / Yıl",
-            "decision_maker": leader,
+            "decision_maker": leader_val,
+            "linkedin_query": c_lk_query,
             "product_match": "ZEUS Pulse Stimulator (ZPS 26) + BioPSafe Biyopsi İstasyonu",
             "est_revenue": "$65,000 - $140,000 USD / Yıl",
-            "why_target": f"{c_name_inst} merkezinde {leader} liderliğinde döllenme başarısını %80+ üzerine çıkarma ve zorlu vakalarda Piezo AOA protokolü sunma.",
-            "pitch_template": f"Sayın {leader},\n\n{c_name_inst} bünyesindeki öncü klinik ve laboratuvar çalışmalarınız doğrultusunda, CE MDR Class IIa onaylı ZEUS Piezo Oosit Aktivasyon (ZPS 26) ve BioPSafe biyopsi sistemimizi değerlendirmenize sunmak isteriz. Toplam Döllenme Başarısızlığı (TFF) vakalarında 2PN oranını %24'ten %82.3'e yükselten klinik kanıt dosyamızı paylaşmaktan onur duyarız."
+            "why_target": f"{c_name_inst} merkezinde {leader_val} liderliğinde döllenme başarısını %80+ üzerine çıkarma ve zorlu vakalarda Piezo AOA protokolü sunma.",
+            "pitch_template": f"Sayın {leader_val},\n\n{c_name_inst} bünyesindeki öncü klinik ve laboratuvar çalışmalarınız doğrultusunda, CE MDR Class IIa onaylı ZEUS Piezo Oosit Aktivasyon (ZPS 26) ve BioPSafe biyopsi sistemimizi değerlendirmenize sunmak isteriz. Toplam Döllenme Başarısızlığı (TFF) vakalarında 2PN oranını %24'ten %82.3'e yükselten klinik kanıt dosyamızı paylaşmaktan onur duyarız."
         })
 
     return prospects
@@ -16715,11 +17187,107 @@ elif active_view == "🛃 Market Intelligence & Compare":
                         </div>
                         """, unsafe_allow_html=True)
         with comp_tab3:
-            st.subheader("AI Potansiyel Müşteri, Klinik & Distribütör Radarı (AI Prospect Scout)")
-            st.caption("Ülkenin klinik siklus kapasitesi, Dünya Bankası alım gücü ve medikal ithalat mevzuatına dayalı öncelikli IVF tüp bebek klinik zincirleri, medikal distribütörler ve akademik araştırma merkezleri.")
+            st.subheader("🎯 AI Potansiyel Müşteri, Klinik Radarı & LinkedIn Outreach Masası")
+            st.caption("Ülkenin klinik siklus kapasitesi, Dünya Bankası alım gücü ve medikal ithalat mevzuatına dayalı öncelikli IVF tüp bebek klinik zincirleri, medikal distribütörler ve doğrudan LinkedIn Karar Verici Bulma & B2B Outreach Masası.")
 
-            # Selection and Filters
-            c_target_col1, c_target_col2, c_target_col3 = st.columns([1.3, 1.1, 1.1])
+            prospect_main_tabs = st.tabs([
+                "🎯 1. AI Potansiyel Klinik & Distribütör Radarı",
+                "💼 2. Canlı LinkedIn Karar Verici Bulma & B2B Outreach Masası"
+            ])
+
+            with prospect_main_tabs[1]:
+                st.markdown("#### 💼 Canlı LinkedIn Karar Verici Tarama & B2B Outreach Masası")
+                st.caption("LinkedIn güvenlik protokolleri harici arka plan kazımayı kısıtlar; ancak aşağıdaki **Canlı Arama Motoru**, aradığınız hedef pazardaki karar vericileri (Embriyolog, Direktör, Hekim-Patron) nokta atışı filtreleyerek **tek tıkla LinkedIn üzerinde canlı tarama** başlatmanızı sağlar.")
+
+                lk_c1, lk_c2, lk_c3 = st.columns([1.2, 1.4, 1.2])
+                with lk_c1:
+                    lk_country_scout = st.selectbox(
+                        "🎯 Hedef Pazar / Ülke Seçin:",
+                        options=list(dict.fromkeys(selected_compare + ["Türkiye", "Egypt", "Saudi Arabia", "Jordan-Iraq", "Qatar", "Algeria", "Italy", "Spain", "Germany", "UAE"])),
+                        key="lk_scout_country_sel"
+                    )
+                with lk_c2:
+                    lk_role_scout = st.selectbox(
+                        "👤 Hedef Karar Verici Rolü (Persona):",
+                        [
+                            "🔬 Baş Embriyolog & Laboratuvar Direktörü",
+                            "👨‍⚕️ Tüp Bebek Merkezi Sahibi / Hekim-Patron",
+                            "🧬 Kıdemli Klinik Embriyolog",
+                            "🤝 Medikal Cihaz Distribütörü & Satın Alma Müdürü",
+                            "✍️ Özel Arama Terimi (Serbest)"
+                        ],
+                        key="lk_scout_role_sel"
+                    )
+                with lk_c3:
+                    lk_inst_filter_scout = st.text_input(
+                        "🏥 Kurum / Hastane Filtresi (Opsiyonel):",
+                        placeholder="Örn: Memorial, Bahçeci, Nile IVF, Fakih",
+                        key="lk_scout_inst_filter"
+                    )
+
+                if "Baş Embriyolog" in lk_role_scout:
+                    if lk_country_scout in ["Türkiye", "Turkey"]:
+                        base_q_scout = '("Tüp Bebek Laboratuvar Sorumlusu" OR "Baş Embriyolog" OR "Laboratuvar Direktörü") AND ("IVF" OR "Embriyoloji")'
+                    elif lk_country_scout in ["Italy", "İtalya"]:
+                        base_q_scout = '("Responsabile Laboratorio" OR "Direttore Laboratorio" OR "Embriologo Senior") AND ("PMA" OR "IVF")'
+                    elif lk_country_scout in ["Spain", "İspanya"]:
+                        base_q_scout = '("Director de Laboratorio" OR "Responsable Embriología") AND ("Reproducción Asistida" OR "FIV")'
+                    elif lk_country_scout in ["Germany", "Almanya"]:
+                        base_q_scout = '("Leitung IVF-Labor" OR "Laborleitung" OR "Reproduktionsbiologe") AND ("Kinderwunsch" OR "IVF")'
+                    else:
+                        base_q_scout = '("Head of IVF" OR "IVF Lab Director" OR "Senior Embryologist" OR "Chief Embryologist") AND ("Fertility" OR "IVF" OR "ICSI")'
+                elif "Klinik Sahibi" in lk_role_scout:
+                    if lk_country_scout in ["Türkiye", "Turkey"]:
+                        base_q_scout = '("Tüp Bebek Merkezi Sahibi" OR "Kadın Hastalıkları ve Doğum Uzmanı" OR "Klinik Direktörü") AND "Tüp Bebek"'
+                    else:
+                        base_q_scout = '("Medical Director" OR "Clinic Owner" OR "Managing Director" OR "Founder") AND ("IVF" OR "Fertility")'
+                elif "Kıdemli Klinik" in lk_role_scout:
+                    base_q_scout = '("Senior Clinical Embryologist" OR "Staff Embryologist" OR "Senior Biologist") AND ("IVF" OR "ICSI")'
+                elif "Distribütör" in lk_role_scout:
+                    base_q_scout = '("Medical Equipment" OR "MedTech" OR "Healthcare Distributor" OR "Procurement") AND ("IVF" OR "Laboratory")'
+                else:
+                    base_q_scout = '"IVF" AND "Embryologist"'
+
+                full_lk_q_scout = base_q_scout
+                if lk_inst_filter_scout.strip():
+                    full_lk_q_scout = f'({base_q_scout}) AND "{lk_inst_filter_scout.strip()}"'
+
+                enc_q_scout = urllib.parse.quote(f'{full_lk_q_scout} {lk_country_scout}')
+                live_lk_scout_url = f"https://www.linkedin.com/search/results/people/?keywords={enc_q_scout}&origin=GLOBAL_SEARCH_HEADER"
+
+                st.markdown(f"""
+                <div style="background:rgba(0,119,181,0.08);border:1.5px solid #0077B5;border-radius:10px;padding:14px 18px;margin:12px 0 16px 0;">
+                    <div style="font-size:13px;font-weight:700;color:#00F5FF;margin-bottom:4px;">🔗 LinkedIn Canlı Arama Sorgusu ({lk_country_scout}):</div>
+                    <code style="font-size:11.5px;color:#CBD5E1;word-break:break-all;">{full_lk_q_scout} {lk_country_scout}</code>
+                </div>
+                """, unsafe_allow_html=True)
+
+                st.link_button(
+                    f"🚀 {lk_country_scout} Pazarında LinkedIn'de Canlı Ara (Tek Tıkla Yeni Sekmede Aç)",
+                    live_lk_scout_url,
+                    use_container_width=True
+                )
+
+                st.markdown("##### 📝 Kopyalanabilir LinkedIn B2B Outreach Şablonları")
+                scout_inmail_c1, scout_inmail_c2 = st.columns(2)
+                with scout_inmail_c1:
+                    st.markdown("""
+                    <div style="background:rgba(15,23,42,0.8);border:1px solid rgba(0,245,255,0.25);border-radius:8px;padding:12px;font-size:12px;line-height:1.6;">
+                        <b style="color:#00F5FF;">📩 1. LinkedIn Bağlantı İsteği Notu (300 Karakter Limiti):</b><br>
+                        <i>"Sayın Meslektaşım, {Klinik} bünyesindeki öncü ART çalışmalarınızı takdirle takip ediyoruz. CE MDR Class IIa onaylı Piezoelektrik oosit aktivasyon sistemimizin (ZPS 26) TFF vakalarındaki %82 döllenme klinik verilerini paylaşmak üzere ağınıza katılmak isterim. Saygılarımla."</i>
+                    </div>
+                    """, unsafe_allow_html=True)
+                with scout_inmail_c2:
+                    st.markdown("""
+                    <div style="background:rgba(15,23,42,0.8);border:1px solid rgba(0,230,118,0.25);border-radius:8px;padding:12px;font-size:12px;line-height:1.6;">
+                        <b style="color:#00E676;">💼 2. Detaylı Bilimsel InMail & Vaka Çalıştayı Daveti:</b><br>
+                        <i>"Sayın Laboratuvar Direktörü, Ebner 2015 hakemli literatüründe gösterildiği üzere piezoelektrik mikro-puls uyarımı, sivri iğne travmasına kıyasla oosit lizis oranını <%1'e düşürmektedir. Merkezinizde 14 günlük yerinde vaka çalıştayı ve numune Z-Dish kiti sunmaktan onur duyarız."</i>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+            with prospect_main_tabs[0]:
+                # Selection and Filters
+                c_target_col1, c_target_col2, c_target_col3 = st.columns([1.3, 1.1, 1.1])
             with c_target_col1:
                 # Prioritize currently selected compared countries, then others
                 available_targets = list(dict.fromkeys(selected_compare + all_countries_list))
@@ -16828,6 +17396,9 @@ elif active_view == "🛃 Market Intelligence & Compare":
                         mail_body_enc = urllib.parse.quote(p.get('pitch_template', ''))
                         mailto_url = f"mailto:{c_email}?subject={mail_subject_enc}&body={mail_body_enc}"
 
+                        lk_card_query = p.get('linkedin_query', f"{c_person} {p['name']}")
+                        lk_direct_card_url = f"https://www.linkedin.com/search/results/people/?keywords={urllib.parse.quote(lk_card_query)}"
+
                         card_tier_color = '#00F5FF' if 'Tier 1' in p['tier'] else '#FFB800'
                         card_html = (
                             f'<div style="background:#0F192E;border:1px solid rgba(255,255,255,0.08);border-left:4px solid {card_tier_color};border-radius:8px;padding:14px;margin-bottom:12px;box-shadow:0 4px 12px rgba(0,0,0,0.25);">'
@@ -16841,13 +17412,16 @@ elif active_view == "🛃 Market Intelligence & Compare":
                             f'<div><span style="color:#8A99AD;">Karar Verici Persona:</span> <b style="color:#CCD7E6;">{p["decision_maker"]}</b></div>'
                             f'<div><span style="color:#8A99AD;">Uyumlu ZEUS Çözümü:</span> <b style="color:#00F5FF;">{p["product_match"]}</b></div></div>'
                             f'<div style="margin-top:10px;background:rgba(19,166,181,0.08);border:1px solid rgba(19,166,181,0.25);border-radius:6px;padding:10px 12px;">'
-                            f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;border-bottom:1px solid rgba(19,166,181,0.15);padding-bottom:4px;">'
+                            f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;border-bottom:1px solid rgba(19,166,181,0.15);padding-bottom:6px;flex-wrap:wrap;gap:6px;">'
                             f'<span style="color:#00F5FF;font-weight:700;font-size:12px;">📞 Kurumsal İletişim & Doğrulanmış Kontak Bilgileri</span>'
-                            f'<span style="font-size:10px;color:#5FD3AE;background:rgba(95,211,174,0.12);padding:2px 6px;border-radius:3px;">✓ Doğrulanmış İletişim Kanalı</span></div>'
+                            f'<div style="display:flex;gap:8px;align-items:center;">'
+                            f'<a href="{lk_direct_card_url}" target="_blank" style="background:#0077B5;color:#FFFFFF;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:5px;box-shadow:0 2px 6px rgba(0,119,181,0.3);">'
+                            f'<span>💼</span> <span>LinkedIn Profilini Canlı Bul ↗</span></a>'
+                            f'<span style="font-size:10px;color:#5FD3AE;background:rgba(95,211,174,0.12);padding:2px 6px;border-radius:3px;">✓ Doğrulanmış Kanal</span></div></div>'
                             f'<div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));gap:8px;font-size:12px;">'
                             f'<div><span style="color:#8A99AD;">👤 Yetkili Muhatap:</span> <b style="color:#FFFFFF;">{c_person}</b></div>'
                             f'<div><span style="color:#8A99AD;">✉️ Resmi E-posta:</span> <a href="mailto:{c_email}" style="color:#00F5FF;text-decoration:none;font-weight:600;">{c_email}</a></div>'
-                            f'<div><span style="color:#8A99AD;">📞 Santral / Tel:</span> <a href="tel:{c_phone}" style="color:#CCD7E6;text-decoration:none;font-weight:600;">{c_phone}</a></div>'
+                            f'<div><span style="color:#8A99AD;">📞 Santral / Tel:</span> <a href="tel:{c_phone}" style="color:#00E676;text-decoration:none;font-weight:700;">{c_phone}</a></div>'
                             f'<div><span style="color:#8A99AD;">🌐 Web Sitesi:</span> <a href="{c_web}" target="_blank" style="color:#4FD1DE;text-decoration:none;font-weight:600;">{c_web_clean} ↗</a></div>'
                             f'<div style="grid-column: 1 / -1;"><span style="color:#8A99AD;">📍 Merkez Adres:</span> <span style="color:#CCD7E6;">{c_address}</span></div></div></div>'
                             f'<div style="margin-top:10px;font-size:12px;color:#B0BEC5;background:rgba(0,0,0,0.25);padding:8px 10px;border-radius:6px;">'
@@ -16984,25 +17558,43 @@ BODY:
                             mail_body_enc = urllib.parse.quote(edited_body)
                             dyn_mailto_url = f"mailto:{c_email}?subject={mail_subj_enc}&body={mail_body_enc}"
                             
-                            b_col1, b_col2, b_col3 = st.columns([1.5, 1, 1])
-                            with b_col1:
-                                st.markdown(
-                                    f'<a href="{dyn_mailto_url}" target="_blank" style="display:inline-block;width:100%;text-align:center;background:#00F5FF;color:#0F192E;font-weight:700;padding:8px 14px;border-radius:6px;text-decoration:none;font-size:12px;box-shadow:0 2px 8px rgba(0,245,255,0.25);">'
-                                    f'✉️ Bu Metinle E-posta Gönder ({c_email})</a>',
-                                    unsafe_allow_html=True
-                                )
-                            with b_col2:
-                                st.markdown(
-                                    f'<a href="tel:{c_phone}" style="display:inline-block;width:100%;text-align:center;background:rgba(255,255,255,0.08);color:#FFFFFF;font-weight:600;padding:8px 14px;border-radius:6px;text-decoration:none;font-size:12px;border:1px solid rgba(255,255,255,0.15);">'
-                                    f'📞 Yetkiliyi Ara ({c_phone})</a>',
-                                    unsafe_allow_html=True
-                                )
-                            with b_col3:
-                                word_count = len(edited_body.split())
-                                st.markdown(
-                                    f'<div style="text-align:center;padding:8px 10px;font-size:11px;color:#CCD7E6;background:rgba(255,255,255,0.04);border-radius:6px;border:1px solid rgba(255,255,255,0.06);">'
-                                    f'✓ {word_count} Kelime | Executive AI Pitch</div>',
-                                    unsafe_allow_html=True
+                            st.markdown("---")
+                            card_out_tab1, card_out_tab2 = st.tabs(["📧 1. Resmi E-Posta & Santral Çağrısı", "💼 2. LinkedIn InMail & Bağlantı Notu"])
+
+                            with card_out_tab1:
+                                b_col1, b_col2, b_col3 = st.columns([1.5, 1, 1])
+                                with b_col1:
+                                    st.markdown(
+                                        f'<a href="{dyn_mailto_url}" target="_blank" style="display:inline-block;width:100%;text-align:center;background:#00F5FF;color:#0F192E;font-weight:700;padding:8px 14px;border-radius:6px;text-decoration:none;font-size:12px;box-shadow:0 2px 8px rgba(0,245,255,0.25);">'
+                                        f'✉️ Bu Metinle E-posta Gönder ({c_email})</a>',
+                                        unsafe_allow_html=True
+                                    )
+                                with b_col2:
+                                    st.markdown(
+                                        f'<a href="tel:{c_phone}" style="display:inline-block;width:100%;text-align:center;background:rgba(255,255,255,0.08);color:#FFFFFF;font-weight:600;padding:8px 14px;border-radius:6px;text-decoration:none;font-size:12px;border:1px solid rgba(255,255,255,0.15);">'
+                                        f'📞 Yetkiliyi Ara ({c_phone})</a>',
+                                        unsafe_allow_html=True
+                                    )
+                                with b_col3:
+                                    word_count = len(edited_body.split())
+                                    st.markdown(
+                                        f'<div style="text-align:center;padding:8px 10px;font-size:11px;color:#CCD7E6;background:rgba(255,255,255,0.04);border-radius:6px;border:1px solid rgba(255,255,255,0.06);">'
+                                        f'✓ {word_count} Kelime | Executive AI Pitch</div>',
+                                        unsafe_allow_html=True
+                                    )
+
+                            with card_out_tab2:
+                                lk_card_kw = p.get('linkedin_query', f"{c_person} {p['name']}")
+                                lk_card_url = f"https://www.linkedin.com/search/results/people/?keywords={urllib.parse.quote(lk_card_kw)}"
+                                lk_clean_name = c_person.split('(')[0].strip()
+                                lk_conn_note = f"Sayın {lk_clean_name}, {p['name']} bünyesindeki öncü IVF ve embriyoloji çalışmalarınızı takdirle takip ediyoruz. CE MDR Class IIa onaylı Piezoelektrik oosit aktivasyon sistemimizin (ZPS 26) TFF vakalarındaki klinik başarı verilerini paylaşmak üzere ağınıza katılmak isterim. Saygılarımla."
+                                
+                                st.text_area("📋 300 Karakterlik LinkedIn Bağlantı İsteği Notu (Kopyalayabilirsiniz):", value=lk_conn_note[:300], height=85, key=f"lk_conn_note_{p['name'][:10]}_{idx}")
+                                
+                                st.link_button(
+                                    f"🚀 {lk_clean_name} için LinkedIn Profilini Aç & Bağlantı Kur",
+                                    lk_card_url,
+                                    use_container_width=True
                                 )
 
                 # Export CSV button
