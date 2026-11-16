@@ -6997,9 +6997,9 @@ with st.sidebar:
         },
         "⚖️ Çok Boyutlu Karşılaştırma Masası (Compare)": {
             "title": "Kıyaslama & Skor Kartı",
-            "badge": "22 Metrik",
+            "badge": "22 Metrik & Rakip",
             "color": "#38BDF8",
-            "params": ["22 Seçili Makro/Klinik Metrik", "Pazar Fırsat Skoru (0-100)", "Ticari Risk & Stabilite", "Klinik Başına Yıllık Siklus", "Görsel Kıyaslama Grafikleri"]
+            "params": ["22 Seçili Makro/Klinik Metrik", "ZEUS vs Rakipler (Eppendorf, RI Witness, Vitrolife)", "Satış Kazanma Stratejileri", "Tavsiye Edilen Sözleşme Maddeleri", "Yönetici Karar Not Defteri"]
         },
         "🧮 Fiyatlandırma, İskonto & Marjlar (Pricing)": {
             "title": "Fiyat & Kârlılık",
@@ -7023,7 +7023,7 @@ with st.sidebar:
             "title": "Yönetim Kurulu Karar Merkezi",
             "badge": "5 Kişilik Heyet",
             "color": "#EC4899",
-            "params": ["CEO, CFO, CSO, Satış, Embriyolog & QA Konsensüsü", "Stratejik Uyarı & Eylem Planları", "Jeopolitik Kriz & Savaş Masası", "Canlı Oylama & Karar Tutanağı İcra Onayı"]
+            "params": ["Küresel Rakip Analizi & Pazar Farkları", "Sözleşme Şartnamesi & Bağlayıcı Hükümler", "Yönetici Karar Not Defteri", "CEO, CFO, CSO, Satış & Embriyolog Konsensüsü", "Jeopolitik Kriz & Savaş Masası"]
         },
         "📱 MedTech Sosyal Medya & Sağlık Mevzuatı": {
             "title": "Sosyal Medya & Tanıtım",
@@ -9893,6 +9893,568 @@ VERIFIED_CLINIC_DIRECTORY = {
         "linkedin_query": "Pankaj Shrivastav Conceive Fertility Hospital UAE"
     }
 }
+
+
+
+# ==============================================================================
+# ZEUS COMPETITIVE INTELLIGENCE & DEAL DESK (RAKİP FİRMALAR & SÖZLEŞME STRATEJİSİ)
+# ==============================================================================
+def get_default_competitor_decision_notes():
+    return [
+        {
+            "id": "NOTE-TR-01",
+            "timestamp": "2026-11-16 11:20",
+            "country": "Türkiye",
+            "clinic_or_dist": "Memorial Şişli & Tavmergen Tüp Bebek",
+            "target_competitor": "Eppendorf SE & Prime Tech (PiezoXpert)",
+            "our_product": "ZEUS Pulse Stimulator (ZPS 26)",
+            "selected_strategy": "🔬 Klinik Kanıt & Hakemli Yayın Kalkanı (Baltacı / Ebner sub-%1.2 lizis)",
+            "contract_clauses": [
+                "Asgari Yıllık Sarf Satın Alma Taahhüdü (60 Kutu Z-Dish)",
+                "Kesinlikle Ücretsiz Demo Yok - 14 Günlük Yerinde Vaka Çalıştayı",
+                "Fiyat Koruma & Kur Riski Tamponu ($ USD Endeksli)"
+            ],
+            "decision_note": "Memorial Şişli'de Prof. Dr. Semra Kahraman heyetine Eppendorf'un %4-8 mekanik hasar oranına karşı Baltacı et al. sub-%1.2 lizis ve TFF %82.3 döllenme verisi sunulacak. Kliniğe ücretsiz demo yerine 14 günlük yerinde vaka çalıştayı ve 25 kutuluk başlangıç paketi faturalandırılacak.",
+            "author": "Yönetici Heyeti (CSO & Ticari Direktör)",
+            "status": "İcrada & Görüşme Aşamasında"
+        },
+        {
+            "id": "NOTE-ES-01",
+            "timestamp": "2026-11-16 10:45",
+            "country": "Spain",
+            "clinic_or_dist": "IVI-RMA Global & Palex Medical",
+            "target_competitor": "CooperSurgical / RI (RI Witness RFID)",
+            "our_product": "ZEUS Mismatch Blocker (ZMB-7T)",
+            "selected_strategy": "💼 OPEX Kurtarma Stratejisi (RFID Siklus Başı $30 vs ZEUS $7.5 - %75 Tasarruf)",
+            "contract_clauses": [
+                "Yıllık Asgari 500 Siklus Kontör (Cycle Coin) Çekiş Şartı",
+                "Münhasırlık ve Performans İhlali Şartı (6 Ayda Asgari Kota)",
+                "Biyolojik Güvenlik & Sıfır EMF Radyasyonu Uyumluluk Belgesi"
+            ],
+            "decision_note": "IVI-RMA Global'de yıllık 45.000 siklusun oluşturduğu devasa RFID çip masrafı ($1.35M/yıl) gösterilecek. ZEUS Mismatch Blocker ile yıllık %75 OPEX tasarrufu sağlanabileceği CFO ve Bilimsel Direktöre raporlandı. Palex Medical distribütörlük sözleşmesine 6 ayda en az 2 filo paketi kotası bağlandı.",
+            "author": "CFO & Uluslararası İş Geliştirme",
+            "status": "Yönetim Kurulu Onayında"
+        },
+        {
+            "id": "NOTE-EG-01",
+            "timestamp": "2026-11-15 16:30",
+            "country": "Egypt",
+            "clinic_or_dist": "TechnoPharm Egypt & The Egyptian IVF-ET Center",
+            "target_competitor": "Hamilton Thorne (Lykos Lazer) & Vitrolife",
+            "our_product": "ZEUS BioPSafe (ZBS26 Black-Box Biyopsi) + ZPS 26",
+            "selected_strategy": "🚀 $85,000 USD Turnkey Filo Paketi & Ezici ROI (8.2 Ay Amortisman)",
+            "contract_clauses": [
+                "60-Günlük Tesis İçi Konsinye Depolama & Banka Teminatı",
+                "Asgari Yıllık Sarf Satın Alma Taahhüdü (75 Kutu Sarf)",
+                "Tescil Belgelerinin Münhasırlığı ($100K Cezai Şart)"
+            ],
+            "decision_note": "Kahire pazarında hekim-patronlara bireysel cihaz yerine $85K'lık komple anahtar teslim filo paketi teklif edilecek. TechnoPharm'a EDA tescil dosyası teslim edilirken sözleşmeye münhasırlık cezai şartı ($100K) eklendi.",
+            "author": "CEO & Bölge Satış Direktörü",
+            "status": "Sözleşme Taslağı Hazırlandı"
+        }
+    ]
+
+ZEUS_COMPETITIVE_INTELLIGENCE_2026 = {
+    "eppendorf": {
+        "id": "eppendorf",
+        "name": "Eppendorf SE (Almanya) & Prime Tech Ltd. (Japonya)",
+        "logo_text": "🇩🇪 🇯🇵 Eppendorf / Prime Tech",
+        "category": "Piezo ICSI & Hücre Mikroenjeksiyonu",
+        "market_share": "Küresel Piezo Pazarının ~%62'si (Yerleşik İki Dev)",
+        "what_they_sell": [
+            "Eppendorf PiezoXpert ($38,000 - $48,000 USD)",
+            "Prime Tech PMM-150FU / PMM-180FU ($42,000 - $55,000 USD)",
+            "TransferMan 4r Mikromanipülatör ($28,000 USD)",
+            "CellTram 4r Air / Oil Mikroenjektör ($9,500 USD)",
+            "Piezo Delme İğneleri & Rutin Sarflar ($35 - $60 USD/adet)"
+        ],
+        "hardware_price_range": "$38,000 – $55,000 USD (Sadece Donanım)",
+        "consumable_price_range": "$35 – $60 USD / İğne veya Sarf",
+        "matched_zeus_device": "ZEUS Pulse Stimulator (ZPS 26) + Z-Dish Piezo Array",
+        "proximity_pct": 82,
+        "proximity_label": "%82 Benzerlik (Piezo Darbe Motoru Eşdeğer, Protokol Farklı)",
+        "technical_gap_analysis": [
+            "• Regülasyon Farkı: Eppendorf birçok ülkede 'RUO' (Yalnızca Araştırma Amaçlı) kalmaktadır; ZEUS ZPS 26 ise CE MDR 2017/745 Class IIa tam klinik tescillidir.",
+            "• Hücresel Bütünlük & Lizis: Eppendorf sert mekanik rezonans uygular (%4-8 oosit lizis riski); ZEUS patentli çok kademeli mikrosaniye elektrik darbe modülasyonu ile lizisi <%1.2'ye düşürür.",
+            "• Eşzamanlı Kapasite: Prime Tech ve Eppendorf her oositi tek tek manuel iğneyle deler (1 saat sürer); ZEUS Z-Dish Array ile tek seansta 16 oosit eşzamanlı aktive edilir (12 dakika).",
+            "• Klinik Kanıt: Rakipler yalnızca broşür ve teknik tork sunar; ZEUS Baltacı et al. (RBM Online) ve Tanaka ROSI hakemli makaleleriyle Toplam Döllenme Başarısızlığı (TFF) vakalarında 2PN oranını %24.6'dan %82.3'e çıkarır.",
+            "• Fiyatlandırma Uçurumu: Eppendorf/Prime Tech donanımı $45K+ iken, ZEUS standart distribütör $8,500 USD taban fiyatıyla 4 kat daha hızlı ROI sunar."
+        ],
+        "winning_sales_strategy": [
+            "1. 'Bilimsel Kanıt Masası': Baş embriyolog ve laboratuvar direktörünün önüne Baltacı et al. (p<0.001) ve Ebner et al. literatürünü koyarak, donanım değil 'gebelik garantileyen klinik protokol' sattığımızı kanıtlayın.",
+            "2. 'Sıfır Lizis Vurgusu': Zorlu ve az sayıda oositi olan yaşlı anne adaylarında lizisin tolere edilemeyeceğini, ZEUS'un <%1.2 lizis oranıyla her yumurtayı kurtardığını vurgulayın.",
+            "3. 'Kesinlikle Demo Yok - 14 Günlük Vaka Çalıştayı': Ücretsiz deneme vermek yerine, en zorlu 15 TFF vakasında yerinde 14 günlük vaka çalıştayı ve 25 kutuluk Z-Dish kitini paket olarak satın."
+        ],
+        "recommended_contract_clauses": [
+            "• Asgari Yıllık Sarf Satın Alma Taahhüdü: Kurulu cihaz başına yılda en az 60 kutu Z-Dish (Electro Dish) çekiş şartı. Aksi takdirde garanti ve aplikatör desteği askıya alınır.",
+            "• Donanım İndirimi Karşılığı 2 Yıllık Sözleşme: $8,500 USD tabanından daha fazla indirim talep edilirse (%5-10), sözleşme süresi 2 yıla ve yıllık sarf taahhüdü 80 kutuya çıkarılmalıdır."
+        ]
+    },
+    "coopersurgical_ri": {
+        "id": "coopersurgical_ri",
+        "name": "CooperSurgical / Research Instruments (ABD / İngiltere)",
+        "logo_text": "🇺🇸 🇬🇧 CooperSurgical / RI Witness",
+        "category": "Elektronik Numune Şahitliği (Witnessing) & İnkübasyon",
+        "market_share": "Küresel IVF Elektronik Şahitlik Pazarının ~%70'i",
+        "what_they_sell": [
+            "RI Witness RFID Elektronik Şahitlik Sistemi ($75,000 - $140,000 USD kurulum)",
+            "Siklus Başı RFID Çip Sarf Malzemesi ($25 - $40 USD / Siklus)",
+            "Integra 3 Mikromanipülatör ($35,000 USD)",
+            "K-Systems G210 / G185 Çok Odacıklı İnkübatörler ($30,000 - $55,000 USD)",
+            "RI Mikro Pipetler ($25 - $45 USD / Kutu)"
+        ],
+        "hardware_price_range": "$75,000 – $140,000 USD (Kurulum & Donanım)",
+        "consumable_price_range": "$25 – $40 USD / Siklus Başı RFID Çip Masrafı",
+        "matched_zeus_device": "ZEUS Mismatch Blocker (ZMB-7T) — 7 Terminal Şahitlik",
+        "proximity_pct": 88,
+        "proximity_label": "%88 Fonksiyonel Benzerlik (İkisi de Karışmayı Önler)",
+        "technical_gap_analysis": [
+            "• Sarf Maliyeti & OPEX: RI Witness her dish ve tüpün altına pahalı RFID etiket yapıştırılmasını zorunlu kılar (siklus başı $30 masraf); ZEUS Mismatch Blocker sınırsız ücretsiz 2D barkod ve mikro-kontör modeliyle siklus maliyetini $7.5 USD'ye (%75 tasarruf) indirir.",
+            "• Biyolojik Radyasyon: RI Witness gametlerin hemen altında yüksek frekanslı RF alanı oluşturur; ZEUS %100 optik barkod okuyucuyla sıfır EMF radyasyonu ile gamet sağlığını korur.",
+            "• Bağımsız 7 Terminal Koruması: OPU, Androloji, ICSI, Biyopsi, Kriyodepolama, Çözme, Transfer noktalarının her birinde bağımsız doğrulama.",
+            "• Donanım Kilidi Yok: Kliniği tek bir tüp bebek kabinine hapsetmez, her türlü steril kabin ve masaüstü inkübatörle dakikalar içinde entegre olur."
+        ],
+        "winning_sales_strategy": [
+            "1. 'OPEX Kurtarma Tablosu': Yıllık 1.000 siklus yapan bir kliniğin RI Witness'a yılda $30,000 USD çip parası ödediğini, ZEUS ile bu masrafın $7,500'e inip kliniğe yılda $22,500 net nakit kalacağını CFO'ya sunun.",
+            "2. 'Sıfır EMF Güvenliği': Baş embriyologlara gametlerin altına yerleştirilen radyo antenleri yerine %100 biyogüvenli optik şahitliğin etik ve klinik üstünlüğünü işleyin."
+        ],
+        "recommended_contract_clauses": [
+            "• Yıllık Asgari 500 Kontör (Cycle Coin) Çekiş Garantisi: Terminaller indirimli verilirken, her yıl en az 500 siklusluk kontör alımı zorunlu tutulmalıdır.",
+            "• Yazılım Lisansı ve Cloud-Audit Yedekleme Şartı: Denetim izi loglarının yasal saklama süresi boyunca (10 yıl) kesintisiz korunması karşılığı yıllık destek bedeli."
+        ]
+    },
+    "hamilton_vitrolife": {
+        "id": "hamilton_vitrolife",
+        "name": "Hamilton Thorne (ABD) & Vitrolife (İsveç)",
+        "logo_text": "🇺🇸 🇸🇪 Hamilton Thorne / Vitrolife",
+        "category": "Lazer Biyopsi, Time-Lapse & Kültür Medyaları",
+        "market_share": "Biyopsi Lazerlerinde ~%55, Time-Lapse'de ~%60 Pazar Payı",
+        "what_they_sell": [
+            "Hamilton Thorne Lykos / Zilos-tk Klinik Lazer ($55,000 - $85,000 USD)",
+            "EmbryoScope / EmbryoScope+ Time-Lapse ($110,000 - $190,000 USD)",
+            "CASA Sperm Analiz Sistemleri ($28,000 - $45,000 USD)",
+            "G-Series IVF Kültür Medyaları ($80 - $220 USD / Şişe)",
+            "Oosight Polarize Işık Mili Görüntüleme ($35,000 USD)"
+        ],
+        "hardware_price_range": "$55,000 – $190,000 USD (Lazer & Time-Lapse)",
+        "consumable_price_range": "$80 – $220 USD / Kültür Medyası & Slayt",
+        "matched_zeus_device": "ZEUS BioPSafe (ZBS26 / ZBB25-001) Black-Box Biyopsi İstasyonu",
+        "proximity_pct": 78,
+        "proximity_label": "%78 Tamamlayıcı ve Biyopsi Platformu Yakınlığı",
+        "technical_gap_analysis": [
+            "• 13 Kızılötesi Sensör Güvencesi: Rakiplerin lazerinde PCR tüpü kontrolü yoktur, tüp karıştırma riski embriyoloğun inisiyatifindedir; BioPSafe 13 IR sensörüyle yanlış tüpe örnek konulmasını donanımsal olarak kilitler.",
+            "• Çift Tabletli Dijital Denetim: Mikroskop altında çalışırken embriyoloğun ellerini serbest bırakan ayak pedalları ve anlık kamera teyidi.",
+            "• Fiyat Avantajı: Rakip lazerin 1/5 fiyatına ($12,500 USD), mevcut tüm lazer ve mikromanipülatörlerle tak-çalıştır tam uyum."
+        ],
+        "winning_sales_strategy": [
+            "1. 'Lazerle Rekabet Etmeyin, Tamamlayın': Kliniğe lazerini değiştirmesini söylemeyin; 'Lazeriniz mükemmel kesiyor ama embriyo parçasını PCR tüpüne koyarken insan hatası riski sürüyor, BioPSafe ile biyopsi sürecinizi %100 sigortalayın' deyin.",
+            "2. 'Genetik Hukuki Risk Kalkanı': PGT-A ve PGT-M biyopsilerinde yanlış tüp yüzünden açılan milyon dolarlık tazminat davalarını hatırlatarak BioPSafe'in bir zorunluluk olduğunu satın."
+        ],
+        "recommended_contract_clauses": [
+            "• Biyopsi Şerit ve Sarf Kiti Münhasırlığı: Cihaz alan kliniklerin biyopsi adaptör ve şeritlerini sadece ZEUS yetkili kanallarından tedarik etmesi şartı.",
+            "• Akreditasyon Uyum Protokolü: CAP ve ISO 15189 denetimlerinde kullanılacak dijital log export lisansının yıllık sarf alımına bağlanması."
+        ]
+    },
+    "cryobio_kitazato": {
+        "id": "cryobio_kitazato",
+        "name": "Cryo Bio System (Fransa) & Kitazato (Japonya)",
+        "logo_text": "🇫🇷 🇯🇵 Cryo Bio System / Kitazato",
+        "category": "Kriyobiyoloji, Vitrifikasyon & Sıvı Azot Depolama",
+        "market_share": "Küresel IVF Kriyoprezervasyon Pazarının ~%65'i",
+        "what_they_sell": [
+            "MVE / Chart Sıvı Azot Tankları ($35,000 - $60,000 USD / Tank)",
+            "Kitazato Cryotop Vitrifikasyon Kitleri ($45 - $75 USD / Kit)",
+            "CBS High Security Straws (Kapalı Sistem Payetler - $60 USD / Paket)",
+            "Kriyodepolama Gobletleri & Alüminyum Caneler ($15 - $30 USD / Adet)"
+        ],
+        "hardware_price_range": "$35,000 – $60,000 USD (Azot Tankı & Kriyomimari)",
+        "consumable_price_range": "$45 – $75 USD / Vitrifikasyon Kiti",
+        "matched_zeus_device": "ZEUS Smart Cryo-Tools (ZCT25) — 4X Tank Kapasite Paketi",
+        "proximity_pct": 85,
+        "proximity_label": "%85 Fonksiyonel Eşdeğerlik (Depolama & Kriyomimari)",
+        "technical_gap_analysis": [
+            "• Net 4X Kapasite Artışı: Standart CBS caneleri cane başına 10 payet taşırken, ZEUS Smart Cryo-Tools cane başına 40 payet taşır; mevcut tank kapasitesini 4 katına çıkarır.",
+            "• $50,000 Yeni Tank Tasarrufu: Kliniklerin yeni tank almasını, ilave sıvı azot tüketmesini ve laboratuvar zeminini genişletmesini gereksiz kılar.",
+            "• Termal Şok Koruması: Sıvı azot rezervuarlı patentli sekizgen goblet yapısı, payetler dışarı çekildiğinde sıcaklık artışını önler ve >%95 çözme canlılığı garantiler."
+        ],
+        "winning_sales_strategy": [
+            "1. 'Metrekare & Tank Tasarrufu Argümanı': Doluluk oranı %80'e ulaşmış kliniklere 'Yeni tank alıp laboratuvarı büyütmeyin, mevcut tankınıza ZEUS 4X kiti takarak kapasitenizi anında 4 katına çıkarın' teklifini yapın.",
+            "2. 'Sıvı Azot OPEX Azaltımı': 4 ayrı tankı soğutmak yerine 1 tankta 4 kat depolama ile kliniğin yıllık sıvı azot tüketimini %60 azaltacağını kanıtlayın."
+        ],
+        "recommended_contract_clauses": [
+            "• 4X Tank Dönüşüm Kiti Satışında Yıllık 100 Kutu Payet Alım Şartı.",
+            "• Tank Mülkiyeti & Canlılık Garantisi: Şartlara uyulmadığı takdirde termal şok kalkanı garantisinin sonlanması."
+        ]
+    }
+}
+
+def render_competitor_intelligence_and_deal_desk(selected_markets=None, active_source="compare"):
+    """
+    Renders the comprehensive Competitor Intelligence, Technical Proximity,
+    Winning Sales Strategies, Recommended Contract Clauses, and Executive Decision Notes Desk.
+    """
+    if 'executive_competitor_decision_notes' not in st.session_state:
+        st.session_state['executive_competitor_decision_notes'] = get_default_competitor_decision_notes()
+
+    target_markets_list = selected_markets if (selected_markets and len(selected_markets) > 0) else ["Türkiye", "Spain", "Germany", "Egypt", "UAE", "Saudi Arabia", "Jordan", "Iraq", "Qatar", "Algeria", "Italy"]
+
+    st.markdown("### ⚔️ ZEUS vs. Küresel Rakipler, Fark Analizi & Sözleşme Stratejisi")
+    st.caption("Uluslararası tüp bebek (IVF/ART) pazarındaki dev rakiplerin ne sattığı, ZEUS cihazlarıyla donanımsal/klinik yakınlığı, sahada rakipleri eleme ve daha çok satma taktikleri, distribütör/hastane sözleşme hükümleri ve Stratejik Karar Merkezi ile entegre Yönetici Karar Not Defteri.")
+
+    # High-level KPI Row
+    ck1, ck2, ck3, ck4 = st.columns(4)
+    with ck1:
+        st.markdown("""
+        <div style="background:#0F192E;border:1px solid rgba(0,245,255,0.3);border-radius:8px;padding:12px;text-align:center;">
+            <div style="font-size:11px;color:#8FA3C0;font-weight:600;">🎯 İNCELENEN RAKİPLER</div>
+            <div style="font-size:20px;font-weight:700;color:#00F5FF;margin:4px 0;">5 MedTech Devi</div>
+            <div style="font-size:10.5px;color:#5FD3AE;">Eppendorf, RI, HT, Vitrolife, CBS</div>
+        </div>
+        """, unsafe_allow_html=True)
+    with ck2:
+        st.markdown("""
+        <div style="background:#0F192E;border:1px solid rgba(0,230,118,0.3);border-radius:8px;padding:12px;text-align:center;">
+            <div style="font-size:11px;color:#8FA3C0;font-weight:600;">💰 ZEUS MALİYET AVANTAJI</div>
+            <div style="font-size:20px;font-weight:700;color:#00E676;margin:4px 0;">%65 - %75 Tasarruf</div>
+            <div style="font-size:10.5px;color:#5FD3AE;">Düşük CAPEX & $7.5 OPEX / Siklus</div>
+        </div>
+        """, unsafe_allow_html=True)
+    with ck3:
+        st.markdown("""
+        <div style="background:#0F192E;border:1px solid rgba(255,184,0,0.3);border-radius:8px;padding:12px;text-align:center;">
+            <div style="font-size:11px;color:#8FA3C0;font-weight:600;">🔬 KLİNİK KANIT ÜSTÜNLÜĞÜ</div>
+            <div style="font-size:20px;font-weight:700;color:#FFB800;margin:4px 0;">%82.3 Fertilizasyon</div>
+            <div style="font-size:10.5px;color:#FFD54F;">Baltacı / Ebner (TFF Vakalarında +%57.7)</div>
+        </div>
+        """, unsafe_allow_html=True)
+    with ck4:
+        st.markdown("""
+        <div style="background:#0F192E;border:1px solid rgba(168,85,247,0.3);border-radius:8px;padding:12px;text-align:center;">
+            <div style="font-size:11px;color:#8FA3C0;font-weight:600;">🛡️ DONANIMSAL PATENT FARKI</div>
+            <div style="font-size:20px;font-weight:700;color:#C084FC;margin:4px 0;">13 IR Sensör & 4X Krio</div>
+            <div style="font-size:10.5px;color:#E9D5FF;">Sıfır Hata & Cane Başına 40 Payet</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    c_desk_tab1, c_desk_tab2, c_desk_tab3, c_desk_tab4 = st.tabs([
+        "🏢 1. Rakipler Ne Satıyor & Bizim Cihazlarla Yakınlık Analizi",
+        "🎯 2. Sahada Rakipleri Eleme & Satış Kazanma Stratejileri",
+        "📜 3. Tavsiye Edilen Distribütör & Klinik Sözleşme Hükümleri",
+        "✍️ 4. Yönetici Karar Not Defteri & Karar Masası"
+    ])
+
+    # --------------------------------------------------------------------------
+    # SUB-TAB 1: RAKİPLER NE SATIYOR & YAKINLIK ANALİZİ
+    # --------------------------------------------------------------------------
+    with c_desk_tab1:
+        st.markdown("#### 🏢 Global Rakiplerin Ürünleri, Fiyatları ve ZEUS Donanımlarıyla Yakınlık Kıyaslaması")
+        st.caption("Aşağıdaki matris, IVF sektöründe pazar lideri konumundaki üreticilerin ürün portföyünü, fiyat aralıklarını, ZEUS cihazlarıyla olan teknolojik yakınlığını ve ZEUS'un ezici klinik/donanımsal üstünlüklerini ortaya koyar.")
+
+        # Comparison Scorecard Table
+        comp_table_html = """
+        <div style="overflow-x:auto;margin-bottom:20px;">
+        <table style="width:100%;border-collapse:collapse;font-size:12px;color:#CCD7E6;background:#0F192E;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);">
+            <thead>
+                <tr style="background:#16243E;color:#00F5FF;border-bottom:2px solid rgba(0,245,255,0.3);text-align:left;">
+                    <th style="padding:10px 12px;">Rakip Üretici & Menşei</th>
+                    <th style="padding:10px 12px;">Ne Satıyor? (Ürün & Fiyat)</th>
+                    <th style="padding:10px 12px;">Eşleşen ZEUS Çözümü</th>
+                    <th style="padding:10px 12px;">Teknolojik Yakınlık</th>
+                    <th style="padding:10px 12px;">ZEUS'un Ezici Üstünlüğü</th>
+                    <th style="padding:10px 12px;">Kliniğe Net Katma Değer</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                    <td style="padding:10px 12px;"><b style="color:#FFFFFF;">🇩🇪 Eppendorf & 🇯🇵 Prime Tech</b><br><span style="color:#8FA3C0;font-size:11px;">Almanya & Japonya</span></td>
+                    <td style="padding:10px 12px;"><b style="color:#FFB800;">PiezoXpert & PMM-150FU</b><br><span style="color:#94A3B8;">$38,000 - $55,000 USD</span></td>
+                    <td style="padding:10px 12px;"><b style="color:#00F5FF;">ZEUS Pulse Stimulator (ZPS 26)</b><br><span style="color:#5FD3AE;">$8,500 USD Taban</span></td>
+                    <td style="padding:10px 12px;"><span style="background:rgba(0,245,255,0.12);color:#00F5FF;padding:2px 8px;border-radius:4px;font-weight:700;">%82 Yakınlık</span></td>
+                    <td style="padding:10px 12px;"><b style="color:#00E676;">CE MDR Class IIa tescili</b>, sub-%1.2 lizis (vs %6 mekanik hasar), 16 oosit eşzamanlı Z-Dish array.</td>
+                    <td style="padding:10px 12px;color:#CCD7E6;">TFF vakalarında %24'ten %82.3'e döllenme artışı ve 4 kat daha hızlı yatırım geri dönüşü (ROI).</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.015);">
+                    <td style="padding:10px 12px;"><b style="color:#FFFFFF;">🇺🇸 CooperSurgical / RI</b><br><span style="color:#8FA3C0;font-size:11px;">ABD & İngiltere</span></td>
+                    <td style="padding:10px 12px;"><b style="color:#FFB800;">RI Witness (RFID Şahitlik)</b><br><span style="color:#94A3B8;">$75K-$140K + $30/Siklus Çip</span></td>
+                    <td style="padding:10px 12px;"><b style="color:#00F5FF;">ZEUS Mismatch Blocker (ZMB-7T)</b><br><span style="color:#5FD3AE;">7 Terminal Şahitlik</span></td>
+                    <td style="padding:10px 12px;"><span style="background:rgba(0,230,118,0.12);color:#00E676;padding:2px 8px;border-radius:4px;font-weight:700;">%88 Yakınlık</span></td>
+                    <td style="padding:10px 12px;"><b style="color:#00E676;">Sıfır EMF Radyasyonu</b>, sınırsız ücretsiz 2D barkod, döngü başı mikro-kontörle %75 OPEX tasarrufu.</td>
+                    <td style="padding:10px 12px;color:#CCD7E6;">1,000 siklusta her yıl $22,500 USD doğrudan OPEX tasarrufu ve gametlerin altında radyasyonsuz güvenlik.</td>
+                </tr>
+                <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
+                    <td style="padding:10px 12px;"><b style="color:#FFFFFF;">🇺🇸 Hamilton Thorne & 🇸🇪 Vitrolife</b><br><span style="color:#8FA3C0;font-size:11px;">ABD & İsveç</span></td>
+                    <td style="padding:10px 12px;"><b style="color:#FFB800;">Lykos Lazer & EmbryoScope</b><br><span style="color:#94A3B8;">$55K-$85K Lazer / $140K+ TL</span></td>
+                    <td style="padding:10px 12px;"><b style="color:#00F5FF;">ZEUS BioPSafe (ZBS26 / ZBB25)</b><br><span style="color:#5FD3AE;">Black-Box Biyopsi</span></td>
+                    <td style="padding:10px 12px;"><span style="background:rgba(255,184,0,0.12);color:#FFB800;padding:2px 8px;border-radius:4px;font-weight:700;">%78 Yakınlık</span></td>
+                    <td style="padding:10px 12px;"><b style="color:#00E676;">13 Kızılötesi Optik Sensör</b>, çift tabletli denetim izi, PCR tüpü şerit atlama hatasını sıfırlayan akıllı tepsi.</td>
+                    <td style="padding:10px 12px;color:#CCD7E6;">PGT-A/M genetik biyopsilerinde numune karıştırma riskini donanımsal kilitler, lazerle tam uyumlu çalışır.</td>
+                </tr>
+                <tr>
+                    <td style="padding:10px 12px;"><b style="color:#FFFFFF;">🇫🇷 Cryo Bio System & 🇯🇵 Kitazato</b><br><span style="color:#8FA3C0;font-size:11px;">Fransa & Japonya</span></td>
+                    <td style="padding:10px 12px;"><b style="color:#FFB800;">MVE Tanklar & Cryotop Payet</b><br><span style="color:#94A3B8;">$35,000+ Tank / $60 Payet</span></td>
+                    <td style="padding:10px 12px;"><b style="color:#00F5FF;">ZEUS Smart Cryo-Tools (ZCT25)</b><br><span style="color:#5FD3AE;">4X Tank Dönüşüm Kiti</span></td>
+                    <td style="padding:10px 12px;"><span style="background:rgba(168,85,247,0.12);color:#C084FC;padding:2px 8px;border-radius:4px;font-weight:700;">%85 Yakınlık</span></td>
+                    <td style="padding:10px 12px;"><b style="color:#00E676;">Cane başına 40 payet</b> (vs standart 10 payet), sekizgen LN2 rezervuarlı goblet, >%95 çözme canlılığı.</td>
+                    <td style="padding:10px 12px;color:#CCD7E6;">Kliniğin $50,000 yeni azot tankı almasını ve laboratuvar zeminini genişletmesini engeller.</td>
+                </tr>
+            </tbody>
+        </table>
+        </div>
+        """
+        st.markdown(comp_table_html, unsafe_allow_html=True)
+
+        st.markdown("##### 🔍 Derinlemesine Rakip İnceleme Masası")
+        sel_comp_card = st.selectbox(
+            "Detaylı Karşılaştırma Raporunu Açmak İstediğiniz Rakibi Seçin:",
+            ["eppendorf", "coopersurgical_ri", "hamilton_vitrolife", "cryobio_kitazato"],
+            format_func=lambda x: ZEUS_COMPETITIVE_INTELLIGENCE_2026[x]["name"],
+            key="sel_comp_card_box"
+        )
+
+        c_data = ZEUS_COMPETITIVE_INTELLIGENCE_2026[sel_comp_card]
+        cc1, cc2 = st.columns([1.2, 1.8])
+        with cc1:
+            st.markdown(f"""
+            <div style="background:rgba(15,23,42,0.8);border:1.5px solid #00F5FF;border-radius:10px;padding:16px;">
+                <div style="font-size:14px;font-weight:700;color:#FFFFFF;margin-bottom:6px;">{c_data['logo_text']}</div>
+                <div style="font-size:11px;color:#8FA3C0;margin-bottom:10px;">🏷️ {c_data['category']}</div>
+                <div style="font-size:12px;color:#CCD7E6;margin-bottom:6px;"><b>📊 Pazar Hâkimiyeti:</b> {c_data['market_share']}</div>
+                <div style="font-size:12px;color:#CCD7E6;margin-bottom:6px;"><b>💰 Donanım Fiyatı:</b> <span style="color:#FFB800;font-weight:700;">{c_data['hardware_price_range']}</span></div>
+                <div style="font-size:12px;color:#CCD7E6;margin-bottom:12px;"><b>📦 Sarf Fiyatı:</b> <span style="color:#FFB800;">{c_data['consumable_price_range']}</span></div>
+                <div style="background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.25);border-radius:6px;padding:8px 10px;font-size:11.5px;">
+                    <b style="color:#00F5FF;">🎯 Eşleşen ZEUS Çözümü:</b><br>
+                    <span style="color:#FFFFFF;font-weight:600;">{c_data['matched_zeus_device']}</span><br>
+                    <span style="color:#5FD3AE;font-weight:700;">{c_data['proximity_label']}</span>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with cc2:
+            st.markdown(f"""
+            <div style="background:rgba(15,23,42,0.8);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:16px;">
+                <div style="font-size:13px;font-weight:700;color:#00E676;margin-bottom:8px;">⚔️ Donanımsal & Klinik Boşluk Analizi (ZEUS Neden Daha Üstün?)</div>
+                <div style="font-size:12px;color:#CBD5E1;line-height:1.7;">
+                    {'<br>'.join(c_data['technical_gap_analysis'])}
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+    # --------------------------------------------------------------------------
+    # SUB-TAB 2: SATIŞ KAZANMA STRATEJİLERİ (BATTLECARDS)
+    # --------------------------------------------------------------------------
+    with c_desk_tab2:
+        st.markdown("#### 🎯 Sahada Rakipleri Eleme ve Daha Çok Satış Kapatma Stratejileri")
+        st.caption("Klinik görüşmelerinde rakiplerin kurulu donanımını veya yerleşik distribütörlerini aşmak için uygulanacak taktiksel argümanlar ve ikna reçeteleri.")
+
+        strat_c1, strat_c2 = st.columns(2)
+        with strat_c1:
+            st.markdown("""
+            <div style="background:#0F192E;border:1px solid rgba(0,245,255,0.3);border-left:4px solid #00F5FF;border-radius:8px;padding:14px;margin-bottom:12px;">
+                <h5 style="color:#00F5FF;margin:0 0 6px 0;">1. Klinik Kanıt & Hakemli Yayın Kalkanı (The Scientific Wedge)</h5>
+                <div style="font-size:12px;color:#CCD7E6;line-height:1.6;">
+                    • <b>Taktik:</b> Hekim-patron ve baş embriyoloğun karşısına teknik donanım broşürüyle değil, <b>Prof. Dr. Volkan Baltacı et al. (RBM Online)</b> ve <b>Ebner et al. (Human Reproduction)</b> hakemli makaleleriyle çıkın.<br>
+                    • <b>Vurucu Cümle:</b> <i>"Eppendorf size bir mikromanipülatör satar; ZEUS ise Toplam Döllenme Başarısızlığı (TFF) vakalarında 2PN döllenme oranını %24'ten %82.3'e çıkaran, sub-%1.2 lizis garantili klinik protokolü satar."</i>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("""
+            <div style="background:#0F192E;border:1px solid rgba(0,230,118,0.3);border-left:4px solid #00E676;border-radius:8px;padding:14px;margin-bottom:12px;">
+                <h5 style="color:#00E676;margin:0 0 6px 0;">2. OPEX Kurtarma Stratejisi (The RFID Trap Breaker)</h5>
+                <div style="font-size:12px;color:#CCD7E6;line-height:1.6;">
+                    • <b>Taktik:</b> CooperSurgical RI Witness kullanan veya teklif alan kliniklerin CFO'suna 3 yıllık Toplam Sahip Olma Maliyeti (TCO) çıkarın.<br>
+                    • <b>Vurucu Cümle:</b> <i>"Yılda 1.000 siklus yapan kliniğiniz RI Witness çiplerine her yıl $30,000 USD ödüyor. ZEUS Mismatch Blocker çipsiz 2D barkod ve döngü kontörü modeliyle bu masrafı $7,500'e indirir. Kalan $22,500 her yıl doğrudan kâr hanenize yazılır."</i>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        with strat_c2:
+            st.markdown("""
+            <div style="background:#0F192E;border:1px solid rgba(255,184,0,0.3);border-left:4px solid #FFB800;border-radius:8px;padding:14px;margin-bottom:12px;">
+                <h5 style="color:#FFB800;margin:0 0 6px 0;">3. $85,000 USD Turnkey Filo Avantajı (The Fleet Bundle Kill Shot)</h5>
+                <div style="font-size:12px;color:#CCD7E6;line-height:1.6;">
+                    • <b>Taktik:</b> Rakipler tek bir piezo veya lazer ünitesi için $50K-$80K isterken; ZEUS'un $85,000 USD Anahtar Teslim Filo Paketi teklifi sunun.<br>
+                    • <b>Vurucu Cümle:</b> <i>"Tek bir cihaz fiyatına laboratuvarınızın tüm oosit aktivasyonunu (ZPS 26), genetik biyopsisini (BioPSafe), şahitliğini (Mismatch Blocker) ve krio tank kapasitesini (Smart Cryo) 450 kutu sarfla birlikte modernize edin. Yatırım 8.2 ayda amorti olur."</i>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.markdown("""
+            <div style="background:#0F192E;border:1px solid rgba(244,63,94,0.3);border-left:4px solid #F43F5E;border-radius:8px;padding:14px;margin-bottom:12px;">
+                <h5 style="color:#F43F5E;margin:0 0 6px 0;">4. Kesinlikle Demo Yok: 14 Günlük Ücretli Vaka Çalıştayı Modeli</h5>
+                <div style="font-size:12px;color:#CCD7E6;line-height:1.6;">
+                    • <b>Taktik:</b> Sahada personelin ilgilenmediği veya dolaba kaldırdığı ücretsiz demo cihaz verme hatasına asla düşmeyin.<br>
+                    • <b>Vurucu Cümle:</b> <i>"Ücretsiz demo vermiyoruz; çünkü teknoloji uzman aplikatör eşliğinde doğru protokol gerektirir. En zorlu 15 TFF hastanız için 14 günlük yerinde vaka çalıştayı ve 25 kutuluk Z-Dish kitimizi faturalandırarak sonuçları birlikte görelim."</i>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+    # --------------------------------------------------------------------------
+    # SUB-TAB 3: TAVSİYE EDİLEN SÖZLEŞME HÜKÜMLERİ
+    # --------------------------------------------------------------------------
+    with c_desk_tab3:
+        st.markdown("#### 📜 Distribütör ve Klinik Sözleşmelerinde Mutlaka Yer Alması Gereken Hükümler")
+        st.caption("ZEUS Bioscience mülkiyetini koruyan, sarf çekişini garanti altına alan ve distribütörün atıl kalmasını engelleyen hukuki-ticari şartname maddeleri.")
+
+        st.markdown("""
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:14px;margin-bottom:16px;">
+            <div style="background:#0F192E;border:1px solid rgba(0,245,255,0.25);border-radius:8px;padding:14px;">
+                <div style="font-size:13px;font-weight:700;color:#00F5FF;margin-bottom:6px;">1. Asgari Yıllık Sarf Satın Alma Taahhüdü (MOQ)</div>
+                <div style="font-size:11.5px;color:#CBD5E1;line-height:1.6;">
+                    <b>Sözleşme Metni:</b> <i>"Distribütör/Klinik, sahada kurulu her bir ZEUS Pulse Stimulator (ZPS 26) başına yıllık asgari 60 kutu (çeyrek dönem başına en az 15 kutu) Electro Dish / Z-Dish sarf malzemesi çekmeyi gayrikabili rücu taahhüt eder. Asgari kotanın yerine getirilmemesi halinde, cihazın ücretsiz üretici garanti kapsamı, yazılım lisansı ve yıllık kalibrasyon sertifikalandırması kendiliğinden askıya alınır."</i>
+                </div>
+            </div>
+            <div style="background:#0F192E;border:1px solid rgba(0,230,118,0.25);border-radius:8px;padding:14px;">
+                <div style="font-size:13px;font-weight:700;color:#00E676;margin-bottom:6px;">2. Münhasırlık ve Performans İhlali Şartı (Clawback)</div>
+                <div style="font-size:11.5px;color:#CBD5E1;line-height:1.6;">
+                    <b>Sözleşme Metni:</b> <i>"Distribütöre tanınan ülke/bölge münhasırlığı (tek yetkili satıcılık), ilk 6 ay içerisinde asgari 2 adet anahtar teslim cihaz ve 150 kutu sarf malzemesi fiili çekişi şartına bağlıdır. Bu performans hedefine ulaşılamaması durumunda, ZEUS tek taraflı bildirimle münhasırlığı iptal ederek genel acentelik statüsüne geçirme ve bölgedeki hastanelere doğrudan satış yapma hakkını saklı tutar."</i>
+                </div>
+            </div>
+            <div style="background:#0F192E;border:1px solid rgba(255,184,0,0.25);border-radius:8px;padding:14px;">
+                <div style="font-size:13px;font-weight:700;color:#FFB800;margin-bottom:6px;">3. Fiyat Koruma & Kur Riski Tamponu (Hard Currency Peg)</div>
+                <div style="font-size:11.5px;color:#CBD5E1;line-height:1.6;">
+                    <b>Sözleşme Metni:</b> <i>"Sözleşme kapsamındaki tüm cihaz ve sarf birim fiyatları ABD Doları ($ USD) cinsinden belirlenmiş olup, yerel para birimindeki %10 ve üzerindeki devalüasyonlarda satış fiyatları güncel efektif döviz kuruna göre anında revize edilir. Yerel para biriminde vadeli satış yapılamaz."</i>
+                </div>
+            </div>
+            <div style="background:#0F192E;border:1px solid rgba(244,63,94,0.25);border-radius:8px;padding:14px;">
+                <div style="font-size:13px;font-weight:700;color:#F43F5E;margin-bottom:6px;">4. 60-Günlük Tesis İçi Konsinye Depolama & Teminat Mektubu</div>
+                <div style="font-size:11.5px;color:#CBD5E1;line-height:1.6;">
+                    <b>Sözleşme Metni:</b> <i>"Kliniğin acil vaka ihtiyacı için klinik deposuna yerleştirilen 25-50 kutuluk güvenlik stoğu (buffer consignment), distribütör/hastane tarafından verilecek banka teminat mektubu mukabilinde teslim edilir. Her bir kutunun steril güvenlik mührü açıldığı an faturalandırılır ve 30 gün içinde nakden ödenir."</i>
+                </div>
+            </div>
+            <div style="background:#0F192E;border:1px solid rgba(168,85,247,0.25);border-radius:8px;padding:14px;grid-column: 1 / -1;">
+                <div style="font-size:13px;font-weight:700;color:#C084FC;margin-bottom:6px;">5. Regülasyon ve Tescil Belgelerinin Münhasırlığı (Regulatory Armor)</div>
+                <div style="font-size:11.5px;color:#CBD5E1;line-height:1.6;">
+                    <b>Sözleşme Metni:</b> <i>"ZEUS Bioscience tarafından distribütöre tescil amacıyla sağlanan CE MDR 2017/745 Class IIa, ISO 13485 ve Free Sales Certificate (FSC) belgeleri sadece ZEUS tescilli ürünleri için kullanılabilir. Bu belgelerin rakip ürünlerin ithalatında veya izinsiz yan ürün kaydında kullanılması durumunda $100,000 USD cezai şart uygulanır ve LOA derhal feshedilir."</i>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    # --------------------------------------------------------------------------
+    # SUB-TAB 4: YÖNETİCİ KARAR NOT DEFTERİ & KARAR MASASI
+    # --------------------------------------------------------------------------
+    with c_desk_tab4:
+        st.markdown("#### ✍️ Yönetici Karar Not Defteri & Stratejik Karar Masası")
+        st.caption("Pazar ve rakip bazında yönetim kurulu kararlarını, sahada verilecek özel iskonto ve tavizleri, sözleşmeye eklenecek özel hükümleri buraya kaydedebilirsiniz. Kaydedilen kararlar doğrudan Strategic Decision Center'a yansır.")
+
+        note_col1, note_col2 = st.columns([1.6, 1.4])
+        with note_col1:
+            st.markdown("##### 📝 Yeni Stratejik Karar / Müzakere Notu Ekle")
+            with st.form("form_competitor_decision_note", clear_on_submit=True):
+                f_c1, f_c2 = st.columns(2)
+                with f_c1:
+                    f_country = st.selectbox("🎯 Hedef Pazar / Ülke:", target_markets_list, key="f_note_country")
+                    f_clinic = st.text_input("🏥 Kurum / Distribütör Adı:", placeholder="Örn: Memorial Şişli, Palex Medical, Nile IVF", key="f_note_clinic")
+                with f_c2:
+                    f_comp = st.selectbox("⚔️ Hedeflenen Rakip Firma:", [
+                        "Eppendorf SE & Prime Tech (PiezoXpert)",
+                        "CooperSurgical / RI (RI Witness RFID)",
+                        "Hamilton Thorne (Lykos Lazer) & Vitrolife",
+                        "Cryo Bio System & Kitazato (Kriyo)",
+                        "Cook Medical & Origio (Rutin Sarflar)"
+                    ], key="f_note_comp")
+                    f_zeus_prod = st.selectbox("🛡️ Konumlandırılan ZEUS Ürünü:", [
+                        "ZEUS Pulse Stimulator (ZPS 26)",
+                        "ZEUS Mismatch Blocker (ZMB-7T)",
+                        "ZEUS BioPSafe (ZBS26 Black-Box)",
+                        "ZEUS Smart Cryo-Tools (ZCT25)",
+                        "$85,000 USD Turnkey Filo Paketi"
+                    ], key="f_note_zeus_prod")
+
+                f_strategy = st.selectbox("🎯 Uygulanacak Satış & Kazanma Stratejisi:", [
+                    "🔬 Klinik Kanıt & Hakemli Yayın Kalkanı (Baltacı / Ebner sub-%1.2 lizis)",
+                    "💼 OPEX Kurtarma Stratejisi (RFID Siklus Başı $30 vs ZEUS $7.5 - %75 Tasarruf)",
+                    "🚀 $85,000 USD Turnkey Filo Paketi & Ezici ROI (8.2 Ay Amortisman)",
+                    "⛔ Kesinlikle Demo Yok - 14 Günlük Yerinde Ücretli Vaka Çalıştayı",
+                    "🤝 Yerel Distribütöre %45+ Brüt Marj & Münhasır Bölge Teşviği"
+                ], key="f_note_strategy")
+
+                f_clauses = st.multiselect("📜 Sözleşmeye Eklenecek Bağlayıcı Hükümler:", [
+                    "Asgari Yıllık Sarf Satın Alma Taahhüdü (60-75 Kutu)",
+                    "Münhasırlık ve Performans İhlali Şartı (6 Ayda Asgari Kota)",
+                    "Fiyat Koruma & Kur Riski Tamponu ($ USD Endeksli)",
+                    "60-Günlük Tesis İçi Konsinye Depolama & Banka Teminatı",
+                    "Regülasyon ve Tescil Belgelerinin Münhasırlığı ($100K Cezai Şart)"
+                ], default=["Asgari Yıllık Sarf Satın Alma Taahhüdü (60-75 Kutu)", "Fiyat Koruma & Kur Riski Tamponu ($ USD Endeksli)"])
+
+                f_memo = st.text_area(
+                    "✍️ Yönetici Karar Tutanağı & Müzakere Notu:",
+                    placeholder="Müzakere taktikleri, hekimin itirazına verilecek cevaplar, verilecek azami iskonto ve sözleşme özel şartları...",
+                    height=100,
+                    key="f_note_memo"
+                )
+
+                f_author = st.selectbox("👤 Karar Verici Yetkili:", [
+                    "Yönetim Kurulu & CEO",
+                    "CSO & Baş Embriyolog Heyeti",
+                    "CFO & Uluslararası İş Geliştirme",
+                    "Bölge Satış Direktörü & Hukuk Müşavirliği"
+                ], key="f_note_author")
+
+                submit_note = st.form_submit_button("💾 Karar Notunu Kaydet & Strategic Decision Center'a İlet", type="primary", use_container_width=True)
+                if submit_note:
+                    if f_memo.strip():
+                        new_note_entry = {
+                            "id": f"NOTE-{f_country[:2].upper()}-{len(st.session_state['executive_competitor_decision_notes']) + 1:02d}",
+                            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M"),
+                            "country": f_country,
+                            "clinic_or_dist": f_clinic.strip() if f_clinic.strip() else f"{f_country} Referans Kurumu",
+                            "target_competitor": f_comp,
+                            "our_product": f_zeus_prod,
+                            "selected_strategy": f_strategy,
+                            "contract_clauses": f_clauses,
+                            "decision_note": f_memo.strip(),
+                            "author": f_author,
+                            "status": "Onaylandı & İcrada"
+                        }
+                        st.session_state['executive_competitor_decision_notes'].insert(0, new_note_entry)
+                        st.success(f"✓ {f_country} pazarında {f_comp} karşısındaki karar notu başarıyla kaydedildi ve Strategic Decision Center'a aktarıldı!")
+                        st.rerun()
+                    else:
+                        st.error("Lütfen karar notu içeriğini boş bırakmayınız.")
+
+        with note_col2:
+            st.markdown("##### 🏛️ Kayıtlı Yönetici Karar Tutanakları")
+            all_saved_notes = st.session_state['executive_competitor_decision_notes']
+            
+            if len(all_saved_notes) == 0:
+                st.info("Henüz kayıtlı karar notu bulunmamaktadır.")
+            else:
+                for idx_n, n_item in enumerate(all_saved_notes):
+                    with st.expander(f"📌 [{n_item['id']}] {n_item['country']} — {n_item['clinic_or_dist']} ({n_item['timestamp']})", expanded=(idx_n == 0)):
+                        st.markdown(f"""
+                        <div style="font-size:11.5px;color:#CCD7E6;line-height:1.5;">
+                            <b>⚔️ Rakip Firma:</b> <span style="color:#FFB800;">{n_item['target_competitor']}</span><br>
+                            <b>🛡️ ZEUS Çözümü:</b> <span style="color:#00F5FF;">{n_item['our_product']}</span><br>
+                            <b>🎯 Uygulanacak Strateji:</b> <span style="color:#00E676;">{n_item['selected_strategy']}</span><br>
+                            <b>📜 Bağlayıcı Sözleşme Şartları:</b><br>
+                            <span style="color:#CBD5E1;">{' • '.join(n_item['contract_clauses']) if n_item['contract_clauses'] else 'Standart Hükümler'}</span>
+                        </div>
+                        <div style="background:rgba(0,0,0,0.3);border-left:3px solid #00F5FF;padding:8px 10px;border-radius:4px;margin:8px 0;font-size:12px;color:#FFFFFF;">
+                            <b>✍️ Karar Notu:</b><br>{n_item['decision_note']}
+                        </div>
+                        <div style="font-size:11px;color:#8FA3C0;display:flex;justify-content:space-between;">
+                            <span>👤 {n_item['author']}</span>
+                            <span style="color:#5FD3AE;">✓ {n_item['status']}</span>
+                        </div>
+                        """, unsafe_allow_html=True)
+                        if st.button(f"🗑️ Notu Sil ({n_item['id']})", key=f"del_note_{n_item['id']}_{idx_n}"):
+                            st.session_state['executive_competitor_decision_notes'].pop(idx_n)
+                            st.rerun()
+
+                # Export CSV button
+                df_notes = pd.DataFrame(all_saved_notes)
+                csv_notes = df_notes.to_csv(index=False).encode('utf-8')
+                st.download_button(
+                    "📥 Yönetici Karar Tutanaklarını İndir (CSV)",
+                    data=csv_notes,
+                    file_name="ZEUS_Competitor_Decision_Notes.csv",
+                    mime="text/csv",
+                    key=f"dl_notes_{active_source}"
+                )
 
 
 def get_country_prospects(c_name, c_row=None):
@@ -16648,13 +17210,14 @@ elif active_view == "🛃 Market Intelligence & Compare":
         cmp_df['customs_difficulty_index'] = [d['customs_difficulty_index'] for d in customs_series]
 
         # Tabbed Layout for Easy Exploration
-        comp_tab1, comp_tab2, comp_tab3, comp_tab4, comp_tab5, comp_tab6 = st.tabs([
+        comp_tab1, comp_tab2, comp_tab3, comp_tab4, comp_tab5, comp_tab6, comp_tab7 = st.tabs([
             "📊 Çok Boyutlu Grafik Analizi (Visual Analytics)",
             "📋 Kapsamlı Skor Kartı & Veri Tablosu (Comparative Scorecard)",
             "🎯 AI Potansiyel Müşteri, Klinik & Distribütör Radarı (AI Prospect Scout)",
             "🔬 ZEUS Klinik Cihaz & Teknoloji AI Portföy Tavsiye Masası (Device Advisor)",
             "🚀 Global Klinik Pazarlama, İletişim Masası & LinkedIn Hub (GTM Playbook)",
-            "🏛️ Sağlık Bakanlığı Kararları, Mevzuat & Sektörel Uzman Notları (Regulatory & Market KB)"
+            "🏛️ Sağlık Bakanlığı Kararları, Mevzuat & Sektörel Uzman Notları (Regulatory & Market KB)",
+            "⚔️ ZEUS vs. Küresel Rakipler, Fark Analizi & Sözleşme Stratejisi (Competitor Battlecard)"
         ])
 
         with comp_tab1:
@@ -19655,6 +20218,9 @@ Cihaz, tüp bebek (IVF/ICSI) laboratuvarlarında Total Döllenme Başarısızlı
                 </div>
                 """, unsafe_allow_html=True)
 
+        with comp_tab7:
+            render_competitor_intelligence_and_deal_desk(selected_compare, country_df, active_source="compare")
+
 
     else:
         st.warning("Lütfen karşılaştırma analizi için en az 2 pazar seçiniz.")
@@ -22496,11 +23062,17 @@ elif active_view == "📈 Performance Evaluator":
 # 12. VIEW: STRATEGIC DECISION CENTER
 # ==============================================================================
 elif active_view == "🏛️ Strategic Decision Center":
-    st.title("Strategic Decision Center")
-    st.caption("Configurable weighted multi-criteria assessment framework for critical corporate authorizations and commercial expansion.")
+    st.title("Strategic Decision Center & Executive Board Room")
+    st.caption("Configurable weighted multi-criteria assessment framework for critical corporate authorizations, competitor displacement and commercial expansion.")
 
     if 'executive_strategic_plans' not in st.session_state:
         st.session_state['executive_strategic_plans'] = get_default_strategic_plans()
+
+    # Dedicated Competitor Intelligence & Deal Desk in Strategic Decision Center
+    with st.expander("⚔️ Küresel Rakip İstihbaratı, Satış Kazanma Stratejisi & Yönetici Karar Notları Masası", expanded=True):
+        render_competitor_intelligence_and_deal_desk(None, country_df, active_source="sdc")
+
+    st.markdown("---")
 
     # --------------------------------------------------------------------------
     # TOP EXECUTIVE EVALUATION BOARD: STRATEGIC ALERTS IMPLEMENTATION REVIEW
