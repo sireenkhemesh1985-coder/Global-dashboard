@@ -4518,6 +4518,16 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
             key=f"{key_prefix}_sarf_qty_{target_country}"
         )
 
+        sarf_gross = sarf_price * sarf_qty
+        sarf_disc_unit = sarf_price * (sarf_disc_pct / 100.0)
+        net_sarf_unit = sarf_price - sarf_disc_unit
+        sarf_tot_disc = sarf_disc_unit * sarf_qty
+        sarf_tot_net = net_sarf_unit * sarf_qty
+        est_sarf_cogs = (sarf_price * 0.35 * sarf_qty) if sarf_price > 0 else 0.0
+        sarf_margin_usd = (sarf_tot_net - est_sarf_cogs) if sarf_price > 0 else 0.0
+        sarf_margin_pct = (sarf_margin_usd / sarf_tot_net * 100.0) if sarf_tot_net > 0 else 0.0
+        sarf_over_ceiling = sarf_disc_pct > rec_sarf_max
+
         # Dynamic Consumable Volume Threshold Advice Inline
         if sarf_qty < 150:
             sarf_inline_msg = "<span style='color:#EF4444;font-weight:700;'>🚫 150 Kutu Altı Kuralı:</span> KESİNLİKLE İNDİRİM UYGULAMAYINIZ! Kutu başı $100.00 USD sabit tutulmalıdır."
@@ -4571,16 +4581,6 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
             </div>
         </div>
         """, unsafe_allow_html=True)
-        
-        sarf_gross = sarf_price * sarf_qty
-        sarf_disc_unit = sarf_price * (sarf_disc_pct / 100.0)
-        net_sarf_unit = sarf_price - sarf_disc_unit
-        sarf_tot_disc = sarf_disc_unit * sarf_qty
-        sarf_tot_net = net_sarf_unit * sarf_qty
-        est_sarf_cogs = (sarf_price * 0.35 * sarf_qty) if sarf_price > 0 else 0.0
-        sarf_margin_usd = (sarf_tot_net - est_sarf_cogs) if sarf_price > 0 else 0.0
-        sarf_margin_pct = (sarf_margin_usd / sarf_tot_net * 100.0) if sarf_tot_net > 0 else 0.0
-        sarf_over_ceiling = sarf_disc_pct > rec_sarf_max
         
         st.markdown(f"""
         <div style="background:#0F192E;border:1px solid {'#FF6B6B' if sarf_over_ceiling else '#13A6B5'};border-radius:10px;padding:12px 16px;margin-top:10px;font-size:12px;">
