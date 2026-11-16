@@ -13520,14 +13520,24 @@ def render_tenders_hub():
 
     st.markdown("<div style=\'height: 12px;\'></div>", unsafe_allow_html=True)
 
-    # Country Selector for Tenders
-    t_countries = ["Egypt", "Saudi Arabia", "Iraq", "Turkey", "Jordan", "Algeria", "Qatar", "Kuwait", "Germany"]
+    # Country Selector for Tenders (All 59 Global Markets)
+    t_countries = [
+        "Egypt", "Jordan", "Iraq", "Saudi Arabia", "Turkey", "United Arab Emirates", "Qatar", "Kuwait", 
+        "Algeria", "Morocco", "Palestine", "Syria", "Germany", "Spain", "Italy", "France", 
+        "United Kingdom", "Belgium", "Netherlands", "Sweden", "Norway", "Denmark", "Finland", 
+        "Switzerland", "Austria", "Greece", "Poland", "Portugal", "Ireland", "Czechia", "Romania", 
+        "Bulgaria", "Azerbaijan", "Albania-Slovakia", "United States", "Canada", "Mexico", 
+        "Brazil", "Colombia", "Peru", "Chile", "Argentina", "India", "Pakistan", "Bangladesh", 
+        "South Korea", "Japan", "China", "Taiwan", "Vietnam", "Thailand", "Philippines", 
+        "Malaysia", "Indonesia", "Australia", "New Zealand", "South Africa", "Nigeria", "Kenya"
+    ]
     t_col_sel1, t_col_sel2 = st.columns([2, 1])
     with t_col_sel1:
+        def_t_idx = t_countries.index("Egypt") if "Egypt" in t_countries else 0
         sel_t_country = st.selectbox(
             "İhale ve Şartnamesi İncelenecek Ülke / Pazar:",
             t_countries,
-            index=0,
+            index=def_t_idx,
             key="tenders_hub_country_select"
         )
     with t_col_sel2:
@@ -13798,14 +13808,25 @@ def render_regulations_hub():
 
     st.markdown("<div style=\'height: 12px;\'></div>", unsafe_allow_html=True)
 
-    # Country Selector for Regulations
-    reg_countries = ["Turkey", "Egypt", "Saudi Arabia", "Jordan", "Iraq", "Algeria", "Germany", "United Arab Emirates", "Qatar", "Kuwait", "Spain", "India"]
+    # Master Country List for Regulations (All 59 Global Markets)
+    ALL_GLOBAL_MASTER_COUNTRIES = [
+        "Jordan", "Iraq", "Turkey", "Saudi Arabia", "United Arab Emirates", "Qatar", "Kuwait", 
+        "Egypt", "Algeria", "Morocco", "Palestine", "Syria", "Germany", "Spain", "Italy", "France", 
+        "United Kingdom", "Belgium", "Netherlands", "Sweden", "Norway", "Denmark", "Finland", 
+        "Switzerland", "Austria", "Greece", "Poland", "Portugal", "Ireland", "Czechia", "Romania", 
+        "Bulgaria", "Azerbaijan", "Albania-Slovakia", "United States", "Canada", "Mexico", 
+        "Brazil", "Colombia", "Peru", "Chile", "Argentina", "India", "Pakistan", "Bangladesh", 
+        "South Korea", "Japan", "China", "Taiwan", "Vietnam", "Thailand", "Philippines", 
+        "Malaysia", "Indonesia", "Australia", "New Zealand", "South Africa", "Nigeria", "Kenya"
+    ]
+    reg_countries = ALL_GLOBAL_MASTER_COUNTRIES
     r_col_sel1, r_col_sel2 = st.columns([2, 1])
     with r_col_sel1:
+        def_reg_idx = reg_countries.index("Jordan") if "Jordan" in reg_countries else 0
         sel_reg_country = st.selectbox(
             "Mevzuatı ve Tescil Detayları İncelenecek Ülke:",
             reg_countries,
-            index=0,
+            index=def_reg_idx,
             key="reg_hub_country_select"
         )
     with r_col_sel2:
@@ -13851,15 +13872,35 @@ def render_regulations_hub():
     with reg_tab2:
         st.markdown(f"#### 🏛️ {sel_reg_country} Tescil Süreci, Resmi Harçlar ve Masraflar")
         
-        # Exact certification fees table
+        # Comprehensive certification fees table for all global key markets
         cert_costs_map = {
-            "Turkey": {"authority": "TİTCK (Türkiye)", "fee": "$1,200 – $1,800 USD", "duration": "3-7 Gün (Hızlı ÜTS)", "docs": "ÜTS Tekil Ürün Kaydı, CE Sertifikası & AB Uygunluk Beyanı, ISO 13485, Türkçe Kullanım Kılavuzu"},
-            "Egypt": {"authority": "EDA (Mısır)", "fee": "$3,500 – $5,000 USD", "duration": "3-5 Ay (Fast-Track İthal İzni)", "docs": "Mısır Konsolosluk Onaylı Menşe (COO) & FSC, Arapça IFU, EDA ithalat vizesi"},
-            "Saudi Arabia": {"authority": "SFDA (Suudi)", "fee": "$5,500 – $8,500 USD", "duration": "2-4 Ay (MDMA Lisansı)", "docs": "SFDA MDMA Başvurusu, Yetkili Temsilci (AR) Sözleşmesi, İki Dilli Etiketleme"},
-            "Jordan": {"authority": "JFDA (Ürdün)", "fee": "$2,200 – $3,200 USD", "duration": "1-2 Ay", "docs": "FSC, COO, CE Sertifikası, JFDA ithalat vizesi"},
-            "Iraq": {"authority": "KIMADIA (Irak)", "fee": "$4,000 – $6,500 USD", "duration": "3-6 Ay", "docs": "Irak Konsolosluğu tasdikli COO ve FSC, CE Sertifikalı, Kimadia akreditasyon dosyası"},
-            "Algeria": {"authority": "MSPRH (Cezayir)", "fee": "$2,800 – $4,200 USD", "duration": "2-4 Ay", "docs": "Homologasyon Dosyası, Fransızca Teknik Dosya, Konsolosluk tasdikli FSC"},
-            "Germany": {"authority": "BfArM / EUDAMED", "fee": "$12,000 – $18,000 USD", "duration": "1-3 Ay (CE Sertifikalı Varken)", "docs": "EUDAMED UDI-DI Bildirimi, CER Klinik Rapor, ISO 14971 Risk Dosyası"}
+            "Turkey": {"authority": "TİTCK (Türkiye)", "fee": "$1,200 – $1,800 USD", "duration": "3-7 Gün (Hızlı ÜTS)", "docs": "ÜTS Tekil Ürün Kaydı, CE Sertifikası & AB Uygunluk Beyanı, ISO 13485, Türkçe IFU"},
+            "Jordan": {"authority": "JFDA (Ürdün Gıda & İlaç İdaresi)", "fee": "$2,200 – $3,200 USD", "duration": "1-2 Ay", "docs": "JFDA İthalat Lisansı, Konsolosluk Tasdikli COO & FSC, CE Sertifikası, Arapça/İngilizce IFU"},
+            "Iraq": {"authority": "KIMADIA & MoH (Irak Sağlık Bakanlığı)", "fee": "$4,000 – $6,500 USD", "duration": "3-6 Ay", "docs": "Irak Konsolosluğu Tasdikli COO ve FSC, CE Sertifikası, KIMADIA Akreditasyon Dosyası"},
+            "Saudi Arabia": {"authority": "SFDA (Suudi Gıda ve İlaç İdaresi)", "fee": "$5,500 – $8,500 USD", "duration": "2-4 Ay", "docs": "SFDA MDMA Başvurusu, Yetkili Temsilci (AR) Sözleşmesi, İki Dilli Arapça/İngilizce Etiketleme"},
+            "United Arab Emirates": {"authority": "MOHAP & EHS (BAE Sağlık Bakanlığı)", "fee": "$4,500 – $7,000 USD", "duration": "2-3 Ay", "docs": "MOHAP Medikal Cihaz Tescili, FSC, CE Sertifikası (Class IIa), Yerel Temsilci Ataması"},
+            "Qatar": {"authority": "MOPH (Katar Halk Sağlığı Bakanlığı)", "fee": "$3,000 – $4,500 USD", "duration": "1-2 Ay", "docs": "MOPH İthalat Ön İzni, Konsolosluk Tasdikli COO & FSC, CE Belgesi, Arapça/İngilizce IFU"},
+            "Kuwait": {"authority": "MoH KMMD (Kuveyt Tıbbi Cihaz İdaresi)", "fee": "$3,500 – $5,200 USD", "duration": "2-4 Ay", "docs": "MoH Tescil Dosyası, CE Sertifikası, FSC ve Ajanlık Sözleşmesi"},
+            "Egypt": {"authority": "EDA (Mısır İlaç ve Cihaz Otoritesi)", "fee": "$3,500 – $5,000 USD", "duration": "3-5 Ay", "docs": "Mısır Konsolosluk Onaylı Menşe (COO) & FSC, Arapça IFU, EDA İthalat Vizesi"},
+            "Algeria": {"authority": "MSPRH (Cezayir Sağlık Bakanlığı)", "fee": "$2,800 – $4,200 USD", "duration": "2-4 Ay", "docs": "Homologasyon Dosyası, Fransızca Teknik Dosya, Konsolosluk Tasdikli FSC"},
+            "Morocco": {"authority": "DMP (Fas Sağlık Bakanlığı)", "fee": "$2,500 – $3,800 USD", "duration": "2-4 Ay", "docs": "DMP Enregistrement Dosyası, Fransızca IFU, CE Class IIa Sertifikası"},
+            "Palestine": {"authority": "MoH Filistin (Sağlık Bakanlığı)", "fee": "$1,500 – $2,500 USD", "duration": "1-2 Ay", "docs": "MoH İthalat İzni, FSC, COO, CE Sertifikası"},
+            "Syria": {"authority": "MoH Suriye (Sağlık Bakanlığı)", "fee": "$1,800 – $3,000 USD", "duration": "2-4 Ay", "docs": "Suriye Sağlık Bakanlığı Tescili, FSC, CE Sertifikası"},
+            "Germany": {"authority": "BfArM & EUDAMED (Almanya)", "fee": "$12,000 – $18,000 USD", "duration": "1-3 Ay", "docs": "EUDAMED UDI-DI Bildirimi, CER Klinik Rapor, ISO 14971 Risk Dosyası, CE Class IIa"},
+            "Spain": {"authority": "AEMPS (İspanya İlaç ve Sağlık Ürünleri Ajansı)", "fee": "$4,000 – $7,500 USD", "duration": "1-2 Ay", "docs": "AEMPS Bildirimi, CE Class IIa, EUDAMED UDI Kaydı, İspanyolca IFU"},
+            "Italy": {"authority": "Ministero della Salute (İtalya)", "fee": "$4,500 – $8,000 USD", "duration": "1-2 Ay", "docs": "Repertorio Dispositivi Medici (RDM) Kaydı, CE Class IIa, İtalyanca IFU"},
+            "France": {"authority": "ANSM (Fransa İlaç ve Sağlık Güvenliği Ajansı)", "fee": "$5,000 – $9,000 USD", "duration": "1-2 Ay", "docs": "ANSM Bildirimi, EUDAMED UDI, CE Class IIa, Fransızca IFU"},
+            "United Kingdom": {"authority": "MHRA (İngiltere İlaç ve Sağlık Ürünleri Ajansı)", "fee": "$6,000 – $10,000 USD", "duration": "1-3 Ay", "docs": "MHRA Cihaz Kaydı, UKCA / CE, UK Responsible Person (UKRP) Temsilcisi"},
+            "Belgium": {"authority": "FAMHP (Belçika Sağlık Ürünleri Ajansı)", "fee": "$4,000 – $6,500 USD", "duration": "1-2 Ay", "docs": "FAMHP Tescili, EUDAMED UDI, CE Class IIa"},
+            "Netherlands": {"authority": "CIBG & IGJ (Hollanda)", "fee": "$4,000 – $6,500 USD", "duration": "1-2 Ay", "docs": "Farmatec CIBG Bildirimi, CE Class IIa, Hollandaca/İngilizce IFU"},
+            "Switzerland": {"authority": "Swissmedic (İsviçre)", "fee": "$8,000 – $14,000 USD", "duration": "2-3 Ay", "docs": "Swissmedic Bildirimi, CH-REP Yetkili Temsilci Şartı, CE Class IIa"},
+            "United States": {"authority": "US FDA (Amerikan Gıda ve İlaç Dairesi)", "fee": "$18,000 – $32,000 USD", "duration": "3-6 Ay", "docs": "FDA 510(k) Premarket Notification, Establishment Registration, UDI"},
+            "Canada": {"authority": "Health Canada (Kanada Sağlık Bakanlığı)", "fee": "$7,500 – $12,000 USD", "duration": "2-4 Ay", "docs": "Medical Device Licence (MDL Class II), MDSAP Kalite Sertifikası"},
+            "Japan": {"authority": "PMDA & MHLW (Japonya)", "fee": "$10,000 – $18,000 USD", "duration": "3-6 Ay", "docs": "Ninsho/Shonin Tescili, Marketing Authorization Holder (MAH), J-GMP"},
+            "South Korea": {"authority": "MFDS (Güney Kore Gıda ve İlaç Güvenliği Bakanlığı)", "fee": "$4,500 – $7,500 USD", "duration": "2-4 Ay", "docs": "MFDS Tıbbi Cihaz İthal İzni, KGMP Kalite Sertifikası, Korece IFU"},
+            "India": {"authority": "CDSCO (Hindistan Merkezi İlaç Standartları)", "fee": "$2,500 – $4,200 USD", "duration": "3-6 Ay", "docs": "Form MD-15 İthalat Lisansı, Sugam Portalı Kaydı, Hint Yetkili Ajanı (IRA)"},
+            "Brazil": {"authority": "ANVISA (Brezilya Sağlık Düzenleme Kurumu)", "fee": "$6,000 – $11,000 USD", "duration": "4-8 Ay", "docs": "Registro ANVISA (Classe II), BGMP Denetimi, Portekizce IFU"},
+            "Australia": {"authority": "TGA (Avustralya Terapötik Ürünler İdaresi)", "fee": "$5,500 – $9,000 USD", "duration": "1-2 Ay", "docs": "ARTG (Avustralya Terapötik Ürünler Kaydı), TGA Yerel Sponsoru, CE Class IIa"}
         }
         c_cost_info = cert_costs_map.get(sel_reg_country, {"authority": auth_name, "fee": "$2,500 – $4,500 USD", "duration": "2-3 Ay", "docs": "CE Sertifikalı (Class IIa), ISO 13485, Konsolosluk Tasdikli COO & FSC"})
 
@@ -13892,15 +13933,15 @@ def render_regulations_hub():
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
             <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(168,85,247,0.3);border-radius:10px;padding:16px;font-size:12px;line-height:1.75;">
                 <b style="color:#C084FC;font-size:13.5px;">⚖️ Embriyo Transferi Kısıtı (eSET):</b><br>
-                <div style="color:#E1E7EC;margin-top:4px;">{ivf_pgt.get("eset_rule", "35 yaş altı kadınlarda ilk iki siklusta azami 1 embriyo transferine izin verilir; çoğul gebelik kısıtlaması uygulanır.")}</div><br>
+                <div style="color:#E1E7EC;margin-top:4px;">{ivf_pgt.get("eset_rule") or ivf_pgt.get("transfer_rules") or f"{sel_reg_country} tüp bebek mevzuatı uyarınca çoğul gebelikleri kısıtlamak amacıyla tek embriyo transferi (eSET) teşvik edilir."}</div><br>
                 <b style="color:#00F5FF;font-size:13.5px;">🏥 Devlet Desteği & Geri Ödeme:</b><br>
-                <div style="color:#E1E7EC;margin-top:4px;">{ivf_pgt.get("reimbursement", "Tüp bebek tedavilerinin yaklaşık %75-%85'i cepten özel ödeme (Out-of-Pocket) olarak karşılanır.")}</div>
+                <div style="color:#E1E7EC;margin-top:4px;">{ivf_pgt.get("reimbursement") or ivf_pgt.get("cycle_funding") or f"{sel_reg_country} pazarında tüp bebek tedavileri ağırlıklı olarak özel kliniklerde cepten ödeme (Out-of-Pocket) veya karma sigorta modeliyle yürütülür."}</div>
             </div>
             <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(168,85,247,0.3);border-radius:10px;padding:16px;font-size:12px;line-height:1.75;">
                 <b style="color:#00E676;font-size:13.5px;">🔬 PGT-A / PGT-M / PGT-SR Yasal Statüsü:</b><br>
-                <div style="color:#E1E7EC;margin-top:4px;">{ivf_pgt.get("pgt_status", "PGT-A ve PGT-M (Talasemi, Orak Hücre vb.) tıbbi endikasyonla lisanslı genetik merkezlerde tamamen yasaldır.")}</div><br>
+                <div style="color:#E1E7EC;margin-top:4px;">{ivf_pgt.get("pgt_status") or ivf_pgt.get("pgt_legal_status") or f"PGT-A ve PGT-M (Talasemi, anöploidi taramaları) {sel_reg_country} yetkili sağlık otoritesi lisanslı genetik merkezlerde yasaldır."}</div><br>
                 <b style="color:#EF4444;font-size:13.5px;">🚫 Cinsiyet Seçimi (Sex Selection) Biyoetik Hükmü:</b><br>
-                <div style="color:#E1E7EC;margin-top:4px;">{ivf_pgt.get("sex_selection_rule", "Yalnızca X-bağlantılı kalıtsal hastalıklar hariç sosyal cinsiyet seçimi yasaktır.")}</div>
+                <div style="color:#E1E7EC;margin-top:4px;">{ivf_pgt.get("sex_selection_rule") or f"{sel_reg_country} biyoetik mevzuatı uyarınca X'e bağlı ölümcül kalıtsal hastalıkların engellenmesi haricinde sosyal amaçlı cinsiyet seçimi yasaktır."}</div>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -24266,9 +24307,18 @@ elif active_view == "🧮 Pricing & Discount Calculator":
         st.markdown("### ZEUS Global IVF Pazar, Sağlık Bakanlığı Kararları & Regülasyon Kütüphanesi")
         st.caption("Uluslararası tüp bebek pazarları, Resmi Sağlık Bakanlığı (MOH) kararları, CE Sertifikalı tescil mevzuatı, gümrük GTIP kodları, PGT biyoetik kuralları, indirim-tahmin matrisleri ve satış stratejileri.")
 
-        # Prioritize key active & target markets in selection dropdown
-        prio_order = ["Egypt", "Jordan-Iraq", "Qatar", "Saudi Arabia", "Algeria", "Turkey", "Italy", "Germany", "Spain", "United Arab Emirates", "Kuwait", "Azerbaijan", "United Kingdom", "Jordan", "Iraq", "Palestine", "Belgium", "Bulgaria", "South Korea", "India"]
-        all_avail_keys = list(MARKET_KNOWLEDGE_BASE.keys())
+        # Prioritize key active & target markets in selection dropdown (All 59 Global Markets)
+        prio_order = [
+            "Egypt", "Jordan-Iraq", "Jordan", "Iraq", "Turkey", "Saudi Arabia", "United Arab Emirates", 
+            "Qatar", "Kuwait", "Algeria", "Morocco", "Palestine", "Syria", "Germany", "Spain", "Italy", 
+            "France", "United Kingdom", "Belgium", "Netherlands", "Sweden", "Norway", "Denmark", 
+            "Finland", "Switzerland", "Austria", "Greece", "Poland", "Portugal", "Ireland", "Czechia", 
+            "Romania", "Bulgaria", "Azerbaijan", "Albania-Slovakia", "United States", "Canada", "Mexico", 
+            "Brazil", "Colombia", "Peru", "Chile", "Argentina", "India", "Pakistan", "Bangladesh", 
+            "South Korea", "Japan", "China", "Taiwan", "Vietnam", "Thailand", "Philippines", 
+            "Malaysia", "Indonesia", "Australia", "New Zealand", "South Africa", "Nigeria", "Kenya"
+        ]
+        all_avail_keys = list(set(list(MARKET_KNOWLEDGE_BASE.keys()) + prio_order))
         sorted_countries = []
         for p in prio_order:
             if p not in sorted_countries:
