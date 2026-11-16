@@ -4503,10 +4503,39 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
             sarf_inline_bg = "rgba(168,85,247,0.12)"
             sarf_inline_border = "#A855F7"
 
+        total_dishes_val = sarf_qty * 10
+        total_pools_val = total_dishes_val * 4
+        max_oocytes_val = total_dishes_val * 20
+        patient_cycles_val = total_dishes_val
+
         st.markdown(f"""
-        <div style="background:{sarf_inline_bg};border:1px solid {sarf_inline_border};border-radius:6px;padding:6px 10px;margin-top:4px;margin-bottom:8px;font-size:11px;color:#E2E8F0;">
-            {sarf_inline_msg}
-            <div style="font-size:10px;color:#94A3B8;margin-top:2px;">🧪 <b>Siklüs Eşdeğeri:</b> {sarf_qty:,} Kutu = ~{sarf_qty * 10:,} Tedavi Siklüsü (1 Kutu = 10 Vaka)</div>
+        <div style="background:{sarf_inline_bg};border:1.5px solid {sarf_inline_border};border-radius:8px;padding:10px 14px;margin-top:6px;margin-bottom:10px;font-size:12px;color:#E2E8F0;box-shadow:0 3px 10px rgba(0,0,0,0.25);">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:6px;">
+                <div>{sarf_inline_msg}</div>
+                <span style="background:rgba(0,245,255,0.15);color:#00F5FF;border:1px solid #00F5FF;padding:2px 8px;border-radius:4px;font-weight:700;font-size:10.5px;">
+                    ⚡ 4 Pool × 5 Oosit = Max 20 Oosit/Dish
+                </span>
+            </div>
+            <div style="font-size:12.5px;color:#00F5FF;margin-top:6px;font-weight:800;border-top:1px solid rgba(255,255,255,0.08);padding-top:6px;">
+                🧪 <b>Siklüs & Oosit Kapasitesi:</b> {sarf_qty:,} Kutu = {total_dishes_val:,} Dish = ~{patient_cycles_val:,} Hasta Tedavi Siklüsü
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(170px, 1fr));gap:8px;margin-top:6px;font-size:11px;">
+                <div style="background:rgba(0,0,0,0.35);padding:6px 10px;border-radius:6px;border-left:2.5px solid #00F5FF;">
+                    <span style="color:#94A3B8;">Toplam Mikro-Havuz (Pool):</span><br>
+                    <b style="color:#FFFFFF;font-size:13px;">{total_pools_val:,} Pool</b> (Her Dish 4 Pool)
+                </div>
+                <div style="background:rgba(0,0,0,0.35);padding:6px 10px;border-radius:6px;border-left:2.5px solid #00E676;">
+                    <span style="color:#94A3B8;">Azami Oosit Kapasitesi:</span><br>
+                    <b style="color:#00E676;font-size:13px;">{max_oocytes_val:,} Oosit</b> (Max 20/Dish)
+                </div>
+                <div style="background:rgba(0,0,0,0.35);padding:6px 10px;border-radius:6px;border-left:2.5px solid #FFD700;">
+                    <span style="color:#94A3B8;">Vaka Başı / Oosit Başı:</span><br>
+                    <b style="color:#FFD700;font-size:13px;">${net_sarf_unit/10.0:,.2f} / Vaka</b> <span style="color:#8FA3C0;font-size:10px;">(${net_sarf_unit/200.0:,.2f}/Oosit)</span>
+                </div>
+            </div>
+            <div style="font-size:10.5px;color:#8FA3C0;margin-top:6px;line-height:1.45;">
+                ℹ️ <i>Klinik Yükleme Kuralı: 1 ZEUS Electro Dish 4 ayrı elektrotlu pool'den oluşur; her pool'e max 5 oosit yüklenerek tek dish'te toplam 20 oosit aynı anda aktive edilir. Bir hastadan ortalama 8–15 oosit toplandığından, 1 Dish tam 1 hasta siklüsünü (20 oosite kadar) tek başına eksiksiz karşılar.</i>
+            </div>
         </div>
         """, unsafe_allow_html=True)
         
@@ -4737,7 +4766,10 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
     # --------------------------------------------------------------------------
     # 3. KLİNİK SİKLÜS BAZLI SARF DOĞRULAMASI & KAPASİTE KALİBRASYONU
     # --------------------------------------------------------------------------
-    patient_cycles = sarf_qty * 10 # 1 box = 10 dishes = 10 patient cycles
+    total_dishes = sarf_qty * 10
+    total_pools = total_dishes * 4
+    max_oocytes = total_dishes * 20
+    patient_cycles = total_dishes # 1 dish covers 1 patient cycle up to 20 oocytes (4 pools x 5)
     avg_clinic_cycles = round(country_cycles / clinics_num) if clinics_num > 0 else 500
     avg_clinic_boxes = round(avg_clinic_cycles / 10)
     covered_clinics = round(patient_cycles / avg_clinic_cycles, 1) if avg_clinic_cycles > 0 else 1.0
@@ -4811,14 +4843,17 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
         sarf_suit_badge = "background:rgba(255,255,255,0.08);color:#94A3B8;border:1px solid rgba(255,255,255,0.2);"
         sarf_suit_text = f"{target_country} için standart Z-Dish kutu fiyatı giriniz (Örn: $75 - $100 USD/kutu)."
     elif 65.0 <= sarf_price <= 110.0:
-        vaka_basi_sarf = net_sarf_unit / 10.0 # kutuda 10 dish
+        vaka_basi_sarf = net_sarf_unit / 10.0 # kutuda 10 dish (her biri max 20 oosit)
+        oosit_basi_sarf = vaka_basi_sarf / 20.0 # max 20 oosit tam yüklemede oosit başı maliyet
         sarf_suit_status = f"✅ {target_country} İÇİN OPTİMUM SARF FİYATI"
         sarf_suit_badge = "background:rgba(0,230,118,0.18);color:#00E676;border:1px solid #00E676;"
         sarf_suit_text = (
-            f"<b>${net_sarf_unit:,.2f} USD/Kutu ({vaka_basi_sarf:,.2f} USD/Vaka):</b> Kutu başına 10 aktivasyon dishi ile vaka başı sarf maliyeti "
-            f"yalnızca <b>${vaka_basi_sarf:,.2f} USD</b> olmaktadır. {target_country} ortalama IVF tedavi ücreti içinde bu maliyet <b><%1 pay</b> alır "
-            f"ve klinik bütçesini hiç sarsmaz. <b>{sarf_qty} Kutu Yıllık Taahhüt</b>, yılda {patient_cycles:,} vakayı kapsayarak ZEUS'a <b>${sarf_tot_net:,.2f} USD/Yıl</b> "
-            f"kesintisiz, yüksek kârlı (%{sarf_margin_pct:.1f}) nakit akışı sağlar."
+            f"<b>${net_sarf_unit:,.2f} USD/Kutu (${vaka_basi_sarf:,.2f} USD/Vaka | ${oosit_basi_sarf:,.2f} USD/Oosit):</b> Kutu başına 10 aktivasyon dishi "
+            f"(1 Dish = 4 Pool × 5 Oosit = Max 20 Oosit) ile vaka başı sarf maliyeti yalnızca <b>${vaka_basi_sarf:,.2f} USD</b> olmaktadır. "
+            f"{target_country} ortalama IVF tedavi ücreti içinde bu maliyet <b><%1 pay</b> alır ve klinik bütçesini hiç sarsmaz. "
+            f"<b>{sarf_qty} Kutu Yıllık Taahhüt</b>, tam {total_dishes:,} Dish / {total_pools:,} Pool ile <b>{max_oocytes:,} oosit</b> ve "
+            f"<b>{patient_cycles:,} hasta siklüsünü</b> kapsayarak ZEUS'a <b>${sarf_tot_net:,.2f} USD/Yıl</b> kesintisiz, "
+            f"yüksek kârlı (%{sarf_margin_pct:.1f}) nakit akışı sağlar."
         )
     elif sarf_price < 65.0:
         sarf_suit_status = f"⚠️ DÜŞÜK SARF FİYATI"
@@ -4878,16 +4913,17 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
             </div>
         </div>
 
-        <!-- ORTA PANEL 2: Klinik Siklüs Doğrulaması & Gerçekçilik Analizi -->
+        <!-- ORTA PANEL 2: Klinik Siklüs & Oosit Doğrulaması Analizi -->
         <div style="background:rgba(0,0,0,0.35);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:12px 16px;margin-bottom:14px;">
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:6px;">
-                <span style="font-weight:800;color:#00F5FF;font-size:13px;">🧪 Klinik Siklüs Doğrulaması (1 Kutu = 10 Tedavi Siklüsü)</span>
-                <span style="{cycle_status_badge}font-size:10.5px;padding:2px 8px;border-radius:6px;font-weight:700;">{sarf_qty * 10:,} Siklüs Eşdeğeri</span>
+                <span style="font-weight:800;color:#00F5FF;font-size:13.5px;">🧪 Klinik Siklüs & Oosit Doğrulaması (1 Dish = 4 Pool × 5 = Max 20 Oosit)</span>
+                <span style="{cycle_status_badge}font-size:10.5px;padding:2px 8px;border-radius:6px;font-weight:700;">{patient_cycles:,} Siklüs | {max_oocytes:,} Oosit Kapasitesi</span>
             </div>
-            <div style="font-size:12px;color:#CBD5E1;line-height:1.65;margin-bottom:8px;">
-                • <b>Kutu / Siklüs Dönüşümü:</b> 1 kutu Z-Dish (10 dish) = <b>10 Hasta Tedavisi (Siklüs)</b>. Taahhüt edilen <b>{sarf_qty:,} Kutu</b>, tam <b>{patient_cycles:,} hasta siklüsünü</b> kapsar.<br>
+            <div style="font-size:12px;color:#CBD5E1;line-height:1.7;margin-bottom:8px;">
+                • <b>Dish Mimarisi & Oosit Yükleme Standardı:</b> Her bir ZEUS Electro Dish <b>4 bağımsız mikro-havuzdan (pool)</b> oluşur. Her pool azami <b>5 oosit</b> alır; böylece 1 dish tek seferde azami <b>20 oosite</b> kadar aktivasyon sağlar. Bir tüp bebek siklusunda ortalama 8–15 oosit toplandığı için <b>1 Dish, 1 tam hasta siklüsünü (20 oosite kadar)</b> tek başına eksiksiz karşılar.<br>
+                • <b>Kutu / Siklüs Dönüşümü:</b> 1 kutu Z-Dish (10 dish) = <b>10 Hasta Tedavisi (Siklüs)</b> / <b>40 Pool</b> / <b>Azami 200 Oosit</b>. Taahhüt edilen <b>{sarf_qty:,} Kutu</b>, tam <b>{total_dishes:,} Adet Dish</b>, <b>{total_pools:,} Pool</b> ve <b>{max_oocytes:,} Oosit</b> kapasitesiyle <b>{patient_cycles:,} hasta siklüsünü</b> kapsar.<br>
                 • <b>{target_country} Pazar Karşılaştırması:</b> Ülkede yılda tahmini <b>{country_cycles:,} siklüs</b> gerçekleşir ({clinics_num} klinik, merkez başı ortalama ~<b>{avg_clinic_cycles:,} siklüs / ~{avg_clinic_boxes} kutu/yıl</b>). Bu taahhüt yaklaşık <b>{covered_clinics} kliniğin</b> tüm yıllık tüketimini karşılar.<br>
-                • <b>Cihaz / Sarf Orantısı:</b> {dev_qty} adet ZPS 26 cihazı aktif çalıştırıldığında yılda en az <b>{min_needed_boxes} kutu ({min_needed_boxes * 10:,} siklüs)</b> çekmelidir.
+                • <b>Cihaz / Sarf Orantısı:</b> {dev_qty} adet ZPS 26 cihazı aktif çalıştırıldığında yılda en az <b>{min_needed_boxes} kutu ({min_needed_boxes * 10:,} siklüs / {min_needed_boxes * 200:,} oosit)</b> çekmelidir.
             </div>
             <div style="background:rgba(255,255,255,0.03);padding:6px 10px;border-radius:6px;font-size:11px;">
                 {cycle_status_text}
@@ -9606,11 +9642,11 @@ ZEUS_CLINICAL_DEVICE_PORTFOLIO = {
         'name': 'ZEUS Pulse Stimulator (ZPS 26 / ZPS24-001)',
         'category': 'Elektroporasyon, Yapay Oosit Aktivasyonu (AOA) ve Hücre Füzyon Cihazı',
         'icon': '⚡',
-        'tagline': 'Piezoelektrik Fizyolojik Kalsiyum Dalgaları ile Kontrollü Oosit Aktivasyonu (AOA) & 1 Yıl Raf Ömürlü Liyofilize Solüsyon Teknolojisi',
+        'tagline': 'Fizyolojik Kalsiyum Dalgaları ile Kontrollü Elektriksel Oosit Aktivasyonu (AOA) & 1 Yıl Raf Ömürlü Liyofilize Solüsyon Teknolojisi',
         'manual_model': 'ZEUS Pulse Stimulator ZPS 26 / ZPS24-001 (GenSa Sağlık / ZEUS Bioscience)',
         'catalog_codes': {
             'main_unit': 'ZPS24-001 (ZEUS Pulse Stimulator Ana Konsol)',
-            'electro_dish': 'ZPS13-002 (Steril 4 Hücre Havuzlu Metal Elektrotlu Petri)',
+            'electro_dish': 'ZPS13-002 (Steril 4 Havuzlu Metal Elektrotlu Petri - 4 Pool × Max 5 = Max 20 Oosit/Dish)',
             'dish_fastener': 'ZPS13-006 (Stereomikroskop Tablası Sabitleyici Termal Blok)',
             'electroliquid': 'ZPS26-003 (ZEUS Electroliquid Powder - Liyofilize Toz Formül / 1 Yıl Kuru Raf Ömrü)'
         },
@@ -9624,7 +9660,7 @@ ZEUS_CLINICAL_DEVICE_PORTFOLIO = {
             'shelf_life_breakthrough': 'Liyofilize Toz Formülü (Mart 2026 İtibarıyla): Çözülmemiş kuru toz 1 YIL (12 Ay) stabil raf ömrü (+2°C / +25°C); sulandırıldıktan sonra 2 ay kullanım ömrü. (Eski sıvı solüsyonların 2 aylık bozulma kısıtı ve soğuk zincir riski tamamen aşılmıştır)'
         },
         'consumables': [
-            'ZPS13-002 ZEUS Electro Dish: 4 ayrı hücre havuzlu (Pool 1-4), platin/metal elektrotlu steril tek kullanımlık petri (1x1, 1x2)',
+            'ZPS13-002 ZEUS Electro Dish: 4 ayrı hücre havuzlu (Pool 1-4, her pool max 5 oosit, tek dish max 20 oosit kapasiteli), platin/metal elektrotlu steril tek kullanımlık petri',
             'ZPS13-006 ZEUS Dish Fastener: Mikroskop tablasına sabitleyici U-şekilli metal termal blok',
             'ZPS26-003 ZEUS Electroliquid Powder (Liyofilize Toz Formül): Mannitol, MgSO4, CaCl2, HSA ve HEPES içeren steril liyofilize toz. Çözülmediği sürece 1 YIL (12 ay) raf ömrüne sahiptir; sulandırıldıktan sonra 2 ay boyunca aktif kullanılır. Uluslararası nakliye ve yıllık/yarı-yıllık toplu sarf siparişleri (MoQ) için soğuk zincir riskini sıfırlar.',
             'Tıbbi Sınıf Krokodil Elektrot Kablosu, DC Güç Adaptörü ve Alüminyum Koruyucu Taşıma Çantası'
@@ -21446,10 +21482,39 @@ elif active_view == "🌍 Country 360° Performance & Report":
                 c360_con_bg = "rgba(168,85,247,0.12)"
                 c360_con_bdr = "#A855F7"
 
+            total_dishes_c360 = con_qty * 10
+            total_pools_c360 = total_dishes_c360 * 4
+            max_oocytes_c360 = total_dishes_c360 * 20
+            patient_cycles_c360 = total_dishes_c360
+
             st.markdown(f"""
-            <div style="background:{c360_con_bg};border:1px solid {c360_con_bdr};border-radius:6px;padding:6px 10px;margin-top:4px;margin-bottom:8px;font-size:11px;color:#E2E8F0;">
-                {c360_con_msg}
-                <div style="font-size:10px;color:#94A3B8;margin-top:2px;">🧪 <b>Siklüs Eşdeğeri:</b> {con_qty:,} Kutu = ~{con_qty * 10:,} Tedavi Siklüsü (1 Kutu Z-Dish = 10 Tedavi Vakası)</div>
+            <div style="background:{c360_con_bg};border:1.5px solid {c360_con_bdr};border-radius:8px;padding:10px 14px;margin-top:6px;margin-bottom:10px;font-size:12px;color:#E2E8F0;box-shadow:0 3px 10px rgba(0,0,0,0.25);">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:6px;">
+                    <div>{c360_con_msg}</div>
+                    <span style="background:rgba(0,245,255,0.15);color:#00F5FF;border:1px solid #00F5FF;padding:2px 8px;border-radius:4px;font-weight:700;font-size:10.5px;">
+                        ⚡ 4 Pool × 5 Oosit = Max 20 Oosit/Dish
+                    </span>
+                </div>
+                <div style="font-size:12.5px;color:#00F5FF;margin-top:6px;font-weight:800;border-top:1px solid rgba(255,255,255,0.08);padding-top:6px;">
+                    🧪 <b>Siklüs & Oosit Kapasitesi:</b> {con_qty:,} Kutu = {total_dishes_c360:,} Dish = ~{patient_cycles_c360:,} Hasta Tedavi Siklüsü
+                </div>
+                <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(170px, 1fr));gap:8px;margin-top:6px;font-size:11px;">
+                    <div style="background:rgba(0,0,0,0.35);padding:6px 10px;border-radius:6px;border-left:2.5px solid #00F5FF;">
+                        <span style="color:#94A3B8;">Toplam Mikro-Havuz (Pool):</span><br>
+                        <b style="color:#FFFFFF;font-size:13px;">{total_pools_c360:,} Pool</b> (Her Dish 4 Pool)
+                    </div>
+                    <div style="background:rgba(0,0,0,0.35);padding:6px 10px;border-radius:6px;border-left:2.5px solid #00E676;">
+                        <span style="color:#94A3B8;">Azami Oosit Kapasitesi:</span><br>
+                        <b style="color:#00E676;font-size:13px;">{max_oocytes_c360:,} Oosit</b> (Max 20/Dish)
+                    </div>
+                    <div style="background:rgba(0,0,0,0.35);padding:6px 10px;border-radius:6px;border-left:2.5px solid #FFD700;">
+                        <span style="color:#94A3B8;">Vaka Başı / Oosit Başı:</span><br>
+                        <b style="color:#FFD700;font-size:13px;">${net_con_unit/10.0:,.2f} / Vaka</b> <span style="color:#8FA3C0;font-size:10px;">(${net_con_unit/200.0:,.2f}/Oosit)</span>
+                    </div>
+                </div>
+                <div style="font-size:10.5px;color:#8FA3C0;margin-top:6px;line-height:1.45;">
+                    ℹ️ <i>Klinik Yükleme Kuralı: 1 ZEUS Electro Dish 4 ayrı elektrotlu pool'den oluşur; her pool'e max 5 oosit yüklenerek tek dish'te toplam 20 oosit aynı anda aktive edilir. Bir hastadan ortalama 8–15 oosit toplandığından, 1 Dish tam 1 hasta siklüsünü (20 oosite kadar) tek başına eksiksiz karşılar.</i>
+                </div>
             </div>
             """, unsafe_allow_html=True)
             
