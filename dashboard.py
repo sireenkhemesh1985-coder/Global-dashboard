@@ -45,6 +45,39 @@ st.markdown("""
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
     
+    /* Global Smooth Scrolling */
+    html {
+        scroll-behavior: smooth !important;
+    }
+
+    /* Floating Back-To-Top Button */
+    #btn-back-to-top {
+        position: fixed;
+        bottom: 26px;
+        right: 26px;
+        z-index: 999999;
+        background: linear-gradient(135deg, #00F5FF 0%, #0099FF 100%);
+        color: #070B14 !important;
+        border-radius: 50%;
+        width: 44px;
+        height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 18px;
+        font-weight: 800;
+        text-decoration: none !important;
+        box-shadow: 0 4px 18px rgba(0, 245, 255, 0.45);
+        border: 1.5px solid rgba(255, 255, 255, 0.6);
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    #btn-back-to-top:hover {
+        transform: translateY(-3px) scale(1.08);
+        box-shadow: 0 8px 26px rgba(0, 245, 255, 0.7);
+        color: #070B14 !important;
+    }
+
     /* Global Background & Typography */
     html, body, [class*="css"] {
         font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -7390,6 +7423,31 @@ ZEUS Bioscience Global Market Intelligence System (ZGMI)
         )
 
 
+def render_back_to_top_button():
+    st.markdown('''
+    <div style="text-align: center; margin: 30px 0 16px 0;">
+        <a href="#top_anchor" target="_self" onclick="const el=document.getElementById('top_anchor');if(el){el.scrollIntoView({behavior:'smooth',block:'start'});}else{window.scrollTo({top:0,behavior:'smooth'});}" style="
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, rgba(0, 245, 255, 0.12) 0%, rgba(19, 166, 181, 0.2) 100%);
+            color: #00F5FF;
+            border: 1px solid rgba(0, 245, 255, 0.4);
+            padding: 10px 28px;
+            border-radius: 30px;
+            font-size: 12.5px;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: 0.04em;
+            box-shadow: 0 4px 16px rgba(0, 245, 255, 0.18);
+            transition: all 0.25s ease;
+        ">
+            <span style="font-size:15px;">⬆️</span>
+            <span>Sayfa Başına Dön (Yukarı Çık)</span>
+        </a>
+    </div>
+    ''', unsafe_allow_html=True)
+
 def render_login_gate():
     if not st.session_state.get("authenticated", False):
         # Hide sidebar and collapsed controls when not authenticated
@@ -7454,6 +7512,9 @@ def render_login_gate():
         st.stop()
 
 render_login_gate()
+
+# Top Anchor & Floating Back-To-Top Button
+st.markdown('''<div id="top_anchor" style="position:relative;top:-30px;height:0px;width:0px;"></div><a href="#top_anchor" id="btn-back-to-top" title="Sayfa Başına Dön (Yukarı Çık)" onclick="const el=document.getElementById('top_anchor');if(el){el.scrollIntoView({behavior:'smooth',block:'start'});}else{window.scrollTo({top:0,behavior:'smooth'});}">⬆️</a>''', unsafe_allow_html=True)
 
 # ==============================================================================
 # 3. SIDEBAR NAVIGATION & GLOBAL CONTROLS
@@ -19309,7 +19370,13 @@ elif active_view == "🛃 Market Intelligence & Compare":
                                 
                             strat_mode = "commercial" if "Finansal" in strat_choice else ("distributor" if "Distribütörlük" in strat_choice else "clinical")
                             eff_selected_lang = auto_l if lang_sel_studio == "auto" else lang_sel_studio
-                            
+
+                            pitch_ver_key = f"pitch_ver_{radar_country}_{idx}_{strat_mode}_{eff_selected_lang}"
+                            if pitch_ver_key not in st.session_state:
+                                st.session_state[pitch_ver_key] = 0
+
+                            pitch_state_key = f"pitch_data_{radar_country}_{idx}_{strat_mode}_{eff_selected_lang}"
+
                             user_note_key = f"user_note_{radar_country}_{idx}"
                             if user_note_key not in st.session_state:
                                 st.session_state[user_note_key] = ""
@@ -19323,7 +19390,7 @@ elif active_view == "🛃 Market Intelligence & Compare":
                             # Quick suggestion directive chips
                             def clear_pitch_cache_for_target(c_name, t_idx):
                                 for k in list(st.session_state.keys()):
-                                    if k.startswith(f"pitch_data_{c_name}_{t_idx}") or k.startswith(f"subj_input_{c_name}_{t_idx}") or k.startswith(f"body_input_{c_name}_{t_idx}"):
+                                    if k.startswith(f"pitch_data_{c_name}_{t_idx}"):
                                         del st.session_state[k]
 
                             # Row 1 of directive chips (including Whitepaper & ESHRE Guideline)
@@ -19335,8 +19402,7 @@ elif active_view == "🛃 Market Intelligence & Compare":
                                     clear_pitch_cache_for_target(radar_country, idx)
                                     p_subj_gen, p_body_gen = build_executive_pitch(p, radar_country, strat_mode, target_wp_text, eff_selected_lang)
                                     st.session_state[pitch_state_key] = (p_subj_gen, p_body_gen)
-                                    st.session_state[widget_subj_key] = p_subj_gen
-                                    st.session_state[widget_body_key] = p_body_gen
+                                    st.session_state[pitch_ver_key] = st.session_state.get(pitch_ver_key, 0) + 1
                                     st.rerun()
                             with chip_r1_c2:
                                 if st.button("📚 ESHRE Guideline & AOA Kanıtı", key=f"chip_eshre_guide_{radar_country}_{idx}", use_container_width=True):
@@ -19345,8 +19411,7 @@ elif active_view == "🛃 Market Intelligence & Compare":
                                     clear_pitch_cache_for_target(radar_country, idx)
                                     p_subj_gen, p_body_gen = build_executive_pitch(p, radar_country, strat_mode, target_eshre_text, eff_selected_lang)
                                     st.session_state[pitch_state_key] = (p_subj_gen, p_body_gen)
-                                    st.session_state[widget_subj_key] = p_subj_gen
-                                    st.session_state[widget_body_key] = p_body_gen
+                                    st.session_state[pitch_ver_key] = st.session_state.get(pitch_ver_key, 0) + 1
                                     st.rerun()
                             with chip_r1_c3:
                                 if st.button("⚡ %10 Filo İndirimi & Konsinye", key=f"chip_disc_{radar_country}_{idx}", use_container_width=True):
@@ -19355,8 +19420,7 @@ elif active_view == "🛃 Market Intelligence & Compare":
                                     clear_pitch_cache_for_target(radar_country, idx)
                                     p_subj_gen, p_body_gen = build_executive_pitch(p, radar_country, strat_mode, target_disc_text, eff_selected_lang)
                                     st.session_state[pitch_state_key] = (p_subj_gen, p_body_gen)
-                                    st.session_state[widget_subj_key] = p_subj_gen
-                                    st.session_state[widget_body_key] = p_body_gen
+                                    st.session_state[pitch_ver_key] = st.session_state.get(pitch_ver_key, 0) + 1
                                     st.rerun()
 
                             # Row 2 of directive chips
@@ -19368,8 +19432,7 @@ elif active_view == "🛃 Market Intelligence & Compare":
                                     clear_pitch_cache_for_target(radar_country, idx)
                                     p_subj_gen, p_body_gen = build_executive_pitch(p, radar_country, strat_mode, target_cong_text, eff_selected_lang)
                                     st.session_state[pitch_state_key] = (p_subj_gen, p_body_gen)
-                                    st.session_state[widget_subj_key] = p_subj_gen
-                                    st.session_state[widget_body_key] = p_body_gen
+                                    st.session_state[pitch_ver_key] = st.session_state.get(pitch_ver_key, 0) + 1
                                     st.rerun()
                             with chip_r2_c2:
                                 if st.button("🔬 %79.4 TFF Başarı Verisi", key=f"chip_tff_{radar_country}_{idx}", use_container_width=True):
@@ -19378,8 +19441,7 @@ elif active_view == "🛃 Market Intelligence & Compare":
                                     clear_pitch_cache_for_target(radar_country, idx)
                                     p_subj_gen, p_body_gen = build_executive_pitch(p, radar_country, strat_mode, target_tff_text, eff_selected_lang)
                                     st.session_state[pitch_state_key] = (p_subj_gen, p_body_gen)
-                                    st.session_state[widget_subj_key] = p_subj_gen
-                                    st.session_state[widget_body_key] = p_body_gen
+                                    st.session_state[pitch_ver_key] = st.session_state.get(pitch_ver_key, 0) + 1
                                     st.rerun()
                             with chip_r2_c3:
                                 if st.button("🧪 Non-Toksik AOA", key=f"chip_chem_{radar_country}_{idx}", use_container_width=True):
@@ -19388,8 +19450,7 @@ elif active_view == "🛃 Market Intelligence & Compare":
                                     clear_pitch_cache_for_target(radar_country, idx)
                                     p_subj_gen, p_body_gen = build_executive_pitch(p, radar_country, strat_mode, target_chem_text, eff_selected_lang)
                                     st.session_state[pitch_state_key] = (p_subj_gen, p_body_gen)
-                                    st.session_state[widget_subj_key] = p_subj_gen
-                                    st.session_state[widget_body_key] = p_body_gen
+                                    st.session_state[pitch_ver_key] = st.session_state.get(pitch_ver_key, 0) + 1
                                     st.rerun()
 
                             c_box_col1, c_box_col2 = st.columns([3.0, 1.0])
@@ -19406,12 +19467,6 @@ elif active_view == "🛃 Market Intelligence & Compare":
                             with c_box_col2:
                                 st.write("")
                                 ai_gen_btn = st.button("🚀 Yorumuma Göre Maili Oluştur", key=f"ai_btn_{radar_country}_{idx}", type="primary", use_container_width=True)
-                                
-                            pitch_state_key = f"pitch_data_{radar_country}_{idx}_{strat_mode}_{eff_selected_lang}"
-                            
-                            # Determine language-specific keys
-                            widget_subj_key = f"subj_input_{radar_country}_{idx}_{strat_mode}_{eff_selected_lang}"
-                            widget_body_key = f"body_input_{radar_country}_{idx}_{strat_mode}_{eff_selected_lang}"
 
                             if ai_gen_btn:
                                 clear_pitch_cache_for_target(radar_country, idx)
@@ -19465,8 +19520,7 @@ BODY:
                                             p_subj = p_parts[0].replace("SUBJECT:", "").strip()
                                             p_body = p_parts[1].strip()
                                             st.session_state[pitch_state_key] = (p_subj, p_body)
-                                            st.session_state[widget_subj_key] = p_subj
-                                            st.session_state[widget_body_key] = p_body
+                                            st.session_state[pitch_ver_key] = st.session_state.get(pitch_ver_key, 0) + 1
                                             gen_success = True
                                     except Exception:
                                         gen_success = False
@@ -19474,21 +19528,19 @@ BODY:
                                 if not gen_success:
                                     p_subj, p_body = build_executive_pitch(p, radar_country, strat_mode, user_custom_note, eff_selected_lang)
                                     st.session_state[pitch_state_key] = (p_subj, p_body)
-                                    st.session_state[widget_subj_key] = p_subj
-                                    st.session_state[widget_body_key] = p_body
+                                    st.session_state[pitch_ver_key] = st.session_state.get(pitch_ver_key, 0) + 1
 
                                 st.rerun()
 
                             elif pitch_state_key not in st.session_state:
                                 p_subj, p_body = build_executive_pitch(p, radar_country, strat_mode, user_custom_note, eff_selected_lang)
                                 st.session_state[pitch_state_key] = (p_subj, p_body)
-                                st.session_state[widget_subj_key] = p_subj
-                                st.session_state[widget_body_key] = p_body
-                            
+
+                            curr_ver = st.session_state.get(pitch_ver_key, 0)
                             curr_subj, curr_body = st.session_state.get(pitch_state_key, build_executive_pitch(p, radar_country, strat_mode, user_custom_note, eff_selected_lang))
-                            
-                            edited_subj = st.text_input("📌 E-posta Konu Başlığı (Subject):", value=curr_subj, key=widget_subj_key)
-                            edited_body = st.text_area("Özelleştirilmiş İletişim Metni (Email Body):", value=curr_body, height=270, key=widget_body_key)
+
+                            edited_subj = st.text_input("📌 E-posta Konu Başlığı (Subject):", value=curr_subj, key=f"subj_disp_{radar_country}_{idx}_{strat_mode}_{eff_selected_lang}_{curr_ver}")
+                            edited_body = st.text_area("Özelleştirilmiş İletişim Metni (Email Body):", value=curr_body, height=270, key=f"body_disp_{radar_country}_{idx}_{strat_mode}_{eff_selected_lang}_{curr_ver}")
                             
                             mail_subj_enc = urllib.parse.quote(edited_subj)
                             mail_body_enc = urllib.parse.quote(edited_body)
@@ -25677,6 +25729,9 @@ elif active_view == "🏛️ Küresel & Kamu İhaleleri Masası (Tenders Hub)":
 
 elif active_view == "📜 Gümrük, GTİP & Sağlık Bakanlığı Mevzuatı":
     render_regulations_hub()
+
+# Universal Bottom 'Back to Top' Button (Every Page)
+render_back_to_top_button()
 
 # Modern Glass GSAP AI Telemetry Status Banner
 components.html("""
