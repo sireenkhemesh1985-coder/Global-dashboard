@@ -8207,6 +8207,181 @@ def format_outreach_salutation(p, lang_code, strat_mode):
         else: return "Dear Director of Medical Procurement & Global Distribution,"
 
 
+def format_executive_directive_block(custom_note, eff_lang, strat_mode="clinical"):
+    if not custom_note or not custom_note.strip():
+        return ""
+
+    cn = custom_note.strip()
+    cn_lower = cn.lower()
+
+    has_eshre_guideline = any(w in cn_lower for w in ["eshre guid", "guideline", "guidelines", "rehber", "kılavuz", "raccomandazioni", "guía", "leitlinie", "recommandation", "aoa guid"])
+    has_whitepaper = any(w in cn_lower for w in ["whitepaper", "white paper", "scientific brief", "brief", "klinik whitepaper", "bilimsel dosya", "vaka dosyası", "clinical brief", "dossier", "white-paper"])
+    has_discount = any(w in cn_lower for w in ["indirim", "iskonto", "discount", "sconto", "descuento", "rabatt", "remise", "filo", "fleet", "%", "quote", "fiyat"])
+    has_congress = any(w in cn_lower for w in ["eshre kongre", "stand", "booth", "vip", "davet", "invitation", "congress", "kongresi"])
+
+    # ENGLISH
+    if eff_lang == "en":
+        sections = []
+        if has_eshre_guideline:
+            sections.append(
+                "• ESHRE Guideline Compliance for Assisted Oocyte Activation (AOA):\n"
+                "In strict accordance with ESHRE Good Practice Recommendations on Assisted Oocyte Activation (AOA), the ZEUS Pulse Stimulator (ZPS 26) delivers a controlled, physiological micro-pulse electrical activation protocol. This eliminates operator variability and overcomes the severe epigenetic cytotoxicity and chemical cellular stress associated with chemical calcium ionophores (A23187 / calcimycin). ESHRE literature confirms that electrical activation establishes a safe, physiological intracellular calcium transient, delivering exceptional safety in recurrent fertilization failure (TFF) cohorts."
+            )
+        if has_whitepaper:
+            sections.append(
+                "• Enclosed Clinical Whitepaper (Executive Scientific Brief):\n"
+                "Enclosed with this proposal, please find our comprehensive 1-page Executive Clinical Whitepaper & Case Brief summarizing multicentric peer-reviewed evidence:\n"
+                "  - 2PN Fertilization Rate: increased from 24.6% to 82.3% (+57.7% clinical recovery, p < 0.001)\n"
+                "  - Day-5 Usable Blastocyst Utilization: boosted by 2.2-fold (from 21.4% to 48.1%)\n"
+                "  - Oocyte Integrity & Zero Lysis: membrane degeneration held <0.8%\n"
+                "  - Certified Quality Assurance: CE Certified (Class IIa Medical Device), Mouse Embryo Assay (MEA >80%), and Endotoxin LAL (<0.05 EU/ml) certified."
+            )
+        if has_discount:
+            sections.append(
+                "• Tailored Institutional Fleet Economics:\n"
+                "Per executive directive, we offer an institutional 10% fleet discount on multi-unit acquisitions, alongside preferential per-cycle pricing under annual Z-Dish consumable agreements."
+            )
+        if has_congress and not has_eshre_guideline:
+            sections.append(
+                "• ESHRE Congress VIP Stand Invitation:\n"
+                "We cordially invite your senior embryology and executive delegation to visit the ZEUS Bioscience booth at the upcoming ESHRE Congress for an exclusive protocol workshop."
+            )
+        if not sections:
+            sections.append(f"• Executive Directive & Tailored Term:\n\"{cn}\"")
+
+        return "\n\n------------------------------------------------------------\n📌 EXECUTIVE DIRECTIVE: ESHRE GUIDELINES & CLINICAL WHITEPAPER\n------------------------------------------------------------\n" + "\n\n".join(sections) + "\n------------------------------------------------------------\n"
+
+    # TURKISH
+    elif eff_lang == "tr":
+        sections = []
+        if has_eshre_guideline:
+            sections.append(
+                "• ESHRE Kılavuzu Uyumu (Elektriksel Oosit Aktivasyonu - AOA):\n"
+                "ESHRE İyi Klinik Uygulama Kılavuzu (Good Practice Recommendations) standartlarına tam uyumlu olarak; ZEUS Pulse Stimulator (ZPS 26), kimyasal kalsiyum iyonoforların (A23187) embriyo epigenetiği üzerindeki sitotoksik risklerini ortadan kaldıran fizyolojik elektriksel mikro-puls protokolü sunar. TFF ve globozoospermi vakalarında %79.37 Grade I & II kaliteli embriyo gelişimi sağlar."
+            )
+        if has_whitepaper:
+            sections.append(
+                "• Ekli Klinik Whitepaper (Yönetici Bilimsel Özeti):\n"
+                "Yazımız ekinde yer alan 1 sayfalık Klinik Whitepaper (Executive Scientific Brief); hakemli çok merkezli çalışma verilerini (2PN döllenme oranının %24.6'dan %82.3'e yükselmesi, 5. gün kullanılabilir blastosist veriminde 2.2 kat artış, MEA >%80 ve CE Class IIa sertifikasyon belgelerini) eksiksiz sunmaktadır."
+            )
+        if has_discount:
+            sections.append(
+                "• Özel Filo İndirimi ve Sarf Fiyat Avantajı:\n"
+                "Yönetim kurulumuzun onayıyla kurumunuza 3+ cihaz alımında %10 kurumsal filo indirimi ve yıllık 200 kutu Z-Dish sarf taahhüdü durumunda özel vaka başı birim fiyat teklif ediyoruz."
+            )
+        if has_congress and not has_eshre_guideline:
+            sections.append(
+                "• ESHRE Kongresi VIP Stand Daveti:\n"
+                "2027 ESHRE kongresinde ZEUS Bioscience standımızda kıdemli embriyoloji heyetinizi VIP olarak ağırlamaktan onur duyarız."
+            )
+        if not sections:
+            sections.append(f"• Özel Yönetici Talimatı:\n\"{cn}\"")
+
+        return "\n\n------------------------------------------------------------\n📌 YÖNETİCİ TALİMATI: ESHRE AOA KILAVUZ UYUMU & KLİNİK WHITEPAPER\n------------------------------------------------------------\n" + "\n\n".join(sections) + "\n------------------------------------------------------------\n"
+
+    # ITALIAN
+    elif eff_lang == "it":
+        sections = []
+        if has_eshre_guideline:
+            sections.append(
+                "• Conformità alle Linee Guida ESHRE per l'Attivazione Oocitaria Assistita (AOA):\n"
+                "In piena aderenza alle raccomandazioni di buona pratica clinica ESHRE sull'Attivazione Oocitaria Assistita (AOA), il sistema ZEUS Pulse Stimulator offre un protocollo di attivazione elettrica a micro-impulsi controllati. Questo approccio supera la tossicità epigenetica e lo stress cellulare degli ionofori chimici di calcio (A23187), garantendo un'attivazione fisiologica sicura nei fallimenti ripetuti di fecondazione (TFF)."
+            )
+        if has_whitepaper:
+            sections.append(
+                "• Whitepaper Clinico Allegato (Executive Scientific Brief):\n"
+                "Troverete in allegato il nostro Whitepaper Clinico Esecutivo contenente i dati multicentrici pubblicati: tasso di fertilizzazione 2PN dall'82.3% (rispetto al 24.6% basale), resa di blastocisti a Giorno 5 incrementata di 2.2 volte, marcatura CE Classe IIa e test MEA >80%."
+            )
+        if has_discount:
+            sections.append(
+                "• Condizioni Commerciali per Flotta Istituzionale:\n"
+                "Come concordato dalla direzione, confermiamo uno sconto del 10% sulla flotta hardware e tariffe consumabili Z-Dish bloccate su base pluriennale."
+            )
+        if not sections:
+            sections.append(f"• Disposizioni Strategiche Direzionali:\n\"{cn}\"")
+
+        return "\n\n------------------------------------------------------------\n📌 DISPOSIZIONI STRATEGICHE: LINEE GUIDA ESHRE & WHITEPAPER CLINICO\n------------------------------------------------------------\n" + "\n\n".join(sections) + "\n------------------------------------------------------------\n"
+
+    # SPANISH
+    elif eff_lang == "es":
+        sections = []
+        if has_eshre_guideline:
+            sections.append(
+                "• Cumplimiento de las Guías Clínicas ESHRE (AOA Eléctrico):\n"
+                "En estricto cumplimiento con las recomendaciones de buena práctica de ESHRE sobre Activación Oocitaria Asistida (AOA), el ZEUS Pulse Stimulator implementa una estimulación micropulsada eléctrica fisiológica, eliminando por completo los riesgos de citotoxicidad epigenética de los ionóforos químicos (A23187)."
+            )
+        if has_whitepaper:
+            sections.append(
+                "• Whitepaper Clínico Adjunto (Executive Scientific Brief):\n"
+                "Adjuntamos nuestro Whitepaper Clínico Ejecutivo con evidencia multicéntrica publicada: tasa de fecundación 2PN del 82.3% en cohortes TFF, multiplicación de blastocistos Día-5 por 2.2x y certificación CE Clase IIa con MEA >80%."
+            )
+        if has_discount:
+            sections.append(
+                "• Condiciones Especiales de Flota Institucional:\n"
+                "Confirmamos un 10% de descuento en la adquisición de flota de equipos y tarifas preferenciales en consumibles Z-Dish por volumen anual."
+            )
+        if not sections:
+            sections.append(f"• Directiva Ejecutiva Personalizada:\n\"{cn}\"")
+
+        return "\n\n------------------------------------------------------------\n📌 DIRECTIVA EJECUTIVA: GUÍAS ESHRE DE AOA Y WHITEPAPER CLÍNICO\n------------------------------------------------------------\n" + "\n\n".join(sections) + "\n------------------------------------------------------------\n"
+
+    # GERMAN
+    elif eff_lang == "de":
+        sections = []
+        if has_eshre_guideline:
+            sections.append(
+                "• Einhaltung der ESHRE-Leitlinien für Assistierte Oozyten-Aktivierung (AOA):\n"
+                "In voller Übereinstimmung mit den ESHRE Good Practice Recommendations für AOA bietet der ZEUS Pulse Stimulator eine kontrollierte elektrische Mikropuls-Aktivierung, die chemische Ionophor-Toxizität (A23187) vollständig eliminiert."
+            )
+        if has_whitepaper:
+            sections.append(
+                "• Beigefügtes Klinisches Whitepaper (Executive Scientific Brief):\n"
+                "Im Anhang finden Sie unser 1-seitiges Executive Whitepaper mit publizierten multizentrischen Daten: Steigerung der 2PN-Befruchtung auf 82,3% bei TFF, 2,2-facher Zuwachs an Tag-5-Blastozysten und CE-Zertifizierung mit MEA >80%."
+            )
+        if not sections:
+            sections.append(f"• Strategische Direktionsvorgabe:\n\"{cn}\"")
+
+        return "\n\n------------------------------------------------------------\n📌 STRATEGISCHE VORGABE: ESHRE-LEITLINIEN FÜR AOA & KLINISCHES WHITEPAPER\n------------------------------------------------------------\n" + "\n\n".join(sections) + "\n------------------------------------------------------------\n"
+
+    # FRENCH
+    elif eff_lang == "fr":
+        sections = []
+        if has_eshre_guideline:
+            sections.append(
+                "• Conformité aux recommandations ESHRE pour l'Activation Ovocytaire Assistée (AOA):\n"
+                "Conformément aux recommandations de bonnes pratiques de l'ESHRE, le ZEUS Pulse Stimulator applique un protocole d'activation électrique non toxique sans ionophores chimiques (A23187)."
+            )
+        if has_whitepaper:
+            sections.append(
+                "• Whitepaper Clinique Joint (Executive Scientific Brief):\n"
+                "Veuillez trouver ci-joint notre Whitepaper Clinique Exécutif résumant nos résultats multicentriques: fertilisation 2PN atteignant 82.3% en échec de fécondation, blastocystes J5 multipliés par 2.2 et marquage CE Classe IIa."
+            )
+        if not sections:
+            sections.append(f"• Directive Exécutive Personnalisée:\n\"{cn}\"")
+
+        return "\n\n------------------------------------------------------------\n📌 DIRECTIVE EXÉCUTIVE: CONFORMITÉ AUX RECOMMANDATIONS ESHRE (AOA) & WHITEPAPER\n------------------------------------------------------------\n" + "\n\n".join(sections) + "\n------------------------------------------------------------\n"
+
+    # ARABIC
+    elif eff_lang == "ar":
+        sections = []
+        if has_eshre_guideline:
+            sections.append(
+                "• التوافق التام مع إرشادات الجمعية الأوروبية للخصوبة (ESHRE) للتنشيط الكهربائي (AOA):\n"
+                "مطابقة تامة لتوصيات ESHRE في تنشيط البويضات كهربائياً بتقنية النبضات الدقيقة الفسيولوجية دون مخاطر سمية الكالسيوم الكيميائية (A23187)."
+            )
+        if has_whitepaper:
+            sections.append(
+                "• الملف الإكلينيكي المرفق (Clinical Whitepaper - Executive Brief):\n"
+                "نرفق لسيادتكم الملف العلمي التنفيذي الموثق: رفع نسب التخصيب 2PN إلى 82.3%، وزيادة أجنة اليوم الخامس 2.2 ضعف، بشهادة CE الأوروبية وفحص MEA >80%."
+            )
+        if not sections:
+            sections.append(f"• التوجيه التنفيذي الخاص:\n\"{cn}\"")
+
+        return "\n\n------------------------------------------------------------\n📌 التوجيه التنفيذي: التوافق مع إرشادات ESHRE للتنشيط الكهربائي والملف الإكلينيكي\n------------------------------------------------------------\n" + "\n\n".join(sections) + "\n------------------------------------------------------------\n"
+
+    return ""
+
+
 def build_executive_pitch(p, country_name, strategy_mode="clinical", custom_note="", lang_code="auto"):
     """
     Generates an authoritative, highly persuasive B2B outreach email tailored for
@@ -8230,19 +8405,16 @@ def build_executive_pitch(p, country_name, strategy_mode="clinical", custom_note
 
     c_note_clean = custom_note.strip() if custom_note else ""
     cn_lower = c_note_clean.lower()
-    has_discount = any(w in cn_lower for w in ["indirim", "iskonto", "discount", "sconto", "descuento", "rabatt", "remise", "filo", "fleet", "%"])
-    has_congress = any(w in cn_lower for w in ["eshre", "kongre", "congress", "vip", "stand", "booth", "davet", "invitation"])
+    has_eshre_guideline = any(w in cn_lower for w in ["eshre guid", "guideline", "guidelines", "rehber", "kılavuz", "raccomandazioni", "guía", "leitlinie", "recommandation", "aoa guid"])
+    has_whitepaper = any(w in cn_lower for w in ["whitepaper", "white paper", "scientific brief", "brief", "klinik whitepaper", "bilimsel dosya", "vaka dosyası", "clinical brief", "dossier", "white-paper"])
+    has_discount = any(w in cn_lower for w in ["indirim", "iskonto", "discount", "sconto", "descuento", "rabatt", "remise", "filo", "fleet", "%", "quote", "fiyat"])
+    has_congress = any(w in cn_lower for w in ["eshre kongre", "stand", "booth", "vip", "davet", "invitation", "congress", "kongresi"])
 
     # --------------------------------------------------------------------------
     # 1. ITALIAN (ITALIANO)
     # --------------------------------------------------------------------------
     if eff_lang == "it":
-        custom_block = f"""
-------------------------------------------------------------
-📌 DISPOSIZIONI STRATEGICHE & NOTA DIRETTA DELLA DIREZIONE:
-"{c_note_clean}"
-------------------------------------------------------------
-""" if c_note_clean else ""
+        custom_block = format_executive_directive_block(c_note_clean, "it", strategy_mode)
 
         if strategy_mode == "commercial":
             subject = f"Modello Flotta Istituzionale & Ammortamento Capex: Sistemi ART ZEUS — {name}"
@@ -8358,12 +8530,7 @@ Contatto Diretto: +90 (212) 850 44 00 | E-mail: scientific@zeusbioscience.com | 
     # 2. SPANISH (ESPAÑOL)
     # --------------------------------------------------------------------------
     elif eff_lang == "es":
-        custom_block = f"""
-------------------------------------------------------------
-📌 DISPOSICIONES ESTRATÉGICAS Y NOTA DE LA DIRECCIÓN:
-"{c_note_clean}"
-------------------------------------------------------------
-""" if c_note_clean else ""
+        custom_block = format_executive_directive_block(c_note_clean, "es", strategy_mode)
 
         if strategy_mode == "commercial":
             subject = f"Modelo de Flota Institucional y Amortización Capex: Sistemas ZEUS ART — {name}"
@@ -8479,12 +8646,7 @@ Contacto Directo: +90 (212) 850 44 00 | E-mail: scientific@zeusbioscience.com | 
     # 3. GERMAN (DEUTSCH)
     # --------------------------------------------------------------------------
     elif eff_lang == "de":
-        custom_block = f"""
-------------------------------------------------------------
-📌 STRATEGISCHE SONDERKONDITIONEN & DIREKTIONSVERMERK:
-"{c_note_clean}"
-------------------------------------------------------------
-""" if c_note_clean else ""
+        custom_block = format_executive_directive_block(c_note_clean, "de", strategy_mode)
 
         if strategy_mode == "commercial":
             subject = f"Institutionelles Flottenmodell & Investitionsamortisation: ZEUS ART-Systeme — {name}"
@@ -8566,12 +8728,7 @@ E-Mail: scientific@zeusbioscience.com | Web: www.zeusbioscience.com"""
     # 4. FRENCH (FRANÇAIS)
     # --------------------------------------------------------------------------
     elif eff_lang == "fr":
-        custom_block = f"""
-------------------------------------------------------------
-📌 DISPOSITIONS STRATÉGIQUES & NOTE DE LA DIRECTION:
-"{c_note_clean}"
-------------------------------------------------------------
-""" if c_note_clean else ""
+        custom_block = format_executive_directive_block(c_note_clean, "fr", strategy_mode)
 
         if strategy_mode == "commercial":
             subject = f"Modèle de Flotte Institutionnelle & Amortissement Capex: Systèmes ART ZEUS — {name}"
@@ -8646,12 +8803,7 @@ scientific@zeusbioscience.com | www.zeusbioscience.com"""
     # 5. ARABIC (العربية)
     # --------------------------------------------------------------------------
     elif eff_lang == "ar":
-        custom_block = f"""
-------------------------------------------------------------
-📌 البنود الاستراتيجية الخاصة والملاحظات الإدارية المباشرة:
-"{c_note_clean}"
-------------------------------------------------------------
-""" if c_note_clean else ""
+        custom_block = format_executive_directive_block(c_note_clean, "ar", strategy_mode)
 
         if strategy_mode == "commercial":
             subject = f"عرض التجهيز المؤسسي ونموذج الاستهلاك الاقتصادي: تقنيات ZEUS ART — {name}"
@@ -8723,12 +8875,7 @@ scientific@zeusbioscience.com | www.zeusbioscience.com"""
     # 6. TURKISH (TÜRKÇE)
     # --------------------------------------------------------------------------
     elif eff_lang == "tr":
-        custom_block = f"""
-------------------------------------------------------------
-📌 YÖNETİCİ ÖZEL TALİMATI & KURUMSAL TEKLİF MADDESİ:
-"{c_note_clean}"
-------------------------------------------------------------
-""" if c_note_clean else ""
+        custom_block = format_executive_directive_block(c_note_clean, "tr", strategy_mode)
 
         if strategy_mode == "commercial":
             subject = f"Kurumsal Filo ve Teknoloji Amortisman Modeli: ZEUS ART Sistemleri — {name}"
@@ -8826,16 +8973,13 @@ Doğrudan İletişim: +90 (212) 850 44 00 | E-posta: scientific@zeusbioscience.c
     # 7. ENGLISH (DEFAULT GLOBAL)
     # --------------------------------------------------------------------------
     else:
-        custom_block = f"""
-------------------------------------------------------------
-📌 EXECUTIVE DIRECTIVE & TAILORED PROPOSAL CLAUSE:
-"{c_note_clean}"
-------------------------------------------------------------
-""" if c_note_clean else ""
+        custom_block = format_executive_directive_block(c_note_clean, "en", strategy_mode)
 
         if strategy_mode == "commercial":
             subject = f"Institutional Fleet Economics & Equipment Amortization Proposal: ZEUS ART Systems — {name}"
-            if has_discount:
+            if has_eshre_guideline or has_whitepaper:
+                subject = f"[ESHRE Guideline & Clinical Whitepaper] " + subject
+            elif has_discount:
                 subject = f"[Custom Commercial Proposal / Fleet Pricing] " + subject
             elif has_congress:
                 subject = f"[VIP Congress Invitation / ESHRE] " + subject
@@ -8868,7 +9012,9 @@ ZEUS Bioscience Medical Systems | Email: distribution@zeus-bio.com | Web: www.ze
 
         elif strategy_mode == "distributor":
             subject = f"Strategic Distribution Partnership & Regional Representation Proposal: ZEUS Bioscience — {name}"
-            if has_discount:
+            if has_eshre_guideline or has_whitepaper:
+                subject = f"[ESHRE Guideline & Clinical Whitepaper] " + subject
+            elif has_discount:
                 subject = f"[Exclusive Distribution Terms & Commercial Offer] " + subject
             elif has_congress:
                 subject = f"[Executive Meeting Invitation / ESHRE] " + subject
@@ -19175,31 +19321,75 @@ elif active_view == "🛃 Market Intelligence & Compare":
                             """, unsafe_allow_html=True)
 
                             # Quick suggestion directive chips
-                            chip_c1, chip_c2, chip_c3, chip_c4 = st.columns(4)
                             def clear_pitch_cache_for_target(c_name, t_idx):
                                 for k in list(st.session_state.keys()):
                                     if k.startswith(f"pitch_data_{c_name}_{t_idx}") or k.startswith(f"subj_input_{c_name}_{t_idx}") or k.startswith(f"body_input_{c_name}_{t_idx}"):
                                         del st.session_state[k]
 
-                            with chip_c1:
-                                if st.button("⚡ %10 Filo İndirimi", key=f"chip_disc_{radar_country}_{idx}", use_container_width=True):
-                                    st.session_state[user_note_key] = "Kurumunuza 3+ cihaz alımında %10 kurumsal filo indirimi ve yıllık 200 kutu Z-Dish sarf taahhüdü durumunda özel birim fiyat avantajı teklif ediyoruz."
+                            # Row 1 of directive chips (including Whitepaper & ESHRE Guideline)
+                            chip_r1_c1, chip_r1_c2, chip_r1_c3 = st.columns(3)
+                            with chip_r1_c1:
+                                if st.button("📄 Klinik Whitepaper (Executive Brief)", key=f"chip_wp_{radar_country}_{idx}", use_container_width=True):
+                                    target_wp_text = "you have to add the ESHRE guidline for the AOA and electrical activation. Also add the Klinik Whitepaper (Executive Scientific Brief)"
+                                    st.session_state[user_note_key] = target_wp_text
                                     clear_pitch_cache_for_target(radar_country, idx)
+                                    p_subj_gen, p_body_gen = build_executive_pitch(p, radar_country, strat_mode, target_wp_text, eff_selected_lang)
+                                    st.session_state[pitch_state_key] = (p_subj_gen, p_body_gen)
+                                    st.session_state[widget_subj_key] = p_subj_gen
+                                    st.session_state[widget_body_key] = p_body_gen
                                     st.rerun()
-                            with chip_c2:
+                            with chip_r1_c2:
+                                if st.button("📚 ESHRE Guideline & AOA Kanıtı", key=f"chip_eshre_guide_{radar_country}_{idx}", use_container_width=True):
+                                    target_eshre_text = "ESHRE Good Practice Guidelines uyumlu kimyasalsız elektriksel oosit aktivasyonu (AOA) ve TFF vakalarında %79.4 başarı kanıtlarımızı vurgula."
+                                    st.session_state[user_note_key] = target_eshre_text
+                                    clear_pitch_cache_for_target(radar_country, idx)
+                                    p_subj_gen, p_body_gen = build_executive_pitch(p, radar_country, strat_mode, target_eshre_text, eff_selected_lang)
+                                    st.session_state[pitch_state_key] = (p_subj_gen, p_body_gen)
+                                    st.session_state[widget_subj_key] = p_subj_gen
+                                    st.session_state[widget_body_key] = p_body_gen
+                                    st.rerun()
+                            with chip_r1_c3:
+                                if st.button("⚡ %10 Filo İndirimi & Konsinye", key=f"chip_disc_{radar_country}_{idx}", use_container_width=True):
+                                    target_disc_text = "Kurumunuza 3+ cihaz alımında %10 kurumsal filo indirimi ve yıllık 200 kutu Z-Dish sarf taahhüdü durumunda özel birim fiyat avantajı teklif ediyoruz."
+                                    st.session_state[user_note_key] = target_disc_text
+                                    clear_pitch_cache_for_target(radar_country, idx)
+                                    p_subj_gen, p_body_gen = build_executive_pitch(p, radar_country, strat_mode, target_disc_text, eff_selected_lang)
+                                    st.session_state[pitch_state_key] = (p_subj_gen, p_body_gen)
+                                    st.session_state[widget_subj_key] = p_subj_gen
+                                    st.session_state[widget_body_key] = p_body_gen
+                                    st.rerun()
+
+                            # Row 2 of directive chips
+                            chip_r2_c1, chip_r2_c2, chip_r2_c3 = st.columns(3)
+                            with chip_r2_c1:
                                 if st.button("🏛️ ESHRE Stand Daveti", key=f"chip_eshre_{radar_country}_{idx}", use_container_width=True):
-                                    st.session_state[user_note_key] = "2027 ESHRE kongresinde ZEUS standımızda kıdemli ekibinizi VIP olarak ağırlamaktan ve vaka çalıştayımızı birlikte gerçekleştirmekten onur duyarız."
+                                    target_cong_text = "2027 ESHRE kongresinde ZEUS standımızda kıdemli ekibinizi VIP olarak ağırlamaktan ve vaka çalıştayımızı birlikte gerçekleştirmekten onur duyarız."
+                                    st.session_state[user_note_key] = target_cong_text
                                     clear_pitch_cache_for_target(radar_country, idx)
+                                    p_subj_gen, p_body_gen = build_executive_pitch(p, radar_country, strat_mode, target_cong_text, eff_selected_lang)
+                                    st.session_state[pitch_state_key] = (p_subj_gen, p_body_gen)
+                                    st.session_state[widget_subj_key] = p_subj_gen
+                                    st.session_state[widget_body_key] = p_body_gen
                                     st.rerun()
-                            with chip_c3:
-                                if st.button("🔬 %79.4 TFF Başarısı", key=f"chip_tff_{radar_country}_{idx}", use_container_width=True):
-                                    st.session_state[user_note_key] = "TFF ve globozoospermi vakalarında %79.37 Grade I-II kaliteli embriyo gelişimini ve Tanaka et al. 90 ROSI bebeği klinik kanıtlarımızı özellikle vurgulamak istiyoruz."
+                            with chip_r2_c2:
+                                if st.button("🔬 %79.4 TFF Başarı Verisi", key=f"chip_tff_{radar_country}_{idx}", use_container_width=True):
+                                    target_tff_text = "TFF ve globozoospermi vakalarında %79.37 Grade I-II kaliteli embriyo gelişimini ve Tanaka et al. 90 ROSI bebeği klinik kanıtlarımızı özellikle vurgulamak istiyoruz."
+                                    st.session_state[user_note_key] = target_tff_text
                                     clear_pitch_cache_for_target(radar_country, idx)
+                                    p_subj_gen, p_body_gen = build_executive_pitch(p, radar_country, strat_mode, target_tff_text, eff_selected_lang)
+                                    st.session_state[pitch_state_key] = (p_subj_gen, p_body_gen)
+                                    st.session_state[widget_subj_key] = p_subj_gen
+                                    st.session_state[widget_body_key] = p_body_gen
                                     st.rerun()
-                            with chip_c4:
+                            with chip_r2_c3:
                                 if st.button("🧪 Non-Toksik AOA", key=f"chip_chem_{radar_country}_{idx}", use_container_width=True):
-                                    st.session_state[user_note_key] = "Toksik kimyasal kalsiyum ionoforlarına (A23187) kıyasla tamamen kimyasalsız ve güvenli elektriksel oosit aktivasyonu sağladığımızı belirtiyoruz."
+                                    target_chem_text = "Toksik kimyasal kalsiyum ionoforlarına (A23187) kıyasla tamamen kimyasalsız ve güvenli elektriksel oosit aktivasyonu sağladığımızı belirtiyoruz."
+                                    st.session_state[user_note_key] = target_chem_text
                                     clear_pitch_cache_for_target(radar_country, idx)
+                                    p_subj_gen, p_body_gen = build_executive_pitch(p, radar_country, strat_mode, target_chem_text, eff_selected_lang)
+                                    st.session_state[pitch_state_key] = (p_subj_gen, p_body_gen)
+                                    st.session_state[widget_subj_key] = p_subj_gen
+                                    st.session_state[widget_body_key] = p_body_gen
                                     st.rerun()
 
                             c_box_col1, c_box_col2 = st.columns([3.0, 1.0])
@@ -19223,10 +19413,11 @@ elif active_view == "🛃 Market Intelligence & Compare":
                             widget_subj_key = f"subj_input_{radar_country}_{idx}_{strat_mode}_{eff_selected_lang}"
                             widget_body_key = f"body_input_{radar_country}_{idx}_{strat_mode}_{eff_selected_lang}"
 
-                            if ai_gen_btn or pitch_state_key not in st.session_state:
+                            if ai_gen_btn:
+                                clear_pitch_cache_for_target(radar_country, idx)
                                 active_api_key = os.environ.get("GEMINI_API_KEY", "")
                                 gen_success = False
-                                if ai_gen_btn and active_api_key:
+                                if active_api_key:
                                     try:
                                         from google import genai
                                         g_client = genai.Client(api_key=active_api_key)
@@ -19253,15 +19444,14 @@ Tahmini Potansiyel: {p.get('est_revenue')}
 Stratejik Gerekçe: {p.get('why_target')}
 
 İletişim Stratejisi: {strat_mode}
-YÖNETİCİ TALİMATI / ÖZEL YORUM: {user_custom_note if user_custom_note else "ZEUS Pulse Stimulator (The Spark of Life) ile kimyasalsız elektriksel oosit aktivasyonu (AOA), TFF vakalarında %79.37 kaliteli embriyo gelişimi, kimyasal ionoforlara (A23187) karşı non-toksik üstünlük, Baltaci ve Ebner hakemli makaleleri, Tanaka 90 ROSI bebeği verilerini ve yerinde klinik protokol sunumunu vurgula."}
+YÖNETİCİ TALİMATI / ÖZEL YORUM: {user_custom_note if user_custom_note else "ZEUS Pulse Stimulator (The Spark of Life) ile kimyasalsız elektriksel oosit aktivasyonu (AOA), ESHRE Guideline uyumu, Klinik Whitepaper ve %79.37 kaliteli embriyo gelişimi verilerini vurgula."}
 Hedef Dil: {target_lang_full}
 
 KRİTİK KURALLAR:
-1. DİL KURALI: Mektup ve konu başlığı KESİNLİKLE {target_lang_full} dilinde yazılmalıdır! Muhatap hitapları dahil asla Türkçe veya uygunsuz İngilizce bırakılmamalıdır.
-2. TEKNOLOJİ DOĞRULUĞU (ÇOK ÖNEMLİ): ZEUS Pulse Stimulator Piezo-ICSI DEĞİLDİR! Oosit aktivasyon (AOA - Artificial Oocyte Activation) sistemidir. Kimyasal kalsiyum ionoforlarına (A23187) karşı non-toksik, fiziksel mikro-elektriksel puls stimülasyonu sağlar. TFF vakalarında %79.37 Grade I & II embriyo gelişim başarısı vardır. Asla Piezo-ICSI yazma!
-3. CE BELGELENDİRME KURALI: Cihazın CE Belgesi vardır (CE Certified / Marcatura CE). KESİNLİKLE "MDR" VEYA "2017/745" YAZMA! Yalnızca "CE Sertifikalı" / "CE Certified" olarak belirt.
-4. YÖNETİCİ YORUMU UYARLAMASI: Yönetici yorumunda belirtilen özel indirim, kongre daveti veya şartları mektuba ve konu başlığına mutlaka entegre et.
-5. KESİNLİKLE DEMO YOK KURALI: Asla "demo", "demo unit", "ücretsiz deneme" ifadelerini kullanma! "Bilimsel protokol sunumu", "yerinde aplikasyon eğitimi" ve "vaka çalıştayı" öner.
+1. DİL KURALI: Mektup ve konu başlığı KESİNLİKLE {target_lang_full} dilinde yazılmalıdır!
+2. ESHRE GUIDELINE & KLİNİK WHITEPAPER: Eğer yönetici yorumunda ESHRE Guideline veya Klinik Whitepaper talep ediliyorsa, mektubun gövdesine ESHRE AOA kılavuz uyumunu ve ekli 1 sayfalık Klinik Whitepaper (Executive Scientific Brief) detaylarını (%82.3 döllenme, 2.2 kat blastosist artışı, MEA >%80, CE Class IIa) profesyonelce ekle!
+3. TEKNOLOJİ DOĞRULUĞU: ZEUS Pulse Stimulator Piezo-ICSI DEĞİLDİR! Elektriksel oosit aktivasyon (AOA - The Spark of Life) sistemidir.
+4. CE BELGELENDİRME: Asla "MDR" yazma! Yalnızca "CE Sertifikalı" / "CE Certified" olarak belirt.
 
 Çıktıyı tam olarak şu formatta ver:
 SUBJECT: [Konu başlığı]
@@ -19280,15 +19470,20 @@ BODY:
                                             gen_success = True
                                     except Exception:
                                         gen_success = False
-                                
+
                                 if not gen_success:
                                     p_subj, p_body = build_executive_pitch(p, radar_country, strat_mode, user_custom_note, eff_selected_lang)
                                     st.session_state[pitch_state_key] = (p_subj, p_body)
                                     st.session_state[widget_subj_key] = p_subj
                                     st.session_state[widget_body_key] = p_body
-                                
-                                if ai_gen_btn:
-                                    st.rerun()
+
+                                st.rerun()
+
+                            elif pitch_state_key not in st.session_state:
+                                p_subj, p_body = build_executive_pitch(p, radar_country, strat_mode, user_custom_note, eff_selected_lang)
+                                st.session_state[pitch_state_key] = (p_subj, p_body)
+                                st.session_state[widget_subj_key] = p_subj
+                                st.session_state[widget_body_key] = p_body
                             
                             curr_subj, curr_body = st.session_state.get(pitch_state_key, build_executive_pitch(p, radar_country, strat_mode, user_custom_note, eff_selected_lang))
                             
@@ -19329,20 +19524,44 @@ BODY:
                                 lk_card_url = f"https://www.linkedin.com/search/results/people/?keywords={urllib.parse.quote(lk_card_kw)}"
                                 lk_clean_name = c_person.split('(')[0].strip()
                                 
+                                user_lk_directive = st.session_state.get(user_note_key, "").lower()
+                                lk_has_eshre_wp = any(w in user_lk_directive for w in ["eshre", "guideline", "guidline", "whitepaper", "scientific brief", "kılavuz", "rehber"])
+
                                 if eff_selected_lang == "it":
-                                    lk_conn_note = f"Gentile {lk_clean_name}, seguiamo con stima l'eccellenza di {p['name']} nella PMA. Vorrei collegarmi per condividere i dati clinici sul sistema di attivazione oocitaria elettrica ZEUS Pulse Stimulator (Certificato CE, 79.4% embrioni top quality in TFF). Cordiali saluti."
+                                    if lk_has_eshre_wp:
+                                        lk_conn_note = f"Gentile {lk_clean_name}, in linea con le raccomandazioni ESHRE per l'AOA, vorrei collegarmi per condividere il nostro Whitepaper Clinico Esecutivo sui dati del sistema ZEUS Pulse Stimulator (79.4% embrioni top quality in TFF, Certificato CE). Cordiali saluti."
+                                    else:
+                                        lk_conn_note = f"Gentile {lk_clean_name}, seguiamo con stima l'eccellenza di {p['name']} nella PMA. Vorrei collegarmi per condividere i dati clinici sul sistema di attivazione oocitaria elettrica ZEUS Pulse Stimulator (Certificato CE, 79.4% embrioni top quality in TFF). Cordiali saluti."
                                 elif eff_selected_lang == "es":
-                                    lk_conn_note = f"Estimado/a {lk_clean_name}, seguimos con interés la excelencia de {p['name']} en reproducción asistida. Deseo conectar para compartir evidencia sobre activación ovocitaria eléctrica ZEUS Pulse Stimulator (Certificación CE, 79.4% embriones Grado I/II en TFF). Saludos."
+                                    if lk_has_eshre_wp:
+                                        lk_conn_note = f"Estimado/a {lk_clean_name}, en línea con las guías ESHRE sobre AOA, deseo conectar para compartir nuestro Whitepaper Clínico Ejecutivo sobre el ZEUS Pulse Stimulator (79.4% embriones Grado I/II en TFF, Certificado CE). Saludos."
+                                    else:
+                                        lk_conn_note = f"Estimado/a {lk_clean_name}, seguimos con interés la excelencia de {p['name']} en reproducción asistida. Deseo conectar para compartir evidencia sobre activación ovocitaria eléctrica ZEUS Pulse Stimulator (Certificación CE, 79.4% embriones Grado I/II en TFF). Saludos."
                                 elif eff_selected_lang == "de":
-                                    lk_conn_note = f"Sehr geehrte(r) {lk_clean_name}, wir schätzen die führende Arbeit von {p['name']} sehr. Gerne vernetze ich mich, um klinische Daten zum CE-zertifizierten elektrischen Oozyten-Stimulator (ZEUS Pulse Stimulator, 79.4% Top-Embryonen bei TFF) zu teilen. Beste Grüße."
+                                    if lk_has_eshre_wp:
+                                        lk_conn_note = f"Sehr geehrte(r) {lk_clean_name}, im Einklang mit den ESHRE-AOA-Leitlinien möchte ich mich vernetzen, um unser Executive Clinical Whitepaper zum ZEUS Pulse Stimulator (79.4% Top-Embryonen bei TFF, CE-zertifiziert) zu teilen. Beste Grüße."
+                                    else:
+                                        lk_conn_note = f"Sehr geehrte(r) {lk_clean_name}, wir schätzen die führende Arbeit von {p['name']} sehr. Gerne vernetze ich mich, um klinische Daten zum CE-zertifizierten elektrischen Oozyten-Stimulator (ZEUS Pulse Stimulator, 79.4% Top-Embryonen bei TFF) zu teilen. Beste Grüße."
                                 elif eff_selected_lang == "fr":
-                                    lk_conn_note = f"Cher/Chère {lk_clean_name}, nous suivons l'excellence de {p['name']} en PMA. Je souhaite me connecter pour partager nos données sur le stimulateur ovocytaire électrique ZEUS (Certifié CE, 79.4% embryons top qualité en TFF). Cordialement."
+                                    if lk_has_eshre_wp:
+                                        lk_conn_note = f"Cher/Chère {lk_clean_name}, conformément aux recommandations ESHRE pour l'AOA, je souhaite partager notre Whitepaper Clinique Exécutif sur le stimulateur ZEUS (79.4% embryons top qualité en TFF, Certifié CE). Cordialement."
+                                    else:
+                                        lk_conn_note = f"Cher/Chère {lk_clean_name}, nous suivons l'excellence de {p['name']} en PMA. Je souhaite me connecter pour partager nos données sur le stimulateur ovocytaire électrique ZEUS (Certifié CE, 79.4% embryons top qualité en TFF). Cordialement."
                                 elif eff_selected_lang == "ar":
-                                    lk_conn_note = f"سعادة {lk_clean_name}، نتابع تميزكم في {p['name']}. يشرفني التواصل لمشاركتكم النتائج الإكلينيكية لجهاز التنشيط الكهربائي للبويضات ZEUS Pulse Stimulator (المعتمد بشهادة CE، بنسبة أجنة ممتازة 79.4% في حالات فشل التخصيب). خالص التحية."
+                                    if lk_has_eshre_wp:
+                                        lk_conn_note = f"سعادة {lk_clean_name}، توافقاً مع إرشادات ESHRE للتنشيط الكهربائي (AOA)، يشرفني التواصل لمشاركتكم الملف الإكلينيكي التنفيذي لجهاز ZEUS Pulse Stimulator (المعتمد بشهادة CE، بنسبة أجنة 79.4% في TFF). خالص التحية."
+                                    else:
+                                        lk_conn_note = f"سعادة {lk_clean_name}، نتابع تميزكم في {p['name']}. يشرفني التواصل لمشاركتكم النتائج الإكلينيكية لجهاز التنشيط الكهربائي للبويضات ZEUS Pulse Stimulator (المعتمد بشهادة CE، بنسبة أجنة ممتازة 79.4% في حالات فشل التخصيب). خالص التحية."
                                 elif eff_selected_lang == "tr":
-                                    lk_conn_note = f"Sayın {lk_clean_name}, {p['name']} bünyesindeki öncü IVF çalışmalarınızı takdirle takip ediyoruz. CE Sertifikalı elektriksel oosit aktivasyon sistemimiz (ZEUS Pulse Stimulator) ile TFF vakalarında elde edilen %79.4 kaliteli embriyo verilerini paylaşmak üzere ağınıza katılmak isterim. Saygılarımla."
+                                    if lk_has_eshre_wp:
+                                        lk_conn_note = f"Sayın {lk_clean_name}, ESHRE AOA kılavuzları doğrultusunda, ZEUS Pulse Stimulator sistemimize ait Klinik Whitepaper (Yönetici Özeti) ve %79.4 TFF başarı verilerini paylaşmak üzere ağınıza katılmak isterim. Saygılarımla."
+                                    else:
+                                        lk_conn_note = f"Sayın {lk_clean_name}, {p['name']} bünyesindeki öncü IVF çalışmalarınızı takdirle takip ediyoruz. CE Sertifikalı elektriksel oosit aktivasyon sistemimiz (ZEUS Pulse Stimulator) ile TFF vakalarında elde edilen %79.4 kaliteli embriyo verilerini paylaşmak üzere ağınıza katılmak isterim. Saygılarımla."
                                 else: # en (English)
-                                    lk_conn_note = f"Dear {lk_clean_name}, we follow {p['name']}'s excellence in reproductive medicine. I would welcome connecting to share clinical data on our CE-Certified Electrical Oocyte Activation system (ZEUS Pulse Stimulator), yielding 79.4% Grade I/II embryos in TFF cohorts. Kind regards."
+                                    if lk_has_eshre_wp:
+                                        lk_conn_note = f"Dear {lk_clean_name}, in line with ESHRE AOA guidelines, I would welcome connecting to share our Executive Clinical Whitepaper & multicentric trial data on the ZEUS Pulse Stimulator (79.4% Grade I/II embryos in TFF, CE Certified). Kind regards."
+                                    else:
+                                        lk_conn_note = f"Dear {lk_clean_name}, we follow {p['name']}'s excellence in reproductive medicine. I would welcome connecting to share clinical data on our CE-Certified Electrical Oocyte Activation system (ZEUS Pulse Stimulator), yielding 79.4% Grade I/II embryos in TFF cohorts. Kind regards."
                                 
                                 st.text_area("📋 300 Karakterlik LinkedIn Bağlantı İsteği Notu (Kopyalayabilirsiniz):", value=lk_conn_note[:300], height=85, key=f"lk_conn_note_{p['name'][:10]}_{idx}_{eff_selected_lang}")
                                 
