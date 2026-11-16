@@ -6247,6 +6247,197 @@ def run_live_social_scan():
 
     return results
 
+
+def render_responsive_script_table(data_list, font_size_str="14px (Standart)", view_mode="📋 Tam Akışlı Tablo (Satır Kaydırmalı - Kesilme Yok)"):
+    """
+    Renders production script tables and social media data without any text clipping.
+    Supports auto text-wrapping, custom font sizing, high-contrast dark theme styling,
+    and instant teleprompter/copy mode.
+    """
+    if not data_list:
+        return
+    
+    # Extract keys from first item
+    keys = list(data_list[0].keys())
+    has_time = any("zaman" in k.lower() or "time" in k.lower() or "gün" in k.lower() for k in keys)
+    has_vo = any("seslendirme" in k.lower() or "voiceover" in k.lower() or "vo" in k.lower() for k in keys)
+    
+    # Parse base font size
+    try:
+        base_px = int(font_size_str.split()[0].replace("px", "").strip())
+    except Exception:
+        base_px = 14
+        
+    time_px = max(11, base_px - 2)
+    meta_px = max(11, base_px - 1)
+    line_h = 1.65 if base_px >= 14 else 1.55
+
+    # Determine column widths and styling rules
+    col_meta = {}
+    for k in keys:
+        kl = k.lower()
+        if "zaman" in kl or "time" in kl:
+            col_meta[k] = {"width": "12%", "min_w": "95px", "type": "time", "align": "center"}
+        elif "gün" in kl:
+            col_meta[k] = {"width": "15%", "min_w": "110px", "type": "day", "align": "left"}
+        elif "seslendirme" in kl or "voiceover" in kl:
+            col_meta[k] = {"width": "38%", "min_w": "260px", "type": "vo", "align": "left"}
+        elif "görsel" in kl or "mikroskop" in kl or "kadraj" in kl:
+            col_meta[k] = {"width": "32%", "min_w": "220px", "type": "visual", "align": "left"}
+        elif "başlık" in kl or "title" in kl:
+            col_meta[k] = {"width": "35%", "min_w": "200px", "type": "title", "align": "left"}
+        elif "resim" in kl or "thumbnail" in kl:
+            col_meta[k] = {"width": "25%", "min_w": "160px", "type": "thumb", "align": "left"}
+        else:
+            col_meta[k] = {"width": "18%", "min_w": "130px", "type": "badge", "align": "left"}
+
+    # 1. RENDER TABLE VIEW
+    if "Tablo" in view_mode or "Çift" in view_mode or not has_vo:
+        th_cells = []
+        for k in keys:
+            m = col_meta.get(k, {})
+            w = m.get("width", "auto")
+            min_w = m.get("min_w", "100px")
+            al = m.get("align", "left")
+            th_cells.append(
+                f'<th style="padding:12px 14px; width:{w}; min-width:{min_w}; color:#00F5FF; '
+                f'font-weight:700; font-size:{base_px}px; border-bottom:2px solid #00F5FF; '
+                f'text-align:{al}; letter-spacing:0.3px; background:#111E38; white-space:normal;">{k}</th>'
+            )
+        header_tr = f'<tr style="background:#111E38;">{"".join(th_cells)}</tr>'
+
+        body_rows = []
+        for idx, row in enumerate(data_list):
+            bg = "rgba(15, 25, 46, 0.92)" if idx % 2 == 0 else "rgba(22, 34, 60, 0.80)"
+            td_cells = []
+            for k in keys:
+                val = str(row.get(k, ""))
+                m = col_meta.get(k, {})
+                ctype = m.get("type", "visual")
+                min_w = m.get("min_w", "100px")
+
+                if ctype == "time":
+                    td = (
+                        f'<td style="padding:14px 10px; vertical-align:top; border-bottom:1px solid rgba(255,255,255,0.08); '
+                        f'text-align:center; min-width:{min_w};">'
+                        f'<div style="background:rgba(245,158,11,0.18); color:#FBBF24; border:1px solid rgba(245,158,11,0.35); '
+                        f'padding:4px 8px; border-radius:6px; font-weight:700; font-size:{time_px}px; display:inline-block; white-space:nowrap;">'
+                        f'⏱️ {val}</div></td>'
+                    )
+                elif ctype == "day":
+                    td = (
+                        f'<td style="padding:14px 12px; vertical-align:top; border-bottom:1px solid rgba(255,255,255,0.08); min-width:{min_w};">'
+                        f'<span style="background:rgba(0,245,255,0.12); color:#00F5FF; border:1px solid rgba(0,245,255,0.25); '
+                        f'padding:4px 8px; border-radius:4px; font-weight:700; font-size:{base_px-1}px;">📅 {val}</span></td>'
+                    )
+                elif ctype == "vo":
+                    td = (
+                        f'<td style="padding:14px 16px; vertical-align:top; border-bottom:1px solid rgba(255,255,255,0.08); '
+                        f'min-width:{min_w}; white-space:normal !important; word-wrap:break-word; word-break:normal; overflow-wrap:break-word;">'
+                        f'<div style="border-left:3px solid #00F5FF; padding:4px 10px 4px 12px; background:rgba(0,245,255,0.04); '
+                        f'border-radius:0 6px 6px 0; color:#FFFFFF; font-size:{base_px}px; line-height:{line_h}; font-weight:500;">'
+                        f'"{val}"'
+                        f'</div></td>'
+                    )
+                elif ctype == "visual":
+                    td = (
+                        f'<td style="padding:14px 16px; vertical-align:top; border-bottom:1px solid rgba(255,255,255,0.08); '
+                        f'min-width:{min_w}; color:#CBD5E1; font-size:{base_px-0.5}px; line-height:{line_h}; '
+                        f'white-space:normal !important; word-wrap:break-word; word-break:normal; overflow-wrap:break-word;">'
+                        f'{val}</td>'
+                    )
+                elif ctype == "title":
+                    td = (
+                        f'<td style="padding:14px 16px; vertical-align:top; border-bottom:1px solid rgba(255,255,255,0.08); '
+                        f'min-width:{min_w}; color:#FFFFFF; font-size:{base_px}px; line-height:{line_h}; '
+                        f'white-space:normal !important; word-wrap:break-word; overflow-wrap:break-word;">'
+                        f'{val}</td>'
+                    )
+                elif ctype == "thumb":
+                    td = (
+                        f'<td style="padding:14px 14px; vertical-align:top; border-bottom:1px solid rgba(255,255,255,0.08); '
+                        f'min-width:{min_w}; color:#F59E0B; font-size:{meta_px}px; font-weight:700; '
+                        f'white-space:normal !important; word-wrap:break-word; overflow-wrap:break-word;">'
+                        f'<div style="background:rgba(245,158,11,0.12); border:1px solid rgba(245,158,11,0.25); padding:6px 10px; border-radius:6px;">'
+                        f'🖼️ {val}</div></td>'
+                    )
+                else:
+                    td = (
+                        f'<td style="padding:14px 14px; vertical-align:top; border-bottom:1px solid rgba(255,255,255,0.08); '
+                        f'min-width:{min_w}; color:#38BDF8; font-size:{meta_px}px; line-height:1.5; '
+                        f'white-space:normal !important; word-wrap:break-word; overflow-wrap:break-word;">'
+                        f'<div style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.25); '
+                        f'padding:8px 10px; border-radius:6px; font-weight:500;">'
+                        f'{val}</div></td>'
+                    )
+                td_cells.append(td)
+
+            body_rows.append(f'<tr class="zeus-script-row" style="background:{bg};">{"".join(td_cells)}</tr>')
+
+        table_html = f"""
+        <style>
+        .zeus-script-row:hover {{
+            background: rgba(0, 245, 255, 0.08) !important;
+        }}
+        </style>
+        <div style="width:100%; overflow-x:auto; margin:12px 0 20px 0; border:1px solid rgba(0,245,255,0.25); border-radius:10px; box-shadow:0 6px 20px rgba(0,0,0,0.45); background:#0F192E;">
+          <table style="width:100%; border-collapse:collapse; min-width:720px; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+            <thead>
+              {header_tr}
+            </thead>
+            <tbody>
+              {"".join(body_rows)}
+            </tbody>
+          </table>
+        </div>
+        """
+        st.markdown(table_html, unsafe_allow_html=True)
+
+    # 2. RENDER TELEPROMPTER / VO RAW VIEW IF VO COLUMN EXISTS
+    if has_vo and ("Teleprompter" in view_mode or "Çift" in view_mode):
+        st.markdown(f"""
+        <div style="background:rgba(15,23,42,0.95); border:1px solid rgba(0,245,255,0.3); border-radius:10px; padding:18px 22px; margin-top:14px; margin-bottom:20px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:10px;">
+                <span style="color:#00F5FF; font-weight:700; font-size:{base_px + 2}px;">🎙️ Teleprompter & Canlı Seslendirme Akışı</span>
+                <span style="background:rgba(0,230,118,0.15); color:#00E676; border:1px solid rgba(0,230,118,0.3); padding:3px 10px; border-radius:4px; font-size:11px; font-weight:700;">{len(data_list)} Sahne Hazır</span>
+            </div>
+        """, unsafe_allow_html=True)
+
+        full_vo_paragraphs = []
+        for s_idx, row in enumerate(data_list):
+            time_val = row.get("Zaman", f"Sahne {s_idx+1}")
+            vo_val = ""
+            for k in row:
+                if "seslendirme" in k.lower() or "voiceover" in k.lower() or "vo" in k.lower():
+                    vo_val = row[k]
+                    break
+            visual_val = ""
+            for k in row:
+                if "görsel" in k.lower() or "kadraj" in k.lower() or "mikroskop" in k.lower():
+                    visual_val = row[k]
+                    break
+
+            full_vo_paragraphs.append(f"[{time_val}]\n{vo_val}")
+
+            st.markdown(f"""
+            <div style="margin-bottom:14px; padding:12px 16px; background:rgba(255,255,255,0.03); border-left:4px solid #F59E0B; border-radius:6px;">
+                <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+                    <span style="color:#F59E0B; font-weight:700; font-size:{time_px}px;">⏱️ {time_val}</span>
+                    <span style="color:#8A99AD; font-size:11px;">Sahne {s_idx+1}</span>
+                </div>
+                <div style="color:#FFFFFF; font-size:{base_px + 1}px; line-height:1.75; font-weight:500; margin-bottom:6px;">
+                    {vo_val}
+                </div>
+                {f'<div style="color:#64748B; font-size:11.5px; font-style:italic;">🎬 {visual_val}</div>' if visual_val else ''}
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("</div>", unsafe_allow_html=True)
+
+        # Raw text box for easy 1-click clipboard copy
+        with st.expander("📋 Tek Tıkla Kopyalanabilir Düz Metin (VO Raw Text)", expanded=False):
+            st.text_area("Seslendirme Akışı (Tümünü Seç ve Kopyala):", "\n\n".join(full_vo_paragraphs), height=180)
+
 def render_social_media_hub():
     st.title("📱 Global MedTech Social Media & B2B Content Marketing Hub")
     st.caption("ZEUS Bioscience Uluslararası Tüp Bebek (IVF/ICSI/PGT) Pazarı İçin Canlı Sayfa Denetimi, YouTube & LinkedIn Büyüme Stratejisi, İyileştirme Takibi ve Video Senaryoları.")
@@ -6534,7 +6725,7 @@ def render_social_media_hub():
             {"Mevcut Başlık": "ZEUS Mismatch Blocker | Electronic Witnessing for IVF Labs", "Önerilen Yeni Başlık (Yüksek CTR)": "How Leading IVF Labs Prevent Sample Mix-ups: 7-Station RFID Electronic Witnessing", "Küçük Resim (Thumbnail) Metni": "ZERO ERROR IVF (Manipülatör Kilit)"},
             {"Mevcut Başlık": "Zeus Bioscience (49 Dk)", "Önerilen Yeni Başlık (Yüksek CTR)": "Full Clinical Masterclass: Electrical Oocyte Activation (AOA), Embryo Biopsy & Electronic Witnessing in IVF", "Küçük Resim (Thumbnail) Metni": "IVF MASTERCLASS (4K Canlı Vaka)"},
         ]
-        st.dataframe(pd.DataFrame(ctr_table), use_container_width=True, hide_index=True)
+        render_responsive_script_table(ctr_table, font_size_str='13px (Küçük)', view_mode='📋 Tablo')
 
     # =========================================================================
     # TAB 3: LINKEDIN STRATEGY & B2B LEAD CONVERSION
@@ -6625,7 +6816,7 @@ def render_social_media_hub():
             {"Gün & Saat": "Perşembe (09:00)", "İçerik Türü": "🎥 Mikroskop Vaka / BioPSafe Biyopsi", "Hedef Kitle": "Embriyoloji Uzmanları", "Format": "45 sn Canlı Mikroskop Videosu"},
             {"Gün & Saat": "Pazar Akşamı (20:30)", "İçerik Türü": "🛡️ Hasta Güvenliği / RFID Witnessing", "Hedef Kitle": "Klinik Direktörleri & CEO'lar", "Format": "Vaka Analizi & İnfografik"},
         ]
-        st.dataframe(pd.DataFrame(li_routine), use_container_width=True, hide_index=True)
+        render_responsive_script_table(li_routine, font_size_str='13px (Küçük)', view_mode='📋 Tablo')
 
     # =========================================================================
     # TAB 4: PRODUCTION-READY VIDEO SCRIPTS
@@ -6708,6 +6899,23 @@ def render_social_media_hub():
             key="sb_video_script"
         )
 
+        # Script Font Size & View Mode Controls
+        col_ctrl1, col_ctrl2 = st.columns([1.3, 1.7])
+        with col_ctrl1:
+            script_font_size = st.select_slider(
+                "🔤 Tablo & Metin Boyutu (Text Size):",
+                options=["12px (Kompakt)", "13px (Küçük)", "14px (Standart)", "16px (Büyük - Net Okuma)", "18px (Geniş / VO)"],
+                value="14px (Standart)",
+                help="Tablo içindeki tüm seslendirme ve görsel metinlerin punto boyutunu ekranınıza göre ayarlayabilirsiniz."
+            )
+        with col_ctrl2:
+            script_view_mode = st.radio(
+                "👁️ Senaryo Görünüm Formatı:",
+                ["📋 Tam Akışlı Tablo (Satır Kaydırmalı - Kesilme Yok)", "🎙️ Teleprompter (Düz Metin & Seslendirme)", "📑 Çift Görünüm (Tablo + Teleprompter)"],
+                index=0,
+                horizontal=True
+            )
+
 
         if "TR Sağlık Bakanlığı Uyumlu 1" in script_sel:
             st.info("ℹ️ **Mevzuat Uyumluluk Notu:** Bu senaryo; T.C. Sağlık Bakanlığı 29.07.2023 tarihli Tanıtım Yönetmeliği ve TİTCK Tıbbi Cihaz Tanıtım Yönetmeliği uyarınca **yalnızca Sağlık Meslek Mensuplarına (Hekim, Embriyolog)** yönelik bilimsel/eğitsel içerik standardında kurgulanmıştır. Reklam, fiyat, hasta görseli veya gebelik garantisi içermez; hakemli tıp literatürüne (Ebner 2015, Baltaci 2010) dayanır.")
@@ -6743,7 +6951,7 @@ def render_social_media_hub():
                     "Ekran Yazısı & Bilimsel Atıf": "⚖️ YASAL UYARI: Bu video yalnızca sağlık meslek mensuplarını bilgilendirme amaçlıdır. Tanı ve tedavi için hekiminize başvurunuz."
                 }
             ]
-            st.dataframe(pd.DataFrame(sc_tr1_table), use_container_width=True, hide_index=True)
+            render_responsive_script_table(sc_tr1_table, font_size_str=script_font_size, view_mode=script_view_mode)
 
         elif "TR Sağlık Bakanlığı Uyumlu 2" in script_sel:
             st.info("ℹ️ **Mevzuat Uyumluluk Notu:** Bu senaryo; genel topluma ve sosyal medyaya açık kanallarda yayımlanmak üzere hazırlanmış **Hücresel Biyoloji & Toplum Sağlığı Eğitimi** formatındadır. Ticari marka, ürün satışı, fiyat veya hasta yönlendirmesi içermez. Kadın hastalıkları ve doğum uzmanına danışılması gerektiğini vurgulayan yasal uyarı taşır.")
@@ -6779,7 +6987,7 @@ def render_social_media_hub():
                     "Ekran Yazısı & Bilimsel Atıf": "⚖️ YASAL UYARI: Bu içerik toplum sağlığını bilgilendirme amaçlıdır. Teşhis ve tedavi yerine geçmez; hekiminize danışınız."
                 }
             ]
-            st.dataframe(pd.DataFrame(sc_tr2_table), use_container_width=True, hide_index=True)
+            render_responsive_script_table(sc_tr2_table, font_size_str=script_font_size, view_mode=script_view_mode)
 
         elif "TR Sağlık Bakanlığı Uyumlu 3" in script_sel:
             st.info("ℹ️ **Mevzuat Uyumluluk Notu:** Bu senaryo; embriyoloji laboratuvarlarında sarf malzeme kalitesi ve hasta güvenliğini güvenceye alan uluslararası standartları (MEA >%80, Endotoksin, ISO 13485) teknik bir dille anlatan **Laboratuvar Kalite Güvencesi** eğitim senaryosudur.")
@@ -6815,7 +7023,7 @@ def render_social_media_hub():
                     "Ekran Yazısı & Bilimsel Atıf": "⚖️ YASAL UYARI: Bu materyal sağlık profesyonellerine yönelik teknik kalite bilgilendirmesidir."
                 }
             ]
-            st.dataframe(pd.DataFrame(sc_tr3_table), use_container_width=True, hide_index=True)
+            render_responsive_script_table(sc_tr3_table, font_size_str=script_font_size, view_mode=script_view_mode)
 
         elif "Senaryo 1" in script_sel:
             sc1_table = [
@@ -6825,7 +7033,7 @@ def render_social_media_hub():
                 {"Zaman": "00:40 - 00:52", "Görsel & Mikroskop Açısı": "Kamera laboratuvardaki baş embriyoloğa döner. Embriyolog monitördeki 2PN döllenmiş zigotları inceler ve başını onaylarcasına sallar. Masada ZPS 26 kontrol konsolu şık mavi LED ışığıyla görünür.", "Seslendirme (Voiceover - VO)": "Total Döllenme Başarısızlığı (TFF) geçmişi olan zorlu vakalarda klinik 2PN oranlarını yüzde 24'ten yüzde 82'ye yükselten altın standart.", "Ekran Yazısı & Grafik": "🏆 TFF Vakalarında Kanıtlanmış AOA Protokolü | CE Device Certified (Class IIa)"},
                 {"Zaman": "00:52 - 01:00", "Görsel & Mikroskop Açısı": "ZEUS Bioscience animasyonlu logosu, CE Class IIa ibaresi. Altta web sitesi ve QR kod: 'Kliniğinizde Yerinde Vaka Çalıştayı Talep Edin'.", "Seslendirme (Voiceover - VO)": "Kliniğinizin başarı oranlarını bir üst seviyeye taşıyın. Yerinde aplikasyon çalıştayı ve konsinye değerlendirme protokolü için profildeki linke tıklayın.", "Ekran Yazısı & Grafik": "👉 zeusbio.com/zps26 | Yerinde Vaka Çalıştayı & Aplikasyon Eğitimi"}
             ]
-            st.dataframe(pd.DataFrame(sc1_table), use_container_width=True, hide_index=True)
+            render_responsive_script_table(sc1_table, font_size_str=script_font_size, view_mode=script_view_mode)
 
         elif "Senaryo 2" in script_sel:
             sc2_table = [
@@ -6835,7 +7043,7 @@ def render_social_media_hub():
                 {"Zaman": "00:55 - 01:15", "Görsel & Mikroskop Açısı": "Embriyolog biyopsi yapılan hücre kümesini BioPSafe Tubing kılavuzuyla doğrudan PCR tüpünün tabanına tek hamlede aktarır. Damla yüzeyde asılı kalmaz, tam merkeze yerleşir.", "Seslendirme (Voiceover - VO)": "BioPSafe Tubing kitiyle örnek kaybı riski sıfırlanır. Genetik analiz için maksimum DNA amplifikasyon güvencesi sağlanır.", "Ekran Yazısı & Grafik": "🧬 %100 Başarılı PCR Amplifikasyonu | MEA >%80 & Endotoksin Güvencesi"},
                 {"Zaman": "01:15 - 01:25", "Görsel & Mikroskop Açısı": "BioPSafe steril kutusu, CE işareti, parti analiz sertifikası (CoA).", "Seslendirme (Voiceover - VO)": "Embriyolarınızı termal hasardan koruyun. Ücretsiz BioPSafe doğrulama numunesi ve biyopsi protokolü için hemen başvurun.", "Ekran Yazısı & Grafik": "👉 zeusbio.com/biopsafe | Ücretsiz Doğrulama Numunesi Talep Et"}
             ]
-            st.dataframe(pd.DataFrame(sc2_table), use_container_width=True, hide_index=True)
+            render_responsive_script_table(sc2_table, font_size_str=script_font_size, view_mode=script_view_mode)
 
         elif "Senaryo 3" in script_sel:
             sc3_table = [
@@ -6844,7 +7052,7 @@ def render_social_media_hub():
                 {"Zaman": "00:35 - 01:05", "Görsel & Mikroskop Açısı": "ZEUS Mismatch Blocker mikromanipülatörün yanına monte edilmiştir. Yanlış hastanın sperm tüpü alana yaklaştırılır. ANINDA KIRMIZI ALARM! Konsol sesli uyarı verir ve mikromanipülatör kolunu otomatik kilitler!", "Seslendirme (Voiceover - VO)": "ZEUS Mismatch Blocker, laboratuvarınızdaki 7 kritik kontrol noktasında temassız RFID teknolojisiyle çalışır. Yanlış bir numune alana girdiğinde sistem manipülatörü kilitler ve işlemi anında durdurur.", "Ekran Yazısı & Grafik": "🚨 OTOMATİK KİLİTLEME: Eşleşmeyen Numunede Manipülatör Bloke Edilir"},
                 {"Zaman": "01:05 - 01:30", "Görsel & Mikroskop Açısı": "Sistem anında dijital denetim izi (Audit Trail) üretir.", "Seslendirme (Voiceover - VO)": "Her işlem saniyesi saniyesine kayıt altına alınır. Hastaya ve bakanlık denetçilerine sunulabilecek yüzde 100 şeffaf elektronik şahitlik raporu hazır.", "Ekran Yazısı & Grafik": "👉 zeusbio.com/mismatch-blocker | Canlı Online Simülasyon Randevusu Alın"}
             ]
-            st.dataframe(pd.DataFrame(sc3_table), use_container_width=True, hide_index=True)
+            render_responsive_script_table(sc3_table, font_size_str=script_font_size, view_mode=script_view_mode)
 
         elif "Senaryo 4" in script_sel:
             sc4_table = [
@@ -6852,7 +7060,7 @@ def render_social_media_hub():
                 {"Zaman": "00:08 - 00:28", "Görsel & Mikroskop Açısı": "Z-Dish Array'in mikrokuyucuklarına dizilmiş 12 oosit. Solüsyonda kalsiyum yoktur (Calcium-Free AOA). ZPS 26 piezo uyarımı verilir verilmez hücre içinde endojen kalsiyum salınımı başlar.", "Seslendirme (Voiceover - VO)": "ZEUS Z-Dish Array ve Kalsiyumsuz AOA Protokolü ile kimyasal toksisiteye son veriyoruz. Mikrosaniyelik piezo uyarım oositin kendi doğal kalsiyum rezervlerini serbest bırakır.", "Ekran Yazısı & Grafik": "🛡️ %0 Kimyasal Toksisite | Doğal Endojen Kalsiyum Salınımı"},
                 {"Zaman": "00:28 - 01:00", "Görsel & Mikroskop Açısı": "Z-Dish kuyucuklarında yan yana duran kusursuz 2PN pronükleuslar.", "Seslendirme (Voiceover - VO)": "Sonuç: Sıfır kimyasal kalıntı, yüzde 54.2 blastosist oluşumu ve CE Sertifikalı uyumlu en yüksek güvenlik standardı.", "Ekran Yazısı & Grafik": "👉 zeusbio.com/zdish | Protokol & Validasyon Dosyasını İndir"}
             ]
-            st.dataframe(pd.DataFrame(sc4_table), use_container_width=True, hide_index=True)
+            render_responsive_script_table(sc4_table, font_size_str=script_font_size, view_mode=script_view_mode)
 
         elif "Senaryo 5" in script_sel:
             sc5_table = [
@@ -6862,7 +7070,7 @@ def render_social_media_hub():
                 {"Zaman": "00:50 - 01:05 (Klinik Kanıt)", "Görsel & Mikroskop Açısı": "4K mikroskop altında bölünmüş ve 5. güne ulaşmış harika kalitede bir blastosist embriyo gösterilir. Sağ altta CE Sertifikalı (Class IIa) ve ISO 13485 hologramları parlar.", "Seslendirme (Voiceover - VO)": "Sonuç? Geleneksel ICSI'deki yüzde 8.5 lizis oranı yüzde 0.8'in altına inerken; TFF vakalarında 2PN döllenme oranı yüzde 82'ye, blastosist dönüşümü ise artı yüzde 18.4'e ulaşıyor.", "Ekran Yazısı & Grafik": "📈 Klinik Veri: 2PN Başarısı %24 ➔ %82 | Blastosist +%18.4 | CE Class IIa"},
                 {"Zaman": "01:05 - 01:15 (Bitiş & Lead Magnet)", "Görsel & Mikroskop Açısı": "ZEUS Bioscience kurumsal logosu ve ZPS 26 cihazı. Ekranda indirme butonu simgesi ve QR kod belirir.", "Seslendirme (Voiceover - VO)": "Kliniğinizin başarı oranlarını yükseltecek hakemli klinik çalışma protokolünü ve ZPS 26 teknik şartnamesini inceleyin. Yorumlara 'PROTOKOL' yazın, klinik çalışma dosyasını size hemen gönderelim.", "Ekran Yazısı & Grafik": "👉 Yorumlara 'PROTOKOL' Yazın | DM ile Klinik Dosyayı Alın | zeusbio.com"}
             ]
-            st.dataframe(pd.DataFrame(sc5_table), use_container_width=True, hide_index=True)
+            render_responsive_script_table(sc5_table, font_size_str=script_font_size, view_mode=script_view_mode)
 
         elif "Senaryo 6" in script_sel:
             sc6_table = [
@@ -6872,7 +7080,7 @@ def render_social_media_hub():
                 {"Zaman": "00:28 - 00:38 (Klinik Kanıt)", "Dikey 9:16 Kadraj & Güvenli Alan": "4K time-lapse ile bölünen 5. gün blastosisti. Sağ köşede CE Sertifikalı (Class IIa) hologram damgası.", "Seslendirme (Voiceover - VO)": "Blastosist gelişiminde net artı yüzde 18.4 artış. CE Sertifikalı (Class IIa) onaylı küresel altın standart.", "Mobil Ekran Altyazısı (Auto-Cap)": "📈 Blastosist Artışı +%18.4 | CE Sertifikalı (Class IIa)"},
                 {"Zaman": "00:38 - 00:45 (Başparmakla Mobil Eylem)", "Dikey 9:16 Kadraj & Güvenli Alan": "ZEUS Bioscience logosu, animasyonlu parmak klavyede 'P-R-O-T-O-K-O-L' yazar ve DM ikonuna tıklar.", "Seslendirme (Voiceover - VO)": "Klinik çalışma ve aplikasyon protokolünü hemen almak için yoruma 'PROTOKOL' yazın, DM ile anında iletelim!", "Mobil Ekran Altyazısı (Auto-Cap)": "👇 Yoruma 'PROTOKOL' Yazın | DM ile Anında Gelsin"}
             ]
-            st.dataframe(pd.DataFrame(sc6_table), use_container_width=True, hide_index=True)
+            render_responsive_script_table(sc6_table, font_size_str=script_font_size, view_mode=script_view_mode)
 
         # 9:16 Vertical Mobile Production Guide
         st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
