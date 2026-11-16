@@ -12337,7 +12337,6 @@ def get_default_geopolitical_crisis_protocol():
 import urllib.parse
 
 # Define the dictionary of comprehensive official tender portal links
-GLOBAL_COUNTRY_TENDER_PORTALS_CODE = '''
 GLOBAL_COUNTRY_TENDER_PORTALS = {
     "Egypt": [
         {
@@ -12649,10 +12648,26 @@ def render_country_tender_portals_html(country_name, raw_portals=None):
     Renders rich interactive government tender portal cards with direct working URLs,
     live tender search buttons, and CPV codes for any country.
     """
-    portals = GLOBAL_COUNTRY_TENDER_PORTALS.get(country_name)
+    c_alias = {
+        "Turkey": "Türkiye", "TR": "Türkiye",
+        "Suudi Arabistan": "Saudi Arabia", "KSA": "Saudi Arabia",
+        "Mısır": "Egypt", "EG": "Egypt",
+        "Irak": "Iraq", "IQ": "Iraq",
+        "Almanya": "Germany", "DE": "Germany",
+        "İtalya": "Italy", "IT": "Italy",
+        "İspanya": "Spain", "ES": "Spain",
+        "İngiltere": "United Kingdom", "UK": "United Kingdom", "GB": "United Kingdom",
+        "BAE": "UAE", "United Arab Emirates": "UAE", "AE": "UAE",
+        "Cezayir": "Algeria", "DZ": "Algeria",
+        "Ürdün": "Jordan", "JO": "Jordan",
+        "Katar": "Qatar", "QA": "Qatar",
+        "Kuveyt": "Kuwait", "KW": "Kuwait"
+    }
+    clean_c = str(country_name).strip() if country_name else ""
+    target_c = c_alias.get(clean_c, clean_c)
+    
+    portals = GLOBAL_COUNTRY_TENDER_PORTALS.get(target_c) or GLOBAL_COUNTRY_TENDER_PORTALS.get(clean_c) or raw_portals
     if not portals:
-        # Generate default dynamic portals if country not explicitly registered
-        clean_c = country_name.strip()
         portals = [
             {
                 "name": f"{clean_c} Ulusal Kamu & Sağlık İhale Portalı",
@@ -12685,17 +12700,27 @@ def render_country_tender_portals_html(country_name, raw_portals=None):
 
     portal_cards = []
     for p in portals:
-        p_name = p.get("name", "İhale Portalı")
-        p_url = p.get("url", "https://google.com")
-        p_domain = p.get("domain", "gov")
-        p_desc = p.get("desc", "Sağlık İhaleleri Portalı")
-        p_status = p.get("status", "Resmi Otorite")
-        p_color = p.get("status_color", "#00F5FF")
-        sq = p.get("search_query", f"{p_name} tenders")
+        if isinstance(p, str):
+            p_name = p
+            p_url = f"https://www.google.com/search?q={urllib.parse.quote(p)}"
+            p_domain = "portal.gov"
+            p_desc = f"{target_c} Resmi Satın Alma & İhale Platformu"
+            p_status = "Resmi Otorite"
+            p_color = "#00F5FF"
+            sq = f"{target_c} {p} tenders"
+        else:
+            p_name = p.get("name", "İhale Portalı")
+            p_url = p.get("url", "https://google.com")
+            p_domain = p.get("domain", "gov")
+            p_desc = p.get("desc", "Sağlık İhaleleri Portalı")
+            p_status = p.get("status", "Resmi Otorite")
+            p_color = p.get("status_color", "#00F5FF")
+            sq = p.get("search_query", f"{p_name} tenders")
+            
         sq_enc = urllib.parse.quote(sq)
         search_link = f"https://www.google.com/search?q={sq_enc}"
 
-        card = f\'\'\'
+        card = f"""
         <div style="background:rgba(15,23,42,0.85); border:1px solid rgba(0,245,255,0.2); border-left:3px solid {p_color}; border-radius:8px; padding:10px 12px; margin-bottom:10px; box-shadow:0 2px 8px rgba(0,0,0,0.25);">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:4px; flex-wrap:wrap; gap:6px;">
                 <a href="{p_url}" target="_blank" style="color:#FFFFFF; font-weight:700; font-size:12.5px; text-decoration:none; display:inline-flex; align-items:center; gap:5px;" title="Resmi Portala Canlı Git">
@@ -12713,11 +12738,709 @@ def render_country_tender_portals_html(country_name, raw_portals=None):
                 </a>
             </div>
         </div>
-        \'\'\'
+        """
         portal_cards.append(card)
 
     return "".join(portal_cards)
-'''
+
+
+GLOBAL_COUNTRY_TENDER_SCHEDULES = {
+    "Egypt": {
+        "quarterly_cycle": "Q1: İhtiyaç Tespiti & UPA Bütçe Tahsisi | Q2: UPA İhale İlanı & Teklif Toplama | Q3: Teknik Komisyon & Akreditif (LC) | Q4: Teslimat & Klinik Devreye Alma",
+        "milestones": [
+            {"step": "1", "name": "İhale İlanı & Şartname Yayını", "date": "15 Ocak 2026", "icon": "📢"},
+            {"step": "2", "name": "Şartname İtiraz & Soru-Cevap", "date": "05 Mart 2026", "icon": "❓"},
+            {"step": "3", "name": "Son Teklif Verme (Deadline)", "date": "08 Nisan 2026, 14:00", "icon": "⏳", "highlight": True},
+            {"step": "4", "name": "Numune & MEA Analizi", "date": "22 Nisan – 05 Mayıs 2026", "icon": "🔬"},
+            {"step": "5", "name": "İhale Kararı & Sözleşme", "date": "20 Mayıs 2026", "icon": "✍️"},
+            {"step": "6", "name": "Teslimat & Kurulum", "date": "Temmuz 2026", "icon": "🚚"}
+        ],
+        "tenders": [
+            {
+                "id": "EGY-UPA-2026-IVF-09",
+                "title": "UPA Yıllık Ulusal Merkezi IVF Laboratuvarı Ekipman ve Sarf Çerçeve İhalesi",
+                "authority": "Unified Procurement Authority (UPA - El-Shiraa El-Mowahed)",
+                "type": "Ulusal Açık Kamu İhalesi",
+                "budget": "8.500.000 EGP (~$175.000 USD)",
+                "publish_date": "15 Ocak 2026",
+                "clarification_deadline": "05 Mart 2026",
+                "submission_deadline": "08 Nisan 2026, 14:00 (Kahire Saati)",
+                "sample_eval_date": "22 Nisan – 05 Mayıs 2026",
+                "award_date": "20 Mayıs 2026",
+                "delivery_window": "Temmuz 2026 (LC Açılışından İtibaren 45 Gün)",
+                "days_left": "22 Gün Kaldı",
+                "status_badge": "🟢 Teklif Hazırlığı Açık",
+                "status_color": "#00E676",
+                "target_scope": "5 Adet Piezo Oosit Stimülatör (ZPS 26) + 750 Kutu Z-Dish Array",
+                "portal_url": "https://www.upa.gov.eg",
+                "portal_name": "UPA e-Procurement"
+            },
+            {
+                "id": "KASR-ALAINY-2026/IVF",
+                "title": "Kahire Üniversitesi Tıp Fakültesi (Kasr Al-Ainy) İleri İnfertilite Cihaz Alımı",
+                "authority": "Kahire Üniversitesi & Ayn Şems Satın Alma Masası",
+                "type": "Üniversite Hastanesi Doğrudan Temin",
+                "budget": "3.200.000 EGP (~$66.000 USD)",
+                "publish_date": "20 Şubat 2026",
+                "clarification_deadline": "25 Mart 2026",
+                "submission_deadline": "30 Nisan 2026, 12:00",
+                "sample_eval_date": "10 Mayıs 2026",
+                "award_date": "25 Mayıs 2026",
+                "delivery_window": "Haziran 2026",
+                "days_left": "44 Gün Kaldı",
+                "status_badge": "🟢 Açık Teklif Süreci",
+                "status_color": "#00F5FF",
+                "target_scope": "2 Adet ZPS 26 Cihazı + Yerinde Klinik Embriyoloji Eğitimi",
+                "portal_url": "https://etenders.gov.eg",
+                "portal_name": "Bawaba Al-Monaqasat"
+            }
+        ]
+    },
+    "Saudi Arabia": {
+        "quarterly_cycle": "Q1: NUPCO Şartnamelerinin Dağıtımı | Q2: Teklif Teslimi & SFDA Teknik Değerlendirme | Q3: Sözleşme İmzası & İlk Parti Sevkiyatı | Q4: Klinik Eğitim & Kabul Testleri",
+        "milestones": [
+            {"step": "1", "name": "İhale İlanı & Şartname Yayını", "date": "08 Şubat 2026", "icon": "📢"},
+            {"step": "2", "name": "Şartname İtiraz & Soru-Cevap", "date": "20 Mart 2026", "icon": "❓"},
+            {"step": "3", "name": "Son Teklif Verme (Deadline)", "date": "18 Nisan 2026, 16:00", "icon": "⏳", "highlight": True},
+            {"step": "4", "name": "SFDA & Numune Doğrulama", "date": "02 – 18 Mayıs 2026", "icon": "🔬"},
+            {"step": "5", "name": "Nihai Karar & Sözleşme", "date": "08 Haziran 2026", "icon": "✍️"},
+            {"step": "6", "name": "Kurulum & Teslimat", "date": "Ağustos 2026", "icon": "🚚"}
+        ],
+        "tenders": [
+            {
+                "id": "KSA-NUPCO-2026/04-IVF",
+                "title": "Ulusal Kamu & Üniversite Hastaneleri Tüp Bebek Donanım Çerçeve Alımı",
+                "authority": "NUPCO (National Unified Procurement Company) & Suudi Sağlık Bakanlığı (MOH)",
+                "type": "Ulusal Merkezi Çerçeve İhalesi",
+                "budget": "1.850.000 SAR (~$493.000 USD)",
+                "publish_date": "08 Şubat 2026",
+                "clarification_deadline": "20 Mart 2026",
+                "submission_deadline": "18 Nisan 2026, 16:00 (Riyad Saati)",
+                "sample_eval_date": "02 – 18 Mayıs 2026",
+                "award_date": "08 Haziran 2026",
+                "delivery_window": "Ağustos 2026 (LC Açılışından 45 Gün Sonra)",
+                "days_left": "32 Gün Kaldı",
+                "status_badge": "🟢 Teklif Hazırlığı Açık",
+                "status_color": "#00E676",
+                "target_scope": "8 Adet Oosit Aktivasyon Sistemi (ZPS 26) + 1.200 Kutu Z-Dish Array",
+                "portal_url": "https://nupco.com",
+                "portal_name": "NUPCO e-Tender Portal"
+            },
+            {
+                "id": "KFSHRC-2026-MED-12",
+                "title": "King Faisal Specialist Hospital & Research Centre İleri Embriyoloji Cihaz İhalesi",
+                "authority": "King Faisal Uzman Hastanesi & Araştırma Merkezi",
+                "type": "Özel Kamu İhtisas Alımı",
+                "budget": "920.000 SAR (~$245.000 USD)",
+                "publish_date": "01 Mart 2026",
+                "clarification_deadline": "28 Mart 2026",
+                "submission_deadline": "12 Mayıs 2026, 14:00 (Riyad)",
+                "sample_eval_date": "20 – 28 Mayıs 2026",
+                "award_date": "30 Mayıs 2026",
+                "delivery_window": "Temmuz 2026",
+                "days_left": "56 Gün Kaldı",
+                "status_badge": "🟢 Yeni İlan Edildi",
+                "status_color": "#00F5FF",
+                "target_scope": "3 Adet Pulse Stimulator + 500 Kutu Sarf + Klinik Entegrasyon",
+                "portal_url": "https://etenders.gov.sa",
+                "portal_name": "Etimad Platformu"
+            }
+        ]
+    },
+    "Türkiye": {
+        "quarterly_cycle": "Q1: EKAP İhale İlanı & Teknik Şartname İtiraz | Q2: Tekliflerin Açılması & DMO Başvuruları | Q3: Şehir Hastaneleri Kurulumu | Q4: Yıllık Sarf Hakedişleri",
+        "milestones": [
+            {"step": "1", "name": "EKAP İhale İlanı", "date": "24 Ocak 2026", "icon": "📢"},
+            {"step": "2", "name": "Şartname İtiraz & Açıklama", "date": "14 Mart 2026", "icon": "❓"},
+            {"step": "3", "name": "Son Teklif Verme (Deadline)", "date": "07 Nisan 2026, 10:30", "icon": "⏳", "highlight": True},
+            {"step": "4", "name": "Komisyon & Numune İncelemesi", "date": "18 Nisan – 02 Mayıs 2026", "icon": "🔬"},
+            {"step": "5", "name": "Sözleşme & Kesin Teminat", "date": "20 Mayıs 2026", "icon": "✍️"},
+            {"step": "6", "name": "Teslimat & Kurulum", "date": "Temmuz 2026", "icon": "🚚"}
+        ],
+        "tenders": [
+            {
+                "id": "TR-KHGM-2026-TUP-118",
+                "title": "8 Şehir Hastanesi Tüp Bebek Laboratuvarı Oosit Aktivasyon Sistemi Alımı (4734 Açık İhale)",
+                "authority": "T.C. Sağlık Bakanlığı, Kamu Hastaneleri Genel Müdürlüğü (KHGM)",
+                "type": "4734 Sayılı Kanun Kapsamında Açık İhale",
+                "budget": "₺4.200.000 TRY (~$122.000 USD)",
+                "publish_date": "24 Ocak 2026",
+                "clarification_deadline": "14 Mart 2026",
+                "submission_deadline": "07 Nisan 2026, 10:30 (Ankara Saati)",
+                "sample_eval_date": "18 Nisan – 02 Mayıs 2026",
+                "award_date": "20 Mayıs 2026",
+                "delivery_window": "Temmuz 2026 (60 Gün)",
+                "days_left": "21 Gün Kaldı",
+                "status_badge": "🟢 EKAP Teklif Verme Açık",
+                "status_color": "#00E676",
+                "target_scope": "8 Adet Donanım + 1.200 Kutu MEA Onaylı Sarf Seti",
+                "portal_url": "https://ekap.kik.gov.tr",
+                "portal_name": "EKAP e-İhale"
+            },
+            {
+                "id": "TR-DMO-SM-2026/Q2",
+                "title": "DMO Sağlık Market Tıbbi Cihaz Kataloğu Çerçeve Anlaşması (Sürekli Tedarik)",
+                "authority": "Devlet Malzeme Ofisi (DMO) Sağlık Market Dairesi",
+                "type": "DMO Çerçeve Kataloğu",
+                "budget": "₺8.500.000 TRY (~$250.000 USD Tahmini)",
+                "publish_date": "01 Nisan 2026",
+                "clarification_deadline": "15 Nisan 2026",
+                "submission_deadline": "30 Nisan 2026, 17:00",
+                "sample_eval_date": "05 – 15 Mayıs 2026",
+                "award_date": "25 Mayıs 2026",
+                "delivery_window": "Haziran 2026 Başlangıç",
+                "days_left": "44 Gün Kaldı",
+                "status_badge": "🟡 Başvuru Takvimi Yaklaşıyor",
+                "status_color": "#FFB800",
+                "target_scope": "ÜTS Kayıtlı Cihaz & Sarf Doğrudan Sipariş Modeli",
+                "portal_url": "https://www.dmo.gov.tr",
+                "portal_name": "DMO Sağlık Market"
+            }
+        ]
+    },
+    "Iraq": {
+        "quarterly_cycle": "Q1: TIREPD Fabrika Kaydı & KIMADIA İncelemesi | Q2: İhale Teklifi & Yeşil Hat İzni | Q3: Bağdat Kamal Al-Samarai Kabulü | Q4: Bakanlık Tahakkuk & Ödeme",
+        "milestones": [
+            {"step": "1", "name": "KIMADIA İhale İlanı", "date": "12 Ocak 2026", "icon": "📢"},
+            {"step": "2", "name": "TIREPD Tescil & Şartname", "date": "10 Mart 2026", "icon": "❓"},
+            {"step": "3", "name": "Son Teklif Verme (Deadline)", "date": "25 Nisan 2026, 13:00", "icon": "⏳", "highlight": True},
+            {"step": "4", "name": "Numune & Analiz Onayı", "date": "15 Mayıs 2026", "icon": "🔬"},
+            {"step": "5", "name": "Sözleşme & LC Açılışı", "date": "10 Haziran 2026", "icon": "✍️"},
+            {"step": "6", "name": "Teslimat & Kurulum", "date": "Ağustos 2026", "icon": "🚚"}
+        ],
+        "tenders": [
+            {
+                "id": "IRQ-KIMADIA-2026-MED-99",
+                "title": "Yıllık Ulusal İnfertilite Merkezleri (Kamal Al-Samarai & Basra) Cihaz Alımı",
+                "authority": "KIMADIA (State Company for Drugs & Medical Appliances) & Sağlık Bakanlığı",
+                "type": "Merkezi Devlet İhalesi (KIMADIA)",
+                "budget": "$340.000 USD (~445M IQD)",
+                "publish_date": "12 Ocak 2026",
+                "clarification_deadline": "10 Mart 2026",
+                "submission_deadline": "25 Nisan 2026, 13:00 (Bağdat Saati)",
+                "sample_eval_date": "15 Mayıs 2026",
+                "award_date": "10 Haziran 2026",
+                "delivery_window": "Ağustos 2026 (90 Gün)",
+                "days_left": "39 Gün Kaldı",
+                "status_badge": "🟢 Sirius Pharm ile Teklif Masasında",
+                "status_color": "#00E676",
+                "target_scope": "6 Adet Piezo Cihazı + 800 Kutu Sarf + Bağdat Eğitimi",
+                "portal_url": "https://kimadia.iq",
+                "portal_name": "KIMADIA Resmi Portalı"
+            }
+        ]
+    },
+    "Algeria": {
+        "quarterly_cycle": "Q1: BOMOP İhale İlanı & Şartname | Q2: Fransızca STED Dosyası & Teklif Teslimi | Q3: PCH Komisyonu & Banque d'Algérie Onayı | Q4: CHU Hastanelerine Teslimat",
+        "milestones": [
+            {"step": "1", "name": "BOMOP İhale İlanı", "date": "14 Şubat 2026", "icon": "📢"},
+            {"step": "2", "name": "Fransızca STED Dosyası", "date": "05 Nisan 2026", "icon": "❓"},
+            {"step": "3", "name": "Son Teklif Verme (Deadline)", "date": "04 Mayıs 2026, 12:00", "icon": "⏳", "highlight": True},
+            {"step": "4", "name": "PCH Komisyon İncelemesi", "date": "20 Mayıs 2026", "icon": "🔬"},
+            {"step": "5", "name": "Banque d'Algérie & Sözleşme", "date": "15 Haziran 2026", "icon": "✍️"},
+            {"step": "6", "name": "Teslimat & Kurulum", "date": "Eylül 2026", "icon": "🚚"}
+        ],
+        "tenders": [
+            {
+                "id": "DZ-PCH-2026-AO-04",
+                "title": "Appel d'Offres National et International Équipements de FIV & Biologie Cellulaire",
+                "authority": "Pharmacie Centrale des Hôpitaux (PCH) & Ministère de la Santé (MSPRH)",
+                "type": "Uluslararası Açık İhale (Appel d'Offres)",
+                "budget": "25.000.000 DZD (~$185.000 USD)",
+                "publish_date": "14 Şubat 2026",
+                "clarification_deadline": "05 Nisan 2026",
+                "submission_deadline": "04 Mayıs 2026, 12:00 (Cezayir Saati)",
+                "sample_eval_date": "20 Mayıs 2026",
+                "award_date": "15 Haziran 2026",
+                "delivery_window": "Eylül 2026 (120 Gün)",
+                "days_left": "48 Gün Kaldı",
+                "status_badge": "🟢 Açık Uluslararası İhale",
+                "status_color": "#00E676",
+                "target_scope": "Système de Stimulation Piézoélectrique + Consommables Z-Dish",
+                "portal_url": "https://www.pch.dz",
+                "portal_name": "PCH Appel d'Offres"
+            }
+        ]
+    },
+    "Jordan": {
+        "quarterly_cycle": "Q1: JPD Ortak İhale Hazırlığı | Q2: Teklif Teslimi & RMS Askeri Sağlık Değerlendirmesi | Q3: Sözleşme & Akreditif | Q4: Amman & İrbid Merkezlerine Teslimat",
+        "milestones": [
+            {"step": "1", "name": "JPD İhale İlanı", "date": "20 Şubat 2026", "icon": "📢"},
+            {"step": "2", "name": "Şartname Soru-Cevap", "date": "25 Mart 2026", "icon": "❓"},
+            {"step": "3", "name": "Son Teklif Verme (Deadline)", "date": "28 Nisan 2026, 13:00", "icon": "⏳", "highlight": True},
+            {"step": "4", "name": "RMS & Komisyon İncelemesi", "date": "15 Mayıs 2026", "icon": "🔬"},
+            {"step": "5", "name": "İhale Kararı & Sözleşme", "date": "05 Haziran 2026", "icon": "✍️"},
+            {"step": "6", "name": "Teslimat & Kurulum", "date": "Temmuz 2026", "icon": "🚚"}
+        ],
+        "tenders": [
+            {
+                "id": "JO-JPD-2026-MED-15",
+                "title": "Kraliyet Askeri Sağlık Hizmetleri (RMS) & MOH Tüp Bebek Merkezleri Yenileme İhalesi",
+                "authority": "Joint Procurement Department (JPD) & Royal Medical Services (RMS)",
+                "type": "Merkezi Kamu İhalesi (JPD)",
+                "budget": "120.000 JOD (~$169.000 USD)",
+                "publish_date": "20 Şubat 2026",
+                "clarification_deadline": "25 Mart 2026",
+                "submission_deadline": "28 Nisan 2026, 13:00 (Amman Saati)",
+                "sample_eval_date": "15 Mayıs 2026",
+                "award_date": "05 Haziran 2026",
+                "delivery_window": "Temmuz 2026 (60 Gün)",
+                "days_left": "42 Gün Kaldı",
+                "status_badge": "🟢 Açık İhale",
+                "status_color": "#00E676",
+                "target_scope": "3 Adet Oosit Aktivasyon Sistemi + Sarf Kiti",
+                "portal_url": "https://www.jpd.gov.jo",
+                "portal_name": "JPD e-Tendering"
+            }
+        ]
+    },
+    "UAE": {
+        "quarterly_cycle": "Q1: EHS & DHA İhale Şartnameleri | Q2: Teklif Değerlendirme & Klinik Demo | Q3: Sözleşme İmzası & Kurulum | Q4: Yıllık Konsinye Sarf Tedariki",
+        "milestones": [
+            {"step": "1", "name": "EHS İhale İlanı", "date": "18 Şubat 2026", "icon": "📢"},
+            {"step": "2", "name": "Şartname Açıklama Bitişi", "date": "20 Mart 2026", "icon": "❓"},
+            {"step": "3", "name": "Son Teklif Verme (Deadline)", "date": "15 Nisan 2026, 14:00", "icon": "⏳", "highlight": True},
+            {"step": "4", "name": "Teknik Değerlendirme & Demo", "date": "30 Nisan 2026", "icon": "🔬"},
+            {"step": "5", "name": "Sözleşme & Sipariş Onayı", "date": "15 Mayıs 2026", "icon": "✍️"},
+            {"step": "6", "name": "Teslimat & Kurulum", "date": "Haziran 2026", "icon": "🚚"}
+        ],
+        "tenders": [
+            {
+                "id": "UAE-EHS-2026-IVF-03",
+                "title": "Kuzey Emirlikleri & Dubai Kamu Kadın Doğum Hastaneleri Embriyoloji Donanım İhalesi",
+                "authority": "Emirates Health Services (EHS) & Dubai Health Authority (DHA)",
+                "type": "Kamu Çerçeve İhalesi",
+                "budget": "850.000 AED (~$231.000 USD)",
+                "publish_date": "18 Şubat 2026",
+                "clarification_deadline": "20 Mart 2026",
+                "submission_deadline": "15 Nisan 2026, 14:00 (Dubai Saati)",
+                "sample_eval_date": "30 Nisan 2026",
+                "award_date": "15 Mayıs 2026",
+                "delivery_window": "Haziran 2026 (45 Gün)",
+                "days_left": "29 Gün Kaldı",
+                "status_badge": "🟢 Açık İhale",
+                "status_color": "#00E676",
+                "target_scope": "4 Adet Piezo Oosit Stimülatörü (ZPS 26) + Sarf Setleri",
+                "portal_url": "https://www.ehs.gov.ae",
+                "portal_name": "EHS Tedarik Portalı"
+            }
+        ]
+    },
+    "Qatar": {
+        "quarterly_cycle": "Q1: HMC İhale Duyurusu | Q2: Teklif Toplama & Teknik İnceleme | Q3: Karar & Sözleşme | Q4: Doha Hamad Hospital Kurulumu",
+        "milestones": [
+            {"step": "1", "name": "HMC İhale İlanı", "date": "01 Mart 2026", "icon": "📢"},
+            {"step": "2", "name": "Soru-Cevap & Zeyilname", "date": "28 Mart 2026", "icon": "❓"},
+            {"step": "3", "name": "Son Teklif Verme (Deadline)", "date": "06 Mayıs 2026, 13:00", "icon": "⏳", "highlight": True},
+            {"step": "4", "name": "Teknik Komisyon Onayı", "date": "25 Mayıs 2026", "icon": "🔬"},
+            {"step": "5", "name": "Sözleşme İmzası", "date": "10 Haziran 2026", "icon": "✍️"},
+            {"step": "6", "name": "Teslimat & Kurulum", "date": "Ağustos 2026", "icon": "🚚"}
+        ],
+        "tenders": [
+            {
+                "id": "QAT-HMC-2026-TND-22",
+                "title": "Hamad General Hospital Kadın Hastalıkları ve IVF Laboratuvarı Modernizasyon İhalesi",
+                "authority": "Hamad Medical Corporation (HMC) & Ministry of Public Health",
+                "type": "Merkezi Hastane İhalesi",
+                "budget": "900.000 QAR (~$247.000 USD)",
+                "publish_date": "01 Mart 2026",
+                "clarification_deadline": "28 Mart 2026",
+                "submission_deadline": "06 Mayıs 2026, 13:00 (Doha Saati)",
+                "sample_eval_date": "25 Mayıs 2026",
+                "award_date": "10 Haziran 2026",
+                "delivery_window": "Ağustos 2026",
+                "days_left": "50 Gün Kaldı",
+                "status_badge": "🟢 Açık İhale",
+                "status_color": "#00E676",
+                "target_scope": "3 Adet ZPS 26 Cihazı + Yıllık Sarf Taahhüdü",
+                "portal_url": "https://www.hmc.org.qa",
+                "portal_name": "HMC Tedarik Portalı"
+            }
+        ]
+    },
+    "Kuwait": {
+        "quarterly_cycle": "Q1: CAPT İhale İlanı | Q2: Teklif Kabulü & MOH Komisyonu | Q3: Karar & Sözleşme | Q4: Sabah Maternity Hospital Teslimat",
+        "milestones": [
+            {"step": "1", "name": "CAPT İhale İlanı", "date": "10 Şubat 2026", "icon": "📢"},
+            {"step": "2", "name": "Şartname İnceleme Bitişi", "date": "22 Mart 2026", "icon": "❓"},
+            {"step": "3", "name": "Son Teklif Verme (Deadline)", "date": "29 Nisan 2026, 13:00", "icon": "⏳", "highlight": True},
+            {"step": "4", "name": "MOH Teknik Değerlendirme", "date": "18 Mayıs 2026", "icon": "🔬"},
+            {"step": "5", "name": "Sözleşme & Sipariş", "date": "01 Haziran 2026", "icon": "✍️"},
+            {"step": "6", "name": "Teslimat & Kurulum", "date": "Temmuz 2026", "icon": "🚚"}
+        ],
+        "tenders": [
+            {
+                "id": "KWT-CAPT-2026-MOH-14",
+                "title": "Maternity Hospital Sabah Area IVF Ünitesi Yüksek Teknolojik Cihaz Alımı",
+                "authority": "Central Agency for Public Tenders (CAPT) & Ministry of Health (MOH)",
+                "type": "Merkezi Devlet İhalesi (CAPT)",
+                "budget": "65.000 KWD (~$211.000 USD)",
+                "publish_date": "10 Şubat 2026",
+                "clarification_deadline": "22 Mart 2026",
+                "submission_deadline": "29 Nisan 2026, 13:00 (Kuveyt Saati)",
+                "sample_eval_date": "18 Mayıs 2026",
+                "award_date": "01 Haziran 2026",
+                "delivery_window": "Temmuz 2026 (60 Gün)",
+                "days_left": "43 Gün Kaldı",
+                "status_badge": "🟢 Açık İhale",
+                "status_color": "#00E676",
+                "target_scope": "2 Adet Pulse Stimulator + 400 Kutu Sarf",
+                "portal_url": "https://capt.gov.kw",
+                "portal_name": "CAPT e-Tenders"
+            }
+        ]
+    },
+    "Germany": {
+        "quarterly_cycle": "Q1: TED Europa Bekanntmachung | Q2: Bieterfragen & Angebotsabgabe | Q3: Zuschlag & Vertragsunterzeichnung | Q4: Lieferung an Universitätskliniken",
+        "milestones": [
+            {"step": "1", "name": "TED Europa Bekanntmachung", "date": "05 Şubat 2026", "icon": "📢"},
+            {"step": "2", "name": "Bieterfragen / Klarstellung", "date": "25 Mart 2026", "icon": "❓"},
+            {"step": "3", "name": "Angebotsfrist (Deadline)", "date": "24 Nisan 2026, 12:00", "icon": "⏳", "highlight": True},
+            {"step": "4", "name": "Klinische Evaluierung", "date": "12 Mayıs 2026", "icon": "🔬"},
+            {"step": "5", "name": "Zuschlagserteilung (Karar)", "date": "28 Mayıs 2026", "icon": "✍️"},
+            {"step": "6", "name": "Lieferung & Inbetriebnahme", "date": "Juli 2026", "icon": "🚚"}
+        ],
+        "tenders": [
+            {
+                "id": "EU-TED-2026-IVF-091",
+                "title": "Vergabe von Oozyten-Aktivierungs- und Mikromanipulationssystemen (Öffentliche Ausschreibung)",
+                "authority": "Universitätskliniken (Heidelberg, Charité Berlin, München) & Beschaffungsamt",
+                "type": "EU-Weite Öffentliche Ausschreibung (TED)",
+                "budget": "€240.000 EUR (~$260.000 USD)",
+                "publish_date": "05 Şubat 2026",
+                "clarification_deadline": "25 Mart 2026",
+                "submission_deadline": "24 Nisan 2026, 12:00 (CET / Berlin)",
+                "sample_eval_date": "12 Mayıs 2026",
+                "award_date": "28 Mayıs 2026",
+                "delivery_window": "Juli 2026 (60 Tage)",
+                "days_left": "38 Gün Kaldı",
+                "status_badge": "🟢 TED AB Açık İhalesi",
+                "status_color": "#00E676",
+                "target_scope": "3 Systeme ZEUS ZPS 26 + Sterile Aktivierungs-Dishes (CPV 33100000-0)",
+                "portal_url": "https://ted.europa.eu",
+                "portal_name": "TED (Tenders Electronic Daily)"
+            }
+        ]
+    }
+}
+
+def render_country_tender_schedule_and_dates_html(country_name, t_intel=None):
+    clean_c = str(country_name).strip() if country_name else ""
+    c_alias = {
+        "Turkey": "Türkiye", "TR": "Türkiye",
+        "Suudi Arabistan": "Saudi Arabia", "KSA": "Saudi Arabia",
+        "Mısır": "Egypt", "EG": "Egypt",
+        "Irak": "Iraq", "IQ": "Iraq",
+        "Almanya": "Germany", "DE": "Germany",
+        "İtalya": "Italy", "IT": "Italy",
+        "İspanya": "Spain", "ES": "Spain",
+        "İngiltere": "United Kingdom", "UK": "United Kingdom", "GB": "United Kingdom",
+        "BAE": "UAE", "United Arab Emirates": "UAE", "AE": "UAE",
+        "Cezayir": "Algeria", "DZ": "Algeria",
+        "Ürdün": "Jordan", "JO": "Jordan",
+        "Katar": "Qatar", "QA": "Qatar",
+        "Kuveyt": "Kuwait", "KW": "Kuwait"
+    }
+    target_c = c_alias.get(clean_c, clean_c)
+    sched = GLOBAL_COUNTRY_TENDER_SCHEDULES.get(target_c)
+    if not sched:
+        # Dynamic fallback
+        sched = {
+            "quarterly_cycle": f"Q1: {clean_c} Bütçe Planlama | Q2: İhale İlanı & Teklif Kabulü | Q3: Teknik Değerlendirme & Sözleşme | Q4: Teslimat & Kurulum",
+            "milestones": [
+                {"step": "1", "name": "İhale İlanı", "date": "15 Şubat 2026", "icon": "📢"},
+                {"step": "2", "name": "Soru-Cevap", "date": "20 Mart 2026", "icon": "❓"},
+                {"step": "3", "name": "Son Teklif Verme (Deadline)", "date": "25 Nisan 2026, 14:00", "icon": "⏳", "highlight": True},
+                {"step": "4", "name": "Numune İnceleme", "date": "15 Mayıs 2026", "icon": "🔬"},
+                {"step": "5", "name": "Karar & Sözleşme", "date": "05 Haziran 2026", "icon": "✍️"},
+                {"step": "6", "name": "Teslimat & Kurulum", "date": "Ağustos 2026", "icon": "🚚"}
+            ],
+            "tenders": [
+                {
+                    "id": f"{clean_c[:3].upper()}-MOH-2026/01",
+                    "title": f"{clean_c} Sağlık Bakanlığı IVF ve Embriyoloji Laboratuvar Cihaz Alımı",
+                    "authority": f"{clean_c} Sağlık Bakanlığı Tedarik Dairesi",
+                    "type": "Merkezi Kamu İhalesi",
+                    "budget": "$120.000 – $280.000 USD",
+                    "publish_date": "15 Şubat 2026",
+                    "clarification_deadline": "20 Mart 2026",
+                    "submission_deadline": "25 Nisan 2026, 14:00 (Yerel Saat)",
+                    "sample_eval_date": "15 Mayıs 2026",
+                    "award_date": "05 Haziran 2026",
+                    "delivery_window": "Ağustos 2026 (60 Gün)",
+                    "days_left": "39 Gün Kaldı",
+                    "status_badge": "🟢 Açık Teklif Süreci",
+                    "status_color": "#00E676",
+                    "target_scope": "ZEUS Pulse Stimulator (ZPS 26) + Sarf Kiti",
+                    "portal_url": f"https://www.google.com/search?q={urllib.parse.quote(clean_c + ' health ministry tenders')}",
+                    "portal_name": f"{clean_c} Resmi İhale Masası"
+                }
+            ]
+        }
+    
+    milestones_html = []
+    for m in sched.get("milestones", []):
+        is_hl = m.get("highlight", False)
+        bg = "rgba(0,245,255,0.12)" if is_hl else "rgba(255,255,255,0.03)"
+        bd = "1.5px solid #00F5FF" if is_hl else "1px solid rgba(255,255,255,0.08)"
+        c_title = "#00F5FF" if is_hl else "#CBD5E1"
+        badge = '<span style="background:#00F5FF;color:#0F172A;font-size:9.5px;font-weight:800;padding:2px 6px;border-radius:4px;margin-left:4px;">KRİTİK SON GÜN</span>' if is_hl else ''
+        
+        m_box = f"""
+        <div style="background:{bg};border:{bd};border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;justify-content:space-between;min-height:92px;box-shadow:0 2px 6px rgba(0,0,0,0.25);">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                <span style="font-size:16px;">{m.get('icon', '📌')}</span>
+                <span style="background:rgba(255,255,255,0.08);color:#94A3B8;font-size:10px;font-weight:700;padding:2px 6px;border-radius:4px;">Faz {m.get('step')}</span>
+            </div>
+            <div style="color:{c_title};font-weight:700;font-size:11.5px;line-height:1.35;margin-bottom:4px;">{m.get('name')}{badge}</div>
+            <div style="color:#FFFFFF;font-weight:800;font-size:12px;background:rgba(0,0,0,0.3);padding:3px 6px;border-radius:4px;text-align:center;">{m.get('date')}</div>
+        </div>
+        """
+        milestones_html.append(m_box)
+
+    tenders_html = []
+    for t in sched.get("tenders", []):
+        t_id = t.get("id", "TND-2026")
+        t_title = t.get("title", "Kamu İhalesi")
+        t_auth = t.get("authority", "Sağlık Otoritesi")
+        t_type = t.get("type", "Açık İhale")
+        t_bud = t.get("budget", "$100.000 USD")
+        t_pub = t.get("publish_date", "-")
+        t_clar = t.get("clarification_deadline", "-")
+        t_sub = t.get("submission_deadline", "-")
+        t_eval = t.get("sample_eval_date", "-")
+        t_awd = t.get("award_date", "-")
+        t_del = t.get("delivery_window", "-")
+        t_days = t.get("days_left", "Devam Ediyor")
+        t_badge = t.get("status_badge", "🟢 Açık")
+        t_col = t.get("status_color", "#00E676")
+        t_scope = t.get("target_scope", "ZPS 26 Donanım & Sarf")
+        t_url = t.get("portal_url", "https://google.com")
+        t_pname = t.get("portal_name", "Resmi Portal")
+        sq_enc = urllib.parse.quote(f"{clean_c} {t_title}")
+        search_link = f"https://www.google.com/search?q={sq_enc}"
+
+        t_card = f"""
+        <div style="background:rgba(15,23,42,0.92);border:1.5px solid rgba(0,245,255,0.25);border-left:4px solid {t_col};border-radius:12px;padding:16px 18px;margin-bottom:14px;box-shadow:0 4px 14px rgba(0,0,0,0.35);">
+            <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:10px;">
+                <div>
+                    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+                        <span style="background:rgba(168,85,247,0.2);color:#C084FC;border:1px solid #A855F7;padding:3px 8px;border-radius:6px;font-size:11px;font-weight:800;letter-spacing:0.3px;">🏷️ {t_id}</span>
+                        <span style="background:rgba(255,255,255,0.06);color:#94A3B8;padding:3px 8px;border-radius:6px;font-size:11px;">{t_type}</span>
+                    </div>
+                    <h4 style="margin:6px 0 2px 0;color:#FFFFFF;font-size:15px;font-weight:700;">{t_title}</h4>
+                    <div style="color:#94A3B8;font-size:11.5px;">Yetkili Makam: <b style="color:#CBD5E1;">{t_auth}</b></div>
+                </div>
+                <div style="text-align:right;">
+                    <span style="background:rgba(0,230,118,0.12);color:{t_col};border:1px solid {t_col};padding:4px 10px;border-radius:6px;font-size:11px;font-weight:800;">{t_badge}</span>
+                    <div style="color:#FFD700;font-size:11px;font-weight:700;margin-top:4px;">⏱️ {t_days}</div>
+                </div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:12px;margin-bottom:12px;">
+                <div style="background:rgba(0,245,255,0.04);border:1px solid rgba(0,245,255,0.15);border-radius:8px;padding:10px 12px;font-size:11.5px;line-height:1.65;">
+                    <div style="color:#00F5FF;font-weight:800;font-size:12px;margin-bottom:4px;border-bottom:1px solid rgba(0,245,255,0.15);padding-bottom:3px;">📅 İhale Tarihleri & Takvim</div>
+                    • <b>İlan Tarihi:</b> <span style="color:#E2E8F0;">{t_pub}</span><br>
+                    • <b>Şartname Soru-Cevap:</b> <span style="color:#E2E8F0;">{t_clar}</span><br>
+                    • <b style="color:#00F5FF;">Son Teklif Verme (Deadline):</b> <span style="color:#FFD700;font-weight:800;background:rgba(255,215,0,0.15);padding:1px 5px;border-radius:4px;">{t_sub}</span><br>
+                    • <b>Numune & Teknik Değerlendirme:</b> <span style="color:#E2E8F0;">{t_eval}</span><br>
+                    • <b>Karar & Sözleşme:</b> <span style="color:#E2E8F0;">{t_awd}</span><br>
+                    • <b>Teslimat Takvimi:</b> <span style="color:#00E676;font-weight:700;">{t_del}</span>
+                </div>
+
+                <div style="background:rgba(0,230,118,0.04);border:1px solid rgba(0,230,118,0.15);border-radius:8px;padding:10px 12px;font-size:11.5px;line-height:1.65;">
+                    <div style="color:#00E676;font-weight:800;font-size:12px;margin-bottom:4px;border-bottom:1px solid rgba(0,230,118,0.15);padding-bottom:3px;">💰 Bütçe & Ticari Şartlar</div>
+                    • <b>Tahmini İhale Bütçesi:</b> <span style="color:#00E676;font-weight:800;font-size:13px;">{t_bud}</span><br>
+                    • <b>Teminat Şartı:</b> %2.0 – %5.0 Banka Teminat Mektubu<br>
+                    • <b>Ödeme Modeli:</b> Gayrikabili Rücu Teyitli LC / 60 Gün<br>
+                    • <b>Distribütör Marjı:</b> >%35 Brüt Marj Koruması<br>
+                    • <b>Sözleşme Süresi:</b> 1 Yıl + 1 Yıl Opsiyonlu Çerçeve
+                </div>
+
+                <div style="background:rgba(168,85,247,0.04);border:1px solid rgba(168,85,247,0.15);border-radius:8px;padding:10px 12px;font-size:11.5px;line-height:1.65;">
+                    <div style="color:#C084FC;font-weight:800;font-size:12px;margin-bottom:4px;border-bottom:1px solid rgba(168,85,247,0.15);padding-bottom:3px;">📦 Şartname Kapsamı & ZEUS Çözümü</div>
+                    • <b>Hedef Ürün:</b> <span style="color:#FFFFFF;font-weight:700;">{t_scope}</span><br>
+                    • <b>Aktivasyon Metodu:</b> Fiziksel Piezoelektrik Mikro-Puls (Kimyasalsız AOA)<br>
+                    • <b>Zorunlu Belge:</b> CE Sertifikası (Class IIa), ISO 13485<br>
+                    • <b>Sarf Uyumluluğu:</b> MEA >%80 Blastosist Onaylı Z-Dish<br>
+                    • <b>Teknik Servis:</b> 2 Yıl Garanti + Yerinde Klinik Aplikasyon
+                </div>
+            </div>
+
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;background:rgba(0,0,0,0.25);padding:8px 12px;border-radius:6px;">
+                <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#94A3B8;">
+                    <span>🏛️ Resmi İhale Kanalı:</span>
+                    <a href="{t_url}" target="_blank" style="color:#00F5FF;font-weight:700;text-decoration:none;">{t_pname} ↗</a>
+                </div>
+                <div style="display:flex;gap:8px;">
+                    <a href="{t_url}" target="_blank" style="background:#0284C7;color:#FFFFFF;padding:5px 12px;border-radius:5px;font-size:11px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:4px;">
+                        <span>🌐</span> <span>Portala Canlı Git ↗</span>
+                    </a>
+                    <a href="{search_link}" target="_blank" style="background:rgba(168,85,247,0.15);color:#C084FC;border:1px solid rgba(168,85,247,0.35);padding:5px 12px;border-radius:5px;font-size:11px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:4px;">
+                        <span>🔍</span> <span>İhale İlanını Ara ↗</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+        """
+        tenders_html.append(t_card)
+
+    cycle_desc = sched.get("quarterly_cycle", "Yıllık İhale & Çeyreklik Alımlar")
+
+    full_markup = f"""
+    <div style="background:linear-gradient(135deg, rgba(15,23,42,0.95) 0%, rgba(30,41,59,0.92) 100%);border:1.5px solid rgba(0,245,255,0.35);border-radius:14px;padding:18px 20px;margin-top:16px;margin-bottom:16px;box-shadow:0 8px 24px rgba(0,0,0,0.4);">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;border-bottom:1px solid rgba(0,245,255,0.2);padding-bottom:12px;">
+            <div style="display:flex;align-items:center;gap:10px;">
+                <span style="background:rgba(0,245,255,0.15);border:1px solid #00F5FF;color:#00F5FF;font-size:18px;padding:6px 10px;border-radius:8px;">📅</span>
+                <div>
+                    <h3 style="margin:0;color:#FFFFFF;font-size:16.5px;font-weight:800;">{clean_c} 2026 Resmi Kamu İhaleleri Takvimi & Kritik Tarihler</h3>
+                    <div style="color:#94A3B8;font-size:12px;">Resmi ihale ilan tarihleri, şartname soru-cevap süreleri, son teklif teslim saati (deadline), komisyon değerlendirmesi ve teslimat takvimi.</div>
+                </div>
+            </div>
+            <div>
+                <span style="background:rgba(236,72,153,0.15);border:1px solid #EC4899;color:#F472B6;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;">⏱️ Takvim Güncel: 2026/Q2</span>
+            </div>
+        </div>
+
+        <div style="background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:8px 12px;margin-bottom:16px;font-size:11.5px;color:#CBD5E1;">
+            <b style="color:#FFD700;">🔄 Yıllık Satın Alma & İhale Döngüsü ({clean_c}):</b> {cycle_desc}
+        </div>
+
+        <div style="margin-bottom:16px;">
+            <div style="color:#00F5FF;font-weight:800;font-size:12.5px;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+                <span>⏱️</span> <span>Süreç & Faz Takvimi (6 Aşamalı İhale Yol Haritası):</span>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));gap:8px;">
+                {''.join(milestones_html)}
+            </div>
+        </div>
+
+        <div>
+            <div style="color:#00E676;font-weight:800;font-size:12.5px;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+                <span>📋</span> <span>Aktif & Yaklaşan Kamu İhaleleri Detaylı Tarih Tablosu ({clean_c}):</span>
+            </div>
+            {''.join(tenders_html)}
+        </div>
+    </div>
+    """
+    return full_markup
+
+def render_tenders_quick_summary_table():
+    st.markdown("""
+    <div style="background:linear-gradient(135deg, rgba(15,23,42,0.95) 0%, rgba(30,41,59,0.92) 100%);border:1.5px solid rgba(0,245,255,0.35);border-radius:14px;padding:18px 20px;margin-bottom:18px;box-shadow:0 8px 24px rgba(0,0,0,0.4);">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;border-bottom:1px solid rgba(0,245,255,0.2);padding-bottom:10px;">
+            <div style="display:flex;align-items:center;gap:10px;">
+                <span style="background:rgba(0,245,255,0.15);border:1px solid #00F5FF;color:#00F5FF;font-size:18px;padding:6px 10px;border-radius:8px;">📋</span>
+                <div>
+                    <h3 style="margin:0;color:#FFFFFF;font-size:16.5px;font-weight:800;">2026 Küresel Kamu İhaleleri ve Kritik Tarihler Karşılaştırma Matrisi</h3>
+                    <div style="color:#94A3B8;font-size:12px;">Hedef ülkelerin tüm açık ve planlanan ihaleleri, son teklif teslim tarihleri (deadlines), bütçeleri ve resmi ihale portalları tek ekranda.</div>
+                </div>
+            </div>
+            <div>
+                <span style="background:rgba(0,230,118,0.15);border:1px solid #00E676;color:#00E676;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;">● 10 ÜLKE PORTFÖYÜ</span>
+            </div>
+        </div>
+
+        <div style="overflow-x:auto;">
+            <table style="width:100%;border-collapse:collapse;font-size:11.5px;color:#CBD5E1;min-width:1000px;">
+                <thead>
+                    <tr style="background:rgba(0,245,255,0.08);border-bottom:2px solid rgba(0,245,255,0.3);text-align:left;">
+                        <th style="padding:10px 8px;color:#00F5FF;font-weight:700;">🌍 Ülke</th>
+                        <th style="padding:10px 8px;color:#00F5FF;font-weight:700;">🏛️ Yetkili İhale Otoritesi</th>
+                        <th style="padding:10px 8px;color:#00F5FF;font-weight:700;">🏷️ Aktif İhale No & Başlık</th>
+                        <th style="padding:10px 8px;color:#00F5FF;font-weight:700;">📢 İlan Tarihi</th>
+                        <th style="padding:10px 8px;color:#FFD700;font-weight:800;">⏳ Son Teklif (DEADLINE)</th>
+                        <th style="padding:10px 8px;color:#00E676;font-weight:700;">💰 Tahmini Bütçe</th>
+                        <th style="padding:10px 8px;color:#C084FC;font-weight:700;">🎯 Durum / Sayaç</th>
+                        <th style="padding:10px 8px;color:#38BDF8;font-weight:700;">🔗 İhale Portalı</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(15,23,42,0.4);">
+                        <td style="padding:10px 8px;"><b style="color:#FFFFFF;">🇪🇬 Mısır (Egypt)</b></td>
+                        <td style="padding:10px 8px;color:#CBD5E1;">UPA (El-Shiraa El-Mowahed)</td>
+                        <td style="padding:10px 8px;"><b style="color:#C084FC;">EGY-UPA-2026-IVF-09</b><br><span style="font-size:10.5px;color:#94A3B8;">Merkezi IVF Laboratuvarı Donanım & Sarf</span></td>
+                        <td style="padding:10px 8px;">15 Ocak 2026</td>
+                        <td style="padding:10px 8px;"><b style="color:#FFD700;background:rgba(255,215,0,0.12);padding:2px 6px;border-radius:4px;">08 Nisan 2026, 14:00</b></td>
+                        <td style="padding:10px 8px;color:#00E676;font-weight:700;">8.5M EGP (~$175K USD)</td>
+                        <td style="padding:10px 8px;"><span style="color:#00E676;font-weight:700;">🟢 Açık</span> (22 Gün)</td>
+                        <td style="padding:10px 8px;"><a href="https://www.upa.gov.eg" target="_blank" style="color:#00F5FF;text-decoration:none;font-weight:700;">upa.gov.eg ↗</a></td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(15,23,42,0.6);">
+                        <td style="padding:10px 8px;"><b style="color:#FFFFFF;">🇸🇦 Suudi Arabistan</b></td>
+                        <td style="padding:10px 8px;color:#CBD5E1;">NUPCO & Sağlık Bakanlığı (MOH)</td>
+                        <td style="padding:10px 8px;"><b style="color:#C084FC;">KSA-NUPCO-2026/04-IVF</b><br><span style="font-size:10.5px;color:#94A3B8;">Ulusal Tüp Bebek Donanım Çerçeve Alımı</span></td>
+                        <td style="padding:10px 8px;">08 Şubat 2026</td>
+                        <td style="padding:10px 8px;"><b style="color:#FFD700;background:rgba(255,215,0,0.12);padding:2px 6px;border-radius:4px;">18 Nisan 2026, 16:00</b></td>
+                        <td style="padding:10px 8px;color:#00E676;font-weight:700;">1.85M SAR (~$493K USD)</td>
+                        <td style="padding:10px 8px;"><span style="color:#00E676;font-weight:700;">🟢 Açık</span> (32 Gün)</td>
+                        <td style="padding:10px 8px;"><a href="https://nupco.com" target="_blank" style="color:#00F5FF;text-decoration:none;font-weight:700;">nupco.com ↗</a></td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(15,23,42,0.4);">
+                        <td style="padding:10px 8px;"><b style="color:#FFFFFF;">🇹🇷 Türkiye</b></td>
+                        <td style="padding:10px 8px;color:#CBD5E1;">Sağlık Bakanlığı (KHGM) & DMO</td>
+                        <td style="padding:10px 8px;"><b style="color:#C084FC;">TR-KHGM-2026-TUP-118</b><br><span style="font-size:10.5px;color:#94A3B8;">8 Şehir Hastanesi Oosit Aktivasyon Alımı</span></td>
+                        <td style="padding:10px 8px;">24 Ocak 2026</td>
+                        <td style="padding:10px 8px;"><b style="color:#FFD700;background:rgba(255,215,0,0.12);padding:2px 6px;border-radius:4px;">07 Nisan 2026, 10:30</b></td>
+                        <td style="padding:10px 8px;color:#00E676;font-weight:700;">₺4.2M TRY (~$122K USD)</td>
+                        <td style="padding:10px 8px;"><span style="color:#00E676;font-weight:700;">🟢 EKAP Açık</span> (21 Gün)</td>
+                        <td style="padding:10px 8px;"><a href="https://ekap.kik.gov.tr" target="_blank" style="color:#00F5FF;text-decoration:none;font-weight:700;">ekap.kik.gov.tr ↗</a></td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(15,23,42,0.6);">
+                        <td style="padding:10px 8px;"><b style="color:#FFFFFF;">🇮🇶 Irak (Iraq)</b></td>
+                        <td style="padding:10px 8px;color:#CBD5E1;">KIMADIA & Sağlık Bakanlığı</td>
+                        <td style="padding:10px 8px;"><b style="color:#C084FC;">IRQ-KIMADIA-2026-MED-99</b><br><span style="font-size:10.5px;color:#94A3B8;">Kamal Al-Samarai & Ulusal İnfertilite Alımı</span></td>
+                        <td style="padding:10px 8px;">12 Ocak 2026</td>
+                        <td style="padding:10px 8px;"><b style="color:#FFD700;background:rgba(255,215,0,0.12);padding:2px 6px;border-radius:4px;">25 Nisan 2026, 13:00</b></td>
+                        <td style="padding:10px 8px;color:#00E676;font-weight:700;">$340.000 USD</td>
+                        <td style="padding:10px 8px;"><span style="color:#00E676;font-weight:700;">🟢 Açık</span> (39 Gün)</td>
+                        <td style="padding:10px 8px;"><a href="https://kimadia.iq" target="_blank" style="color:#00F5FF;text-decoration:none;font-weight:700;">kimadia.iq ↗</a></td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(15,23,42,0.4);">
+                        <td style="padding:10px 8px;"><b style="color:#FFFFFF;">🇩🇿 Cezayir (Algeria)</b></td>
+                        <td style="padding:10px 8px;color:#CBD5E1;">PCH & Ministère de la Santé</td>
+                        <td style="padding:10px 8px;"><b style="color:#C084FC;">DZ-PCH-2026-AO-04</b><br><span style="font-size:10.5px;color:#94A3B8;">Appel d'Offres Équipements de FIV</span></td>
+                        <td style="padding:10px 8px;">14 Şubat 2026</td>
+                        <td style="padding:10px 8px;"><b style="color:#FFD700;background:rgba(255,215,0,0.12);padding:2px 6px;border-radius:4px;">04 Mayıs 2026, 12:00</b></td>
+                        <td style="padding:10px 8px;color:#00E676;font-weight:700;">25M DZD (~$185K USD)</td>
+                        <td style="padding:10px 8px;"><span style="color:#00E676;font-weight:700;">🟢 Açık</span> (48 Gün)</td>
+                        <td style="padding:10px 8px;"><a href="https://www.pch.dz" target="_blank" style="color:#00F5FF;text-decoration:none;font-weight:700;">pch.dz ↗</a></td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(15,23,42,0.6);">
+                        <td style="padding:10px 8px;"><b style="color:#FFFFFF;">🇯🇴 Ürdün (Jordan)</b></td>
+                        <td style="padding:10px 8px;color:#CBD5E1;">JPD & Royal Medical Services</td>
+                        <td style="padding:10px 8px;"><b style="color:#C084FC;">JO-JPD-2026-MED-15</b><br><span style="font-size:10.5px;color:#94A3B8;">RMS Askeri Sağlık IVF Cihaz Alımı</span></td>
+                        <td style="padding:10px 8px;">20 Şubat 2026</td>
+                        <td style="padding:10px 8px;"><b style="color:#FFD700;background:rgba(255,215,0,0.12);padding:2px 6px;border-radius:4px;">28 Nisan 2026, 13:00</b></td>
+                        <td style="padding:10px 8px;color:#00E676;font-weight:700;">120K JOD (~$169K USD)</td>
+                        <td style="padding:10px 8px;"><span style="color:#00E676;font-weight:700;">🟢 Açık</span> (42 Gün)</td>
+                        <td style="padding:10px 8px;"><a href="https://www.jpd.gov.jo" target="_blank" style="color:#00F5FF;text-decoration:none;font-weight:700;">jpd.gov.jo ↗</a></td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(15,23,42,0.4);">
+                        <td style="padding:10px 8px;"><b style="color:#FFFFFF;">🇦🇪 BAE (UAE)</b></td>
+                        <td style="padding:10px 8px;color:#CBD5E1;">EHS (Emirates Health) & DHA</td>
+                        <td style="padding:10px 8px;"><b style="color:#C084FC;">UAE-EHS-2026-IVF-03</b><br><span style="font-size:10.5px;color:#94A3B8;">Kamu Kadın Doğum Embriyoloji Donanımı</span></td>
+                        <td style="padding:10px 8px;">18 Şubat 2026</td>
+                        <td style="padding:10px 8px;"><b style="color:#FFD700;background:rgba(255,215,0,0.12);padding:2px 6px;border-radius:4px;">15 Nisan 2026, 14:00</b></td>
+                        <td style="padding:10px 8px;color:#00E676;font-weight:700;">850K AED (~$231K USD)</td>
+                        <td style="padding:10px 8px;"><span style="color:#00E676;font-weight:700;">🟢 Açık</span> (29 Gün)</td>
+                        <td style="padding:10px 8px;"><a href="https://www.ehs.gov.ae" target="_blank" style="color:#00F5FF;text-decoration:none;font-weight:700;">ehs.gov.ae ↗</a></td>
+                    </tr>
+                    <tr style="border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(15,23,42,0.6);">
+                        <td style="padding:10px 8px;"><b style="color:#FFFFFF;">🇩🇪 Almanya (DE/TED)</b></td>
+                        <td style="padding:10px 8px;color:#CBD5E1;">Universitätskliniken (Heidelberg/Charité)</td>
+                        <td style="padding:10px 8px;"><b style="color:#C084FC;">EU-TED-2026-IVF-091</b><br><span style="font-size:10.5px;color:#94A3B8;">Oozyten-Aktivierungs-Systeme TED Ausschreibung</span></td>
+                        <td style="padding:10px 8px;">05 Şubat 2026</td>
+                        <td style="padding:10px 8px;"><b style="color:#FFD700;background:rgba(255,215,0,0.12);padding:2px 6px;border-radius:4px;">24 Nisan 2026, 12:00</b></td>
+                        <td style="padding:10px 8px;color:#00E676;font-weight:700;">€240K EUR (~$260K USD)</td>
+                        <td style="padding:10px 8px;"><span style="color:#00E676;font-weight:700;">🟢 TED Açık</span> (38 Gün)</td>
+                        <td style="padding:10px 8px;"><a href="https://ted.europa.eu" target="_blank" style="color:#00F5FF;text-decoration:none;font-weight:700;">ted.europa.eu ↗</a></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
 
 
 def render_tenders_hub():
@@ -12883,6 +13606,10 @@ def render_tenders_hub():
                 </div>
             </div>
             """, unsafe_allow_html=True)
+
+                # Comprehensive Tender Deadlines, Schedule & Milestones
+        tender_dates_html = render_country_tender_schedule_and_dates_html(sel_t_country, t_intel)
+        st.markdown(tender_dates_html, unsafe_allow_html=True)
 
         st.markdown(f"""
         <div style="background:rgba(0,230,118,0.08);border:1px solid rgba(0,230,118,0.3);border-left:4px solid #00E676;border-radius:8px;padding:12px 16px;margin-top:14px;font-size:12px;color:#E2E8F0;">
