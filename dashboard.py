@@ -4286,6 +4286,34 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
     
     rec_dev_max = float(pricing_fc.get('rec_device_discount', 10.0))
     rec_sarf_max = float(pricing_fc.get('rec_sarf_discount', 12.0))
+
+    # Quick Scenario Buttons for Pricing
+    q_col1, q_col2, q_col3 = st.columns([1.1, 1.2, 0.9])
+    dev_k = f"{key_prefix}_dev_price_{target_country}"
+    sarf_k = f"{key_prefix}_sarf_price_{target_country}"
+    
+    with q_col1:
+        if st.button("⚡ Standart Dağıtıcı Fiyatı ($8,500 Cihaz / $100 Sarf)", key=f"btn_std_preset_{key_prefix}_{target_country}", use_container_width=True):
+            st.session_state[dev_k] = 8500.0
+            st.session_state[sarf_k] = 100.0
+            st.rerun()
+    with q_col2:
+        if st.button("🏢 Kurumsal Filo / İhale Paketi ($85,000 USD Bütçe)", key=f"btn_fleet_preset_{key_prefix}_{target_country}", use_container_width=True):
+            st.session_state[dev_k] = 8500.0
+            st.session_state[f"{key_prefix}_dev_qty_{target_country}"] = 8
+            st.session_state[sarf_k] = 100.0
+            st.session_state[f"{key_prefix}_sarf_qty_{target_country}"] = 450
+            st.rerun()
+    with q_col3:
+        if st.button("🔄 Sıfırla (Manuel)", key=f"btn_reset_preset_{key_prefix}_{target_country}", use_container_width=True):
+            st.session_state[dev_k] = 0.0
+            st.session_state[sarf_k] = 0.0
+            st.rerun()
+
+    if dev_k not in st.session_state:
+        st.session_state[dev_k] = 8500.0
+    if sarf_k not in st.session_state:
+        st.session_state[sarf_k] = 100.0
     
     with col_c1:
         st.markdown("""
@@ -4306,14 +4334,15 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
             key=f"{key_prefix}_dev_model_{target_country}"
         )
         
+        cur_dev_val = float(st.session_state.get(dev_k, 8500.0))
         dev_price = st.number_input(
             "Cihaz Liste Fiyatı ($ USD — Elle Giriniz):",
             min_value=0.0,
             max_value=1000000.0,
-            value=0.0,
+            value=cur_dev_val,
             step=100.0,
             placeholder="Cihaz birim fiyatını elle yazınız...",
-            key=f"{key_prefix}_dev_price_{target_country}"
+            key=dev_k
         )
         
         dev_disc_pct = st.slider(
@@ -4399,14 +4428,15 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
             key=f"{key_prefix}_sarf_model_{target_country}"
         )
         
+        cur_sarf_val = float(st.session_state.get(sarf_k, 100.0))
         sarf_price = st.number_input(
             "Sarf Liste Fiyatı ($ USD/Kutu — Elle Giriniz):",
             min_value=0.0,
             max_value=50000.0,
-            value=0.0,
+            value=cur_sarf_val,
             step=10.0,
             placeholder="Sarf kutu fiyatını elle yazınız...",
-            key=f"{key_prefix}_sarf_price_{target_country}"
+            key=sarf_k
         )
         
         sarf_disc_pct = st.slider(
@@ -4494,6 +4524,194 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
         </div>
     </div>
     """, unsafe_allow_html=True)
+
+    # --------------------------------------------------------------------------
+    # DİNAMİK ÜLKE FİYAT UYGUNLUK KONTROLÜ & AKILLI İSKONTO ÖNERİSİ MOTORU
+    # --------------------------------------------------------------------------
+    macro = resolve_country_macro(target_country)
+    gdp_val = macro.get('gdp_pc', 12000)
+    customs_val = macro.get('customs_tariff_pct', 5.0)
+    living_code = macro.get('living_standard_code', 'Middle Income')
+    clinics_num = macro.get('clinics', 20)
+    
+    # 1. Cihaz Fiyat Uygunluğu Analizi
+    landed_factor = 1.0 + (customs_val / 100.0) + 0.04 # Gümrük + Navlun
+    landed_dev_cost = net_dev_unit * landed_factor
+    rec_clinic_retail = landed_dev_cost * 1.50 # Distribütör %35-%50 marj koyarak kliniğe satar
+    eppendorf_bench = 18500.0 if gdp_val < 15000 else 22000.0
+    
+    # Is it a fleet / multi-unit deal?
+    is_fleet_order = dev_qty >= 4 or (dev_gross >= 50000.0)
+    
+    # Evaluate device suitability
+    if dev_price <= 0:
+        dev_suit_status = "⚠️ FİYAT GİRİLMEDİ"
+        dev_suit_badge = "background:rgba(255,255,255,0.08);color:#94A3B8;border:1px solid rgba(255,255,255,0.2);"
+        dev_suit_text = f"{target_country} pazarı için birim liste fiyatı giriniz (Örn: $8,500 USD standart distribütör transfer fiyatı)."
+    elif 7000.0 <= dev_price <= 10500.0:
+        dev_suit_status = f"✅ {target_country} İÇİN MÜKEMMEL DAĞITICI TRANSFER FİYATI"
+        dev_suit_badge = "background:rgba(0,230,118,0.18);color:#00E676;border:1px solid #00E676;"
+        dev_suit_text = (
+            f"<b>$8,500 USD Bandı ({target_country} Dağıtıcı Alışı):</b> Gümrük (%{customs_val:.1f}) ve navlunla dağıtıcıya <b>${landed_dev_cost:,.0f} USD</b>'ye mal olur. "
+            f"Dağıtıcı yerel özel tüp bebek merkezlerine <b>${rec_clinic_retail:,.0f} USD</b> seviyesinde (%35-%45 marjla) rahatça satabilir. "
+            f"Rakip Eppendorf'a (${eppendorf_bench:,.0f} USD) kıyasla <b>%25 daha ekonomiktir</b>. "
+            f"Bir klinik bu cihaz bedelini yalnızca <b>8-10 IVF tedavisinde</b> tamamen amorti eder."
+        )
+    elif dev_price < 7000.0:
+        dev_suit_status = f"⚠️ DÜŞÜK FİYAT / DÜŞÜK MARJ UYARISI"
+        dev_suit_badge = "background:rgba(255,184,0,0.18);color:#FFB800;border:1px solid #FFB800;"
+        dev_suit_text = (
+            f"<b>${dev_price:,.0f} USD Fiyatı:</b> {target_country} kliniği için çok cazip olsa da ZEUS üretici marjını (%{dev_margin_pct:.1f}) daraltmaktadır. "
+            f"Yalnızca yüksek adetli (10+ cihaz) veya sarf kilitlemeli kamu ihalelerinde uygulanması önerilir."
+        )
+    elif dev_price <= 22000.0:
+        if is_fleet_order:
+            dev_suit_status = f"🏢 KURUMSAL FİLO / İHALE PAKETİ İÇİN UYGUN"
+            dev_suit_badge = "background:rgba(0,245,255,0.18);color:#00F5FF;border:1px solid #00F5FF;"
+            dev_suit_text = (
+                f"<b>{dev_qty} Adet Cihaz ({target_country} Filo Hacmi):</b> Toplam ${dev_tot_net:,.0f} USD cihaz anlaşması, "
+                f"büyük özel hastane zincirleri (Cleopatra, Bahçeci, Dr. Sulaiman Al Habib) ve kamu üniversite ihaleleri (UPA, NUPCO, KHGM) bütçe limitlerine tam uygundur."
+            )
+        else:
+            dev_suit_status = f"ℹ️ KLİNİK SON KULLANICI / PERAKENDE FİYATI"
+            dev_suit_badge = "background:rgba(56,189,248,0.18);color:#38BDF8;border:1px solid #38BDF8;"
+            dev_suit_text = (
+                f"<b>${dev_price:,.0f} USD:</b> Doğrudan hastane satışları için uygundur; ancak yerel distribütöre veriliyorsa distribütör marj ekleyemeyeceği için sahada zorlanır."
+            )
+    else:
+        if is_fleet_order:
+            dev_suit_status = f"🏢 ÇOKLU FİLO / ANAHTAR TESLİM LABORATUVAR PAKETİ"
+            dev_suit_badge = "background:rgba(168,85,247,0.18);color:#C084FC;border:1px solid #A855F7;"
+            dev_suit_text = f"Toplam ${dev_tot_net:,.0f} USD tutarındaki {dev_qty} cihazlık paket kurumsal ihale standartlarındadır."
+        else:
+            dev_suit_status = f"🔴 TEK CİHAZ İÇİN FAHİŞ"
+            dev_suit_badge = "background:rgba(239,68,68,0.18);color:#EF4444;border:1px solid #EF4444;"
+            dev_suit_text = f"Tek bir Piezo mikro-puls cihazı için ${dev_price:,.0f} USD {target_country} pazar tavanının ($22,000 USD) çok üzerindedir. Müşteri teklifi reddeder."
+
+    # 2. Sarf Fiyat & Miktar Uygunluğu Analizi
+    if sarf_price <= 0:
+        sarf_suit_status = "⚠️ SARF FİYATI GİRİLMEDİ"
+        sarf_suit_badge = "background:rgba(255,255,255,0.08);color:#94A3B8;border:1px solid rgba(255,255,255,0.2);"
+        sarf_suit_text = f"{target_country} için standart Z-Dish kutu fiyatı giriniz (Örn: $75 - $100 USD/kutu)."
+    elif 65.0 <= sarf_price <= 110.0:
+        vaka_basi_sarf = net_sarf_unit / 10.0 # kutuda 10 dish
+        sarf_suit_status = f"✅ {target_country} İÇİN OPTİMUM SARF FİYATI"
+        sarf_suit_badge = "background:rgba(0,230,118,0.18);color:#00E676;border:1px solid #00E676;"
+        sarf_suit_text = (
+            f"<b>${net_sarf_unit:,.2f} USD/Kutu ({vaka_basi_sarf:,.2f} USD/Vaka):</b> Kutu başına 10 aktivasyon dishi ile vaka başı sarf maliyeti "
+            f"yalnızca <b>${vaka_basi_sarf:,.2f} USD</b> olmaktadır. {target_country} ortalama IVF tedavi ücreti (~$1,200-$1,800 USD) içinde bu maliyet <b><%1 pay</b> alır "
+            f"ve klinik bütçesini hiç sarsmaz. <b>{sarf_qty} Kutu Yıllık Taahhüt</b>, yılda {sarf_qty * 10:,} vakayı kapsayarak ZEUS'a <b>${sarf_tot_net:,.2f} USD/Yıl</b> "
+            f"kesintisiz, yüksek kârlı (%{sarf_margin_pct:.1f}) nakit akışı sağlar."
+        )
+    elif sarf_price < 65.0:
+        sarf_suit_status = f"⚠️ DÜŞÜK SARF FİYATI"
+        sarf_suit_badge = "background:rgba(255,184,0,0.18);color:#FFB800;border:1px solid #FFB800;"
+        sarf_suit_text = f"${sarf_price:,.2f} USD/kutu fiyatı ZEUS sarf marjını daraltır. Sadece 1.000+ kutuluk dev kamu ihalelerinde onaylanmalıdır."
+    else:
+        sarf_suit_status = f"⚠️ YÜKSEK SARF FİYATI"
+        sarf_suit_badge = "background:rgba(239,68,68,0.18);color:#EF4444;border:1px solid #EF4444;"
+        sarf_suit_text = f"${sarf_price:,.2f} USD/kutu fiyatı {target_country} kliniklerinde rutin Piezo AOA kullanımını kısıtlayabilir; sarf çekişini düşürür."
+
+    # 3. Akıllı İskonto Önerisi Motoru (Calculation of Recommended Discounts)
+    base_dev_rec = 5.0
+    if dev_qty >= 16:
+        dev_vol_add = 7.0
+    elif dev_qty >= 8:
+        dev_vol_add = 5.0
+    elif dev_qty >= 4:
+        dev_vol_add = 3.5
+    elif dev_qty >= 2:
+        dev_vol_add = 2.0
+    else:
+        dev_vol_add = 0.0
+
+    cross_sub_add = 1.0 if sarf_qty >= 300 else 0.0
+    macro_adj = 1.0 if gdp_val < 10000 else (0.5 if gdp_val < 20000 else 0.0)
+
+    rec_optimum_dev_disc = round(min(15.0, base_dev_rec + dev_vol_add + cross_sub_add + macro_adj), 1)
+    rec_max_safe_dev_disc = round(min(20.0, rec_optimum_dev_disc + 2.5), 1)
+
+    base_sarf_rec = 6.0
+    if sarf_qty >= 1000:
+        sarf_vol_add = 8.0
+    elif sarf_qty >= 500:
+        sarf_vol_add = 6.0
+    elif sarf_qty >= 250:
+        sarf_vol_add = 4.0
+    elif sarf_qty >= 100:
+        sarf_vol_add = 2.0
+    else:
+        sarf_vol_add = 0.0
+
+    fleet_sarf_add = 2.0 if dev_qty >= 5 else (1.0 if dev_qty >= 2 else 0.0)
+    rec_optimum_sarf_disc = round(min(20.0, base_sarf_rec + sarf_vol_add + fleet_sarf_add), 1)
+    rec_max_safe_sarf_disc = round(min(25.0, rec_optimum_sarf_disc + 3.0), 1)
+
+    # Render Suitability and Recommendation Card
+    st.markdown(f"""
+    <div style="background:linear-gradient(135deg, rgba(15,23,42,0.95) 0%, rgba(19,166,181,0.08) 100%);border:1.5px solid #00F5FF;border-radius:12px;padding:18px 20px;margin-top:16px;box-shadow:0 8px 25px rgba(0,0,0,0.4);">
+        <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:10px;margin-bottom:14px;flex-wrap:wrap;gap:10px;">
+            <div>
+                <span style="font-size:15px;font-weight:800;color:#00F5FF;">🎯 {target_country} Pazar Uygunluk Kararı & Akıllı İskonto Tavsiyesi</span>
+                <div style="font-size:11.5px;color:#94A3B8;margin-top:2px;">Girilen fiyat ({dev_price:,.0f} USD Cihaz / {sarf_price:,.0f} USD Sarf) ve sipariş büyüklüğü ({dev_qty} Cihaz + {sarf_qty} Sarf) ülke makroekonomisi ve klinik alım gücüyle kıyaslandı.</div>
+            </div>
+            <span style="{dev_suit_badge}padding:4px 12px;border-radius:8px;font-weight:800;font-size:11.5px;">
+                {dev_suit_status}
+            </span>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+            <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(0,245,255,0.2);border-radius:10px;padding:12px 14px;font-size:12px;line-height:1.7;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                    <b style="color:#00F5FF;font-size:13px;">⚡ Cihaz Fiyatı & Hacim Uygunluğu:</b>
+                    <span style="{dev_suit_badge}font-size:10px;padding:1px 6px;border-radius:4px;font-weight:700;">{dev_qty} Adet</span>
+                </div>
+                {dev_suit_text}
+            </div>
+            <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,215,0,0.2);border-radius:10px;padding:12px 14px;font-size:12px;line-height:1.7;">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                    <b style="color:#FFD700;font-size:13px;">🧪 Sarf Fiyatı & Taahhüt Uygunluğu:</b>
+                    <span style="{sarf_suit_badge}font-size:10px;padding:1px 6px;border-radius:4px;font-weight:700;">{sarf_qty} Kutu/Yıl</span>
+                </div>
+                {sarf_suit_text}
+            </div>
+        </div>
+
+        <div style="background:rgba(0,0,0,0.35);border:1px solid rgba(0,245,255,0.3);border-radius:10px;padding:14px 16px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px;">
+                <div>
+                    <span style="font-weight:800;color:#00E676;font-size:13.5px;">💡 {target_country} İçin Sistemin Tavsiye Ettiği Optimum İskonto</span>
+                    <div style="font-size:11px;color:#94A3B8;">{dev_qty} Adet Cihaz Filosu ve {sarf_qty} Kutu Yıllık Taahhüt Hacmi Göz Önüne Alınarak Hesaplanmıştır.</div>
+                </div>
+                <div style="display:flex;gap:12px;font-size:12px;">
+                    <div style="background:rgba(0,245,255,0.12);padding:6px 12px;border-radius:8px;border:1px solid #00F5FF;">
+                        <span style="color:#8FA3C0;font-size:10px;">ÖNERİLEN CİHAZ İSKONTOSU:</span><br>
+                        <b style="color:#00F5FF;font-size:15px;">%{rec_optimum_dev_disc:.1f}</b> <span style="color:#94A3B8;font-size:10.5px;">(Azami Tavan: %{rec_max_safe_dev_disc:.1f})</span>
+                    </div>
+                    <div style="background:rgba(255,184,0,0.12);padding:6px 12px;border-radius:8px;border:1px solid #FFD700;">
+                        <span style="color:#8FA3C0;font-size:10px;">ÖNERİLEN SARF İSKONTOSU:</span><br>
+                        <b style="color:#FFD700;font-size:15px;">%{rec_optimum_sarf_disc:.1f}</b> <span style="color:#94A3B8;font-size:10.5px;">(Azami Tavan: %{rec_max_safe_sarf_disc:.1f})</span>
+                    </div>
+                </div>
+            </div>
+
+            <div style="font-size:11.5px;color:#CBD5E1;line-height:1.6;border-top:1px dashed rgba(255,255,255,0.1);padding-top:8px;">
+                <b>📌 Neden Bu İskonto Öneriliyor?</b><br>
+                • <b>Filo Hacim Primi:</b> Tekil sipariş yerine <b>{dev_qty} adetlik</b> toplu alım yapıldığı için cihaza taban (%5.0) üzerine <b>+%{dev_vol_add:.1f}</b> hacim teşviki verilmesi dağıtıcıyı motive eder.<br>
+                • <b>Razor-and-Blade Koruması:</b> Yıllık <b>{sarf_qty} kutu sarf taahhüdü</b> verildiği için şirket asıl kârı sarftan elde edecektir. Bu nedenle sarfa <b>%{rec_optimum_sarf_disc:.1f}</b> iskonto tanınırken, şirketin toplam brüt kârı <b>%{tot_margin_pct:.1f}</b> ile CFO kırmızı çizgisinin (%35) çok üzerinde kalmaya devam eder.<br>
+                • <b>CFO Kararı:</b> {'✅ İŞLEM ONAYLANABİLİR: Toplam kâr $' + f'{tot_profit:,.0f} USD ve brüt marj %{tot_margin_pct:.1f} ile tam uyumludur.' if tot_margin_pct >= 35.0 else '⚠️ MARJ DÜŞÜK: Brüt marj %35 eşiğinin altında kalmaktadır. İskontoyu düşürünüz.'}
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # 1-Click apply recommendation button
+    disc_btn_c1, disc_btn_c2 = st.columns([1.5, 2.5])
+    with disc_btn_c1:
+        if st.button(f"🎯 Önerilen İskontoyu Uygula (%{rec_optimum_dev_disc:.1f} Cihaz / %{rec_optimum_sarf_disc:.1f} Sarf)", key=f"btn_apply_rec_disc_{key_prefix}_{target_country}", type="primary", use_container_width=True):
+            st.session_state[f"{key_prefix}_dev_disc_slider_{target_country}"] = float(rec_optimum_dev_disc)
+            st.session_state[f"{key_prefix}_sarf_disc_slider_{target_country}"] = float(rec_optimum_sarf_disc)
+            st.rerun()
 
 
 def render_deep_sales_strategy_ui(country_name, deep_intel=None, p_fc=None):
