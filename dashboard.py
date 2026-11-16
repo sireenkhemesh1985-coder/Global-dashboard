@@ -1932,6 +1932,422 @@ MARKET_KNOWLEDGE_BASE = {
     }
 }
 
+# ==============================================================================
+# GLOBAL TIBBİ CİHAZ TESCİL, RUHSAT HARÇLARI, MERCI & DOSYA REHBERİ
+# (Class IIa Medical Device Registration Authority, Required Dossier & Ministry Fees)
+# ==============================================================================
+GLOBAL_DEVICE_REGISTRATION_FEES = {
+    "Türkiye": {
+        "country_tr": "Türkiye",
+        "flag": "🇹🇷",
+        "authority_name": "Türkiye İlaç ve Tıbbi Cihaz Kurumu (TİTCK)",
+        "department_portal": "Tıbbi Cihaz Kayıt ve Koordinasyon Dairesi Başkanlığı / ÜTS (Ürün Takip Sistemi)",
+        "device_classification": "Class IIa (Aktif Tedavi & Piezo Stimülasyon Cihazı - MDR Kural 9/10)",
+        "required_documents": [
+            "AB Onaylanmış Kuruluş (Notified Body) CE MDR 2017/745 Sertifikası",
+            "AB Uygunluk Beyanı (EU Declaration of Conformity - DoC)",
+            "ISO 13485:2016 Tıbbi Cihaz Kalite Yönetim Sistemi Sertifikası",
+            "Türkçe Kullanım Kılavuzu (IFU) ve TİTCK Uyumlu Türkçe Etiket Taslağı",
+            "Teknik Dosya Özeti (STED Formatında) & Risk Analizi (ISO 14971)",
+            "Elektriksel Güvenlik (IEC 60601-1) ve EMC (IEC 60601-1-2) Test Raporları",
+            "İthalatçı/Distribütör ÜTS Firma Tescil Kaydı, İmza Sirküleri ve Beyanname"
+        ],
+        "official_filing_fee": "₺8.500 – ₺15.000 TRY",
+        "official_filing_fee_usd": "$250 – $450 USD",
+        "consular_stamp_fee_usd": "$0 USD (Yerli/Apostil Geçerli)",
+        "local_agent_fee_usd": "$0 – $500 USD (Yerel Firma Kendi Başvurabilir)",
+        "total_device_cost_usd": "$250 – $500 USD",
+        "approval_timeline": "2 – 4 Hafta (ÜTS Sistem Belge İncelemesi)",
+        "validity_period": "CE Belgesi Süresince (Azami 5 Yıl)",
+        "fast_track_available": "Doğrudan CE MDR Harmonizasyonu",
+        "special_notes": "TİTCK doğrudan CE MDR sertifikasını baz alır. Cihazın AB onaylı CE belgesi mevcutsa dosya inceleme çok hızlı ve sembolik harçla tamamlanır."
+    },
+    "Egypt": {
+        "country_tr": "Mısır (Egypt)",
+        "flag": "🇪🇬",
+        "authority_name": "Mısır İlaç ve Tıbbi Cihaz Otoritesi (EDA - Egyptian Drug Authority)",
+        "department_portal": "Central Administration of Medical Devices (CAMD) / MeDevice Portalı",
+        "device_classification": "Class IIa (Active Medical Device - CE MDR Fast-Track)",
+        "required_documents": [
+            "CE MDR 2017/745 Sertifikası & AB Uygunluk Beyanı (DoC)",
+            "Free Sale Certificate (FSC - Serbest Satış Sertifikası, Mısır Kahire Konsolosluğu Tasdikli)",
+            "Menşe Şahadetnamesi (COO - Kahire Konsolosluğu & Ticaret Odası Tasdikli)",
+            "ISO 13485:2016 Sertifikası (Mısır Konsolosluğu Tasdikli)",
+            "Münhasır Dağıtıcı / Acente Sözleşmesi (Noter ve Mısır Konsolosluk Onaylı LOA)",
+            "Teknik Dosya (STED formatında) + Arapça ve İngilizce IFU (Kullanım Kılavuzu) & Etiket",
+            "Sarflar için: MEA (Mouse Embryo Assay >%80) ve Endotoksin parti analiz sertifikaları (CoA)"
+        ],
+        "official_filing_fee": "45.000 – 60.000 EGP",
+        "official_filing_fee_usd": "$950 – $1.250 USD",
+        "consular_stamp_fee_usd": "$800 – $1.200 USD (FSC, COO, LOA ve ISO Konsolosluk Tasdikleri)",
+        "local_agent_fee_usd": "$1.500 – $2.500 USD (Mısır Yerel Ruhsatlandırma Danışmanı / Acente)",
+        "total_device_cost_usd": "$3.250 – $4.950 USD",
+        "approval_timeline": "4 – 6 Ay (Fast-Track CE MDR Kabul Protokolü)",
+        "validity_period": "3 Yıl (Yenileme Bedeli: ~20.000 EGP)",
+        "fast_track_available": "Referans Ülke (AB/CE) Hızlı Kayıt Hattı",
+        "special_notes": "FSC belgesinin menşe ülke sağlık otoritesinden düzenlenip Mısır Konsolosluğunca tasdiki zorunludur. Sarf partilerinde teslim anında kalan raf ömrünün en az %60 olması şarttır."
+    },
+    "Saudi Arabia": {
+        "country_tr": "Suudi Arabistan (Saudi Arabia)",
+        "flag": "🇸🇦",
+        "authority_name": "Suudi Gıda ve İlaç Kurumu (SFDA - Saudi Food and Drug Authority)",
+        "department_portal": "Medical Device National Registry (MDNR) & GHAD Elektronik Lisanslama Sistemi",
+        "device_classification": "Class IIa (Active Device for IVF / MDMA Yolu)",
+        "required_documents": [
+            "SFDA Tıbbi Cihaz Pazarlama İzni (MDMA - Medical Device Marketing Authorization) Başvuru Formu",
+            "CE MDR 2017/745 Class IIa Sertifikası & Declaration of Conformity",
+            "SFDA Yetkili Temsilci Sözleşmesi (AR - SFDA Authorized Representative Agreement)",
+            "Apostil veya Suudi Konsolosluk Tasdikli Free Sale Certificate (FSC)",
+            "ISO 13485:2016 Sertifikası & Üretim Tesisi Akreditasyonu",
+            "ISO 14971 Tıbbi Cihaz Risk Yönetimi Dosyası ve IEC 60601 Test Raporları",
+            "Arapça ve İngilizce Çift Dilli Etiketleme (UDI / GS1 Barkodlu) ve Kullanım Kılavuzu"
+        ],
+        "official_filing_fee": "19.000 SAR (MDMA) + 2.600 SAR (MDNR)",
+        "official_filing_fee_usd": "$5.065 USD (MDMA) + $700 USD (MDNR)",
+        "consular_stamp_fee_usd": "$400 – $600 USD (FSC/COO Apostil Masrafları)",
+        "local_agent_fee_usd": "$3.000 – $5.000 USD/yıl (SFDA Lisanslı Yetkili Temsilci / AR Ücreti)",
+        "total_device_cost_usd": "$5.765 – $8.500 USD (İlk Tescil Maliyeti)",
+        "approval_timeline": "2 – 4 Ay (MDMA CE Onay Yolu)",
+        "validity_period": "3 Yıl (SFDA MDMA Lisansı)",
+        "fast_track_available": "MDMA CE-Path (GHTF Kurucu Ülke Protokolü)",
+        "special_notes": "SFDA tescili için üreticinin Suudi Arabistan'da yerleşik bir SFDA Yetkili Temsilcisi (AR) ataması mecburidir. AMS Saudi bu yetkiyi üstlenebilir veya bağımsız AR atanabilir."
+    },
+    "UAE": {
+        "country_tr": "Birleşik Arap Emirlikleri (UAE)",
+        "flag": "🇦🇪",
+        "authority_name": "BAE Sağlık ve Önleme Bakanlığı (MOHAP - Ministry of Health and Prevention)",
+        "department_portal": "Medical Device Registration Section / MOHAP E-Services",
+        "device_classification": "Class IIa (Active Specialized IVF Device)",
+        "required_documents": [
+            "CE MDR 2017/745 Sertifikası & DoC",
+            "BAE Büyükelçiliği / Dışişleri Tasdikli Free Sale Certificate (FSC)",
+            "Menşe Ülke Tasdikli ISO 13485:2016 Sertifikası",
+            "MOHAP Tıbbi Depo Lisansına Sahip Yerel Distribütör Yetki Mektubu (LOA)",
+            "Cihaz Teknik Özeti, Klinik Değerlendirme Raporu (CER) ve Güvenlik Testleri",
+            "İngilizce ve Arapça Kullanım Kılavuzu & UDI Etiketleri",
+            "Sarf Serileri için MEA >%80 ve Endotoxin Parti Uygunluk Beyanı"
+        ],
+        "official_filing_fee": "5.000 – 7.500 AED + 1.000 AED Dosya İnceleme",
+        "official_filing_fee_usd": "$1.360 – $2.040 USD + $272 USD İnceleme",
+        "consular_stamp_fee_usd": "$600 – $900 USD (BAE Elçilik Tasdikleri)",
+        "local_agent_fee_usd": "$1.200 – $2.000 USD (Yerel Medikal Depo Dosya Takip Hizmeti)",
+        "total_device_cost_usd": "$2.500 – $3.800 USD (Sarf grup kaydı: +$680 USD)",
+        "approval_timeline": "2 – 3 Ay (MOHAP Hızlı Tescil Hattı)",
+        "validity_period": "5 Yıl",
+        "fast_track_available": "CE MDR / US FDA Tanınırlığı ile Hızlı Yol",
+        "special_notes": "BAE'de başvuru ancak MOHAP lisanslı bir Tıbbi Depo (Medical Store) veya Yerel Dağıtıcı aracılığıyla yapılabilir. 5 yıllık ruhsat bölgedeki en uzun sürelerden biridir."
+    },
+    "Qatar": {
+        "country_tr": "Katar (Qatar)",
+        "flag": "🇶🇦",
+        "authority_name": "Katar Halk Sağlığı Bakanlığı (MOPH - Ministry of Public Health)",
+        "department_portal": "Pharmacy & Drug Control Department / Medical Device Registration Section",
+        "device_classification": "Class IIa (CE MDR Uyumlu)",
+        "required_documents": [
+            "CE MDR Sertifikası & AB Uygunluk Deklarasyonu",
+            "Katar Büyükelçiliği Onaylı Free Sale Certificate (FSC)",
+            "Ticaret Odası Onaylı Distribütör Yetki Belgesi (Exclusive Agency Certificate)",
+            "ISO 13485 Sertifikası",
+            "Hamad Medical Corporation (HMC) Teknik Şartname Uygunluk Beyanı",
+            "İngilizce ve Arapça Kullanıcı Dokümantasyonu"
+        ],
+        "official_filing_fee": "1.000 – 2.000 QAR",
+        "official_filing_fee_usd": "$275 – $550 USD",
+        "consular_stamp_fee_usd": "$500 – $800 USD",
+        "local_agent_fee_usd": "$800 – $1.500 USD",
+        "total_device_cost_usd": "$800 – $1.500 USD",
+        "approval_timeline": "2 – 3 Ay",
+        "validity_period": "3 Yıl",
+        "fast_track_available": "CE MDR Doğrudan Onay Protokolü",
+        "special_notes": "Katar MOPH resmi harçları GCC bölgesindeki en ekonomik seviyededir. HMC ve Sidra Medicine alımları için MOPH tescil numarası şarttır."
+    },
+    "Kuwait": {
+        "country_tr": "Kuveyt (Kuwait)",
+        "flag": "🇰🇼",
+        "authority_name": "Kuveyt Sağlık Bakanlığı (MOH Kuwait)",
+        "department_portal": "Medical Administration & Drug Inspection Department (MADID)",
+        "device_classification": "Class IIa (CE MDR Referanslı)",
+        "required_documents": [
+            "CE MDR 2017/745 Sertifikası ve DoC",
+            "Kuveyt Konsolosluğu Tasdikli FSC ve Menşe Belgesi (COO)",
+            "Kuveyt Ticaret Bakanlığı Onaylı Yerel Acente Tescil Belgesi",
+            "ISO 13485:2016 Sertifikası",
+            "Cihaz Teknik Dosya Özeti & IFU",
+            "Laboratuvar Kalite Güvence ve MEA Test Raporları"
+        ],
+        "official_filing_fee": "250 – 500 KWD",
+        "official_filing_fee_usd": "$815 – $1.630 USD",
+        "consular_stamp_fee_usd": "$600 – $900 USD",
+        "local_agent_fee_usd": "$1.500 – $2.200 USD",
+        "total_device_cost_usd": "$2.200 – $3.200 USD",
+        "approval_timeline": "3 – 5 Ay",
+        "validity_period": "3 Yıl",
+        "fast_track_available": "CE Onaylı Tıbbi Cihazlar için Standart Yol",
+        "special_notes": "Kuveyt'te distribütörün Ticaret Bakanlığı'na tescilli münhasır acente belgesine sahip olması zorunludur."
+    },
+    "Jordan": {
+        "country_tr": "Ürdün (Jordan)",
+        "flag": "🇯🇴",
+        "authority_name": "Ürdün Gıda ve İlaç Kurumu (JFDA - Jordan Food and Drug Administration)",
+        "department_portal": "Medical Devices & Medical Supplies Directorate",
+        "device_classification": "Class IIa (Active Electromedical IVF Equipment)",
+        "required_documents": [
+            "CE MDR 2017/745 Class IIa Sertifikası & DoC (JFDA CE onayını doğrudan tanır)",
+            "Apostil veya Ürdün Konsolosluğu Tasdikli Free Sale Certificate (FSC)",
+            "ISO 13485:2016 Sertifikası",
+            "Sirius Pharm Co. Yerel Distribütör Yetki Mektubu (LOA)",
+            "İngilizce Kullanım Kılavuzu, Güvenlik Testleri (IEC 60601) ve Broşür",
+            "Parti MEA >%80 ve Sterilite Analiz Sertifikası (CoA)"
+        ],
+        "official_filing_fee": "350 – 500 JOD",
+        "official_filing_fee_usd": "$500 – $705 USD",
+        "consular_stamp_fee_usd": "$400 – $600 USD",
+        "local_agent_fee_usd": "$800 – $1.200 USD (Sirius Pharm yerel dosya takip)",
+        "total_device_cost_usd": "$900 – $1.400 USD",
+        "approval_timeline": "6 – 8 Hafta (JFDA Fast-Track CE Tanıma Protokolü)",
+        "validity_period": "5 Yıl",
+        "fast_track_available": "Avrupa CE MDR Belgesi ile Hızlı Onay",
+        "special_notes": "JFDA, CE MDR belgesine sahip cihazlarda hızlı tescil sağlar. Sirius Pharm üzerinden başvuru yapıldığında ortalama 45 günde onay alınır."
+    },
+    "Iraq": {
+        "country_tr": "Irak (Iraq)",
+        "flag": "🇮🇶",
+        "authority_name": "Irak Sağlık Bakanlığı (MOH Iraq) & KIMADIA",
+        "department_portal": "State Company for Marketing Drugs and Medical Appliances / TIREPD Sistemi",
+        "device_classification": "Class IIa (CE Onaylı Medikal Cihaz)",
+        "required_documents": [
+            "TIREPD Üretici / Fabrika Sahası Kaydı (Site Registration) & ISO 13485",
+            "CE MDR Sertifikası & AB Uygunluk Beyanı",
+            "Irak Konsolosluğu Tasdikli Menşe Şahadetnamesi (COO) ve FSC",
+            "Sirius Pharm / ITL Mümessillik Sözleşmesi ve Bakanlık Kayıt Lisansı",
+            "Hızlı Analiz Protokolü ve Parti Analiz Raporları (CoA)",
+            "Gümrük Yeşil Hat İthalat İzin Belgesi"
+        ],
+        "official_filing_fee": "$1.000 – $1.500 USD (Cihaz Kaydı) + $2.000 USD (Fabrika Tescil Harcı)",
+        "official_filing_fee_usd": "$1.000 – $1.500 USD",
+        "consular_stamp_fee_usd": "$500 – $800 USD (Irak Konsolosluk Tasdikleri)",
+        "local_agent_fee_usd": "$1.500 – $2.500 USD (Bağdat/Erbil Saha Takibi)",
+        "total_device_cost_usd": "$1.500 – $2.500 USD (Üretici kayıtlı ise; ilk girişte ~$4.000 USD)",
+        "approval_timeline": "2 – 4 Ay (KIMADIA Hızlı Hat)",
+        "validity_period": "3 Yıl",
+        "fast_track_available": "KIMADIA Acil Yeşil Hat İthal İzni",
+        "special_notes": "Fabrika tescili bir kez yapıldıktan sonra model ekleme işlemi hızlıdır. Kürdistan Bölgesel Yönetimi (KRG/Erbil) girişlerinde ek yerel onay gerekebilir."
+    },
+    "Algeria": {
+        "country_tr": "Cezayir (Algeria)",
+        "flag": "🇩🇿",
+        "authority_name": "Ulusal İlaç Ürünleri Ajansı (ANPP) & Sağlık Bakanlığı (MSPRH)",
+        "department_portal": "Direction de la Pharmacie et des Dispositifs Médicaux (Homologation)",
+        "device_classification": "Classe IIa (Homologation des Dispositifs Médicaux)",
+        "required_documents": [
+            "Fransızca Hazırlanmış STED Teknik Dosyası (Dossier Technique STED)",
+            "CE MDR 2017/745 Class IIa Sertifikası & ISO 13485",
+            "Cezayir Konsolosluğu Tasdikli Free Sale Certificate (FSC) ve COO",
+            "Fransızca Kullanım Kılavuzu ve Etiket Tasarımı (Manuel en Français)",
+            "Bank of Algeria Domiciliation Onayı ve Yetkili Dağıtıcı Sözleşmesi",
+            "Klinik Etkililik ve Biyo-uyumluluk Çalışmaları"
+        ],
+        "official_filing_fee": "150.000 – 220.000 DZD",
+        "official_filing_fee_usd": "$1.120 – $1.650 USD",
+        "consular_stamp_fee_usd": "$800 – $1.200 USD (Konsolosluk ve Noter Tasdikleri)",
+        "local_agent_fee_usd": "$1.800 – $2.500 USD (Cezayir Yerel Regülasyon Temsilcisi)",
+        "total_device_cost_usd": "$2.200 – $3.500 USD",
+        "approval_timeline": "4 – 6 Ay (Bakanlık Homologasyon Komitesi)",
+        "validity_period": "5 Yıl (Homologasyon Sertifikası)",
+        "fast_track_available": "CE MDR Referansı ile Standart Homologasyon",
+        "special_notes": "Teknik dosyanın ve kullanım kılavuzunun eksiksiz Fransızca olması şarttır. Bankacılık domiciliation süreci için tescil belgesi zorunludur."
+    },
+    "Germany": {
+        "country_tr": "Almanya / AB (Germany / EU)",
+        "flag": "🇩🇪",
+        "authority_name": "Almanya Federal İlaç ve Tıbbi Cihaz Enstitüsü (BfArM) & AB Onaylanmış Kuruluş",
+        "department_portal": "EUDAMED (European Database on Medical Devices) & BfArM DMIDS",
+        "device_classification": "Class IIa (Active Medical Device - EU MDR 2017/745 Rule 9)",
+        "required_documents": [
+            "AB Onaylanmış Kuruluş (Notified Body) CE MDR 2017/745 Sertifikası",
+            "MDR Ek II & III Kapsamlı Teknik Dokümantasyon Dosyası",
+            "Klinik Değerlendirme Raporu (CER - MEDDEV 2.7/1 rev 4 ve MDR Madde 61)",
+            "ISO 13485:2016 Kalite Yönetim Sertifikası",
+            "Basic UDI-DI ve UDI Barkod Kayıtları (EUDAMED Veritabanı)",
+            "Almanca ve İngilizce Kullanım Kılavuzu (Gebrauchsanweisung) ve Etiket",
+            "Elektriksel Güvenlik (IEC 60601-1) ve Biyo-uyumluluk (ISO 10993) Tam Raporları"
+        ],
+        "official_filing_fee": "€150 – €500 EUR (BfArM / EUDAMED Bildirim Harcı)",
+        "official_filing_fee_usd": "$160 – $550 USD (Bildirim/Kayıt Harcı)",
+        "consular_stamp_fee_usd": "$0 USD (AB İçi Tasdik Aranmaz)",
+        "local_agent_fee_usd": "$0 USD (AB Üreticisi / Yetkili Temsilci Doğrudan Bildirir)",
+        "total_device_cost_usd": "$200 – $550 USD (CE MDR Varsa) | *Not: Sıfırdan Notified Body CE Denetimi: €25.000 – €45.000 EUR",
+        "approval_timeline": "1 – 3 Hafta (EUDAMED / BfArM Sistem Bildirimi)",
+        "validity_period": "5 Yıl (Notified Body CE Sertifikası Geçerliliği Boyunca)",
+        "fast_track_available": "MDR Tam Uyumlu Doğrudan Serbest Dolaşım",
+        "special_notes": "Eğer ürünün CE MDR Class IIa belgesi mevcutsa, Almanya'da pazara arz için sadece BfArM/EUDAMED bildirimi yapılır ve maliyet ~$300 USD civarındadır."
+    },
+    "Spain": {
+        "country_tr": "İspanya (Spain)",
+        "flag": "🇪🇸",
+        "authority_name": "İspanya İlaç ve Sağlık Ürünleri Ajansı (AEMPS)",
+        "department_portal": "AEMPS CCyC (Comercialización y Control) Portalı",
+        "device_classification": "Class IIa (MDR 2017/745)",
+        "required_documents": [
+            "CE MDR 2017/745 Sertifikası & DoC",
+            "İspanyolca Kullanım Kılavuzu (Instrucciones de Uso) ve Etiket Taslağı",
+            "ISO 13485:2016 Sertifikası",
+            "Distribütörün AEMPS İthalatçı/Dağıtıcı Lisansı (Licencia Previa de Distribución)"
+        ],
+        "official_filing_fee": "€180 – €350 EUR (Tasa 1.12 Pazara Arz Bildirim Harcı)",
+        "official_filing_fee_usd": "$195 – $380 USD",
+        "consular_stamp_fee_usd": "$0 USD (AB İçi Muafiyet)",
+        "local_agent_fee_usd": "$0 – $500 USD",
+        "total_device_cost_usd": "$200 – $400 USD",
+        "approval_timeline": "2 – 4 Hafta",
+        "validity_period": "CE Belgesi Boyunca",
+        "fast_track_available": "AB Tek Pazar Bildirim Rejimi",
+        "special_notes": "İspanya AEMPS sistemine bildirim yapılır yapılmaz satış başlatılabilir. İspanyolca etiketleme ve kılavuz yasal zorunluluktur."
+    },
+    "Italy": {
+        "country_tr": "İtalya (Italy)",
+        "flag": "🇮🇹",
+        "authority_name": "İtalya Sağlık Bakanlığı (Ministero della Salute)",
+        "department_portal": "Direzione Generale dei Dispositivi Medici / RDM (Repertorio dei Dispositivi Medici)",
+        "device_classification": "Class IIa (MDR 2017/745 / CND Sınıflandırması: Z12)",
+        "required_documents": [
+            "CE MDR Sertifikası & AB Uygunluk Beyanı",
+            "CND (Classificazione Nazionale dei Dispositivi) Kod Eşleştirmesi",
+            "İtalyanca Kullanım Kılavuzu ve Etiket",
+            "ISO 13485 Sertifikası & UDI-DI Verisi"
+        ],
+        "official_filing_fee": "€150 – €300 EUR",
+        "official_filing_fee_usd": "$165 – $330 USD",
+        "consular_stamp_fee_usd": "$0 USD",
+        "local_agent_fee_usd": "$0 USD",
+        "total_device_cost_usd": "$200 – $400 USD",
+        "approval_timeline": "2 – 3 Hafta",
+        "validity_period": "CE Belgesi Boyunca",
+        "fast_track_available": "RDM Hızlı Bildirim Protokolü",
+        "special_notes": "RDM tescil numarası olmadan kamu hastaneleri ve özel tüp bebek merkezleri ihale veya doğrudan satın alma yapamaz."
+    },
+    "United Kingdom": {
+        "country_tr": "Birleşik Krallık (UK)",
+        "flag": "🇬🇧",
+        "authority_name": "İlaç ve Sağlık Ürünleri Düzenleme Kurumu (MHRA)",
+        "department_portal": "MHRA Medical Device Online Registration System (DORS)",
+        "device_classification": "Class IIa (CE MDR Tanıma Protokolü - 2030'a Kadar Geçerli)",
+        "required_documents": [
+            "UK Sorumlu Kişi Atama Belgesi (UK Responsible Person - UKRP Agreement)",
+            "CE MDR 2017/745 Sertifikası veya UKCA Sertifikası",
+            "Declaration of Conformity (DoC) & ISO 13485",
+            "Teknik Dosya Özeti & İngilizce Kullanım Kılavuzu (IFU)",
+            "GMDN Kodu ve Küresel Ürün Tanımlayıcıları"
+        ],
+        "official_filing_fee": "£240 GBP (MHRA Cihaz Kayıt Harcı)",
+        "official_filing_fee_usd": "$310 USD",
+        "consular_stamp_fee_usd": "$0 USD (Apostil Gerekmez)",
+        "local_agent_fee_usd": "$1.500 – $2.500 USD/yıl (UKRP Temsilcilik Ücreti)",
+        "total_device_cost_usd": "$1.800 – $2.800 USD",
+        "approval_timeline": "3 – 5 Hafta",
+        "validity_period": "Yıllık UKRP İdamesiyle CE Geçerliliği Boyunca",
+        "fast_track_available": "Geçiş Rejimi: CE MDR 2030 Sonuna Kadar Doğrudan Kabul Edilir",
+        "special_notes": "UK'de yerleşik olmayan üreticilerin bir UKRP (UK Responsible Person) ataması mecburidir. Cihaz CE MDR belgesiyle doğrudan MHRA'e kaydedilir."
+    },
+    "India": {
+        "country_tr": "Hindistan (India)",
+        "flag": "🇮🇳",
+        "authority_name": "Merkezi İlaç Standartları Kontrol Örgütü (CDSCO)",
+        "department_portal": "SUGAM Online Portal / Form MD-14 (İthalat Lisansı)",
+        "device_classification": "Class B (Orta-Düşük Risk / IVF Piezo Stimulator)",
+        "required_documents": [
+            "Form MD-14 İthalat Lisansı Başvurusu",
+            "Hint Yetkili Temsilci Sözleşmesi (Indian Authorized Agent - IAA) & Güç Vekaleti",
+            "CE MDR 2017/745 Sertifikası veya US FDA 510(k)",
+            "Apostilli Free Sale Certificate (FSC)",
+            "Device Master File (DMF) ve Plant Master File (PMF)",
+            "ISO 13485:2016 Sertifikası & Test Raporları"
+        ],
+        "official_filing_fee": "$1.000 USD (Tesis Başına) + $50 USD (Cihaz Modeli Başına)",
+        "official_filing_fee_usd": "$1.050 USD",
+        "consular_stamp_fee_usd": "$300 – $500 USD",
+        "local_agent_fee_usd": "$1.500 – $2.500 USD (Hint Yerel Ajan / Danışmanlık)",
+        "total_device_cost_usd": "$2.600 – $3.800 USD",
+        "approval_timeline": "3 – 5 Ay",
+        "validity_period": "3 Yıl (Form MD-15 Lisansı)",
+        "fast_track_available": "CE/FDA Tanınırlığı ile Ön Değerlendirme Kolaylığı",
+        "special_notes": "Hindistan'da Class B cihazlar için CE belgesi olması inceleme süresini ciddi ölçüde hızlandırır. Hint Temsilcisinin (IAA) CDSCO toptan satış lisansı olması şarttır."
+    },
+    "United States": {
+        "country_tr": "Amerika Birleşik Devletleri (USA)",
+        "flag": "🇺🇸",
+        "authority_name": "ABD Gıda ve İlaç Dairesi (US FDA)",
+        "department_portal": "Center for Devices and Radiological Health (CDRH) / eSubmitter Portal",
+        "device_classification": "Class II (Premarket Notification 510(k) Required - Product Code: MQG/Oocyte Stimulator)",
+        "required_documents": [
+            "510(k) Premarket Notification Başvuru Dosyası (Predicate Cihaz Karşılaştırması)",
+            "Elektriksel Güvenlik (IEC 60601-1) & EMC (IEC 60601-1-2) Test Raporları",
+            "Biyo-uyumluluk Değerlendirmesi (ISO 10993)",
+            "Yazılım Doğrulama ve Siber Güvenlik Dosyası (FDA Software Guidance)",
+            "Kullanıcı Kılavuzu, UDI Etiketleme ve Sterilizasyon Validasyonu",
+            "US Agent (ABD Yerleşik Temsilci) Atama Mektubu"
+        ],
+        "official_filing_fee": "$5.440 USD (Small Business) / $21.760 USD (Standart Harç)",
+        "official_filing_fee_usd": "$5.440 USD (Küçük İşletme) | $21.760 USD (Standart)",
+        "consular_stamp_fee_usd": "$0 USD",
+        "local_agent_fee_usd": "$2.500 – $4.000 USD/yıl (US Agent)",
+        "total_device_cost_usd": "$15.000 – $25.000 USD (Küçük İşletme + Danışmanlık) | $35.000 – $55.000 USD (Büyük Firma)",
+        "approval_timeline": "6 – 9 Ay (FDA 510(k) İnceleme Süresi)",
+        "validity_period": "Süresiz (Yıllık ~$9.280 USD FDA Tesis Kayıt Harcı İle)",
+        "fast_track_available": "FDA Q-Submission & Hızlandırılmış Predicate İncelemesi",
+        "special_notes": "Yıllık cirosu $100M altındaki şirketler FDA'e Küçük İşletme (Small Business) başvurusu yaparak harçta %75 indirim hakkı kazanır ($5.440 USD'ye düşer)."
+    }
+}
+
+def resolve_device_registration_info(country_name):
+    c = str(country_name).strip()
+    alias_map = {
+        'Turkey': 'Türkiye', 'TR': 'Türkiye',
+        'Egypt': 'Egypt', 'EG': 'Egypt', 'Mısır': 'Egypt',
+        'Saudi Arabia': 'Saudi Arabia', 'SA': 'Saudi Arabia', 'KSA': 'Saudi Arabia', 'Suudi Arabistan': 'Saudi Arabia',
+        'UAE': 'UAE', 'United Arab Emirates': 'UAE', 'AE': 'UAE', 'BAE': 'UAE', 'Birleşik Arap Emirlikleri': 'UAE',
+        'Qatar': 'Qatar', 'QA': 'Qatar', 'Katar': 'Qatar',
+        'Kuwait': 'Kuwait', 'KW': 'Kuwait', 'Kuveyt': 'Kuwait',
+        'Jordan': 'Jordan', 'JO': 'Jordan', 'Ürdün': 'Jordan', 'Jordan-Iraq': 'Jordan', 'Jordan & Iraq': 'Jordan',
+        'Iraq': 'Iraq', 'IQ': 'Iraq', 'Irak': 'Iraq',
+        'Algeria': 'Algeria', 'DZ': 'Algeria', 'Cezayir': 'Algeria',
+        'Germany': 'Germany', 'DE': 'Germany', 'Almanya': 'Germany',
+        'Spain': 'Spain', 'ES': 'Spain', 'İspanya': 'Spain',
+        'Italy': 'Italy', 'IT': 'Italy', 'İtalya': 'Italy',
+        'United Kingdom': 'United Kingdom', 'UK': 'United Kingdom', 'GB': 'United Kingdom', 'Birleşik Krallık': 'United Kingdom', 'İngiltere': 'United Kingdom',
+        'India': 'India', 'IN': 'India', 'Hindistan': 'India',
+        'United States': 'United States', 'USA': 'United States', 'US': 'United States', 'Amerika': 'United States', 'ABD': 'United States'
+    }
+    target_key = alias_map.get(c, c)
+    if target_key in GLOBAL_DEVICE_REGISTRATION_FEES:
+        return GLOBAL_DEVICE_REGISTRATION_FEES[target_key]
+    
+    # Generic fallback
+    return {
+        "country_tr": c,
+        "flag": "🌐",
+        "authority_name": f"{c} Sağlık Bakanlığı & Tıbbi Cihaz İthalat Otoritesi",
+        "department_portal": "Medical Device Registration & Import Licensing Portal",
+        "device_classification": "Class IIa (EU MDR 2017/745 Harmonize)",
+        "required_documents": [
+            "CE MDR 2017/745 Class IIa Sertifikası & DoC",
+            "Konsolosluk / Apostil Tasdikli Free Sale Certificate (FSC)",
+            "Menşe Şahadetnamesi (Certificate of Origin - COO)",
+            "ISO 13485:2016 Kalite Yönetim Sertifikası",
+            "Teknik Dosya Özeti (STED Formatında) & IFU",
+            "Yetkili Distribütörlük / LOA Sözleşmesi"
+        ],
+        "official_filing_fee": "$1,000 – $2,000 USD (Tahmini)",
+        "official_filing_fee_usd": "$1,000 – $2,000 USD",
+        "consular_stamp_fee_usd": "$500 – $800 USD",
+        "local_agent_fee_usd": "$1,500 – $2.500 USD",
+        "total_device_cost_usd": "$3,000 – $5.300 USD",
+        "approval_timeline": "3 – 6 Ay",
+        "validity_period": "3 – 5 Yıl",
+        "fast_track_available": "CE MDR Tanınırlığı Mevcut",
+        "special_notes": f"{c} pazarında CE MDR belgesi üzerinden hızlandırılmış dosya inceleme ve yerel yetkili distribütör LOA onayı esastır."
+    }
+
 COUNTRY_DEEP_INTELLIGENCE = {
     'Egypt': {
         'customs_regulatory': {
@@ -14644,11 +15060,12 @@ elif active_view == "🛃 Market Intelligence & Compare":
                     "Görünüm Düzeni:",
                     [
                         "📊 Hem Grafik Hem Tablo (Entegre Görünüm)",
-                        "📈 Yalnızca Karşılaştırma Grafikleri",
-                        "📋 Yalnızca Detaylı Skor Kartı Tablosu"
+                        "📋 Yalnızca Detaylı Skor Kartı Tablosu",
+                        "📈 Yalnızca Karşılaştırma Grafikleri"
                     ],
                     index=0,
-                    horizontal=True
+                    horizontal=True,
+                    key="score_view_mode_radio"
                 )
             with vc2:
                 cat_filter = st.selectbox(
@@ -14660,7 +15077,9 @@ elif active_view == "🛃 Market Intelligence & Compare":
                         "💰 Makroekonomik Güç & Nüfus",
                         "🔬 Klinik Teknoloji & Regülasyon Rejimi",
                         "🛃 Gümrük, Belgelendirme & İthalat Rejimi (Customs & Barriers)"
-                    ]
+                    ],
+                    index=0,
+                    key="scorecard_category_filter"
                 )
 
             st.markdown("<br>", unsafe_allow_html=True)
@@ -14668,12 +15087,93 @@ elif active_view == "🛃 Market Intelligence & Compare":
             show_charts = "Grafik" in score_view_mode
             show_table = "Tablo" in score_view_mode
 
+            # Full Master Metrics Registry (Available for both table & filters)
+            all_metric_rows = [
+                # Category 1: Opportunity & ZEUS
+                {'cat': '🎯 Pazar Fırsatı & ZEUS Dağıtım Ağı', 'name': 'Yetkili Partner / Distribütör', 'extract': lambda r: r['Distributor']},
+                {'cat': '🎯 Pazar Fırsatı & ZEUS Dağıtım Ağı', 'name': 'Tahmini ZEUS Penetrasyonu %', 'extract': lambda r: r['Penetration %']},
+                {'cat': '🎯 Pazar Fırsatı & ZEUS Dağıtım Ağı', 'name': 'Pazar Fırsat Skoru', 'extract': lambda r: f"{r['score']} / 100"},
+                {'cat': '🎯 Pazar Fırsatı & ZEUS Dağıtım Ağı', 'name': 'Ticari Risk Düzeyi', 'extract': lambda r: f"{'🟢' if r['risk']=='Low' else ('🟡' if r['risk']=='Medium' else '🔴')} {r['risk']}"},
+                
+                # Category 2: Clinical Infrastructure
+                {'cat': '🏥 Klinik Altyapı & Tedavi Kapasitesi', 'name': 'Lisanslı Aktif IVF Klinik Sayısı', 'extract': lambda r: f"{r['clinics']:,} Klinik"},
+                {'cat': '🏥 Klinik Altyapı & Tedavi Kapasitesi', 'name': 'Yıllık Tedavi Siklus Hacmi', 'extract': lambda r: f"{r['cycles']:,} Siklus"},
+                {'cat': '🏥 Klinik Altyapı & Tedavi Kapasitesi', 'name': 'Milyon Nüfus Başına Klinik Yoğunluğu', 'extract': lambda r: f"{r['clinics_per_m']:.2f} klinik/M"},
+                {'cat': '🏥 Klinik Altyapı & Tedavi Kapasitesi', 'name': 'Klinik Başına Yıllık Ortalama Siklus', 'extract': lambda r: f"{r['cycles_per_clinic']:,.0f} siklus/kl."},
+                
+                # Category 3: Macroeconomics & Demographics
+                {'cat': '💰 Makroekonomik Güç & Nüfus', 'name': 'Kişi Başı GSYİH (GDP Per Capita)', 'extract': lambda r: f"${r['gdp_pc']:,} USD"},
+                {'cat': '💰 Makroekonomik Güç & Nüfus', 'name': 'Toplam GSYİH (GDP - Milyar USD)', 'extract': lambda r: f"${r['gdp']:,.1f} Milyar"},
+                {'cat': '💰 Makroekonomik Güç & Nüfus', 'name': 'Ülke Nüfusu (Milyon Kişi)', 'extract': lambda r: f"{r['pop']:.1f} Milyon"},
+                {'cat': '💰 Makroekonomik Güç & Nüfus', 'name': 'Sağlık Harcaması / GSYİH %', 'extract': lambda r: f"%{r['health_pct']:.1f}"},
+                {'cat': '💰 Makroekonomik Güç & Nüfus', 'name': '🧬 IVF & PGT Harcaması / GSYİH %', 'extract': lambda r: f"%{r.get('ivf_gdp_pct', 0.08):.2f}"},
+                {'cat': '💰 Makroekonomik Güç & Nüfus', 'name': '🏛️ IVF & PGT Devlet Desteği Oranı %', 'extract': lambda r: f"%{r.get('state_support_pct', 40.0):.0f}"},
+                {'cat': '💰 Makroekonomik Güç & Nüfus', 'name': '📜 Devlet Geri Ödeme & Sigorta Politikası Kapsamı', 'extract': lambda r: r.get('reimbursement_policy', 'Kısmi Geri Ödeme')},
+                
+                # Category 4: Technology & Regulation
+                {'cat': '🔬 Klinik Teknoloji & Regülasyon Rejimi', 'name': 'ICSI Mikroenjeksiyon Adaptasyonu %', 'extract': lambda r: f"%{r['icsi_pct']}"},
+                {'cat': '🔬 Klinik Teknoloji & Regülasyon Rejimi', 'name': 'PGT Genetik Tanı Oranı %', 'extract': lambda r: f"%{r['pgt_pct']}"},
+                {'cat': '🔬 Klinik Teknoloji & Regülasyon Rejimi', 'name': 'Kriyoprezervasyon (Dondurma) %', 'extract': lambda r: f"%{r['cryo_pct']}"},
+                {'cat': '🔬 Klinik Teknoloji & Regülasyon Rejimi', 'name': 'Medikal İthalat Rejimi', 'extract': lambda r: r['import_cond']},
+                {'cat': '🔬 Klinik Teknoloji & Regülasyon Rejimi', 'name': 'Regülasyon Zorluk Derecesi', 'extract': lambda r: r['regulation']},
+
+                # Category 5: Customs & Regulatory Barriers
+                {'cat': '🛃 Gümrük, Belgelendirme & İthalat Rejimi (Customs & Barriers)', 'name': '📦 Gümrük Vergisi Oranı % (Customs Tariff)', 'extract': lambda r: f"%{r.get('customs_tariff_pct', 5.0):.1f}"},
+                {'cat': '🛃 Gümrük, Belgelendirme & İthalat Rejimi (Customs & Barriers)', 'name': '📜 Belgelendirme Zorluk Skoru (Documentation Barriers)', 'extract': lambda r: f"{r.get('doc_barrier_score', 5.0):.1f} / 10 ({r.get('doc_barrier_label', 'Orta')})"},
+                {'cat': '🛃 Gümrük, Belgelendirme & İthalat Rejimi (Customs & Barriers)', 'name': '⏳ Gümrükleme & Çekim Süresi (Lead Time - Gün)', 'extract': lambda r: f"{r.get('customs_clearance_days', 10):.0f} Gün"},
+                {'cat': '🛃 Gümrük, Belgelendirme & İthalat Rejimi (Customs & Barriers)', 'name': '🏛️ Gümrük & İthalat Şartları (Customs Conditions)', 'extract': lambda r: r.get('customs_conditions', 'Standart Sağlık İzni & Menşe Belgesi')},
+                {'cat': '🛃 Gümrük, Belgelendirme & İthalat Rejimi (Customs & Barriers)', 'name': '🛃 Bileşik Gümrük Zorluk Endeksi (0-100 Puan)', 'extract': lambda r: f"{r.get('customs_difficulty_index', 35):.0f} Puan"}
+            ]
+
+            # Filter rows by category
+            if "Tüm Göstergeler" not in cat_filter:
+                selected_metric_rows = [m for m in all_metric_rows if m['cat'] == cat_filter]
+            else:
+                selected_metric_rows = all_metric_rows
+
+            transposed_data = {'Metrik / Gösterge': [m['name'] for m in selected_metric_rows]}
+            for _, r in cmp_df.iterrows():
+                transposed_data[r['name']] = [m['extract'](r) for m in selected_metric_rows]
+
+            scorecard_df = pd.DataFrame(transposed_data)
+
             # ==================================================================
-            # 1. GÖRSEL KIYASLAMA VE GRAFİK BÖLÜMÜ
+            # 1. DETAYLI SKOR KARTI VERİ TABLOSU (TABLO GÖRÜNÜMÜ AKTİFSE DOĞRUDAN EN ÜSTTE)
+            # ==================================================================
+            if show_table:
+                st.markdown(f"""
+                <div style="background:rgba(0,245,255,0.06);border:1px solid rgba(0,245,255,0.3);border-radius:8px;padding:10px 16px;margin-bottom:12px;font-size:12.5px;color:#E0F7FA;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+                    <div>
+                        <b>🔍 Aktif Tablo Filtresi:</b> <span style="color:#00F5FF;font-weight:700;">{cat_filter}</span> 
+                        &nbsp;|&nbsp; <b>Listelenen Gösterge:</b> <span style="color:#FFB800;font-weight:700;">{len(selected_metric_rows)} / 22 Metrik</span>
+                    </div>
+                    <div style="font-size:11.5px;color:#94A3B8;">
+                        Kıyaslanan Pazarlar: <span style="color:#FFFFFF;font-weight:700;">{len(cmp_df)} Ülke</span>
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
+                st.dataframe(scorecard_df, use_container_width=True, hide_index=True)
+
+                # Export CSV button
+                csv_scorecard = scorecard_df.to_csv(index=False).encode('utf-8')
+                st.download_button(
+                    label="📥 Filtrelenen Karşılaştırma Skor Kartını CSV Olarak İndir",
+                    data=csv_scorecard,
+                    file_name="ZEUS_Market_Comparison_Scorecard.csv",
+                    mime="text/csv",
+                    key="dl_btn_scorecard_csv"
+                )
+
+            if show_table and show_charts:
+                st.markdown("---")
+
+            # ==================================================================
+            # 2. GÖRSEL ANALİTİK KIYASLAMA VE GRAFİK BÖLÜMÜ
             # ==================================================================
             if show_charts:
                 # Row 1: Dual Core Strategic Benchmark Charts
-                st.markdown("##### 1. Stratejik Pazar Fırsatı & Tedavi Kapasitesi Kıyaslaması")
+                st.markdown("##### 📈 Stratejik Pazar Fırsatı & Tedavi Kapasitesi Kıyaslaması")
                 b_col1, b_col2 = st.columns(2)
                 
                 with b_col1:
@@ -14720,7 +15220,7 @@ elif active_view == "🛃 Market Intelligence & Compare":
                     st.plotly_chart(fig_cycles_bar, use_container_width=True)
 
                 # Row 2: 360° Radar Comparison & Dynamic Metric Visualizer
-                st.markdown("##### 2. Pazar Gücü & Çok Boyutlu Rekabet Matrisi")
+                st.markdown("##### 🔬 Pazar Gücü & Çok Boyutlu Rekabet Matrisi")
                 r_col1, r_col2 = st.columns([1.18, 1])
 
                 with r_col1:
@@ -14961,76 +15461,6 @@ elif active_view == "🛃 Market Intelligence & Compare":
                             </div>
                         </div>
                         """, unsafe_allow_html=True)
-
-
-            st.markdown("---")
-
-            # ==================================================================
-            # 2. DETAYLI SKOR KARTI VERİ TABLOSU
-            # ==================================================================
-            if show_table:
-                st.markdown(f"##### 📋 Detaylı Çok Boyutlu Karşılaştırmalı Skor Kartı Tablosu ({cat_filter})")
-                st.caption("Aşağıdaki tablo Dünya Bankası (WDI) ve ESHRE/CDC resmi kayıtlarına dayalı verileri yan yana kıyaslamaktadır.")
-                
-                # Full Master Metrics Registry
-                all_metric_rows = [
-                    # Category 1: Opportunity & ZEUS
-                    {'cat': '🎯 Pazar Fırsatı & ZEUS Dağıtım Ağı', 'name': 'Yetkili Partner / Distribütör', 'extract': lambda r: r['Distributor']},
-                    {'cat': '🎯 Pazar Fırsatı & ZEUS Dağıtım Ağı', 'name': 'Tahmini ZEUS Penetrasyonu %', 'extract': lambda r: r['Penetration %']},
-                    {'cat': '🎯 Pazar Fırsatı & ZEUS Dağıtım Ağı', 'name': 'Pazar Fırsat Skoru', 'extract': lambda r: f"{r['score']} / 100"},
-                    {'cat': '🎯 Pazar Fırsatı & ZEUS Dağıtım Ağı', 'name': 'Ticari Risk Düzeyi', 'extract': lambda r: f"{'🟢' if r['risk']=='Low' else ('🟡' if r['risk']=='Medium' else '🔴')} {r['risk']}"},
-                    
-                    # Category 2: Clinical Infrastructure
-                    {'cat': '🏥 Klinik Altyapı & Tedavi Kapasitesi', 'name': 'Lisanslı Aktif IVF Klinik Sayısı', 'extract': lambda r: f"{r['clinics']:,} Klinik"},
-                    {'cat': '🏥 Klinik Altyapı & Tedavi Kapasitesi', 'name': 'Yıllık Tedavi Siklus Hacmi', 'extract': lambda r: f"{r['cycles']:,} Siklus"},
-                    {'cat': '🏥 Klinik Altyapı & Tedavi Kapasitesi', 'name': 'Milyon Nüfus Başına Klinik Yoğunluğu', 'extract': lambda r: f"{r['clinics_per_m']:.2f} klinik/M"},
-                    {'cat': '🏥 Klinik Altyapı & Tedavi Kapasitesi', 'name': 'Klinik Başına Yıllık Ortalama Siklus', 'extract': lambda r: f"{r['cycles_per_clinic']:,.0f} siklus/kl."},
-                    
-                    # Category 3: Macroeconomics & Demographics
-                    {'cat': '💰 Makroekonomik Güç & Nüfus', 'name': 'Kişi Başı GSYİH (GDP Per Capita)', 'extract': lambda r: f"${r['gdp_pc']:,} USD"},
-                    {'cat': '💰 Makroekonomik Güç & Nüfus', 'name': 'Toplam GSYİH (GDP - Milyar USD)', 'extract': lambda r: f"${r['gdp']:,.1f} Milyar"},
-                    {'cat': '💰 Makroekonomik Güç & Nüfus', 'name': 'Ülke Nüfusu (Milyon Kişi)', 'extract': lambda r: f"{r['pop']:.1f} Milyon"},
-                    {'cat': '💰 Makroekonomik Güç & Nüfus', 'name': 'Sağlık Harcaması / GSYİH %', 'extract': lambda r: f"%{r['health_pct']:.1f}"},
-                    {'cat': '💰 Makroekonomik Güç & Nüfus', 'name': '🧬 IVF & PGT Harcaması / GSYİH %', 'extract': lambda r: f"%{r.get('ivf_gdp_pct', 0.08):.2f}"},
-                    {'cat': '💰 Makroekonomik Güç & Nüfus', 'name': '🏛️ IVF & PGT Devlet Desteği Oranı %', 'extract': lambda r: f"%{r.get('state_support_pct', 40.0):.0f}"},
-                    {'cat': '💰 Makroekonomik Güç & Nüfus', 'name': '📜 Devlet Geri Ödeme & Sigorta Politikası Kapsamı', 'extract': lambda r: r.get('reimbursement_policy', 'Kısmi Geri Ödeme')},
-                    
-                    # Category 4: Technology & Regulation
-                    {'cat': '🔬 Klinik Teknoloji & Regülasyon Rejimi', 'name': 'ICSI Mikroenjeksiyon Adaptasyonu %', 'extract': lambda r: f"%{r['icsi_pct']}"},
-                    {'cat': '🔬 Klinik Teknoloji & Regülasyon Rejimi', 'name': 'PGT Genetik Tanı Oranı %', 'extract': lambda r: f"%{r['pgt_pct']}"},
-                    {'cat': '🔬 Klinik Teknoloji & Regülasyon Rejimi', 'name': 'Kriyoprezervasyon (Dondurma) %', 'extract': lambda r: f"%{r['cryo_pct']}"},
-                    {'cat': '🔬 Klinik Teknoloji & Regülasyon Rejimi', 'name': 'Medikal İthalat Rejimi', 'extract': lambda r: r['import_cond']},
-                    {'cat': '🔬 Klinik Teknoloji & Regülasyon Rejimi', 'name': 'Regülasyon Zorluk Derecesi', 'extract': lambda r: r['regulation']},
-
-                    # Category 5: Customs & Regulatory Barriers
-                    {'cat': '🛃 Gümrük, Belgelendirme & İthalat Rejimi (Customs & Barriers)', 'name': '📦 Gümrük Vergisi Oranı % (Customs Tariff)', 'extract': lambda r: f"%{r.get('customs_tariff_pct', 5.0):.1f}"},
-                    {'cat': '🛃 Gümrük, Belgelendirme & İthalat Rejimi (Customs & Barriers)', 'name': '📜 Belgelendirme Zorluk Skoru (Documentation Barriers)', 'extract': lambda r: f"{r.get('doc_barrier_score', 5.0):.1f} / 10 ({r.get('doc_barrier_label', 'Orta')})"},
-                    {'cat': '🛃 Gümrük, Belgelendirme & İthalat Rejimi (Customs & Barriers)', 'name': '⏳ Gümrükleme & Çekim Süresi (Lead Time - Gün)', 'extract': lambda r: f"{r.get('customs_clearance_days', 10):.0f} Gün"},
-                    {'cat': '🛃 Gümrük, Belgelendirme & İthalat Rejimi (Customs & Barriers)', 'name': '🏛️ Gümrük & İthalat Şartları (Customs Conditions)', 'extract': lambda r: r.get('customs_conditions', 'Standart Sağlık İzni & Menşe Belgesi')},
-                    {'cat': '🛃 Gümrük, Belgelendirme & İthalat Rejimi (Customs & Barriers)', 'name': '🛃 Bileşik Gümrük Zorluk Endeksi (0-100 Puan)', 'extract': lambda r: f"{r.get('customs_difficulty_index', 35):.0f} Puan"}
-                ]
-
-                # Filter by category if chosen
-                if "Tüm Göstergeler" not in cat_filter:
-                    selected_metric_rows = [m for m in all_metric_rows if m['cat'] == cat_filter]
-                else:
-                    selected_metric_rows = all_metric_rows
-
-                transposed_data = {'Metrik / Gösterge': [m['name'] for m in selected_metric_rows]}
-                for _, r in cmp_df.iterrows():
-                    transposed_data[r['name']] = [m['extract'](r) for m in selected_metric_rows]
-
-                scorecard_df = pd.DataFrame(transposed_data)
-                st.dataframe(scorecard_df, use_container_width=True, hide_index=True)
-
-                # Export CSV button
-                csv_scorecard = scorecard_df.to_csv(index=False).encode('utf-8')
-                st.download_button(
-                    label="Karşılaştırma Skor Kartını CSV Olarak İndir",
-                    data=csv_scorecard,
-                    file_name="ZEUS_Market_Comparison_Scorecard.csv",
-                    mime="text/csv"
-                )
         with comp_tab3:
             st.subheader("AI Potansiyel Müşteri, Klinik & Distribütör Radarı (AI Prospect Scout)")
             st.caption("Ülkenin klinik siklus kapasitesi, Dünya Bankası alım gücü ve medikal ithalat mevzuatına dayalı öncelikli IVF tüp bebek klinik zincirleri, medikal distribütörler ve akademik araştırma merkezleri.")
@@ -15046,12 +15476,12 @@ elif active_view == "🛃 Market Intelligence & Compare":
             target_country_row = country_df[country_df['name'] == radar_country].iloc[0] if len(country_df[country_df['name'] == radar_country]) > 0 else cmp_df.iloc[0]
             
             with c_target_col2:
-                cat_filter = st.selectbox("🏥 Kurum / Hedef Kategorisi:", [
+                prospect_cat_filter = st.selectbox("🏥 Kurum / Hedef Kategorisi:", [
                     "Tüm Hedef Kurumlar",
                     "🏥 Öncü IVF Klinik Zincirleri & Hastaneler",
                     "🤝 MedTech & Laboratuvar Distribütörleri",
                     "🎓 Üniversite & Akademik Araştırma Merkezleri"
-                ])
+                ], key="prospect_institution_cat_filter")
                 
             with c_target_col3:
                 tier_filter = st.selectbox("⭐ Öncelik Seviyesi (Tier):", [
@@ -15121,7 +15551,7 @@ elif active_view == "🛃 Market Intelligence & Compare":
             # Apply filters
             filtered_prospects = []
             for p in prospects_list:
-                if cat_filter != "Tüm Hedef Kurumlar" and p['category'] != cat_filter:
+                if prospect_cat_filter != "Tüm Hedef Kurumlar" and p['category'] != prospect_cat_filter:
                     continue
                 if tier_filter != "Tüm Seviyeler" and p['tier'] != tier_filter:
                     continue
@@ -16877,12 +17307,13 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
             # ------------------------------------------------------------------
             # DEEP 5-PILLAR KNOWLEDGE MODULE (SEÇİLİ ÜLKEYE GÖRE DİNAMİK SEKMELER)
             # ------------------------------------------------------------------
-            k_tab1, k_tab2, k_tab3, k_tab4, k_tab5 = st.tabs([
+            k_tab1, k_tab2, k_tab3, k_tab4, k_tab5, k_tab6 = st.tabs([
                 "📦 1. Gümrük, GTİP & İthalat Mevzuatı",
                 "🧬 2. Yeni IVF & PGT Mevzuatı",
                 "💰 3. İndirim, 2027 Tahminleri & Uzman Görüşleri",
                 "🎯 4. Ülkeye Özel Satış Stratejisi (GTM)",
-                "📜 5. Resmi Sağlık Bakanlığı Tebliğleri"
+                "📜 5. Resmi Sağlık Bakanlığı Tebliğleri",
+                "🌍 6. Cihaz Tescil Mercii, Evraklar & Resmi Harçlar Rehberi (Registration & Fees)"
             ])
 
             # SUB-TAB 1: GÜMRÜK & İTHALAT MEVZUATI
@@ -17019,6 +17450,93 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
                         """, unsafe_allow_html=True)
                 else:
                     st.info(f"{cmp_kb_country} pazarı için genel uluslararası CE MDR ve ISO 13485 medikal cihaz mevzuat hükümleri geçerlidir.")
+
+            # SUB-TAB 6: GLOBAL TIBBİ CİHAZ TESCİL, RUHSAT HARÇLARI & MERCI REHBERİ
+            with k_tab6:
+                st.markdown(f"#### 🌍 {cmp_kb_country} ve Global Pazarlar Tıbbi Cihaz Tescil, Evrak & Harç Rehberi")
+                st.caption("ZEUS Pulse Stimulator (ZPS 26) ve sarflarının tescilinde resmi bakanlık mercileri, zorunlu belgeler, harçlar, konsolosluk onayları ve onay süreleri.")
+
+                reg_single = resolve_device_registration_info(cmp_kb_country)
+
+                # Active Country Spotlight Dossier Card
+                st.markdown(f"""
+                <div style="background:linear-gradient(135deg, rgba(15,23,42,0.92) 0%, rgba(19,166,181,0.12) 100%);border:1.5px solid #00F5FF;border-radius:12px;padding:18px 20px;margin-bottom:18px;box-shadow:0 8px 24px rgba(0,0,0,0.35);">
+                    <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:10px;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
+                        <div>
+                            <span style="font-size:16px;font-weight:800;color:#00F5FF;">🏛️ {reg_single['flag']} {cmp_kb_country} Tıbbi Cihaz Tescil Dosyası & Resmi Başvuru Şartnamesi</span>
+                            <div style="font-size:11.5px;color:#94A3B8;margin-top:2px;">Hedef Pazar: <b style="color:#FFF;">{reg_single['country_tr']}</b> &nbsp;|&nbsp; Regülasyon Kapsamı: <b style="color:#00E676;">{reg_single['device_classification']}</b></div>
+                        </div>
+                        <span style="background:rgba(0,245,255,0.15);color:#00F5FF;border:1px solid #13A6B5;padding:4px 12px;border-radius:6px;font-size:11.5px;font-weight:700;">
+                            {reg_single['fast_track_available']}
+                        </span>
+                    </div>
+
+                    <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));gap:12px;margin-bottom:14px;">
+                        <div style="background:rgba(255,255,255,0.03);padding:10px 14px;border-radius:8px;border-left:3px solid #00F5FF;">
+                            <div style="font-size:10.5px;color:#8FA3C0;text-transform:uppercase;">🏛️ Başvurulacak Merci & Portal</div>
+                            <div style="font-size:12.5px;font-weight:700;color:#FFFFFF;margin-top:3px;">{reg_single['authority_name']}</div>
+                            <div style="font-size:11px;color:#00F5FF;margin-top:2px;">{reg_single['department_portal']}</div>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.03);padding:10px 14px;border-radius:8px;border-left:3px solid #FFD700;">
+                            <div style="font-size:10.5px;color:#8FA3C0;text-transform:uppercase;">💰 Resmi Bakanlık Başvuru Harcı</div>
+                            <div style="font-size:13.5px;font-weight:800;color:#FFD700;margin-top:3px;">{reg_single['official_filing_fee']}</div>
+                            <div style="font-size:11px;color:#E2E8F0;margin-top:2px;">Yaklaşık: <b style="color:#00E676;">{reg_single['official_filing_fee_usd']}</b></div>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.03);padding:10px 14px;border-radius:8px;border-left:3px solid #10B981;">
+                            <div style="font-size:10.5px;color:#8FA3C0;text-transform:uppercase;">💵 Toplam Cihaz Başı Tescil Maliyeti</div>
+                            <div style="font-size:14px;font-weight:800;color:#10B981;margin-top:3px;">{reg_single['total_device_cost_usd']}</div>
+                            <div style="font-size:10.5px;color:#94A3B8;margin-top:2px;">Harç + Tasdik + Acente Dahil</div>
+                        </div>
+                        <div style="background:rgba(255,255,255,0.03);padding:10px 14px;border-radius:8px;border-left:3px solid #A855F7;">
+                            <div style="font-size:10.5px;color:#8FA3C0;text-transform:uppercase;">⏳ Onay Süresi & Geçerlilik</div>
+                            <div style="font-size:12.5px;font-weight:700;color:#E2E8F0;margin-top:3px;">⏱️ {reg_single['approval_timeline']}</div>
+                            <div style="font-size:11px;color:#A855F7;margin-top:2px;">📜 Geçerlilik: {reg_single['validity_period']}</div>
+                        </div>
+                    </div>
+
+                    <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:14px;margin-bottom:12px;">
+                        <div style="font-weight:700;color:#00F5FF;font-size:12.5px;margin-bottom:8px;">📋 {cmp_kb_country} İçin Zorunlu Resmi Başvuru Evrakları:</div>
+                        <div style="font-size:11.8px;color:#CCD7E6;line-height:1.75;">
+                            {"<br>".join(["• " + d for d in reg_single["required_documents"]])}
+                        </div>
+                    </div>
+
+                    <div style="background:rgba(255,184,0,0.06);border-left:4px solid #FFB800;padding:10px 14px;border-radius:4px;font-size:11.5px;color:#FDE68A;">
+                        💡 <b>Mevzuat Notu & Fast-Track Protokolü:</b> {reg_single['special_notes']}
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
+                # Global Comparison Matrix Table of 15 Key Markets
+                st.markdown("##### 🌐 Global Pazarlar Karşılaştırmalı Tıbbi Cihaz Tescil, Harç & Süre Tablosu (15 Ülke)")
+                st.caption("Aşağıdaki master çizelge, ZEUS Pulse Stimulator (ZPS 26) Sınıf IIa cihazımızın farklı coğrafyalarda tescili için ödenmesi gereken resmi devlet harçlarını, konsolosluk onay masraflarını ve yerel acente maliyetlerini özetlemektedir.")
+
+                matrix_rows = []
+                for c_k, c_v in GLOBAL_DEVICE_REGISTRATION_FEES.items():
+                    matrix_rows.append({
+                        "Ülke": f"{c_v['flag']} {c_v['country_tr']}",
+                        "Resmi Tescil Mercii": c_v['authority_name'],
+                        "Portal / Daire": c_v['department_portal'],
+                        "Sınıf": c_v['device_classification'].split('(')[0].strip(),
+                        "Resmi Bakanlık Harcı": c_v['official_filing_fee_usd'],
+                        "Konsolosluk / Tasdik": c_v['consular_stamp_fee_usd'],
+                        "Yerel Acente / Danışmanlık": c_v['local_agent_fee_usd'],
+                        "Toplam Cihaz Başı Tescil (USD)": c_v['total_device_cost_usd'],
+                        "Onay Süresi": c_v['approval_timeline'],
+                        "Geçerlilik": c_v['validity_period']
+                    })
+
+                global_reg_df = pd.DataFrame(matrix_rows)
+                st.dataframe(global_reg_df, use_container_width=True, hide_index=True)
+
+                csv_reg_matrix = global_reg_df.to_csv(index=False).encode('utf-8')
+                st.download_button(
+                    label="📥 Tüm Ülkelerin Medikal Cihaz Tescil & Harç Matrisini İndir (CSV)",
+                    data=csv_reg_matrix,
+                    file_name="ZEUS_Global_Medical_Device_Registration_Fees_Matrix.csv",
+                    mime="text/csv",
+                    key="dl_btn_global_reg_matrix_csv"
+                )
 
             # Do's and Don'ts Card
             st.markdown(f"""
@@ -17478,6 +17996,56 @@ elif active_view == "🌍 Country 360° Performance & Report":
                 • <b>Embriyo Biyopsi Standardı:</b> {ivf_pgt.get('biopsy_standards', 'Gün 5 Trofektoderm lazer biyopsisi')}
             </div>
             """, unsafe_allow_html=True)
+
+        # Cihaz Tescil Mercii, Başvuru Evrakları & Resmi Harçlar Card (Country 360 Spotlight)
+        reg_c360 = resolve_device_registration_info(sel_country)
+        st.markdown(f"""
+        <div style="background:rgba(15,23,42,0.85);border:1.5px solid #00F5FF;border-radius:10px;padding:16px;margin-top:14px;box-shadow:0 4px 16px rgba(0,0,0,0.35);">
+            <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:10px;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+                <div>
+                    <span style="font-size:14.5px;font-weight:800;color:#00F5FF;">🏛️ {reg_c360['flag']} {sel_country} Tıbbi Cihaz Tescil Mercii, Başvuru Evrakları & Resmi Harçlar</span>
+                    <div style="font-size:11px;color:#94A3B8;margin-top:2px;">ZEUS Pulse Stimulator (ZPS 26) Sınıf IIa Aktif Tıbbi Cihaz ve Sarf Kayıt Protokolü</div>
+                </div>
+                <span style="background:rgba(0,230,118,0.15);color:#00E676;border:1px solid rgba(0,230,118,0.35);padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;">
+                    {reg_c360['device_classification']}
+                </span>
+            </div>
+            
+            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:12px;margin-bottom:14px;">
+                <div style="background:rgba(255,255,255,0.03);padding:10px 12px;border-radius:8px;border-left:3px solid #00F5FF;">
+                    <div style="font-size:10.5px;color:#8FA3C0;text-transform:uppercase;">🏛️ Başvurulacak Otorite & Portal</div>
+                    <div style="font-size:12px;font-weight:700;color:#FFFFFF;margin-top:2px;">{reg_c360['authority_name']}</div>
+                    <div style="font-size:11px;color:#00F5FF;margin-top:2px;">{reg_c360['department_portal']}</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.03);padding:10px 12px;border-radius:8px;border-left:3px solid #FFD700;">
+                    <div style="font-size:10.5px;color:#8FA3C0;text-transform:uppercase;">💰 Resmi Bakanlık Başvuru Harcı</div>
+                    <div style="font-size:13.5px;font-weight:800;color:#FFD700;margin-top:2px;">{reg_c360['official_filing_fee']}</div>
+                    <div style="font-size:11px;color:#E2E8F0;margin-top:2px;">Yaklaşık: <b style="color:#00E676;">{reg_c360['official_filing_fee_usd']}</b></div>
+                </div>
+                <div style="background:rgba(255,255,255,0.03);padding:10px 12px;border-radius:8px;border-left:3px solid #10B981;">
+                    <div style="font-size:10.5px;color:#8FA3C0;text-transform:uppercase;">💵 Toplam Cihaz Başı Tescil Maliyeti</div>
+                    <div style="font-size:14px;font-weight:800;color:#10B981;margin-top:2px;">{reg_c360['total_device_cost_usd']}</div>
+                    <div style="font-size:10.5px;color:#94A3B8;margin-top:2px;">Harç + Tasdik + Danışmanlık Dahil</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.03);padding:10px 12px;border-radius:8px;border-left:3px solid #A855F7;">
+                    <div style="font-size:10.5px;color:#8FA3C0;text-transform:uppercase;">⏳ Onay Süresi & Geçerlilik</div>
+                    <div style="font-size:12px;font-weight:700;color:#E2E8F0;margin-top:2px;">⏱️ {reg_c360['approval_timeline']}</div>
+                    <div style="font-size:11px;color:#A855F7;margin-top:2px;">📜 Geçerlilik: {reg_c360['validity_period']}</div>
+                </div>
+            </div>
+
+            <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:12px;margin-bottom:10px;">
+                <div style="font-weight:700;color:#00F5FF;font-size:12px;margin-bottom:6px;">📋 Gerekli Resmi Başvuru Evrakları:</div>
+                <div style="font-size:11.5px;color:#CBD5E1;line-height:1.7;">
+                    {"<br>".join(["• " + doc for doc in reg_c360["required_documents"]])}
+                </div>
+            </div>
+            
+            <div style="background:rgba(255,184,0,0.05);border-left:3px solid #FFB800;padding:8px 12px;border-radius:4px;font-size:11px;color:#FDE68A;">
+                💡 <b>Mevzuat Notu & Fast-Track Yolu:</b> {reg_c360['special_notes']}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
 
         st.markdown("<br>", unsafe_allow_html=True)
 
