@@ -2348,6 +2348,432 @@ def resolve_device_registration_info(country_name):
         "special_notes": f"{c} pazarında CE MDR belgesi üzerinden hızlandırılmış dosya inceleme ve yerel yetkili distribütör LOA onayı esastır."
     }
 
+
+# ==============================================================================
+# GLOBAL MEDİKAL İHALE, ŞARTNAME & SATIN ALMA İSTİHBARATI
+# (Public Tenders, Technical Specifications, Action Plan & Procurement Parameters)
+# ==============================================================================
+GLOBAL_TENDER_PROCUREMENT_INTEL = {
+    "Türkiye": {
+        "country_tr": "Türkiye",
+        "flag": "🇹🇷",
+        "tender_authority": "T.C. Sağlık Bakanlığı, Kamu Hastaneleri Genel Müdürlüğü (KHGM) & DMO",
+        "procurement_portals": [
+            "EKAP (Elektronik Kamu Alımları Platformu — ekap.kik.gov.tr)",
+            "DMO Sağlık Market (Devlet Malzeme Ofisi Tıbbi Cihaz Kataloğu)",
+            "Üniversite Hastaneleri Doğrudan Temin & 4734 Sayılı Kanun İhale Portalları"
+        ],
+        "active_tender_types": [
+            "4734 Sayılı KİK Açık İhale: Şehir Hastaneleri ve EAH Tüp Bebek Merkezi Cihaz Alımları",
+            "DMO Sağlık Market Çerçeve Sözleşmesi: Oosit Stimülasyon & Piezo Cihazı Doğrudan Siparişi",
+            "Kamu ve Üniversite Hastaneleri 1 Yıllık IVF Sarf Malzeme & Kültür Kit İhaleleri",
+            "Üniversite Tüp Bebek Merkezleri Doğrudan Temin (Madde 22/d) Acil Cihaz / Sarf Alımları"
+        ],
+        "typical_budget_range": "₺1.200.000 – ₺4.500.000 TRY (~$35.000 – $130.000 USD)",
+        "procurement_schedule": "Yıllık Merkezi İhaleler (Q4 Bütçe / Q1-Q2 İhale) & Aylık DMO Siparişleri",
+        "technical_specifications": {
+            "device_title": "Piezoelektrik Mikro-Puls Oosit Aktivasyon ve Mikroenjeksiyon Sistemi",
+            "core_specs": [
+                "Cihaz, oosit aktivasyonunu kimyasal kalsiyum iyonofor (A23187/İyonomisin) kullanmaksızın fiziksel mikro-puls elektriksel stimülasyon ile gerçekleştirebilmelidir.",
+                "Ayarlanabilir puls voltajı (0–99 V) ve mikro-saniye bazlı puls genişliği (10–99 µs) aralığına sahip olmalıdır.",
+                "Oosit lizis oranı klinik olarak doğrulanmış <%1 düzeyinde olmalı ve blastosist gelişimini baskılamamalıdır.",
+                "İnvert mikroskop ve mikromanipülatör sistemleri (Eppendorf / Narishige) ile tam entegre çalışmalıdır.",
+                "Cihazla birlikte kullanılacak tek kullanımlık aktivasyon petrileri biyo-uyumlu, parti MEA test sertifikalı olmalıdır."
+            ],
+            "mandatory_certifications": [
+                "TİTCK Ürün Takip Sistemi (ÜTS) Tekil Barkod Kaydı & Sistemde 'Kayıtlı/Satılabilir' Statüsü",
+                "AB Onaylanmış Kuruluş Onaylı CE MDR 2017/745 Class IIa Sertifikası",
+                "ISO 13485:2016 Tıbbi Cihaz Kalite Yönetim Sertifikası",
+                "IEC 60601-1 Tıbbi Elektrikli Cihazlar Güvenlik ve IEC 60601-1-2 EMC Test Raporları",
+                "Türkçe Kullanma Kılavuzu (IFU) ve Garanti Belgesi (Asgari 2 yıl garanti + 10 yıl yedek parça temini taahhüdü)"
+            ],
+            "consumable_specs": [
+                "Parti bazında bağımsız akredite laboratuvar onaylı MEA (Mouse Embryo Assay) >%80 blastosist gelişim sertifikası",
+                "Endotoksin seviyesi <0.05 EU/ml (LAL testi) analiz belgesi",
+                "Steril, gamma ışınlamalı tekli ambalaj ve parti analiz sertifikası (CoA)"
+            ]
+        },
+        "action_plan_checklist": [
+            "1. Şartname Hazırlık Aşaması: İhale öncesinde üniversite ve şehir hastanelerinin Tüp Bebek Laboratuvar Şeflerine Piezo AOA klinik üstünlük dosyası sunulmalı; teknik şartnameye 'Kimyasal içermeyen fiziksel piezoelektrik stimülasyon' maddesinin girmesi sağlanmalıdır.",
+            "2. ÜTS & DMO Kaydı: Cihaz ve sarf malzemelerin ÜTS barkodları aktif olmalı, DMO Sağlık Market tıbbi cihaz listesine fiyat başvurusu yapılmalıdır.",
+            "3. Geçici Teminat Mektubu: Teklif bedelinin asgari %3'ü oranında banka geçici teminat mektubu hazırlanmalıdır.",
+            "4. Yetkili Satıcı Belgesi (LOA): İhaleye katılacak dağıtıcı/bayi adına üreticiden alınmış yetki belgesi EKAP sistemine yüklenmelidir.",
+            "5. Numune ve Demo: Komisyon talep ettiğinde merkezde 14 günlük vaka çalıştayı ve klinik aplikasyon demosu yapacak sertifikalı embriyolog hazır bulundurulmalıdır.",
+            "6. Fiyat Stratejisi: SGK SUT geri ödeme kodları ve DMO tavan fiyatları dikkate alınarak asgari %35 brüt marjı koruyan teklif verilmelidir."
+        ],
+        "key_tender_parameters": {
+            "tender_type_dist": "Açık İhale (%55), DMO Sağlık Market (%30), Doğrudan Temin (%15)",
+            "bid_bond_rate": "%3.0 Geçici Teminat | %6.0 Kesin Teminat",
+            "lock_in_strength": "%92 (Teknik şartnameye piezo spesifikasyonları girildiğinde rakipsiz kalma gücü)",
+            "payment_term_days": "DMO: 60-90 Gün | Üniversite Hastaneleri: 120-180 Gün | Özel Zincirler: 30-45 Gün",
+            "recommended_strategy": "Klinik Şeflerine Doğrudan Tanıtım + DMO Sağlık Market Listelemesi"
+        }
+    },
+    "Saudi Arabia": {
+        "country_tr": "Suudi Arabistan (Saudi Arabia)",
+        "flag": "🇸🇦",
+        "tender_authority": "NUPCO (National Unified Procurement Company) & Sağlık Bakanlığı (MOH)",
+        "procurement_portals": [
+            "NUPCO e-Tender Portal (nupco.com)",
+            "Etimad Ulusal Kamu İhale Platformu (etimad.sa)",
+            "KFSHRC & National Guard (MNGHA) Bağımsız Sağlık İhale Portalları"
+        ],
+        "active_tender_types": [
+            "NUPCO 3 Yıllık Ulusal Tıbbi Teçhizat ve Embriyoloji Sarf Çerçeve İhalesi",
+            "Sağlık Bakanlığı (MOH) Bölgesel Tüp Bebek Merkezleri Ekipman Yenileme İhaleleri",
+            "King Faisal Specialist Hospital (KFSHRC) İleri Genetik & IVF Cihaz Alımları",
+            "NUPCO Konsinye Depo Tedarik Sözleşmeleri (Call-off Orders)"
+        ],
+        "typical_budget_range": "600.000 – 2.500.000 SAR (~$160.000 – $665.000 USD)",
+        "procurement_schedule": "3 Yıllık Çerçeve Sözleşmeler & Yıllık Çeyreklik Çağrı Siparişleri (Call-offs)",
+        "technical_specifications": {
+            "device_title": "Piezoelectric Oocyte Activation & Micro-injection Workstation",
+            "core_specs": [
+                "Cihaz, kalsiyum iyonofor kimyasal toksisitesi olmadan fiziksel piezoelektrik stimülasyon sağlamalıdır.",
+                "Sub-%1 oosit lizisi klinik çalışma raporu ile belgelenmelidir.",
+                "SFDA MDMA onaylı ve çift dilli Arapça/İngilizce UDI GS1 etiketli olmalıdır.",
+                "Hassas voltaj kalibrasyonu ve laboratuvar invert mikroskoplarıyla entegrasyon aparatı içermelidir."
+            ],
+            "mandatory_certifications": [
+                "SFDA MDMA (Medical Device Marketing Authorization) Lisansı",
+                "ISO 13485:2016 ve CE MDR 2017/745 Class IIa Sertifikası",
+                "Suudi Arabistan Yerleşik Yetkili Temsilci (AR) Tescili",
+                "NUPCO Barkodlama ve Paletleme Standartları Uygunluk Belgesi"
+            ],
+            "consumable_specs": [
+                "MEA >%80 ve Endotoxin <0.05 EU/ml parti sertifikalı steril aktivasyon dishleri",
+                "Suudi iklim koşullarına uygun sıcaklık göstergeli (Cold-chain) ambalaj"
+            ]
+        },
+        "action_plan_checklist": [
+            "1. NUPCO Portal Kaydı: Distribütör (AMS Saudi) NUPCO ve Etimad platformlarına yetkili tedarikçi olarak kaydedilmelidir.",
+            "2. SFDA MDMA Lisansı: Cihaz ve sarfların SFDA MDMA onay numaraları teklif dosyasına eksiksiz eklenmelidir.",
+            "3. NUPCO Konsinye Sözleşmesi: Riyad ve Cidde NUPCO lojistik depolarına asgari 3 aylık emniyet stoğu taahhüt edilmelidir.",
+            "4. Sertifikalı Aplikasyon Uzmanı: Distribütör bünyesinde yerleşik Suudi lisanslı embriyolog demo tutanağı sunmalıdır.",
+            "5. Banka Teminatı: İhale bedelinin %5'i tutarında Riyad bankalarından teminat mektubu temin edilmelidir."
+        ],
+        "key_tender_parameters": {
+            "tender_type_dist": "NUPCO Merkezi İhale (%75), Bağımsız Kurum Alımları (%25)",
+            "bid_bond_rate": "%5.0 Kesin Teminat Mektubu",
+            "lock_in_strength": "%88 (NUPCO şartnamesine piezo teknolojisi kilitlendiğinde yüksek marj)",
+            "payment_term_days": "NUPCO: 60-90 Gün (Garantili Devlet Ödemesi)",
+            "recommended_strategy": "NUPCO Konsinye Listelemesi + AMS Saudi Üzerinden Yerel İhale Takibi"
+        }
+    },
+    "Egypt": {
+        "country_tr": "Mısır (Egypt)",
+        "flag": "🇪🇬",
+        "tender_authority": "Unified Procurement Authority (UPA - El-Shiraa El-Mowahed) & Üniversite Hastaneleri",
+        "procurement_portals": [
+            "UPA Medical Procurement e-Portal (upa.gov.eg)",
+            "Kahire Üniversitesi (Kasr Al-Ainy) & Ayn Şems Satın Alma Masası",
+            "Mısır Askeri Tıp Akademisi & Kadın Doğum Hastaneleri İhale Masası"
+        ],
+        "active_tender_types": [
+            "UPA Yıllık Ulusal Merkezi IVF Laboratuvarı Ekipman ve Sarf İhalesi",
+            "Üniversite Hastaneleri (Kasr Al-Ainy) Yüksek Riskli İnfertilite Cihaz Alımları",
+            "Al-Galaa Askeri Kadın Doğum Hastanesi Özel Doğrudan Alım İhalesi",
+            "Özel Tüp Bebek Zincirleri Kurumsal Tedarik Anlaşmaları"
+        ],
+        "typical_budget_range": "4.000.000 – 12.000.000 EGP (~$85.000 – $250.000 USD)",
+        "procurement_schedule": "Yıllık UPA İhalesi (Q3 Hazırlık / Q4 Karar) & Çeyreklik Üniversite Alımları",
+        "technical_specifications": {
+            "device_title": "Piezo Electric Oocyte Activation System for Severe Fertilization Failure",
+            "core_specs": [
+                "Cihaz, Total Döllenme Başarısızlığı (TFF) ve şiddetli erkek faktöründe fiziksel piezo elektriksel mikro-puls ile aktivasyon yapmalıdır.",
+                "Oosit lizis oranı <%1 olmalı, kalsiyum klorür ve kimyasal iyonofor ihtiyacını tamamen ortadan kaldırmalıdır.",
+                "Laboratuvar mikromanipülatörüne ayak pedallı veya dokunmatik ekranlı mikro-tetikleme sunmalıdır."
+            ],
+            "mandatory_certifications": [
+                "Mısır İlaç ve Tıbbi Cihaz Otoritesi (EDA) Kayıt Belgesi",
+                "Mısır Konsolosluğu ve Ticaret Odası Tasdikli FSC ve Menşe Şahadetnamesi (COO)",
+                "CE MDR 2017/745 Class IIa ve ISO 13485 Sertifikası",
+                "2 yıl garanti ve Kahire merkezli teknik servis desteği"
+            ],
+            "consumable_specs": [
+                "Parti MEA >%80 ve Endotoksin sertifikalı aktivasyon dishleri",
+                "Teslim anında en az %60 kalan raf ömrü taahhüdü"
+            ]
+        },
+        "action_plan_checklist": [
+            "1. UPA Kayıt ve Tescil: Dağıtıcı (TechnoPharm / Technomed) adına UPA sistem kaydı yapılmalı, EDA tescil belgesi yüklenmelidir.",
+            "2. Döviz Kuru Klozu: EGP devalüasyon riskine karşı teklif sözleşmesine USD bazlı döviz kuru ayarlama maddesi ekletilmelidir.",
+            "3. Akreditif (LC) Şartı: Kamu ve üniversite ihalelerinde gayrikabili rücu teyitli akreditif (Confirmed LC) temin edilmelidir.",
+            "4. Kasr Al-Ainy Klinik Demosu: Üniversite tüp bebek direktörüne 14 günlük yerinde vaka çalıştayı düzenlenmelidir.",
+            "5. Yerel Aplikasyon Desteği: Mısır'da bordrolu en az 1 sertifikalı klinik embriyolog istihdamı şartnameye eklenmelidir."
+        ],
+        "key_tender_parameters": {
+            "tender_type_dist": "UPA Merkezi İhale (%65), Üniversite & Askeri Hastaneler (%35)",
+            "bid_bond_rate": "%2.0 Geçici Teminat | %5.0 Kesin Teminat",
+            "lock_in_strength": "%85 (Fiziksel piezo stimülasyon şartnameye girdiğinde tek kaynak avantajı)",
+            "payment_term_days": "LC Kapsamında 60 Gün | Açık Hesap Kamu Alımı: Kesinlikle Engellenmeli",
+            "recommended_strategy": "UPA İhalesi + Kasr Al-Ainy Referans Laboratuvarı Entegrasyonu"
+        }
+    },
+    "Iraq": {
+        "country_tr": "Irak (Iraq)",
+        "flag": "🇮🇶",
+        "tender_authority": "KIMADIA (State Company for Marketing Drugs and Medical Appliances) & MOH Iraq",
+        "procurement_portals": [
+            "KIMADIA Tenders System (kimadia.iq)",
+            "Irak Sağlık Bakanlığı TIREPD Portalı",
+            "Kürdistan Bölgesel Yönetimi (KRG/Erbil) Sağlık Tedarik Masası"
+        ],
+        "active_tender_types": [
+            "KIMADIA Yıllık Merkezi IVF Laboratuvar Teçhizat İhalesi (Bağdat, Basra, Necef)",
+            "KRG Erbil & Süleymaniye Doğrudan Sağlık Bakanlığı İhaleleri",
+            "Bakanlık Lisanslı Özel IVF Merkezleri Toplu Konsorsiyum Satın Almaları"
+        ],
+        "typical_budget_range": "$100.000 – $400.000 USD",
+        "procurement_schedule": "Yıllık KIMADIA İhalesi & 6 Aylık Acil İthalat Siparişleri",
+        "technical_specifications": {
+            "device_title": "Advanced Piezo Micro-pulse Stimulator for ICSI & Oocyte Activation",
+            "core_specs": [
+                "Cihaz mikro-enjeksiyon esnasında oosit zarını mekanik yırtılmadan koruyan piezoelektrik frekans üretmelidir.",
+                "Sub-%1 oosit lizis oranı ve %80+ fertilizasyon başarısı klinik raporla kanıtlanmalıdır.",
+                "CE MDR Class IIa ve ISO 13485 sertifikalı olmalıdır."
+            ],
+            "mandatory_certifications": [
+                "KIMADIA TIREPD Fabrika Tescil Belgesi",
+                "Irak Konsolosluğu Onaylı Menşe Şahadetnamesi (COO) ve FSC",
+                "KIMADIA Yeşil Hat İthalat İzni",
+                "Sirius Pharm / ITL Yetkili Mümessillik Belgesi"
+            ],
+            "consumable_specs": [
+                "Lot bazında analiz sertifikası (CoA), MEA >%80 güvencesi"
+            ]
+        },
+        "action_plan_checklist": [
+            "1. TIREPD Fabrika Kaydı: KIMADIA nezdinde üretici fabrika kayıt işlemi Sirius Pharm üzerinden tamamlanmalıdır.",
+            "2. Yeşil Hat İzni: Acil sarf ve yedek parça transferi için KIMADIA hızlı analiz ve yeşil hat muafiyeti alınmalıdır.",
+            "3. Bağdat Demo Merkezi: Kamal Al-Samarai Tüp Bebek Hastanesinde yerinde demo ve embriyolog çalıştayı organize edilmelidir.",
+            "4. Teminat ve Tahakkuk: %5 banka teminat mektubu sunulmalı ve Bakanlık tahakkuk takibi Sirius Pharm ile koordine edilmelidir."
+        ],
+        "key_tender_parameters": {
+            "tender_type_dist": "KIMADIA İhalesi (%75), KRG Bölgesel Alımları (%25)",
+            "bid_bond_rate": "%5.0 Banka Teminat Mektubu",
+            "lock_in_strength": "%90 (KIMADIA teknik şartnamesine piezo kilitlendiğinde)",
+            "payment_term_days": "Bakanlık Tahakkuk: 90-120 Gün",
+            "recommended_strategy": "Sirius Pharm Üzerinden KIMADIA Yıllık Teklifi + Yeşil Hat"
+        }
+    },
+    "Algeria": {
+        "country_tr": "Cezayir (Algeria)",
+        "flag": "🇩🇿",
+        "tender_authority": "Pharmacie Centrale des Hôpitaux (PCH) & Ministère de la Santé (MSPRH)",
+        "procurement_portals": [
+            "PCH Appel d'Offres National et International (pch.dz)",
+            "Ministère de la Santé Portalı",
+            "CHU Mustapha Bacha & Oran Üniversite Hastaneleri İhale Masası"
+        ],
+        "active_tender_types": [
+            "PCH Ulusal ve Uluslararası Medikal Cihaz İhaleleri (Appel d'Offres)",
+            "Üniversite Hastaneleri (CHU) Doğrudan Tahsisli IVF Ekipman Alımları",
+            "Özel Tüp Bebek Klinikleri Konsorsiyum Alımları"
+        ],
+        "typical_budget_range": "10.000.000 – 30.000.000 DZD (~$75.000 – $225.000 USD)",
+        "procurement_schedule": "Yıllık PCH İhaleleri (Q2 İlan / Q4 Teslimat)",
+        "technical_specifications": {
+            "device_title": "Système de Stimulation Piézoélectrique pour l'Activation Oocytaire",
+            "core_specs": [
+                "Stimulateur piézoélectrique d'activation ovocytaire sans utilisation d'ionophores chimiques.",
+                "Taux de lyse ovocytaire inférieur à 1% cliniquement prouvé.",
+                "Compatible avec les micromanipulateurs standards de laboratoire FIV."
+            ],
+            "mandatory_certifications": [
+                "Homologation ANPP (Agence Nationale des Produits Pharmaceutiques)",
+                "Dossier Technique STED et Manuel en Français",
+                "CE MDR 2017/745 Classe IIa et ISO 13485",
+                "Attestation de Domiciliation Bancaire (Banque d'Algérie)"
+            ],
+            "consumable_specs": [
+                "Certificat d'analyse lot par lot (MEA >80%, Endotoxine <0.05 EU/ml)"
+            ]
+        },
+        "action_plan_checklist": [
+            "1. ANPP Homologasyonu: Cezayir Sağlık Bakanlığı onaylı 5 yıllık homologasyon belgesi temin edilmelidir.",
+            "2. Fransızca Teknik Şartname: PCH şartname komisyonuna Fransızca klinik üstünlük dosyası sunulmalıdır.",
+            "3. Banka Domiciliation: Cezayir Bankası ithalat döviz transfer onay süreci yerel partnerle koordine edilmelidir.",
+            "4. Yerel Servis ve Garanti: Cezayir'de yerleşik biyomedikal mühendis teknik servis taahhüdü verilmelidir."
+        ],
+        "key_tender_parameters": {
+            "tender_type_dist": "PCH İhalesi (%70), CHU Doğrudan Alım (%30)",
+            "bid_bond_rate": "%3.0 Caution de Soumission | %7.0 Caution de Bonne Exécution",
+            "lock_in_strength": "%82",
+            "payment_term_days": "PCH Kapsamında 90-120 Gün",
+            "recommended_strategy": "Yerel Dağıtıcı + PCH Fransızca Şartname Adaptasyonu"
+        }
+    },
+    "UAE": {
+        "country_tr": "Birleşik Arap Emirlikleri (UAE)",
+        "flag": "🇦🇪",
+        "tender_authority": "Emirates Health Services (EHS), Dubai Health Authority (DHA) & SEHA / PureHealth",
+        "procurement_portals": [
+            "Tejari Dubai e-Procurement Portal",
+            "EHS Federal Tenders Portal (ehs.gov.ae)",
+            "PureHealth / SEHA Abu Dhabi Procurement Platform"
+        ],
+        "active_tender_types": [
+            "EHS & SEHA 2-3 Yıllık IVF Donanım ve Sarf Malzeme Çerçeve İhalesi",
+            "DHA Dubai Kadın Doğum ve İnfertilite Cihaz Yenileme İhaleleri",
+            "Özel Hastane Zincirleri (Mediclinic, NMC, Burjeel) Kurumsal İhaleleri"
+        ],
+        "typical_budget_range": "500.000 – 2.000.000 AED (~$135.000 – $545.000 USD)",
+        "procurement_schedule": "2 Yıllık Çerçeve Sözleşmeler & Çeyreklik Tahsisler",
+        "technical_specifications": {
+            "device_title": "Piezoelectric Oocyte Activation & Micro-manipulation System",
+            "core_specs": [
+                "Fiziksel piezoelektrik mikro-puls stimülasyonu, sub-%1 lizis oranı, yüksek döllenme başarısı.",
+                "MOHAP onaylı, UDI barkodlu ve EHS entegrasyonuna uygun."
+            ],
+            "mandatory_certifications": [
+                "MOHAP Tıbbi Cihaz Tescil Sertifikası",
+                "CE MDR 2017/745 Class IIa & ISO 13485",
+                "MOHAP Lisanslı Yerel Tıbbi Depo Temsilciliği"
+            ],
+            "consumable_specs": [
+                "MEA >%80 ve Endotoxin <0.05 EU/ml parti analiz sertifikalı steril dishler"
+            ]
+        },
+        "action_plan_checklist": [
+            "1. MOHAP Tescili: MOHAP onay belgesi ve yerel tıbbi depo yetkisi tamamlanmalıdır.",
+            "2. Tejari & EHS Portal Kaydı: Federal ve Dubai tedarik portallarına yetkili tedarikçi kaydı yapılmalıdır.",
+            "3. 24 Saat Servis Taahhüdü: BAE geneli 24 saat içinde yerinde servis ve yedek cihaz tahsisi taahhüt edilmelidir."
+        ],
+        "key_tender_parameters": {
+            "tender_type_dist": "EHS/SEHA Çerçeve (%60), DHA (%25), Özel Hastane Ağları (%15)",
+            "bid_bond_rate": "%5.0 Bank Guarantee",
+            "lock_in_strength": "%86",
+            "payment_term_days": "45-60 Gün",
+            "recommended_strategy": "Yerel Tıbbi Depo ile EHS Çerçeve Sözleşmesi"
+        }
+    },
+    "Qatar": {
+        "country_tr": "Katar (Qatar)",
+        "flag": "🇶🇦",
+        "tender_authority": "Hamad Medical Corporation (HMC), Sidra Medicine & MOPH Qatar",
+        "procurement_portals": ["HMC e-Procurement Portal (hamad.qa)", "Sidra Medicine Tenders System"],
+        "active_tender_types": ["HMC Kadın Hastanesi IVF Teknoloji Alımları", "Sidra Medicine Araştırma Cihaz İhaleleri"],
+        "typical_budget_range": "400.000 – 1.800.000 QAR (~$110.000 – $495.000 USD)",
+        "procurement_schedule": "Yıllık ve 2 Yıllık Çerçeve Sözleşmeler",
+        "technical_specifications": {
+            "device_title": "Piezoelectric Oocyte Activation System",
+            "core_specs": ["MOPH tescilli, MEA >%80, sub-%1 oosit lizisi, invert mikroskop entegre."],
+            "mandatory_certifications": ["MOPH Tescil Belgesi, CE MDR Class IIa, ISO 13485"],
+            "consumable_specs": ["MEA >%80 steril petri dishleri"]
+        },
+        "action_plan_checklist": ["Münhasır Katar acentesi üzerinden HMC ihale masasına teklif ve klinik demo sunumu."],
+        "key_tender_parameters": {
+            "tender_type_dist": "HMC İhalesi (%85), Sidra (%15)",
+            "bid_bond_rate": "%5.0 Bank Guarantee",
+            "lock_in_strength": "%90",
+            "payment_term_days": "45-60 Gün",
+            "recommended_strategy": "HMC İhale Masasına Doğrudan Şartname Advocacy"
+        }
+    },
+    "Jordan": {
+        "country_tr": "Ürdün (Jordan)",
+        "flag": "🇯🇴",
+        "tender_authority": "Joint Procurement Directorate (JPD) & Royal Medical Services (RMS)",
+        "procurement_portals": ["JPD Unified Bidding Portal", "RMS Tenders System"],
+        "active_tender_types": ["RMS Askeri Tüp Bebek Merkezleri Ekipman İhaleleri", "Üniversite (JU/JUST) IVF Alımları"],
+        "typical_budget_range": "50.000 – 180.000 JOD (~$70.000 – $250.000 USD)",
+        "procurement_schedule": "Yıllık JPD İhaleleri",
+        "technical_specifications": {
+            "device_title": "Piezo Stimulator for Oocyte Activation",
+            "core_specs": ["JFDA onaylı, CE MDR Class IIa, kimyasalsız piezo aktivasyon."],
+            "mandatory_certifications": ["JFDA Tescili, ISO 13485, Sirius Pharm LOA"],
+            "consumable_specs": ["Parti MEA >%80 CoA"]
+        },
+        "action_plan_checklist": ["Sirius Pharm ile RMS komisyonuna yerinde demo ve JPD ihale başvurusu."],
+        "key_tender_parameters": {
+            "tender_type_dist": "JPD/RMS (%70), Üniversiteler (%30)",
+            "bid_bond_rate": "%3.0 Geçici | %10.0 Kesin",
+            "lock_in_strength": "%88",
+            "payment_term_days": "90 Gün",
+            "recommended_strategy": "Sirius Pharm + RMS Askeri Merkezleri Odaklı İhale"
+        }
+    },
+    "Germany": {
+        "country_tr": "Almanya / AB (Germany / EU)",
+        "flag": "🇩🇪",
+        "tender_authority": "Kamu Hastane Birlikleri (Universitätskliniken) & TED",
+        "procurement_portals": ["TED (Tenders Electronic Daily — ted.europa.eu)", "Vergabemarktplatz Deutschland"],
+        "active_tender_types": ["Universitätskliniken (Charité, Heidelberg vb.) IVF Cihaz İhaleleri", "DFG Araştırma Hibeli Cihaz Alımları"],
+        "typical_budget_range": "€100.000 – €450.000 EUR (~$110.000 – $490.000 USD)",
+        "procurement_schedule": "TED Çapında Çok Yıllı İhaleler",
+        "technical_specifications": {
+            "device_title": "Piezoelektrisches Oozyten-Aktivierungssystem",
+            "core_specs": ["EU MDR 2017/745 Class IIa, sub-%1 Lyse, EUDAMED registriert, deutsche IFU."],
+            "mandatory_certifications": ["Notified Body CE MDR, ISO 13485, Basic UDI-DI"],
+            "consumable_specs": ["Lot MEA >80%, Endotoxin <0.05 EU/ml"]
+        },
+        "action_plan_checklist": ["TED üzerinden e-Tender teklifi ve yerel dağıtıcı (Gynemed) işbirliği."],
+        "key_tender_parameters": {
+            "tender_type_dist": "Kamu İhalesi (%60), Doğrudan Üniversite Alımı (%40)",
+            "bid_bond_rate": "%0-%3 Bankgarantie",
+            "lock_in_strength": "%85",
+            "payment_term_days": "30-60 Gün",
+            "recommended_strategy": "Gynemed Üzerinden TED İhaleleri ve Üniversite Klinikleri"
+        }
+    }
+}
+
+def resolve_country_tender_intel(country_name):
+    c = str(country_name).strip()
+    alias_map = {
+        'Turkey': 'Türkiye', 'TR': 'Türkiye',
+        'Egypt': 'Egypt', 'EG': 'Egypt', 'Mısır': 'Egypt',
+        'Saudi Arabia': 'Saudi Arabia', 'SA': 'Saudi Arabia', 'KSA': 'Saudi Arabia', 'Suudi Arabistan': 'Saudi Arabia',
+        'UAE': 'UAE', 'United Arab Emirates': 'UAE', 'AE': 'UAE', 'BAE': 'UAE', 'Birleşik Arap Emirlikleri': 'UAE',
+        'Qatar': 'Qatar', 'QA': 'Qatar', 'Katar': 'Qatar',
+        'Kuwait': 'Kuwait', 'KW': 'Kuwait', 'Kuveyt': 'Kuwait',
+        'Jordan': 'Jordan', 'JO': 'Jordan', 'Ürdün': 'Jordan', 'Jordan-Iraq': 'Jordan', 'Jordan & Iraq': 'Jordan',
+        'Iraq': 'Iraq', 'IQ': 'Iraq', 'Irak': 'Iraq',
+        'Algeria': 'Algeria', 'DZ': 'Algeria', 'Cezayir': 'Algeria',
+        'Germany': 'Germany', 'DE': 'Germany', 'Almanya': 'Germany',
+        'Spain': 'Germany', 'Italy': 'Germany', 'United Kingdom': 'Germany'
+    }
+    target_key = alias_map.get(c, c)
+    if target_key in GLOBAL_TENDER_PROCUREMENT_INTEL:
+        return GLOBAL_TENDER_PROCUREMENT_INTEL[target_key]
+    
+    # Generic fallback
+    return {
+        "country_tr": c,
+        "flag": "🌐",
+        "tender_authority": f"{c} Sağlık Bakanlığı ve Kamu Hastaneleri Satın Alma Kurumu",
+        "procurement_portals": [f"{c} Ulusal Kamu İhale Portalı", "Üniversite ve Kamu Hastaneleri Tedarik Masası"],
+        "active_tender_types": [
+            f"{c} Kamu Hastaneleri IVF & Embriyoloji Cihaz Alım İhalesi",
+            "Yıllık Tüp Bebek Sarf Malzeme ve Hücre Kültürü Kiti İhalesi",
+            "Doğrudan Temin Kapsamında Acil Cihaz / Sarf Alımları"
+        ],
+        "typical_budget_range": "$50.000 – $200.000 USD",
+        "procurement_schedule": "Yıllık Bütçe Dönemi Kamu İhaleleri",
+        "technical_specifications": {
+            "device_title": "Piezoelectric Oocyte Activation & Micro-pulse Stimulator",
+            "core_specs": [
+                "Kimyasal içermeyen fiziksel piezoelektrik stimülasyon, sub-%1 oosit lizisi.",
+                "CE MDR 2017/745 Class IIa ve ISO 13485 kalite standartlarına uygun."
+            ],
+            "mandatory_certifications": ["CE MDR 2017/745 Class IIa", "ISO 13485:2016", "Yerel Sağlık Otoritesi İthalat İzni"],
+            "consumable_specs": ["MEA >%80 ve Endotoksin sertifikalı steril aktivasyon petrileri"]
+        },
+        "action_plan_checklist": [
+            f"1. {c} yetkili distribütörü ile ihale şartnamesi hazırlayan klinik heyetine teknik dosya sunulmalıdır.",
+            "2. CE MDR ve FSC belgeleri yerel konsolosluk onaylarıyla hazır bulundurulmalıdır.",
+            "3. İhale banka teminat mektubu (%3-%5) ve üretici yetki mektubu (LOA) sağlanmalıdır."
+        ],
+        "key_tender_parameters": {
+            "tender_type_dist": "Kamu İhalesi (%65), Doğrudan Alım (%35)",
+            "bid_bond_rate": "%3.0 - %5.0 Teminat Mektubu",
+            "lock_in_strength": "%84",
+            "payment_term_days": "60-90 Gün",
+            "recommended_strategy": "Yerel Distribütör Üzerinden Şartnameye Piezo Kriteri Ekletilmesi"
+        }
+    }
+
 COUNTRY_DEEP_INTELLIGENCE = {
     'Egypt': {
         'customs_regulatory': {
@@ -17307,13 +17733,14 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
             # ------------------------------------------------------------------
             # DEEP 5-PILLAR KNOWLEDGE MODULE (SEÇİLİ ÜLKEYE GÖRE DİNAMİK SEKMELER)
             # ------------------------------------------------------------------
-            k_tab1, k_tab2, k_tab3, k_tab4, k_tab5, k_tab6 = st.tabs([
+            k_tab1, k_tab2, k_tab3, k_tab4, k_tab5, k_tab6, k_tab7 = st.tabs([
                 "📦 1. Gümrük, GTİP & İthalat Mevzuatı",
                 "🧬 2. Yeni IVF & PGT Mevzuatı",
                 "💰 3. İndirim, 2027 Tahminleri & Uzman Görüşleri",
                 "🎯 4. Ülkeye Özel Satış Stratejisi (GTM)",
                 "📜 5. Resmi Sağlık Bakanlığı Tebliğleri",
-                "🌍 6. Cihaz Tescil Mercii, Evraklar & Resmi Harçlar Rehberi (Registration & Fees)"
+                "🌍 6. Cihaz Tescil Mercii, Evraklar & Resmi Harçlar Rehberi (Registration & Fees)",
+                "🏛️ 7. Resmi İhaleler, Teknik Şartname & Katılım Kılavuzu (Tenders & Procurement)"
             ])
 
             # SUB-TAB 1: GÜMRÜK & İTHALAT MEVZUATI
@@ -17536,6 +17963,170 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
                     file_name="ZEUS_Global_Medical_Device_Registration_Fees_Matrix.csv",
                     mime="text/csv",
                     key="dl_btn_global_reg_matrix_csv"
+                )
+
+            # SUB-TAB 7: RESMİ İHALELER, TEKNİK ŞARTNAME & KATILIM KILAVUZU
+            with k_tab7:
+                st.markdown(f"#### 🏛️ {cmp_kb_country} Resmi Medikal İhaleleri, Teknik Şartname & Katılım Kılavuzu")
+                st.caption("Kamu hastaneleri, üniversite tüp bebek merkezleri ve ulusal satın alma ofislerinde açılan ihaleler, resmi teknik şartname maddeleri, teminat oranları ve ihale kazanma eylem planı.")
+
+                t_intel = resolve_country_tender_intel(cmp_kb_country)
+                t_params = t_intel.get("key_tender_parameters", {})
+                t_specs = t_intel.get("technical_specifications", {})
+
+                # Top Executive Tender KPI Cards
+                tk1, tk2, tk3, tk4 = st.columns(4)
+                tk1.metric("🏛️ Yetkili İhale Otoritesi", t_intel.get("tender_authority", "Kamu Hastaneleri Kurumu").split(',')[0].strip()[:24], delta="Merkezi Satın Alma")
+                tk2.metric("💰 Tipik İhale Bütçesi", t_intel.get("typical_budget_range", "$50K - $150K").split('(')[-1].replace(')', '').strip(), delta=t_intel.get("procurement_schedule", "Yıllık İhale")[:20])
+                tk3.metric("🎯 Şartnameye Kilitlenme Gücü", t_params.get("lock_in_strength", "%90").split('(')[0].strip(), delta="Piezo Tek Kaynak Avantajı")
+                tk4.metric("⏳ Teminat & Vade", t_params.get("bid_bond_rate", "%3 Geçici").split('|')[0].strip(), delta=t_params.get("payment_term_days", "60 Gün")[:20])
+
+                st.markdown("<br>", unsafe_allow_html=True)
+
+                # Pillar 1 & 2 Layout: Active Tenders vs Spec Guide
+                th_c1, th_c2 = st.columns([1.1, 1.2])
+
+                with th_c1:
+                    # Active Tenders & Procurement Portals
+                    st.markdown(f"""
+                    <div style="background:rgba(15,23,42,0.85);border:1px solid rgba(0,245,255,0.3);border-radius:10px;padding:16px;margin-bottom:14px;box-shadow:0 4px 14px rgba(0,0,0,0.35);">
+                        <div style="font-weight:800;color:#00F5FF;font-size:14px;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+                            <span>📢 {t_intel['flag']} {cmp_kb_country} Açılan İhale Türleri & Satın Alma Kanalları</span>
+                        </div>
+                        <div style="font-size:11px;color:#8FA3C0;margin-bottom:8px;"><b>Yetkili Kurum:</b> {t_intel.get('tender_authority', 'Kamu Sağlık Otoritesi')}</div>
+                        
+                        <div style="font-size:12px;color:#E2E8F0;line-height:1.75;margin-bottom:12px;">
+                            <b>Açılan Tipik İhale Paketleri:</b><br>
+                            {"<br>".join(["• " + t for t in t_intel.get("active_tender_types", [])])}
+                        </div>
+
+                        <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:10px 12px;margin-top:10px;">
+                            <b style="color:#FFD700;font-size:11.5px;">🌐 Resmi İhale Portalları & Takip Kanalları:</b>
+                            <div style="font-size:11px;color:#94A3B8;margin-top:4px;line-height:1.6;">
+                                {"<br>".join(["🔗 " + p for p in t_intel.get("procurement_portals", [])])}
+                            </div>
+                        </div>
+
+                        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;font-size:11px;">
+                            <div style="background:rgba(0,230,118,0.06);border:1px solid rgba(0,230,118,0.25);padding:8px 10px;border-radius:6px;">
+                                <span style="color:#8FA3C0;">İhale Modeli Dağılımı:</span><br>
+                                <b style="color:#00E676;">{t_params.get('tender_type_dist', 'Açık İhale %60')}</b>
+                            </div>
+                            <div style="background:rgba(255,184,0,0.06);border:1px solid rgba(255,184,0,0.25);padding:8px 10px;border-radius:6px;">
+                                <span style="color:#8FA3C0;">Ödeme Vadesi:</span><br>
+                                <b style="color:#FFB800;">{t_params.get('payment_term_days', '60-90 Gün')}</b>
+                            </div>
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                with th_c2:
+                    # Technical Specifications Guide
+                    st.markdown(f"""
+                    <div style="background:rgba(15,23,42,0.85);border:1px solid rgba(0,230,118,0.3);border-radius:10px;padding:16px;margin-bottom:14px;box-shadow:0 4px 14px rgba(0,0,0,0.35);">
+                        <div style="font-weight:800;color:#00E676;font-size:14px;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+                            <span>📋 {cmp_kb_country} Resmi Teknik Şartname Kılavuzu (ZPS 26)</span>
+                        </div>
+                        <div style="font-size:12px;font-weight:700;color:#FFFFFF;margin-bottom:6px;">Başlık: <span style="color:#00F5FF;">{t_specs.get('device_title', 'Piezoelektrik Oosit Aktivasyon Sistemi')}</span></div>
+                        
+                        <div style="font-size:11.8px;color:#CBD5E1;line-height:1.7;margin-bottom:10px;">
+                            <b style="color:#00E676;">⚡ Cihaz Fonksiyonel & Teknik Kriterleri:</b><br>
+                            {"<br>".join(["• " + s for s in t_specs.get("core_specs", [])])}
+                        </div>
+
+                        <div style="font-size:11.8px;color:#CBD5E1;line-height:1.7;margin-bottom:10px;border-top:1px dashed rgba(255,255,255,0.08);padding-top:8px;">
+                            <b style="color:#FFD700;">📜 Zorunlu Yasal Sertifikasyon & Standartlar:</b><br>
+                            {"<br>".join(["• " + c for c in t_specs.get("mandatory_certifications", [])])}
+                        </div>
+
+                        <div style="font-size:11.5px;color:#94A3B8;line-height:1.6;border-top:1px dashed rgba(255,255,255,0.08);padding-top:8px;">
+                            <b style="color:#38BDF8;">🧪 Sarf Malzeme & Kültür Kit Koşulları:</b><br>
+                            {"<br>".join(["• " + cs for cs in t_specs.get("consumable_specs", [])])}
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
+
+                # Downloadable Complete Tender Specification (.txt)
+                sample_spec_text = f"""T.C. SAĞLIK BAKANLIĞI / {cmp_kb_country.upper()} RESMİ TÜP BEBEK LABORATUVARI
+TEKNİK ŞARTNAMESİ: PİEZOELEKTRİK MİKRO-PULS OOSİT AKTİVASYON VE MİKROENJEKSİYON SİSTEMİ
+
+1. CİHAZIN AMACI VE GENEL TANIMI:
+Cihaz, tüp bebek (IVF/ICSI) laboratuvarlarında Total Döllenme Başarısızlığı (TFF), şiddetli erkek faktörü ve ileri anne yaşında oosit membran elastikiyetini koruyarak, kimyasal kalsiyum iyonofor (A23187/İyonomisin) gerektirmeksizin fiziksel mikro-puls elektriksel stimülasyon ile oosit aktivasyonunu gerçekleştirmek üzere tasarlanmış olmalıdır.
+
+2. TEKNİK VE ELEKTRİKSEL PARAMETRELER:
+2.1. Cihaz çıkış voltajı 0 ile 99 V arasında 1 V hassasiyetle ayarlanabilir olmalıdır.
+2.2. Mikro-puls süresi 10 ile 99 mikro-saniye (µs) aralığında ayarlanabilir olmalıdır.
+2.3. Cihaz invert mikroskop ve mikromanipülatör sistemleri (Eppendorf, Narishige vb.) ile tam uyumlu aparatlara ve ayak pedallı tetikleme ünitesine sahip olmalıdır.
+2.4. Klinik lizis oranı <%1 olmalı, blastosist gelişim oranını (blastocyst rate) baskılamamalıdır.
+
+3. KALİTE, GÜVENLİK VE BELGELENDİRME ŞARTLARI:
+3.1. Cihaz, AB Tıbbi Cihaz Regülasyonu (EU MDR 2017/745) kapsamında Sınıf IIa (Class IIa) onaylı CE sertifikasına sahip olmalıdır.
+3.2. Üretici ISO 13485:2016 Tıbbi Cihaz Kalite Yönetim Sistemi sertifikasına sahip olmalıdır.
+3.3. Cihaz IEC 60601-1 (Elektriksel Güvenlik) ve IEC 60601-1-2 (Elektromanyetik Uyumluluk - EMC) test raporlarına sahip olmalıdır.
+3.4. Ürün Takip Sistemi (ÜTS) veya ilgili ulusal sağlık otoritesi tescil numarası teklif dosyasında sunulmalıdır.
+
+4. SARF MALZEME STANDARTLARI:
+4.1. Cihazla birlikte kullanılacak tek kullanımlık aktivasyon petri/dishleri gamma ışınlamalı steril tekli ambalajda olmalıdır.
+4.2. Her parti (lot) için bağımsız akredite laboratuvar onaylı Fare Embriyo Testi (MEA >%80) ve Endotoksin (<0.05 EU/ml) analiz sertifikası (CoA) sunulmalıdır.
+
+5. GARANTİ, SERVİS VE APLİKASYON EĞİTİMİ:
+5.1. Cihaz fabrikasyon ve montaj hatalarına karşı en az 2 (iki) yıl tam garanti kapsamında olmalıdır.
+5.2. Garanti bitiminden itibaren 10 (on) yıl süreyle ücreti karşılığı yedek parça ve teknik servis temini taahhüt edilmelidir.
+5.3. Yüklenici, kurumun embriyoloji personeline merkezde asgari 14 günlük yerinde vaka çalıştayı ve klinik aplikasyon eğitimi vermekle yükümlüdür.
+"""
+                st.download_button(
+                    label=f"📥 {cmp_kb_country} Resmi Teknik Şartname Taslağını İndir (.txt)",
+                    data=sample_spec_text.encode('utf-8'),
+                    file_name=f"ZEUS_{cmp_kb_country}_IVF_Piezo_Tender_Specification.txt",
+                    mime="text/plain",
+                    key="dl_btn_tender_spec_txt"
+                )
+
+                st.markdown("<br>", unsafe_allow_html=True)
+
+                # Action Plan Checklist: Ne Yapılması Gerek?
+                st.markdown(f"""
+                <div style="background:rgba(255,184,0,0.05);border:1.5px solid #FFB800;border-radius:10px;padding:16px;margin-bottom:16px;">
+                    <div style="font-weight:800;color:#FFB800;font-size:14px;margin-bottom:10px;">
+                        🎯 İhale Katılım & Başarı Eylem Planı (Ne Yapılması Gerek?)
+                    </div>
+                    <div style="color:#FDE68A;font-size:12px;line-height:1.8;">
+                        {"<br>".join([a for a in t_intel.get("action_plan_checklist", [])])}
+                    </div>
+                    <div style="margin-top:10px;padding-top:8px;border-top:1px dashed rgba(255,184,0,0.3);font-size:11.5px;color:#CBD5E1;">
+                        💡 <b>Stratejik Tavsiye:</b> {t_params.get('recommended_strategy', 'Klinik Şeflerine Doğrudan Tanıtım')}
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
+                # Global Tender Comparison Matrix
+                st.markdown("##### 🌐 Global Pazarlar Karşılaştırmalı İhale ve Satın Alma Matrisi")
+                st.caption("Farklı ülkelerdeki kamu hastaneleri ve satın alma otoritelerinin ihale kanalları, ortalama bütçe aralıkları ve ödeme vadeleri kıyaslaması.")
+
+                tender_matrix_rows = []
+                for t_k, t_v in GLOBAL_TENDER_PROCUREMENT_INTEL.items():
+                    p_info = t_v.get("key_tender_parameters", {})
+                    tender_matrix_rows.append({
+                        "Ülke": f"{t_v['flag']} {t_v['country_tr']}",
+                        "Yetkili İhale Otoritesi": t_v.get("tender_authority", "").split(',')[0].strip(),
+                        "İhale Portalları": ", ".join([p.split('(')[0].strip() for p in t_v.get("procurement_portals", [])[:2]]),
+                        "Tipik İhale Bütçesi": t_v.get("typical_budget_range", "").split('(')[-1].replace(')', '').strip(),
+                        "İhale Takvimi": t_v.get("procurement_schedule", "").split('&')[0].strip(),
+                        "Teminat Oranı": p_info.get("bid_bond_rate", "").split('|')[0].strip(),
+                        "Şartname Kilit Gücü": p_info.get("lock_in_strength", "").split('(')[0].strip(),
+                        "Ödeme Vadesi": p_info.get("payment_term_days", "").split('|')[0].strip()
+                    })
+
+                t_df = pd.DataFrame(tender_matrix_rows)
+                st.dataframe(t_df, use_container_width=True, hide_index=True)
+
+                csv_t_matrix = t_df.to_csv(index=False).encode('utf-8')
+                st.download_button(
+                    label="📥 Global Medikal İhale ve Şartname Matrisini İndir (CSV)",
+                    data=csv_t_matrix,
+                    file_name="ZEUS_Global_IVF_Tender_Procurement_Matrix.csv",
+                    mime="text/csv",
+                    key="dl_btn_global_tender_matrix_csv"
                 )
 
             # Do's and Don'ts Card
@@ -18046,6 +18637,37 @@ elif active_view == "🌍 Country 360° Performance & Report":
             </div>
         </div>
         """, unsafe_allow_html=True)
+
+        # Cihaz Resmi İhaleleri, Satın Alma Kanalları & Teknik Şartname Card
+        tender_c360 = resolve_country_tender_intel(sel_country)
+        tp_c360 = tender_c360.get("key_tender_parameters", {})
+        ts_c360 = tender_c360.get("technical_specifications", {})
+        
+        with st.expander(f"🏛️ {tender_c360['flag']} {sel_country} Resmi Medikal İhaleleri, Satın Alma Kanalları & Teknik Şartname", expanded=False):
+            t_col1, t_col2 = st.columns([1.1, 1.2])
+            with t_col1:
+                st.markdown(f"""
+                <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(0,245,255,0.2);border-radius:8px;padding:12px;font-size:11.8px;line-height:1.7;">
+                    <b style="color:#00F5FF;font-size:12.5px;">📢 Açılan İhale Türleri & Satın Alma Kanalları:</b><br>
+                    • <b>Yetkili Otorite:</b> {tender_c360.get('tender_authority', 'Kamu Satın Alma Kurumu')}<br>
+                    • <b>Tipik İhale Bütçesi:</b> <span style="color:#FFD700;font-weight:700;">{tender_c360.get('typical_budget_range', '$50K - $150K')}</span><br>
+                    • <b>Şartname Kilit Gücü:</b> <span style="color:#00E676;font-weight:700;">{tp_c360.get('lock_in_strength', '%90')}</span><br>
+                    • <b>Teminat / Vade:</b> {tp_c360.get('bid_bond_rate', '%3')} | {tp_c360.get('payment_term_days', '60 Gün')}<br><br>
+                    <b style="color:#FFFFFF;">Açılan Tipik İhaleler:</b><br>
+                    {"<br>".join(["• " + t for t in tender_c360.get("active_tender_types", [])[:3]])}
+                </div>
+                """, unsafe_allow_html=True)
+            with t_col2:
+                st.markdown(f"""
+                <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(0,230,118,0.2);border-radius:8px;padding:12px;font-size:11.8px;line-height:1.7;">
+                    <b style="color:#00E676;font-size:12.5px;">📋 Şartname Kriterleri & Eylem Planı (ZPS 26):</b><br>
+                    • <b>Şartname Başlığı:</b> {ts_c360.get('device_title', 'Piezo Stimülatör')}<br>
+                    • <b>Zorunlu Kriterler:</b> Kimyasalsız piezoelektrik puls stimülasyonu, sub-%1 lizis, MEA >%80 analizli sarflar.<br>
+                    • <b>Zorunlu Belgeler:</b> CE MDR Class IIa, ISO 13485, Yerel tescil barkodu.<br><br>
+                    <b style="color:#FFB800;">Eylem Planı:</b><br>
+                    {"<br>".join(["• " + a for a in tender_c360.get("action_plan_checklist", [])[:3]])}
+                </div>
+                """, unsafe_allow_html=True)
 
         st.markdown("<br>", unsafe_allow_html=True)
 
