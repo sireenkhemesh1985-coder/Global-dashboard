@@ -5142,18 +5142,70 @@ def render_social_media_hub():
         st.markdown("""
         <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(0, 245, 255, 0.25); border-radius: 12px; padding: 18px 22px; margin-bottom: 20px;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h4 style="margin: 0; color: #00F5FF; font-size: 16px;">🎬 Yüksek Dönüşümlü MedTech Video Senaryoları & Çekim Kılavuzları</h4>
-                <span style="font-size: 11px; background: rgba(0, 245, 255, 0.15); color: #00F5FF; padding: 3px 10px; border-radius: 12px; font-weight: 700;">4 Production-Ready Scripts</span>
+                <h4 style="margin: 0; color: #00F5FF; font-size: 16px;">🎬 MedTech Video Senaryoları & T.C. Sağlık Bakanlığı Mevzuat Kılavuzu</h4>
+                <span style="font-size: 11px; background: rgba(0, 245, 255, 0.15); color: #00F5FF; padding: 3px 10px; border-radius: 12px; font-weight: 700;">7 Production-Ready Scripts</span>
             </div>
             <p style="margin: 8px 0 0 0; color: #94A3B8; font-size: 12.5px; line-height: 1.6;">
-                Aşağıdaki senaryolar; saniye saniye görsel akış, kamera/mikroskop açısı, seslendirme metni (voiceover), ekrandaki veri grafikleri ve aksiyon çağrısı (CTA) ile doğrudan prodüksiyona girecek şekilde hazırlanmıştır.
+                Aşağıdaki senaryolar; T.C. Sağlık Bakanlığı ve TİTCK mevzuatına tam uyumlu (bilimsel, hekim/embriyolog hedefli, reklam unsuru içermeyen) ve küresel B2B pazarlara yönelik prodüksiyon planlarıyla hazırlanmıştır.
             </p>
         </div>
         """, unsafe_allow_html=True)
 
+        # =========================================================================
+        # T.C. SAĞLIK BAKANLIĞI & TİTCK MEVZUAT UYUMLULUK MERKEZİ (CANLI REHBER)
+        # =========================================================================
+        with st.expander("⚖️ T.C. Sağlık Bakanlığı & TİTCK Sosyal Medya ve Tanıtım Mevzuatı Kılavuzu (Resmi Metin & Kurallar)", expanded=True):
+            st.markdown("""
+            <div style="background: rgba(239, 68, 68, 0.05); border: 1px solid rgba(239, 68, 68, 0.25); border-radius: 10px; padding: 16px 20px; margin-bottom: 15px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                    <span style="color: #F87171; font-weight: 700; font-size: 13.5px;">📜 Yasal Dayanaklar ve Mevzuat Çerçevesi</span>
+                    <span style="background: rgba(239, 68, 68, 0.2); color: #F87171; font-size: 10.5px; font-weight: 700; padding: 2px 8px; border-radius: 6px;">Yasal Uyumluluk Zorunlu</span>
+                </div>
+                <div style="color: #CBD5E1; font-size: 12px; line-height: 1.7;">
+                    • <b>Sağlık Hizmetlerinde Tanıtım ve Bilgilendirme Faaliyetleri Hakkında Yönetmelik</b> (Resmi Gazete: 29 Temmuz 2023 / Sayı: 32263)<br>
+                    • <b>Tıbbi Cihaz Satış, Reklam ve Tanıtım Yönetmeliği</b> (Resmi Gazete: 02 Haziran 2021 / Sayı: 31499 - TİTCK)<br>
+                    • <b>1219 Sayılı Tababet ve Şuabatı San'atlarının Tarzı İcrasına Dair Kanun</b> (Madde 24 - Reklam Yasağı)<br>
+                    • <b>6502 Sayılı Tüketicinin Korunması Hakkında Kanun</b> (Haksız Ticari Uygulamalar & Örtülü Reklam Yasağı)
+                </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 16px;">
+                <div style="background: rgba(239, 68, 68, 0.08); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 10px; padding: 14px 16px;">
+                    <div style="color: #EF4444; font-weight: 700; font-size: 12.5px; margin-bottom: 8px;">❌ KESİNLİKLE YASAK OLANLAR (Kırmızı Çizgiler)</div>
+                    <ul style="color: #E2E8F0; font-size: 11.5px; line-height: 1.6; margin: 0; padding-left: 18px;">
+                        <li><b>Reklam ve Talep Yaratma:</b> İnsanları gereksiz tedaviye yönlendiren veya talep oluşturucu ticari dil kullanmak.</li>
+                        <li><b>Hasta Öncesi/Sonrası (Before/After):</b> Hasta rızası olsa dahi tedavi öncesi-sonrası görüntüsü, pozitif gebelik testi, bebek kucaklama vb. duygusal yönlendirici paylaşımlar.</li>
+                        <li><b>Üstünlük ve Garanti İddiası:</b> 'En iyi teknoloji', 'kesin gebelik garantisi', 'sıfır risk', 'mucize tedavi' gibi ifadeler.</li>
+                        <li><b>Fiyat ve Kampanya Belirtme:</b> Cihaz/sarf malzeme fiyatı, indirim, çekiliş, hediye veya bundle kampanya duyurusu.</li>
+                        <li><b>Rakipleri Kötüleme:</b> Başka marka, cihaz veya klinikleri hedef gösterip karalamak.</li>
+                        <li><b>Halka Doğrudan Cihaz Tanıtımı:</b> Sadece hekim/klinik kullanımı olan cihazların halka yönelik mecrada ticari satışını yapmak.</li>
+                    </ul>
+                </div>
+                <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 10px; padding: 14px 16px;">
+                    <div style="color: #10B981; font-weight: 700; font-size: 12.5px; margin-bottom: 8px;">✅ MEVZUATA UYGUN ALANLAR (Yeşil Koridor)</div>
+                    <ul style="color: #E2E8F0; font-size: 11.5px; line-height: 1.6; margin: 0; padding-left: 18px;">
+                        <li><b>Sağlık Meslek Mensuplarına Yönelik Tanıtım:</b> Hekim, embriyolog ve klinik biyologlara yönelik bilimsel ve teknik eğitimler.</li>
+                        <li><b>Hakemli Bilimsel Literatür Atfı:</b> PubMed, Fertility and Sterility, Human Reproduction gibi dergilerde yayımlanmış makale özetleri, DOI numaraları ve yazarlarının tarafsız sunumu.</li>
+                        <li><b>Hücresel Biyoloji & Toplum Sağlığı Eğitimi:</b> Reklam içermeyen, döllenme biyolojisini, oosit zarını, kalsiyum salınım fizyolojisini anlatan 3D animasyonlar.</li>
+                        <li><b>Kalite Belgeleri & Standartlar:</b> CE MDR Class IIa, ISO 13485 ve MEA >%80 biyo-uyumluluk kalite güvencesi bilgilendirmeleri.</li>
+                        <li><b>Zorunlu Yasal Uyarı Eklenmesi:</b> 'Bu içerik yalnızca sağlık profesyonellerini bilgilendirme amaçlıdır; tanı ve tedavi için hekiminize danışınız' notu.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="background: rgba(15, 23, 42, 0.85); border-left: 4px solid #00F5FF; padding: 12px 16px; border-radius: 6px; font-size: 11.5px; color: #94A3B8;">
+                <b style="color: #00F5FF;">💡 ZEUS Sosyal Medya İçerik Kuralı:</b> Türkiye pazarında yayımlanacak tüm YouTube, LinkedIn ve Instagram içerikleri; tüketiciye yönelik ticari satış veya gebelik vaadi içermez. Yalnızca <b>sağlık meslek mensuplarına yönelik bilimsel metodoloji</b> veya <b>toplum sağlığına yönelik hücre biyolojisi eğitimi</b> formatında yayınlanır.
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
+
         script_sel = st.selectbox(
             "İncelemek İstediğiniz Video Senaryosunu Seçin:",
             [
+                "🇹🇷 TR Sağlık Bakanlığı Uyumlu 1: Piezo AOA Hücresel Biyofiziği & Hakemli Literatür Analizi (B2B Hekim/Embriyolog - 60 sn)",
+                "🇹🇷 TR Sağlık Bakanlığı Uyumlu 2: Tüp Bebekte Döllenme Biyolojisi & Oosit Hücre Bütünlüğü (Toplum Sağlığı Eğitici Animasyon - 60 sn)",
+                "🇹🇷 TR Sağlık Bakanlığı Uyumlu 3: ART Laboratuvarlarında MEA Testi ve CE MDR Biyouyumluluk Güvencesi (Laboratuvar Güvenliği - 75 sn)",
                 "Senaryo 1: ZEUS ZPS 26 Piezo Stimulator vs Geleneksel ICSI (A/B Mikroskop Karşılaştırması - 60 sn)",
                 "Senaryo 2: BioPSafe Trofektoderm Biyopsi Kiti (30 Saniyede Sıfır Termal DNA Hasarı - 75 sn)",
                 "Senaryo 3: Mismatch Blocker - Laboratuvarda Numune Karışmasına Sıfır Tolerans (7 RFID İstasyonu - 90 sn)",
@@ -5164,7 +5216,116 @@ def render_social_media_hub():
             key="sb_video_script"
         )
 
-        if "Senaryo 1" in script_sel:
+
+        if "TR Sağlık Bakanlığı Uyumlu 1" in script_sel:
+            st.info("ℹ️ **Mevzuat Uyumluluk Notu:** Bu senaryo; T.C. Sağlık Bakanlığı 29.07.2023 tarihli Tanıtım Yönetmeliği ve TİTCK Tıbbi Cihaz Tanıtım Yönetmeliği uyarınca **yalnızca Sağlık Meslek Mensuplarına (Hekim, Embriyolog)** yönelik bilimsel/eğitsel içerik standardında kurgulanmıştır. Reklam, fiyat, hasta görseli veya gebelik garantisi içermez; hakemli tıp literatürüne (Ebner 2015, Baltaci 2010) dayanır.")
+            sc_tr1_table = [
+                {
+                    "Zaman": "00:00 - 00:08",
+                    "Görsel & Mikroskop Açısı": "4K Konfokal Mikroskop Animasyonu: İnsan oositinin hücre zarı (oolemma) ve aktin filament ağının mikroskopik yapısı. Ekranda 'Biyofiziksel İnceleme: Oosit Membran Dinamiği' başlığı.",
+                    "Seslendirme (Voiceover - VO)": "İntrasitoplazmik sperm enjeksiyonunda hücre zarının mekanik esnekliği ve sitoplazmik bütünlüğün korunması, embriyolojik kalitenin temel belirleyicilerindendir.",
+                    "Ekran Yazısı & Bilimsel Atıf": "🔬 Hücresel Biyofizik: Oosit Membran Viskoelastisitesi | Yalnızca Sağlık Meslek Mensupları İçindir"
+                },
+                {
+                    "Zaman": "00:08 - 00:25",
+                    "Görsel & Mikroskop Açısı": "Şematik Hücresel İllüstrasyon: Standart mekanik delme ile piezoelektrik mikro-puls dalgasının membran üzerindeki gerilim dağılımı (FEA - Sonlu Elemanlar Analizi) karşılaştırması.",
+                    "Seslendirme (Voiceover - VO)": "Literatürde gösterildiği üzere; mikro-darbeli piezo osilasyon, sivri iğne travmasına kıyasla oosit zarı yırtılma ve dejenerasyon oranlarını belirgin şekilde minimize etmektedir.",
+                    "Ekran Yazısı & Bilimsel Atıf": "📑 Ebner et al. (2015), J Assist Reprod Genet, DOI: 10.1007/s10815-015-0453-1"
+                },
+                {
+                    "Zaman": "00:25 - 00:45",
+                    "Görsel & Mikroskop Açısı": "Kalsiyum Osilasyon Grafiği: Endoplazmik retikulumdan hücre içine fizyolojik Ca2+ iyonu salınım eğrisi. Floresan kalsiyum boyaması altında aktivasyon dalgası.",
+                    "Seslendirme (Voiceover - VO)": "Total fertilizasyon başarısızlığı vakalarında elektriksel mikro-uyarım, oositin endojen kalsiyum depolarını fizyolojik paternde mobilize ederek pronükleus gelişimini destekler.",
+                    "Ekran Yazısı & Bilimsel Atıf": "📑 Baltaci et al. (2010), Fertil Steril, DOI: 10.1016/j.fertnstert.2009.04.015"
+                },
+                {
+                    "Zaman": "00:45 - 00:55",
+                    "Görsel & Mikroskop Açısı": "Embriyoloji laboratuvarında monitörde 2PN zigot morfolojisi incelemesi. ZPS 26 kontrol ünitesi teknik ekranı.",
+                    "Seslendirme (Voiceover - VO)": "Uluslararası hakemli klinik çalışmalarda doğrulanmış piezoelektrik oosit aktivasyon protokolleri ve teknik veriler için bilimsel bültenimizi inceleyebilirsiniz.",
+                    "Ekran Yazısı & Bilimsel Atıf": "📊 CE Device Certified (EU MDR 2017/745 Class IIa) | ISO 13485:2016"
+                },
+                {
+                    "Zaman": "00:55 - 01:00",
+                    "Görsel & Mikroskop Açısı": "ZEUS Bioscience kurumsal logosu. Zorunlu mevzuat uyarısı ekranın alt kısmında net biçimde yer alır.",
+                    "Seslendirme (Voiceover - VO)": "Detaylı bilimsel yayınlar ve teknik protokol dokümanı: zeusbio.com/scientific",
+                    "Ekran Yazısı & Bilimsel Atıf": "⚖️ YASAL UYARI: Bu video yalnızca sağlık meslek mensuplarını bilgilendirme amaçlıdır. Tanı ve tedavi için hekiminize başvurunuz."
+                }
+            ]
+            st.dataframe(pd.DataFrame(sc_tr1_table), use_container_width=True, hide_index=True)
+
+        elif "TR Sağlık Bakanlığı Uyumlu 2" in script_sel:
+            st.info("ℹ️ **Mevzuat Uyumluluk Notu:** Bu senaryo; genel topluma ve sosyal medyaya açık kanallarda yayımlanmak üzere hazırlanmış **Hücresel Biyoloji & Toplum Sağlığı Eğitimi** formatındadır. Ticari marka, ürün satışı, fiyat veya hasta yönlendirmesi içermez. Kadın hastalıkları ve doğum uzmanına danışılması gerektiğini vurgulayan yasal uyarı taşır.")
+            sc_tr2_table = [
+                {
+                    "Zaman": "00:00 - 00:10",
+                    "Görsel & Mikroskop Açısı": "3D Tıbbi Animasyon: Anne yumurtası (oosit) ve sperm hücresinin mikroskopik anatomisi. Hücre zarlarının doğal yapısı. Sade ve sakin bir laboratuvar fonu.",
+                    "Seslendirme (Voiceover - VO)": "Tüp bebek laboratuvarında döllenme nasıl gerçekleşir? Yumurta ve sperm hücresinin buluştuğu o mucizevi anın biyolojisine yakından bakalım.",
+                    "Ekran Yazısı & Bilimsel Atıf": "🧬 Hücre Biyolojisi: Tüp Bebekte Döllenme Süreci | Eğitici Bilgilendirme"
+                },
+                {
+                    "Zaman": "00:10 - 00:25",
+                    "Görsel & Mikroskop Açısı": "Sperm hücresinin yumurta zarına teması ve hücre içine sinyal iletimi. Yumurta sitoplazmasında yayılan doğal kalsiyum dalgası (animasyon).",
+                    "Seslendirme (Voiceover - VO)": "Doğal süreçte spermin yumurtaya girişi, hücre içinde mikrosaniyelik bir biyokimyasal sinyal başlatır. Bu sinyale 'Oosit Aktivasyonu' adı verilir.",
+                    "Ekran Yazısı & Bilimsel Atıf": "⚡ Biyolojik Sinyal: Hücresel Kalsiyum Dalgalanması ve Oosit Aktivasyonu"
+                },
+                {
+                    "Zaman": "00:25 - 00:42",
+                    "Görsel & Mikroskop Açısı": "Bölünmüş Hücre Çizimi: Bazı vakalarda sinyal iletiminin yetersiz kalması şematik olarak gösterilir.",
+                    "Seslendirme (Voiceover - VO)": "Bazı durumlarda sperm ve yumurta bir araya gelse dahi aktivasyon sinyali oluşmayabilir. Modern üreme tıbbında embriyoloji laboratuvarları, hücrenin bu doğal sinyalini anlamak için ileri biyofiziksel yöntemler geliştirmektedir.",
+                    "Ekran Yazısı & Bilimsel Atıf": "🔬 Üreme Tıbbında İleri Laboratuvar Metodolojileri"
+                },
+                {
+                    "Zaman": "00:42 - 00:52",
+                    "Görsel & Mikroskop Açısı": "Embriyoloji laboratuvarında mikroskop başında çalışan uzman embriyolog. Temiz oda (Cleanroom) standartları.",
+                    "Seslendirme (Voiceover - VO)": "Her hücre benzersizdir ve her bireyin tedavi süreci yalnızca uzman hekimler tarafından kişiye özel olarak değerlendirilmelidir.",
+                    "Ekran Yazısı & Bilimsel Atıf": "🏥 Kişiye Özel Tedavi & Multidisipliner Klinik Yaklaşım"
+                },
+                {
+                    "Zaman": "00:52 - 01:00",
+                    "Görsel & Mikroskop Açısı": "Sade bilgi ekranı. T.C. Sağlık Bakanlığı mevzuatına uygun zorunlu yasal uyarı.",
+                    "Seslendirme (Voiceover - VO)": "Üreme sağlığı ve tedavi seçenekleriniz hakkında doğru bilgi için lütfen kadın hastalıkları ve doğum uzmanınıza danışınız.",
+                    "Ekran Yazısı & Bilimsel Atıf": "⚖️ YASAL UYARI: Bu içerik toplum sağlığını bilgilendirme amaçlıdır. Teşhis ve tedavi yerine geçmez; hekiminize danışınız."
+                }
+            ]
+            st.dataframe(pd.DataFrame(sc_tr2_table), use_container_width=True, hide_index=True)
+
+        elif "TR Sağlık Bakanlığı Uyumlu 3" in script_sel:
+            st.info("ℹ️ **Mevzuat Uyumluluk Notu:** Bu senaryo; embriyoloji laboratuvarlarında sarf malzeme kalitesi ve hasta güvenliğini güvenceye alan uluslararası standartları (MEA >%80, Endotoksin, ISO 13485) teknik bir dille anlatan **Laboratuvar Kalite Güvencesi** eğitim senaryosudur.")
+            sc_tr3_table = [
+                {
+                    "Zaman": "00:00 - 00:12",
+                    "Görsel & Mikroskop Açısı": "Laboratuvar güvenlik kabini içinde steril pipet ve petri kabı açılışı. Parti analiz sertifikası (Certificate of Analysis - CoA) üzerindeki MEA ve Endotoksin değerleri.",
+                    "Seslendirme (Voiceover - VO)": "Tüp bebek laboratuvarında kullanılan tek kullanımlık bir dish veya solüsyon, embriyonun 5 günlük gelişimini doğrudan etkiler. Peki laboratuvar güvenliğinde uluslararası altın standart nedir?",
+                    "Ekran Yazısı & Bilimsel Atıf": "🛡️ Laboratuvar Kalite Güvencesi: MEA Testi ve Biyouyumluluk Esasları"
+                },
+                {
+                    "Zaman": "00:12 - 00:30",
+                    "Görsel & Mikroskop Açısı": "Mouse Embryo Assay (MEA) test sürecinin infografik gösterimi: 1 hücreli fare embriyosunun 96 saat boyunca kültür ortamında izlenmesi ve blastokist aşamasına ulaşması.",
+                    "Seslendirme (Voiceover - VO)": "Mouse Embryo Assay, yani MEA testi; sarf malzemelerin embriyo üzerinde toksik etki yaratmadığını kanıtlayan en kritik biyolojik testtir. Kabul edilebilir kalite eşiği en az yüzde 80 blastokist gelişimidir.",
+                    "Ekran Yazısı & Bilimsel Atıf": "📊 MEA Blastokist Oranı >= %80 (96 Saat Kültür Kalite Eşiği)"
+                },
+                {
+                    "Zaman": "00:30 - 00:50",
+                    "Görsel & Mikroskop Açısı": "Endotoksin testi LAL analizi ekranı. Pipetleme ve gama sterilizasyon barkodları.",
+                    "Seslendirme (Voiceover - VO)": "Ayrıca endotoksin seviyesinin 0.05 EU/ml'nin altında olması ve medikal sınıf gama sterilizasyonu, hücre kültüründe biyolojik güvenliğin ayrılmaz parçasıdır.",
+                    "Ekran Yazısı & Bilimsel Atıf": "🧪 LAL Endotoksin Seviyesi < 0.05 EU/ml | Steril Gama Işınlama (SAL 10^-6)"
+                },
+                {
+                    "Zaman": "00:50 - 01:05",
+                    "Görsel & Mikroskop Açısı": "Tıbbi cihaz CE MDR Class IIa sertifikası ve ISO 13485:2016 akreditasyon logosu.",
+                    "Seslendirme (Voiceover - VO)": "ZEUS Bioscience üretim tesislerinde üretilen her sarf parti, bağımsız MEA ve endotoksin analizlerinden geçirilerek sertifikalandırılmaktadır.",
+                    "Ekran Yazısı & Bilimsel Atıf": "📜 ISO 13485:2016 & EU MDR 2017/745 Class IIa Uygunluğu"
+                },
+                {
+                    "Zaman": "01:05 - 01:15",
+                    "Görsel & Mikroskop Açısı": "Kurumsal kapanış ekranı ve yasal bilgilendirme notu.",
+                    "Seslendirme (Voiceover - VO)": "Parti analiz sertifikaları ve kalite protokolleri hakkında teknik bilgi için: zeusbio.com/quality",
+                    "Ekran Yazısı & Bilimsel Atıf": "⚖️ YASAL UYARI: Bu materyal sağlık profesyonellerine yönelik teknik kalite bilgilendirmesidir."
+                }
+            ]
+            st.dataframe(pd.DataFrame(sc_tr3_table), use_container_width=True, hide_index=True)
+
+        elif "Senaryo 1" in script_sel:
             sc1_table = [
                 {"Zaman": "00:00 - 00:06", "Görsel & Mikroskop Açısı": "Bölünmüş Ekran (Split Screen): Solda standart sivri ICSI iğnesi oosite batıyor. Oosit tamamen içe çöküyor ve aniden patlayarak sitoplazma dışarı sızıyor (Oosit lizisi!). Sağ taraf ise kararık, merak uyandırıyor.", "Seslendirme (Voiceover - VO)": "Her 10 oositten biri, yumurtanın kalitesizliğinden değil... yanlış iğne travması yüzünden kaybediliyor. Peki ya bu hücre zarı hiç yırtılmasaydı?", "Ekran Yazısı & Grafik": "⚠️ %8.5 Oosit Dejenerasyonu Riski (Geleneksel Delme Travması)"},
                 {"Zaman": "00:06 - 00:22", "Görsel & Mikroskop Açısı": "Ekranın sağı aydınlanır. ZEUS ZPS 26'ya bağlı küt uçlu (flat-tip) piezo mikropipet kadraja girer. Pipet oosit zarına değer. Tek bir ultra-ince piezoelektrik mikro-titreşim (dalga efekti) oluşur. Zar delinmez, mikrosaniyede esneyip açılır.", "Seslendirme (Voiceover - VO)": "ZEUS ZPS 26 Piezo Stimülatör ile sivri iğneyle delmeyi unutun. Patentli küt uçlu piezo osilasyonu, oosit zarına tek bir mikropuls göndererek zarı esnetir ve spermi doğrudan ooplazmaya zararsız bırakır.", "Ekran Yazısı & Grafik": "⚡ ZEUS ZPS 26: Saniyede 1 Mikro-Puls ile Sıfır Membran Yırtılması"},
