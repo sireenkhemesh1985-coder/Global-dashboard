@@ -59,6 +59,26 @@ st.markdown("""
         color: #E2E8F0 !important;
     }
 
+    /* Multi-line & Non-Truncating Metrics (Sığmazsa alta al) */
+    [data-testid="stMetricValue"] {
+        white-space: normal !important;
+        word-break: break-word !important;
+        overflow-wrap: break-word !important;
+        text-overflow: clip !important;
+        line-height: 1.25 !important;
+    }
+    [data-testid="stMetricDelta"] {
+        white-space: normal !important;
+        word-break: break-word !important;
+        overflow-wrap: break-word !important;
+    }
+    [data-testid="stMetricDelta"] > div {
+        white-space: normal !important;
+        word-break: break-word !important;
+        overflow-wrap: break-word !important;
+        text-overflow: clip !important;
+    }
+
     /* Main Container Spacing */
     .main .block-container {
         padding-top: 1.8rem !important;
@@ -18413,18 +18433,58 @@ elif active_view == "🌍 Country 360° Performance & Report":
         </div>
         """, unsafe_allow_html=True)
 
-        kpi_m1, kpi_m2, kpi_m3, kpi_m4 = st.columns(4)
-        kpi_m1.metric("Lisanslı IVF Kliniği", f"{c_macro['clinics']} Klinik", delta=f"{c_macro['gdp_tier']}")
-        kpi_m2.metric("Yıllık Tedavi Siklusu", f"{est_total_cycles:,.0f} Siklus", delta=f"Klinik Başı: ~{int(est_total_cycles / max(c_macro['clinics'], 1)):,} Siklus")
-        
         # Display verified GDP pc and Purchasing Power Parity (Alım Gücü USD)
         gdp_ppp_val = c_macro.get('gdp_ppp', int(c_macro['gdp_pc'] * 2.2))
-        kpi_m3.metric(
-            "Kişi Başı GSYİH (GDP pc)", 
-            f"${c_macro['gdp_pc']:,} USD", 
-            delta=f"Alım Gücü (SAGP): ${gdp_ppp_val:,} USD"
-        )
-        kpi_m4.metric("ICSI & AOA Adaptasyonu", f"%{c_macro.get('icsi_pct', 82)}%", delta="Total Tedavi Penetrasyonu")
+        
+        # Responsive Non-Truncating Macro KPI Cards (Sığmazsa alta al)
+        st.markdown(f"""
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));gap:12px;margin-bottom:12px;">
+            <div style="background:rgba(15,23,42,0.65);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;justify-content:space-between;min-height:115px;">
+                <div>
+                    <div style="font-size:11px;color:#8FA3C0;font-weight:600;text-transform:uppercase;letter-spacing:0.02em;">Lisanslı IVF Kliniği</div>
+                    <div style="font-size:24px;font-weight:800;color:#FFFFFF;margin:4px 0 6px 0;line-height:1.1;">{c_macro['clinics']} Klinik</div>
+                </div>
+                <div>
+                    <div style="font-size:11px;color:#00E676;background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.25);padding:3px 8px;border-radius:5px;display:inline-block;line-height:1.35;word-break:break-word;white-space:normal;">
+                        ↑ {c_macro['gdp_tier']}
+                    </div>
+                </div>
+            </div>
+            <div style="background:rgba(15,23,42,0.65);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;justify-content:space-between;min-height:115px;">
+                <div>
+                    <div style="font-size:11px;color:#8FA3C0;font-weight:600;text-transform:uppercase;letter-spacing:0.02em;">Yıllık Tedavi Siklusu</div>
+                    <div style="font-size:24px;font-weight:800;color:#FFFFFF;margin:4px 0 6px 0;line-height:1.1;">{est_total_cycles:,.0f} Siklus</div>
+                </div>
+                <div>
+                    <div style="font-size:11px;color:#00E676;background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.25);padding:3px 8px;border-radius:5px;display:inline-block;line-height:1.35;word-break:break-word;white-space:normal;">
+                        ↑ Klinik Başı: ~{int(est_total_cycles / max(c_macro['clinics'], 1)):,} Siklus
+                    </div>
+                </div>
+            </div>
+            <div style="background:rgba(15,23,42,0.65);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;justify-content:space-between;min-height:115px;">
+                <div>
+                    <div style="font-size:11px;color:#8FA3C0;font-weight:600;text-transform:uppercase;letter-spacing:0.02em;">Kişi Başı GSYİH (GDP pc)</div>
+                    <div style="font-size:24px;font-weight:800;color:#FFFFFF;margin:4px 0 6px 0;line-height:1.1;">${c_macro['gdp_pc']:,} USD</div>
+                </div>
+                <div>
+                    <div style="font-size:11px;color:#00E676;background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.25);padding:3px 8px;border-radius:5px;display:inline-block;line-height:1.35;word-break:break-word;white-space:normal;">
+                        ↑ Alım Gücü (SAGP): ${gdp_ppp_val:,} USD
+                    </div>
+                </div>
+            </div>
+            <div style="background:rgba(15,23,42,0.65);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;justify-content:space-between;min-height:115px;">
+                <div>
+                    <div style="font-size:11px;color:#8FA3C0;font-weight:600;text-transform:uppercase;letter-spacing:0.02em;">ICSI & AOA Adaptasyonu</div>
+                    <div style="font-size:24px;font-weight:800;color:#FFFFFF;margin:4px 0 6px 0;line-height:1.1;">%{c_macro.get('icsi_pct', 82)}%</div>
+                </div>
+                <div>
+                    <div style="font-size:11px;color:#00E676;background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.25);padding:3px 8px;border-radius:5px;display:inline-block;line-height:1.35;word-break:break-word;white-space:normal;">
+                        ↑ Total Tedavi Penetrasyonu
+                    </div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
 
         st.markdown(f"""
         <div style="background:rgba(255,184,0,0.03);border:1px solid rgba(255,184,0,0.25);border-radius:10px;padding:8px 14px;margin-top:10px;margin-bottom:12px;">
@@ -18433,13 +18493,69 @@ elif active_view == "🌍 Country 360° Performance & Report":
         </div>
         """, unsafe_allow_html=True)
 
-        kpi_t1, kpi_t2, kpi_t3, kpi_t4 = st.columns(4)
-        kpi_t1.metric("Gümrük Vergisi", f"%{c_macro['customs_tariff_pct']:.1f}", delta=f"{cust_reg.get('vat_rate', '%14 KDV')}")
-        kpi_t2.metric("Liman Bekleme Süresi", f"{c_macro['customs_clearance_days']} Gün", delta="Gümrük Tamponu")
-        # Ensure full distributor / channel partner name is clearly visible without ugly truncation
-        clean_partner_display = "TechnoPharm / Technomed" if "TechnoPharm" in c_partner_label else (c_partner_label if len(c_partner_label) <= 26 else c_partner_label[:26])
-        kpi_t3.metric("Mevcut Dağıtıcı / Kanal", clean_partner_display, delta="Yetkili Acente / Aday")
-        kpi_t4.metric("Kayıtlı ERP Satışı", f"${tot_rev:,.0f} USD" if tot_rev > 0 else "$0 USD", delta=f"{tot_devs} Cihaz / {tot_cons} Kutu" if tot_rev > 0 else "Genişleme Bölgesi")
+        vat_rate_str = cust_reg.get('vat_rate', '%14.0 Standart KDV')
+        partner_full_str = c_partner_label.strip()
+        erp_rev_str = f"${tot_rev:,.0f} USD" if tot_rev > 0 else "$0 USD"
+        erp_delta_str = f"{tot_devs} Cihaz / {tot_cons} Kutu" if tot_rev > 0 else "Genişleme Bölgesi"
+
+        # Responsive Multi-line Trade & Customs Cards (Metin sığmazsa tam okunacak şekilde alta alır)
+        st.markdown(f"""
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));gap:12px;margin-bottom:14px;">
+            <!-- Card 1: Gümrük Vergisi -->
+            <div style="background:rgba(15,23,42,0.65);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;justify-content:space-between;min-height:115px;">
+                <div>
+                    <div style="font-size:11px;color:#8FA3C0;font-weight:600;text-transform:uppercase;letter-spacing:0.02em;">Gümrük Vergisi</div>
+                    <div style="font-size:24px;font-weight:800;color:#FFFFFF;margin:4px 0 6px 0;line-height:1.1;">%{c_macro['customs_tariff_pct']:.1f}</div>
+                </div>
+                <div>
+                    <div style="font-size:11px;color:#00E676;background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.25);padding:3px 8px;border-radius:5px;display:inline-block;line-height:1.35;word-break:break-word;white-space:normal;">
+                        ↑ {vat_rate_str}
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2: Liman Bekleme Süresi -->
+            <div style="background:rgba(15,23,42,0.65);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;justify-content:space-between;min-height:115px;">
+                <div>
+                    <div style="font-size:11px;color:#8FA3C0;font-weight:600;text-transform:uppercase;letter-spacing:0.02em;">Liman Bekleme Süresi</div>
+                    <div style="font-size:24px;font-weight:800;color:#FFFFFF;margin:4px 0 6px 0;line-height:1.1;">{c_macro['customs_clearance_days']} Gün</div>
+                </div>
+                <div>
+                    <div style="font-size:11px;color:#00E676;background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.25);padding:3px 8px;border-radius:5px;display:inline-block;line-height:1.35;word-break:break-word;white-space:normal;">
+                        ↑ Gümrük Tamponu
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Mevcut Dağıtıcı / Kanal (Sığmazsa alta al) -->
+            <div style="background:rgba(15,23,42,0.65);border:1px solid rgba(0,245,255,0.3);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;justify-content:space-between;min-height:115px;">
+                <div>
+                    <div style="font-size:11px;color:#8FA3C0;font-weight:600;text-transform:uppercase;letter-spacing:0.02em;">Mevcut Dağıtıcı / Kanal</div>
+                    <div style="font-size:16px;font-weight:800;color:#00F5FF;margin:4px 0 6px 0;line-height:1.35;word-break:break-word;white-space:normal;">
+                        {partner_full_str}
+                    </div>
+                </div>
+                <div>
+                    <div style="font-size:11px;color:#00E676;background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.25);padding:3px 8px;border-radius:5px;display:inline-block;line-height:1.35;word-break:break-word;white-space:normal;">
+                        ↑ Yetkili Acente / Aday
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4: Kayıtlı ERP Satışı -->
+            <div style="background:rgba(15,23,42,0.65);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;justify-content:space-between;min-height:115px;">
+                <div>
+                    <div style="font-size:11px;color:#8FA3C0;font-weight:600;text-transform:uppercase;letter-spacing:0.02em;">Kayıtlı ERP Satışı</div>
+                    <div style="font-size:24px;font-weight:800;color:#FFFFFF;margin:4px 0 6px 0;line-height:1.1;">{erp_rev_str}</div>
+                </div>
+                <div>
+                    <div style="font-size:11px;color:#00E676;background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.25);padding:3px 8px;border-radius:5px;display:inline-block;line-height:1.35;word-break:break-word;white-space:normal;">
+                        ↑ {erp_delta_str}
+                    </div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
 
         st.markdown("<hr style='border-color:rgba(19,166,181,0.25);margin:18px 0;'>", unsafe_allow_html=True)
 
