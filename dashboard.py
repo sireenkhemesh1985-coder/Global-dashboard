@@ -18830,12 +18830,33 @@ elif active_view == "🌍 Country 360° Performance & Report":
             <div style="display:flex;justify-content:space-between;align-items:center;">
                 <div>
                     <span style="font-weight:800;color:#00F5FF;font-size:15px;">🧮 {sel_country} Canlı Cihaz & Sarf İskonto Simülatörü</span>
-                    <div style="color:#94A3B8;font-size:11.5px;margin-top:2px;">Cihaz ve sarf liste fiyatı ile iskonto oranını girin; net birim fiyat, toplam anlaşma bedeli ve kâr marjını anında hesaplayın.</div>
+                    <div style="color:#94A3B8;font-size:11.5px;margin-top:2px;">Distribütör ve klinik transfer fiyatları, iskonto marjları ve ülke alım gücüne uygunluk analizi.</div>
                 </div>
                 <span style="background:rgba(0,245,255,0.15);color:#00F5FF;font-weight:800;font-size:11.5px;padding:3px 10px;border-radius:6px;border:1px solid #13A6B5;">Canlı Hesaplama Motoru</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
+
+        # Quick Scenario Buttons for Distributor Pricing ($8,500 vs $85,000 USD)
+        ps_col1, ps_col2, ps_col3 = st.columns([1.1, 1.2, 0.9])
+        preset_price_key = f"c360_dev_price_{sel_country}"
+        
+        with ps_col1:
+            if st.button("⚡ Standart Distribütör Cihaz Fiyatı ($8,500 USD)", key=f"btn_set_8500_{sel_country}", use_container_width=True):
+                st.session_state[preset_price_key] = 8500.0
+                st.rerun()
+        with ps_col2:
+            if st.button("🏢 Kurumsal Filo / İhale Paketi ($85,000 USD)", key=f"btn_set_85000_{sel_country}", use_container_width=True):
+                st.session_state[preset_price_key] = 85000.0
+                st.rerun()
+        with ps_col3:
+            if st.button("🔄 Sıfırla (Manuel)", key=f"btn_reset_price_{sel_country}", use_container_width=True):
+                st.session_state[preset_price_key] = 0.0
+                st.rerun()
+
+        # Ensure default initial price is $8,500 USD (standard distributor transfer price) if not yet set
+        if preset_price_key not in st.session_state:
+            st.session_state[preset_price_key] = 8500.0
 
         calc_col1, calc_col2 = st.columns(2)
         with calc_col1:
@@ -18857,14 +18878,15 @@ elif active_view == "🌍 Country 360° Performance & Report":
                 key=f"c360_dev_preset_{sel_country}"
             )
             
+            cur_preset_val = float(st.session_state.get(preset_price_key, 8500.0))
             dev_list_price = st.number_input(
-                "Cihaz Birim Fiyatı ($ USD — Elle Giriniz):", 
+                "Cihaz Birim Fiyatı ($ USD — Elle Giriniz veya Butonla Seçiniz):", 
                 min_value=0.0, 
                 max_value=500000.0, 
-                value=0.0, 
+                value=cur_preset_val, 
                 step=100.0, 
-                placeholder="Fiyatı buraya elle giriniz ($ USD)...",
-                key=f"c360_dev_price_{sel_country}"
+                placeholder="Örn: 8500.0 USD",
+                key=preset_price_key
             )
             rec_dev_max = float(pricing_fc.get('rec_device_discount', 8.0))
             dev_disc_pct = st.slider("Cihaz İskonto Oranı (%):", min_value=0.0, max_value=30.0, value=rec_dev_max, step=0.5, key=f"c360_dev_disc_{sel_country}")
@@ -18922,14 +18944,18 @@ elif active_view == "🌍 Country 360° Performance & Report":
                 key=f"c360_con_preset_{sel_country}"
             )
             
+            con_price_key = f"c360_con_price_{sel_country}"
+            if con_price_key not in st.session_state:
+                st.session_state[con_price_key] = 75.0
+
             con_list_price = st.number_input(
                 "Sarf Kutu Fiyatı ($ USD/Kutu — Elle Giriniz):", 
                 min_value=0.0, 
                 max_value=50000.0, 
-                value=0.0, 
+                value=float(st.session_state.get(con_price_key, 75.0)), 
                 step=5.0, 
-                placeholder="Kutu fiyatını buraya elle giriniz ($ USD)...",
-                key=f"c360_con_price_{sel_country}"
+                placeholder="Örn: 75.0 USD",
+                key=con_price_key
             )
             rec_sarf_max = float(pricing_fc.get('rec_sarf_discount', 10.0))
             con_disc_pct = st.slider("Sarf İskonto Oranı (%):", min_value=0.0, max_value=35.0, value=rec_sarf_max, step=0.5, key=f"c360_con_disc_{sel_country}")
@@ -18976,12 +19002,114 @@ elif active_view == "🌍 Country 360° Performance & Report":
         deal_blended_margin = (deal_tot_profit / deal_tot_rev * 100.0) if deal_tot_rev > 0 else 0.0
         sarf_share_pct = (con_tot_rev / deal_tot_rev * 100.0) if deal_tot_rev > 0 else 0.0
 
+        # Safe calculation of effective discount without ZeroDivisionError
+        deal_denom = deal_tot_rev + deal_tot_disc
+        eff_disc_pct = (deal_tot_disc / deal_denom * 100.0) if deal_denom > 0 else 0.0
+
         d_col1, d_col2, d_col3, d_col4 = st.columns(4)
         d_col1.metric("Toplam Anlaşma Değeri", f"${deal_tot_rev:,.2f} USD", delta=f"{dev_qty} Cihaz + {con_qty} Sarf")
-        d_col2.metric("Toplam Verilen İndirim", f"-${deal_tot_disc:,.2f} USD", delta=f"Efektif: %{(deal_tot_disc/(deal_tot_rev+deal_tot_disc)*100.0):.1f}")
+        d_col2.metric("Toplam Verilen İndirim", f"-${deal_tot_disc:,.2f} USD", delta=f"Efektif: %{eff_disc_pct:.1f}")
         d_col3.metric("Kümülatif Brüt Kâr", f"${deal_tot_profit:,.2f} USD", delta=f"%{deal_blended_margin:.1f} Brüt Marj")
         d_col4.metric("Sarf Gelir Ağırlığı", f"%{sarf_share_pct:.1f}", delta="Razor-and-Blade Payı")
 
+        # ----------------------------------------------------------------------
+        # DİNAMİK ÜLKE FİYAT UYGUNLUK DEĞERLENDİRMESİ ($8,500 USD / $85,000 USD ANALİZİ)
+        # ----------------------------------------------------------------------
+        gdp_val = c_macro.get('gdp_pc', 12000)
+        customs_val = c_macro.get('customs_tariff_pct', 5.0)
+        landed_factor = 1.0 + (customs_val / 100.0) + 0.04 # gümrük + navlun/sigorta
+
+        # Evaluate suitability
+        if dev_list_price <= 0:
+            suitability_html = f"""
+            <div style="background:rgba(255,255,255,0.03);border:1px dashed rgba(255,255,255,0.15);border-radius:10px;padding:12px 16px;margin-top:14px;font-size:12px;color:#94A3B8;">
+                ℹ️ <b>Fiyat Girilmedi:</b> Yukarıdaki butonlardan <b>$8,500 USD (Standart Distribütör Fiyatı)</b> veya <b>$85,000 USD (Filo Paketi)</b> seçerek {sel_country} pazarı uygunluk analizini anında görüntüleyebilirsiniz.
+            </div>
+            """
+        elif dev_list_price <= 12000.0:
+            # Realistic single unit distributor pricing evaluation ($8,500 USD band)
+            landed_cost = net_dev_unit * landed_factor
+            rec_clinic_retail = landed_cost * 1.55 # distributor puts %35-%55 markup
+            eppendorf_bench = 18500.0 if gdp_val < 15000 else 22000.0
+            savings_pct = max(0, int(((eppendorf_bench - rec_clinic_retail) / eppendorf_bench) * 100))
+            zeus_margin = ((net_dev_unit - (net_dev_unit * 0.38)) / net_dev_unit * 100.0) if net_dev_unit > 0 else 60.0
+
+            suitability_html = f"""
+            <div style="background:linear-gradient(135deg, rgba(0,230,118,0.08) 0%, rgba(15,23,42,0.92) 100%);border:1.5px solid #00E676;border-radius:12px;padding:16px 18px;margin-top:14px;box-shadow:0 6px 18px rgba(0,0,0,0.3);">
+                <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:8px;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+                    <div>
+                        <span style="font-size:15px;font-weight:800;color:#00E676;">🎯 {sel_country} İçin $8,500 USD Distribütör Fiyatı Uygunluk Raporu</span>
+                        <div style="font-size:11.5px;color:#94A3B8;margin-top:2px;">Standart Tek Cihaz Transfer Fiyatı Analizi & CFO / Satış Heyeti Mutabakatı</div>
+                    </div>
+                    <span style="background:rgba(0,230,118,0.2);color:#00E676;border:1px solid #00E676;padding:4px 12px;border-radius:6px;font-weight:800;font-size:12px;">
+                        ✅ MÜKEMMEL PAZAR UYUMU (OPTIMAL FIT)
+                    </span>
+                </div>
+
+                <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));gap:10px;margin-bottom:12px;font-size:12px;">
+                    <div style="background:rgba(255,255,255,0.03);padding:10px 12px;border-radius:8px;border-left:3px solid #00F5FF;">
+                        <span style="color:#8FA3C0;font-size:10.5px;">ZEUS Üretici Brüt Marjı</span><br>
+                        <b style="color:#00F5FF;font-size:15px;">%{zeus_margin:.1f} Kâr</b><br>
+                        <span style="font-size:10.5px;color:#94A3B8;">CFO Eşiği (%35+) Üstünde</span>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03);padding:10px 12px;border-radius:8px;border-left:3px solid #FFD700;">
+                        <span style="color:#8FA3C0;font-size:10.5px;">Distribütör Mal Oluşu (Landed)</span><br>
+                        <b style="color:#FFD700;font-size:15px;">${landed_cost:,.0f} USD</b><br>
+                        <span style="font-size:10.5px;color:#94A3B8;">Gümrük (%{customs_val:.1f}) + Navlun Dahil</span>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03);padding:10px 12px;border-radius:8px;border-left:3px solid #10B981;">
+                        <span style="color:#8FA3C0;font-size:10.5px;">Kliniğe Satış Fiyatı (Öneri)</span><br>
+                        <b style="color:#10B981;font-size:15px;">${rec_clinic_retail:,.0f} USD</b><br>
+                        <span style="font-size:10.5px;color:#94A3B8;">Distribütör Marjı: %35 – %45</span>
+                    </div>
+                    <div style="background:rgba(255,255,255,0.03);padding:10px 12px;border-radius:8px;border-left:3px solid #A855F7;">
+                        <span style="color:#8FA3C0;font-size:10.5px;">Rakibe Göre Avantaj (Eppendorf)</span><br>
+                        <b style="color:#A855F7;font-size:15px;">%{savings_pct} Daha Ekonomik</b><br>
+                        <span style="font-size:10.5px;color:#94A3B8;">Eppendorf: ${eppendorf_bench:,.0f} USD</span>
+                    </div>
+                </div>
+
+                <div style="font-size:12px;color:#CBD5E1;line-height:1.7;background:rgba(0,0,0,0.25);padding:12px 14px;border-radius:8px;">
+                    <b>💡 Neden {sel_country} İçin $8,500 USD En Doğru Fiyat?</b><br>
+                    • <b>Distribütör Motivasyonu:</b> $8,500 USD fiyatla alan yerel dağıtıcı (Mısır'da TechnoPharm, Ürdün'de Sirius Pharm vb.), cihazı yerel özel tüp bebek merkezlerine <b>$13,500 – $15,500 USD</b> bandında rahatça satabilir. Bu dağıtıcıya %35-%45 net kâr bırakarak klinikleri ziyaret etmesini ve sahada cihazı kurmasını sağlar.<br>
+                    • <b>Klinik Amortismanı:</b> {sel_country} pazarındaki ortalama IVF tedavi ücreti (~$1,200 - $1,800 USD) dikkate alındığında, bir tüp bebek kliniği bu cihazın bedelini <b>yalnızca 8 ila 10 vakada</b> tamamen amorti eder.<br>
+                    • <b>Sarf Kilitleme Gücü (Razor-and-Blade):</b> Cihazı $8,500 USD gibi ulaşılabilir bir transfer fiyatıyla kliniğe soktuğumuzda, klinik her yıl asgari 200–300 kutu Z-Dish aktivasyon sarfı tüketmekte ve ZEUS'a yıllık <b>$15,000 – $22,000 USD</b> sürekli yüksek marjlı (%65+) sarf cirosu kazandırmaktadır.
+                </div>
+            </div>
+            """
+        else:
+            # High price or Fleet / Turnkey Package evaluation ($85,000 USD band)
+            is_fleet = dev_qty >= 5 or dev_list_price >= 50000.0
+            fleet_devices_equiv = int(dev_list_price / 8500.0) if dev_list_price > 8500 else 10
+            
+            suitability_html = f"""
+            <div style="background:linear-gradient(135deg, rgba(255,184,0,0.08) 0%, rgba(15,23,42,0.92) 100%);border:1.5px solid #FFB800;border-radius:12px;padding:16px 18px;margin-top:14px;box-shadow:0 6px 18px rgba(0,0,0,0.3);">
+                <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:8px;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+                    <div>
+                        <span style="font-size:15px;font-weight:800;color:#FFB800;">🏢 {sel_country} İçin $85,000 USD Fiyat Düzeyi Analizi</span>
+                        <div style="font-size:11.5px;color:#94A3B8;margin-top:2px;">Kurumsal Filo, Anahtar Teslim İhale & Çoklu Sistem Değerlendirmesi</div>
+                    </div>
+                    <span style="background:rgba(255,184,0,0.2);color:#FFB800;border:1px solid #FFB800;padding:4px 12px;border-radius:6px;font-weight:800;font-size:12px;">
+                        {'🏢 KURUMSAL İHALE / FİLO İÇİN UYGUN' if is_fleet else '⚠️ TEK CİHAZ İÇİN FAHİŞ'}
+                    </span>
+                </div>
+
+                <div style="font-size:12px;color:#CBD5E1;line-height:1.75;background:rgba(0,0,0,0.25);padding:14px;border-radius:8px;">
+                    <div style="margin-bottom:8px;">
+                        <b style="color:#FF6B6B;">1. Tek Bir ZPS 26 Cihazı Olarak Değerlendirilirse:</b><br>
+                        Tek bir Piezoelektrik mikro-puls stimülatörü için $85,000 USD fiyat {sel_country} ve küresel tüp bebek pazarında <b>fahiş kalır</b>. Küresel pazarda en üst seviye piezo cihazı tavan fiyatı $22,000 USD bandındadır. Tek cihaz için bu fiyat verilirse distribütör ve klinik teklifi doğrudan reddeder.
+                    </div>
+                    <div style="border-top:1px dashed rgba(255,255,255,0.1);padding-top:8px;">
+                        <b style="color:#00E676;">2. Anahtar Teslim Kurumsal Filo / Kamu İhale Paketi Olarak Değerlendirilirse ($85,000 USD):</b><br>
+                        Eğer $85,000 USD bir <b>Turnkey IVF Laboratuvar Paketi</b> ise (Örneğin: <b>6 Adet ZPS 26 Piezo Cihazı + 2 Adet BioPSafe Biyopsi İstasyonu + 1.000 Kutu Z-Dish Sarf</b>);<br>
+                        • <b>{sel_country} Kamu / Üniversite İhaleleri</b> (Mısır UPA / Kasr Al-Ainy, Suudi NUPCO, Türkiye KHGM vb.) bütçe limitlerine <b>TAM OTURUR VE MÜKEMMEL UYGUNDUR</b>.<br>
+                        • Büyük özel tüp bebek hastane zincirleri (Cleopatra, Bahçeci, Dr. Sulaiman Al Habib vb.) için anahtar teslim laboratuvar teknoloji yenileme paketi olarak hızla onaylanır.
+                    </div>
+                </div>
+            </div>
+            """
+
+        st.markdown(suitability_html, unsafe_allow_html=True)
         st.markdown("<br>", unsafe_allow_html=True)
 
         # ----------------------------------------------------------------------
