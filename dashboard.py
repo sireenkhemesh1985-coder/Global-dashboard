@@ -7539,10 +7539,18 @@ def render_login_gate():
                     st.error("❌ Hatalı kullanıcı adı veya şifre! Lütfen bilgilerinizi kontrol ediniz.")
 
             st.markdown("""
-            <div style="text-align: center; margin-top: 24px; font-size: 11px; color: #64748B;">
+            <div style="text-align: center; margin-top: 20px; font-size: 11px; color: #64748B;">
                 <span style="display: inline-flex; align-items: center; gap: 6px; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); padding: 6px 16px; border-radius: 20px;">
                     <span style="color: #00F5FF;">🛡️</span> 256-Bit SSL Uçtan Uca Şifreli Kurumsal Yetkili Oturum
                 </span>
+            </div>
+            <div style="text-align: center; margin-top: 24px; padding-top: 18px; border-top: 1px solid rgba(255, 255, 255, 0.08); font-family: 'Inter', system-ui, -apple-system, sans-serif;">
+                <div style="font-size: 12.5px; font-weight: 600; color: #94A3B8; letter-spacing: 0.04em; margin-bottom: 4px;">
+                    Conceived & Directed by <span style="color: #00F5FF; font-weight: 700; text-shadow: 0 0 12px rgba(0, 245, 255, 0.35);">Sireen Khemesh</span>
+                </div>
+                <div style="font-size: 11px; color: #64748B; letter-spacing: 0.03em; font-weight: 500;">
+                    © 2026 ZEUS Bioscience. All rights reserved
+                </div>
             </div>
             """, unsafe_allow_html=True)
 
