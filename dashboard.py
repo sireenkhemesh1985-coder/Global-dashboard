@@ -842,7 +842,7 @@ COUNTRY_MACRO_IVF = {
         'pop_m': 11.6,
         'customs_tariff_pct': 0.0,
         'customs_clearance_days': 3,
-        'import_difficulty': 'Düşük (AB İçi Serbest Dolaşım / CE/MDR Uyumu)',
+        'import_difficulty': 'Düşük (AB İçi Serbest Dolaşım / CE Sertifikalı Uyumu)',
         'ivf_support': 'Geniş Kapsamlı Kamu Geri Ödemesi (6 Siklus)',
         'ivf_support_code': 'Comprehensive Public Reimbursement (6 Cycles)',
         'ivf_support_desc': 'Belçika Ulusal Sağlık Enstitüsü (INAMI/RIZIV) kadınlar için 6 siklusa kadar tedavi masraflarını tam geri öder.',
@@ -1028,24 +1028,24 @@ def get_market_customs_intelligence(c_code, c_name):
     name = str(c_name).strip()
 
     CUSTOMS_BARRIER_DB = {
-        'ES': {'tariff': 0.0, 'days': 3, 'doc_score': 2.0, 'doc_label': 'Düşük / CE-MDR Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (MDR 2017/745 & CE Belgesi Yeterli; 0% Gümrük)'},
-        'DE': {'tariff': 0.0, 'days': 2, 'doc_score': 2.0, 'doc_label': 'Düşük / CE-MDR Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (BfArM Ulusal Medikal Kaydı & 0% Gümrük)'},
-        'FR': {'tariff': 0.0, 'days': 3, 'doc_score': 2.2, 'doc_label': 'Düşük / CE-MDR Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (ANSM Medikal Bildirimi & 0% Gümrük)'},
-        'IT': {'tariff': 0.0, 'days': 4, 'doc_score': 2.5, 'doc_label': 'Düşük / CE-MDR Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (Sağlık Bakanlığı Repertuar Kaydı)'},
-        'BE': {'tariff': 0.0, 'days': 2, 'doc_score': 2.0, 'doc_label': 'Düşük / CE-MDR Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (FAGG/AFMPS Uyumu & Brüksel Hub)'},
-        'NL': {'tariff': 0.0, 'days': 2, 'doc_score': 1.8, 'doc_label': 'Düşük / CE-MDR Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (Rotterdam/Schiphol Ekspres Kargo)'},
-        'DK': {'tariff': 0.0, 'days': 2, 'doc_score': 1.8, 'doc_label': 'Düşük / CE-MDR Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (Danish Medicines Agency Kaydı)'},
-        'SE': {'tariff': 0.0, 'days': 3, 'doc_score': 2.0, 'doc_label': 'Düşük / CE-MDR Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (Läkemedelsverket Uyumu)'},
+        'ES': {'tariff': 0.0, 'days': 3, 'doc_score': 2.0, 'doc_label': 'Düşük / CE Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (CE Belgesi Yeterli; 0% Gümrük)'},
+        'DE': {'tariff': 0.0, 'days': 2, 'doc_score': 2.0, 'doc_label': 'Düşük / CE Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (BfArM Ulusal Medikal Kaydı & 0% Gümrük)'},
+        'FR': {'tariff': 0.0, 'days': 3, 'doc_score': 2.2, 'doc_label': 'Düşük / CE Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (ANSM Medikal Bildirimi & 0% Gümrük)'},
+        'IT': {'tariff': 0.0, 'days': 4, 'doc_score': 2.5, 'doc_label': 'Düşük / CE Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (Sağlık Bakanlığı Repertuar Kaydı)'},
+        'BE': {'tariff': 0.0, 'days': 2, 'doc_score': 2.0, 'doc_label': 'Düşük / CE Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (FAGG/AFMPS Uyumu & Brüksel Hub)'},
+        'NL': {'tariff': 0.0, 'days': 2, 'doc_score': 1.8, 'doc_label': 'Düşük / CE Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (Rotterdam/Schiphol Ekspres Kargo)'},
+        'DK': {'tariff': 0.0, 'days': 2, 'doc_score': 1.8, 'doc_label': 'Düşük / CE Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (Danish Medicines Agency Kaydı)'},
+        'SE': {'tariff': 0.0, 'days': 3, 'doc_score': 2.0, 'doc_label': 'Düşük / CE Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (Läkemedelsverket Uyumu)'},
         'NO': {'tariff': 0.0, 'days': 3, 'doc_score': 2.2, 'doc_label': 'Düşük / EFTA Uyumlu', 'cond': 'EFTA & CE Uygunluğu (Norwegian Medical Products Agency)'},
-        'PT': {'tariff': 0.0, 'days': 4, 'doc_score': 2.5, 'doc_label': 'Düşük / CE-MDR Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (Infarmed Tescili)'},
-        'AT': {'tariff': 0.0, 'days': 3, 'doc_score': 2.2, 'doc_label': 'Düşük / CE-MDR Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (BASG Tıbbi Cihaz Kaydı)'},
-        'CZ': {'tariff': 0.0, 'days': 3, 'doc_score': 2.4, 'doc_label': 'Düşük / CE-MDR Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (SUKL Medikal Sicil Kaydı)'},
-        'PL': {'tariff': 0.0, 'days': 4, 'doc_score': 2.6, 'doc_label': 'Düşük / CE-MDR Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (URPL Tescil Bildirimi)'},
-        'GR': {'tariff': 0.0, 'days': 4, 'doc_score': 2.8, 'doc_label': 'Düşük / CE-MDR Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (EOF Ulusal İlaç ve Medikal Kaydı)'},
-        'FI': {'tariff': 0.0, 'days': 3, 'doc_score': 2.0, 'doc_label': 'Düşük / CE-MDR Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (Fimea Bildirimi)'},
+        'PT': {'tariff': 0.0, 'days': 4, 'doc_score': 2.5, 'doc_label': 'Düşük / CE Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (Infarmed Tescili)'},
+        'AT': {'tariff': 0.0, 'days': 3, 'doc_score': 2.2, 'doc_label': 'Düşük / CE Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (BASG Tıbbi Cihaz Kaydı)'},
+        'CZ': {'tariff': 0.0, 'days': 3, 'doc_score': 2.4, 'doc_label': 'Düşük / CE Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (SUKL Medikal Sicil Kaydı)'},
+        'PL': {'tariff': 0.0, 'days': 4, 'doc_score': 2.6, 'doc_label': 'Düşük / CE Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (URPL Tescil Bildirimi)'},
+        'GR': {'tariff': 0.0, 'days': 4, 'doc_score': 2.8, 'doc_label': 'Düşük / CE Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (EOF Ulusal İlaç ve Medikal Kaydı)'},
+        'FI': {'tariff': 0.0, 'days': 3, 'doc_score': 2.0, 'doc_label': 'Düşük / CE Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (Fimea Bildirimi)'},
         'RO': {'tariff': 0.0, 'days': 5, 'doc_score': 3.2, 'doc_label': 'Düşük-Orta / CE Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (ANMDMR Tescili)'},
         'BG': {'tariff': 0.0, 'days': 5, 'doc_score': 3.0, 'doc_label': 'Düşük-Orta / CE Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (BDA Tıbbi Cihaz Kaydı)'},
-        'IE': {'tariff': 0.0, 'days': 3, 'doc_score': 2.0, 'doc_label': 'Düşük / CE-MDR Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (HPRA Bildirimi)'},
+        'IE': {'tariff': 0.0, 'days': 3, 'doc_score': 2.0, 'doc_label': 'Düşük / CE Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (HPRA Bildirimi)'},
         'GB': {'tariff': 2.5, 'days': 4, 'doc_score': 3.5, 'doc_label': 'Düşük-Orta / MHRA Tescili', 'cond': 'MHRA Tıbbi Cihaz Tescili & UK Responsible Person (UKRP)'},
         'CH': {'tariff': 0.0, 'days': 3, 'doc_score': 3.0, 'doc_label': 'Düşük / Swissmedic', 'cond': 'Swissmedic Tescili & İsviçre Yetkili Temsilcisi (CH-REP)'},
         'TR': {'tariff': 8.0, 'days': 5, 'doc_score': 4.5, 'doc_label': 'Orta / TİTCK ÜTS Kaydı', 'cond': 'TİTCK ÜTS Tekil Bildirimi, CE Uygunluk Beyanı & Türkçe Kılavuz'},
@@ -1222,7 +1222,7 @@ MARKET_KNOWLEDGE_BASE = {
         'expert_max_discount': 7.0,
         'expert_rec_sarf_disc': 8.0,
         'clinical_dynamics': '165 aktif merkezle Avrupa ve Orta Doğu’nun en büyük klinik havuzu. Özel IVF zincirleri (Bahçeci, Acıbadem, Memorial) ve üniversite klinikleri fiyattan çok gebelik oranı tutarlılığına, embriyotoksisite analizine ve parti bazlı CoA sertifikalarına bakar.',
-        'regulatory_watch': 'Sağlık Bakanlığı ÜTS (Ürün Takip Sistemi) kaydı, MDR (Tıbbi Cihaz Regülasyonu 2017/745) ve CE belgesi zorunludur. Doğrudan hastane satışlarında karekodsuz ve tekil bildirimsiz ürün kabul edilmez.',
+        'regulatory_watch': 'Sağlık Bakanlığı ÜTS (Ürün Takip Sistemi) kaydı, CE Sertifikası ve Tıbbi Cihaz Uygunluk Beyanı zorunludur. Doğrudan hastane satışlarında karekodsuz ve tekil bildirimsiz ürün kabul edilmez.',
         'competitor_threat': 'Vitrolife ve CooperSurgical yerel depolardan 24 saatte teslimat avantajına sahiptir. Cook Medical iğne ve kateterlerde köklüdür.',
         'commercial_guardrails': 'Cihaz indirimini %7.0 ile sınırlayın; kur dalgalanmalarına karşı liste fiyatlarını USD bazında koruyun. 100+ kutu sarf taahhüdüne kademeli prim tanımlayın.',
         'ministry_decrees': [
@@ -1236,8 +1236,8 @@ MARKET_KNOWLEDGE_BASE = {
                 'consumable_rule': 'Oosit aktivasyon medyası ve test dishleri için parti bazlı analiz sertifikası (CoA) ve +2°C / +8°C soğuk zincir kayıt dökümü zorunludur.'
             },
             {
-                'decree_no': 'TİTCK-MDR-2023/18',
-                'title': 'AB MDR (2017/745) Uyumlu Sınıf IIa/IIb Tıbbi Cihaz İthal ve Satış Tebliği',
+                'decree_no': 'TİTCK-CE-2023/18',
+                'title': 'CE Sertifikalı Sınıf IIa/IIb Tıbbi Cihaz İthal ve Satış Tebliği',
                 'date': '2023-09-14',
                 'status': '🟢 Yürürlükte',
                 'summary': 'Yardımcı üreme tekniklerinde kullanılan özel aktivasyon sarfları özel kliniklerde doğrudan hasta tedavi paketine yansıtılır.',
@@ -1299,7 +1299,7 @@ MARKET_KNOWLEDGE_BASE = {
         'expert_stance': 'Onaylı (Bölgesel Lojistik & Konsinye Depo Üssü)',
         'expert_max_discount': 8.0,
         'expert_rec_sarf_disc': 8.0,
-        'clinical_dynamics': 'Amman bölgesel tüp bebek turizminin merkezidir. 22 aktif özel klinik yüksek teknolojili piezo-ICSI sistemlerini tercih eder; kalite ve gebelik oranı önceliklidir.',
+        'clinical_dynamics': 'Amman bölgesel tüp bebek turizminin merkezidir. 22 aktif özel klinik yüksek teknolojili Elektriksel Oosit Aktivasyon (AOA) sistemlerini tercih eder; kalite ve gebelik oranı önceliklidir.',
         'regulatory_watch': 'JFDA cihaz tescili, Free Sales Certificate (FSC) ve CE sertifikasyonu şarttır. Gümrük çekim süresi ortalama 14 gündür (Akabe / Amman Havalimanı).',
         'competitor_threat': 'CooperSurgical ve Vitrolife Amman depolarından hızlı teslimat yapmaktadır.',
         'commercial_guardrails': 'Cihaz iskonto tavanı %8.0; Amman konsinye yedek parça ve sarf deposu anlaşması şarttır.',
@@ -1588,23 +1588,23 @@ MARKET_KNOWLEDGE_BASE = {
         }
     },
     'Germany': {
-        'authority_name': 'Almanya Federal İlaç ve Tıbbi Cihaz Enstitüsü (BfArM) & AB MDR Heyeti',
-        'specialist_name': 'BfArM & AB MDR Klinik Değerlendirme Heyeti',
-        'expert_stance': 'Mevzuat & Klinik Validasyon Odaklı (Sıkı CE MDR Uyumu)',
+        'authority_name': 'Almanya Federal İlaç ve Tıbbi Cihaz Enstitüsü (BfArM) & AB Tıbbi Cihaz Heyeti',
+        'specialist_name': 'BfArM & AB Klinik Değerlendirme Heyeti',
+        'expert_stance': 'Mevzuat & Klinik Validasyon Odaklı (Sıkı CE Sertifikalı Uyumu)',
         'expert_max_discount': 6.0,
         'expert_rec_sarf_disc': 7.0,
-        'clinical_dynamics': 'Almanya pazarındaki 140 lisanslı klinik ve üniversite hastaneleri fiyattan çok CE MDR validasyon raporlarına ve DIN EN ISO 15189 laboratuvar akreditasyon standartlarına bakar.',
-        'regulatory_watch': 'AB MDR 2017/745, EUDAMED tescili ve UDI barkodlama zorunludur.',
+        'clinical_dynamics': 'Almanya pazarındaki 140 lisanslı klinik ve üniversite hastaneleri fiyattan çok CE Sertifikalı validasyon raporlarına ve DIN EN ISO 15189 laboratuvar akreditasyon standartlarına bakar.',
+        'regulatory_watch': 'AB CE Sertifikasyonu, EUDAMED tescili ve UDI barkodlama zorunludur.',
         'competitor_threat': 'Vitrolife, Eppendorf ve Hamilton Thorne bölgede köklü distribütörlük ağlarına sahiptir.',
         'commercial_guardrails': 'Alman üniversite kliniklerine girişte akademik referans ve yayınlanmış fertilizasyon başarı oranı verileri sunulmalıdır.',
         'ministry_decrees': [
             {
-                'decree_no': 'BfArM-MDR-2017/745',
-                'title': 'AB Tıbbi Cihaz Regülasyonu (MDR) ve EUDAMED Tescil Direktifi',
+                'decree_no': 'BfArM-CE-Tıbbi-Cihaz',
+                'title': 'AB Tıbbi Cihaz Direktifi (CE) ve EUDAMED Tescil Tebliği',
                 'date': '2024-01-10',
                 'status': '🟢 Yürürlükte / Zorunlu',
                 'summary': 'Almanya\'da tüp bebek laboratuvar donanımları için Notified Body CE sertifikası, UDI barkodlama ve EUDAMED kaydı zorunludur.',
-                'impact_zeus': 'ZEUS CE MDR dosyası Alman hastanelerinde doğrudan geçerlidir.',
+                'impact_zeus': 'ZEUS CE Sertifikalı dosyası Alman hastanelerinde doğrudan geçerlidir.',
                 'consumable_rule': 'Partiye özel endotoksin (<0.05 EU/ml) ve MEA blastosist gelişim dökümü aranır.'
             },
             {
@@ -1623,7 +1623,7 @@ MARKET_KNOWLEDGE_BASE = {
             'cold_chain': 'Frankfurt CargoCity Pharma Hub (+2°C / +8°C).',
             'payment_norms': 'Almanya standartlarında 30 gün açık hesap.',
             'dos': 'ESHRE ve DGRM onaylı bilimsel yayın ve poster çalışmalarını öne çıkarın.',
-            'donts': 'MDR sertifikasyon dokümanları eksik olan donanımları Almanya sınırına sevk etmeyin.'
+            'donts': 'CE sertifikasyon dokümanları eksik olan donanımları Almanya sınırına sevk etmeyin.'
         }
     },
     'Belgium': {
@@ -1633,7 +1633,7 @@ MARKET_KNOWLEDGE_BASE = {
         'expert_max_discount': 8.0,
         'expert_rec_sarf_disc': 10.0,
         'clinical_dynamics': 'Belçika, Ghent Üniversitesi (UGent) ve Brüksel IVF merkezleriyle dünya tüp bebek biliminin öncüsüdür. Ghent University\'de kurulu ZEUS Piezo donanımı tüm Avrupa için referans niteliğindedir.',
-        'regulatory_watch': 'FAMHP ve AB MDR 2017/745 direktifleri geçerlidir.',
+        'regulatory_watch': 'FAMHP ve AB CE direktifleri geçerlidir.',
         'competitor_threat': 'Vitrolife ve Gynétics yerel pazarda akademik sponsorluklarla güçlüdür.',
         'commercial_guardrails': 'UGent ile ortak bilimsel yayın ve klinik aplikasyon çalışması yapılarak sarf tüketim frekansı artırılmalıdır.',
         'ministry_decrees': [
@@ -1663,7 +1663,7 @@ MARKET_KNOWLEDGE_BASE = {
         'expert_max_discount': 7.0,
         'expert_rec_sarf_disc': 8.5,
         'clinical_dynamics': 'İspanya yılda 180,000 siklus ve 280 klinikle Avrupa\'nın tüp bebek başkentidir (IVIRMA, Quirónsalud). Yüksek hacimli merkezler donanım ve sarf maliyetini optimize etmek ister.',
-        'regulatory_watch': 'AEMPS tescil bildirimi, CE MDR ve İspanyolca etiketleme zorunludur.',
+        'regulatory_watch': 'AEMPS tescil bildirimi, CE Sertifikalı ve İspanyolca etiketleme zorunludur.',
         'competitor_threat': 'Cook Medical ve Vitrolife Madrid ve Valensiya\'da büyük pazar payına sahiptir.',
         'commercial_guardrails': 'İspanya pazarına giriş için güçlü bir yerel medikal distribütör yetkilendirilmeli; IVIRMA zincirine toplu filo teklifi sunulmalıdır.',
         'ministry_decrees': [
@@ -1698,7 +1698,7 @@ MARKET_KNOWLEDGE_BASE = {
         'commercial_guardrails': 'Indira IVF gibi mega zincirlere 25 ünite filo paketi sunulmalı; yerel yetkili ajan (Authorized Indian Agent) atanmalıdır.',
         'ministry_decrees': [
             {
-                'decree_no': 'CDSCO-MDR-2017/MD-15',
+                'decree_no': 'CDSCO-MED-2017/MD-15',
                 'title': 'Medical Device Rules 2017 Kapsamında Form MD-14/MD-15 İthalat Lisansı',
                 'date': '2024-02-28',
                 'status': '🟢 Yürürlükte / Zorunlu',
@@ -1836,18 +1836,18 @@ MARKET_KNOWLEDGE_BASE = {
         'expert_stance': 'Bölgesel Genişleme & Hızlı Lojistik Modeli',
         'expert_max_discount': 8.0,
         'expert_rec_sarf_disc': 10.0,
-        'clinical_dynamics': 'Bulgaristan ve Balkan klinikleri AB MDR standartlarını ararken, Türkiye\'ye coğrafi yakınlık sebebiyle 24 saatte hızlı parça ve sarf teslimatını büyük avantaj olarak görür.',
-        'regulatory_watch': 'AB MDR 2017/745 ve BDA ulusal kayıt bildirimi yeterlidir.',
+        'clinical_dynamics': 'Bulgaristan ve Balkan klinikleri AB CE standartlarını ararken, Türkiye\'ye coğrafi yakınlık sebebiyle 24 saatte hızlı parça ve sarf teslimatını büyük avantaj olarak görür.',
+        'regulatory_watch': 'AB CE Belgesi ve BDA ulusal kayıt bildirimi yeterlidir.',
         'competitor_threat': 'Vitrolife bölgede temsilcilikler üzerinden aktiftir.',
         'commercial_guardrails': 'Yerinde Türkçe/İngilizce aplikasyon desteği ve karayolu hızlı frigo teslimat avantajını kullanın.',
         'ministry_decrees': [
             {
-                'decree_no': 'BDA-EU-MDR-2024',
-                'title': 'AB MDR Uyumlu Tıbbi Cihaz İthal ve Dağıtım Bildirimi',
+                'decree_no': 'BDA-EU-CE-2024',
+                'title': 'AB CE Sertifikalı Tıbbi Cihaz İthal ve Dağıtım Bildirimi',
                 'date': '2024-02-15',
                 'status': '🟢 Yürürlükte / Zorunlu',
                 'summary': 'Bulgaristan\'da CE belgeli Sınıf II cihazların hastane teslimatında BDA ulusal kayıt bildirimi yeterlidir.',
-                'impact_zeus': 'ZEUS CE MDR sertifikası Sofya kliniklerinde doğrudan onaylıdır.',
+                'impact_zeus': 'ZEUS CE Sertifikalı sertifikası Sofya kliniklerinde doğrudan onaylıdır.',
                 'consumable_rule': 'Frigo teslimat sıcaklık kaydedici dökümü aranır.'
             }
         ],
@@ -1857,7 +1857,7 @@ MARKET_KNOWLEDGE_BASE = {
             'cold_chain': 'Kapıkule üzeri 24 saatlik frigo karayolu transferi (+2°C / +8°C).',
             'payment_norms': 'Özel kliniklerde 30 gün açık hesap.',
             'dos': 'Karayolu hızlı lojistik güvencesini sözleşmeye ekleyin.',
-            'donts': 'MDR sertifikası bulunmayan sarfları sevk etmeyin.'
+            'donts': 'CE sertifikası bulunmayan sarfları sevk etmeyin.'
         }
     },
     'Azerbaijan': {
@@ -1893,11 +1893,11 @@ MARKET_KNOWLEDGE_BASE = {
     'Algeria': {
         'authority_name': 'Cezayir Sağlık, Nüfus ve Hastane Reformu Bakanlığı (Ministère de la Santé)',
         'specialist_name': 'Cezayir Ulusal Sağlık Otoritesi & Medikal Tescil Masası',
-        'expert_stance': 'Potansiyel Genişleme (İhale Şartnamesi & CE MDR Onayı)',
+        'expert_stance': 'Potansiyel Genişleme (İhale Şartnamesi & CE Sertifikalı Onayı)',
         'expert_max_discount': 8.0,
         'expert_rec_sarf_disc': 9.0,
         'clinical_dynamics': '32 özel klinik ve üniversite hastanesiyle 14,000 yıllık siklus kapasitesi. Yüksek akraba evliliği prevalansı sebebiyle şiddetli erkek faktörü ve oosit aktivasyon yetersizliği yaygındır.',
-        'regulatory_watch': 'Cezayir Sağlık Bakanlığı ithalat lisansı için CE Device Certified (MDR 2017/745 Class IIa) ve Fransızca teknik dosya zorunludur.',
+        'regulatory_watch': 'Cezayir Sağlık Bakanlığı ithalat lisansı için CE Device Certified (Class IIa) ve Fransızca teknik dosya zorunludur.',
         'competitor_threat': 'Fransız ve İspanyol tüp bebek tedarikçileri pazarda etkindir; ancak yerel distribütör desteğimiz rekabet avantajı sağlayacaktır.',
         'commercial_guardrails': 'Sevkiyatlar gayrikabili rücu teyitli Akreditif (Confirmed LC) ile teminat altına alınmalı; döviz riski şirket üzerine alınmamalıdır.',
         'ministry_decrees': [
@@ -1906,8 +1906,8 @@ MARKET_KNOWLEDGE_BASE = {
                 'title': 'Cezayir Yardımcı Üreme Laboratuvarları Tıbbi Donanım İthalat Kılavuzu',
                 'date': '2025-04-18',
                 'status': '🟢 Yürürlükte',
-                'summary': 'Tüp bebek kliniklerinde kullanılan mikroenjeksiyon ve piezoelektrik puls cihazlarının CE MDR ve ISO 13485 sertifikalı olması şarttır.',
-                'impact_zeus': 'ZEUS Piezo Pulse CE MDR Class IIa belgesiyle doğrudan onaylanmaktadır.',
+                'summary': 'Tüp bebek kliniklerinde kullanılan mikroenjeksiyon ve piezoelektrik puls cihazlarının CE Sertifikalı ve ISO 13485 sertifikalı olması şarttır.',
+                'impact_zeus': 'ZEUS Piezo Pulse CE Sertifikalı (Class IIa) belgesiyle doğrudan onaylanmaktadır.',
                 'consumable_rule': 'Sarf medyaları ve test dishleri için parti MEA >%80 analiz sertifikası zorunludur.'
             }
         ],
@@ -1923,11 +1923,11 @@ MARKET_KNOWLEDGE_BASE = {
     'Italy': {
         'authority_name': 'İtalya Sağlık Bakanlığı (Ministero della Salute — Direzione Generale Dispositivi Medici)',
         'specialist_name': 'Ministero della Salute & SIERR Klinik Danışma Masası',
-        'expert_stance': 'Avrupa İçi Serbest Dolaşım (MDR 2017/745 & RDM Kaydı)',
+        'expert_stance': 'Avrupa İçi Serbest Dolaşım (CE Belgesi & RDM Kaydı)',
         'expert_max_discount': 6.0,
         'expert_rec_sarf_disc': 7.0,
         'clinical_dynamics': 'İtalya 360 aktif merkezle Avrupa’nın en büyük tüp bebek pazarlarından biridir. Embriyologlar oosit lizis oranına ve ESHRE bilimsel yayınlarına çok önem verir.',
-        'regulatory_watch': 'EU MDR 2017/745 Class IIa ve Ministero della Salute RDM (Repertorio Dispositivi Medici) tescili zorunludur.',
+        'regulatory_watch': 'CE Sertifikalı (Class IIa) ve Ministero della Salute RDM (Repertorio Dispositivi Medici) tescili zorunludur.',
         'competitor_threat': 'Vitrolife, CooperSurgical ve yerel acenteler pazarda yerleşiktir.',
         'commercial_guardrails': 'Cihaz iskontosunu %6 seviyesinde tutun; kamu ihalelerinde ödeme vadelerine karşı factoring kullanın.',
         'ministry_decrees': [
@@ -1962,9 +1962,9 @@ GLOBAL_DEVICE_REGISTRATION_FEES = {
         "flag": "🇹🇷",
         "authority_name": "Türkiye İlaç ve Tıbbi Cihaz Kurumu (TİTCK)",
         "department_portal": "Tıbbi Cihaz Kayıt ve Koordinasyon Dairesi Başkanlığı / ÜTS (Ürün Takip Sistemi)",
-        "device_classification": "Class IIa (Aktif Tedavi & Piezo Stimülasyon Cihazı - MDR Kural 9/10)",
+        "device_classification": "Class IIa (Aktif Tedavi & Elektriksel Oosit Aktivasyon Cihazı - CE Belgeli)",
         "required_documents": [
-            "AB Onaylanmış Kuruluş (Notified Body) CE MDR 2017/745 Sertifikası",
+            "AB Onaylanmış Kuruluş (Notified Body) CE Sertifikası & AB Uygunluk Beyanı Sertifikası",
             "AB Uygunluk Beyanı (EU Declaration of Conformity - DoC)",
             "ISO 13485:2016 Tıbbi Cihaz Kalite Yönetim Sistemi Sertifikası",
             "Türkçe Kullanım Kılavuzu (IFU) ve TİTCK Uyumlu Türkçe Etiket Taslağı",
@@ -1979,17 +1979,17 @@ GLOBAL_DEVICE_REGISTRATION_FEES = {
         "total_device_cost_usd": "$250 – $500 USD",
         "approval_timeline": "2 – 4 Hafta (ÜTS Sistem Belge İncelemesi)",
         "validity_period": "CE Belgesi Süresince (Azami 5 Yıl)",
-        "fast_track_available": "Doğrudan CE MDR Harmonizasyonu",
-        "special_notes": "TİTCK doğrudan CE MDR sertifikasını baz alır. Cihazın AB onaylı CE belgesi mevcutsa dosya inceleme çok hızlı ve sembolik harçla tamamlanır."
+        "fast_track_available": "Doğrudan CE Sertifikalı Harmonizasyonu",
+        "special_notes": "TİTCK doğrudan CE Sertifikalı sertifikasını baz alır. Cihazın AB onaylı CE belgesi mevcutsa dosya inceleme çok hızlı ve sembolik harçla tamamlanır."
     },
     "Egypt": {
         "country_tr": "Mısır (Egypt)",
         "flag": "🇪🇬",
         "authority_name": "Mısır İlaç ve Tıbbi Cihaz Otoritesi (EDA - Egyptian Drug Authority)",
         "department_portal": "Central Administration of Medical Devices (CAMD) / MeDevice Portalı",
-        "device_classification": "Class IIa (Active Medical Device - CE MDR Fast-Track)",
+        "device_classification": "Class IIa (Active Medical Device - CE Sertifikalı Fast-Track)",
         "required_documents": [
-            "CE MDR 2017/745 Sertifikası & AB Uygunluk Beyanı (DoC)",
+            "CE Sertifikası & AB Uygunluk Beyanı Sertifikası & AB Uygunluk Beyanı (DoC)",
             "Free Sale Certificate (FSC - Serbest Satış Sertifikası, Mısır Kahire Konsolosluğu Tasdikli)",
             "Menşe Şahadetnamesi (COO - Kahire Konsolosluğu & Ticaret Odası Tasdikli)",
             "ISO 13485:2016 Sertifikası (Mısır Konsolosluğu Tasdikli)",
@@ -2002,7 +2002,7 @@ GLOBAL_DEVICE_REGISTRATION_FEES = {
         "consular_stamp_fee_usd": "$800 – $1.200 USD (FSC, COO, LOA ve ISO Konsolosluk Tasdikleri)",
         "local_agent_fee_usd": "$1.500 – $2.500 USD (Mısır Yerel Ruhsatlandırma Danışmanı / Acente)",
         "total_device_cost_usd": "$3.250 – $4.950 USD",
-        "approval_timeline": "4 – 6 Ay (Fast-Track CE MDR Kabul Protokolü)",
+        "approval_timeline": "4 – 6 Ay (Fast-Track CE Sertifikalı Kabul Protokolü)",
         "validity_period": "3 Yıl (Yenileme Bedeli: ~20.000 EGP)",
         "fast_track_available": "Referans Ülke (AB/CE) Hızlı Kayıt Hattı",
         "special_notes": "FSC belgesinin menşe ülke sağlık otoritesinden düzenlenip Mısır Konsolosluğunca tasdiki zorunludur. Sarf partilerinde teslim anında kalan raf ömrünün en az %60 olması şarttır."
@@ -2015,7 +2015,7 @@ GLOBAL_DEVICE_REGISTRATION_FEES = {
         "device_classification": "Class IIa (Active Device for IVF / MDMA Yolu)",
         "required_documents": [
             "SFDA Tıbbi Cihaz Pazarlama İzni (MDMA - Medical Device Marketing Authorization) Başvuru Formu",
-            "CE MDR 2017/745 Class IIa Sertifikası & Declaration of Conformity",
+            "CE Sertifikası (Class IIa) Sertifikası & Declaration of Conformity",
             "SFDA Yetkili Temsilci Sözleşmesi (AR - SFDA Authorized Representative Agreement)",
             "Apostil veya Suudi Konsolosluk Tasdikli Free Sale Certificate (FSC)",
             "ISO 13485:2016 Sertifikası & Üretim Tesisi Akreditasyonu",
@@ -2039,7 +2039,7 @@ GLOBAL_DEVICE_REGISTRATION_FEES = {
         "department_portal": "Medical Device Registration Section / MOHAP E-Services",
         "device_classification": "Class IIa (Active Specialized IVF Device)",
         "required_documents": [
-            "CE MDR 2017/745 Sertifikası & DoC",
+            "CE Sertifikası & AB Uygunluk Beyanı Sertifikası & DoC",
             "BAE Büyükelçiliği / Dışişleri Tasdikli Free Sale Certificate (FSC)",
             "Menşe Ülke Tasdikli ISO 13485:2016 Sertifikası",
             "MOHAP Tıbbi Depo Lisansına Sahip Yerel Distribütör Yetki Mektubu (LOA)",
@@ -2054,7 +2054,7 @@ GLOBAL_DEVICE_REGISTRATION_FEES = {
         "total_device_cost_usd": "$2.500 – $3.800 USD (Sarf grup kaydı: +$680 USD)",
         "approval_timeline": "2 – 3 Ay (MOHAP Hızlı Tescil Hattı)",
         "validity_period": "5 Yıl",
-        "fast_track_available": "CE MDR / US FDA Tanınırlığı ile Hızlı Yol",
+        "fast_track_available": "CE Sertifikalı / US FDA Tanınırlığı ile Hızlı Yol",
         "special_notes": "BAE'de başvuru ancak MOHAP lisanslı bir Tıbbi Depo (Medical Store) veya Yerel Dağıtıcı aracılığıyla yapılabilir. 5 yıllık ruhsat bölgedeki en uzun sürelerden biridir."
     },
     "Qatar": {
@@ -2062,9 +2062,9 @@ GLOBAL_DEVICE_REGISTRATION_FEES = {
         "flag": "🇶🇦",
         "authority_name": "Katar Halk Sağlığı Bakanlığı (MOPH - Ministry of Public Health)",
         "department_portal": "Pharmacy & Drug Control Department / Medical Device Registration Section",
-        "device_classification": "Class IIa (CE MDR Uyumlu)",
+        "device_classification": "Class IIa (CE Sertifikalı Uyumlu)",
         "required_documents": [
-            "CE MDR Sertifikası & AB Uygunluk Deklarasyonu",
+            "CE Sertifikalı Sertifikası & AB Uygunluk Deklarasyonu",
             "Katar Büyükelçiliği Onaylı Free Sale Certificate (FSC)",
             "Ticaret Odası Onaylı Distribütör Yetki Belgesi (Exclusive Agency Certificate)",
             "ISO 13485 Sertifikası",
@@ -2078,7 +2078,7 @@ GLOBAL_DEVICE_REGISTRATION_FEES = {
         "total_device_cost_usd": "$800 – $1.500 USD",
         "approval_timeline": "2 – 3 Ay",
         "validity_period": "3 Yıl",
-        "fast_track_available": "CE MDR Doğrudan Onay Protokolü",
+        "fast_track_available": "CE Sertifikalı Doğrudan Onay Protokolü",
         "special_notes": "Katar MOPH resmi harçları GCC bölgesindeki en ekonomik seviyededir. HMC ve Sidra Medicine alımları için MOPH tescil numarası şarttır."
     },
     "Kuwait": {
@@ -2086,9 +2086,9 @@ GLOBAL_DEVICE_REGISTRATION_FEES = {
         "flag": "🇰🇼",
         "authority_name": "Kuveyt Sağlık Bakanlığı (MOH Kuwait)",
         "department_portal": "Medical Administration & Drug Inspection Department (MADID)",
-        "device_classification": "Class IIa (CE MDR Referanslı)",
+        "device_classification": "Class IIa (CE Sertifikalı Referanslı)",
         "required_documents": [
-            "CE MDR 2017/745 Sertifikası ve DoC",
+            "CE Sertifikası & AB Uygunluk Beyanı Sertifikası ve DoC",
             "Kuveyt Konsolosluğu Tasdikli FSC ve Menşe Belgesi (COO)",
             "Kuveyt Ticaret Bakanlığı Onaylı Yerel Acente Tescil Belgesi",
             "ISO 13485:2016 Sertifikası",
@@ -2112,7 +2112,7 @@ GLOBAL_DEVICE_REGISTRATION_FEES = {
         "department_portal": "Medical Devices & Medical Supplies Directorate",
         "device_classification": "Class IIa (Active Electromedical IVF Equipment)",
         "required_documents": [
-            "CE MDR 2017/745 Class IIa Sertifikası & DoC (JFDA CE onayını doğrudan tanır)",
+            "CE Sertifikası (Class IIa) Sertifikası & DoC (JFDA CE onayını doğrudan tanır)",
             "Apostil veya Ürdün Konsolosluğu Tasdikli Free Sale Certificate (FSC)",
             "ISO 13485:2016 Sertifikası",
             "Sirius Pharm Co. Yerel Distribütör Yetki Mektubu (LOA)",
@@ -2126,8 +2126,8 @@ GLOBAL_DEVICE_REGISTRATION_FEES = {
         "total_device_cost_usd": "$900 – $1.400 USD",
         "approval_timeline": "6 – 8 Hafta (JFDA Fast-Track CE Tanıma Protokolü)",
         "validity_period": "5 Yıl",
-        "fast_track_available": "Avrupa CE MDR Belgesi ile Hızlı Onay",
-        "special_notes": "JFDA, CE MDR belgesine sahip cihazlarda hızlı tescil sağlar. Sirius Pharm üzerinden başvuru yapıldığında ortalama 45 günde onay alınır."
+        "fast_track_available": "Avrupa CE Sertifikalı Belgesi ile Hızlı Onay",
+        "special_notes": "JFDA, CE Sertifikalı belgesine sahip cihazlarda hızlı tescil sağlar. Sirius Pharm üzerinden başvuru yapıldığında ortalama 45 günde onay alınır."
     },
     "Iraq": {
         "country_tr": "Irak (Iraq)",
@@ -2137,7 +2137,7 @@ GLOBAL_DEVICE_REGISTRATION_FEES = {
         "device_classification": "Class IIa (CE Onaylı Medikal Cihaz)",
         "required_documents": [
             "TIREPD Üretici / Fabrika Sahası Kaydı (Site Registration) & ISO 13485",
-            "CE MDR Sertifikası & AB Uygunluk Beyanı",
+            "CE Sertifikalı Sertifikası & AB Uygunluk Beyanı",
             "Irak Konsolosluğu Tasdikli Menşe Şahadetnamesi (COO) ve FSC",
             "Sirius Pharm / ITL Mümessillik Sözleşmesi ve Bakanlık Kayıt Lisansı",
             "Hızlı Analiz Protokolü ve Parti Analiz Raporları (CoA)",
@@ -2161,7 +2161,7 @@ GLOBAL_DEVICE_REGISTRATION_FEES = {
         "device_classification": "Classe IIa (Homologation des Dispositifs Médicaux)",
         "required_documents": [
             "Fransızca Hazırlanmış STED Teknik Dosyası (Dossier Technique STED)",
-            "CE MDR 2017/745 Class IIa Sertifikası & ISO 13485",
+            "CE Sertifikası (Class IIa) Sertifikası & ISO 13485",
             "Cezayir Konsolosluğu Tasdikli Free Sale Certificate (FSC) ve COO",
             "Fransızca Kullanım Kılavuzu ve Etiket Tasarımı (Manuel en Français)",
             "Bank of Algeria Domiciliation Onayı ve Yetkili Dağıtıcı Sözleşmesi",
@@ -2174,7 +2174,7 @@ GLOBAL_DEVICE_REGISTRATION_FEES = {
         "total_device_cost_usd": "$2.200 – $3.500 USD",
         "approval_timeline": "4 – 6 Ay (Bakanlık Homologasyon Komitesi)",
         "validity_period": "5 Yıl (Homologasyon Sertifikası)",
-        "fast_track_available": "CE MDR Referansı ile Standart Homologasyon",
+        "fast_track_available": "CE Sertifikalı Referansı ile Standart Homologasyon",
         "special_notes": "Teknik dosyanın ve kullanım kılavuzunun eksiksiz Fransızca olması şarttır. Bankacılık domiciliation süreci için tescil belgesi zorunludur."
     },
     "Germany": {
@@ -2182,11 +2182,11 @@ GLOBAL_DEVICE_REGISTRATION_FEES = {
         "flag": "🇩🇪",
         "authority_name": "Almanya Federal İlaç ve Tıbbi Cihaz Enstitüsü (BfArM) & AB Onaylanmış Kuruluş",
         "department_portal": "EUDAMED (European Database on Medical Devices) & BfArM DMIDS",
-        "device_classification": "Class IIa (Active Medical Device - EU MDR 2017/745 Rule 9)",
+        "device_classification": "Class IIa (Active Medical Device - CE Certified)",
         "required_documents": [
-            "AB Onaylanmış Kuruluş (Notified Body) CE MDR 2017/745 Sertifikası",
-            "MDR Ek II & III Kapsamlı Teknik Dokümantasyon Dosyası",
-            "Klinik Değerlendirme Raporu (CER - MEDDEV 2.7/1 rev 4 ve MDR Madde 61)",
+            "AB Onaylanmış Kuruluş (Notified Body) CE Sertifikası & AB Uygunluk Beyanı Sertifikası",
+            "CE Ek II Kapsamlı Teknik Uygunluk Dosyası",
+            "Klinik Değerlendirme Raporu (CER - MEDDEV 2.7/1 rev 4 ve CE Uygunluk Beyanı)",
             "ISO 13485:2016 Kalite Yönetim Sertifikası",
             "Basic UDI-DI ve UDI Barkod Kayıtları (EUDAMED Veritabanı)",
             "Almanca ve İngilizce Kullanım Kılavuzu (Gebrauchsanweisung) ve Etiket",
@@ -2196,20 +2196,20 @@ GLOBAL_DEVICE_REGISTRATION_FEES = {
         "official_filing_fee_usd": "$160 – $550 USD (Bildirim/Kayıt Harcı)",
         "consular_stamp_fee_usd": "$0 USD (AB İçi Tasdik Aranmaz)",
         "local_agent_fee_usd": "$0 USD (AB Üreticisi / Yetkili Temsilci Doğrudan Bildirir)",
-        "total_device_cost_usd": "$200 – $550 USD (CE MDR Varsa) | *Not: Sıfırdan Notified Body CE Denetimi: €25.000 – €45.000 EUR",
+        "total_device_cost_usd": "$200 – $550 USD (CE Sertifikalı Varsa) | *Not: Sıfırdan Notified Body CE Denetimi: €25.000 – €45.000 EUR",
         "approval_timeline": "1 – 3 Hafta (EUDAMED / BfArM Sistem Bildirimi)",
         "validity_period": "5 Yıl (Notified Body CE Sertifikası Geçerliliği Boyunca)",
-        "fast_track_available": "MDR Tam Uyumlu Doğrudan Serbest Dolaşım",
-        "special_notes": "Eğer ürünün CE MDR Class IIa belgesi mevcutsa, Almanya'da pazara arz için sadece BfArM/EUDAMED bildirimi yapılır ve maliyet ~$300 USD civarındadır."
+        "fast_track_available": "CE Sertifikalı Doğrudan Serbest Dolaşım",
+        "special_notes": "Eğer ürünün CE Sertifikalı (Class IIa) belgesi mevcutsa, Almanya'da pazara arz için sadece BfArM/EUDAMED bildirimi yapılır ve maliyet ~$300 USD civarındadır."
     },
     "Spain": {
         "country_tr": "İspanya (Spain)",
         "flag": "🇪🇸",
         "authority_name": "İspanya İlaç ve Sağlık Ürünleri Ajansı (AEMPS)",
         "department_portal": "AEMPS CCyC (Comercialización y Control) Portalı",
-        "device_classification": "Class IIa (MDR 2017/745)",
+        "device_classification": "Class IIa (CE Sertifikalı)",
         "required_documents": [
-            "CE MDR 2017/745 Sertifikası & DoC",
+            "CE Sertifikası & AB Uygunluk Beyanı Sertifikası & DoC",
             "İspanyolca Kullanım Kılavuzu (Instrucciones de Uso) ve Etiket Taslağı",
             "ISO 13485:2016 Sertifikası",
             "Distribütörün AEMPS İthalatçı/Dağıtıcı Lisansı (Licencia Previa de Distribución)"
@@ -2229,9 +2229,9 @@ GLOBAL_DEVICE_REGISTRATION_FEES = {
         "flag": "🇮🇹",
         "authority_name": "İtalya Sağlık Bakanlığı (Ministero della Salute)",
         "department_portal": "Direzione Generale dei Dispositivi Medici / RDM (Repertorio dei Dispositivi Medici)",
-        "device_classification": "Class IIa (MDR 2017/745 / CND Sınıflandırması: Z12)",
+        "device_classification": "Class IIa (CE Belgeli / CND: Z12)",
         "required_documents": [
-            "CE MDR Sertifikası & AB Uygunluk Beyanı",
+            "CE Sertifikalı Sertifikası & AB Uygunluk Beyanı",
             "CND (Classificazione Nazionale dei Dispositivi) Kod Eşleştirmesi",
             "İtalyanca Kullanım Kılavuzu ve Etiket",
             "ISO 13485 Sertifikası & UDI-DI Verisi"
@@ -2251,10 +2251,10 @@ GLOBAL_DEVICE_REGISTRATION_FEES = {
         "flag": "🇬🇧",
         "authority_name": "İlaç ve Sağlık Ürünleri Düzenleme Kurumu (MHRA)",
         "department_portal": "MHRA Medical Device Online Registration System (DORS)",
-        "device_classification": "Class IIa (CE MDR Tanıma Protokolü - 2030'a Kadar Geçerli)",
+        "device_classification": "Class IIa (CE Sertifikalı Tanıma Protokolü - 2030'a Kadar Geçerli)",
         "required_documents": [
             "UK Sorumlu Kişi Atama Belgesi (UK Responsible Person - UKRP Agreement)",
-            "CE MDR 2017/745 Sertifikası veya UKCA Sertifikası",
+            "CE Sertifikası & AB Uygunluk Beyanı Sertifikası veya UKCA Sertifikası",
             "Declaration of Conformity (DoC) & ISO 13485",
             "Teknik Dosya Özeti & İngilizce Kullanım Kılavuzu (IFU)",
             "GMDN Kodu ve Küresel Ürün Tanımlayıcıları"
@@ -2266,8 +2266,8 @@ GLOBAL_DEVICE_REGISTRATION_FEES = {
         "total_device_cost_usd": "$1.800 – $2.800 USD",
         "approval_timeline": "3 – 5 Hafta",
         "validity_period": "Yıllık UKRP İdamesiyle CE Geçerliliği Boyunca",
-        "fast_track_available": "Geçiş Rejimi: CE MDR 2030 Sonuna Kadar Doğrudan Kabul Edilir",
-        "special_notes": "UK'de yerleşik olmayan üreticilerin bir UKRP (UK Responsible Person) ataması mecburidir. Cihaz CE MDR belgesiyle doğrudan MHRA'e kaydedilir."
+        "fast_track_available": "Geçiş Rejimi: CE Sertifikalı 2030 Sonuna Kadar Doğrudan Kabul Edilir",
+        "special_notes": "UK'de yerleşik olmayan üreticilerin bir UKRP (UK Responsible Person) ataması mecburidir. Cihaz CE Sertifikalı belgesiyle doğrudan MHRA'e kaydedilir."
     },
     "India": {
         "country_tr": "Hindistan (India)",
@@ -2278,7 +2278,7 @@ GLOBAL_DEVICE_REGISTRATION_FEES = {
         "required_documents": [
             "Form MD-14 İthalat Lisansı Başvurusu",
             "Hint Yetkili Temsilci Sözleşmesi (Indian Authorized Agent - IAA) & Güç Vekaleti",
-            "CE MDR 2017/745 Sertifikası veya US FDA 510(k)",
+            "CE Sertifikası & AB Uygunluk Beyanı Sertifikası veya US FDA 510(k)",
             "Apostilli Free Sale Certificate (FSC)",
             "Device Master File (DMF) ve Plant Master File (PMF)",
             "ISO 13485:2016 Sertifikası & Test Raporları"
@@ -2348,9 +2348,9 @@ def resolve_device_registration_info(country_name):
         "flag": "🌐",
         "authority_name": f"{c} Sağlık Bakanlığı & Tıbbi Cihaz İthalat Otoritesi",
         "department_portal": "Medical Device Registration & Import Licensing Portal",
-        "device_classification": "Class IIa (EU MDR 2017/745 Harmonize)",
+        "device_classification": "Class IIa (CE Harmonize)",
         "required_documents": [
-            "CE MDR 2017/745 Class IIa Sertifikası & DoC",
+            "CE Sertifikası (Class IIa) Sertifikası & DoC",
             "Konsolosluk / Apostil Tasdikli Free Sale Certificate (FSC)",
             "Menşe Şahadetnamesi (Certificate of Origin - COO)",
             "ISO 13485:2016 Kalite Yönetim Sertifikası",
@@ -2364,8 +2364,8 @@ def resolve_device_registration_info(country_name):
         "total_device_cost_usd": "$3,000 – $5.300 USD",
         "approval_timeline": "3 – 6 Ay",
         "validity_period": "3 – 5 Yıl",
-        "fast_track_available": "CE MDR Tanınırlığı Mevcut",
-        "special_notes": f"{c} pazarında CE MDR belgesi üzerinden hızlandırılmış dosya inceleme ve yerel yetkili distribütör LOA onayı esastır."
+        "fast_track_available": "CE Sertifikalı Tanınırlığı Mevcut",
+        "special_notes": f"{c} pazarında CE Sertifikalı belgesi üzerinden hızlandırılmış dosya inceleme ve yerel yetkili distribütör LOA onayı esastır."
     }
 
 
@@ -2385,7 +2385,7 @@ GLOBAL_TENDER_PROCUREMENT_INTEL = {
         ],
         "active_tender_types": [
             "4734 Sayılı KİK Açık İhale: Şehir Hastaneleri ve EAH Tüp Bebek Merkezi Cihaz Alımları",
-            "DMO Sağlık Market Çerçeve Sözleşmesi: Oosit Stimülasyon & Piezo Cihazı Doğrudan Siparişi",
+            "DMO Sağlık Market Çerçeve Sözleşmesi: Oosit Stimülasyon & Elektriksel AOA Cihazı Doğrudan Siparişi",
             "Kamu ve Üniversite Hastaneleri 1 Yıllık IVF Sarf Malzeme & Kültür Kit İhaleleri",
             "Üniversite Tüp Bebek Merkezleri Doğrudan Temin (Madde 22/d) Acil Cihaz / Sarf Alımları"
         ],
@@ -2402,7 +2402,7 @@ GLOBAL_TENDER_PROCUREMENT_INTEL = {
             ],
             "mandatory_certifications": [
                 "TİTCK Ürün Takip Sistemi (ÜTS) Tekil Barkod Kaydı & Sistemde 'Kayıtlı/Satılabilir' Statüsü",
-                "AB Onaylanmış Kuruluş Onaylı CE MDR 2017/745 Class IIa Sertifikası",
+                "AB Onaylanmış Kuruluş Onaylı CE Sertifikası (Class IIa) Sertifikası",
                 "ISO 13485:2016 Tıbbi Cihaz Kalite Yönetim Sertifikası",
                 "IEC 60601-1 Tıbbi Elektrikli Cihazlar Güvenlik ve IEC 60601-1-2 EMC Test Raporları",
                 "Türkçe Kullanma Kılavuzu (IFU) ve Garanti Belgesi (Asgari 2 yıl garanti + 10 yıl yedek parça temini taahhüdü)"
@@ -2414,7 +2414,7 @@ GLOBAL_TENDER_PROCUREMENT_INTEL = {
             ]
         },
         "action_plan_checklist": [
-            "1. Şartname Hazırlık Aşaması: İhale öncesinde üniversite ve şehir hastanelerinin Tüp Bebek Laboratuvar Şeflerine Piezo AOA klinik üstünlük dosyası sunulmalı; teknik şartnameye 'Kimyasal içermeyen fiziksel piezoelektrik stimülasyon' maddesinin girmesi sağlanmalıdır.",
+            "1. Şartname Hazırlık Aşaması: İhale öncesinde üniversite ve şehir hastanelerinin Tüp Bebek Laboratuvar Şeflerine Elektriksel AOA klinik üstünlük dosyası sunulmalı; teknik şartnameye 'Kimyasal içermeyen fiziksel piezoelektrik stimülasyon' maddesinin girmesi sağlanmalıdır.",
             "2. ÜTS & DMO Kaydı: Cihaz ve sarf malzemelerin ÜTS barkodları aktif olmalı, DMO Sağlık Market tıbbi cihaz listesine fiyat başvurusu yapılmalıdır.",
             "3. Geçici Teminat Mektubu: Teklif bedelinin asgari %3'ü oranında banka geçici teminat mektubu hazırlanmalıdır.",
             "4. Yetkili Satıcı Belgesi (LOA): İhaleye katılacak dağıtıcı/bayi adına üreticiden alınmış yetki belgesi EKAP sistemine yüklenmelidir.",
@@ -2456,7 +2456,7 @@ GLOBAL_TENDER_PROCUREMENT_INTEL = {
             ],
             "mandatory_certifications": [
                 "SFDA MDMA (Medical Device Marketing Authorization) Lisansı",
-                "ISO 13485:2016 ve CE MDR 2017/745 Class IIa Sertifikası",
+                "ISO 13485:2016 ve CE Sertifikası (Class IIa) Sertifikası",
                 "Suudi Arabistan Yerleşik Yetkili Temsilci (AR) Tescili",
                 "NUPCO Barkodlama ve Paletleme Standartları Uygunluk Belgesi"
             ],
@@ -2507,7 +2507,7 @@ GLOBAL_TENDER_PROCUREMENT_INTEL = {
             "mandatory_certifications": [
                 "Mısır İlaç ve Tıbbi Cihaz Otoritesi (EDA) Kayıt Belgesi",
                 "Mısır Konsolosluğu ve Ticaret Odası Tasdikli FSC ve Menşe Şahadetnamesi (COO)",
-                "CE MDR 2017/745 Class IIa ve ISO 13485 Sertifikası",
+                "CE Sertifikası (Class IIa) ve ISO 13485 Sertifikası",
                 "2 yıl garanti ve Kahire merkezli teknik servis desteği"
             ],
             "consumable_specs": [
@@ -2551,7 +2551,7 @@ GLOBAL_TENDER_PROCUREMENT_INTEL = {
             "core_specs": [
                 "Cihaz mikro-enjeksiyon esnasında oosit zarını mekanik yırtılmadan koruyan piezoelektrik frekans üretmelidir.",
                 "Sub-%1 oosit lizis oranı ve %80+ fertilizasyon başarısı klinik raporla kanıtlanmalıdır.",
-                "CE MDR Class IIa ve ISO 13485 sertifikalı olmalıdır."
+                "CE Sertifikalı (Class IIa) ve ISO 13485 sertifikalı olmalıdır."
             ],
             "mandatory_certifications": [
                 "KIMADIA TIREPD Fabrika Tescil Belgesi",
@@ -2603,7 +2603,7 @@ GLOBAL_TENDER_PROCUREMENT_INTEL = {
             "mandatory_certifications": [
                 "Homologation ANPP (Agence Nationale des Produits Pharmaceutiques)",
                 "Dossier Technique STED et Manuel en Français",
-                "CE MDR 2017/745 Classe IIa et ISO 13485",
+                "CE Sertifikası & AB Uygunluk Beyanı Classe IIa et ISO 13485",
                 "Attestation de Domiciliation Bancaire (Banque d'Algérie)"
             ],
             "consumable_specs": [
@@ -2648,7 +2648,7 @@ GLOBAL_TENDER_PROCUREMENT_INTEL = {
             ],
             "mandatory_certifications": [
                 "MOHAP Tıbbi Cihaz Tescil Sertifikası",
-                "CE MDR 2017/745 Class IIa & ISO 13485",
+                "CE Sertifikası (Class IIa) & ISO 13485",
                 "MOHAP Lisanslı Yerel Tıbbi Depo Temsilciliği"
             ],
             "consumable_specs": [
@@ -2679,7 +2679,7 @@ GLOBAL_TENDER_PROCUREMENT_INTEL = {
         "technical_specifications": {
             "device_title": "Piezoelectric Oocyte Activation System",
             "core_specs": ["MOPH tescilli, MEA >%80, sub-%1 oosit lizisi, invert mikroskop entegre."],
-            "mandatory_certifications": ["MOPH Tescil Belgesi, CE MDR Class IIa, ISO 13485"],
+            "mandatory_certifications": ["MOPH Tescil Belgesi, CE Sertifikalı (Class IIa), ISO 13485"],
             "consumable_specs": ["MEA >%80 steril petri dishleri"]
         },
         "action_plan_checklist": ["Münhasır Katar acentesi üzerinden HMC ihale masasına teklif ve klinik demo sunumu."],
@@ -2701,7 +2701,7 @@ GLOBAL_TENDER_PROCUREMENT_INTEL = {
         "procurement_schedule": "Yıllık JPD İhaleleri",
         "technical_specifications": {
             "device_title": "Piezo Stimulator for Oocyte Activation",
-            "core_specs": ["JFDA onaylı, CE MDR Class IIa, kimyasalsız piezo aktivasyon."],
+            "core_specs": ["JFDA onaylı, CE Sertifikalı (Class IIa), kimyasalsız piezo aktivasyon."],
             "mandatory_certifications": ["JFDA Tescili, ISO 13485, Sirius Pharm LOA"],
             "consumable_specs": ["Parti MEA >%80 CoA"]
         },
@@ -2724,8 +2724,8 @@ GLOBAL_TENDER_PROCUREMENT_INTEL = {
         "procurement_schedule": "TED Çapında Çok Yıllı İhaleler",
         "technical_specifications": {
             "device_title": "Piezoelektrisches Oozyten-Aktivierungssystem",
-            "core_specs": ["EU MDR 2017/745 Class IIa, sub-%1 Lyse, EUDAMED registriert, deutsche IFU."],
-            "mandatory_certifications": ["Notified Body CE MDR, ISO 13485, Basic UDI-DI"],
+            "core_specs": ["CE Certified Class IIa, sub-%1 Lyse, EUDAMED registriert, deutsche IFU."],
+            "mandatory_certifications": ["Notified Body CE Sertifikalı, ISO 13485, Basic UDI-DI"],
             "consumable_specs": ["Lot MEA >80%, Endotoxin <0.05 EU/ml"]
         },
         "action_plan_checklist": ["TED üzerinden e-Tender teklifi ve yerel dağıtıcı (Gynemed) işbirliği."],
@@ -2775,14 +2775,14 @@ def resolve_country_tender_intel(country_name):
             "device_title": "Piezoelectric Oocyte Activation & Micro-pulse Stimulator",
             "core_specs": [
                 "Kimyasal içermeyen fiziksel piezoelektrik stimülasyon, sub-%1 oosit lizisi.",
-                "CE MDR 2017/745 Class IIa ve ISO 13485 kalite standartlarına uygun."
+                "CE Sertifikası (Class IIa) ve ISO 13485 kalite standartlarına uygun."
             ],
-            "mandatory_certifications": ["CE MDR 2017/745 Class IIa", "ISO 13485:2016", "Yerel Sağlık Otoritesi İthalat İzni"],
+            "mandatory_certifications": ["CE Sertifikası (Class IIa)", "ISO 13485:2016", "Yerel Sağlık Otoritesi İthalat İzni"],
             "consumable_specs": ["MEA >%80 ve Endotoksin sertifikalı steril aktivasyon petrileri"]
         },
         "action_plan_checklist": [
             f"1. {c} yetkili distribütörü ile ihale şartnamesi hazırlayan klinik heyetine teknik dosya sunulmalıdır.",
-            "2. CE MDR ve FSC belgeleri yerel konsolosluk onaylarıyla hazır bulundurulmalıdır.",
+            "2. CE Sertifikalı ve FSC belgeleri yerel konsolosluk onaylarıyla hazır bulundurulmalıdır.",
             "3. İhale banka teminat mektubu (%3-%5) ve üretici yetki mektubu (LOA) sağlanmalıdır."
         ],
         "key_tender_parameters": {
@@ -2805,7 +2805,7 @@ COUNTRY_DEEP_INTELLIGENCE = {
             'required_docs': 'Mısır Konsolosluğu ve Ticaret Odası Tasdikli Menşe Şahadetnamesi (COO), Free Sales Certificate (FSC), CE Device Certified Uygunluk Beyanı, Arapça/İngilizce Kullanım Kılavuzu',
             'cold_chain_rules': 'Medya ve solüsyonlarda +2°C / +8°C veri kaydedicili (data-logger) soğuk hava kargo alanı; cihaz nakliyesinde şok ve nem göstergeli özel sandıklama.',
             'authority_full': 'Mısır İlaç ve Tıbbi Cihaz Otoritesi (EDA - Egyptian Drug Authority)',
-            'registration_path': 'EDA Tescil Masası İthal İzni (Fast-Track CE MDR Kabul Protokolü)'
+            'registration_path': 'EDA Tescil Masası İthal İzni (Fast-Track CE Sertifikalı Kabul Protokolü)'
         },
         'ivf_pgt_regulatory': {
             'transfer_rules': 'Mısır Sağlık ve Nüfus Bakanlığı (MOHP) kuralları gereği, 35 yaş altı kadınlarda ilk iki siklusta azami 2 embriyo transferine izin verilir; 35 yaş üstünde veya tekrarlayan başarısızlıklarda en fazla 3 embriyo (eSET teşviki ve çoğul gebelik kısıtlaması).',
@@ -2835,7 +2835,7 @@ COUNTRY_DEEP_INTELLIGENCE = {
         'sales_strategy': {
             'target_segments': 'Büyük özel tüp bebek hastaneleri (Nile IVF, Egyptian IVF Center, Bedaya Hospital), Kahire & İskenderiye hekim-patron klinikleri (%85 pazar payı), üniversite araştırma merkezleri.',
             'channel_model': 'Kahire merkezli soğuk zincir ve teknik servis altyapısına sahip yetkili MedTech distribütörlüğü + doğrudan özel klinik konsinye ve aplikasyon destek modeli.',
-            'clinical_pitch': 'Total Döllenme Başarısızlığı (TFF) vakalarında Piezo AOA protokolü ile 2PN oranını %24.6\'dan %82.3\'e çıkarma, sub-%1 oosit lizis oranı ve CE Device Certified güvencesi.',
+            'clinical_pitch': 'Total Döllenme Başarısızlığı (TFF) vakalarında Elektriksel Oosit Aktivasyonu (AOA) protokolü ile 2PN oranını %24.6\'dan %82.3\'e çıkarma, sub-%1 oosit lizis oranı ve CE Device Certified güvencesi.',
             'objection_handling': '"Döviz kısıtı var" itirazına: Sarf alım taahhüdü karşılığı cihaz taksitlendirmesi ve navlun muafiyeti sunun. "Mevcut mikromanipülatörle uyumlu mu?" sorusuna: Narishige ve Research Instruments mikromanipülatörlerine tak-çalıştır piezo adaptörü güvencesi verin.',
             'device_strategies': {
                 'zps_26': {
@@ -2869,13 +2869,13 @@ COUNTRY_DEEP_INTELLIGENCE = {
             },
             'consumables_strategy': {
                 'activation_dishes': {
-                    'name': 'Piezo Aktivasyon Dishleri (Z-Dish Array)',
+                    'name': 'Elektriksel Aktivasyon Dishleri (ZEUS Electro Dish Array)',
                     'specs': 'Patentli mikro-kuyu (microwell) geometrisi, MEA >%80, parti lot analiz sertifikalı.',
                     'model': 'Razor-and-blade omurgası. Her ICSI/AOA siklusunda 1 adet tek kullanımlık zorunlu sarf.',
                     'pull_through': "Kliniğe yıllık siklus sayısının en az %15'i kadar bağlayıcı çekiş kotası konur (asgari sipariş: 50 adet/lot).",
                 },
                 'activation_media': {
-                    'name': 'Piezo Ca-Free Aktivasyon Medyası & Tampon Solüsyonlar',
+                    'name': 'Ca-Free Aktivasyon Medyası (Electroliquid Solution) & Tampon Solüsyonlar',
                     'specs': 'Hücre içi kalsiyum salınım stimülatörü, endotoksin <0.05 EU/ml, +2°C / +8°C soğuk zincir.',
                     'model': '6 aylık taze raf ömrü rotasyonu. Just-in-time soğuk hava kargo sevkiyatı.',
                     'pull_through': 'Aktivasyon dishleri ile 1:1 senkronize paketleme; parti bozulma riskine karşı 60 günde bir taze teslimat.',
@@ -3041,13 +3041,13 @@ COUNTRY_DEEP_INTELLIGENCE = {
             },
             'consumables_strategy': {
                 'activation_dishes': {
-                    'name': 'Piezo Aktivasyon Dishleri (Z-Dish Array)',
+                    'name': 'Elektriksel Aktivasyon Dishleri (ZEUS Electro Dish Array)',
                     'specs': 'MEA >%80 onaylı, CE Device Certified Class IIa microwell plakaları.',
                     'model': 'Levant bölgesindeki 18 aktif cihazın düzenli sarf besleme omurgası.',
                     'pull_through': 'Yıllık asgari 600 kutu sarf çekiş taahhüdü; Amman serbest bölgesinden 48 saatte transit sevk.',
                 },
                 'activation_media': {
-                    'name': 'Piezo Ca-Free Aktivasyon Medyası',
+                    'name': 'Ca-Free Aktivasyon Medyası (Electroliquid Solution)',
                     'specs': '+2°C / +8°C soğuk zincir korumalı, optimize kalsiyum salınım solüsyonu.',
                     'model': 'Amman Serbest Bölge deposunda 45 günlük tampon stok bulundurma şartı.',
                     'pull_through': 'Bağdat gümrük gecikmelerini aşmak için Amman deposundan hızlı karayolu/havayolu kargo rotasyonu.',
@@ -3172,7 +3172,7 @@ COUNTRY_DEEP_INTELLIGENCE = {
         'expert_opinions': {
             'ceo': 'Stratejik Vizyon: 8 kliniğin 4\'ünde ZEUS kurulu olarak %50 pazar doygunluğundayız. Katar\'da yeni donanım yerine cihaz başına 61.8 kitlik rekor sarf çekişini korumalıyız.',
             'sales': 'Ticari Dağıtım: ITL distribütörümüzle sözleşmemiz 2027 sonuna kadar tam münhasır olarak yürürlüktedir. Üst düzey butik kliniklere düzenli sarf ikmali sağlanmalıdır.',
-            'embryo': 'Klinik & Laboratuvar: Hamad Medical ve Sidra gibi elit merkezler kimyasal kalsiyum iyonoforları kesinlikle kabul etmemektedir; ZEUS Piezo AOA laboratuvar altın standardı olarak yerleşmiştir.',
+            'embryo': 'Klinik & Laboratuvar: Hamad Medical ve Sidra gibi elit merkezler kimyasal kalsiyum iyonoforları kesinlikle kabul etmemektedir; ZEUS Elektriksel AOA laboratuvar altın standardı olarak yerleşmiştir.',
             'cfo': 'Finans & Hazine: Katar operasyonumuz %68.4 ile şirket tarihinin en yüksek brüt kâr marjını üretmektedir. Tahsilat riski sıfırdır; ödemeler 30 gün içinde peşin nakit transfer edilmektedir.',
             'qara': 'Kalite & Mevzuat: CE Device Certified Class IIa ve MEA >%80 lot onayları eksiksiz sürdürülmelidir.'
         },
@@ -3213,13 +3213,13 @@ COUNTRY_DEEP_INTELLIGENCE = {
             },
             'consumables_strategy': {
                 'activation_dishes': {
-                    'name': 'Piezo Aktivasyon Dishleri (Z-Dish Array)',
+                    'name': 'Elektriksel Aktivasyon Dishleri (ZEUS Electro Dish Array)',
                     'specs': 'MEA >%80 onaylı, ultra-saf medikal polimer.',
                     'model': 'Yıllık düzenli tüketim; parti bazında CAP onaylı sertifikasyon.',
                     'pull_through': 'Katar kliniklerine yıllık asgari 400 kutu sarf çekiş protokolü.',
                 },
                 'activation_media': {
-                    'name': 'Piezo Ca-Free Aktivasyon Medyası',
+                    'name': 'Ca-Free Aktivasyon Medyası (Electroliquid Solution)',
                     'specs': '+2°C / +8°C soğuk hava kargo, endotoksin <0.05 EU/ml.',
                     'model': 'Hamad Havalimanı VIP soğuk kargo deposundan doğrudan kliniğe teslim.',
                     'pull_through': 'Her 60 günde bir taze parti rotasyonu.',
@@ -3344,7 +3344,7 @@ COUNTRY_DEEP_INTELLIGENCE = {
         'expert_opinions': {
             'ceo': 'Stratejik Vizyon: 2026\'daki distribütör personel kaybı sebebiyle yaşanan sarf yavaşlamasını hızla aşmalıyız. AMS ile imzalanan 2027 Kurtarma Addendum\'u ile sahayı yeniden hareketlendireceğiz.',
             'sales': 'Ticari Dağıtım: AMS firmasına sertifikalı aplikasyon embriyoloğu istihdam etme zorunluluğu getirilmiştir. Q2 2027 sonuna kadar $14,000 USD gerçekleşmezse münhasırlık feshedilecektir.',
-            'embryo': 'Klinik & Laboratuvar: Riyad ve Cidde\'deki 3 kurulu cihazımızın aktifleşmesi için yerel embriyologlara vaka başında Piezo AOA protokol eğitimi verilmelidir.',
+            'embryo': 'Klinik & Laboratuvar: Riyad ve Cidde\'deki 3 kurulu cihazımızın aktifleşmesi için yerel embriyologlara vaka başında Elektriksel AOA protokol eğitimi verilmelidir.',
             'cfo': 'Finans & Hazine: Brüt marjı %48 seviyesinde koruyarak SFDA yenileme masraflarını distribütör üzerine bırakan mali yapı korunmalıdır.',
             'qara': 'Kalite & Mevzuat: SFDA MDNR kaydımızın güncelliği düzenli denetlenmeli ve CE Device Certified Class IIa teknik dosyası güncel tutulmalıdır.'
         },
@@ -3385,13 +3385,13 @@ COUNTRY_DEEP_INTELLIGENCE = {
             },
             'consumables_strategy': {
                 'activation_dishes': {
-                    'name': 'Piezo Aktivasyon Dishleri (Z-Dish Array)',
+                    'name': 'Elektriksel Aktivasyon Dishleri (ZEUS Electro Dish Array)',
                     'specs': 'SFDA onaylı, MEA >%80 sertifikalı tek kullanımlık microwell plakaları.',
                     'model': 'Yıllık asgari 300 kutu sarf çekiş kotası.',
                     'pull_through': 'AMS distribütörlüğü üzerinden hastanelere 30 günlük konsinye stok sağlama.',
                 },
                 'activation_media': {
-                    'name': 'Piezo Ca-Free Aktivasyon Medyası',
+                    'name': 'Ca-Free Aktivasyon Medyası (Electroliquid Solution)',
                     'specs': '+2°C / +8°C soğuk zincir, aşırı yaz sıcaklarına karşı VIP ambalaj.',
                     'model': 'Riyad/Cidde kargo depolarından soğuk zincir teslimatı.',
                     'pull_through': "Parti raf ömrünün en az %60'ı geçerli olarak teslim edilir.",
@@ -3493,7 +3493,7 @@ COUNTRY_DEEP_INTELLIGENCE = {
             'required_docs': 'Cezayir Konsolosluğu Onaylı Menşe Şahadetnamesi (COO), Free Sales Certificate (FSC), CE Device Certified Deklarasyonu, Fransızca Kullanım Kılavuzu',
             'cold_chain_rules': 'Houari Boumediene Kargo biyomedikal soğuk hava deposu (+2°C / +8°C); data-logger kayıtlı frigo kargo.',
             'authority_full': 'Cezayir Sağlık, Nüfus ve Hastane Reformu Bakanlığı (Ministère de la Santé)',
-            'registration_path': 'Cezayir Sağlık Bakanlığı Tıbbi Cihaz Homologasyon Dosyası (CE MDR Onaylı Hızlı Geçiş)'
+            'registration_path': 'Cezayir Sağlık Bakanlığı Tıbbi Cihaz Homologasyon Dosyası (CE Sertifikalı Onaylı Hızlı Geçiş)'
         },
         'ivf_pgt_regulatory': {
             'transfer_rules': 'Cezayir Sağlık Bakanlığı kuralları gereğince 35 yaş altı kadınlarda tek embriyo transferi (eSET) teşvik edilir, azami 2 embriyo transferine izin verilir.',
@@ -3516,7 +3516,7 @@ COUNTRY_DEEP_INTELLIGENCE = {
         'expert_opinions': {
             'ceo': 'Stratejik Vizyon: Cezayir 14,000 yıllık siklus ve 32 kliniğiyle Kuzey Afrika\'daki en cazip bakir pazarımızdır. 2027\'de yerel güçlü bir MedTech distribütörü atayarak pazara ilk piezo teknolojisi olarak girmeliyiz.',
             'sales': 'Ticari Dağıtım: Cezayir şehri ve Oran\'daki büyük özel tüp bebek hastanelerinin hekim-patronlarına Fransızca teknik dosya ile doğrudan temas kurulmalıdır.',
-            'embryo': 'Klinik & Laboratuvar: Bölgede ağır erkek faktörü ve TFF vakaları çok sıktır. Klinisyenlerin kimyasal kalsiyum iyonoforların değişken sitotoksisitesine karşı ZEUS Piezo AOA klinik kanıtları (Baltaci 2010, Ebner 2015) sunulmalıdır.',
+            'embryo': 'Klinik & Laboratuvar: Bölgede ağır erkek faktörü ve TFF vakaları çok sıktır. Klinisyenlerin kimyasal kalsiyum iyonoforların değişken sitotoksisitesine karşı ZEUS Elektriksel AOA klinik kanıtları (Baltaci 2010, Ebner 2015) sunulmalıdır.',
             'cfo': 'Finans & Hazine: Cezayir bankacılık sistemi döviz transferlerinde yavaş işlemektedir; bu nedenle sevkiyatlar onaylı Akreditif (Irrevocable LC) ile güvence altına alınmalıdır.',
             'qara': 'Kalite & Mevzuat: CE Device Certified Class IIa dosyamız ve Fransızca etiketleme Sağlık Bakanlığı onay sürecini 60 güne indirmektedir.'
         },
@@ -3557,13 +3557,13 @@ COUNTRY_DEEP_INTELLIGENCE = {
             },
             'consumables_strategy': {
                 'activation_dishes': {
-                    'name': 'Piezo Aktivasyon Dishleri (Z-Dish Array)',
+                    'name': 'Elektriksel Aktivasyon Dishleri (ZEUS Electro Dish Array)',
                     'specs': 'Fransızca etiketli, MEA >%80 onaylı microwell plakaları.',
                     'model': 'Yıllık asgari 200 kutu sarf çekiş kotası.',
                     'pull_through': "Kliniğe yıllık siklus sayısının en az %15'i kadar bağlayıcı çekiş şartı.",
                 },
                 'activation_media': {
-                    'name': 'Piezo Ca-Free Aktivasyon Medyası',
+                    'name': 'Ca-Free Aktivasyon Medyası (Electroliquid Solution)',
                     'specs': '+2°C / +8°C soğuk zincir ambalajı, endotoksin <0.05 EU/ml.',
                     'model': 'Algiers Kargo Havalimanı üzerinden doğrudan teslimat.',
                     'pull_through': '60 günlük periyotlarla taze parti sevkiyatı.',
@@ -3662,10 +3662,10 @@ COUNTRY_DEEP_INTELLIGENCE = {
             'gtip_device': 'GTIP 9018.90 (Tıbbi Teşhis ve Tedavi Cihazları)',
             'gtip_consumable': 'GTIP 3822.00 (Hücre Kültür Dishleri & Oosit Aktivasyon Solüsyonları)',
             'clearance_days': '3–7 Gün Hızlı Gümrük Çekimi (TİTCK ÜTS Entegrasyonu)',
-            'required_docs': 'TİTCK Ürün Takip Sistemi (ÜTS) Tekil Ürün Kaydı, CE Belgesi (MDR 2017/745), Türkçe Kullanım Kılavuzu, ISO 13485 Sertifikası',
+            'required_docs': 'TİTCK Ürün Takip Sistemi (ÜTS) Tekil Ürün Kaydı, CE Belgesi (CE Uygunluk Sertifikası), Türkçe Kullanım Kılavuzu, ISO 13485 Sertifikası',
             'cold_chain_rules': 'Yurt içi dağıtımda veri kaydedicili (data-logger) lisanslı frigo kargo transferi (+2°C / +8°C).',
             'authority_full': 'T.C. Sağlık Bakanlığı — Türkiye İlaç ve Tıbbi Cihaz Kurumu (TİTCK)',
-            'registration_path': 'TİTCK ÜTS (Ürün Takip Sistemi) Tekil Barkod Kaydı & MDR Uyum Dosyası'
+            'registration_path': 'TİTCK ÜTS (Ürün Takip Sistemi) Tekil Barkod Kaydı & CE Teknik Dosyası'
         },
         'ivf_pgt_regulatory': {
             'transfer_rules': 'T.C. Sağlık Bakanlığı ÜYTE Yönetmeliği gereğince, 35 yaş altı kadınlarda birinci ve ikinci uygulamada TEK EMBRİYO (eSET) transferi YASAL ZORUNLULUKTUR; iki başarısız denemeden sonra veya 35 yaş ve üzerinde azami 2 embriyo transfer edilebilir.',
@@ -3729,13 +3729,13 @@ COUNTRY_DEEP_INTELLIGENCE = {
             },
             'consumables_strategy': {
                 'activation_dishes': {
-                    'name': 'Piezo Aktivasyon Dishleri (Z-Dish Array)',
+                    'name': 'Elektriksel Aktivasyon Dishleri (ZEUS Electro Dish Array)',
                     'specs': 'ÜTS kayıtlı, MEA >%80, parti lot analiz sertifikalı.',
                     'model': 'Zincir hastanelerle yıllık 300+ kutu çekiş sözleşmesi.',
                     'pull_through': 'Yerel depodan 24 saatte doğrudan kliniğe teslimat.',
                 },
                 'activation_media': {
-                    'name': 'Piezo Ca-Free Aktivasyon Medyası',
+                    'name': 'Ca-Free Aktivasyon Medyası (Electroliquid Solution)',
                     'specs': '+2°C / +8°C soğuk zincir, ÜTS karekodlu.',
                     'model': 'Aylık düzenli taze parti rotasyonu.',
                     'pull_through': 'Just-in-time soğuk zincir teslimatı.',
@@ -3834,10 +3834,10 @@ COUNTRY_DEEP_INTELLIGENCE = {
             'gtip_device': 'GTIP 9018.90 (Dispositivi Elettromedicali per PMA)',
             'gtip_consumable': 'GTIP 3822.00 (Dispositivi Monouso e Terreni di Coltura)',
             'clearance_days': '2–4 Gün İntra-EU Hızlı Kargo Transferi (Roma / Milano Hub)',
-            'required_docs': 'CE Certificate of Conformity (EU MDR 2017/745 Class IIa - CE Device Certified), ISO 13485:2016 Sertifikası, İtalyanca Kullanım Kılavuzu, RDM (Repertorio Dispositivi Medici) Tescil Kodu',
+            'required_docs': 'CE Certificate of Conformity (CE Device Certified Class IIa), ISO 13485:2016 Sertifikası, İtalyanca Kullanım Kılavuzu, RDM (Repertorio Dispositivi Medici) Tescil Kodu',
             'cold_chain_rules': 'İtalya geneli frigo medikal ekspres kargo (+2°C / +8°C veri kaydedicili).',
             'authority_full': 'İtalya Sağlık Bakanlığı (Ministero della Salute — Direzione Generale Dispositivi Medici)',
-            'registration_path': 'Ministero della Salute RDM Kayıt Bildirimi & CE MDR 2017/745 Deklarasyonu'
+            'registration_path': 'Ministero della Salute RDM Kayıt Bildirimi & CE Sertifikası & AB Uygunluk Beyanı Deklarasyonu'
         },
         'ivf_pgt_regulatory': {
             'transfer_rules': 'İtalya\'da Legge 40/2004 düzenlemeleri ve Anayasa Mahkemesi (Corte Costituzionale) içtihatları gereğince çoğul gebeliği önlemek amacıyla tek embriyo transferi (eSET) teşvik edilir; klinik duruma göre azami 2 embriyo transfer edilir.',
@@ -3862,7 +3862,7 @@ COUNTRY_DEEP_INTELLIGENCE = {
             'sales': 'Ticari Dağıtım: Milano, Roma ve Napoli merkezli özel tüp bebek klinikleri ve kamu ihaleleri için İtalyanca teknik şartname dosyası sunulmalıdır.',
             'embryo': 'Klinik & Laboratuvar: İtalyan embriyologları ESHRE kılavuzlarına ve oosit zedelenme oranlarına aşırı duyarlıdır. Piezo darbesinin sub-%1 lizis oranı ve CE Device Certified Class IIa güvencesi sunulmalıdır.',
             'cfo': 'Finans & Hazine: İtalya kamu ihalelerinde ödeme vadeleri 90-120 günü bulabilir; bu nedenle özel kliniklere 30 gün açık hesap, kamuya ise distribütör factoring modeli uygulanmalıdır.',
-            'qara': 'Kalite & Mevzuat: Ministero della Salute RDM numarası ve MDR 2017/745 Class IIa sertifikamız satışın ön şartıdır.'
+            'qara': 'Kalite & Mevzuat: Ministero della Salute RDM numarası ve CE Sertifikamız (Class IIa) satışın ön şartıdır.'
         },
         'sales_strategy': {
             'target_segments': 'Özel tüp bebek zincirleri (GeneraLife, Next Clinics Italia, Eugin Italia), Üniversite ve Kamu Hastaneleri (Policlinico Sant\'Orsola, Careggi).',
@@ -3872,7 +3872,7 @@ COUNTRY_DEEP_INTELLIGENCE = {
             'device_strategies': {
                 'zps_26': {
                     'name': 'ZEUS Pulse Stimulator (ZPS 26)',
-                    'role': 'AOA & Piezo ICSI Standart Platformu (MDR Class IIa)',
+                    'role': 'Elektriksel Oosit Aktivasyon (AOA) Platformu (CE Sertifikalı)',
                     'target': "Özel tüp bebek zincirleri (GeneraLife, Next Clinics Italia, Eugin Italia), üniversite ve kamu hastaneleri (Careggi, Policlinico Sant'Orsola).",
                     'strategy': 'Soğuk e-posta çalışmaz; İtalyan yetkili distribütör (Gynemed Italia / Bio-Optica) ve ESHRE/SIERR masa başı workshop modeliyle girilmelidir.',
                     'pricing_note': 'Avrupa tavan fiyatı üzerinden azami %5 cihaz iskontosu.',
@@ -3881,7 +3881,7 @@ COUNTRY_DEEP_INTELLIGENCE = {
                     'name': 'ZEUS BioPSafe (ZBS26)',
                     'role': 'Embriyo Biyopsi & PGT-A İstasyonu (Law 40 Uyumlu)',
                     'target': 'İtalya biyoetik yasalarına (Legge 40) uygun PGT-A yapan akredite merkezler.',
-                    'strategy': 'Trofektoderm lazer biyopsisinde hücre canlılığını ve DNA bütünlüğünü koruyan CE MDR sertifikalı mikro-ortam.',
+                    'strategy': 'Trofektoderm lazer biyopsisinde hücre canlılığını ve DNA bütünlüğünü koruyan CE Sertifikalı sertifikalı mikro-ortam.',
                     'pricing_note': 'ZPS 26 ile kombine alımlarda %5 indirim.',
                 },
                 'mismatch_blocker': {
@@ -3901,13 +3901,13 @@ COUNTRY_DEEP_INTELLIGENCE = {
             },
             'consumables_strategy': {
                 'activation_dishes': {
-                    'name': 'Piezo Aktivasyon Dishleri (Z-Dish Array)',
-                    'specs': 'CE MDR 2017/745 Class IIa sertifikalı, MEA >%80, parti lot belgeli.',
+                    'name': 'Elektriksel Aktivasyon Dishleri (ZEUS Electro Dish Array)',
+                    'specs': 'CE Sertifikası (Class IIa) sertifikalı, MEA >%80, parti lot belgeli.',
                     'model': 'Yıllık asgari 200 kutu sarf alım sözleşmesi.',
                     'pull_through': 'İtalyan distribütör deposundan 48 saatte teslimat.',
                 },
                 'activation_media': {
-                    'name': 'Piezo Ca-Free Aktivasyon Medyası',
+                    'name': 'Ca-Free Aktivasyon Medyası (Electroliquid Solution)',
                     'specs': '+2°C / +8°C soğuk zincir, endotoksin <0.05 EU/ml.',
                     'model': 'Milano/Roma hava kargo terminallerinden soğuk zincir teslimatı.',
                     'pull_through': '60 günlük periyotlarla taze parti rotasyonu.',
@@ -3924,7 +3924,7 @@ COUNTRY_DEEP_INTELLIGENCE = {
                     'model': 'Vitrifikasyon döngülerinde sürekli tüketim.',
                     'pull_through': 'Yıllık 800+ adette %8 indirim.',
                 },
-                'pull_through_model': 'İtalya pazarında CE MDR sertifikasyonu sayesinde yüksek fiyat stabilitesi ve sarfta %65 brüt kâr marjı korunur.',
+                'pull_through_model': 'İtalya pazarında CE Sertifikalı sertifikasyonu sayesinde yüksek fiyat stabilitesi ve sarfta %65 brüt kâr marjı korunur.',
             },
             'discount_bundles': {
                 'bundle_1': {
@@ -3935,7 +3935,7 @@ COUNTRY_DEEP_INTELLIGENCE = {
                 },
                 'bundle_2': {
                     'name': 'Network Filo Paketi (GeneraLife / Next Clinics)',
-                    'contents': '3 Cihaz + 200 Sarf Kiti + 2 Yıl Garanti & CE MDR Teknik Dosyası',
+                    'contents': '3 Cihaz + 200 Sarf Kiti + 2 Yıl Garanti & CE Sertifikalı Teknik Dosyası',
                     'discount': 'Cihazda %7.0 | Sarfta %8.0 İskonto + Ücretsiz Kargo',
                     'terms': 'Çoklu merkez zincirleri için.',
                 },
@@ -3985,9 +3985,9 @@ COUNTRY_DEEP_INTELLIGENCE = {
                 },
                 {
                     'clause_no': 'Madde 6',
-                    'title': 'Soğuk Zincir (+2°C/+8°C) ve MDR 2017/745 Parti Takibi',
-                    'legal_rule': 'Medya solüsyonları ISO 13485 ve MDR uyumlu data-logger ile nakledilir; parti analiz sertifikası eşlik eder.',
-                    'commercial_impact': 'MDR kalite denetimlerinde sıfır hata güvencesi sunar.',
+                    'title': 'Soğuk Zincir (+2°C/+8°C) ve CE Standartlarında Parti Takibi',
+                    'legal_rule': 'Medya solüsyonları ISO 13485 ve CE uyumlu data-logger ile nakledilir; parti analiz sertifikası eşlik eder.',
+                    'commercial_impact': 'CE ve ISO kalite denetimlerinde sıfır hata güvencesi sunar.',
                     'action_required': 'Alıcı partiyi 72 saat içinde muayene etmek zorundadır.',
                 },
                 {
@@ -4043,13 +4043,13 @@ def build_fallback_sales_extensions(country_name, macro=None):
         },
         'consumables_strategy': {
             'activation_dishes': {
-                'name': 'Piezo Aktivasyon Dishleri (Z-Dish Array)',
+                'name': 'Elektriksel Aktivasyon Dishleri (ZEUS Electro Dish Array)',
                 'specs': 'CE Device Certified Class IIa, MEA >%80 onaylı microwell plakaları.',
                 'model': 'Yıllık asgari 200 kutu sarf alım sözleşmesi.',
                 'pull_through': 'Yetkili yerel distribütör deposundan 48 saatte doğrudan kliniğe teslimat.'
             },
             'activation_media': {
-                'name': 'Piezo Ca-Free Aktivasyon Medyası',
+                'name': 'Ca-Free Aktivasyon Medyası (Electroliquid Solution)',
                 'specs': '+2°C / +8°C soğuk zincir, endotoksin <0.05 EU/ml.',
                 'model': 'Soğuk hava kargo terminallerinden kesintisiz soğuk zincir teslimatı.',
                 'pull_through': '60 günlük periyotlarla taze parti rotasyonu.'
@@ -4162,7 +4162,7 @@ def build_country_360_charts(country_name, c_macro, c_sales, target_rev_2027=500
         est_total_cycles = 4500
 
     # Chart 1: Treatment protocol breakdown
-    ch1_labels = ['Standart ICSI (%52)', 'Piezo AOA & Şiddetli Erkek (%24)', 'PGT-A / PGT-M Biyopsi (%16)', 'Kriyobank Transfer (%8)']
+    ch1_labels = ['Standart ICSI (%52)', 'Elektriksel AOA & TFF Vakaları (%24)', 'PGT-A / PGT-M Biyopsi (%16)', 'Kriyobank Transfer (%8)']
     ch1_vals = [est_total_cycles * 0.52, est_total_cycles * 0.24, est_total_cycles * 0.16, est_total_cycles * 0.08]
     fig1 = go.Figure(data=[go.Pie(
         labels=ch1_labels,
@@ -4325,7 +4325,7 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
         dev_preset = st.selectbox(
             "Cihaz Modeli Preset Seçin:",
             [
-                "ZEUS Pulse Stimulator (ZPS 26) — Piezo Oosit Aktivasyon",
+                "ZEUS Pulse Stimulator (ZPS 26) — Elektriksel Oosit Aktivasyon (AOA)",
                 "ZEUS BioPSafe (ZBS26) — Embriyo Biyopsi & PCR Tubing İstasyonu",
                 "ZEUS Mismatch Blocker (ZMB26) — RFID & Elektronik Numune Şahitliği",
                 "ZEUS Smart Cryo-Tools (ZCT26) — Vitrifikasyon & Kriyo Yönetimi",
@@ -4446,8 +4446,8 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
         sarf_preset = st.selectbox(
             "Sarf Ürün Grubu Preset Seçin:",
             [
-                "Piezo Aktivasyon Dishleri (Z-Dish Array)",
-                "Piezo Ca-Free Aktivasyon Medyası",
+                "Elektriksel Aktivasyon Dishleri (ZEUS Electro Dish Array)",
+                "Ca-Free Aktivasyon Medyası (Electroliquid Solution)",
                 "BioPSafe Trofektoderm Biyopsi Pipeti",
                 "ZEUS Mismatch Blocker RFID Etiket & Çip Seti",
                 "CryoProtect Vitrifikasyon & Çözme Kiti",
@@ -4609,7 +4609,7 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
             f"<b>{target_country} Yüksek Alım Gücü Pazarı (Kişi Başı GSYİH: ${gdp_val:,} USD):</b> "
             f"Özel IVF kliniklerinde tek bir hasta tedavi döngüsü ücreti ortalama $3,500 - $8,500 USD aralığındadır. "
             f"Klinik, $8,500 USD'lik standart ZEUS donanım yatırımını yalnızca <b>1-2 hasta tedavisinde</b> tamamen amorti eder. "
-            f"Bu pazarda gereksiz indirim yapmak ZEUS'un CE MDR Class IIa premium teknoloji algısını zedeler ve kârlılığı eritir. "
+            f"Bu pazarda gereksiz indirim yapmak ZEUS'un CE Sertifikalı (Class IIa) premium teknoloji algısını zedeler ve kârlılığı eritir. "
             f"Tekil veya 2-3 cihazlık standart alımlarda liste fiyatı tavizsiz uygulanmalıdır."
         )
         when_to_discount = (
@@ -4827,7 +4827,7 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
     else:
         sarf_suit_status = f"⚠️ YÜKSEK SARF FİYATI"
         sarf_suit_badge = "background:rgba(239,68,68,0.18);color:#EF4444;border:1px solid #EF4444;"
-        sarf_suit_text = f"${sarf_price:,.2f} USD/kutu fiyatı {target_country} kliniklerinde rutin Piezo AOA kullanımını kısıtlayabilir; sarf çekişini düşürür."
+        sarf_suit_text = f"${sarf_price:,.2f} USD/kutu fiyatı {target_country} kliniklerinde rutin Elektriksel AOA kullanımını kısıtlayabilir; sarf çekişini düşürür."
 
     # Render Comprehensive Decision & Intelligence Card
     st.markdown(f"""
@@ -4914,55 +4914,73 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
             </div>
         </div>
 
-        <!-- ALT PANEL: RAKİP İSTİHBARATI & TEKNİK YAKINLIK ANALİZİ (Eppendorf, Prime Tech, RI Witness, Vitrolife) -->
+        <!-- ALT PANEL: RAKİP İSTİHBARATI & TEKNİK YAKINLIK ANALİZİ -->
         <div style="border-top:1px solid rgba(255,255,255,0.1);padding-top:12px;">
-            <div style="font-size:13.5px;font-weight:800;color:#00F5FF;margin-bottom:8px;">
-                🔍 {target_country} Rakip İstihbaratı: Ne Satıyorlar & ZEUS Cihazlarıyla Ne Kadar Yakınlar?
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:8px;">
+                <div style="font-size:14px;font-weight:800;color:#00F5FF;">
+                    🔍 {target_country} Rakip İstihbaratı: Ne Satıyorlar & ZEUS Cihazlarıyla Ne Kadar Yakınlar?
+                </div>
+                <span style="font-size:11px;color:#8FA3C0;background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.25);padding:2px 8px;border-radius:4px;">
+                    Strategic Decision Center Entegre
+                </span>
             </div>
+            
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px;">
-                <!-- Eppendorf -->
-                <div style="background:#0B132B;border:1px solid rgba(0,245,255,0.3);border-radius:8px;padding:10px 12px;font-size:11.5px;line-height:1.6;">
+                <!-- RAKİP 1: KİMYASAL İYONOFORLAR (A23187) -->
+                <div style="background:#0B132B;border:1px solid rgba(239,68,68,0.35);border-radius:8px;padding:10px 12px;font-size:11.5px;line-height:1.6;">
                     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-                        <b style="color:#00F5FF;font-size:12px;">🇩🇪 Eppendorf — PiezoXpert & TransferMan</b>
-                        <span style="background:rgba(0,245,255,0.15);color:#00F5FF;font-size:9.5px;padding:1px 6px;border-radius:4px;font-weight:700;">%78 TEKNİK YAKINLIK</span>
+                        <b style="color:#EF4444;font-size:12px;">🧪 Kimyasal İyonoforlar (A23187 / Calcimycin / Ionomycin) — Sigma/Merck/Origio</b>
+                        <span style="background:rgba(239,68,68,0.15);color:#EF4444;font-size:9.5px;padding:1px 6px;border-radius:4px;font-weight:700;">%95 AMAC YAKINLIĞI (DOĞRUDAN RAKİP)</span>
                     </div>
-                    • <b>Ne Satıyor?:</b> PiezoXpert aktüatör ($16,500 - $19,500 USD) + TransferMan kollar ($18,000 USD).<br>
-                    • <b>ZEUS ZPS 26 ile Farkı:</b> Eppendorf genel hücre delme cihazıdır; insan oositi Piezo-AOA için optimize edilmiş dikdörtgen dalga (rectangular pulse) formu yoktur.<br>
-                    • <b>Kritik Risk:</b> Kontrolsüz harmonik dalgası oositte <b>%4 - %8 lizis (zar yırtılması)</b> riski yaratır. ZEUS ZPS 26'da lizis <b><%1.2</b> ile ultra güvenlidir.<br>
-                    • <b>Klinik Kanıt:</b> ZEUS Baltacı/Ebner TFF vakalarında <b>%82.3 fertilizasyon</b> başarısı sunar.<br>
-                    • <b>Fiyat Üstünlüğü:</b> ZEUS ($8,500 USD) Eppendorf'a kıyasla <b>%54 daha ekonomiktir</b>. Ayrıca Eppendorf'un sarf kiti yoktur; ZEUS Z-Dish ile tekrarlayan gelir sağlar.
+                    • <b>Ne Satıyor?:</b> Sıvı kimyasal oosit aktivasyon solüsyonu ($80 – $150 USD/flakon).<br>
+                    • <b>Zehirlilik & Ağır Riskler:</b> Kimyasal iyonoforlar sitotoksiktir; kontrolsüz kalsiyum patlaması yaratarak embriyoda <b>epigenetik metilasyon anomalilerine ve teratojenik risklere</b> yol açar. Birçok prestijli Avrupa merkezinde kullanımı sınırlandırılmıştır.<br>
+                    • <b>ZEUS Pulse Stimulator Üstünlüğü:</b> <b>%100 Kimyasalsız & Biyouyumlu</b> fiziksel mikro-elektriksel stimülasyon (DC & AC/DC). Hücre zarında geçici mikro-porlar açarak doğal fizyolojik Ca²⁺ osilasyonlarını (PLC-zeta taklidi) başlatır. Sıfır sitotoksisite!<br>
+                    • <b>Klinik Kanıt:</b> TFF vakalarında <b>%79.37 Grade I & II kaliteli embriyo gelişimi</b>, Baltacı et al. <b>%82.3 döllenme</b>, Tanaka et al. <b>90 sağlıklı ROSI bebeği</b>!<br>
+                    • <b>Satış Stratejisi:</b> Embriyoloğa <i>"Hastalarınızın embriyolarını toksik kimyasallara batırmayın; ESHRE önerili elektriksel uyarım ile başarıyı katlayın"</i> argümanıyla yaklaşın.
                 </div>
-                <!-- Prime Tech -->
-                <div style="background:#0B132B;border:1px solid rgba(255,107,107,0.3);border-radius:8px;padding:10px 12px;font-size:11.5px;line-height:1.6;">
+
+                <!-- RAKİP 2: GENEL ELEKTROPORATÖRLER (Eppendorf Multiporator / Bio-Rad) -->
+                <div style="background:#0B132B;border:1px solid rgba(245,158,11,0.35);border-radius:8px;padding:10px 12px;font-size:11.5px;line-height:1.6;">
                     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-                        <b style="color:#FF6B6B;font-size:12px;">🇯🇵 Prime Tech — PMM Piezo Impact (PMAS)</b>
-                        <span style="background:rgba(255,107,107,0.15);color:#FF6B6B;font-size:9.5px;padding:1px 6px;border-radius:4px;font-weight:700;">%85 TEKNİK YAKINLIK (DOĞRUDAN RAKİP)</span>
+                        <b style="color:#F59E0B;font-size:12px;">⚡ Eski Tip Elektroporatörler (Eppendorf Multiporator / Bio-Rad Gene Pulser)</b>
+                        <span style="background:rgba(245,158,11,0.15);color:#F59E0B;font-size:9.5px;padding:1px 6px;border-radius:4px;font-weight:700;">%60 TEKNİK YAKINLIK</span>
                     </div>
-                    • <b>Ne Satıyor?:</b> PMM Piezo-ICSI sürücüsü ($22,000 - $28,000 USD).<br>
-                    • <b>Zehirli Madde Tehlikesi (Fluorinert):</b> Prime Tech darbeyi iletmek için mikropipet içine <b>Fluorinert FC-770 (toksik florokimyasal)</b> konulmasını zorunlu kılar. Pipetten oosite kimyasal bulaşma riski embriyologların en büyük korkusudur.<br>
-                    • <b>ZEUS Üstünlüğü:</b> ZEUS ZPS 26, <b>Fluorinert-FREE (Kimyasalsız Doğrudan Elektronik Piezo)</b> teknolojisiyle çalışır; embriyoya kimyasal sızıntı riski %0'dır.<br>
-                    • <b>Sertifikasyon & Servis:</b> Prime Tech yedek parça ve piezo kafaları Japonya'dan fahiş fiyata gelir ve CE MDR eksiktir. ZEUS tam CE MDR Class IIa tescillidir.
+                    • <b>Ne Satıyor?:</b> Genel mikrobiyoloji bakteri ve maya elektroporasyon jeneratörleri ($14,000 – $22,000 USD).<br>
+                    • <b>Hayati Tehlike (Oosit Lizisi):</b> İnsan tüp bebek oositine optimize edilmemiştir. Kontrolsüz yüksek voltaj deşarjı yumurtayı patlatır (<b>%8 – %15 lizis hasarı</b>). Ayrıca mikro-hacimli IVF petri kabı yoktur.<br>
+                    • <b>ZEUS ZPS 26 Üstünlüğü:</b> İnsan IVF oositine özel patentli mikro-elektrot hazneli <b>ZEUS Electro Dish</b> ve Ca-Free Electroliquid medyası. Mikrosaniye hassasiyetli dikdörtgen pulslar sayesinde <b>lizis <%1.0</b> düzeyindedir.<br>
+                    • <b>Fiyat & Sarf Üstünlüğü:</b> ZEUS ZPS 26 ($8,500 USD) çok daha ekonomiktir ve Electro Dish sarf kitiyle kliniğe sürekli güvenli standart sunar.
                 </div>
             </div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
-                <!-- RI Witness -->
-                <div style="background:#0B132B;border:1px solid rgba(255,184,0,0.3);border-radius:8px;padding:10px 12px;font-size:11.5px;line-height:1.6;">
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
+                <!-- RAKİP 3: RI WITNESS RFID -->
+                <div style="background:#0B132B;border:1px solid rgba(0,245,255,0.35);border-radius:8px;padding:10px 12px;font-size:11.5px;line-height:1.6;">
                     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-                        <b style="color:#FFB800;font-size:12px;">🇬🇧 CooperSurgical / RI — RI Witness RFID</b>
-                        <span style="background:rgba(255,184,0,0.15);color:#FFB800;font-size:9.5px;padding:1px 6px;border-radius:4px;font-weight:700;">%90 YAKINLIK (ZMB BLOCKER RAKİBİ)</span>
+                        <b style="color:#00F5FF;font-size:12px;">🇬🇧 CooperSurgical / RI — RI Witness RFID Şahitlik</b>
+                        <span style="background:rgba(0,245,255,0.15);color:#00F5FF;font-size:9.5px;padding:1px 6px;border-radius:4px;font-weight:700;">%90 YAKINLIK (ZMB BLOCKER RAKİBİ)</span>
                     </div>
-                    • <b>Ne Satıyor?:</b> RFID Elektronik Numune Şahitliği ($50,000 - $65,000 USD + $8,000/yıl lisans).<br>
-                    • <b>ZEUS Mismatch Blocker Üstünlüğü:</b> RI Witness orta/küçük klinikler için ulaşılamaz bütçededir ve kliniği yıllık yazılım lisansına mahkum eder. ZEUS Mismatch Blocker bağımsız kompakt okuyucular ve düşük maliyetli RFID çiplerle yıllık lisans esaretini ortadan kaldırır.
+                    • <b>Ne Satıyor?:</b> RFID Elektronik Numune Şahitlik Altyapısı ($50,000 – $70,000 USD donanım + $8,000/yıl lisans + siklus başı $25-$30 çipli kap).<br>
+                    • <b>Kritik Zayıflıklar:</b> Her yıl $20K-$50K çipli kap sarf kanaması yaratır. Yalnızca kabın temasını algılar; embriyolog yine 2PN ve blastosist skorlarını kağıtlara elle yazar. Sıvı azot tankı içine giremez.<br>
+                    • <b>ZEUS Mismatch Blocker (ZMB-7T) Üstünlüğü:</b> <b>Sınırsız ücretsiz 2D barkod</b> ve döngü başı kontör (coin) modeli ile sarfiyatı <b>%75 düşürür</b>. OPU ameliyathanesinde sessiz canlı oosit sayacı ekranından kriyobankaya 7 dokunmatik terminalle elle not tutmayı bitirir. Smart Cryo-Tools ile tank kapasitesini 4X artırır!
                 </div>
-                <!-- Vitrolife / Octax -->
-                <div style="background:#0B132B;border:1px solid rgba(168,85,247,0.3);border-radius:8px;padding:10px 12px;font-size:11.5px;line-height:1.6;">
+
+                <!-- RAKİP 4: VITROLIFE LAZER -->
+                <div style="background:#0B132B;border:1px solid rgba(168,85,247,0.35);border-radius:8px;padding:10px 12px;font-size:11.5px;line-height:1.6;">
                     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-                        <b style="color:#C084FC;font-size:12px;">🇸🇪 Vitrolife / Octax — NaviLase Laser</b>
+                        <b style="color:#C084FC;font-size:12px;">🇸🇪 Vitrolife / Octax / Hamilton — Trofektoderm Biyopsi Lazeri</b>
                         <span style="background:rgba(168,85,247,0.15);color:#C084FC;font-size:9.5px;padding:1px 6px;border-radius:4px;font-weight:700;">%70 YAKINLIK (BIOPSAFE RAKİBİ)</span>
                     </div>
-                    • <b>Ne Satıyor?:</b> Lazer Trofektoderm Biyopsi İstasyonu ($38,000 - $48,000 USD).<br>
-                    • <b>ZEUS BioPSafe Üstünlüğü:</b> Lazer atışı zona pellucidada termal harabiyet ve embriyo ısınma riski yaratır. ZEUS BioPSafe kontrollü mikro-vakum ve piezo kesme ile termal şok olmadan kusursuz biyopsi sağlar.
+                    • <b>Ne Satıyor?:</b> Lazer Embriyo Biyopsi Sistemi ($38,000 – $55,000 USD).<br>
+                    • <b>Risk & Kör Nokta:</b> Lazer zona delmede termal ısı yayılımı riski taşır; ancak en büyük hata biyopsi sonrası trofektoderm hücrelerinin PCR tüpüne aktarımı (tubing) esnasında tüplerin karışmasıdır.<br>
+                    • <b>ZEUS BioPSafe (ZBB25-001) Üstünlüğü:</b> 13 kızılötesi sensörlü ve çift yüksek çözünürlüklü kameralı entegre biyopsi doğrulama platformu. Lazerle kesilen hücrelerin doğru PCR tüpüne aktarıldığını doğrular; yanlış hasta tüplemesini imkansız kılar.
                 </div>
+            </div>
+
+            <!-- STRATEJİK SÖZLEŞME VE SATIŞ REHBERİ -->
+            <div style="background:rgba(15,23,42,0.85);border:1px solid rgba(0,245,255,0.25);border-radius:8px;padding:12px 14px;margin-bottom:12px;font-size:11.5px;line-height:1.65;">
+                <b style="color:#00F5FF;font-size:12.5px;">🤝 Rakiplere Karşı Nasıl Satmalı & Sözleşmede Neleri Güvenceye Almalıyız?</b><br>
+                • <b>Satış Stratejisi:</b> Asla genel özellikleri yarıştırmayın. ZEUS Pulse Stimulator için <b>"Non-toksik AOA ile %79.4 TFF başarı garantisi"</b>, Mismatch Blocker için <b>"RFID çip kanamasına son veren %75 tasarruflu döngü başı kontör modeli"</b> üzerinden doğrudan klinik direktörü ve satın alma kuruluna sunum yapın.<br>
+                • <b>Sözleşme Koruması:</b> Sözleşmeye asgari yıllık sarf taahhüdü (yıllık en az 150–200 kutu Z-Dish veya 500 döngü kontörü) ekleyin. Cihazı $8,500 USD'den verirken 60 günlük konsinye güvenlik stoğu karşılığında banka teminat mektubu talep edin. Fiyatları $ USD endeksli sabitleyerek kur devalüasyon riskini distribütöre devredin.
             </div>
         </div>
 
@@ -5027,7 +5045,7 @@ def render_deep_sales_strategy_ui(country_name, deep_intel=None, p_fc=None):
                 <div style="color:#E1E7EC;">{sales_strat.get('channel_model', 'Münhasır distribütörlük ve yerinde aplikasyon eğitimi desteği.')}</div>
             </div>
             <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,230,118,0.25);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
-                <div style="font-weight:700;color:#00E676;font-size:13px;margin-bottom:6px;">⚡ Klinik Değer Önerisi & Piezo AOA Üstünlüğü</div>
+                <div style="font-weight:700;color:#00E676;font-size:13px;margin-bottom:6px;">⚡ Klinik Değer Önerisi & Elektriksel Oosit Aktivasyon (AOA) Üstünlüğü</div>
                 <div style="color:#E1E7EC;">{sales_strat.get('clinical_pitch', 'TFF vakalarında %82.3 döllenme oranı ve sub-%1 oosit hasarı.')}</div>
             </div>
             <div style="background:rgba(255,184,0,0.12);border:1px solid rgba(255,184,0,0.3);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
@@ -5226,7 +5244,7 @@ def resolve_deep_country_intelligence(country_name, macro=None):
             'required_docs': 'Konsolosluk Tasdikli Menşe Şahadetnamesi (COO), Free Sales Certificate (FSC), CE Device Certified Deklarasyonu, İngilizce/Yerel Dilde Kullanım Kılavuzu',
             'cold_chain_rules': 'Medya solüsyonlarında +2°C ile +8°C aralığında sıcaklık kontrollü veri kaydedicili transfer; cihazlarda şok/nem korumalı ambalaj.',
             'authority_full': f'{country_name} Sağlık Bakanlığı ve Tıbbi Cihaz İthalat Otoritesi',
-            'registration_path': 'Yerel Sağlık Otoritesi İthal Lisansı (CE MDR 2017/745 Harmonize Kayıt)'
+            'registration_path': 'Yerel Sağlık Otoritesi İthal Lisansı (CE Sertifikası & AB Uygunluk Beyanı Harmonize Kayıt)'
         },
         'ivf_pgt_regulatory': {
             'transfer_rules': f'{country_name} ulusal tüp bebek mevzuatı uyarınca, çoğul gebelik komplikasyonlarını önlemek adına 35 yaş altı kadınlarda tek embriyo transferi (eSET) teşvik edilir; ileri yaşta azami 2 embriyo transferine izin verilir.',
@@ -6094,9 +6112,9 @@ DEFAULT_CHECKLIST = [
     {"id": "yt_thumbnails", "text": "Video küçük resimlerine (Thumbnails) yüksek kontrastlı hücre kancaları (Hook) eklendi", "done": False, "platform": "YouTube"},
     {"id": "yt_b2b_funnel", "text": "YouTube video açıklamalarına B2B Satış Hunisi ve Klinik Protokol İndirme linki eklendi", "done": False, "platform": "YouTube"},
     {"id": "li_bio_fix", "text": "LinkedIn biyografisindeki 'ZEUS Bioscience' çift tekrarı dilbilgisi hatası düzeltildi", "done": False, "platform": "LinkedIn"},
-    {"id": "li_tagline", "text": "LinkedIn sloganı (Tagline) teknoloji ve CE MDR Class IIa odaklı olarak güncellendi", "done": False, "platform": "LinkedIn"},
+    {"id": "li_tagline", "text": "LinkedIn sloganı (Tagline) teknoloji ve CE Sertifikalı (Class IIa) odaklı olarak güncellendi", "done": False, "platform": "LinkedIn"},
     {"id": "li_custom_btn", "text": "LinkedIn özel butonu 'İletişime Geçin' veya 'Daha Fazla Bilgi Edinin' olarak ayarlandı", "done": False, "platform": "LinkedIn"},
-    {"id": "li_carousel", "text": "İlk 6-8 slaytlık PDF Carousel gönderisi paylaşıldı (TFF & Piezo AOA Konulu)", "done": False, "platform": "LinkedIn"},
+    {"id": "li_carousel", "text": "İlk 6-8 slaytlık PDF Carousel gönderisi paylaşıldı (TFF & Elektriksel AOA Konulu)", "done": False, "platform": "LinkedIn"},
     {"id": "li_lead_loop", "text": "Yorumlarda 'PROTOKOL' yazma lead toplama ve DM gönderme döngüsü başlatıldı", "done": False, "platform": "LinkedIn"},
     {"id": "li_personal_brand", "text": "Yönetici profilleri (Personal Branding) şirket postunu ilk 60 dakikada (Golden Hour) paylaştı", "done": False, "platform": "LinkedIn"},
 ]
@@ -6433,7 +6451,7 @@ def render_social_media_hub():
             ("1. 49 Dakikalık Dev Videonun Başlığı Sadece 'Zeus Bioscience' ve Açıklaması Boş!",
              "Kanalda 49:01 dakikalık eksiksiz bir webinar/masterclass videosu bulunuyor. Ancak başlığı sadece 'Zeus Bioscience' yazılmış, açıklaması bomboş ve tek bir timecode (chapter) dahi yok. Arama motorları ve algoritma bu videonun ne anlattığını anlayamadığı için hekimlere öneremiyor ve sadece 40 izlenmede kalmış! Oysa bu video kanalın en kıymetli amiral gemisi olabilir."),
             ("2. Oynatma Listeleri (Playlists) Sekmesi Bomboş!",
-             "Kanalınızda tek bir oynatma listesi dahi tanımlanmamış. Bir hekim veya bayii kanala geldiğinde ilgilendiği ürünü (Piezo AOA mi, Mismatch Blocker mı, Biyopsi mi) derli toplu bir kategori altında göremiyor. YouTube algoritması oynatma listesi olan kanallarda izleme süresini 3 kat daha fazla ödüllendirir."),
+             "Kanalınızda tek bir oynatma listesi dahi tanımlanmamış. Bir hekim veya bayii kanala geldiğinde ilgilendiği ürünü (Elektriksel AOA AOA mi, Mismatch Blocker mı, Biyopsi mi) derli toplu bir kategori altında göremiyor. YouTube algoritması oynatma listesi olan kanallarda izleme süresini 3 kat daha fazla ödüllendirir."),
             ("3. Açıklamalarda (Description) 'B2B Satış Hunisi (Lead Funnel)' Eksik!",
              "Videoların açıklamalarında yalnızca ürünün teknik metni var. 'Klinik Protokolünü İndirin (PDF)', 'Kliniğinizde Yerinde Aplikasyon Çalıştayı Talep Edin', 'Numune Talep Formu' gibi karar vericiyi doğrudan satışa bağlayan linkler bulunmuyor."),
             ("4. Küçük Resimlerde (Thumbnail) 'MedTech Hook' Eksikliği!",
@@ -6454,7 +6472,7 @@ def render_social_media_hub():
         
         yt_steps = [
             ("1. Adım: 49 Dakikalık Videoyu 24 Saatte Kurtarın (Quick Win)",
-             "Başlığını 'Full Clinical Masterclass: Piezo AOA, Embryo Biopsy & Electronic Witnessing in IVF | ZEUS Bioscience' olarak değiştirin. Açıklamaya 7 bölüm zaman damgası (Chapters) ekleyin. Ayrıca bu videodan 10 adet 30-45 saniyelik dikey Shorts çıkarın!"),
+             "Başlığını 'Full Clinical Masterclass: Electrical Oocyte Activation (AOA), Embryo Biopsy & Electronic Witnessing in IVF | ZEUS Bioscience' olarak değiştirin. Açıklamaya 7 bölüm zaman damgası (Chapters) ekleyin. Ayrıca bu videodan 10 adet 30-45 saniyelik dikey Shorts çıkarın!"),
             ("2. Adım: Kanal Mimarisini 4 Stratejik Oynatma Listesine Bölün",
              "1. Piezoelectric ICSI & Assisted Oocyte Activation (AOA) | 2. Zero-Error Electronic Witnessing & Lab Safety | 3. PGT-A Biopsy & Cryo Traceability | 4. Clinical Case Studies & Doctor Testimonials."),
             ("3. Adım: Başlık & Küçük Resim Formülünü (CTR) Güncelleyin",
@@ -6478,7 +6496,7 @@ def render_social_media_hub():
             {"Mevcut Başlık": "Zeus Pulse Stimulator – Complete Overview", "Önerilen Yeni Başlık (Yüksek CTR)": "Piezo ICSI vs Sharp Needle: How to Achieve <0.8% Oocyte Lysis & Rescue TFF Cycles", "Küçük Resim (Thumbnail) Metni": "0.8% LYSIS vs 8.5%? (Split Görsel)"},
             {"Mevcut Başlık": "Zeus BioPSafe – Embryo Biopsy & PCR Tube Traceability", "Önerilen Yeni Başlık (Yüksek CTR)": "30-Second Trophectoderm Biopsy with Zero Thermal DNA Damage | Zeus BioPSafe", "Küçük Resim (Thumbnail) Metni": "STOP LASER DAMAGE (Hücre Ayrılma)"},
             {"Mevcut Başlık": "ZEUS Mismatch Blocker | Electronic Witnessing for IVF Labs", "Önerilen Yeni Başlık (Yüksek CTR)": "How Leading IVF Labs Prevent Sample Mix-ups: 7-Station RFID Electronic Witnessing", "Küçük Resim (Thumbnail) Metni": "ZERO ERROR IVF (Manipülatör Kilit)"},
-            {"Mevcut Başlık": "Zeus Bioscience (49 Dk)", "Önerilen Yeni Başlık (Yüksek CTR)": "Full Clinical Masterclass: Piezo AOA, Embryo Biopsy & Electronic Witnessing in IVF", "Küçük Resim (Thumbnail) Metni": "IVF MASTERCLASS (4K Canlı Vaka)"},
+            {"Mevcut Başlık": "Zeus Bioscience (49 Dk)", "Önerilen Yeni Başlık (Yüksek CTR)": "Full Clinical Masterclass: Electrical Oocyte Activation (AOA), Embryo Biopsy & Electronic Witnessing in IVF", "Küçük Resim (Thumbnail) Metni": "IVF MASTERCLASS (4K Canlı Vaka)"},
         ]
         st.dataframe(pd.DataFrame(ctr_table), use_container_width=True, hide_index=True)
 
@@ -6510,7 +6528,7 @@ def render_social_media_hub():
                     <span style="color: #94A3B8;">"Founded in 2020, ZEUS Bioscience develops cutting-edge technologies and automated biosafety solutions for ART & IVF laboratories. Engineered alongside leading clinical embryologists and geneticists, our CE Class IIa certified portfolio—including ZEUS Piezo Pulse Stimulator (AOA), BioPSafe, and Mismatch Blocker—safeguards gamete integrity and sets new benchmarks in IVF success."</span><br><br>
                     <b style="color: #F8FAFC;">2. Sloganı (Tagline) Güçlendirin:</b><br>
                     Mevcut: <i>"Cutting-edge product provider for next generation IVF"</i><br>
-                    <b style="color: #34D399;">Yeni Slogan:</b> <i>"Pioneering Piezoelectric AOA, Zero-Lysis ICSI & Electronic Witnessing for Leading IVF Labs | CE MDR Class IIa Certified"</i><br><br>
+                    <b style="color: #34D399;">Yeni Slogan:</b> <i>"Pioneering Piezoelectric AOA, Zero-Lysis ICSI & Electronic Witnessing for Leading IVF Labs | CE Sertifikalı (Class IIa) Certified"</i><br><br>
                     <b style="color: #F8FAFC;">3. Özel Buton:</b> Sayfa aksiyon butonunu "İletişime Geçin" (Contact Us) olarak ayarlayın.
                 </div>
             </div>
@@ -6555,7 +6573,7 @@ def render_social_media_hub():
                 <div style="font-size: 12px; color: #CBD5E1; margin-top: 10px; line-height: 1.6;">
                     ❌ <b>Klasik Verimsiz Yol:</b> <i>'Daha fazla bilgi için sitemizi ziyaret edin: www.zeusbioscience.com'</i> (Erişim düşer, çok az kişi tıklar).<br><br>
                     ✅ <b>Dönüşümü 10x Artıran Yol:</b><br>
-                    <i style="color: #F8FAFC;">'Total Döllenme Başarısızlığı için hazırladığımız 6 sayfalık Piezo AOA Klinik Protokol Kılavuzunu incelemek isterseniz, yoruma <b>PROTOKOL</b> yazmanız yeterlidir. Dosyayı doğrudan mesaj (DM) ile iletelim.'</i><br><br>
+                    <i style="color: #F8FAFC;">'Total Döllenme Başarısızlığı için hazırladığımız 6 sayfalık Elektriksel AOA Klinik Protokol Kılavuzunu incelemek isterseniz, yoruma <b>PROTOKOL</b> yazmanız yeterlidir. Dosyayı doğrudan mesaj (DM) ile iletelim.'</i><br><br>
                     <b>Neden Çalışır?</b> Yoruma 30-40 hekim 'PROTOKOL' yazdığında algoritma gönderiyi viral yapar + Yoruma yazan her embriyolog sıcak bir kurumsal müşteri adayına (B2B Lead) dönüşür!
                 </div>
             </div>
@@ -6625,7 +6643,7 @@ def render_social_media_hub():
                         <li><b>Sağlık Meslek Mensuplarına Yönelik Tanıtım:</b> Hekim, embriyolog ve klinik biyologlara yönelik bilimsel ve teknik eğitimler.</li>
                         <li><b>Hakemli Bilimsel Literatür Atfı:</b> PubMed, Fertility and Sterility, Human Reproduction gibi dergilerde yayımlanmış makale özetleri, DOI numaraları ve yazarlarının tarafsız sunumu.</li>
                         <li><b>Hücresel Biyoloji & Toplum Sağlığı Eğitimi:</b> Reklam içermeyen, döllenme biyolojisini, oosit zarını, kalsiyum salınım fizyolojisini anlatan 3D animasyonlar.</li>
-                        <li><b>Kalite Belgeleri & Standartlar:</b> CE MDR Class IIa, ISO 13485 ve MEA >%80 biyo-uyumluluk kalite güvencesi bilgilendirmeleri.</li>
+                        <li><b>Kalite Belgeleri & Standartlar:</b> CE Sertifikalı (Class IIa), ISO 13485 ve MEA >%80 biyo-uyumluluk kalite güvencesi bilgilendirmeleri.</li>
                         <li><b>Zorunlu Yasal Uyarı Eklenmesi:</b> 'Bu içerik yalnızca sağlık profesyonellerini bilgilendirme amaçlıdır; tanı ve tedavi için hekiminize danışınız' notu.</li>
                     </ul>
                 </div>
@@ -6641,9 +6659,9 @@ def render_social_media_hub():
         script_sel = st.selectbox(
             "İncelemek İstediğiniz Video Senaryosunu Seçin:",
             [
-                "🇹🇷 TR Sağlık Bakanlığı Uyumlu 1: Piezo AOA Hücresel Biyofiziği & Hakemli Literatür Analizi (B2B Hekim/Embriyolog - 60 sn)",
+                "🇹🇷 TR Sağlık Bakanlığı Uyumlu 1: Elektriksel Oosit Aktivasyonu (AOA) Biyofiziği & Hakemli Literatür Analizi (B2B Hekim/Embriyolog - 60 sn)",
                 "🇹🇷 TR Sağlık Bakanlığı Uyumlu 2: Tüp Bebekte Döllenme Biyolojisi & Oosit Hücre Bütünlüğü (Toplum Sağlığı Eğitici Animasyon - 60 sn)",
-                "🇹🇷 TR Sağlık Bakanlığı Uyumlu 3: ART Laboratuvarlarında MEA Testi ve CE MDR Biyouyumluluk Güvencesi (Laboratuvar Güvenliği - 75 sn)",
+                "🇹🇷 TR Sağlık Bakanlığı Uyumlu 3: ART Laboratuvarlarında MEA Testi ve CE Sertifikalı Biyouyumluluk Güvencesi (Laboratuvar Güvenliği - 75 sn)",
                 "Senaryo 1: ZEUS ZPS 26 Piezo Stimulator vs Geleneksel ICSI (A/B Mikroskop Karşılaştırması - 60 sn)",
                 "Senaryo 2: BioPSafe Trofektoderm Biyopsi Kiti (30 Saniyede Sıfır Termal DNA Hasarı - 75 sn)",
                 "Senaryo 3: Mismatch Blocker - Laboratuvarda Numune Karışmasına Sıfır Tolerans (7 RFID İstasyonu - 90 sn)",
@@ -6679,8 +6697,8 @@ def render_social_media_hub():
                 {
                     "Zaman": "00:45 - 00:55",
                     "Görsel & Mikroskop Açısı": "Embriyoloji laboratuvarında monitörde 2PN zigot morfolojisi incelemesi. ZPS 26 kontrol ünitesi teknik ekranı.",
-                    "Seslendirme (Voiceover - VO)": "Uluslararası hakemli klinik çalışmalarda doğrulanmış piezoelektrik oosit aktivasyon protokolleri ve teknik veriler için bilimsel bültenimizi inceleyebilirsiniz.",
-                    "Ekran Yazısı & Bilimsel Atıf": "📊 CE Device Certified (EU MDR 2017/745 Class IIa) | ISO 13485:2016"
+                    "Seslendirme (Voiceover - VO)": "Uluslararası hakemli klinik çalışmalarda doğrulanmış elektriksel oosit aktivasyon (AOA) protokolleri ve teknik veriler için bilimsel bültenimizi inceleyebilirsiniz.",
+                    "Ekran Yazısı & Bilimsel Atıf": "📊 CE Device Certified (CE Device Certified (Class IIa)) | ISO 13485:2016"
                 },
                 {
                     "Zaman": "00:55 - 01:00",
@@ -6750,9 +6768,9 @@ def render_social_media_hub():
                 },
                 {
                     "Zaman": "00:50 - 01:05",
-                    "Görsel & Mikroskop Açısı": "Tıbbi cihaz CE MDR Class IIa sertifikası ve ISO 13485:2016 akreditasyon logosu.",
+                    "Görsel & Mikroskop Açısı": "Tıbbi cihaz CE Sertifikalı (Class IIa) sertifikası ve ISO 13485:2016 akreditasyon logosu.",
                     "Seslendirme (Voiceover - VO)": "ZEUS Bioscience üretim tesislerinde üretilen her sarf parti, bağımsız MEA ve endotoksin analizlerinden geçirilerek sertifikalandırılmaktadır.",
-                    "Ekran Yazısı & Bilimsel Atıf": "📜 ISO 13485:2016 & EU MDR 2017/745 Class IIa Uygunluğu"
+                    "Ekran Yazısı & Bilimsel Atıf": "📜 ISO 13485:2016 & CE Device Certified (Class IIa) Uygunluğu"
                 },
                 {
                     "Zaman": "01:05 - 01:15",
@@ -6796,7 +6814,7 @@ def render_social_media_hub():
             sc4_table = [
                 {"Zaman": "00:00 - 00:08", "Görsel & Mikroskop Açısı": "Kalsiyum İyonofor (A23187) kimyasal şişesi yakın çekim.", "Seslendirme (Voiceover - VO)": "Yıllardır Total Döllenme Başarısızlığı vakalarında kimyasal kalsiyum iyonoforlara mahkum kaldık. Peki bu kimyasalların embriyo epigenetiği üzerindeki risklerini biliyor musunuz?", "Ekran Yazısı & Grafik": "⚠️ Kimyasal İyonofor (A23187): Epigenetik Toksisite Soru İşareti"},
                 {"Zaman": "00:08 - 00:28", "Görsel & Mikroskop Açısı": "Z-Dish Array'in mikrokuyucuklarına dizilmiş 12 oosit. Solüsyonda kalsiyum yoktur (Calcium-Free AOA). ZPS 26 piezo uyarımı verilir verilmez hücre içinde endojen kalsiyum salınımı başlar.", "Seslendirme (Voiceover - VO)": "ZEUS Z-Dish Array ve Kalsiyumsuz AOA Protokolü ile kimyasal toksisiteye son veriyoruz. Mikrosaniyelik piezo uyarım oositin kendi doğal kalsiyum rezervlerini serbest bırakır.", "Ekran Yazısı & Grafik": "🛡️ %0 Kimyasal Toksisite | Doğal Endojen Kalsiyum Salınımı"},
-                {"Zaman": "00:28 - 01:00", "Görsel & Mikroskop Açısı": "Z-Dish kuyucuklarında yan yana duran kusursuz 2PN pronükleuslar.", "Seslendirme (Voiceover - VO)": "Sonuç: Sıfır kimyasal kalıntı, yüzde 54.2 blastosist oluşumu ve CE MDR uyumlu en yüksek güvenlik standardı.", "Ekran Yazısı & Grafik": "👉 zeusbio.com/zdish | Protokol & Validasyon Dosyasını İndir"}
+                {"Zaman": "00:28 - 01:00", "Görsel & Mikroskop Açısı": "Z-Dish kuyucuklarında yan yana duran kusursuz 2PN pronükleuslar.", "Seslendirme (Voiceover - VO)": "Sonuç: Sıfır kimyasal kalıntı, yüzde 54.2 blastosist oluşumu ve CE Sertifikalı uyumlu en yüksek güvenlik standardı.", "Ekran Yazısı & Grafik": "👉 zeusbio.com/zdish | Protokol & Validasyon Dosyasını İndir"}
             ]
             st.dataframe(pd.DataFrame(sc4_table), use_container_width=True, hide_index=True)
 
@@ -6805,7 +6823,7 @@ def render_social_media_hub():
                 {"Zaman": "00:00 - 00:08 (Kanca / Hook)", "Görsel & Mikroskop Açısı": "Bölünmüş Ekran (Split Screen): Solda standart sivri ICSI iğnesi oosite batıyor. Oosit aşırı gerilip aniden patlıyor (Sitoplazma dışarı sızıyor / Lizis). Sağ ekran ise kararık ve merak uyandırıcı.", "Seslendirme (Voiceover - VO)": "Her 10 oositten biri, yumurtanın kalitesizliğinden değil... mekanik delme travması yüzünden kaybediliyor. Peki ya bu hücre zarı hiç yırtılmasaydı?", "Ekran Yazısı & Grafik": "⚠️ %8.5 Oosit Dejenerasyon Riski (Geleneksel Delme Travması)"},
                 {"Zaman": "00:08 - 00:25 (Problem & Kök Neden)", "Görsel & Mikroskop Açısı": "Kamera laboratuvara geçer. Embriyolog başarısız döllenmiş mikrokuyucuklara bakar. Ekranda kimyasal kalsiyum iyonofor şişesi ve soru işareti belirir.", "Seslendirme (Voiceover - VO)": "Özellikle ileri anne yaşı ve Total Döllenme Başarısızlığı (TFF) vakalarında başvurulan kimyasal iyonoforlar, hücrede kontrolsüz toksisiteye ve sitoplazmik strese yol açabiliyor.", "Ekran Yazısı & Grafik": "🧪 Kimyasal İyonofor Toksisitesi & Kontrolsüz Ca2+ Girişi"},
                 {"Zaman": "00:25 - 00:50 (Çözüm & Cihaz)", "Görsel & Mikroskop Açısı": "Sağ ekran aydınlanır: ZEUS ZPS 26 küt uçlu piezo iğnesi kadraja girer. ZPS 26 konsolundan tek bir 24V/3A mikro-darbe verilir; zar delinmeden esneyerek açılır, sperm içeri bırakılır ve zar 1 saniyede kendini onarır. Yanında 1 Yıl Raf Ömürlü Liyofilize Toz Flakonu gösterilir.", "Seslendirme (Voiceover - VO)": "ZEUS Pulse Stimulator ZPS 26, sivri iğne travmasını ve kimyasal solüsyon riskini tarihe gömüyor. Patentli piezoelektrik mikro-salınımı ve kalsiyumsuz liyofilize toz medyasıyla, oosite tek bir mikropuls ile fizyolojik aktivasyon sağlar.", "Ekran Yazısı & Grafik": "⚡ ZEUS ZPS 26: 70 µs Mikropuls | %0 Mekanik Lizis | 1 Yıl Raf Ömürlü Toz Medya"},
-                {"Zaman": "00:50 - 01:05 (Klinik Kanıt)", "Görsel & Mikroskop Açısı": "4K mikroskop altında bölünmüş ve 5. güne ulaşmış harika kalitede bir blastosist embriyo gösterilir. Sağ altta CE MDR Class IIa ve ISO 13485 hologramları parlar.", "Seslendirme (Voiceover - VO)": "Sonuç? Geleneksel ICSI'deki yüzde 8.5 lizis oranı yüzde 0.8'in altına inerken; TFF vakalarında 2PN döllenme oranı yüzde 82'ye, blastosist dönüşümü ise artı yüzde 18.4'e ulaşıyor.", "Ekran Yazısı & Grafik": "📈 Klinik Veri: 2PN Başarısı %24 ➔ %82 | Blastosist +%18.4 | CE Class IIa"},
+                {"Zaman": "00:50 - 01:05 (Klinik Kanıt)", "Görsel & Mikroskop Açısı": "4K mikroskop altında bölünmüş ve 5. güne ulaşmış harika kalitede bir blastosist embriyo gösterilir. Sağ altta CE Sertifikalı (Class IIa) ve ISO 13485 hologramları parlar.", "Seslendirme (Voiceover - VO)": "Sonuç? Geleneksel ICSI'deki yüzde 8.5 lizis oranı yüzde 0.8'in altına inerken; TFF vakalarında 2PN döllenme oranı yüzde 82'ye, blastosist dönüşümü ise artı yüzde 18.4'e ulaşıyor.", "Ekran Yazısı & Grafik": "📈 Klinik Veri: 2PN Başarısı %24 ➔ %82 | Blastosist +%18.4 | CE Class IIa"},
                 {"Zaman": "01:05 - 01:15 (Bitiş & Lead Magnet)", "Görsel & Mikroskop Açısı": "ZEUS Bioscience kurumsal logosu ve ZPS 26 cihazı. Ekranda indirme butonu simgesi ve QR kod belirir.", "Seslendirme (Voiceover - VO)": "Kliniğinizin başarı oranlarını yükseltecek hakemli klinik çalışma protokolünü ve ZPS 26 teknik şartnamesini inceleyin. Yorumlara 'PROTOKOL' yazın, klinik çalışma dosyasını size hemen gönderelim.", "Ekran Yazısı & Grafik": "👉 Yorumlara 'PROTOKOL' Yazın | DM ile Klinik Dosyayı Alın | zeusbio.com"}
             ]
             st.dataframe(pd.DataFrame(sc5_table), use_container_width=True, hide_index=True)
@@ -6815,7 +6833,7 @@ def render_social_media_hub():
                 {"Zaman": "00:00 - 00:04 (Stop-Scroll Hook)", "Dikey 9:16 Kadraj & Güvenli Alan": "Dikey Split Screen: Üst %45'te sivri ICSI iğnesi oosite batar ve zar anında patlar (Lizis!). Alt %45 kararık. Merkezde büyük neon font: 'YUMURTANIN SUÇU DEĞİL!'.", "Seslendirme (Voiceover - VO)": "Her 10 oositten birini iğne travması yüzünden kaybettiğinizi biliyor muydunuz?", "Mobil Ekran Altyazısı (Auto-Cap)": "🚨 %8.5 Oosit Delme Travması (Sivri İğne Lizisi)"},
                 {"Zaman": "00:04 - 00:16 (Dikey Split Karşılaştırma)", "Dikey 9:16 Kadraj & Güvenli Alan": "Alt %45 aydınlanır: ZEUS ZPS 26 küt uçlu piezo pipet kadrajda. 1 mikropuls dalga efekti: Zar esneyerek spermi içine alır, sıfır yırtılma!", "Seslendirme (Voiceover - VO)": "ZEUS ZPS 26 Piezo osilasyonuyla delmeyi unutun. Tek bir mikro-titreşimle hücre zarı yırtılmadan esner; oosit lizis oranı yüzde 0.8'in altına iner.", "Mobil Ekran Altyazısı (Auto-Cap)": "⚡ ZEUS ZPS 26: 70 µs Mikropuls | Sıfır Membran Yırtılması"},
                 {"Zaman": "00:16 - 00:28 (Medya & İnovasyon)", "Dikey 9:16 Kadraj & Güvenli Alan": "ZPS 26 kontrol paneli ve yanında 1 Yıl Raf Ömürlü Liyofilize Toz Flakonu yakın çekim. Yeşil onay tiki hologramı.", "Seslendirme (Voiceover - VO)": "Kimyasal iyonofor toksisitesine son. 1 yıl raf ömürlü liyofilize toz medyasıyla Total Döllenme Başarısızlığı vakalarında 2PN döllenme oranı yüzde 82.", "Mobil Ekran Altyazısı (Auto-Cap)": "🛡️ 1 Yıl Raf Ömrü (Liyofilize Toz) | 2PN Başarısı %82.3"},
-                {"Zaman": "00:28 - 00:38 (Klinik Kanıt)", "Dikey 9:16 Kadraj & Güvenli Alan": "4K time-lapse ile bölünen 5. gün blastosisti. Sağ köşede CE MDR Class IIa hologram damgası.", "Seslendirme (Voiceover - VO)": "Blastosist gelişiminde net artı yüzde 18.4 artış. CE MDR Class IIa onaylı küresel altın standart.", "Mobil Ekran Altyazısı (Auto-Cap)": "📈 Blastosist Artışı +%18.4 | CE MDR Class IIa"},
+                {"Zaman": "00:28 - 00:38 (Klinik Kanıt)", "Dikey 9:16 Kadraj & Güvenli Alan": "4K time-lapse ile bölünen 5. gün blastosisti. Sağ köşede CE Sertifikalı (Class IIa) hologram damgası.", "Seslendirme (Voiceover - VO)": "Blastosist gelişiminde net artı yüzde 18.4 artış. CE Sertifikalı (Class IIa) onaylı küresel altın standart.", "Mobil Ekran Altyazısı (Auto-Cap)": "📈 Blastosist Artışı +%18.4 | CE Sertifikalı (Class IIa)"},
                 {"Zaman": "00:38 - 00:45 (Başparmakla Mobil Eylem)", "Dikey 9:16 Kadraj & Güvenli Alan": "ZEUS Bioscience logosu, animasyonlu parmak klavyede 'P-R-O-T-O-K-O-L' yazar ve DM ikonuna tıklar.", "Seslendirme (Voiceover - VO)": "Klinik çalışma ve aplikasyon protokolünü hemen almak için yoruma 'PROTOKOL' yazın, DM ile anında iletelim!", "Mobil Ekran Altyazısı (Auto-Cap)": "👇 Yoruma 'PROTOKOL' Yazın | DM ile Anında Gelsin"}
             ]
             st.dataframe(pd.DataFrame(sc6_table), use_container_width=True, hide_index=True)
@@ -6862,7 +6880,7 @@ def render_social_media_hub():
                 <div style="background: rgba(10, 25, 47, 0.7); border: 1px solid rgba(16, 185, 129, 0.25); border-radius: 10px; padding: 14px 18px; font-size: 12px; line-height: 1.6;">
                     <b style="color: #10B981; font-size: 13px;">💼 Yorum Döngüsü Lead Magneti ('PROTOKOL' Kuralı)</b><br><br>
                     • <b>Etkileşim Çağrısı:</b> İzleyiciden <i>"Yorumlara 'PROTOKOL' yazın"</i> demesini isteyin.<br>
-                    • <b>Otomatik B2B Dönüşüm:</b> Yoruma 'PROTOKOL' yazan her hekime ZEUS ZPS 26'nın 12 sayfalık CE MDR onaylı klinik vaka raporu ve aplikasyon parametreleri PDF olarak otomatik DM ile iletilir.<br>
+                    • <b>Otomatik B2B Dönüşüm:</b> Yoruma 'PROTOKOL' yazan her hekime ZEUS ZPS 26'nın 12 sayfalık CE Sertifikalı onaylı klinik vaka raporu ve aplikasyon parametreleri PDF olarak otomatik DM ile iletilir.<br>
                     • <b>49 Dakikalık Ana Videoya Köprü:</b> Shorts videosunun sabitlenen yorumuna: <i>"Bu vakanın tüm aşamalarını içeren 49 dakikalık Masterclass videomuzu profil linkinden izleyebilirsiniz."</i> bağlantısını ekleyin.
                 </div>
                 """, unsafe_allow_html=True)
@@ -6878,8 +6896,8 @@ def render_social_media_hub():
             ("1. Total Fertilization Failure (TFF) Vakaları ve Oosit Aktivasyon Çıkmazı",
              "Her embriyoloğun kabusu, hastanın psikolojik yıkımı. 'Neden hiçbiri döllenmedi?' sorusu.",
              "ZEUS ZPS 26 Piezo Stimulator + Calcium-Free AOA Medyası",
-             "'Önceki merkezinde sıfır döllenme alan bir hastada, Piezo AOA ile %82.3 döllenme elde ettik...' vaka paylaşımı.",
-             "PubMed PMID 36814210 / Human Reproduction: Piezo AOA fertilization rate %82.3 vs standard ICSI %24.6."),
+             "'Önceki merkezinde sıfır döllenme alan bir hastada, Elektriksel AOA ile %82.3 döllenme elde ettik...' vaka paylaşımı.",
+             "PubMed PMID 36814210 / Human Reproduction: Electrical AOA fertilization rate %82.3 vs standard ICSI %24.6."),
             ("2. Oosit Membran Kırılganlığı & Mekanik İğne Travmasına Bağlı Lizis",
              "İleri anne yaşı ve dismorfik oositlerde sivri iğnenin zarı yırtması embriyoloğun elinde suçluluk yaratır.",
              "ZEUS ZPS 26 Küt Uçlu Piezo Pipet Adaptörü",
@@ -6888,8 +6906,8 @@ def render_social_media_hub():
             ("3. Kalsiyum İyonofor (A23187) vs Piezoelektrik AOA: Toksisite ve Regülasyon",
              "Kimyasal aktivatörlerin FDA/EMA tarafından medikal cihaz sayılmaması ve potansiyel epigenetik riskler.",
              "ZEUS ZPS 26 (CE Device Certified Class IIa) + Z-Dish Array",
-             "Kıyaslama Carousel'i: Kimyasal İlaç Tipi Çözelti vs CE MDR Onaylı Piezo Medikal Cihazı.",
-             "Reproductive BioMedicine Online: Electric & Piezo AOA shows zero epigenetic methylation anomalies."),
+             "Kıyaslama Carousel'i: Kimyasal İlaç Tipi Çözelti vs CE Sertifikalı Onaylı Piezo Medikal Cihazı.",
+             "Reproductive BioMedicine Online: Electrical AOA shows zero epigenetic methylation anomalies and superior blastocyst formation."),
             ("4. PGT-A Blastosist Biyopsisinde Lazer Termal Hasarı ve Sahte Mozaisizm",
              "Genetik merkezleri ile IVF klinikleri arasındaki kavga: Aşırı lazer atımlarının yarattığı mitokondri hasarı.",
              "BioPSafe Trofektoderm Biyopsi Kiti + Z-Holding Pipet",
@@ -6922,7 +6940,7 @@ def render_social_media_hub():
             {"İçerik Türü": "🎥 Mikroskop Altı Piezo ICSI Vaka Kaydı", "LinkedIn": "⭐⭐⭐⭐ (Klinik Verili)", "YouTube": "⭐⭐⭐⭐⭐ (4K Masterclass)", "Instagram": "⭐⭐⭐⭐⭐ (Reels Hook)", "X / Twitter": "⭐⭐⭐ (Kısa GIF)", "Öncelikli Cihaz/Sarf": "ZPS 26 Piezo Stimulator"},
             {"İçerik Türü": "🧬 Trofektoderm Lazer Hasarı & Biyopsi Protokolü", "LinkedIn": "⭐⭐⭐⭐⭐ (Genetik Raporu)", "YouTube": "⭐⭐⭐⭐ (Uygulama)", "Instagram": "⭐⭐⭐ (Görsel)", "X / Twitter": "⭐⭐⭐⭐ (Veri)", "Öncelikli Cihaz/Sarf": "BioPSafe Biyopsi Kiti"},
             {"İçerik Türü": "🛡️ 7 Aşamalı RFID Numune Eşleme & Witnessing", "LinkedIn": "⭐⭐⭐⭐⭐ (Yönetim & Hukuk)", "YouTube": "⭐⭐⭐⭐ (Sistem Turu)", "Instagram": "⭐⭐ (İnfografik)", "X / Twitter": "⭐⭐⭐ (Sektör Notu)", "Öncelikli Cihaz/Sarf": "Mismatch Blocker RFID"},
-            {"İçerik Türü": "📜 CE MDR Class IIa & MEA Parti Analizleri", "LinkedIn": "⭐⭐⭐⭐⭐ (Güvenilirlik)", "YouTube": "⭐⭐ (Kısa Bahis)", "Instagram": "⭐ (Uygun Değil)", "X / Twitter": "⭐⭐⭐ (Resmi Bülten)", "Öncelikli Cihaz/Sarf": "Z-Dish Array & Medyalar"},
+            {"İçerik Türü": "📜 CE Sertifikalı (Class IIa) & MEA Parti Analizleri", "LinkedIn": "⭐⭐⭐⭐⭐ (Güvenilirlik)", "YouTube": "⭐⭐ (Kısa Bahis)", "Instagram": "⭐ (Uygun Değil)", "X / Twitter": "⭐⭐⭐ (Resmi Bülten)", "Öncelikli Cihaz/Sarf": "Z-Dish Array & Medyalar"},
         ])
         st.dataframe(matrix_df, use_container_width=True, hide_index=True)
 
@@ -6933,9 +6951,9 @@ def render_social_media_hub():
         st.markdown("### 📅 30 Günlük Editoryal İçerik Takvimi & Kopyalanabilir Post Metinleri")
         
         cal_df = pd.DataFrame([
-            {"Hafta": "Hafta 1", "Pazartesi (Bilimsel Kanıt)": "LinkedIn Carousel: TFF Vakalarında Piezo AOA vs İyonofor (PubMed Verileri)", "Çarşamba (Video / Reel)": "Reels & Shorts: Sivri İğne Delmesi vs Piezo Salınımı (Split Screen)", "Cuma (Vaka & Tartışma)": "LinkedIn & X: 'Bu oositi siz olsanız nasıl enjekte ederdiniz?' Vaka Tartışması"},
+            {"Hafta": "Hafta 1", "Pazartesi (Bilimsel Kanıt)": "LinkedIn Carousel: TFF Vakalarında Elektriksel AOA vs Kimyasal İyonofor (PubMed Verileri)", "Çarşamba (Video / Reel)": "Reels & Shorts: Sivri İğne Delmesi vs Piezo Salınımı (Split Screen)", "Cuma (Vaka & Tartışma)": "LinkedIn & X: 'Bu oositi siz olsanız nasıl enjekte ederdiniz?' Vaka Tartışması"},
             {"Hafta": "Hafta 2", "Pazartesi (Bilimsel Kanıt)": "LinkedIn Post: PGT-A Biyopsisinde Lazer Termal Hasarı & Mozaisizm Raporu", "Çarşamba (Video / Reel)": "YouTube & LinkedIn Video: BioPSafe ile 30 Saniyede Trofektoderm Biyopsisi", "Cuma (Vaka & Tartışma)": "X Poll (Anket): 'Kliniğinizde trofektoderm biyopsisinde kaç lazer atımı kullanıyorsunuz?'"},
-            {"Hafta": "Hafta 3", "Pazartesi (Bilimsel Kanıt)": "LinkedIn Carousel: Tüp Bebekte Elektronik Şahitlik (Witnessing) & 7 RFID İstasyonu", "Çarşamba (Video / Reel)": "Reels & Shorts: Mismatch Blocker ile Hatalı Tüp Yaklaştığında Otomatik Kilitleme", "Cuma (Vaka & Tartışma)": "LinkedIn B2B Post: Malpraktis Davalarında CE MDR Class IIa Uyumlu Dijital Denetim İzi"},
+            {"Hafta": "Hafta 3", "Pazartesi (Bilimsel Kanıt)": "LinkedIn Carousel: Tüp Bebekte Elektronik Şahitlik (Witnessing) & 7 RFID İstasyonu", "Çarşamba (Video / Reel)": "Reels & Shorts: Mismatch Blocker ile Hatalı Tüp Yaklaştığında Otomatik Kilitleme", "Cuma (Vaka & Tartışma)": "LinkedIn B2B Post: Malpraktis Davalarında CE Sertifikalı (Class IIa) Uyumlu Dijital Denetim İzi"},
             {"Hafta": "Hafta 4", "Pazartesi (Bilimsel Kanıt)": "LinkedIn Post: Kalsiyumsuz AOA Medyası & Z-Dish Array Mikrokuyucuk Avantajı", "Çarşamba (Video / Reel)": "YouTube Masterclass: Narishige / RI Mikromanipülatörüne ZPS 26 Montaj Kılavuzu", "Cuma (Vaka & Tartışma)": "Webinar Duyurusu: 'Total Döllenme Başarısızlığında Altın Standartlar' Canlı Panel Kaydı"}
         ])
         st.dataframe(cal_df, use_container_width=True, hide_index=True)
@@ -6946,7 +6964,7 @@ def render_social_media_hub():
         copy_sel = st.selectbox(
             "Kopyalamak İstediğiniz Gönderi Şablonunu Seçin:",
             [
-                "Post 1: LinkedIn Bilimsel Carousel (TFF Vakalarında Piezo AOA Üstünlüğü - İngilizce & Türkçe)",
+                "Post 1: LinkedIn Bilimsel Carousel (TFF Vakalarında Elektriksel AOA Üstünlüğü - İngilizce & Türkçe)",
                 "Post 2: Instagram Reels / Shorts Video Metni & Hashtagler (Membran Rüptürü vs Piezo Osilasyonu)",
                 "Post 3: LinkedIn B2B Karar Verici Postu (Mismatch Blocker & Elektronik Şahitlik Hukuki Güvencesi)",
                 "Post 4: YouTube Masterclass Video Başlığı, Açıklaması & Timecodes (BioPSafe Biyopsi)"
@@ -7096,11 +7114,11 @@ Download our free 8-page "Trophectoderm Biopsy & PCR Tubing Standard Operating P
 
 ## 1. Executive Summary
 - Primary Target Audience: IVF Clinic Directors, Chief Embryologists, Reproductive Endocrinologists, MedTech Distributors.
-- Core Positioning: Peer-to-Peer Scientific Authority, CE MDR Class IIa Certified Reproducibility, Zero Chemical Toxicity.
+- Core Positioning: Peer-to-Peer Scientific Authority, CE Sertifikalı (Class IIa) Certified Reproducibility, Zero Chemical Toxicity.
 - Target Monthly Reach: 150,000+ Verified IVF Decision Makers across LinkedIn, YouTube, Instagram & X.
 
 ## 2. Multi-Channel Content Matrix
-- LinkedIn: Peer-reviewed PubMed summaries, CE MDR Class IIa compliance dossiers, B2B distributor partnerships, PDF Carousels.
+- LinkedIn: Peer-reviewed PubMed summaries, CE Sertifikalı (Class IIa) compliance dossiers, B2B distributor partnerships, PDF Carousels.
 - YouTube: 4K micromanipulator application masterclasses, 30-second trophectoderm biopsy with BioPSafe, calibration tutorials.
 - Instagram & Reels: High-retention micro-moments (oolemma piezo pulse without snapping), behind-the-scenes cleanroom footage.
 - X (Twitter): Live ESHRE/ASRM congress live-tweeting, DOI threads, clinical polls.
@@ -7108,7 +7126,7 @@ Download our free 8-page "Trophectoderm Biopsy & PCR Tubing Standard Operating P
 ## 3. High-Engagement Clinical Drivers
 1. Total Fertilization Failure (TFF) management & 82.3% 2PN rescue rate.
 2. Oocyte membrane elasticity & sub-1% lysis preservation.
-3. Calcium Ionophore chemical toxicity vs Piezo AOA mechanical safety.
+3. Chemical Calcium Ionophore toxicity vs Non-Toxic Electrical AOA.
 4. PGT-A thermal laser damage & avoidance of false mosaicism.
 5. Electronic Witnessing (RFID) & malpractice zero-risk assurance.
 
@@ -7522,17 +7540,17 @@ Excel satış kayıtlarındaki 874 işlem ve ürün bazlı çekiş frekansları 
 | :--- | :--- | :--- | :--- | :--- |
 | **Zeus Electro Fusion SET** | $15,890.85 | 1 Ünite | Tekil akademik satışta kaldı; ticari lansman yapılmadı. | **Uluslararası Tanıtım Kampanyası & ESHRE Canlı Workshop** |
 | **Electro Liquid Solution (Powder & 2x1ml)** | $53,014.00 | 997 Şişe/Kutu | Dish çekişine göre %50 geride kalıyor (Oran: 2.1 Dish : 1 Solüsyon). | **10 Dish + 2 Liquid Solution %50 İndirimli Bundle Kampanyası** |
-| **Ferti Med Özel Sağlık (Türkiye)** | $9,400.00 | 1 Piezo Cihazı | 2025'ten bu yana sarf siparişi durmuştur. | **Klinik Aplikasyon Ziyareti & Sarf Teklifi** |
-| **Advanced Tech Co (Kuveyt - ATC)** | $26,250.00 | 3 Piezo Cihazı | Cihaz başı sarf çekişi yalnızca $250 (Toplam 9 kutu). | **Körfez Bölge Aplikasyon Ziyareti & Sertifikasyon** |
-| **Acıbadem & Medipolitan (Türkiye)** | $20,200.00 | 4 Piezo Cihazı | Türkiye'nin dev zincirleri, sarf alımında tekil ve düzensiz kalmış. | **Özel Kurumsal Fiyat Anlaşması + Baş Embriyolog Eğitimi** |
+| **Ferti Med Özel Sağlık (Türkiye)** | $9,400.00 | 1 Elektriksel AOA Cihazı | 2025'ten bu yana sarf siparişi durmuştur. | **Klinik Aplikasyon Ziyareti & Sarf Teklifi** |
+| **Advanced Tech Co (Kuveyt - ATC)** | $26,250.00 | 3 Elektriksel AOA Cihazı | Cihaz başı sarf çekişi yalnızca $250 (Toplam 9 kutu). | **Körfez Bölge Aplikasyon Ziyareti & Sertifikasyon** |
+| **Acıbadem & Medipolitan (Türkiye)** | $20,200.00 | 4 Elektriksel AOA Cihazı | Türkiye'nin dev zincirleri, sarf alımında tekil ve düzensiz kalmış. | **Özel Kurumsal Fiyat Anlaşması + Baş Embriyolog Eğitimi** |
 
 ---
 
 #### 3. 🚀 60 Günlük Acil Eylem ve Kampanya Takvimi
-- **Aşama 1 (İlk 15 Gün) - "Piezo Aktivasyon Paketi" (Bundle) Lansmanı:**
+- **Aşama 1 (İlk 15 Gün) - "Elektriksel AOA Aktivasyon Paketi" (Bundle) Lansmanı:**
   Tüm distribütörlere ve doğrudan müşterilere duyuru yapılacak: 10 Kutu Electro Dish (1x2) siparişine 2 Şişe Electro Liquid Solution %50 indirimli tanımlanacak.
 - **Aşama 2 (Gün 16 - 45) - VIP Klinik Eğitim Seferi:**
-  Klinik Aplikasyon Uzmanımız; İstanbul'da Acıbadem Maslak & Medipolitan, Kuveyt'te ATC klinik partnerlerine yerinde ziyaret gerçekleştirerek *Piezo Oosit Aktivasyon Rutini* protokolünü standardize edecek.
+  Klinik Aplikasyon Uzmanımız; İstanbul'da Acıbadem Maslak & Medipolitan, Kuveyt'te ATC klinik partnerlerine yerinde ziyaret gerçekleştirerek *Elektriksel Oosit Aktivasyon (AOA) Aktivasyon Rutini* protokolünü standardize edecek.
 - **Aşama 3 (Gün 46 - 60) - Electro Fusion SET Avrupa/Körfez Webinar Serisi:**
   Ghent Üniversitesi Baş Araştırmacısı ile birlikte Körfez ve Avrupa'daki 25 referans tüp bebek direktörüne özel online canlı vaka çalıştayı düzenlenecek.
 
@@ -7621,7 +7639,7 @@ Excel veritabanındaki 44 partnerin fatura tarihleri, küresel haber akışları
         kpi_impact = "+$285,000 Yeni Küresel Ciro Potansiyeli (2027 Projeksiyonu)"
         timeline = "90 - 180 Günlük Entegre Eylem Planı"
         target_group = "Asya-Pasifik, Batı Avrupa, Kuzey Amerika, MENA, Latin Amerika & Afrika"
-        risk_level = "Orta — MDR/FDA Regülasyon Süreçleri ve Yerel Distribütör Akreditasyonları"
+        risk_level = "Orta — CE/FDA Regülasyon Süreçleri ve Yerel Distribütör Akreditasyonları"
         
         memo_content = f"""### 📋 ZEUS EXECUTIVE MEMORANDUM
 **Doküman Kodu:** `ZGMI-STRAT-MEMO-2026-GLOBAL-EXP` | **Tarih:** Kasım 2026  
@@ -7663,7 +7681,7 @@ ZEUS Bioscience'ın küresel coğrafi dağılımı analiz edildiğinde; mevcut g
 
 - **Aşama 1 (1 - 45 Gün) - Akademik Dosyalar ve İkili Regülasyon Hazırlığı:**
   - Ghent Üniversitesi'nin Electro Fusion SET verileri ile SJNU Güney Kore'nin Piezo ICSI döllenme başarı verileri, uluslararası hakemli iki ayrı "Clinical Dossier" haline getirilecek.
-  - ABD FDA 510(k) için predicate device (öncül cihaz) kıyaslama dosyası ve Avrupa CE/MDR teknik dokümantasyonu tamamlanacak.
+  - ABD FDA 510(k) için predicate device (öncül cihaz) kıyaslama dosyası ve Avrupa CE Sertifikalı teknik dokümantasyonu tamamlanacak.
 - **Aşama 2 (46 - 90 Gün) - Öncelikli Distribütör Tarama ve LOA Protokolleri:**
   - İspanya (Palex Medical), Almanya (Gynemed), Japonya (Kitazato ağı) ve Brezilya (Spectrun Bio) ile gizlilik sözleşmesi (NDA) ve Letter of Intent (LOI) imzalanacak.
   - BAE'de Sellco Trading ile acil $25,000 yıllık sarf taahhütlü yeni sözleşme imzalanacak veya Dubai Health City alternatif adayına geçilecek.
@@ -7797,7 +7815,7 @@ Excel veri tabanındaki 44 kurum tek tek incelendiğinde, şirketin sarf gelirin
 #### 1. 🎯 Yönetici Özeti & İtalya Soğuk E-Posta Kök Neden Analizi
 İtalya'daki tüp bebek (PMA) kliniklerine genel e-posta (`info@`, `segreteria@`) yoluyla iletilen soğuk mesajların geri dönüşsüz kalması bir ürün yetersizliği değil, **medikal sektörün yapısal bir gerçeğidir**:
 1. **Sekreterlik Filtresi:** Genel e-postalar idari personelce doğrudan ticari spam olarak elenir; Baş Embriyoloğun önüne asla düşmez.
-2. **Klinik Güven & CE Güvencesi:** İtalyan embriyologlar Sağlık Bakanlığı (ISS/PMA) denetimi altındadır. Bağımsız hakemli makale ve CE MDR belgesi ilk cümlede sunulmadığı sürece tanımadıkları bir donanımı gametlere bağlamazlar.
+2. **Klinik Güven & CE Güvencesi:** İtalyan embriyologlar Sağlık Bakanlığı (ISS/PMA) denetimi altındadır. Bağımsız hakemli makale ve CE Sertifikalı belgesi ilk cümlede sunulmadığı sürece tanımadıkları bir donanımı gametlere bağlamazlar.
 3. **Kamu/Zincir Satın Alma Yapısı:** İtalya'da tek tek klinik alımı nadirdir; alımlar yerel distribütörler (Gynemed Italia, Bio-Optica, Palex) veya kamu ihaleleri üzerinden yürütülür.
 
 ---
@@ -7805,7 +7823,7 @@ Excel veri tabanındaki 44 kurum tek tek incelendiğinde, şirketin sarf gelirin
 #### 2. 🗺️ Sıralı Ülke Giriş Stratejisi (Faz 1, Faz 2, Faz 3)
 - **🥇 Faz 1 (Hemen Başlanacak - 0-60 Gün):**
   - **BAE (Dubai/Abu Dhabi):** 28 klinik, $53K kişi başı gelir, %100 özel sektör, İngilizce konuşan uluslararası embriyologlar.
-  - **Mısır (Kahire/İskenderiye):** 75 klinik, 52,000 siklus. Ağır erkek faktörü ve TESE/Globozoospermi yoğunluğu nedeniyle Piezo AOA hayati ihtiyaçtır. Karar verici hekim-patronlardır (Prof. Aboulghar, Prof. Medhat Amer).
+  - **Mısır (Kahire/İskenderiye):** 75 klinik, 52,000 siklus. Ağır erkek faktörü ve TESE/Globozoospermi yoğunluğu nedeniyle Elektriksel AOA hayati ihtiyaçtır. Karar verici hekim-patronlardır (Prof. Aboulghar, Prof. Medhat Amer).
   - **Azerbaycan & Orta Asya:** Türk tüp bebek hekimlerine tam güven; sıfır CE bürokrasisi.
   - **Türkiye İç Pazarı:** Acıbadem, Medipolitan gibi sahadaki uyuyan cihazlara yerinde klinik eğitim verilerek sarf çekişi canlandırılmalıdır.
 - **🥈 Faz 2 (Avrupa Tıp Turizmi Merkezleri - 60-120 Gün):**
@@ -7949,7 +7967,8 @@ def build_executive_pitch(p, country_name, strategy_mode="clinical", custom_note
     """
     Generates an authoritative, highly persuasive B2B outreach email tailored for
     C-Level, Chief Embryologist, or Master Distributor personas in their native language
-    with rigorous peer-reviewed scientific citations.
+    with rigorous peer-reviewed scientific citations and official ZEUS Pulse Stimulator catalog data.
+    CE Certified (No MDR). Electrical Oocyte Activation (AOA - Artificial Oocyte Activation, NOT Piezo-ICSI).
     """
     name = p['name']
     city = p.get('city', 'Metropolitan Center')
@@ -7962,33 +7981,48 @@ def build_executive_pitch(p, country_name, strategy_mode="clinical", custom_note
     elif strategy_mode == "auto":
         strategy_mode = "clinical"
 
-    # Determine effective language
     eff_lang = detect_country_lang(country_name) if (not lang_code or lang_code == "auto") else lang_code
     salutation = format_outreach_salutation(p, eff_lang, strategy_mode)
+
+    c_note_clean = custom_note.strip() if custom_note else ""
+    cn_lower = c_note_clean.lower()
+    has_discount = any(w in cn_lower for w in ["indirim", "iskonto", "discount", "sconto", "descuento", "rabatt", "remise", "filo", "fleet", "%"])
+    has_congress = any(w in cn_lower for w in ["eshre", "kongre", "congress", "vip", "stand", "booth", "davet", "invitation"])
 
     # --------------------------------------------------------------------------
     # 1. ITALIAN (ITALIANO)
     # --------------------------------------------------------------------------
     if eff_lang == "it":
-        custom_note_it = f"\\n\\nNota Strategica Particolare:\\nInoltre, {custom_note.strip()}\\n" if custom_note and custom_note.strip() else ""
+        custom_block = f"""
+------------------------------------------------------------
+📌 DISPOSIZIONI STRATEGICHE & NOTA DIRETTA DELLA DIREZIONE:
+"{c_note_clean}"
+------------------------------------------------------------
+""" if c_note_clean else ""
+
         if strategy_mode == "commercial":
             subject = f"Modello Flotta Istituzionale & Ammortamento Capex: Sistemi ART ZEUS — {name}"
+            if has_discount:
+                subject = f"[Proposta Commerciale Personalizzata] " + subject
+            elif has_congress:
+                subject = f"[Invito VIP ESHRE] " + subject
+
             body = f"""{salutation}
 
 Data la rilevanza clinica di {name} a {city} ({volume}), l'ottimizzazione dell'investimento Capex mantenendo standard di laboratorio d'eccellenza rappresenta una priorità economica strategica.
 
-I sistemi tradizionali di micromanipolazione giapponesi e tedeschi impongono costi d'acquisto sproporzionati e consumabili vincolanti con prezzi in continua ascesa.
+I sistemi tradizionali di attivazione ovocitaria chimica (ionofori di calcio) e le vecchie strumentazioni di elettrostimolazione comportano costi unitari elevati, instabilità di protocollo e rischi epigenetici per gli embrioni.
 
-ZEUS Bioscience propone a {name} un modello di flotta e ammortamento ad alto rendimento:
+ZEUS Bioscience propone a {name} un modello di flotta istituzionale e ammortamento ad alto rendimento basato su ZEUS Pulse Stimulator (Attivazione Oocitaria Elettrica AOA):
 
 1. Riduzione Capex del 35% & Payback Medio in 8.2 Mesi:
-Grazie al nostro programma istituzionale e alla netta riduzione dei cicli falliti (lisi <1.2%), l'investimento si ripaga in media in 8.2 mesi operativi.
+Grazie al nostro programma istituzionale e all'eccellente tasso di sviluppo embrionale (79.37% embrioni di Grado I e II in coorti TFF), l'investimento si ripaga in media in 8.2 mesi operativi.
 
-2. Certezza di Fornitura & Tariffe Consumabili Bloccate (CE MDR):
-Forniamo micropiastre Electro Dish (1x2) e terreni di attivazione certificati CE MDR Classe IIa e ISO 13485 a prezzi bloccati pluriennali.
+2. Certezza di Fornitura & Tariffe Consumabili Bloccate (Certificazione CE):
+Forniamo micropiastre sterili Electro Dish e soluzioni Electroliquid certificate CE e ISO 13485 a prezzi bloccati pluriennali, eliminando l'esposizione a costosi reagenti chimici ionofori.
 
 3. Modello di Partnership & Supporto Applicativo Dedicato:
-Offriamo alle vostre cliniche convenzionate l'affiancamento completo dei nostri specialisti di embriologia clinica per l'avvio immediato dei protocolli piezoelettrici.{custom_note_it}
+Offriamo alle vostre cliniche convenzionate l'affiancamento completo dei nostri specialisti di embriologia clinica per l'avvio immediato dei protocolli di attivazione elettrica fisiologica.{custom_block}
 
 Saremmo lieti di presentare il piano di ammortamento e la matrice sconti flotta alla vostra commissione acquisti.
 
@@ -7999,22 +8033,27 @@ ZEUS Bioscience Europe | E-mail: distribution@zeus-bio.com | Web: www.zeus-bio.c
 
         elif strategy_mode == "distributor":
             subject = f"Proposta di Distribuzione Ufficiale & Partnership MedTech: Piattaforma ZEUS ART — {name}"
+            if has_discount:
+                subject = f"[Accordo Distribuzione con Condizioni Speciali] " + subject
+            elif has_congress:
+                subject = f"[Incontro VIP ESHRE] " + subject
+
             body = f"""{salutation}
 
 La solida leadership logistica e la penetrazione commerciale di {name} nell'approvvigionamento dei centri PMA a {city} ({volume}) costituiscono un punto di riferimento fondamentale per il settore.
 
-Nel momento in cui i laboratori PMA si orientano verso protocolli piezoelettrici avanzati (Piezo-ICSI e AOA) per superare i fallimenti di fertilizzazione, le cliniche ricercano un'alternativa certificata CE MDR solida e accessibile rispetto ai costosi sistemi nipponici.
+Nel momento in cui i laboratori PMA richiedono metodiche avanzate e non-tossiche di attivazione ovocitaria (AOA - Artificial Oocyte Activation) per superare i fallimenti totali di fertilizzazione (TFF) e la globozoospermia, le cliniche ricercano un'alternativa fisica e sicura ai citotossici ionofori chimici di calcio (A23187).
 
-ZEUS Bioscience invita {name} a valutare un accordo di distribuzione territoriale esclusiva:
+ZEUS Bioscience invita {name} a valutare un accordo di distribuzione territoriale esclusiva per la linea ZEUS Pulse Stimulator:
 
 1. Margini Distributore Superiori (>42% Lordo su Hardware e Consumabili):
-Prezzi di cessione altamente competitivi su generatori Piezo Pulse ZPS e piastre sterili Electro Dish con entrate ricorrenti prevedibili.
+Prezzi di cessione altamente competitivi su generatori ZEUS Pulse Stimulator e piastre sterili Electro Dish con entrate ricorrenti prevedibili.
 
-2. Dossier Tecnici e Regolatori Chiavi in Mano (CE MDR 2017/745):
-Documentazione tecnica integrale, test MEA e LAL certificati, e supporto per la rapida qualificazione a gare pubbliche e forniture private.
+2. Dossier Tecnici e Regolatori Chiavi in Mano (Certificazione CE Ufficiale):
+Documentazione tecnica integrale, marcatura CE, test MEA >80% e LAL <0.05 EU/ml certificati, con pieno supporto per la rapida qualificazione a gare pubbliche e forniture private.
 
 3. Esclusività Territoriale e Certificazione Tecnica di Fabbrica:
-Supporto specialistico per workshop clinici, affiancamento co-marketing a congressi SIERR/ESHRE e training di certificazione ufficiale per i vostri specialisti di prodotto.{custom_note_it}
+Supporto specialistico per workshop clinici, affiancamento co-marketing a congressi SIERR/ESHRE e training di certificazione ufficiale per i vostri specialisti di prodotto.{custom_block}
 
 Desideriamo concordare un incontro esecutivo riservato per illustrare il modello margini prima della chiusura delle nomine per il mercato italiano.
 
@@ -8024,40 +8063,45 @@ Direzione Sviluppo Internazionale & Partnership MedTech
 ZEUS Bioscience Europe | E-mail: distribution@zeus-bio.com | Web: www.zeus-bio.com"""
 
         else: # clinical
-            subject = f"Collaborazione Scientifica & Protocollo AOA Piezoelettrico: Evidenze Peer-Reviewed e Riduzione Lisi — {name}"
+            subject = f"Collaborazione Scientifica & Protocollo AOA Elettrico: Dati Clinici Pubblicati (79.4% Embrioni Top Quality) — {name}"
+            if has_congress:
+                subject = f"[Invito Sessione Scientifica ESHRE] " + subject
+            elif has_discount:
+                subject = f"[Proposta Collaborazione Scientifica] " + subject
+
             body = f"""{salutation}
 
 Seguiamo con profonda stima il rigore scientifico e i risultati clinici che caratterizzano il laboratorio PMA di {name} a {city} ({volume}).
 
-Nelle pazienti con età materna avanzata (AMA) o ovociti vitrificati fragili, la micromanipolazione convenzionale comporta un tasso di lisi meccanica compreso tra il 4% e l'8% a causa dello stress da taglio dell'oolemma. Inoltre, il Total Fertilization Failure (TFF) persiste nell'1-3% dei cicli e gli ionofori chimici di calcio presentano note criticità di citotossicità.
+Nelle coppie con precedente fallimento totale di fertilizzazione (Total Fertilization Failure - TFF), bassa percentuale di fecondazione post-ICSI, o fattore maschile severo (globozoospermia con deficit proteico di PLC-zeta), l'attivazione artificiale ovocitaria (AOA) rappresenta l'unica via per salvare il ciclo riproduttivo. Tuttavia, i tradizionali ionofori chimici di calcio (A23187, ionomicina) presentano marcate criticità di citotossicità, instabilità ed eterogeneità di risposta.
 
-Il sistema CE/MDR ZEUS Piezo Pulse AOA risolve questi limiti attraverso 3 evidenze cliniche documentate:
+Il sistema certificato CE ZEUS Pulse Stimulator (The Spark of Life) sostituisce i reagenti chimici attraverso micro-impulsi elettrici ultra-controllati (DC & AC/DC) che inducono un'elettroporazione transitoria della membrana, innescando oscillazioni fisiologiche intracellulari di Ca²⁺ esattamente come farebbe uno spermatozoo naturale.
 
-1. Tasso di Lisi Oocitaria Ridotto a <1.2% (Preservazione Membrana):
-La modulazione assiale piezoelettrica sub-microsecondo apre la membrana senza trazione meccanica né aspirazione traumatica, azzerando le perdite di ovociti maturi.
+I 3 pilastri clinici comprovati del sistema ZEUS Pulse Stimulator:
 
-2. Risoluzione del TFF: Tasso di Fertilizzazione 2PN dall'24.6% all'82.3% (Baltaci et al., p < 0.001):
-Studi clinici multicentrici indipendenti confermano il ripristino fisiologico delle oscillazioni di calcio nei casi di deficit di PLC-zeta spermatico, portando il tasso di blastocisti Day-5 al 48.1% (aumento di 2.2 volte, Ebner et al. / ESHRE Taskforce), senza incremento di anomalie congenite o teratogenicità (Vanden Meerschaut et al., Fertil Steril).
+1. 79.37% di Embrioni Top Quality (Grado I e II) in Cicli TFF:
+I dati clinici dimostrano che il 79.37% degli ovociti stimolati elettricamente dopo fallimenti completi di fecondazione evolve con successo in embrioni di eccellente qualità morfologica.
 
-3. Piena Integrazione Plug-and-Play & Biyogüvenlik CE Device Certified (MDR):
-Perfetta compatibilità con i vostri micromanipolatori in uso (Eppendorf, Narishige, Research Instruments). Ogni lotto di piastre Electro Dish è convalidato da test MEA (Mouse Embryo Assay >80%) ed endotossine LAL <0.05 EU/ml.{custom_note_it}
+2. Efficacia nel Fattore Maschile Severo & Globozoospermia (Baltaci et al. & Tanaka et al.):
+La stimolazione elettrica bypassa la carenza di PLC-zeta spermatico, portando il tasso di fertilizzazione 2PN dall'24.6% all'82.3% (Baltaci et al., p < 0.001) e consentendo lo sviluppo sicuro di oltre 90 nati sani documentati dopo iniezione di spermatidi rotondi (ROSI, Tanaka et al. 2018), in pieno accordo con le raccomandazioni ESHRE 2024 per AOA.
+
+3. Sicurezza Biologica Assoluta & Certificazione CE:
+Completamente non tossico e biocompatibile, privo di esposizione a molecole chimiche estranee. Ogni lotto di piastre Electro Dish è convalidato da test MEA (Mouse Embryo Assay >80%) ed endotossine LAL <0.05 EU/ml.{custom_block}
 
 [SINTESI EVIDENZE CLINICHE (WHITEPAPER BENCHMARK)]:
-• Tasso Fertilizzazione 2PN: 24.6% ➔ 82.3% (+57.7% incremento, p < 0.001)
-• Embrioni Alta Qualità Day-3: 42.0% ➔ 74.5% (+32.5% miglioramento)
-• Blastocisti Day-5 Utilizzabili: 21.4% ➔ 48.1% (aumento di 2.2 volte, p < 0.01)
-• Degenerazione Oocitaria Post-ICSI: ridotta dal 7.8% al 3.2% (sub-1.2% lisi piezo)
-• Standard di Sicurezza: CE Device Certified (MDR) | MEA >80% | Endotossine <0.05 EU/ml
+• Embrioni di Grado I e II in TFF: 79.37% di sviluppo morfologico ottimale
+• Tasso Fertilizzazione 2PN: 24.6% ➔ 82.3% (incremento statisticamente significativo, p < 0.001)
+• Blastocisti Day-5 Utilizzabili: aumento di 2.2 volte rispetto a cicli non attivati (Ebner et al.)
+• Sicurezza Neonatale: zero anomalie congenite aggiuntive rispetto a gravidanze naturali (Tanaka et al. / Vanden Meerschaut et al.)
+• Standard di Sicurezza: Dispositivo Certificato CE | MEA >80% | Endotossine <0.05 EU/ml
 
-Per consentire alla vostra équipe di embriologia di approfondire questi dati clinici:
-Mettiamo a disposizione dei vostri biologi una presentazione tecnica approfondita e l'assistenza diretta del nostro team di embriologia clinica applicata.
-
-[PUBBLICAZIONI SCIENTIFICHE DI RIFERIMENTO / PEER-REVIEWED CITATIONS]:
-1. Baltaci et al. (Reprod BioMed Online / Hum Reprod) — Electrical AOA in recurrent TFF cycles (2PN: 24.6% -> 82.3%, p < 0.001).
-2. Ebner et al. (Hum Reprod Update / ESHRE Taskforce) — Assisted Oocyte Activation consensus & Day-5 blastocyst development.
-3. Vanden Meerschaut et al. (Fertil Steril) — Long-term biosafety & neonatal follow-up in electrical AOA.
-4. Nomikos / Swann et al. (Biochem J) — PLC-zeta deficiency and micro-electrical Ca2+ oscillation restoration.
-5. Dossier Tecnico ZEUS CE MDR Classe IIa — Test MEA >80%, Endotossina LAL <0.05 EU/ml.
+[PUBBLICAZIONI SCIENTIFICHE DI RIFERIMENTO]:
+1. Tanaka et al. (2018) — 90 Babies Born After ROSI & Electrical Oocyte Activation: Follow-up study up to 2 years showing normal physical and cognitive development.
+2. Baltaci et al. (Reprod BioMed Online / Hum Reprod) — Electrical AOA in recurrent TFF cycles (2PN: 24.6% -> 82.3%, p < 0.001).
+3. Ebner et al. (Hum Reprod Update / ESHRE Taskforce) — Assisted Oocyte Activation consensus and Day-5 blastocyst development.
+4. Mansour et al. — Electrical Activation of Oocytes After ICSI in couples with previous TFF.
+5. ESHRE Guideline (2024) — Official recommendation of AOA for low fertilization and globozoospermia.
+6. Dossier Tecnico ZEUS CE — Test MEA >80%, Endotossine LAL <0.05 EU/ml.
 
 Saremmo onorati di concordare un breve confronto scientifico di 15 minuti con il vostro team di embriologia.
 
@@ -8070,25 +8114,36 @@ Contatto Diretto: +90 (212) 850 44 00 | E-mail: scientific@zeusbioscience.com | 
     # 2. SPANISH (ESPAÑOL)
     # --------------------------------------------------------------------------
     elif eff_lang == "es":
-        custom_note_es = f"\\n\\nNota Estratégica Especial:\\nAsimismo, {custom_note.strip()}\\n" if custom_note and custom_note.strip() else ""
+        custom_block = f"""
+------------------------------------------------------------
+📌 DISPOSICIONES ESTRATÉGICAS Y NOTA DE LA DIRECCIÓN:
+"{c_note_clean}"
+------------------------------------------------------------
+""" if c_note_clean else ""
+
         if strategy_mode == "commercial":
             subject = f"Modelo de Flota Institucional y Amortización Capex: Sistemas ZEUS ART — {name}"
+            if has_discount:
+                subject = f"[Propuesta Comercial Personalizada] " + subject
+            elif has_congress:
+                subject = f"[Invitación VIP ESHRE] " + subject
+
             body = f"""{salutation}
 
 Dada la destacada posición clínica de {name} en {city} ({volume}), optimizar la inversión en equipamiento tecnológico garantizando un coste unitario predecible por ciclo constituye una prioridad estratégica.
 
-Los sistemas tradicionales de micromanipulación imponen elevados costes de capital y precios desproporcionados en fungibles.
+Los sistemas tradicionales de activación química con ionóforos de calcio conllevan riesgos de citotoxicidad y costes recurrentes impredecibles.
 
-ZEUS Bioscience pone a su disposición un modelo de flota institucional y amortización acelerada:
+ZEUS Bioscience pone a su disposición un modelo de flota institucional y amortización acelerada para el sistema ZEUS Pulse Stimulator (Activación Oocitaria Eléctrica - AOA):
 
 1. 35% de Reducción en Capex & Amortización en 8.2 Meses:
-Nuestra tecnología patentada Piezo Pulse y la reducción drástica de ovocitos lisados permiten alcanzar el retorno completo de la inversión en 8.2 meses de operación.
+Nuestra tecnología de pulsos eléctricos y el 79.37% de embriones Grado I/II en antecedentes de fallo total de fecundación permiten alcanzar el retorno completo de la inversión en 8.2 meses.
 
-2. Seguridad de Suministro y Precio Fijo Garantizado (CE MDR):
-Suministramos placas Electro Dish (1x2) y medios de activación con certificación europea CE MDR Clase IIa e ISO 13485 bajo acuerdos plurianuales blindados.
+2. Seguridad de Suministro y Precio Fijo Garantizado (Certificación CE):
+Suministramos placas Electro Dish y soluciones de activación con certificación europea CE e ISO 13485 bajo acuerdos plurianuales blindados.
 
 3. Modelo de Alianza Institucional y Formación Especializada:
-Ofrecemos a su red de clínicas formación técnica avanzada presencial para sus embriólogos y soporte directo para la rápida integración operativa.{custom_note_es}
+Ofrecemos a su red de clínicas formación técnica avanzada presencial para sus embriólogos y soporte directo para la rápida integración operativa.{custom_block}
 
 Quedamos a su disposición para coordinar una reunión ejecutiva con su comité de adquisiciones.
 
@@ -8099,22 +8154,27 @@ ZEUS Bioscience Europe | E-mail: distribution@zeus-bio.com | Web: www.zeus-bio.c
 
         elif strategy_mode == "distributor":
             subject = f"Propuesta de Distribución Oficial y Alianza MedTech: Plataforma ZEUS ART — {name}"
+            if has_discount:
+                subject = f"[Condiciones Comerciales de Distribución] " + subject
+            elif has_congress:
+                subject = f"[Reunión Ejecutiva ESHRE] " + subject
+
             body = f"""{salutation}
 
 La excelente red de distribución técnica y el posicionamiento de {name} en el sector de reproducción asistida en {city} ({volume}) representan la plataforma idónea para la innovación de laboratorio.
 
-Ante la creciente demanda de procedimientos piezoeléctricos (Piezo-ICSI y AOA) en España y el sur de Europa para optimizar las tasas de fecundación, las clínicas buscan activamente alternativas con marcado CE MDR que eviten el monopolio de costes de la tecnología asiática.
+Ante la creciente demanda de procedimientos avanzados de activación ovocitaria eléctrica (AOA) para resolver fallos de fecundación y globozoospermia, las clínicas buscan activamente alternativas con certificación CE que sustituyan los ionóforos químicos tóxicos.
 
 ZEUS Bioscience invita a {name} a valorar un acuerdo de distribución regional:
 
 1. Márgenes Superiores (>42% Margen Bruto en Equipos y Consumibles):
-Precios de transferencia sumamente atractivos con un modelo de facturación recurrente en placas de activación.
+Precios de transferencia sumamente atractivos con un modelo de facturación recurrente en placas Electro Dish.
 
-2. Documentación Técnica y Marcado CE MDR 2017/745 Completo:
+2. Documentación Técnica y Certificación CE Completa:
 Dossiers regulatorios validados, homologación MEA/LAL y soporte directo para licitaciones y ventas corporativas.
 
 3. Exclusividad de Zona y Soporte Técnico Directo:
-Respaldo científico en talleres clínicos, patrocinio conjunto en congresos SEF/ESHRE y certificación oficial de fábrica para sus especialistas de producto.{custom_note_es}
+Respaldo científico en talleres clínicos, patrocinio conjunto en congresos SEF/ESHRE y certificación oficial de fábrica para sus especialistas.{custom_block}
 
 Nos complacería mantener una reunión ejecutiva para evaluar las condiciones de distribución antes del cierre del ejercicio.
 
@@ -8124,40 +8184,45 @@ Dirección de Desarrollo Internacional | ZEUS Bioscience Europe
 Email: distribution@zeus-bio.com | Web: www.zeus-bio.com"""
 
         else: # clinical
-            subject = f"Colaboración Científica & Protocollo Clínico Piezo AOA: Evidencias Peer-Reviewed y Reducción de Lisis — {name}"
+            subject = f"Colaboración Científica & Protocolo de Activación Oocitaria Eléctrica (AOA): 79.4% Embriones de Alta Calidad — {name}"
+            if has_congress:
+                subject = f"[Invitación Científica ESHRE] " + subject
+            elif has_discount:
+                subject = f"[Propuesta Científica Personalizada] " + subject
+
             body = f"""{salutation}
 
 Reconocemos el liderazgo científico y la excelencia clínica que avalan la trayectoria del laboratorio de embriología de {name} en {city} ({volume}).
 
-En ciclos de alta complejidad—como pacientes de edad materna avanzada o con ovocitos vitrificados—la microinyección convencional genera entre un 4% y un 8% de lisis por cizallamiento mecánico. Asimismo, el Fallo Total de Fecundación (TFF) afecta al 1-3% de los casos y los ionóforos químicos de calcio conllevan riesgos de citotoxicidad celular.
+En ciclos de alta complejidad—como pacientes con Fallo Total de Fecundación previo (TFF), baja tasa de fertilización post-ICSI o globozoospermia con déficit de PLC-zeta—la activación ovocitaria convencional mediante ionóforos químicos de calcio (A23187) genera incertidumbre citotóxica y variabilidad de respuesta.
 
-El sistema ZEUS Piezo Pulse AOA (con Marcado CE MDR Clase IIa) resuelve estos desafíos mediante 3 pilares clínicos contrastados:
+El sistema ZEUS Pulse Stimulator (The Spark of Life), con Certificación CE, resuelve estos desafíos mediante micro-pulsos eléctricos regulados (DC & AC/DC) que generan una electroporación transitoria, mimetizando la señal fisiológica natural de ondas de calcio ($CaCa²⁺) que desencadena el espermatozoide.
 
-1. Reducción de la Lisis Oocitaria por debajo del 1.2%:
-El pulso lineal piezoeléctrico en microsegundos penetra la zona pelúcida y el oolema sin deformación mecánica ni aspiración forzada, protegiendo gametos comprometidos.
+Los 3 pilares clínicos contrastados de ZEUS Pulse Stimulator:
 
-2. Recuperación en TFF: Tasa de Fecundación 2PN del 24.6% al 82.3% (Baltaci et al., p < 0.001):
-Estudios multicéntricos peer-reviewed demuestran la restitución fisiológica de ondas de calcio en casos de deficiencia de PLC-zeta espermático, elevando el rendimiento de blastocistos transferibles Día-5 al 48.1% (aumento de 2.2x, Ebner et al. / Consenso ESHRE) sin incremento en tasas de anomalías congénitas (Vanden Meerschaut et al., Fertil Steril).
+1. 79.37% de Embriones de Grado I y II en Casos con Historial de TFF:
+Los estudios confirman que el 79.37% de los embriones activados tras fallos totales de fecundación evolucionan a embriones de máxima calidad morfológica.
 
-3. Compatibilidad Integral y Estándares de Bioseguridad CE Device Certified (MDR):
-Acoplamiento directo a sus micromanipuladores actuales (Eppendorf, Narishige, Research Instruments). Certificación de bioseguridad con test MEA >80% y endotoxinas LAL <0.05 EU/ml.{custom_note_es}
+2. Solución Efectiva en Factor Masculino Severo y Globozoospermia (Baltaci et al. & Tanaka et al.):
+Restaura las oscilaciones de calcio en ausencia de PLC-zeta, elevando la tasa 2PN del 24.6% al 82.3% (Baltaci et al., p < 0.001) y respaldado por más de 90 niños nacidos sanos tras ROSI con activación eléctrica (Tanaka et al. 2018), en consonancia con la guía ESHRE 2024.
+
+3. Bioseguridad Total Sin Fármacos Químicos & Certificación CE:
+Totalmente libre de reactivos químicos externos. Cada lote de placas Electro Dish cuenta con validación MEA (>80%) y niveles de endotoxinas LAL <0.05 EU/ml.{custom_block}
 
 [RESUMEN DE EVIDENCIA CLÍNICA (WHITEPAPER BENCHMARK)]:
+• Embriones Grado I y II en TFF: 79.37% de desarrollo embrionario óptimo
 • Tasa de Fecundación 2PN: 24.6% ➔ 82.3% (+57.7% de incremento, p < 0.001)
-• Embriones de Alta Calidad Día-3: 42.0% ➔ 74.5% (+32.5% de mejora)
-• Blastocistos Útiles Día-5: 21.4% ➔ 48.1% (aumento de 2.2x en rendimiento, p < 0.01)
-• Degeneración Oocitaria Post-ICSI: reducida del 7.8% al 3.2% (sub-1.2% lisis piezo)
-• Estándares de Bioseguridad: CE Device Certified (MDR) | MEA >80% | Endotoxinas <0.05 EU/ml
+• Blastocistos Útiles Día-5: aumento de 2.2 veces frente a ciclos no activados (Ebner et al.)
+• Seguridad Neonatal: 90 nacimientos documentados sin diferencias con embarazos naturales (Tanaka et al.)
+• Estándares de Calidad: Dispositivo Certificado CE | MEA >80% | Endotoxinas <0.05 EU/ml
 
-Para permitir a su equipo de embriología contrastar estos avances científicos:
-Ponemos a su disposición una sesión clínica monográfica y el protocolo detallado para resolver los casos de fallo total de fecundación.
-
-[PUBLICACIONES CIENTÍFICAS DE REFERENCIA / PEER-REVIEWED CITATIONS]:
-1. Baltaci et al. (Reprod BioMed Online / Hum Reprod) — AOA eléctrica en ciclos de TFF recurrente (2PN: 24.6% -> 82.3%, p < 0.001).
-2. Ebner et al. (Hum Reprod Update / ESHRE Taskforce) — Consenso sobre activación oocitaria y rendimiento de blastocistos Día-5.
-3. Vanden Meerschaut et al. (Fertil Steril) — Bioseguridad y seguimiento neonatal a largo plazo en AOA eléctrica.
-4. Nomikos / Swann et al. (Biochem J) — Deficiencia de PLC-zeta y oscilaciones fisiológicas de Ca2+.
-5. Dossier Técnico ZEUS CE MDR Clase IIa — Tests MEA >80%, Endotoxinas LAL <0.05 EU/ml.
+[PUBLICACIONES CIENTÍFICAS DE REFERENCIA]:
+1. Tanaka et al. (2018) — 90 Babies Born After ROSI & Electrical Oocyte Activation: Estudio de seguimiento hasta los 2 años.
+2. Baltaci et al. (Reprod BioMed Online / Hum Reprod) — AOA eléctrica en ciclos de TFF recurrente (2PN: 24.6% -> 82.3%, p < 0.001).
+3. Ebner et al. (Hum Reprod Update / ESHRE Taskforce) — Consenso sobre activación oocitaria y rendimiento de blastocistos.
+4. Mansour et al. — Electrical Activation of Oocytes After ICSI in previous TFF.
+5. Guía ESHRE (2024) — Recomendación de AOA en baja fecundación y globozoospermia.
+6. Dossier Técnico ZEUS CE — Tests MEA >80%, Endotoxinas LAL <0.05 EU/ml.
 
 Estaríamos honrados de coordinar una breve sesión científica de 15 minutos con su equipo de embriología.
 
@@ -8170,17 +8235,28 @@ Contacto Directo: +90 (212) 850 44 00 | E-mail: scientific@zeusbioscience.com | 
     # 3. GERMAN (DEUTSCH)
     # --------------------------------------------------------------------------
     elif eff_lang == "de":
-        custom_note_de = f"\\n\\nStrategischer Zusatz:\\nZudem: {custom_note.strip()}\\n" if custom_note and custom_note.strip() else ""
+        custom_block = f"""
+------------------------------------------------------------
+📌 STRATEGISCHE SONDERKONDITIONEN & DIREKTIONSVERMERK:
+"{c_note_clean}"
+------------------------------------------------------------
+""" if c_note_clean else ""
+
         if strategy_mode == "commercial":
             subject = f"Institutionelles Flottenmodell & Investitionsamortisation: ZEUS ART-Systeme — {name}"
+            if has_discount:
+                subject = f"[Sonderkonditionen / Flottenangebot] " + subject
+            elif has_congress:
+                subject = f"[VIP-Kongresseinladung ESHRE] " + subject
+
             body = f"""{salutation}
 
 angesichts der herausragenden klinischen Bedeutung von {name} in {city} ({volume}) stellt die nachhaltige Optimierung der Medizintechnik-Investitionen bei gleichzeitiger Senkung der Fallkosten eine vorrangige strategische Aufgabe dar.
 
-Das ZEUS ART-Flottenmodell bietet Ihrem Institut:
-1. 35% geringere Investitionskosten (Capex) & Amortisation in durchschnittlich 8.2 Monaten.
-2. Preisstabilität bei CE-MDR-zertifizierten Verbrauchsmaterialien (Electro Dish).
-3. Fachliche Begleitung und strukturierter klinischer Einführungsworkshop.{custom_note_de}
+Das ZEUS ART-Flottenmodell für den ZEUS Pulse Stimulator (Elektrische Oozytenaktivierung - AOA) bietet Ihrem Institut:
+1. 35% geringere Investitionskosten (Capex) & Amortisation in durchschnittlich 8.2 Monaten (79.37% Top-Embryonen bei TFF).
+2. Preisstabilität bei CE-zertifizierten Verbrauchsmaterialien (Electro Dish & Electroliquid).
+3. Fachliche Begleitung und strukturierter klinischer Einführungsworkshop.{custom_block}
 
 Gerne stellen wir Ihrem Vorstand unsere Wirtschaftlichkeitsrechnung vor.
 
@@ -8189,14 +8265,19 @@ Kaufmännische Direktion | ZEUS Bioscience Europe"""
 
         elif strategy_mode == "distributor":
             subject = f"Exklusiver Distributions- & MedTech-Partnerschaftsvorschlag: ZEUS ART-Plattform — {name}"
+            if has_discount:
+                subject = f"[Vertriebsvereinbarung mit Sonderkonditionen] " + subject
+            elif has_congress:
+                subject = f"[Exklusivtermin ESHRE] " + subject
+
             body = f"""{salutation}
 
 die etablierte Fachpräsenz und das Servicenetzwerk von {name} im Bereich der Reproduktionsmedizin in {city} ({volume}) machen Ihr Unternehmen zum idealen Partner für moderne IVF-Technologien.
 
-Wir bieten {name} eine autorisierte Gebietsdistribution:
+Wir bieten {name} eine autorisierte Gebietsdistribution für den ZEUS Pulse Stimulator (Chemikalienfreie AOA):
 1. Attraktive Händlermargen (>42% Handelsspanne) mit stetig wiederkehrendem Verbrauchsmaterialumsatz.
-2. Vollständige CE-MDR-Zulassungsdossiers und technische Dokumentation.
-3. Gebietsschutz und zertifizierte Herstellerschulungen für Ihre Servicetechniker.{custom_note_de}
+2. Vollständige CE-Zulassungsdossiers und technische Dokumentation (MEA >80%, LAL <0.05 EU/ml).
+3. Gebietsschutz und zertifizierte Herstellerschulungen für Ihre Servicetechniker.{custom_block}
 
 Gerne besprechen wir die Kooperationsbedingungen im Rahmen eines persönlichen Gesprächs.
 
@@ -8204,44 +8285,36 @@ Mit besten Grüßen,
 Internationale Geschäftsentwicklung | ZEUS Bioscience Europe"""
 
         else: # clinical
-            subject = f"Wissenschaftliche Kooperation & Klinisches AOA-Protokoll: Peer-Reviewed Evidenz bei Fertilisierungsversagen — {name}"
+            subject = f"Wissenschaftliche Kooperation & Elektrisches AOA-Protokoll: 79.4% Top-Embryonen bei Fertilisierungsversagen — {name}"
+            if has_congress:
+                subject = f"[Wissenschaftliche Einladung ESHRE] " + subject
+            elif has_discount:
+                subject = f"[Klinischer Kooperationsvorschlag] " + subject
+
             body = f"""{salutation}
 
 die wissenschaftliche Präzision und Behandlungsqualität von {name} in {city} ({volume}) genießen in der Fachwelt höchstes Ansehen.
 
-Bei Patientinnen mit fortgeschrittenem Alter oder fragilen Eizellen führt die mechanische Standard-ICSI zu einer zellulären Schädigungsrate von 4% bis 8%. Zudem führt ein Total Fertilization Failure (TFF) in 1-3% der Zyklen zu Behandlungsabbrüchen.
+Bei Patientinnen mit rezidivierendem Total Fertilization Failure (TFF), niedriger Befruchtungsrate oder schwerem männlichen Faktor (Globozoospermie mit PLC-Zeta-Mangel) stieß die herkömmliche chemische Kalzium-Ionophor-Behandlung (A23187) aufgrund von Zytotoxizität und inkonsistenter Aktivierung an biologische Grenzen.
 
-Das CE/MDR-zertifizierte ZEUS Piezo Pulse AOA-System bietet klinische Lösungen auf Basis publizierter Daten:
+Der CE-zertifizierte ZEUS Pulse Stimulator (The Spark of Life) induziert durch präzise mikroelektrische Impulse (DC & AC/DC) eine transiente Membranpermeabilisierung und stellt den natürlichen Einstrom physiologischer Kalziumoszillationen ($CaCa²⁺) wie bei natürlicher Befruchtung wieder her.
 
-1. Minimierung der Oozyten-Degenerationsrate auf unter 1.2%:
-Die axiale Piezo-Impulsmodulation penetriert die Zona pellucida und das Oolemm ohne mechanische Scherbelastung oder Ansaugtrauma.
+Die 3 klinischen Kernstärken des ZEUS Pulse Stimulators:
+1. 79.37% Grade I & II Qualitäts-Embryonen bei TFF-Vorgeschichte:
+Klinische Evidenz belegt eine exzellente morphologische Entwicklung nach elektrischer Aktivierung.
+2. Signifikante Steigerung der 2PN-Befruchtungsrate von 24,6% auf 82,3% (Baltaci et al., p < 0.001) & 90 gesunde ROSI-Geburten (Tanaka et al. 2018), voll konform mit der ESHRE-Leitlinie 2024.
+3. 100% chemikalienfrei, biokompatibel und CE-zertifiziert mit MEA-Validierung (>80%) und Endotoxinen <0,05 EU/ml.{custom_block}
 
-2. Signifikante Steigerung der 2PN-Befruchtungsrate von 24,6% auf 82,3% (Baltaci et al., p < 0.001):
-Multizentrische Studien belegen die physiologische Wiederherstellung der Kalziumoszillation bei spermienbedingtem PLC-Zeta-Mangel. Die Ausbeute an nutzbaren Tag-5-Blastozysten steigt auf 48,1% (2,2-facher Zuwachs, Ebner et al. / ESHRE-Konsensus), ohne Erhöhung kindlicher Fehlbildungsraten (Vanden Meerschaut et al., Fertil Steril).
-
-3. Nahtlose Workflow-Integration & CE Device Certified (MDR):
-Kompatibel mit allen gängigen Mikromanipulatoren (Eppendorf, Narishige, RI). Chargengeprüft durch Mausembryo-Assay (MEA >80%) und Endotoxinwerte <0,05 EU/ml.{custom_note_de}
-
-[KLINISCHE EVIDENZ-ÜBERSICHT (WHITEPAPER BENCHMARK)]:
-• 2PN-Befruchtungsrate: 24,6% ➔ 82,3% (+57,7% Steigerung, p < 0.001)
-• Tag-3 Hochqualitative Embryonen: 42,0% ➔ 74,5% (+32,5% Verbesserung)
-• Tag-5 Nutzbare Blastozysten: 21,4% ➔ 48,1% (2,2-facher Zuwachs, p < 0.01)
-• Oozyten-Degenerationsrate: gesenkt von 7,8% auf 3,2% (sub-1,2% Piezo-Schonung)
-• Qualitätsstandards: CE Device Certified (MDR) | MEA >80% | Endotoxin LAL <0,05 EU/ml
-
-Gerne stellen wir Ihrem Team das validierte klinische Protokoll und die wissenschaftlichen Dossiers im Rahmen einer fachlichen Konsultation vor.
-
-[WISSENSCHAFTLICHE REFERENZEN & PUBLIKATIONEN]:
-1. Baltaci et al. (Reprod BioMed Online / Hum Reprod) — Elektrische AOA bei TFF (2PN: 24,6% -> 82,3%, p < 0.001).
-2. Ebner et al. (Hum Reprod Update / ESHRE Taskforce) — AOA-Konsensus und Tag-5 Blastozystenentwicklung.
-3. Vanden Meerschaut et al. (Fertil Steril) — Langzeitsicherheit und neonatale Ergebnisse bei AOA.
-4. Nomikos / Swann et al. (Biochem J) — PLC-Zeta-Mangel und mikroelektrische Kalziumoszillationen.
-5. Technische Dokumentation ZEUS CE MDR Klasse IIa — MEA >80%, Endotoxin LAL <0,05 EU/ml.
+[PUBLIKATIONEN & REFERENZEN]:
+1. Tanaka et al. (2018) — 90 Babies Born After ROSI & Electrical Oocyte Activation (2-Jahres-Follow-up).
+2. Baltaci et al. (Reprod BioMed Online / Hum Reprod) — Elektrische AOA bei TFF (p < 0.001).
+3. Ebner et al. (Hum Reprod Update / ESHRE Taskforce) — AOA-Konsensus und Tag-5 Blastozysten.
+4. ESHRE Guideline (2024) — AOA-Empfehlung bei Globozoospermie und TFF.
+5. Technische Dokumentation ZEUS CE — MEA >80%, Endotoxin LAL <0,05 EU/ml.
 
 Wir freuen uns auf ein 15-minütiges fachliches Gespräch mit Ihrem Reproduktionsbiologen-Team.
 
 Mit kollegialen Grüßen,
-
 Medizinische Direktion & Wissenschaftliche Angelegenheiten | ZEUS Bioscience Europe
 E-Mail: scientific@zeusbioscience.com | Web: www.zeusbioscience.com"""
 
@@ -8249,68 +8322,79 @@ E-Mail: scientific@zeusbioscience.com | Web: www.zeusbioscience.com"""
     # 4. FRENCH (FRANÇAIS)
     # --------------------------------------------------------------------------
     elif eff_lang == "fr":
-        custom_note_fr = f"\\n\\nNote Stratégique:\\nDe plus, {custom_note.strip()}\\n" if custom_note and custom_note.strip() else ""
+        custom_block = f"""
+------------------------------------------------------------
+📌 DISPOSITIONS STRATÉGIQUES & NOTE DE LA DIRECTION:
+"{c_note_clean}"
+------------------------------------------------------------
+""" if c_note_clean else ""
+
         if strategy_mode == "commercial":
             subject = f"Modèle de Flotte Institutionnelle & Amortissement Capex: Systèmes ART ZEUS — {name}"
+            if has_discount:
+                subject = f"[Offre Commerciale Spéciale] " + subject
+            elif has_congress:
+                subject = f"[Invitation VIP ESHRE] " + subject
+
             body = f"""{salutation}
 
-Compte tenu du volume clinique d'excellence de {name} à {city} ({volume}), nous vous présentons notre offre de flotte technologique:
-1. Réduction Capex de 35% et amortissement moyen en 8.2 mois.
-2. Sécurité d'approvisionnement et tarif consommables garanti CE MDR.
-3. Accompagnement clinique et intégration opérationnelle dédiée.{custom_note_fr}
+Compte tenu du volume clinique d'excellence de {name} à {city} ({volume}), nous vous présentons notre offre de flotte technologique pour le stimulateur ovocytaire électrique ZEUS Pulse Stimulator:
+1. Réduction Capex de 35% et amortissement moyen en 8.2 mois (79.37% d'embryons Grado I/II en TFF).
+2. Sécurité d'approvisionnement et tarif consommables garanti avec certification CE.
+3. Accompagnement clinique et intégration opérationnelle dédiée.{custom_block}
 
 Bien cordialement,
 Direction Commerciale | ZEUS Bioscience Europe"""
 
         elif strategy_mode == "distributor":
             subject = f"Proposition de Distribution Officielle & Partenariat MedTech: Gamme ZEUS ART — {name}"
+            if has_discount:
+                subject = f"[Conditions Partenariat Distribution] " + subject
+            elif has_congress:
+                subject = f"[Rendez-vous Direction ESHRE] " + subject
+
             body = f"""{salutation}
 
 Votre réseau de distribution médicale à {city} ({volume}) constitue un atout majeur pour la diffusion des technologies d'AMP.
-Nous vous proposons un accord de distribution exclusive:
+Nous vous proposons un accord de distribution exclusive pour ZEUS Pulse Stimulator (AOA Électrique non toxique):
 1. Marges distributeurs supérieures (>42% marge brute) avec revenus récurrents sur les boîtes Electro Dish.
-2. Dossiers techniques complets CE MDR 2017/745 (MEA >80%, LAL <0.05 EU/ml).
-3. Protection territoriale et formation technique certifiée usine.{custom_note_fr}
+2. Dossiers techniques complets avec certification CE (MEA >80%, LAL <0.05 EU/ml).
+3. Protection territoriale et formation technique certifiée usine.{custom_block}
 
 Sincères salutations,
 Direction du Développement International | ZEUS Bioscience Europe"""
 
         else: # clinical
-            subject = f"Collaboration Scientifique & Protocole d'Activation Oocytaire AOA: Données Cliniques Publiées — {name}"
+            subject = f"Collaboration Scientifique & Protocole d'Activation Ovocytaire Électrique (AOA): 79.4% d'Embryons de Haute Qualité — {name}"
+            if has_congress:
+                subject = f"[Invitation Session Scientifique ESHRE] " + subject
+            elif has_discount:
+                subject = f"[Proposition Scientifique Personnalisée] " + subject
+
             body = f"""{salutation}
 
 Nous saluons la rigueur et l'expertise biologique du centre d'AMP de {name} à {city} ({volume}).
 
-Lors de microinjections sur ovocytes fragiles, le traumatisme mécanique classique engendre 4% à 8% de lyse ovocytaire. De plus, les échecs complets de fécondation (TFF) touchent 1 à 3% des cycles ICSI.
+Face aux échecs complets de fécondation (TFF), aux faibles taux de fécondation et aux infertilités masculines sévères (globozoospermie par déficit en PLC-zêta), les ionophores chimiques de calcium (A23187) soulèvent d'importantes inquiétudes de cytotoxicité.
 
-Le stimulateur piézo-électrique ZEUS Piezo Pulse AOA (marquage CE MDR Classe IIa) répond à ces problématiques:
+Le système ZEUS Pulse Stimulator (The Spark of Life), certifié CE, génère des micro-impulsions électriques calibrées (DC & AC/DC) assurant une électroporation transitoire et restaurant les oscillations physiologiques de calcium intracellulaire ($CaCa²⁺).
 
-1. Taux de Dégénérescence Inférieur à 1.2%:
-Pénétration linéaire axiale de la zone pellucide sans aspiration traumatique.
+Les 3 atouts cliniques majeurs de ZEUS Pulse Stimulator:
+1. 79.37% d'Embryons de Haute Qualité (Grade I & II) en Contexte de TFF:
+Preuve clinique directe d'un développement morphologique optimal sans toxicité chimique.
+2. Résolution du Facteur Masculin Sévère (Baltaci et al. & Tanaka et al.):
+Hausse du taux 2PN de 24.6% à 82.3% (Baltaci et al., p < 0.001) et sécurité validée sur 90 enfants nés après activation électrique en ROSI (Tanaka et al. 2018), en accord avec les recommandations ESHRE 2024.
+3. 100% Sans Produits Chimiques & Certification CE:
+Validé par MEA (>80%) et endotoxines LAL <0.05 EU/ml.{custom_block}
 
-2. Restauration du Taux de Fécondation 2PN de 24.6% à 82.3% (Baltaci et al., p < 0.001):
-Amélioration cliniquement prouvée lors d'anomalies de la PLC-zeta spermatique, avec un taux de blastocystes J-5 atteignant 48.1% (facteur 2.2, Ebner et al. / ESHRE) et sécurité néonatale démontrée (Vanden Meerschaut et al., Fertil Steril).
-
-3. Intégration Immédiate & Normes CE Device Certified (MDR):
-Compatible avec vos micromanipulateurs (Eppendorf, Narishige, RI). Conforme aux normes MEA >80% et endotoxines LAL <0.05 EU/ml.{custom_note_fr}
-
-[SYNTHÈSE DES DONNÉES CLINIQUES (WHITEPAPER BENCHMARK)]:
-• Taux de Fécondation 2PN: 24.6% ➔ 82.3% (+57.7% d'amélioration, p < 0.001)
-• Embryons Haute Qualité J-3: 42.0% ➔ 74.5% (+32.5% d'amélioration)
-• Blastocystes Utilisables J-5: 21.4% ➔ 48.1% (multiplié par 2.2, p < 0.01)
-• Dégénérescence Oocytaire Post-ICSI: réduite de 7.8% à 3.2% (sub-1.2% lyse piezo)
-• Sécurité Biologique: CE Device Certified (MDR) | MEA >80% | Endotoxines <0.05 EU/ml
-
-Nous mettons à la disposition de votre équipe notre protocole clinique validé et l'expertise de nos spécialistes en embryologie appliquée.
-
-[RÉFÉRENCES SCIENTIFIQUES PEER-REVIEWED]:
-1. Baltaci et al. (Reprod BioMed Online / Hum Reprod) — AOA électrique et échecs de fécondation (p < 0.001).
-2. Ebner et al. (Hum Reprod Update / ESHRE) — Consensus clinique AOA et blastocystes J-5.
-3. Vanden Meerschaut et al. (Fertil Steril) — Sécurité clinique et suivi néonatal à long terme.
-4. Dossier Technique ZEUS CE MDR Classe IIa — Tests MEA >80%, Endotoxines <0.05 EU/ml.
+[RÉFÉRENCES SCIENTIFIQUES]:
+1. Tanaka et al. (2018) — 90 Babies Born After ROSI & Electrical Oocyte Activation.
+2. Baltaci et al. (Reprod BioMed Online / Hum Reprod) — AOA électrique et échecs de fécondation (p < 0.001).
+3. Ebner et al. (Hum Reprod Update / ESHRE) — Consensus clinique AOA et blastocystes J-5.
+4. ESHRE Guidelines (2024) — Recommandation de l'AOA en globozoospermie et TFF.
+5. Dossier Technique ZEUS CE — Tests MEA >80%, Endotoxines <0.05 EU/ml.
 
 Bien confraternellement,
-
 Direction Médicale & Affaires Scientifiques | ZEUS Bioscience Europe
 scientific@zeusbioscience.com | www.zeusbioscience.com"""
 
@@ -8318,69 +8402,76 @@ scientific@zeusbioscience.com | www.zeusbioscience.com"""
     # 5. ARABIC (العربية)
     # --------------------------------------------------------------------------
     elif eff_lang == "ar":
-        custom_note_ar = f"\\n\\nملاحظة استراتيجية إضافية:\\nفضلاً عن ذلك، {custom_note.strip()}\\n" if custom_note and custom_note.strip() else ""
+        custom_block = f"""
+------------------------------------------------------------
+📌 البنود الاستراتيجية الخاصة والملاحظات الإدارية المباشرة:
+"{c_note_clean}"
+------------------------------------------------------------
+""" if c_note_clean else ""
+
         if strategy_mode == "commercial":
             subject = f"عرض التجهيز المؤسسي ونموذج الاستهلاك الاقتصادي: تقنيات ZEUS ART — {name}"
+            if has_discount:
+                subject = f"[عرض تجاري خاص بتسهيلات توريد] " + subject
+            elif has_congress:
+                subject = f"[دعوة كبار الشخصيات ESHRE] " + subject
+
             body = f"""{salutation}
 
-انطلاقاً من المكانة المتميزة لمركز {name} في {city} ({volume})، يسعدنا تقديم نموذج الشراكة المؤسسية المعتمد:
-1. تخفيض تكلفة الاستثمار الرأسمالي (Capex) بنسبة 35% مع استرداد الاستثمار خلال 8.2 أشهر.
-2. ضمان توريد مستلزمات التنشيط (Electro Dish) بأسعار ثابتة ومعتمدة أوروبياً (CE MDR).
-3. دعم تطبيقي واعتماد بروتوكول إكلينيكي متقدم بإشراف خبرائنا.{custom_note_ar}
+انطلاقاً من المكانة المتميزة لمركز {name} في {city} ({volume})، يسعدنا تقديم نموذج الشراكة المؤسسية المعتمد لجهاز التنشيط الكهربائي للبويضات ZEUS Pulse Stimulator:
+1. تخفيض تكلفة الاستثمار الرأسمالي (Capex) بنسبة 35% مع استرداد الاستثمار خلال 8.2 أشهر (79.37% أجنة ممتازة في حالات التنشيط الصعبة).
+2. ضمان توريد مستلزمات التنشيط (Electro Dish) بأسعار ثابتة ومعتمدة بشهادة المطابقة الأوروبية CE.
+3. دعم تطبيقي واعتماد بروتوكول إكلينيكي متقدم بإشراف خبرائنا.{custom_block}
 
 وتفضلوا بقبول فائق الاحترام والتقدير،
 الإدارة التجارية والمشتريات المؤسسية | ZEUS Bioscience"""
 
         elif strategy_mode == "distributor":
             subject = f"عرض الشراكة وتوزيع الأجهزة المخبرية المعتمدة: منصة ZEUS ART — {name}"
+            if has_discount:
+                subject = f"[اتفاقية توزيع حصرية بشروط مميزة] " + subject
+            elif has_congress:
+                subject = f"[دعوة لاجتماع الإدارة في ESHRE] " + subject
+
             body = f"""{salutation}
 
-نظراً لريادتكم في توزيع التجهيزات المخبرية وتغطية مراكز الخصوبة في {city} ({volume})، ندعوكم لتقييم عقد التوزيع الحصري:
-1. هوامش ربحية مجزية للموزع تتجاوز 42% مع مبيعات دورية منتظمة لمستهلكات التنشيط.
-2. ملفات تسجيل فنية كاملة بشهادة المطابقة الأوروبية CE MDR 2017/745.
-3. حماية إقليمية وتدريب فني معتمد لمهندسيكم.{custom_note_ar}
+نظراً لريادتكم في توزيع التجهيزات المخبرية وتغطية مراكز الخصوبة في {city} ({volume})، ندعوكم لتقييم عقد التوزيع الحصري لجهاز ZEUS Pulse Stimulator (التنشيط الفيزيائي الآمن الخالي من الكيماويات):
+1. هوامش ربحية مجزية للموزع تتجاوز 42% مع مبيعات دورية منتظمة لأطباق Electro Dish.
+2. ملفات تسجيل فنية كاملة بشهادة المطابقة الأوروبية الرسمية CE (اختبارات MEA >80% و endotoxin <0.05).
+3. حماية إقليمية وتدريب فني معتمد لمهندسيكم.{custom_block}
 
 وتفضلوا بقبول الاحترام،
 إدارة تطوير الأعمال الدولية | ZEUS Bioscience"""
 
         else: # clinical
-            subject = f"شراكة علمية وبروتوكول التنشيط الكهروبيزوي للبويضات (Piezo AOA): نتائج منشورة محكمة — {name}"
+            subject = f"شراكة علمية وبروتوكول التنشيط الكهربائي للبويضات (AOA): 79.4% أجنة عالية الجودة — {name}"
+            if has_congress:
+                subject = f"[دعوة علمية خاصة بمؤتمر ESHRE] " + subject
+            elif has_discount:
+                subject = f"[مقترح تعاون علمي مخصص] " + subject
+
             body = f"""{salutation}
 
 نثمن عالياً المستوى العلمي المتميز لمختبر الإخصاب في {name} بمدينة {city} ({volume}).
 
-تتسبب الطرق التقليدية للحقن المجهري في تلف ميكانيكي للبويضات الهشة بنسبة 4-8%، فضلاً عن فشل التخصيب الكامل (TFF) في 1-3% من الحالات وصعوبة ضبط أمان المواد الكيميائية المنشطة.
+في حالات فشل التخصيب الكامل المتكرر (TFF) أو انخفاض معدلات الإخصاب وعقم الرجال الحاد (مثل Globozoospermia ونقص إنزيم PLC-zeta)، تواجه الوسائل الكيميائية التقليدية (أيونوفور الكالسيوم A23187) محاذير سمية خلوية وتذبذباً في الاستجابة.
 
-يقدم نظام ZEUS Piezo Pulse AOA المعتمد بشهادة CE MDR حلولاً إكلينيكية موثقة:
+يقدم نظام ZEUS Pulse Stimulator المعتمد بشهادة CE الرسمية بديلاً فيزيائياً فائق الأمان من خلال نبضات كهربائية دقيقة للغاية (DC & AC/DC) تحفز نفاذية الغشاء الخلوي مؤقتاً وتستعيد تذبذبات الكالسيوم الفسيولوجية الطبيعية ($CaCa²⁺) كما يحدث في التخصيب الطبيعي.
 
-1. خفض نسبة تلف البويضات إلى أقل من 1.2%:
-اختراق دقيق لغشاء البويضة بنبضات بيزوية دون أي سحب ميكانيكي مجهد.
+أهم 3 ركائز إكلينيكية موثقة لنظام ZEUS Pulse Stimulator:
+1. 79.37% أجنة عالية الجودة (Grade I & II) في حالات فشل التخصيب السابق (TFF):
+نتائج موثقة تثبت تطور الأجنة بنجاح دون أي سمية كيميائية.
+2. رفع نسبة التخصيب 2PN من 24.6% إلى 82.3% (Baltaci et al., p < 0.001) وولادة أكثر من 90 طفلاً سليماً بعد التنشيط الكهربائي لحالات ROSI (Tanaka et al. 2018)، بما يتوافق تماماً مع توصيات الجمعية الأوروبية ESHRE 2024.
+3. أمان حيوي مطلق وخالٍ تماماً من المواد الكيميائية ومعتمد بشهادة CE مع اختبارات MEA >80% ومستويات endotoxin أقل من 0.05 EU/ml.{custom_block}
 
-2. رفع نسبة التخصيب (2PN) من 24.6% إلى 82.3% (Baltaci et al., p < 0.001):
-إثبات استعادة تذبذبات الكالسيوم الفسيولوجية في حالات نقص إنزيم PLC-zeta، ومضاعفة أجنة اليوم الخامس الصالحة للنقل بمقدار 2.2 ضعف (Ebner et al. / ESHRE)، مع أمان تام للأجنة والمواليد (Vanden Meerschaut et al., Fertil Steril).
-
-3. توافق تشغيلي تام واعتمادات CE Device Certified (MDR):
-توافق مباشر مع أجهزة الحقن المجهري بمختبركم (Eppendorf, Narishige, RI)، مع اختبارات أمان الأجنة MEA >80% ومستويات endotoxin أقل من 0.05 EU/ml.{custom_note_ar}
-
-[ملخص المؤشرات الإكلينيكية (WHITEPAPER BENCHMARK)]:
-• نسبة التخصيب (2PN): ارتفعت من 24.6% إلى 82.3% (فارق إحصائي +57.7%، p < 0.001)
-• أجنة اليوم الثالث عالية الجودة: ارتفعت من 42.0% إلى 74.5% (+32.5% تحسن)
-• أجنة اليوم الخامس صالحة للنقل (Day-5 Blastocysts): ارتفعت من 21.4% إلى 48.1% (زيادة 2.2 ضعف، p < 0.01)
-• نسبة تلف أو تحلل البويضات: انخفضت من 7.8% إلى 3.2% (أمان غشائي بيزوي فائق)
-• معايير الجودة: شهادة المطابقة الأوروبية CE Device Certified | فحص MEA >80% | إندوتوكسين <0.05 EU/ml
-
-يسعدنا تقديم جلسة علمية متخصصة ومشاركة البروتوكول الإكلينيكي المعتمد لتقييم النتائج مباشرة مع فريق أطباء وأجنة المركز الموقر.
-
-[المراجع العلمية المحكمة / PEER-REVIEWED REFERENCES]:
-1. Baltaci et al. (Reprod BioMed Online / Hum Reprod) — Electrical AOA in severe TFF cycles (2PN: 24.6% -> 82.3%, p < 0.001).
-2. Ebner et al. (Hum Reprod Update / ESHRE Taskforce) — Assisted Oocyte Activation consensus & blastocyst development.
-3. Vanden Meerschaut et al. (Fertil Steril) — Long-term biosafety & neonatal follow-up in electrical AOA.
-4. ZEUS CE MDR Class IIa Technical Dossier — MEA >80%, Endotoxin LAL <0.05 EU/ml.
-
-يشرفنا التنسيق معكم لإجراء لقاء علمي موجز لمدة 15 دقيقة.
+[المراجع العلمية الموثقة]:
+1. Tanaka et al. (2018) — 90 Babies Born After ROSI & Electrical Oocyte Activation.
+2. Baltaci et al. — Electrical AOA in severe TFF cycles (p < 0.001).
+3. Ebner et al. — ESHRE Consensus on AOA.
+4. ESHRE Guidelines (2024) — Official AOA recommendation.
+5. ZEUS CE Technical Dossier — MEA >80%, Endotoxin <0.05 EU/ml.
 
 وتفضلوا بقبول فائق الاحترام والتقدير،،
-
 الإدارة الطبية والشؤون العلمية | ZEUS Bioscience Europe
 scientific@zeusbioscience.com | www.zeusbioscience.com"""
 
@@ -8388,19 +8479,30 @@ scientific@zeusbioscience.com | www.zeusbioscience.com"""
     # 6. TURKISH (TÜRKÇE)
     # --------------------------------------------------------------------------
     elif eff_lang == "tr":
-        custom_note_tr = f"\\n\\nÖzel Stratejik Hüküm:\\nAyrıca, {custom_note.strip()}\\n" if custom_note and custom_note.strip() else ""
+        custom_block = f"""
+------------------------------------------------------------
+📌 YÖNETİCİ ÖZEL TALİMATI & KURUMSAL TEKLİF MADDESİ:
+"{c_note_clean}"
+------------------------------------------------------------
+""" if c_note_clean else ""
+
         if strategy_mode == "commercial":
             subject = f"Kurumsal Filo ve Teknoloji Amortisman Modeli: ZEUS ART Sistemleri — {name}"
+            if has_discount:
+                subject = f"[Özel İskonto & Filo Avantajı] " + subject
+            elif has_congress:
+                subject = f"[VIP Kongre Daveti / ESHRE] " + subject
+
             body = f"""{salutation}
 
 {name}'nin {city} genelindeki öncü klinik büyüklüğü ({volume}) doğrultusunda, yüksek sikluslu merkezlerde teknoloji standardizasyonunu sağlarken birim siklus maliyetlerini optimize etmenin kurumunuz için stratejik önceliğini yakından takip ediyoruz.
 
-Geleneksel ithal mikromanipülasyon donanımlarının yüksek ilk yatırım (Capex) maliyetleri laboratuvar operasyonel marjlarını zorlamaktadır.
+Geleneksel kimyasal kalsiyum ionophore yöntemleri ve eski tip elektroporatörler yüksek sarf maliyeti, operasyonel değişkenlik ve embriyo toksisitesi riski yaratmaktadır.
 
-ZEUS Bioscience olarak kurumunuza özel geliştirdiğimiz filo amortisman modelini sunuyoruz:
-1. %35 Daha Düşük İlk Yatırım & 8.2 Ayda Hızlı Geri Dönüş (ROI): Artan blastokist gelişim oranları ve azalan siklus iptalleriyle sistem yatırımı hızla kendini amorti eder.
-2. Entegre Sarf Güvencesi ve Sabit Fiyat Protokolü: CE/MDR ve ISO 13485 sertifikalı tek kullanımlık Electro Dish (1x2) ve aktivasyon solüsyonlarını sabit fiyat garantisiyle sunuyoruz.
-3. Kurumsal Teknoloji Entegrasyonu ve Yerinde Eğitim: Embriyoloji ekibinize yerinde klinik protokol eğitimi ve vaka çalıştayı desteği sağlıyoruz.{custom_note_tr}
+ZEUS Bioscience olarak ZEUS Pulse Stimulator (Elektriksel Oosit Aktivasyon - AOA) sistemimizle kurumunuza özel geliştirdiğimiz filo modelini sunuyoruz:
+1. %35 Daha Düşük İlk Yatırım & 8.2 Ayda Hızlı Geri Dönüş (ROI): TFF geçmişi olan zorlu vakalarda dahi %79.37 Grade I & II kaliteli embriyo gelişim oranıyla siklus kayıplarını önler ve yatırımı hızla amorti eder.
+2. Entegre Sarf Güvencesi ve Sabit Fiyat Protokolü: CE Sertifikalı ve ISO 13485 onaylı tek kullanımlık Electro Dish pleytleri ve aktivasyon solüsyonlarını sabit fiyat garantisiyle sunuyoruz.
+3. Kurumsal Teknoloji Entegrasyonu ve Yerinde Eğitim: Embriyoloji ekibinize yerinde klinik protokol eğitimi ve vaka çalıştayı desteği sağlıyoruz.{custom_block}
 
 Kurumsal teklifimizi satınalma heyetinize sunmak üzere kısa bir toplantı planlamaktan onur duyarız.
 
@@ -8409,14 +8511,19 @@ ZEUS Bioscience Kurumsal Satınalma & Medikal Direktörlüğü | www.zeus-bio.co
 
         elif strategy_mode == "distributor":
             subject = f"Resmi Distribütörlük & Bölge Dağıtım Teklifi: ZEUS Üreme Teknolojileri Platformu — {name}"
+            if has_discount:
+                subject = f"[Özel Distribütörlük Fiyat Teklifi] " + subject
+            elif has_congress:
+                subject = f"[VIP Yönetici Görüşmesi / ESHRE] " + subject
+
             body = f"""{salutation}
 
 {name}'nin medikal teknoloji dağıtımındaki yaygın saha ağı ve laboratuvar penetrasyonu ({volume}), bölgedeki tüp bebek merkezlerinin modernizasyonunda kilit bir role sahiptir.
 
-Kliniklerin Piezo-ICSI ve AOA teknolojilerine yöneldiği bu dönemde, yüksek brüt marjlı (%42+) portföyümüzü dağıtım ağınıza kazandırmak istiyoruz:
-1. Yüksek Brüt Marj & Düzenli Sarf Geliri: Donanımda cazip bayi transfer fiyatı ve düzenli sarf taahhüdü.
-2. Tam Ruhsatlandırma ve Teknik Destek: CE/MDR 2017/745 teknik dosyaları, ÜTS kayıt desteği ve sertifikalı teknik servis eğitimi.
-3. Bölge Koruması ve Yerel Pazarlama Desteği: Kongre katılım ve yerinde klinik aplikasyon desteği.{custom_note_tr}
+Kliniklerin toksik kimyasal iyonoforlar yerine güvenli ve fiziksel Elektriksel Oosit Aktivasyon (AOA) teknolojilerine yöneldiği bu dönemde, yüksek brüt marjlı (%42+) portföyümüzü dağıtım ağınıza kazandırmak istiyoruz:
+1. Yüksek Brüt Marj & Düzenli Sarf Geliri: Donanımda cazip bayi transfer fiyatı ve patentli Electro Dish sarflarıyla düzenli nakit akışı.
+2. Tam Ruhsatlandırma ve Teknik Destek: Resmi CE sertifikası, ÜTS kayıt güvencesi ve sertifikalı teknik servis eğitimi.
+3. Bölge Koruması ve Yerel Pazarlama Desteği: Ulusal/uluslararası kongre katılımı ve yerinde klinik aplikasyon desteği.{custom_block}
 
 Yetkili bayilik şartlarımızı değerlendirmek üzere bir toplantı organize etmeyi arzu ederiz.
 
@@ -8424,42 +8531,47 @@ Saygılarımızla,
 ZEUS Bioscience İş Geliştirme Direktörlüğü | distribution@zeus-bio.com"""
 
         else: # clinical
-            subject = f"Bilimsel İş Birliği & Piezo AOA Klinik Protokolü: Hakemli Yayın Kanıtları ve Sub-%1.2 Lizis — {name}"
+            subject = f"Bilimsel İş Birliği & Elektriksel AOA Protokolü: TFF Vakalarında %79.4 Kaliteli Embriyo Başarısı — {name}"
+            if has_congress:
+                subject = f"[ESHRE Kongresi Bilimsel Oturum Daveti] " + subject
+            elif has_discount:
+                subject = f"[Kişiselleştirilmiş Bilimsel İş Birliği] " + subject
+
             body = f"""{salutation}
 
 {name}'nin üremeye yardımcı tedavi alanında {city} merkezlerinde yürüttüğü yüksek standartlı embriyolojik çalışmaları büyük bir takdirle takip ediyoruz ({volume}).
 
-Konvansiyonel mekanik mikroenjeksiyon uygulamalarında, özellikle ileri anne yaşı ve sitoplazmik frajilitesi yüksek kohortlarda manuel delmeye bağlı %4 ile %8 arasında mekanik oosit dejenerasyonu yaşanabilmektedir. Ayrıca tekrarlayan Total Döllenme Başarısızlığı (TFF) vakalarında kimyasal ionophore yöntemleri her merkezde homojen ve güvenli sonuç vermemektedir.
+Tekrarlayan Total Döllenme Başarısızlığı (TFF), post-ICSI düşük fertilizasyon oranları veya sperm kaynaklı PLC-zeta eksikliği (globozoospermi, ROSI vakaları) gibi kritik tablolarda uygulanan geleneksel kimyasal kalsiyum ionophore (A23187) protokolleri, hücre üzerinde toksik kimyasal stres ve epigenetik endişeler barındırmaktadır.
 
-ZEUS Bioscience tarafından geliştirilen CE/MDR belgeli Piezo Pulse Stimulator sistemi, bu kritik laboratuvar sorunlarını 3 kanıtlanmış eksende çözer:
+ZEUS Bioscience tarafından geliştirilen CE Sertifikalı ZEUS Pulse Stimulator (The Spark of Life) sistemi, oosit aktivasyonunu kimyasallardan tamamen arındırarak mikro-elektriksel darbelerle (DC & AC/DC) sağlar. Hücre zarında geçici mikro-porlar açarak fizyolojik kalsiyum ($CaCa²⁺) osilasyonunu doğal spermin yaptığı gibi başlatır.
 
-1. %1.2 Altında Oosit Dejenerasyon Oranı (Hücre Bütünlüğü Koruması):
-Patentli mikrosaniye piezoelektrik puls modülasyonu, oolemma zarını mekanik çekme ve aspirasyon travması olmaksızın hassasça açar; canlılık kaybını %1.2'nin altına düşürür.
+ZEUS Pulse Stimulator sisteminin 3 kanıtlanmış klinik üstünlüğü:
 
-2. TFF Vakalarında 2PN Döllenme Oranının %24.6'dan %82.3'e Yükselmesi (Baltaci et al., p < 0.001):
-Bağımsız çok merkezli klinik çalışmalarda, sperm kaynaklı PLC-zeta eksikliğinde elektriksel piezo pulsların fizyolojik kalsiyum salınımını tetikleyerek Day-5 kullanılabilir blastosist oranını %21.4'ten %48.1'e (2.2 kat artış, Ebner et al. / ESHRE) çıkardığı ve ilave konjenital anomali riski yaratmadığı (Vanden Meerschaut et al., Fertil Steril) ispatlanmıştır.
+1. TFF Vakalarında %79.37 Grade I & II Kaliteli Embriyo Gelişimi:
+Klinik veri havuzumuz, daha önce döllenme başarısızlığı yaşamış kohortlarda elektriksel aktivasyon sonrası embriyoların %79.37'sinin en yüksek kalitede (Grade I ve II) geliştiğini kanıtlamaktadır.
 
-3. Mevcut Mikromanipülatörlerle Tam Uyum & CE Device Certified Güvencesi:
-Eppendorf, Narishige ve Research Instruments sistemlerinizle doğrudan entegre olur. Tüm sarflar MEA (>%80 blastosist) ve LAL (<0.05 EU/ml) test onaylıdır.{custom_note_tr}
+2. Şiddetli Erkek İnfertilitesi & Globozoospermi Başarısı (Baltacı et al. & Tanaka et al.):
+Spermde PLC-zeta proteini bulunmadığında dahi elektriksel uyarı fizyolojik kalsiyum dalgalarını tetikleyerek 2PN döllenme oranını %24.6'dan %82.3'e yükseltir (Baltacı et al., p < 0.001). Tanaka ve ekibinin (2018) çalışmasında elektriksel aktivasyonla dünyaya gelen 90 ROSI bebeğinin 2 yaşına kadar doğal gebeliklerle tamamen eşdeğer gelişim gösterdiği ispatlanmıştır. ESHRE 2024 rehberi de düşük döllenme ve globozoospermide AOA'yı açıkça önermektedir.
+
+3. %100 Kimyasalsız Biyouyumluluk & CE Sertifikası Güvencesi:
+Kimyasal ionofor maruziyeti olmadan saf fiziksel uyarım sağlar. Tüm Electro Dish pleytleri lot bazlı MEA (>%80 blastokist) ve LAL endotoksin (<0.05 EU/ml) onaylıdır.{custom_block}
 
 [BİLİMSEL KLİNİK VERİ ÖZETİ (WHITEPAPER BENCHMARK)]:
-• 2PN Döllenme Oranı: %24.6 ➔ %82.3 (+%57.7 Artış, p < 0.001)
-• Day-3 Yüksek Kalite Embriyo Oranı: %42.0 ➔ %74.5 (+%32.5 İyileşme)
-• Day-5 Kullanılabilir Blastosist Oranı: %21.4 ➔ %48.1 (2.2 Kat Artış, p < 0.01)
-• Oosit Dejenerasyon Oranı: %7.8'den %3.2'ye Düşüş (sub-%1.2 Piezo Zar Bütünlüğü)
-• Kalite & Biyouyumluluk: CE Device Certified (MDR) | MEA >%80 | Endotoksin <0.05 EU/ml
+• TFF Vakalarında Grade I & II Kaliteli Embriyo: %79.37 Başarı
+• 2PN Döllenme Oranı: %24.6 ➔ %82.3 (+%57.7 Anlamlı Artış, p < 0.001)
+• Day-5 Kullanılabilir Blastokist Oranı: 2.2 Kat Artış (Ebner et al. / ESHRE)
+• Neonatal Güvenlik: 90 ROSI bebeğinde 2 yıllık takipte sıfır anomali artışı (Tanaka et al. 2018)
+• Kalite & Biyouyumluluk: CE Sertifikalı | MEA >%80 | Endotoksin LAL <0.05 EU/ml
 
-Bu klinik üstünlüğü kendi laboratuvarınızda değerlendirmeniz adına:
-Merkezinize bilimsel iş birliği kapsamında yerinde klinik aplikasyon sunumu ve doğrulanmış protokol desteği sunmayı teklif ediyoruz.
+[HAKEMLİ BİLİMSEL LİTERATÜR KAYNAKLARI]:
+1. Tanaka et al. (2018) — 90 Babies Born After ROSI & Electrical Oocyte Activation: Follow-up study up to 2 years showing normal physical and cognitive development.
+2. Baltaci et al. (Reprod BioMed Online / Hum Reprod) — TFF vakalarında elektriksel AOA protokolü (2PN: %24.6 -> %82.3, p < 0.001).
+3. Ebner et al. (Hum Reprod Update / ESHRE Konsensüsü) — AOA endikasyonları ve Day-5 blastosist utilizasyonunda 2.2 kat artış.
+4. Mansour et al. — Electrical Activation of Oocytes After ICSI in couples with previous TFF (62% fertilizasyon).
+5. ESHRE Rehberi (2024) — Düşük fertilizasyon ve globozoospermide AOA klinik tavsiyesi.
+6. ZEUS CE Teknik Dosyası — MEA >%80, Endotoksin LAL <0.05 EU/ml.
 
-[HAKEMLİ BİLİMSEL LİTERATÜR KAYNAKLARI / PEER-REVIEWED CITATIONS]:
-1. Baltaci et al. (Reprod BioMed Online / Hum Reprod) — TFF vakalarında elektriksel AOA protokolü (2PN: %24.6 -> %82.3, p < 0.001).
-2. Ebner et al. (Hum Reprod Update / ESHRE Konsensüsü) — AOA endikasyonları ve Day-5 blastosist utilizasyonunda 2.2 kat artış.
-3. Vanden Meerschaut et al. (Fertil Steril) — Elektriksel AOA uzun dönemli biyogüvenlik ve neonatal takip.
-4. Nomikos / Swann et al. (Biochem J) — Sperm PLC-zeta eksikliğinde piezo-elektrik kalsiyum salınım mekanizması.
-5. ZEUS CE MDR Sınıf IIa Teknik Dosyası — MEA >%80, Endotoksin LAL <0.05 EU/ml.
-
-Önümüzdeki hafta 15 dakikalık bir çevrim içi bilimsel bilgilendirme görüşmesi gerçekleştirebilir miyiz?
+Laboratuvarınızdaki zorlu vakaları kurtarmak adına ekibinize yerinde klinik protokol ve vaka çalıştayı sunmaktan memnuniyet duyarız. Önümüzdeki hafta 15 dakikalık çevrim içi bilimsel görüşme planlayabilir miyiz?
 
 En derin saygılarımızla,
 
@@ -8470,25 +8582,36 @@ Doğrudan İletişim: +90 (212) 850 44 00 | E-posta: scientific@zeusbioscience.c
     # 7. ENGLISH (DEFAULT GLOBAL)
     # --------------------------------------------------------------------------
     else:
-        custom_note_en = f"\\n\\nSpecial Strategic Consideration:\\nFurthermore, {custom_note.strip()}\\n" if custom_note and custom_note.strip() else ""
+        custom_block = f"""
+------------------------------------------------------------
+📌 EXECUTIVE DIRECTIVE & TAILORED PROPOSAL CLAUSE:
+"{c_note_clean}"
+------------------------------------------------------------
+""" if c_note_clean else ""
+
         if strategy_mode == "commercial":
             subject = f"Institutional Fleet Economics & Equipment Amortization Proposal: ZEUS ART Systems — {name}"
+            if has_discount:
+                subject = f"[Custom Commercial Proposal / Fleet Pricing] " + subject
+            elif has_congress:
+                subject = f"[VIP Congress Invitation / ESHRE] " + subject
+
             body = f"""{salutation}
 
 Given {name}'s clinical prominence in {city} with an annual treatment scale of {volume}, optimizing equipment capital expenditure while securing standardized per-cycle consumable margins represents a critical strategic priority for your executive leadership.
 
-Fertility networks currently confront disproportionately high capital outlays for legacy Japanese and German micromanipulation systems, coupled with inflated recurring dish and media costs that constrain lab profitability.
+Fertility networks currently confront high recurrent costs and epigenetic cytotoxicity concerns associated with standard chemical calcium ionophores (A23187) and legacy electrical stimulators.
 
-ZEUS Bioscience offers an enterprise-grade capital equipment and consumable partnership structured for institutional scale:
+ZEUS Bioscience offers an enterprise-grade capital equipment and consumable partnership for the ZEUS Pulse Stimulator (Electrical Oocyte Activation - AOA):
 
 1. 35% Capex Reduction & Rapid 8.2-Month Payback:
-Our enterprise fleet tier substantially lowers the upfront capital barrier. By decreasing oocyte degeneration (lysis <1.2%) and lifting blastocyst utilization, our institutional partners achieve full capital payback within an average of 8.2 months.
+Our enterprise fleet tier substantially lowers the upfront capital barrier. By delivering a 79.37% Grade I & II premium embryo formation rate even in historic Total Fertilization Failure (TFF) cohorts, our partners achieve full capital payback within an average of 8.2 months.
 
-2. Supply-Chain Certainty & Fixed Unit Consumable Economics (CE MDR Class IIa):
-We supply ISO 13485 and CE/MDR-certified sterile Electro Dishes (1x2) and dual-activation solutions under predictable multi-year volume contracts, shielding your balance sheet from spot-market price fluctuations.
+2. Supply-Chain Certainty & Fixed Unit Consumable Economics (CE Certified):
+We supply ISO 13485 and CE-Certified sterile Electro Dishes and Electroliquid activation solutions under predictable multi-year volume contracts, shielding your balance sheet from reagent price fluctuations.
 
 3. Dedicated Institutional Integration & Application Support:
-We offer comprehensive on-site clinical embryology training, protocol validation, and dedicated technical workflow integration for your affiliated centers.{custom_note_en}
+We offer comprehensive on-site clinical embryology training, protocol validation, and dedicated technical workflow integration for your affiliated centers.{custom_block}
 
 We would welcome the opportunity to present our financial feasibility model and volume discount matrix to your procurement committee.
 
@@ -8501,22 +8624,27 @@ ZEUS Bioscience Medical Systems | Email: distribution@zeus-bio.com | Web: www.ze
 
         elif strategy_mode == "distributor":
             subject = f"Strategic Distribution Partnership & Regional Representation Proposal: ZEUS Bioscience — {name}"
+            if has_discount:
+                subject = f"[Exclusive Distribution Terms & Commercial Offer] " + subject
+            elif has_congress:
+                subject = f"[Executive Meeting Invitation / ESHRE] " + subject
+
             body = f"""{salutation}
 
 With {name}'s commanding distribution footprint and proven technical service reach across {city} and surrounding territories ({volume}), your organization represents the premier benchmark for reproductive health logistics.
 
-As embryology laboratories across your market transition toward precision Piezo-assisted ICSI and AOA to elevate clinical success rates, clinics actively seek a modern, European-certified CE/MDR alternative to cost-prohibitive legacy equipment.
+As embryology laboratories across your market transition toward non-toxic, physical Electrical Oocyte Activation (AOA) to overcome fertilization failure and severe male infertility, clinics actively seek a modern, European CE-Certified alternative to hazardous chemical ionophores.
 
-ZEUS Bioscience invites {name} to evaluate our exclusive or preferred regional distribution agreement:
+ZEUS Bioscience invites {name} to evaluate our exclusive or preferred regional distribution agreement for the ZEUS Pulse Stimulator platform:
 
 1. Unrivaled Distributor Margins (>42% Gross Hardware & Consumable Margin):
-We provide exceptionally attractive distributor transfer pricing on capital Piezo Pulse Stimulators and recurring sterile Electro Dishes, unlocking predictable multi-year revenue.
+We provide exceptionally attractive distributor transfer pricing on capital ZEUS Pulse Stimulators and recurring sterile Electro Dishes, unlocking predictable multi-year revenue.
 
-2. Comprehensive Turnkey Regulatory Dossiers (CE MDR 2017/745 Class IIa):
-Our in-house regulatory department provides full technical files, CE/MDR certificates, MEA >80% and LAL <0.05 EU/ml validations to accelerate national medical device registration and tender qualification.
+2. Comprehensive Turnkey Regulatory Dossiers (Official CE Certification):
+Our in-house regulatory department provides full technical files, CE certificates, MEA >80% and LAL <0.05 EU/ml validations to accelerate national medical device registration and tender qualification.
 
 3. Protected Territory & Local Clinical Training:
-We guarantee rigorous territorial exclusivity, dedicated clinical workshop support, co-branded marketing at regional reproductive congresses, and factory certification for your technical product specialists.{custom_note_en}
+We guarantee rigorous territorial exclusivity, dedicated clinical workshop support, co-branded marketing at regional reproductive congresses, and factory certification for your technical product specialists.{custom_block}
 
 Before finalizing our regional distribution appointments for the forthcoming fiscal period, we would be delighted to review our commercial distributor agreement and margin model with your board.
 
@@ -8528,47 +8656,55 @@ International Business Development Directorate
 ZEUS Bioscience Europe | Email: distribution@zeus-bio.com | Web: www.zeus-bio.com"""
 
         else: # clinical
-            subject = f"Scientific Partnership & Clinical Protocol Review: Peer-Reviewed AOA Protocol & Sub-1.2% Lysis — {name}"
+            subject = f"Scientific Partnership & Electrical AOA Protocol: 79.4% Top-Quality Embryo Rescue in TFF — {name}"
+            if has_congress:
+                subject = f"[ESHRE Scientific Session Invitation] " + subject
+            elif has_discount:
+                subject = f"[Tailored Scientific Collaboration] " + subject
+
             body = f"""{salutation}
 
 As {name} stands at the forefront of reproductive medicine in {city} with an impressive clinical volume of {volume}, we follow your ongoing contributions to embryological excellence with the highest regard.
 
-In contemporary ART—particularly across advanced maternal age (AMA) cohorts and cryopreserved oocyte cycles—mechanical microinjection trauma remains an acute clinical challenge. Conventional needle piercing induces an estimated 4% to 8% oocyte lysis rate due to shear stress on fragile oolemma membranes, while total fertilization failure (TFF) persists in 1-3% of cycles and chemical calcium ionophores carry variable cytotoxicity concerns.
+In contemporary ART—particularly across difficult cases confronting Total Fertilization Failure (TFF), post-ICSI low fertilization rates, or severe male-factor infertility (such as globozoospermia with complete PLC-zeta deficiency)—traditional chemical calcium ionophores (A23187, ionomycin) present notable drawbacks including variable cytoplasmic cytotoxicity, epigenetic risks, and inconsistent laboratory response.
 
-ZEUS Bioscience has engineered the CE/MDR-certified Piezo Pulse Stimulator specifically to resolve these micromanipulation limitations through 3 peer-reviewed clinical pillars:
+ZEUS Bioscience has engineered the CE-Certified ZEUS Pulse Stimulator (The Spark of Life) specifically to replace chemical activation through ultra-precise micro-electrical pulses (DC & AC/DC modes). By creating transient, reversible membrane microporation, it triggers natural, physiological intracellular calcium ($CaCa²⁺) oscillations mimicking the biological role of sperm-borne PLC-zeta.
 
-1. Sub-1.2% Oocyte Degeneration Rate (Membrane Elasticity Preservation):
-Our patented sub-microsecond linear axial piezoelectric pulse enables ultra-precise zona and oolemma penetration without manual aspiration, eliminating mechanical membrane tearing even in vulnerable oocyte groups.
+The 3 proven clinical pillars of the ZEUS Pulse Stimulator system:
 
-2. TFF Rescue: 2PN Fertilization Rate Improvement from 24.6% to 82.3% (Baltaci et al., p < 0.001):
-Independent multicenter trials confirm physiological restoration of calcium oscillations in cases of sperm-borne PLC-zeta deficiency, expanding Day-5 usable blastocysts to 48.1% (a 2.2x increase, Ebner et al. / ESHRE Taskforce Consensus) with zero increase in congenital abnormalities or teratogenicity (Vanden Meerschaut et al., Fertil Steril).
+1. 79.37% Grade I & II Embryo Formation in TFF Cohorts:
+Extensive clinical evidence confirms that 79.37% of activated oocytes with a documented history of total fertilization failure successfully develop into Grade I and Grade II top-quality embryos, rescuing cycles that would otherwise be discarded.
 
-3. Seamless Plug-and-Play Workflow Integration & CE Device Certified Standards:
-Engineered for immediate synchronization with existing inverted microscope micromanipulators (Eppendorf, Narishige, Research Instruments) without requiring lab recalibration. Validated by Mouse Embryo Assay (MEA >80%) and Endotoxin LAL <0.05 EU/ml testing.{custom_note_en}
+2. Clinical Rescue in Severe Male Factor & Globozoospermia (Baltaci et al. & Tanaka et al.):
+By bypassing sperm activation deficiencies, it restores 2PN fertilization rates from 24.6% to 82.3% (Baltaci et al., p < 0.001) and is clinically corroborated by more than 90 healthy babies born after round spermatid injection (ROSI) with electrical activation (Tanaka et al. 2018), showing normal 2-year physical and cognitive development in line with the ESHRE 2024 guideline recommendations.
+
+3. 100% Chemical-Free Biocompatibility & Official CE Certification:
+Eliminates all foreign chemical exposure, ensuring non-toxic embryonic development. Every lot of Electro Dishes and Electroliquid solution is validated by Mouse Embryo Assay (MEA >80%) and Endotoxin LAL <0.05 EU/ml testing.{custom_block}
 
 [CLINICAL EVIDENCE SUMMARY (WHITEPAPER BENCHMARK)]:
-• 2PN Fertilization Rate: 24.6% ➔ 82.3% (+57.7% increase, p < 0.001)
-• Day-3 High-Quality Embryos: 42.0% ➔ 74.5% (+32.5% improvement)
-• Day-5 Usable Blastocysts: 21.4% ➔ 48.1% (2.2x yield expansion, p < 0.01)
-• Oocyte Degeneration Rate: reduced from 7.8% down to 3.2% (sub-1.2% piezo membrane preservation)
-• Quality & Compliance: CE Device Certified (MDR) | MEA >80% | Endotoxin LAL <0.05 EU/ml
+• Grade I & II Embryos in TFF Cycles: 79.37% Optimal Morphological Development
+• 2PN Fertilization Rate: 24.6% ➔ 82.3% (+57.7% Statistically Significant Improvement, p < 0.001)
+• Usable Day-5 Blastocysts: 2.2x Increase Compared to Non-Activated Cycles (Ebner et al. / ESHRE)
+• Neonatal Safety: 90 Documented Healthy ROSI Babies with Zero Added Anomaly Risk (Tanaka et al. 2018)
+• Quality & Compliance: CE-Certified Medical Device | MEA >80% | Endotoxin LAL <0.05 EU/ml
 
-To allow your senior embryology team to objectively evaluate this technology within your clinical workflow:
-ZEUS Bioscience offers a comprehensive scientific briefing and detailed clinical protocol consultation conducted by our European Clinical Embryology Specialist.
+[PEER-REVIEWED SCIENTIFIC REFERENCES]:
+1. Tanaka et al. (2018) — 90 Babies Born After ROSI & Electrical Oocyte Activation: Follow-up study up to 2 years showing normal physical and cognitive development.
+2. Baltaci et al. (Reprod BioMed Online / Hum Reprod) — Electrical AOA in recurrent TFF cycles (2PN: 24.6% -> 82.3%, p < 0.001).
+3. Ebner et al. (Hum Reprod Update / ESHRE Taskforce) — Assisted Oocyte Activation consensus & Day-5 blastocyst development.
+4. Mansour et al. — Electrical Activation of Oocytes After ICSI in couples with previous TFF (62% fertilization).
+5. ESHRE Guidelines (2024) — Official recommendation of AOA in low fertilization and globozoospermia.
+6. ZEUS CE Technical Dossier — MEA >80%, Endotoxin LAL <0.05 EU/ml.
 
-[PEER-REVIEWED SCIENTIFIC CITATIONS & CLINICAL BENCHMARKS]:
-1. Baltaci et al. (Reprod BioMed Online / Hum Reprod) — Electrical AOA in recurrent TFF cycles (2PN: 24.6% -> 82.3%, p < 0.001).
-2. Ebner et al. (Hum Reprod Update / ESHRE Taskforce) — Assisted Oocyte Activation consensus & 2.2x blastocyst expansion.
-3. Vanden Meerschaut et al. (Fertil Steril) — Long-term biosafety & neonatal follow-up in electrical AOA.
-4. Nomikos / Swann et al. (Biochem J) — PLC-zeta deficiency and micro-electrical Ca2+ oscillation restoration.
-5. ZEUS CE MDR Class IIa Technical Dossier — MEA >80%, Endotoxin LAL <0.05 EU/ml.
+To evaluate this protocol within your clinical embryology team:
+We would be honored to arrange an on-site clinical protocol presentation and validation case workshop with your senior embryologists.
 
-Could we coordinate a brief 15-minute scientific briefing this Thursday with our Medical Affairs Director?
+Could we schedule a concise 15-minute scientific briefing next week?
 
-Sincerely,
+Warm regards,
 
-Medical Affairs & Scientific Directorate | ZEUS Bioscience Europe
-Direct: +90 (212) 850 44 00 | Email: scientific@zeusbioscience.com | Web: www.zeusbioscience.com"""
+Medical Directorate & Scientific Affairs | ZEUS Bioscience Europe
+Direct Contact: +90 (212) 850 44 00 | Email: scientific@zeusbioscience.com | Web: www.zeusbioscience.com"""
 
     return subject, body
 
@@ -8680,7 +8816,7 @@ def get_country_gtm_directory(c_name, c_row=None):
                 {"Kurum / Klinik": "Doha Clinic Hospital Fertility Center", "Lider / Karar Verici": "Dr. Marwan Al-Halabi", "Konum": "Doha (New Mirqab)", "İletişim / Profil": "dohaclinic@qatar.net.qa", "Email": "m.halabi@dohaclinic.com"},
                 {"Kurum / Klinik": "Al Ahli Hospital IVF & Genetics Department", "Lider / Karar Verici": "Dr. Ahmad Hazem & ART Ekibi", "Konum": "Doha (Ahmed Bin Ali St)", "İletişim / Profil": "ivf@ahlihospital.com", "Email": "ahazem@ahlihospital.com"}
             ],
-            "market_context": "Katar kişi başı $85,000+ geliriyle en prestijli Körfez pazarıdır. Sidra Medicine ve Hamad'da fiyat baskısı yoktur; CE MDR Class IIa, sıfır kontaminasyon ve 7 aşamalı numune şahitliği teknolojilerine odaklanılmalıdır."
+            "market_context": "Katar kişi başı $85,000+ geliriyle en prestijli Körfez pazarıdır. Sidra Medicine ve Hamad'da fiyat baskısı yoktur; CE Sertifikalı (Class IIa), sıfır kontaminasyon ve 7 aşamalı numune şahitliği teknolojilerine odaklanılmalıdır."
         }
     elif any(k in c_l for k in ["algeria", "cezayir"]):
         return {
@@ -8729,7 +8865,7 @@ def get_country_gtm_directory(c_name, c_row=None):
                 {"Kurum / Klinik": "Kinderwunschzentrum Hamburg", "Lider / Karar Verici": "Dr. Robert Fischer", "Konum": "Hamburg", "İletişim / Profil": "labor@kinderwunsch-hamburg.de", "Email": "fischer@kinderwunsch-hamburg.de"},
                 {"Kurum / Klinik": "Uni-Klinikum Bonn ART Lab", "Lider / Karar Verici": "Kıdemli Reproduktionsbiologe Heyeti", "Konum": "Bonn", "İletişim / Profil": "art-lab@ukbonn.de", "Email": "art-lab@ukbonn.de"}
             ],
-            "market_context": "Almanya'da MEA test sertifikası ve CE MDR dosyası olmadan klinik görüşme yapılmaz; yerel distribütör veya satış mümessili ile ilerlenmelidir."
+            "market_context": "Almanya'da MEA test sertifikası ve CE Sertifikalı dosyası olmadan klinik görüşme yapılmaz; yerel distribütör veya satış mümessili ile ilerlenmelidir."
         }
     elif any(k in c_l for k in ["türkiye", "turkey"]):
         return {
@@ -8813,7 +8949,7 @@ GLOBAL_PROSPECT_RADAR = {
             "product_match": "🧬 ZEUS BioPSafe (ZBS26) + ❄️ Smart Cryo-Tools (4X Tank Kapasite Paketi)",
             "est_revenue": "$55,000 USD / Yıl",
             "why_target": "Düşük over rezervi (POR) ve tekrarlayan implantasyon başarısızlığı (RIF) vakalarında uzmanlaşmış prestijli referans grubu.",
-            "pitch_template": "Sayın Laboratuvar Direktörü,\n\nInstituto Bernabeu'nun düşük yanıtlı hasta gruplarındaki yenilikçi klinik protokolleri doğrultusunda, ZEUS Piezoelektrik oosit stimülasyon sisteminin embriyo blastokist gelişim oranlarına etkisini gösteren güncel vaka serimizi sunmak isteriz. CE/MDR belgeli sistemimiz ve numune sarf kitimiz incelemenize hazırdır."
+            "pitch_template": "Sayın Laboratuvar Direktörü,\n\nInstituto Bernabeu'nun düşük yanıtlı hasta gruplarındaki yenilikçi klinik protokolleri doğrultusunda, ZEUS Piezoelektrik oosit stimülasyon sisteminin embriyo blastokist gelişim oranlarına etkisini gösteren güncel vaka serimizi sunmak isteriz. CE Sertifikalı belgeli sistemimiz ve numune sarf kitimiz incelemenize hazırdır."
         },
         {
             "name": "Quirónsalud Reproducción Asistida",
@@ -8998,8 +9134,8 @@ GLOBAL_PROSPECT_RADAR = {
             "decision_maker": "Klinik Direktör & Baş Embriyolog",
             "product_match": "⚡ ZEUS Pulse Stimulator (ZPS 26) + ❄️ Smart Cryo-Tools 4X Ekosistemi",
             "est_revenue": "$150,000 USD / Yıl",
-            "why_target": "Japonya'da Piezo-ICSI klinik altın standarttır; KLC düşük stimülasyon protokolünde dünya lideridir.",
-            "pitch_template": "Dear Clinical Director,\n\nIn Japanese ART where Piezo-ICSI is paramount for oocyte integrity, ZEUS Piezo Pulse Stimulator offers ultra-stable frequency modulation and rapid pulse micro-bursting, validated in Asian embryology clinics."
+            "why_target": "Japonya'da zorlu fertilizasyon protokollerinde oosit aktivasyonu klinik altın standarttır; KLC düşük stimülasyon protokolünde dünya lideridir.",
+            "pitch_template": "Dear Clinical Director,\n\nIn Japanese ART where non-toxic fertilization protocols are paramount, ZEUS Piezo Pulse Stimulator offers ultra-stable frequency modulation and rapid pulse micro-bursting, validated in Asian embryology clinics."
         },
         {
             "name": "Kitazato Corporation / Sugiyama Shoji",
@@ -9301,7 +9437,7 @@ GLOBAL_PROSPECT_RADAR = {
             "product_match": "ZEUS Piezo Stimulator + Sarf Aboneliği",
             "est_revenue": "$70,000 USD / Yıl",
             "why_target": "HFEA denetimlerinde üstün başarı; ileri yaş anne grubu ve düşük oosit kalitesi vakalarında Piezo öncüsü.",
-            "pitch_template": "Dear Clinical Director,\n\nRecognizing The Lister Fertility Clinic's clinical excellence in managing complex fertility cases, ZEUS Bioscience introduces our CE/MDR-compliant Piezo Pulse Stimulator for targeted oocyte activation and reduced ICSI trauma."
+            "pitch_template": "Dear Clinical Director,\n\nRecognizing The Lister Fertility Clinic's clinical excellence in managing complex fertility cases, ZEUS Bioscience introduces our CE Sertifikalı-compliant Piezo Pulse Stimulator for targeted oocyte activation and reduced ICSI trauma."
         },
         {
             "name": "Research Instruments Ltd (CooperSurgical UK)",
@@ -9357,7 +9493,7 @@ GLOBAL_PROSPECT_RADAR = {
             "product_match": "Fransa Ulusal Dağıtım Sözleşmesi",
             "est_revenue": "$120,000 USD / Yıl",
             "why_target": "Fransız tüp bebek laboratuvarlarına sarf ve kateter tedariğinde tartışmasız pazar lideri.",
-            "pitch_template": "Monsieur le Directeur,\n\nFort de votre leadership sur le marché français de la PMA, ZEUS Bioscience vous propose d'intégrer notre stimulateur piézoélectrique d'activation oocytaire certifié CE/MDR à votre portefeuille de distribution."
+            "pitch_template": "Monsieur le Directeur,\n\nFort de votre leadership sur le marché français de la PMA, ZEUS Bioscience vous propose d'intégrer notre stimulateur piézoélectrique d'activation oocytaire certifié CE Sertifikalı à votre portefeuille de distribution."
         }
     ]
 }
@@ -9399,7 +9535,7 @@ ZEUS_GLOBAL_REFERENCE_NETWORK_2026 = {
             'territory_tr': 'Güney Kore (Doğu Asya Yetkili Teknoloji Partneri)',
             'status': 'Stratejik İleri Teknoloji Partneri (7 Cihaz Kurulumu, $36.8K Ciro, ROSI Protokol Lideri)',
             'key_centers': ['Suji Maria Hospital (Seul)', 'Dongtan Maria Hospital (Seul)'],
-            'focus_products': ['ZEUS Pulse Stimulator (Piezo AOA & ROSI)', 'Black-Box BioPSafe Platform', 'Smart Cryo-Tools']
+            'focus_products': ['ZEUS Pulse Stimulator (Elektriksel AOA & ROSI)', 'Black-Box BioPSafe Platform', 'Smart Cryo-Tools']
         },
         {
             'name': 'Geen Medical Co. (Under the Brand of IVF MedTech)',
@@ -9430,7 +9566,7 @@ ZEUS_GLOBAL_REFERENCE_NETWORK_2026 = {
         {'name': 'Fakih IVF (Dubai)', 'country': 'United Arab Emirates', 'region': 'MENA', 'highlight': 'Ortadoğu’nun en prestijli zincir tüp bebek merkezi; Black-Box ve Kriyomimari referansı.'},
         {'name': 'King Fahad Medical City (KFMC)', 'country': 'Saudi Arabia', 'region': 'MENA', 'highlight': 'Körfez’in en büyük kamu araştırma ve tıp kompleksi; PGT ve kalite şahitlik protokolleri.'},
         {'name': 'Erfan ART and IVF Unit', 'country': 'Saudi Arabia', 'region': 'MENA', 'highlight': 'Cidde’nin öncü özel tüp bebek merkezi; piezoelektrik aktivasyon kullanıcısı.'},
-        {'name': 'Avenues Life London Fertility & IVF Centre', 'country': 'United Kingdom', 'region': 'Europe', 'highlight': 'Londra Harley Street bölgesinde uluslararası referans merkezi; CE/MDR onaylı teknoloji.'},
+        {'name': 'Avenues Life London Fertility & IVF Centre', 'country': 'United Kingdom', 'region': 'Europe', 'highlight': 'Londra Harley Street bölgesinde uluslararası referans merkezi; CE Sertifikalı onaylı teknoloji.'},
         {'name': 'Suji Maria Hospital & Dongtan Maria Hospital', 'country': 'South Korea', 'region': 'Asia-Pacific', 'highlight': 'Dünyanın en yüksek sikluslu Maria IVF zinciri; Piezo aktivasyon ve ROSI öncüsü.'},
         {'name': 'Farah Center & Sadeen Center', 'country': 'Iraq', 'region': 'MENA', 'highlight': 'Bağdat ve Erbil’de yüksek vaka hacimli klinik referansları; 18 kurulu piezo cihazı ağı.'},
         {'name': 'Amal Hospital, Isteqlal Hospital, Shmissani Hospital', 'country': 'Jordan', 'region': 'MENA', 'highlight': 'Amman’ın köklü özel hastane tüp bebek birimleri; düzenli sarf döngüsü.'},
@@ -9484,7 +9620,7 @@ ZEUS_CLINICAL_DEVICE_PORTFOLIO = {
             'modes': 'Dual-Mode Stimülasyon: DC Modu (70 µs mikro-darbe) & AC/DC Modu (5 sn AC + 70 µs DC ayarlanabilir)',
             'dimensions': '140 x 240 x 190 mm | Ağırlık: 3.425 g (Laminar kabin veya stereo tabla yanı kompakt form)',
             'safety': 'Depolanmış kondansatör akımı ile sabit voltaj hassasiyeti; oosit lizis oranı <%1.0',
-            'certification': 'CE İşareti, MDR & ISO 13485 Uyumlu, T.C. Ticaret Bakanlığı 89252994-401.01.05 Satış İzni, TİTCK ÜTS Kayıtlı',
+            'certification': 'CE İşareti, ISO 13485 Belgeli, T.C. Ticaret Bakanlığı 89252994-401.01.05 Satış İzni, TİTCK ÜTS Kayıtlı',
             'shelf_life_breakthrough': 'Liyofilize Toz Formülü (Mart 2026 İtibarıyla): Çözülmemiş kuru toz 1 YIL (12 Ay) stabil raf ömrü (+2°C / +25°C); sulandırıldıktan sonra 2 ay kullanım ömrü. (Eski sıvı solüsyonların 2 aylık bozulma kısıtı ve soğuk zincir riski tamamen aşılmıştır)'
         },
         'consumables': [
@@ -9697,7 +9833,7 @@ def get_country_device_suitability(c_row):
     elif dist_match and c_name in ['Jordan', 'Iraq']:
         zps_rationale = "Sirius Pharm Company ve Farah/Sadeen/Amal referanslarıyla kurulu 18 piezo cihazlık tabanda Electro Dish (ZPS13-002) ve Electroliquid düzenli sarf çekişi garanti altındadır."
     elif dist_match and c_name == 'South Korea':
-        zps_rationale = "SJNU INC ve Suji/Dongtan Maria Hospital referanslarıyla Piezo AOA ve Tanaka ROSI protokolü pazar standardı durumundadır; ESHRE add-on uyumlu en yüksek penetrasyon pazarımızdır."
+        zps_rationale = "SJNU INC ve Suji/Dongtan Maria Hospital referanslarıyla Elektriksel AOA ve Tanaka ROSI protokolü pazar standardı durumundadır; ESHRE add-on uyumlu en yüksek penetrasyon pazarımızdır."
     else:
         zps_rationale = f"{c_name} pazarında %{icsi_pct:.0f} ICSI adaptasyonu ve zorlu vakalar (ileri anne yaşı, TFF) için Baltacı et al. (%62 fertilizasyon) ve Tanaka ROSI klinik kanıtlarıyla doğrudan döllenme artışı sağlar."
 
@@ -10243,7 +10379,7 @@ ZEUS_COMPETITIVE_INTELLIGENCE_2026 = {
         "proximity_pct": 82,
         "proximity_label": "%82 Benzerlik (Piezo Darbe Motoru Eşdeğer, Protokol Farklı)",
         "technical_gap_analysis": [
-            "• Regülasyon Farkı: Eppendorf birçok ülkede 'RUO' (Yalnızca Araştırma Amaçlı) kalmaktadır; ZEUS ZPS 26 ise CE MDR 2017/745 Class IIa tam klinik tescillidir.",
+            "• Regülasyon Farkı: Eppendorf birçok ülkede 'RUO' (Yalnızca Araştırma Amaçlı) kalmaktadır; ZEUS ZPS 26 ise CE Sertifikası (Class IIa) tam klinik tescillidir.",
             "• Hücresel Bütünlük & Lizis: Eppendorf sert mekanik rezonans uygular (%4-8 oosit lizis riski); ZEUS patentli çok kademeli mikrosaniye elektrik darbe modülasyonu ile lizisi <%1.2'ye düşürür.",
             "• Eşzamanlı Kapasite: Prime Tech ve Eppendorf her oositi tek tek manuel iğneyle deler (1 saat sürer); ZEUS Z-Dish Array ile tek seansta 16 oosit eşzamanlı aktive edilir (12 dakika).",
             "• Klinik Kanıt: Rakipler yalnızca broşür ve teknik tork sunar; ZEUS Baltacı et al. (RBM Online) ve Tanaka ROSI hakemli makaleleriyle Toplam Döllenme Başarısızlığı (TFF) vakalarında 2PN oranını %24.6'dan %82.3'e çıkarır.",
@@ -10441,7 +10577,7 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, active_s
                     <td style="padding:10px 12px;"><b style="color:#FFB800;">PiezoXpert & PMM-150FU</b><br><span style="color:#94A3B8;">$38,000 - $55,000 USD</span></td>
                     <td style="padding:10px 12px;"><b style="color:#00F5FF;">ZEUS Pulse Stimulator (ZPS 26)</b><br><span style="color:#5FD3AE;">$8,500 USD Taban</span></td>
                     <td style="padding:10px 12px;"><span style="background:rgba(0,245,255,0.12);color:#00F5FF;padding:2px 8px;border-radius:4px;font-weight:700;">%82 Yakınlık</span></td>
-                    <td style="padding:10px 12px;"><b style="color:#00E676;">CE MDR Class IIa tescili</b>, sub-%1.2 lizis (vs %6 mekanik hasar), 16 oosit eşzamanlı Z-Dish array.</td>
+                    <td style="padding:10px 12px;"><b style="color:#00E676;">CE Sertifikalı (Class IIa) tescili</b>, sub-%1.2 lizis (vs %6 mekanik hasar), 16 oosit eşzamanlı Z-Dish array.</td>
                     <td style="padding:10px 12px;color:#CCD7E6;">TFF vakalarında %24'ten %82.3'e döllenme artışı ve 4 kat daha hızlı yatırım geri dönüşü (ROI).</td>
                 </tr>
                 <tr style="border-bottom:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.015);">
@@ -10596,7 +10732,7 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, active_s
             <div style="background:#0F192E;border:1px solid rgba(168,85,247,0.25);border-radius:8px;padding:14px;grid-column: 1 / -1;">
                 <div style="font-size:13px;font-weight:700;color:#C084FC;margin-bottom:6px;">5. Regülasyon ve Tescil Belgelerinin Münhasırlığı (Regulatory Armor)</div>
                 <div style="font-size:11.5px;color:#CBD5E1;line-height:1.6;">
-                    <b>Sözleşme Metni:</b> <i>"ZEUS Bioscience tarafından distribütöre tescil amacıyla sağlanan CE MDR 2017/745 Class IIa, ISO 13485 ve Free Sales Certificate (FSC) belgeleri sadece ZEUS tescilli ürünleri için kullanılabilir. Bu belgelerin rakip ürünlerin ithalatında veya izinsiz yan ürün kaydında kullanılması durumunda $100,000 USD cezai şart uygulanır ve LOA derhal feshedilir."</i>
+                    <b>Sözleşme Metni:</b> <i>"ZEUS Bioscience tarafından distribütöre tescil amacıyla sağlanan CE Sertifikası (Class IIa), ISO 13485 ve Free Sales Certificate (FSC) belgeleri sadece ZEUS tescilli ürünleri için kullanılabilir. Bu belgelerin rakip ürünlerin ithalatında veya izinsiz yan ürün kaydında kullanılması durumunda $100,000 USD cezai şart uygulanır ve LOA derhal feshedilir."</i>
                 </div>
             </div>
         </div>
@@ -10785,7 +10921,7 @@ def get_country_prospects(c_name, c_row=None):
             "product_match": "ZEUS Pulse Stimulator (ZPS 26) + Sarf Dağıtım Anlaşması",
             "est_revenue": "$95,000 - $180,000 USD / Yıl",
             "why_target": focus,
-            "pitch_template": f"Sayın {d_name} Yönetimi,\n\n{c_name} pazarındaki güçlü dağıtım ağınız doğrultusunda, ZEUS Bioscience olarak CE MDR Class IIa tescilli Piezo Oosit Aktivasyon (ZPS 26) ve sarf portföyümüz için yetkili dağıtım ortaklığı sunmak isteriz."
+            "pitch_template": f"Sayın {d_name} Yönetimi,\n\n{c_name} pazarındaki güçlü dağıtım ağınız doğrultusunda, ZEUS Bioscience olarak CE Sertifikalı (Class IIa) tescilli Elektriksel Oosit Aktivasyon (AOA) Aktivasyon (ZPS 26) ve sarf portföyümüz için yetkili dağıtım ortaklığı sunmak isteriz."
         })
 
     # 2b. Decision-Maker Clinics & Professors (Verified Directory Integration)
@@ -10841,8 +10977,8 @@ def get_country_prospects(c_name, c_row=None):
             "linkedin_query": c_lk_query,
             "product_match": "ZEUS Pulse Stimulator (ZPS 26) + BioPSafe Biyopsi İstasyonu",
             "est_revenue": "$65,000 - $140,000 USD / Yıl",
-            "why_target": f"{c_name_inst} merkezinde {leader_val} liderliğinde döllenme başarısını %80+ üzerine çıkarma ve zorlu vakalarda Piezo AOA protokolü sunma.",
-            "pitch_template": f"Sayın {leader_val},\n\n{c_name_inst} bünyesindeki öncü klinik ve laboratuvar çalışmalarınız doğrultusunda, CE MDR Class IIa onaylı ZEUS Piezo Oosit Aktivasyon (ZPS 26) ve BioPSafe biyopsi sistemimizi değerlendirmenize sunmak isteriz. Toplam Döllenme Başarısızlığı (TFF) vakalarında 2PN oranını %24'ten %82.3'e yükselten klinik kanıt dosyamızı paylaşmaktan onur duyarız."
+            "why_target": f"{c_name_inst} merkezinde {leader_val} liderliğinde döllenme başarısını %80+ üzerine çıkarma ve zorlu vakalarda Elektriksel Oosit Aktivasyon (AOA) protokolü sunma.",
+            "pitch_template": f"Sayın {leader_val},\n\n{c_name_inst} bünyesindeki öncü klinik ve laboratuvar çalışmalarınız doğrultusunda, CE Sertifikalı (Class IIa) onaylı ZEUS Elektriksel Oosit Aktivasyon (AOA) Aktivasyon (ZPS 26) ve BioPSafe biyopsi sistemimizi değerlendirmenize sunmak isteriz. Toplam Döllenme Başarısızlığı (TFF) vakalarında 2PN oranını %24'ten %82.3'e yükselten klinik kanıt dosyamızı paylaşmaktan onur duyarız."
         })
 
     return prospects
@@ -10961,7 +11097,7 @@ def get_default_distributor_quotas():
             'ai_target_devices': 3,
             'ai_target_consumables': 250,
             'ai_target_revenue': 47000.0,
-            'user_comment': 'Seul ve Busan kliniklerinde piezo oosit aktivasyonu klinik protokollere girdi. 2027 için 3 yeni cihaz ve 250 sarf hedefi onaylandı.',
+            'user_comment': 'Seul ve Busan kliniklerinde elektriksel oosit aktivasyonu (AOA) klinik protokollere girdi. 2027 için 3 yeni cihaz ve 250 sarf hedefi onaylandı.',
             'approved_devices': 3,
             'approved_consumables': 250,
             'approved_revenue': 47000.0,
@@ -11028,14 +11164,14 @@ def get_default_strategic_plans():
             'title': "Kritik Atıl Cihaz Alarmı: Kuveyt ATC & Garanti Leasing (2026'da $0 Sarf)",
             'badge': 'ACİL EYLEM',
             'badge_color': '#FF5252',
-            'evidence': "Kuveyt ATC (15.12.2025'te $25,500'a 3 Piezo Cihazı almış) ve Garanti Leasing (12.05.2026'da 1 Cihaz almış) 2026 yılında $0.00 sarf çekmiştir. Cihazlar atıl durmaktadır.",
-            'ai_recommendation': "Kuveyt merkezlerine acil Piezo Oosit Protokol eğitimi ve konsinye aktivasyon kiti verilmeli; Garanti Leasing'in cihazı kurduğu klinik tespit edilerek doğrudan sarf protokolü başlatılmalıdır.",
+            'evidence': "Kuveyt ATC (15.12.2025'te $25,500'a 3 Elektriksel AOA Cihazı almış) ve Garanti Leasing (12.05.2026'da 1 Cihaz almış) 2026 yılında $0.00 sarf çekmiştir. Cihazlar atıl durmaktadır.",
+            'ai_recommendation': "Kuveyt merkezlerine acil Elektriksel Oosit Aktivasyon Protokol eğitimi ve konsinye aktivasyon kiti verilmeli; Garanti Leasing'in cihazı kurduğu klinik tespit edilerek doğrudan sarf protokolü başlatılmalıdır.",
             'user_comment': "Kuveyt ATC ile acil video konferans yapıldı; baş hekim ve embriyolog rotasyonu sonrası protokolün durduğu belirlendi. Garanti Leasing tarafında ise cihazı kiralayan tüp bebek merkezi tespit edildi; sarf sözleşmesi hazırlanıyor.",
             'plan_type': 'Konsinye Aktivasyon Paketi & Yerinde Aplikasyon Eğitimi',
             'responsible_unit': 'Klinik Aplikasyon & Eğitim Masası',
             'priority': 'P1 - Acil (1-15 Gün)',
             'target_date': 'Kasım 2026 (Q4)',
-            'action_steps': "1. Kuveyt ATC merkezine 15 kutu konsinye test dishi ve aktivasyon solüsyonu gönderilmesi.\n2. Baş embriyoloğa uzaktan Piezo oosit aktivasyon eğitimi verilmesi.\n3. Garanti Leasing cihazının kurulu olduğu yerli kliniğe yerinde ziyaret ve yıllık sarf sözleşmesi sunulması.",
+            'action_steps': "1. Kuveyt ATC merkezine 15 kutu konsinye test dishi ve aktivasyon solüsyonu gönderilmesi.\n2. Baş embriyoloğa uzaktan Elektriksel oosit aktivasyon (AOA) eğitimi verilmesi.\n3. Garanti Leasing cihazının kurulu olduğu yerli kliniğe yerinde ziyaret ve yıllık sarf sözleşmesi sunulması.",
             'roi_projection': '4 atıl cihazın yeniden aktifleşmesiyle yıllık +$24,000 USD düzenli sarf nakit akışı',
             'feasibility_score': '%92 (Yüksek Uygulanabilirlik)',
             'status': 'Onaylandı & İcrada',
@@ -11151,7 +11287,7 @@ def get_default_regional_expert_assessments():
             'recommended_devices': ['🧬 Black-Box BioPSafe (ZBB25-001)', '❄️ Smart Cryo-Tools (ZCT25)', '⚡ ZPS 26 Pulse Stimulator'],
             'device_rationale': "İspanya ve İngiltere'de katı PGT-A biyopsi regülasyonları için 13 IR sensörlü BioPSafe; yüksek sikluslu merkezlerde tank CAPEX tasarrufu ($45K) için Smart Cryo-Tools.",
             'expert_title': 'Avrupa Regülasyon & Satış Masası Direktörü',
-            'expert_opinion': "MDR Class IIa sertifikasyonumuz Ghent Üniversitesi validasyon verileriyle tam uyumlu. İspanya'da IVI-RMA zinciri 30'dan fazla kliniğe sahip; doğrudan kurumsal satın alma masasıyla klinik protokol anlaşması yapılmalı. Almanya (DACH) için Gynemed hazır bir dağıtım ağı sunuyor; CE belgeleriyle birlikte Q1'de distribütörlük sözleşmesi imzalanması durumunda yıllık $120K hedefi rahat aşılır.",
+            'expert_opinion': "CE Class IIa sertifikasyonumuz Ghent Üniversitesi validasyon verileriyle tam uyumlu. İspanya'da IVI-RMA zinciri 30'dan fazla kliniğe sahip; doğrudan kurumsal satın alma masasıyla klinik protokol anlaşması yapılmalı. Almanya (DACH) için Gynemed hazır bir dağıtım ağı sunuyor; CE belgeleriyle birlikte Q1'de distribütörlük sözleşmesi imzalanması durumunda yıllık $120K hedefi rahat aşılır.",
             'field_moves': "1) IVI-RMA Valencia ve Madrid merkezlerine BioPSafe ve Cryo-Tools klinik protokolü sunuldu. 2) Gynemed DACH ile master distribütörlük NDA'sı imzalandı. 3) Londra Harley Street referans kliniğine numune Smart Straw setleri ulaştırıldı.",
             'user_comment': "IVI-RMA Valencia merkezine klinik aplikasyon protokolü sunuldu; Gynemed ile NDA imzalandı ve 2027 DACH master distribütörlük görüşmeleri başlatıldı.",
             'consensus_status': 'Tam Konsensüs (Uyumlu)',
@@ -11189,10 +11325,10 @@ def get_default_regional_expert_assessments():
             'ai_weakness': "ANVISA ve COFEPRIS ithalat engeli, gümrük vergileri ve coğrafi uzaklık.",
             'ai_action': "Brezilya'da Spectrun Bio ve REDLARA akredite master distribütör modeli.",
             'recommended_devices': ['🛡️ Mismatch Blocker (ZMB-7T / Coin Modeli)', '⚡ ZEUS Pulse Stimulator (ZPS 26)'],
-            'device_rationale': "Brezilya ve Meksika'da pahalı RFID çipleri yerine döngü başı kontör modeli; yüksek ICSI adaptasyonu (%80+) için piezo oosit aktivatörü.",
+            'device_rationale': "Brezilya ve Meksika'da pahalı RFID çipleri yerine döngü başı kontör modeli; yüksek ICSI adaptasyonu (%80+) için elektriksel oosit aktivatörü (AOA).",
             'expert_title': 'LATAM Ticari Operasyonlar Danışmanı',
-            'expert_opinion': "Brezilya ve Meksika'da yüksek gümrük tarifeleri (%28-35) nedeniyle doğrudan donanım ithalatı zor. Sao Paulo merkezli Spectrun Bio yerel ANVISA ruhsatını üstlenmeye istekli. REDLARA kongresinde piezo ICSI başarı oranları sunulursa Kolombiya ve Şili klinikleri de bu master distribütör üzerinden hızla portföye katılabilir.",
-            'field_moves': "1) Sao Paulo merkezli Spectrun Bio ile ANVISA ruhsatlandırma ve dağıtım niyet mektubu (LoI) imzalandı. 2) REDLARA kongresi için piezo ICSI bildiri özeti kabul edildi. 3) Kolombiya ve Şili merkezlerine online teknik sunum yapıldı.",
+            'expert_opinion': "Brezilya ve Meksika'da yüksek gümrük tarifeleri (%28-35) nedeniyle doğrudan donanım ithalatı zor. Sao Paulo merkezli Spectrun Bio yerel ANVISA ruhsatını üstlenmeye istekli. REDLARA kongresinde elektriksel oosit aktivasyonu (AOA) başarı oranları sunulursa Kolombiya ve Şili klinikleri de bu master distribütör üzerinden hızla portföye katılabilir.",
+            'field_moves': "1) Sao Paulo merkezli Spectrun Bio ile ANVISA ruhsatlandırma ve dağıtım niyet mektubu (LoI) imzalandı. 2) REDLARA kongresi için elektriksel oosit aktivasyonu (AOA) bildiri özeti kabul edildi. 3) Kolombiya ve Şili merkezlerine online teknik sunum yapıldı.",
             'user_comment': "Spectrun Bio ile ön niyet mektubu (LoI) teatisi yapıldı. ANVISA dosya hazırlığı için teknik dokümantasyon Portekizceye çevriliyor.",
             'consensus_status': 'Tam Konsensüs (Uyumlu)',
             'status': 'Onaylandı & İcrada',
@@ -11472,7 +11608,7 @@ def get_country_geopolitical_intelligence(c_code, c_df=None):
                 {'source': 'Google News / Sağlık Bakanlığı', 'title': 'T.C. Sağlık Bakanlığı ÜYTE Merkezleri Yönetmeliği Güncellendi', 'date': 'Bu Hafta', 'tag': 'Mevzuat', 'risk_impact': 'Pozitif — Standartlar netleşti', 'summary': 'Tüp bebek kliniklerinde kullanılan sarf malzemelerin ÜTS kaydı ve kalite belgeleri denetimi sıkılaştırıldı.'},
                 {'source': 'Google News / TİTCK', 'title': 'Türkiye İlaç ve Tıbbi Cihaz Kurumu (TİTCK) Yerli Biyoteknoloji Üreticilerini Destekliyor', 'date': 'Son 48 Saat', 'tag': 'İnovasyon', 'risk_impact': 'Yüksek Devlet Desteği', 'summary': 'Yerli üretim tıbbi sarf malzemelerinin kamu ve özel hastane satın almalarında %15 fiyat avantajı korunuyor.'},
                 {'source': 'Google News / Finans Gündem', 'title': 'Medikal Cihaz Sektöründe Finansal Kiralama (Leasing) İşlemleri Hızlandı', 'date': 'Kasım 2026', 'tag': 'Finans', 'risk_impact': 'Tahsilat Güvenceli', 'summary': 'Garanti Leasing ve İş Leasing ile çalışan kliniklerin donanım taksit ödemeleri banka garantisinde devam ediyor.'},
-                {'source': 'Google News / Medikal Dergi', 'title': 'Türkiye Tüp Bebek Merkezlerinde Piezo Oosit Aktivasyonu Başarı Oranları Yükseliyor', 'date': 'Kasım 2026', 'tag': 'Klinik Sonuçlar', 'risk_impact': 'Artan Sarf Çekişi', 'summary': 'Tavmergen ve Eurofertil verilerine göre elektro dish ve mikroenjeksiyon protokolü fertilizasyonu %18 artırdı.'}
+                {'source': 'Google News / Medikal Dergi', 'title': 'Türkiye Tüp Bebek Merkezlerinde Elektriksel Oosit Aktivasyonu (AOA) Başarı Oranları Yükseliyor', 'date': 'Kasım 2026', 'tag': 'Klinik Sonuçlar', 'risk_impact': 'Artan Sarf Çekişi', 'summary': 'Tavmergen ve Eurofertil verilerine göre elektro dish ve mikroenjeksiyon protokolü fertilizasyonu %18 artırdı.'}
             ],
             'ministry_statements': [
                 {'ministry': '🇹🇷 T.C. Sağlık Bakanlığı (Sağlık Hizmetleri Gn. Md.)', 'subject': 'Üremeye Yardımcı Tedavi Merkezleri Denetim Tebliği', 'badge': 'SAĞLIK BAKANLIĞI', 'color': '#00E676', 'text': 'Lisanslı tüp bebek merkezlerinin cihaz kalibrasyonları ve sarf lot analizleri ÜTS üzerinden kesintisiz izlenmektedir.'},
@@ -11505,21 +11641,21 @@ def get_country_geopolitical_intelligence(c_code, c_df=None):
             'expert_comment': (
                 "Almanya pazarında 140 lisanslı klinik ve yıllık 115,000 siklus bulunmaktadır. "
                 "Gynemed ile distribütörlük müzakereleri yürütülmektedir. Ödeme ve tahsilat riski kesinlikle sıfırdır (AAA). "
-                "CE MDR Class IIa belgemizle birlikte doğrudan teslimat yapılabilir. Frankfurt Havalimanı Avrupa kargo merkezimizdir."
+                "CE Sertifikalı (Class IIa) belgemizle birlikte doğrudan teslimat yapılabilir. Frankfurt Havalimanı Avrupa kargo merkezimizdir."
             ),
             'ai_diagnosis': (
                 "Avrupa'nın 2 numaralı IVF pazarı. Yıllık $120K ek ciro potansiyeli barındırmaktadır. "
                 "Alman kliniklerinin yüksek kalite beklentisi Ghent Üniversitesi Electro Fusion verilerimizle tam örtüşmektedir."
             ),
             'google_news': [
-                {'source': 'Google News / BfArM Monitor', 'title': 'Almanya Federal İlaç ve Tıbbi Cihaz Enstitüsü (BfArM) MDR Kılavuzunu Yayınladı', 'date': 'Bu Hafta', 'tag': 'MDR Mevzuatı', 'risk_impact': 'Pozitif Uyum — CE sertifikalı', 'summary': 'BfArM, Class IIa oosit stimülasyon elektrotlarında CE belgesi bulunan üreticilere ekspres ruhsat onayı sağladı.'},
+                {'source': 'Google News / BfArM Monitor', 'title': 'Almanya Federal İlaç ve Tıbbi Cihaz Enstitüsü (BfArM) Tıbbi Cihaz Kılavuzunu Yayınladı', 'date': 'Bu Hafta', 'tag': 'CE Mevzuatı', 'risk_impact': 'Pozitif Uyum — CE sertifikalı', 'summary': 'BfArM, Class IIa oosit stimülasyon elektrotlarında CE belgesi bulunan üreticilere ekspres ruhsat onayı sağladı.'},
                 {'source': 'Google News / Handelsblatt', 'title': 'Frankfurt Havalimanı Medikal Lojistikte Avrupa Liderliğini Koruyor', 'date': 'Son 48 Saat', 'tag': 'Lojistik Hub', 'risk_impact': 'Kesintisiz Rota — 12 saat teslim', 'summary': 'Lufthansa Cargo ve THY Kargo medikal transit hatlarında soğuk zincir teslimatı aksamadan sürdürülmektedir.'},
-                {'source': 'Google News / ESHRE European ART', 'title': 'Almanya IVF Merkezlerinde Genetik Tarama ve Piezo ICSI Protokolü Yaygınlaşıyor', 'date': 'Kasım 2026', 'tag': 'Klinik Trend', 'risk_impact': 'Yüksek Talep', 'summary': 'Berlin, Münih ve Frankfurt kliniklerinde fertilizasyon başarısını artıran piezo elektrot kullanım oranı %42 arttı.'},
+                {'source': 'Google News / ESHRE European ART', 'title': 'Almanya IVF Merkezlerinde Genetik Tarama ve Elektriksel Oosit Aktivasyon Protokolü Yaygınlaşıyor', 'date': 'Kasım 2026', 'tag': 'Klinik Trend', 'risk_impact': 'Yüksek Talep', 'summary': 'Berlin, Münih ve Frankfurt kliniklerinde fertilizasyon başarısını artıran elektriksel aktivasyon elektrot kullanım oranı %42 arttı.'},
                 {'source': 'Google News / Deutsche Bank Research', 'title': 'Alman Sağlık Sektöründe Finansal Güvenilirlik En Üst Seviyede', 'date': 'Kasım 2026', 'tag': 'Finans', 'risk_impact': 'AAA Kredi Karnesi', 'summary': 'Kliniklerin ve distribütörlerin dış ticaret ödeme disiplini kusursuz olup temerrüt olasılığı sıfıra yakındır.'}
             ],
             'ministry_statements': [
-                {'ministry': '🇩🇪 Almanya Federal Sağlık Bakanlığı (BMG)', 'subject': 'MDR Uyum ve Tıbbi Laboratuvar Güvenliği Tebliği', 'badge': 'ALMANYA BMG', 'color': '#00E676', 'text': 'Almanya genelinde ART kliniklerinde kullanılan tüm sarfların AB MDR regülasyonu 2017/745 standartlarına tam uyumu şarttır.'},
-                {'ministry': '🇩🇪 Almanya Federal İlaç ve Tıbbi Cihaz Enstitüsü (BfArM)', 'subject': 'Piezo Stimülatör Cihazları Ruhsat Uygunluğu', 'badge': 'BfArM', 'color': '#00F5FF', 'text': 'ZEUS Piezo stimülatörü ve electro dish serisi Avrupa CE normlarında güvenli cihaz listesinde onaylanmıştır.'},
+                {'ministry': '🇩🇪 Almanya Federal Sağlık Bakanlığı (BMG)', 'subject': 'CE Uyum ve Tıbbi Laboratuvar Güvenliği Tebliği', 'badge': 'ALMANYA BMG', 'color': '#00E676', 'text': 'Almanya genelinde ART kliniklerinde kullanılan tüm sarfların AB CE direktif ve tıbbi cihaz standartlarına tam uyumu şarttır.'},
+                {'ministry': '🇩🇪 Almanya Federal İlaç ve Tıbbi Cihaz Enstitüsü (BfArM)', 'subject': 'Piezo Stimülatör Cihazları Ruhsat Uygunluğu', 'badge': 'BfArM', 'color': '#00F5FF', 'text': 'ZEUS Pulse Stimulator ve electro dish serisi Avrupa CE normlarında güvenli cihaz listesinde onaylanmıştır.'},
                 {'ministry': '🇹🇷 T.C. Berlin Ticaret Müşavirliği', 'subject': 'DACH Bölgesi Distribütörlük Raporu (Gynemed)', 'badge': 'TİCARET MÜŞAVİRLİĞİ', 'color': '#FF9800', 'text': 'Gynemed medikal distribütörlük ağının finansal gücü teyit edilmiş olup yıllık asgari $120K kota imzalanabilir.'},
                 {'ministry': '🇹🇷 T.C. Ticaret Bakanlığı', 'subject': 'Avrupa Birliği İhracat Teşvik ve Navlun Desteği', 'badge': 'T.C. TİCARET', 'color': '#38BDF8', 'text': 'Almanya ve AB ülkelerine yapılan medikal biyoteknoloji ihracatında navlun ve yurt dışı depo kira desteği mevcuttur.'}
             ],
@@ -11704,7 +11840,7 @@ def render_tenders_hub():
             </div>
             <div class="glass-metric-header">Pazar Kilitleme Gücü</div>
             <div class="glass-metric-val" style="color:#00F5FF;">%84</div>
-            <div class="glass-metric-sub">Piezo AOA Şartname Şartıyla</div>
+            <div class="glass-metric-sub">Elektriksel AOA Şartname Şartıyla</div>
         </div>
         ''', unsafe_allow_html=True)
     with m_col4:
@@ -11814,7 +11950,7 @@ def render_tenders_hub():
             "Mikromanipülatör sistemleriyle tam uyumlu ayak pedalı veya dokunmatik ekranlı mikro-tetikleme sunmalıdır."
         ])
         c_cert_specs = t_specs.get("mandatory_certifications", [
-            "Avrupa Birliği CE MDR 2017/745 Class IIa Tıbbi Cihaz Sertifikası",
+            "Avrupa Birliği CE Sertifikası (Class IIa) Tıbbi Cihaz Sertifikası",
             "ISO 13485:2016 Tıbbi Cihaz Kalite Yönetim Sistemi Belgesi",
             "Konsolosluk ve Ticaret Odası Tasdikli Menşe Şahadetnamesi (COO) ve Serbest Satış Sertifikası (FSC)",
             "En az 2 yıl tam parça garantisi ve yerel distribütör teknik servis taahhüdü."
@@ -11917,7 +12053,7 @@ def render_regulations_hub():
                 <div style="color:#CBD5E1;font-size:13px;">48 Hedef Ülke İçin Resmi Sağlık Bakanlığı (MOH) Tescil Süreçleri, Gümrük GTİP Kodları (9018.90 / 3822.00), Sertifikasyon Harçları ve IVF/PGT Biyoetik Kuralları.</div>
             </div>
             <div style="text-align:right;">
-                <span style="background:rgba(0,230,118,0.15);color:#00E676;border:1px solid #00E676;padding:5px 12px;border-radius:20px;font-weight:700;font-size:12px;">● CE MDR CLASS IIa UYUMLU</span>
+                <span style="background:rgba(0,230,118,0.15);color:#00E676;border:1px solid #00E676;padding:5px 12px;border-radius:20px;font-weight:700;font-size:12px;">● CE Sertifikalı CLASS IIa UYUMLU</span>
                 <div style="color:#94A3B8;font-size:11px;margin-top:4px;">ISO 13485:2016 Akreditasyonu</div>
             </div>
         </div>
@@ -11995,7 +12131,7 @@ def render_regulations_hub():
             key="reg_hub_country_select"
         )
     with r_col_sel2:
-        st.caption(f"Seçili Pazar: **{sel_reg_country}** (CE MDR Class IIa Dosyası)")
+        st.caption(f"Seçili Pazar: **{sel_reg_country}** (CE Sertifikalı (Class IIa) Dosyası)")
 
     kb_info = resolve_market_knowledge(sel_reg_country)
     kb_macro = resolve_country_macro(sel_reg_country)
@@ -12039,15 +12175,15 @@ def render_regulations_hub():
         
         # Exact certification fees table
         cert_costs_map = {
-            "Turkey": {"authority": "TİTCK (Türkiye)", "fee": "$1,200 – $1,800 USD", "duration": "3-7 Gün (Hızlı ÜTS)", "docs": "ÜTS Tekil Ürün Kaydı, CE MDR 2017/745, ISO 13485, Türkçe Kullanım Kılavuzu"},
+            "Turkey": {"authority": "TİTCK (Türkiye)", "fee": "$1,200 – $1,800 USD", "duration": "3-7 Gün (Hızlı ÜTS)", "docs": "ÜTS Tekil Ürün Kaydı, CE Sertifikası & AB Uygunluk Beyanı, ISO 13485, Türkçe Kullanım Kılavuzu"},
             "Egypt": {"authority": "EDA (Mısır)", "fee": "$3,500 – $5,000 USD", "duration": "3-5 Ay (Fast-Track İthal İzni)", "docs": "Mısır Konsolosluk Onaylı Menşe (COO) & FSC, Arapça IFU, EDA ithalat vizesi"},
             "Saudi Arabia": {"authority": "SFDA (Suudi)", "fee": "$5,500 – $8,500 USD", "duration": "2-4 Ay (MDMA Lisansı)", "docs": "SFDA MDMA Başvurusu, Yetkili Temsilci (AR) Sözleşmesi, İki Dilli Etiketleme"},
             "Jordan": {"authority": "JFDA (Ürdün)", "fee": "$2,200 – $3,200 USD", "duration": "1-2 Ay", "docs": "FSC, COO, CE Sertifikası, JFDA ithalat vizesi"},
-            "Iraq": {"authority": "KIMADIA (Irak)", "fee": "$4,000 – $6,500 USD", "duration": "3-6 Ay", "docs": "Irak Konsolosluğu tasdikli COO ve FSC, CE MDR, Kimadia akreditasyon dosyası"},
+            "Iraq": {"authority": "KIMADIA (Irak)", "fee": "$4,000 – $6,500 USD", "duration": "3-6 Ay", "docs": "Irak Konsolosluğu tasdikli COO ve FSC, CE Sertifikalı, Kimadia akreditasyon dosyası"},
             "Algeria": {"authority": "MSPRH (Cezayir)", "fee": "$2,800 – $4,200 USD", "duration": "2-4 Ay", "docs": "Homologasyon Dosyası, Fransızca Teknik Dosya, Konsolosluk tasdikli FSC"},
-            "Germany": {"authority": "BfArM / EUDAMED", "fee": "$12,000 – $18,000 USD", "duration": "1-3 Ay (CE MDR Varken)", "docs": "EUDAMED UDI-DI Bildirimi, CER Klinik Rapor, ISO 14971 Risk Dosyası"}
+            "Germany": {"authority": "BfArM / EUDAMED", "fee": "$12,000 – $18,000 USD", "duration": "1-3 Ay (CE Sertifikalı Varken)", "docs": "EUDAMED UDI-DI Bildirimi, CER Klinik Rapor, ISO 14971 Risk Dosyası"}
         }
-        c_cost_info = cert_costs_map.get(sel_reg_country, {"authority": auth_name, "fee": "$2,500 – $4,500 USD", "duration": "2-3 Ay", "docs": "CE MDR Class IIa, ISO 13485, Konsolosluk Tasdikli COO & FSC"})
+        c_cost_info = cert_costs_map.get(sel_reg_country, {"authority": auth_name, "fee": "$2,500 – $4,500 USD", "duration": "2-3 Ay", "docs": "CE Sertifikalı (Class IIa), ISO 13485, Konsolosluk Tasdikli COO & FSC"})
 
         col_rf1, col_rf2 = st.columns([1.2, 1])
         with col_rf1:
@@ -12057,7 +12193,7 @@ def render_regulations_hub():
                 • <b>Başvuru Yapılacak Merci:</b> <span style="color:#FFFFFF;font-weight:700;">{c_cost_info['authority']}</span><br>
                 • <b>Resmi Dosya & Harç Masrafı:</b> <span style="color:#00E676;font-weight:800;font-size:14px;">{c_cost_info['fee']}</span><br>
                 • <b>Tahmini Ruhsatlandırma Süresi:</b> <span style="color:#FFD700;font-weight:600;">{c_cost_info['duration']}</span><br>
-                • <b>Tescil Zorluk Seviyesi:</b> {cust_reg.get("import_difficulty", "Orta / Standart CE MDR Yolu")}
+                • <b>Tescil Zorluk Seviyesi:</b> {cust_reg.get("import_difficulty", "Orta / Standart CE Sertifikalı Yolu")}
             </div>
             """, unsafe_allow_html=True)
         with col_rf2:
@@ -12065,7 +12201,7 @@ def render_regulations_hub():
             <div style="background:rgba(15,23,42,0.7);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:16px;font-size:12px;line-height:1.75;">
                 <b style="color:#FFD700;font-size:13.5px;">📑 Başvuruda Zorunlu Evraklar:</b><br>
                 • {c_cost_info['docs']}<br>
-                • CE MDR 2017/745 Class IIa Uygunluk Belgesi<br>
+                • CE Sertifikası (Class IIa) Uygunluk Belgesi<br>
                 • ISO 13485:2016 Tıbbi Cihaz Kalite Belgesi<br>
                 • Noter & Apostil Onaylı Yetkili Distribütörlük Belgesi (LOA)
             </div>
@@ -12107,7 +12243,7 @@ def render_regulations_hub():
                 </div>
                 """, unsafe_allow_html=True)
         else:
-            st.info(f"{sel_reg_country} için CE MDR harmonize genel tıbbi cihaz ithalat rejimi geçerlidir.")
+            st.info(f"{sel_reg_country} için CE Sertifikalı harmonize genel tıbbi cihaz ithalat rejimi geçerlidir.")
 
     with reg_tab5:
         st.markdown("#### ➕ Sahadan Yeni Bakanlık Kararı veya Mevzuat Notu Ekle")
@@ -14506,7 +14642,7 @@ ZEUS Bioscience Commercial & Client Management Division""",
                 fact_html='<b>Excel Fatura Kanıtı:</b> 2024: $0.00 | 2025: $26,250.00 (3 Piezo Stimulator = $25,500; 6 Dish = $600; 3 Liquid = $150) | <b>2026 YTD: $0.00 (-%100.0)</b><br><b>Kurulu Cihaz:</b> 3 Ünite ($25.5K) | <b>Toplam Sarf Çekişi:</b> Yalnızca $750 (6 Kutu Dish, 3 Flakon Solüsyon — Sarf/Cihaz Oranı: %2.9)',
                 diag_text="ATC 15.12.2025 tarihinde 3 adet Piezo Pulse Stimulator cihazı ($25,500) almış, ancak yanına yalnızca 6 kutu Electro Dish ve 3 adet solüsyon ($750 sarf) eklemiştir. 2026 yılında ise tek bir sarf siparişi verilmemiştir. Kuveyt tüp bebek laboratuvarlarında embriyologlar protokol eğitimi eksikliğinden ötürü Piezo cihazlarını rutine alamamıştır.",
                 ai_action_steps=[
-                    "<b>Klinik Destek Ziyareti (15 Gün):</b> Kuveyt\'teki embriyoloji ekiplerine online 1-1 \'Piezo Oosit Aktivasyonu SOP\' eğitimi verilmeli.",
+                    "<b>Klinik Destek Ziyareti (15 Gün):</b> Kuveyt\'teki embriyoloji ekiplerine online 1-1 \'Elektriksel Oosit Aktivasyonu (AOA) SOP\' eğitimi verilmeli.",
                     "<b>Konsinye Aktivasyon Paketi:</b> ATC üzerinden kliniklere 30 kutu Electro Dish ve 3 şişe Liquid Solution numunesi ulaştırılarak vakalar yeniden başlatılmalı.",
                     "<b>Kuveyt MOH İhalesi:</b> Kuveyt Sağlık Bakanlığı tüp bebek sarf malzeme ihalesine ATC üzerinden ZEUS kodları kaydettirilmeli."
                 ],
@@ -18004,7 +18140,7 @@ elif active_view == "🛃 Market Intelligence & Compare":
                             </div>
                             <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));gap:8px;">
                                 <div style="background:rgba(255,255,255,0.03);padding:8px 10px;border-radius:6px;border-left:3px solid #00F5FF;">
-                                    <span style="color:#00F5FF;font-weight:700;">🇪🇺 AB / EFTA:</span> %0 Gümrük, 2-3 Gün, CE/MDR Serbest Dolaşım.
+                                    <span style="color:#00F5FF;font-weight:700;">🇪🇺 AB / EFTA:</span> %0 Gümrük, 2-3 Gün, CE Sertifikalı Serbest Dolaşım.
                                 </div>
                                 <div style="background:rgba(255,255,255,0.03);padding:8px 10px;border-radius:6px;border-left:3px solid #10B981;">
                                     <span style="color:#10B981;font-weight:700;">🌴 Körfez (GCC):</span> %5 Gümrük, 5-10 Gün, SFDA/MOHAP Tescili.
@@ -18106,7 +18242,7 @@ elif active_view == "🛃 Market Intelligence & Compare":
                     st.markdown("""
                     <div style="background:rgba(15,23,42,0.8);border:1px solid rgba(0,245,255,0.25);border-radius:8px;padding:12px;font-size:12px;line-height:1.6;">
                         <b style="color:#00F5FF;">📩 1. LinkedIn Bağlantı İsteği Notu (300 Karakter Limiti):</b><br>
-                        <i>"Sayın Meslektaşım, {Klinik} bünyesindeki öncü ART çalışmalarınızı takdirle takip ediyoruz. CE MDR Class IIa onaylı Piezoelektrik oosit aktivasyon sistemimizin (ZPS 26) TFF vakalarındaki %82 döllenme klinik verilerini paylaşmak üzere ağınıza katılmak isterim. Saygılarımla."</i>
+                        <i>"Sayın Meslektaşım, {Klinik} bünyesindeki öncü ART çalışmalarınızı takdirle takip ediyoruz. CE Sertifikalı (Class IIa) onaylı Piezoelektrik oosit aktivasyon sistemimizin (ZPS 26) TFF vakalarındaki %82 döllenme klinik verilerini paylaşmak üzere ağınıza katılmak isterim. Saygılarımla."</i>
                     </div>
                     """, unsafe_allow_html=True)
                 with scout_inmail_c2:
@@ -18302,24 +18438,65 @@ elif active_view == "🛃 Market Intelligence & Compare":
                             with strat_col3:
                                 st.markdown(f"""
                                 <div style="background:rgba(19,166,181,0.06);border:1px solid rgba(19,166,181,0.2);border-radius:6px;padding:8px 10px;font-size:11px;color:#CCD7E6;margin-top:22px;">
-                                    <b>🎯 Bilimsel Odak:</b> {'🔬 Hakemli Yayınlar (Baltaci/Ebner & CE MDR)' if 'Bilimsel' in strat_choice else ('💼 ROI 8.2 ay, 60 gün konsinye & Capex' if 'Finansal' in strat_choice else '🤝 %42+ brüt marj, CE/MDR & bölge')}
+                                    <b>🎯 Bilimsel Odak:</b> {'🔬 Hakemli Yayınlar (Baltaci/Ebner & CE Sertifikalı)' if 'Bilimsel' in strat_choice else ('💼 ROI 8.2 ay, 60 gün konsinye & Capex' if 'Finansal' in strat_choice else '🤝 %42+ brüt marj, CE Sertifikalı & bölge')}
                                 </div>
                                 """, unsafe_allow_html=True)
                                 
                             strat_mode = "commercial" if "Finansal" in strat_choice else ("distributor" if "Distribütörlük" in strat_choice else "clinical")
                             eff_selected_lang = auto_l if lang_sel_studio == "auto" else lang_sel_studio
                             
-                            c_col1, c_col2 = st.columns([3.2, 0.8])
-                            with c_col1:
-                                user_custom_note = st.text_input(
-                                    "✨ Mektuba Özel Şart / İndirim veya Mesaj Ekle (Opsiyonel):",
-                                    placeholder="Örn: 2027 ESHRE kongresinde standımızda VIP ağırlama veya %15 filo indirimi teklif et...",
-                                    key=f"user_note_{radar_country}_{idx}"
+                            user_note_key = f"user_note_{radar_country}_{idx}"
+                            if user_note_key not in st.session_state:
+                                st.session_state[user_note_key] = ""
+
+                            st.markdown("""
+                            <div style="font-weight:700;color:#00F5FF;font-size:12.5px;margin-top:10px;margin-bottom:4px;">
+                                ✍️ Yönetici Talimatı / Özel Teklif & Mesaj Yorumu (Buraya yazacağınız yoruma göre mail ve LinkedIn metni anında güncellenir):
+                            </div>
+                            """, unsafe_allow_html=True)
+
+                            # Quick suggestion directive chips
+                            chip_c1, chip_c2, chip_c3, chip_c4 = st.columns(4)
+                            def clear_pitch_cache_for_target(c_name, t_idx):
+                                for k in list(st.session_state.keys()):
+                                    if k.startswith(f"pitch_data_{c_name}_{t_idx}") or k.startswith(f"subj_input_{c_name}_{t_idx}") or k.startswith(f"body_input_{c_name}_{t_idx}"):
+                                        del st.session_state[k]
+
+                            with chip_c1:
+                                if st.button("⚡ %10 Filo İndirimi", key=f"chip_disc_{radar_country}_{idx}", use_container_width=True):
+                                    st.session_state[user_note_key] = "Kurumunuza 3+ cihaz alımında %10 kurumsal filo indirimi ve yıllık 200 kutu Z-Dish sarf taahhüdü durumunda özel birim fiyat avantajı teklif ediyoruz."
+                                    clear_pitch_cache_for_target(radar_country, idx)
+                                    st.rerun()
+                            with chip_c2:
+                                if st.button("🏛️ ESHRE Stand Daveti", key=f"chip_eshre_{radar_country}_{idx}", use_container_width=True):
+                                    st.session_state[user_note_key] = "2027 ESHRE kongresinde ZEUS standımızda kıdemli ekibinizi VIP olarak ağırlamaktan ve vaka çalıştayımızı birlikte gerçekleştirmekten onur duyarız."
+                                    clear_pitch_cache_for_target(radar_country, idx)
+                                    st.rerun()
+                            with chip_c3:
+                                if st.button("🔬 %79.4 TFF Başarısı", key=f"chip_tff_{radar_country}_{idx}", use_container_width=True):
+                                    st.session_state[user_note_key] = "TFF ve globozoospermi vakalarında %79.37 Grade I-II kaliteli embriyo gelişimini ve Tanaka et al. 90 ROSI bebeği klinik kanıtlarımızı özellikle vurgulamak istiyoruz."
+                                    clear_pitch_cache_for_target(radar_country, idx)
+                                    st.rerun()
+                            with chip_c4:
+                                if st.button("🧪 Non-Toksik AOA", key=f"chip_chem_{radar_country}_{idx}", use_container_width=True):
+                                    st.session_state[user_note_key] = "Toksik kimyasal kalsiyum ionoforlarına (A23187) kıyasla tamamen kimyasalsız ve güvenli elektriksel oosit aktivasyonu sağladığımızı belirtiyoruz."
+                                    clear_pitch_cache_for_target(radar_country, idx)
+                                    st.rerun()
+
+                            c_box_col1, c_box_col2 = st.columns([3.0, 1.0])
+                            with c_box_col1:
+                                user_custom_note = st.text_area(
+                                    "Yorumunuz:",
+                                    value=st.session_state.get(user_note_key, ""),
+                                    placeholder="Örn: ESHRE kongresinde standımıza VIP ağırlama teklif et, 3 cihaz alımına %10 filo indirimi ve 200 kutu Z-Dish taahhüdü öner, CE belgemizi ve %79.4 TFF başarı oranımızı vurgula...",
+                                    key=f"user_note_input_{radar_country}_{idx}",
+                                    height=75,
+                                    label_visibility="collapsed"
                                 )
-                            with c_col2:
+                                st.session_state[user_note_key] = user_custom_note
+                            with c_box_col2:
                                 st.write("")
-                                st.write("")
-                                ai_gen_btn = st.button("AI ile Yeniden Yaz", key=f"ai_btn_{radar_country}_{idx}", use_container_width=True)
+                                ai_gen_btn = st.button("🚀 Yorumuma Göre Maili Oluştur", key=f"ai_btn_{radar_country}_{idx}", type="primary", use_container_width=True)
                                 
                             pitch_state_key = f"pitch_data_{radar_country}_{idx}_{strat_mode}_{eff_selected_lang}"
                             
@@ -18357,13 +18534,15 @@ Tahmini Potansiyel: {p.get('est_revenue')}
 Stratejik Gerekçe: {p.get('why_target')}
 
 İletişim Stratejisi: {strat_mode}
-Özel Not: {user_custom_note if user_custom_note else "Klinik veri, sub-1.2% lizis, Baltaci ve Ebner hakemli makaleleri ve yerinde klinik protokol sunumunu vurgula."}
+YÖNETİCİ TALİMATI / ÖZEL YORUM: {user_custom_note if user_custom_note else "ZEUS Pulse Stimulator (The Spark of Life) ile kimyasalsız elektriksel oosit aktivasyonu (AOA), TFF vakalarında %79.37 kaliteli embriyo gelişimi, kimyasal ionoforlara (A23187) karşı non-toksik üstünlük, Baltaci ve Ebner hakemli makaleleri, Tanaka 90 ROSI bebeği verilerini ve yerinde klinik protokol sunumunu vurgula."}
 Hedef Dil: {target_lang_full}
 
 KRİTİK KURALLAR:
 1. DİL KURALI: Mektup ve konu başlığı KESİNLİKLE {target_lang_full} dilinde yazılmalıdır! Muhatap hitapları dahil asla Türkçe veya uygunsuz İngilizce bırakılmamalıdır.
-2. BİLİMSEL DAYANAK KURALI: Eğer strateji "clinical" (Bilimsel & Klinik İkna) ise; mutlaka hakemli yayın kaynaklarını (Baltaci et al. RBM Online - p<0.001 fertilizasyon artışı, Ebner et al. Hum Reprod Update / ESHRE - 2.2 kat blastosist artışı, Day-3 kaliteli embriyo %74.5, lizis <%1.2, Vanden Meerschaut et al. Fertil Steril - biyogüvenlik ve anomali yokluğu) ve CE Device Certified (MDR Class IIa, MEA >%80, LAL <0.05 EU/ml) standartlarını açıkça referans göstererek metne bilimsel ağırlık kazandır ve mektubun sonuna [Scientific References / Pubblicazioni di Riferimento] künyesini ekle.
-3. KESİNLİKLE DEMO YOK KURALI: ZEUS Bioscience politikası gereği demo cihaz / ücretsiz deneme cihazı VERİLMEMEKTEDİR. Asla mektupta "demo", "demo unit", "ücretsiz deneme cihazı", "loaner" ifadelerini kullanma! Bunun yerine "bilimsel protokol sunumu", "yerinde aplikasyon eğitimi" ve "vaka çalıştayı" öner.
+2. TEKNOLOJİ DOĞRULUĞU (ÇOK ÖNEMLİ): ZEUS Pulse Stimulator Piezo-ICSI DEĞİLDİR! Oosit aktivasyon (AOA - Artificial Oocyte Activation) sistemidir. Kimyasal kalsiyum ionoforlarına (A23187) karşı non-toksik, fiziksel mikro-elektriksel puls stimülasyonu sağlar. TFF vakalarında %79.37 Grade I & II embriyo gelişim başarısı vardır. Asla Piezo-ICSI yazma!
+3. CE BELGELENDİRME KURALI: Cihazın CE Belgesi vardır (CE Certified / Marcatura CE). KESİNLİKLE "MDR" VEYA "2017/745" YAZMA! Yalnızca "CE Sertifikalı" / "CE Certified" olarak belirt.
+4. YÖNETİCİ YORUMU UYARLAMASI: Yönetici yorumunda belirtilen özel indirim, kongre daveti veya şartları mektuba ve konu başlığına mutlaka entegre et.
+5. KESİNLİKLE DEMO YOK KURALI: Asla "demo", "demo unit", "ücretsiz deneme" ifadelerini kullanma! "Bilimsel protokol sunumu", "yerinde aplikasyon eğitimi" ve "vaka çalıştayı" öner.
 
 Çıktıyı tam olarak şu formatta ver:
 SUBJECT: [Konu başlığı]
@@ -18388,6 +18567,9 @@ BODY:
                                     st.session_state[pitch_state_key] = (p_subj, p_body)
                                     st.session_state[widget_subj_key] = p_subj
                                     st.session_state[widget_body_key] = p_body
+                                
+                                if ai_gen_btn:
+                                    st.rerun()
                             
                             curr_subj, curr_body = st.session_state.get(pitch_state_key, build_executive_pitch(p, radar_country, strat_mode, user_custom_note, eff_selected_lang))
                             
@@ -18429,19 +18611,19 @@ BODY:
                                 lk_clean_name = c_person.split('(')[0].strip()
                                 
                                 if eff_selected_lang == "it":
-                                    lk_conn_note = f"Gentile {lk_clean_name}, seguiamo con stima l'eccellenza clinica di {p['name']} nella PMA. Vorrei collegarmi per condividere i dati clinici peer-reviewed sul sistema di attivazione oocitaria Piezo (ZPS 26, CE MDR) con tasso di fecondazione all'82.3% nei casi TFF. Cordiali saluti."
+                                    lk_conn_note = f"Gentile {lk_clean_name}, seguiamo con stima l'eccellenza di {p['name']} nella PMA. Vorrei collegarmi per condividere i dati clinici sul sistema di attivazione oocitaria elettrica ZEUS Pulse Stimulator (Certificato CE, 79.4% embrioni top quality in TFF). Cordiali saluti."
                                 elif eff_selected_lang == "es":
-                                    lk_conn_note = f"Estimado/a {lk_clean_name}, seguimos con gran interés el trabajo de excelencia de {p['name']} en reproducción asistida. Me gustaría conectar para compartir la evidencia clínica con marcado CE MDR sobre activación piezoeléctrica (ZPS 26) y fertilización del 82.3% en TFF. Saludos cordiales."
+                                    lk_conn_note = f"Estimado/a {lk_clean_name}, seguimos con interés la excelencia de {p['name']} en reproducción asistida. Deseo conectar para compartir evidencia sobre activación ovocitaria eléctrica ZEUS Pulse Stimulator (Certificación CE, 79.4% embriones Grado I/II en TFF). Saludos."
                                 elif eff_selected_lang == "de":
-                                    lk_conn_note = f"Sehr geehrte(r) {lk_clean_name}, wir schätzen die führende Arbeit von {p['name']} in der Reproduktionsmedizin sehr. Gerne möchte ich mich vernetzen, um klinische Daten zur CE-MDR-zertifizierten piezoelektrischen Oozytenaktivierung (ZPS 26, Befruchtungsrate 82.3% bei TFF) zu teilen. Beste Grüße."
+                                    lk_conn_note = f"Sehr geehrte(r) {lk_clean_name}, wir schätzen die führende Arbeit von {p['name']} sehr. Gerne vernetze ich mich, um klinische Daten zum CE-zertifizierten elektrischen Oozyten-Stimulator (ZEUS Pulse Stimulator, 79.4% Top-Embryonen bei TFF) zu teilen. Beste Grüße."
                                 elif eff_selected_lang == "fr":
-                                    lk_conn_note = f"Cher/Chère {lk_clean_name}, nous suivons avec intérêt l'excellence des travaux de {p['name']} en PMA. Je souhaite me connecter afin de partager nos données cliniques publiées sur l'activation ovocytaire piézoélectrique (ZPS 26, CE MDR), atteignant 82.3% de fécondation en TFF. Cordialement."
+                                    lk_conn_note = f"Cher/Chère {lk_clean_name}, nous suivons l'excellence de {p['name']} en PMA. Je souhaite me connecter pour partager nos données sur le stimulateur ovocytaire électrique ZEUS (Certifié CE, 79.4% embryons top qualité en TFF). Cordialement."
                                 elif eff_selected_lang == "ar":
-                                    lk_conn_note = f"سعادة {lk_clean_name}، نتابع بتقدير تميزكم في {p['name']} بمجال علاج العقم. يشرفني التواصل لمشاركتكم النتائج الإكلينيكية الموثقة لتقنية التنشيط الكهروبيزوي للبويضات (ZPS 26 المعتمدة أوروبياً CE MDR) بمعدل إخصاب 82.3% في حالات فشل التنشيط. مع خالص التحية."
+                                    lk_conn_note = f"سعادة {lk_clean_name}، نتابع تميزكم في {p['name']}. يشرفني التواصل لمشاركتكم النتائج الإكلينيكية لجهاز التنشيط الكهربائي للبويضات ZEUS Pulse Stimulator (المعتمد بشهادة CE، بنسبة أجنة ممتازة 79.4% في حالات فشل التخصيب). خالص التحية."
                                 elif eff_selected_lang == "tr":
-                                    lk_conn_note = f"Sayın {lk_clean_name}, {p['name']} bünyesindeki öncü IVF ve embriyoloji çalışmalarınızı takdirle takip ediyoruz. CE MDR Class IIa onaylı Piezoelektrik oosit aktivasyon sistemimizin (ZPS 26) TFF vakalarındaki %82.3 klinik başarı verilerini paylaşmak üzere ağınıza katılmak isterim. Saygılarımla."
+                                    lk_conn_note = f"Sayın {lk_clean_name}, {p['name']} bünyesindeki öncü IVF çalışmalarınızı takdirle takip ediyoruz. CE Sertifikalı elektriksel oosit aktivasyon sistemimiz (ZEUS Pulse Stimulator) ile TFF vakalarında elde edilen %79.4 kaliteli embriyo verilerini paylaşmak üzere ağınıza katılmak isterim. Saygılarımla."
                                 else: # en (English)
-                                    lk_conn_note = f"Dear {lk_clean_name}, we closely follow {p['name']}'s leadership in reproductive medicine. I would welcome connecting to share our peer-reviewed clinical evidence on CE MDR Class IIa Piezoelectric Oocyte Activation (ZPS 26), restoring 2PN rates to 82.3% in TFF cohorts. Kind regards."
+                                    lk_conn_note = f"Dear {lk_clean_name}, we follow {p['name']}'s excellence in reproductive medicine. I would welcome connecting to share clinical data on our CE-Certified Electrical Oocyte Activation system (ZEUS Pulse Stimulator), yielding 79.4% Grade I/II embryos in TFF cohorts. Kind regards."
                                 
                                 st.text_area("📋 300 Karakterlik LinkedIn Bağlantı İsteği Notu (Kopyalayabilirsiniz):", value=lk_conn_note[:300], height=85, key=f"lk_conn_note_{p['name'][:10]}_{idx}_{eff_selected_lang}")
                                 
@@ -18488,7 +18670,7 @@ BODY:
         # --------------------------------------------------------------------------
         with comp_tab4:
             st.subheader("🔬 ZEUS Akıllı Cihaz & Teknoloji Portföyü AI Değerlendirme Masası")
-            st.caption("2026 Resmi Ürün Kataloğu (52 Sayfa), Klinik Çalışmalar (Prof. Dr. Volkan Baltacı et al., Tanaka et al. PNAS ROSI, Mansour et al., Vanden Meerschaut et al.), CE/MDR Sertifikasyonları ve Patentli Kriyomimari referans alınarak; hedef pazarın klinik siklus, PGT-A biyopsi, ICSI ve kriyodepolama dinamiklerine göre AI tarafından türetilmiş cihaz ve teknoloji tavsiyeleri.")
+            st.caption("2026 Resmi Ürün Kataloğu (52 Sayfa), Klinik Çalışmalar (Prof. Dr. Volkan Baltacı et al., Tanaka et al. PNAS ROSI, Mansour et al., Vanden Meerschaut et al.), CE Sertifikalı Sertifikasyonları ve Patentli Kriyomimari referans alınarak; hedef pazarın klinik siklus, PGT-A biyopsi, ICSI ve kriyodepolama dinamiklerine göre AI tarafından türetilmiş cihaz ve teknoloji tavsiyeleri.")
 
             # Top Strategic Callout with YouTube & Official 2026 Catalog References
             st.markdown("""
@@ -18510,7 +18692,7 @@ BODY:
                     </div>
                 </div>
                 <div style="margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.08);color:#CCD7E6;font-size:12.5px;line-height:1.55;">
-                    Bu masa; <b>ZPS 26 / ZPS24-001 Pulse Stimulator</b> (piezoelektrik oosit aktivasyonu & füzyon), <b>ZEUS Black-Box Witness Platform (BioPSafe ZBB25-001)</b> (13 IR sensör, çift tablet ve pedal kontrollü biyopsi takibi), <b>Mismatch Blocker ZMB-7T</b> (7 istasyonlu QR kodlu şahitlik & kontör kredisi) ve <b>Smart Cryo-Tools ZCT25</b> (sıvı azot tank kapasitesini 4 katına çıkaran sekizgen goblet mimarisi) teknolojilerini pazarın alım gücü, regülasyonları ve klinik ihtiyaçlarıyla sentezler.
+                    Bu masa; <b>ZPS 26 / ZPS24-001 Pulse Stimulator</b> (elektriksel oosit aktivasyon (AOA)u & füzyon), <b>ZEUS Black-Box Witness Platform (BioPSafe ZBB25-001)</b> (13 IR sensör, çift tablet ve pedal kontrollü biyopsi takibi), <b>Mismatch Blocker ZMB-7T</b> (7 istasyonlu QR kodlu şahitlik & kontör kredisi) ve <b>Smart Cryo-Tools ZCT25</b> (sıvı azot tank kapasitesini 4 katına çıkaran sekizgen goblet mimarisi) teknolojilerini pazarın alım gücü, regülasyonları ve klinik ihtiyaçlarıyla sentezler.
                 </div>
             </div>
             """, unsafe_allow_html=True)
@@ -19020,9 +19202,9 @@ BODY:
                     "flag": "🇩🇪", "country": "Almanya (Germany / DACH)", "phase": 3,
                     "phase_label": "FAZ 3: Regüle Pazar & Teknik Mümessil Girişi (60 - 180 Gün)",
                     "color": "#10B981", "market_size": f"{clinics} Klinik | ~{cycles:,} Siklus | ${gdp_pc:,} GSYİH",
-                    "summary_bullet": f"{clinics} klinik, {cycles:,} siklus; MEA >%80 ve CE MDR teknik dosyası ile yerel tıbbi satış mümessili eşliğinde girilmelidir.",
+                    "summary_bullet": f"{clinics} klinik, {cycles:,} siklus; MEA >%80 ve CE Sertifikalı teknik dosyası ile yerel tıbbi satış mümessili eşliğinde girilmelidir.",
                     "decision_maker": "Laboratuvar Şefleri (Leitung IVF-Labor, Reproduktionsbiologe) & Tıbbi Satın Alma Komitesi",
-                    "barrier": "Katı regülatif filtre ve şüphecilik. MEA >%80 bağımsız akreditasyon raporu ve eksiksiz MDR teknik dosyası olmadan klinik görüşme kabul edilmez. Doğrudan fabrika yerine yerel tıbbi satış mümessili (Medizinprodukteberater) talep edilir.",
+                    "barrier": "Katı regülatif filtre ve şüphecilik. MEA >%80 bağımsız akreditasyon raporu ve eksiksiz CE teknik dosyası olmadan klinik görüşme kabul edilmez. Doğrudan fabrika yerine yerel tıbbi satış mümessili (Medizinprodukteberater) talep edilir.",
                     "recipe": [
                         "Almanca teknik dosya ve bağımsız MEA / Endotoksin sertifikalarının ilk temasta sunulması.",
                         "Labotect veya Gynemed GmbH gibi yerel distribütörlerle DACH bölgesi anlaşması.",
@@ -19200,7 +19382,7 @@ BODY:
 • Tasso di Fertilizzazione 2PN: 24.6% ➔ 82.3% (+57.7% incremento, p < 0.001)
 • Blastocisti Day-5 Utilizzabili: 21.4% ➔ 48.1% (aumento di 2.2 volte)
 • Degenerazione Oocitaria Post-ICSI: 7.8% ➔ 3.2% (maggiore elasticità di membrana)
-• Garanzia di Biocompatibilità: CE MDR Classe IIa | MEA >80% | Endotossine <0.05 EU/ml
+• Garanzia di Biocompatibilità: CE Sertifikalı Classe IIa | MEA >80% | Endotossine <0.05 EU/ml
 """ if include_table_in_email else ""
 
                 table_snip_es = """
@@ -19208,7 +19390,7 @@ BODY:
 • Tasa de Fecundación 2PN: 24.6% ➔ 82.3% (+57.7% de incremento, p < 0.001)
 • Blastocistos Útiles Día-5: 21.4% ➔ 48.1% (aumento de 2.2x en rendimiento)
 • Degeneración Oocitaria Post-ICSI: 7.8% ➔ 3.2% (máxima integridad celular)
-• Estándares de Bioseguridad: CE MDR Clase IIa | MEA >80% | Endotoxinas <0.05 EU/ml
+• Estándares de Bioseguridad: CE Sertifikalı Clase IIa | MEA >80% | Endotoxinas <0.05 EU/ml
 """ if include_table_in_email else ""
 
                 table_snip_de = """
@@ -19216,7 +19398,7 @@ BODY:
 • 2PN-Befruchtungsrate: 24,6% ➔ 82,3% (+57,7% Steigerung, p < 0.001)
 • Tag-5 Nutzbare Blastozysten: 21,4% ➔ 48,1% (2,2-facher Zuwachs)
 • Oozyten-Degenerationsrate: gesenkt von 7,8% auf 3,2% (Gewebeschonend)
-• Biokompatibilität: CE MDR Klasse IIa | MEA >80% | Endotoxin LAL <0,05 EU/ml
+• Biokompatibilität: CE Sertifikalı Klasse IIa | MEA >80% | Endotoxin LAL <0,05 EU/ml
 """ if include_table_in_email else ""
 
                 table_snip_fr = """
@@ -19224,7 +19406,7 @@ BODY:
 • Taux de Fécondation 2PN: 24.6% ➔ 82.3% (+57.7% d'amélioration, p < 0.001)
 • Blastocystes Utilisables J-5: 21.4% ➔ 48.1% (multiplié par 2.2)
 • Dégénérescence Oocytaire Post-ICSI: 7.8% ➔ 3.2% (préservation membranaire)
-• Sécurité Biologique: Marquage CE MDR Classe IIa | MEA >80% | Endotoxines <0.05 EU/ml
+• Sécurité Biologique: Marquage CE Sertifikalı Classe IIa | MEA >80% | Endotoxines <0.05 EU/ml
 """ if include_table_in_email else ""
 
                 table_snip_ar = """
@@ -19232,7 +19414,7 @@ BODY:
 • نسبة التخصيب (2PN): ارتفعت من 24.6% إلى 82.3% (فارق إحصائي +57.7%، p < 0.001)
 • أجنة اليوم الخامس صالحة للنقل (Day-5 Blastocysts): ارتفعت من 21.4% إلى 48.1% (زيادة بمقدار 2.2 ضعف)
 • نسبة تلف أو تحلل البويضات: انخفضت من 7.8% إلى 3.2% (أمان غشائي فائق)
-• اعتمادات الأمان: شهادة CE MDR الأوروبية (فئة IIa) | فحص MEA >80% | إندوتوكسين <0.05 EU/ml
+• اعتمادات الأمان: شهادة CE Sertifikalı الأوروبية (فئة IIa) | فحص MEA >80% | إندوتوكسين <0.05 EU/ml
 """ if include_table_in_email else ""
 
                 table_snip_en = """
@@ -19240,19 +19422,19 @@ BODY:
 • 2PN Fertilization Rate: 24.6% ➔ 82.3% (+57.7% increase, p < 0.001)
 • Day-5 Usable Blastocysts: 21.4% ➔ 48.1% (2.2x yield expansion)
 • Oocyte Degeneration Rate: reduced from 7.8% down to 3.2%
-• Biocompatibility & QC: CE MDR Class IIa Certified | MEA >80% | Endotoxin LAL <0.05 EU/ml
+• Biocompatibility & QC: CE Sertifikalı (Class IIa) Certified | MEA >80% | Endotoxin LAL <0.05 EU/ml
 """ if include_table_in_email else ""
 
                 if "Türkiye" in lang_sel:
                     st.markdown("##### 🇹🇷 Türkiye İçin E-Posta Taslağı (Tüp Bebek Merkezleri & Klinikler)")
                     st.text("Konu Satırı (Subject):")
-                    st.code("Konu: Sn. Laboratuvar Direktörü / Baş Embriyolog Dikkatine - CE Belgeli Piezo AOA Klinik Protokolü ve Döllenme Başarısı Verileri", language="markdown")
+                    st.code("Konu: Sn. Laboratuvar Direktörü / Baş Embriyolog Dikkatine - CE Sertifikalı Elektriksel AOA Klinik Protokolü ve Döllenme Başarısı Verileri", language="markdown")
                     st.text("E-Posta Gövdesi:")
                     st.code(f"""Sayın Klinik Yönetimi ve Değerli Sekreterlik Ekibi,
 
 Bu teknik ve klinik bilgilendirmeyi tüp bebek ünitenizin Laboratuvar Direktörü ve Kıdemli Klinik Embriyologlarına iletmenizi rica ederiz.
 
-Paylaşılan içerik, tekrarlayan Total Döllenme Başarısızlığı (TFF) ve düşük oosit kalitesi vakalarında döllenme oranlarını artıran CE belgeli Piezo AOA protokolüne ilişkindir.
+Paylaşılan içerik, tekrarlayan Total Döllenme Başarısızlığı (TFF) ve düşük oosit kalitesi vakalarında döllenme oranlarını artıran CE belgeli Elektriksel AOA protokolüne ilişkindir.
 
 ---
 
@@ -19286,7 +19468,7 @@ Web: www.zeusbioscience.com""", language="markdown")
 
 Vi chiedo cortesemente di inoltrare la presente comunicazione al Responsabile del Laboratorio PMA e agli Embriologi Clinici della vostra struttura.
 
-Il documento allegato riguarda l'ottimizzazione dei tassi di fertilizzazione nei cicli ad esito critico (Total Fertilization Failure - TFF o bassa fecondazione pregressa), mediante tecnologia certificata CE di attivazione oocitaria Piezoelettrica (Piezo AOA).
+Il documento allegato riguarda l'ottimizzazione dei tassi di fertilizzazione nei cicli ad esito critico (Total Fertilization Failure - TFF o bassa fecondazione pregressa), mediante tecnologia certificata CE di attivazione oocitaria Piezoelettrica (Elektriksel AOA).
 
 ---
 
@@ -19433,7 +19615,7 @@ Web: www.zeusbioscience.com""", language="markdown")
 انطلاقاً من ريادتكم العلمية في معالجة أصعب حالات العقم المستعصي، يسعدنا في شركة ZEUS Bioscience أن نضع بين أيديكم الملف الإكلينيكي لجهاز التحفيز الكهروبيزوي المتقدم (ZEUS Piezo Pulse Stimulator & Electro Dish):
 
 1. شهادة الاعتماد الأوروبي (CE Device Certified): مطابقة تامة لمعايير السلامة البيولوجية واختبارات سلامة الأجنة (MEA >80% & Endotoxin Free).
-2. نتائج إكلينيكية موثقة: أثبتت الدراسات العلمية المنشورة قدرة تقنية (Piezo AOA) على رفع معدلات الإخصاب من 24.6% إلى أكثر من 82.3% (p < 0.001) في حالات انعدام الحيوانات المنوية، تشوهات الحيوانات الشديدة (Globozoospermia)، وفشل التنشيط المسبق.{table_snip_ar}
+2. نتائج إكلينيكية موثقة: أثبتت الدراسات العلمية المنشورة قدرة تقنية (Elektriksel AOA) على رفع معدلات الإخصاب من 24.6% إلى أكثر من 82.3% (p < 0.001) في حالات انعدام الحيوانات المنوية، تشوهات الحيوانات الشديدة (Globozoospermia)، وفشل التنشيط المسبق.{table_snip_ar}
 3. التقييم الإكلينيكي للحالات المستعصية: يسعدنا تزويد مختبركم الموقر بالبروتوكول التطبيقي المعتمد وتوفير جلسة استشارية علمية مع فريق التطبيقات الإكلينيكية لدينا لمراجعة النتائج على الحالات المعقدة.
 
 مرفق مع هذه الرسالة الملخص العلمي (Whitepaper) وشهادات الجودة الأوروبية.
@@ -19595,11 +19777,11 @@ Web: www.zeusbioscience.com""", language="markdown")
 
                         # Localized Note
                         if lk_country in ["Italy", "İtalya"]:
-                            conn_msg = f"Gentile Dott./Dott.ssa {person_clean}, apprezzo molto il lavoro di {inst_clean}. In ZEUS Bioscience abbiamo sviluppato un protocollo CE (Piezo AOA) che porta la fecondazione nei casi TFF all'82.3%. Vorrei condividere il nostro whitepaper clinico. Cordiali saluti!"
+                            conn_msg = f"Gentile Dott./Dott.ssa {person_clean}, apprezzo molto il lavoro di {inst_clean}. In ZEUS Bioscience abbiamo sviluppato un protocollo CE (Elektriksel AOA) che porta la fecondazione nei casi TFF all'82.3%. Vorrei condividere il nostro whitepaper clinico. Cordiali saluti!"
                         elif lk_country in ["Spain", "İspanya"]:
                             conn_msg = f"Estimado/a {person_clean}, sigo con gran interés su labor en {inst_clean}. Contamos con tecnología CE de activación oocitaria Piezo que eleva la fecundación al 82.3% en fallos previos. Me encantaría compartir nuestro whitepaper clínico. ¡Un cordial saludo!"
                         else:
-                            conn_msg = f"Dear {person_clean}, I follow the clinical excellence of {inst_clean} with great admiration. At ZEUS Bioscience, we developed a CE MDR Class IIa Piezo AOA protocol that achieves 82.3% fertilization in TFF cases. I would be honored to share our 1-page clinical whitepaper with your team."
+                            conn_msg = f"Dear {person_clean}, I follow the clinical excellence of {inst_clean} with great admiration. At ZEUS Bioscience, we developed a CE Sertifikalı (Class IIa) Elektriksel AOA protocol that achieves 82.3% fertilization in TFF cases. I would be honored to share our 1-page clinical whitepaper with your team."
 
                         with st.container():
                             st.markdown(f"""
@@ -19651,7 +19833,7 @@ Condividiamo volentieri con la vostra équipe il nostro Clinical Whitepaper e il
 Se per lei ha senso, posso inviarle la scheda tecnica o concordare una breve chiacchierata tecnica online di 10 minuti. Buona giornata!""", language="text")
                         st.text("Bağlantı Kabul Edildikten Sonraki DM (İngilizce - Global):")
                         st.code("""Dear Dr. [Last Name], thank you for connecting.
-As referenced, I am pleased to share our 1-page Clinical Whitepaper on non-toxic Piezo Oocyte Activation (AOA) under CE MDR Class IIa certification.
+As referenced, I am pleased to share our 1-page Clinical Whitepaper on non-toxic Piezo Oocyte Activation (AOA) under CE Sertifikalı (Class IIa) certification.
 Our clinical trials demonstrate an increase in fertilization from 24.6% to 82.3% in previous TFF cases with zero electrical cytolysis risk.
 I would welcome the opportunity to coordinate a brief 10-minute scientific briefing or arrange an evaluation protocol with your embryology team. Best regards!""", language="text")
 
@@ -19704,7 +19886,7 @@ I would welcome the opportunity to coordinate a brief 10-minute scientific brief
 <tr style="background:rgba(255,255,255,0.06); text-align:left; border-bottom:1px solid rgba(255,255,255,0.15);">
 <th style="padding:8px;">Klinik Parametre (Metric)</th>
 <th style="padding:8px; text-align:center;">Standart ICSI (Önceki Siklus)</th>
-<th style="padding:8px; text-align:center; color:#00F5FF;">ZEUS Piezo AOA Siklusu</th>
+<th style="padding:8px; text-align:center; color:#00F5FF;">ZEUS Elektriksel AOA Siklusu</th>
 <th style="padding:8px; text-align:center; color:#10B981;">Klinik Kazanım (p-value)</th>
 </tr>
 <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
@@ -19740,7 +19922,7 @@ I would welcome the opportunity to coordinate a brief 10-minute scientific brief
 </table>
 
 <div style="background:rgba(255,255,255,0.03); border-radius:8px; padding:10px 14px; font-size:11.5px; color:#CCD7E6; margin-top:10px;">
-<b>🛡️ Kalite & Güvenlik Güvencesi:</b> CE Device Certified (MDR) | MEA (Mouse Embryo Assay) >%80 Blastosist Onaylı | Endotoksin LAL <0.05 EU/ml | Doğrulanmış Klinik Aplikasyon ve Protokol Desteği Aktif.
+<b>🛡️ Kalite & Güvenlik Güvencesi:</b> CE Device Certified | MEA (Mouse Embryo Assay) >%80 Blastosist Onaylı | Endotoksin LAL <0.05 EU/ml | Doğrulanmış Klinik Aplikasyon ve Protokol Desteği Aktif.
 </div>
 </div>""", unsafe_allow_html=True)
 
@@ -19761,7 +19943,7 @@ I would welcome the opportunity to coordinate a brief 10-minute scientific brief
                     4. **Nomikos et al. & Swann et al. (2012):** *"Phospholipase C zeta (PLCζ) and its role in human fertilization failure."* **Biochemical Journal.**
                        - *Mekanizma:* Sperm kaynaklı PLC-zeta eksikliğinde oositte endoplazmik retikulumdan kalsiyum salınımını tetikleyen elektropuls mekanizmasının biyokimyasal temeli.
 
-                    5. **ZEUS Bioscience CE Teknik Dokümantasyonu (MDR 2017/745 Class IIa):**
+                    5. **ZEUS Bioscience CE Teknik Dokümantasyonu (Class IIa):**
                        - **Biyouyumluluk:** Mouse Embryo Assay (MEA) > %80 blastosist testi onaylı.
                        - **Sterilite:** Endotoksin LAL < 0.05 EU/mL.
                        - **Voltaj Kalibrasyonu:** 0.5–1.2 kV/cm elektrik alan mikro-kuyu geometrisi.
@@ -19786,7 +19968,7 @@ Calibrated, non-toxic micro-electrical Piezo pulses (0.5-1.2 kV/cm) induce physi
 - Oocyte Degeneration Rate: 7.8% -> 3.2% (59% cell damage reduction)
 
 4. QUALITY ASSURANCE & COMPLIANCE:
-- CE Device Certified (MDR) (Class IIa)
+- CE Device Certified (Class IIa)
 - MEA (Mouse Embryo Assay) > 80% Blastocyst Confirmed
 - Endotoxin LAL < 0.05 EU/ml
 - Peer-Reviewed Clinical Protocol & Application Specialist Support Active
@@ -19946,7 +20128,7 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
         # ----------------------------------------------------------------------
         with comp_tab6:
             st.markdown("### 🏛️ ZEUS Pazar İstihbaratı, Sağlık Bakanlığı Kararları & Sektörel Regülasyon Kütüphanesi")
-            st.caption("Karşılaştırılan ve hedef uluslararası pazarlar için Resmi Sağlık Bakanlığı (MOH) kararları, CE/MDR tescil mevzuatı, gümrük GTİP kodları, PGT biyoetik kuralları, indirim-tahmin matrisleri ve satış stratejileri.")
+            st.caption("Karşılaştırılan ve hedef uluslararası pazarlar için Resmi Sağlık Bakanlığı (MOH) kararları, CE Sertifikalı tescil mevzuatı, gümrük GTİP kodları, PGT biyoetik kuralları, indirim-tahmin matrisleri ve satış stratejileri.")
 
             # Country selection: Prioritize currently selected comparison countries, followed by other key markets
             comp_priorities = [c for c in selected_compare]
@@ -20031,8 +20213,8 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
                     <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
                         <div style="font-weight:700;color:#00F5FF;font-size:13.5px;margin-bottom:8px;">🏛️ Tescil Otoritesi & Ruhsatlandırma Protokolü</div>
                         • <b>Resmi Otorite:</b> <b>{cust_reg.get('authority_full', auth_name)}</b><br>
-                        • <b>Ruhsat & Tescil Protokolü:</b> {cust_reg.get('registration_path', 'CE MDR Harmonize İthal İzni')}<br>
-                        • <b>Cihaz Uygunluğu:</b> <span style="background:rgba(0,230,118,0.15);color:#00E676;padding:2px 8px;border-radius:4px;font-weight:700;">CE Device Certified (EU MDR 2017/745 Class IIa)</span><br>
+                        • <b>Ruhsat & Tescil Protokolü:</b> {cust_reg.get('registration_path', 'CE Sertifikalı Harmonize İthal İzni')}<br>
+                        • <b>Cihaz Uygunluğu:</b> <span style="background:rgba(0,230,118,0.15);color:#00E676;padding:2px 8px;border-radius:4px;font-weight:700;">CE Device Certified (CE Sertifikalı Tıbbi Cihaz)</span><br>
                         • <b>İthalat Zorluk Seviyesi:</b> {kb_macro['import_difficulty']}
                     </div>
                     <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
@@ -20149,7 +20331,7 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
                         </div>
                         """, unsafe_allow_html=True)
                 else:
-                    st.info(f"{cmp_kb_country} pazarı için genel uluslararası CE MDR ve ISO 13485 medikal cihaz mevzuat hükümleri geçerlidir.")
+                    st.info(f"{cmp_kb_country} pazarı için genel uluslararası CE Sertifikalı ve ISO 13485 medikal cihaz mevzuat hükümleri geçerlidir.")
 
             # SUB-TAB 6: GLOBAL TIBBİ CİHAZ TESCİL, RUHSAT HARÇLARI & MERCI REHBERİ
             with k_tab6:
@@ -20333,7 +20515,7 @@ Cihaz, tüp bebek (IVF/ICSI) laboratuvarlarında Total Döllenme Başarısızlı
 2.4. Klinik lizis oranı <%1 olmalı, blastosist gelişim oranını (blastocyst rate) baskılamamalıdır.
 
 3. KALİTE, GÜVENLİK VE BELGELENDİRME ŞARTLARI:
-3.1. Cihaz, AB Tıbbi Cihaz Regülasyonu (EU MDR 2017/745) kapsamında Sınıf IIa (Class IIa) onaylı CE sertifikasına sahip olmalıdır.
+3.1. Cihaz, Sınıf IIa (Class IIa) onaylı resmi CE sertifikasına ve ISO 13485 kalite belgesine sahip olmalıdır.
 3.2. Üretici ISO 13485:2016 Tıbbi Cihaz Kalite Yönetim Sistemi sertifikasına sahip olmalıdır.
 3.3. Cihaz IEC 60601-1 (Elektriksel Güvenlik) ve IEC 60601-1-2 (Elektromanyetik Uyumluluk - EMC) test raporlarına sahip olmalıdır.
 3.4. Ürün Takip Sistemi (ÜTS) veya ilgili ulusal sağlık otoritesi tescil numarası teklif dosyasında sunulmalıdır.
@@ -20844,7 +21026,7 @@ elif active_view == "🌍 Country 360° Performance & Report":
         # PILLAR 2: KLİNİK SİKLUS, DEVLET DESTEĞİ, IVF & PGT ANALİTİK GRAFİKLERİ
         # ----------------------------------------------------------------------
         st.markdown(f"### 📈 2. {sel_country} Klinik IVF Ekosistemi, Siklus Dağılımı, Devlet Desteği & PGT Penetrasyon Grafikleri")
-        st.caption("Ulusal tüp bebek tedavi dağılımı (IVF/ICSI vs Piezo AOA vs PGT), kamu desteği ve 2024-2027 büyüme koridoru görselleştirmesi.")
+        st.caption("Ulusal tüp bebek tedavi dağılımı (IVF/ICSI vs Elektriksel AOA vs PGT), kamu desteği ve 2024-2027 büyüme koridoru görselleştirmesi.")
         
         c_ch1, c_ch2, c_ch3 = st.columns(3)
         g_fig1, g_fig2, g_fig3 = build_country_360_charts(
@@ -20898,7 +21080,7 @@ elif active_view == "🌍 Country 360° Performance & Report":
                 
                 # Kategori 4: Klinik Teknoloji & Biyoetik
                 {"No": "16", "Kategori": "🔬 Teknoloji & Biyoetik", "Parametre / Gösterge": "ICSI Mikroenjeksiyon Adaptasyonu", "Değer": f"%{c_macro.get('icsi_pct', 85)}", "Kaynak & Referans": "Klinik Laboratuvar Sicili"},
-                {"No": "17", "Kategori": "🔬 Teknoloji & Biyoetik", "Parametre / Gösterge": "Piezo AOA & Şiddetli Erkek Faktörü İhtiyacı", "Değer": "%24 - %28 (Yüksek TESE Prevalansı)", "Kaynak & Referans": "Klinik Androloji Verisi"},
+                {"No": "17", "Kategori": "🔬 Teknoloji & Biyoetik", "Parametre / Gösterge": "Elektriksel AOA & Şiddetli Erkek Faktörü İhtiyacı", "Değer": "%24 - %28 (Yüksek TESE Prevalansı)", "Kaynak & Referans": "Klinik Androloji Verisi"},
                 {"No": "18", "Kategori": "🔬 Teknoloji & Biyoetik", "Parametre / Gösterge": "PGT Genetik Tanı Oranı", "Değer": f"%{c_macro.get('pgt_pct', 16)} (Tıbbi Endikasyon)", "Kaynak & Referans": "Akredite Genetik Merkezleri"},
                 {"No": "19", "Kategori": "🔬 Teknoloji & Biyoetik", "Parametre / Gösterge": "Kriyoprezervasyon (Dondurma) Oranı", "Değer": f"%{c_macro.get('cryo_pct', 8)}", "Kaynak & Referans": "Kriyobank İstatistikleri"},
                 
@@ -20938,7 +21120,7 @@ elif active_view == "🌍 Country 360° Performance & Report":
                 • <b>Sarf GTİP:</b> <code style="color:#00E676;">{cust_reg.get('gtip_consumable', 'GTIP 3822.00')}</code><br>
                 • <b>Liman / Gümrük Bekleme:</b> <span style="color:#00E676;font-weight:600;">{cust_reg.get('clearance_days', '15 Gün')}</span><br>
                 • <b>Tescil Otoritesi:</b> {cust_reg.get('authority_full', auth_name)}<br>
-                • <b>Yasal Ruhsat Yolu:</b> {cust_reg.get('registration_path', 'CE MDR Harmonize İthal İzni')}<br>
+                • <b>Yasal Ruhsat Yolu:</b> {cust_reg.get('registration_path', 'CE Sertifikalı Harmonize İthal İzni')}<br>
                 • <b>Zorunlu Evraklar:</b> {cust_reg.get('required_docs', 'COO, FSC, CE Deklarasyonu')}<br>
                 • <b>Soğuk Zincir Standardı:</b> {cust_reg.get('cold_chain_rules', '+2°C / +8°C veri kaydedicili transfer')}
             </div>
@@ -21035,7 +21217,7 @@ elif active_view == "🌍 Country 360° Performance & Report":
                     <b style="color:#00E676;font-size:12.5px;">📋 Şartname Kriterleri & Eylem Planı (ZPS 26):</b><br>
                     • <b>Şartname Başlığı:</b> {ts_c360.get('device_title', 'Piezo Stimülatör')}<br>
                     • <b>Zorunlu Kriterler:</b> Kimyasalsız piezoelektrik puls stimülasyonu, sub-%1 lizis, MEA >%80 analizli sarflar.<br>
-                    • <b>Zorunlu Belgeler:</b> CE MDR Class IIa, ISO 13485, Yerel tescil barkodu.<br><br>
+                    • <b>Zorunlu Belgeler:</b> CE Sertifikalı (Class IIa), ISO 13485, Yerel tescil barkodu.<br><br>
                     <b style="color:#FFB800;">Eylem Planı:</b><br>
                     {"<br>".join(["• " + a for a in tender_c360.get("action_plan_checklist", [])[:3]])}
                 </div>
@@ -21125,7 +21307,7 @@ elif active_view == "🌍 Country 360° Performance & Report":
             dev_preset = st.selectbox(
                 "Cihaz Modeli Seçin:",
                 [
-                    "ZEUS Pulse Stimulator (ZPS 26) — Piezo Oosit Aktivasyon",
+                    "ZEUS Pulse Stimulator (ZPS 26) — Elektriksel Oosit Aktivasyon (AOA)",
                     "ZEUS BioPSafe (ZBS26) — Embriyo Biyopsi & PCR Tubing İstasyonu",
                     "ZEUS Mismatch Blocker (ZMB26) — RFID & Elektronik Numune Şahitliği",
                     "ZEUS Smart Cryo-Tools (ZCT26) — Vitrifikasyon & Kriyo Yönetimi",
@@ -21145,8 +21327,36 @@ elif active_view == "🌍 Country 360° Performance & Report":
                 key=preset_price_key
             )
             rec_dev_max = float(pricing_fc.get('rec_device_discount', 8.0))
-            dev_disc_pct = st.slider("Cihaz İskonto Oranı (%):", min_value=0.0, max_value=30.0, value=rec_dev_max, step=0.5, key=f"c360_dev_disc_{sel_country}")
+            dev_disc_pct = st.slider(f"Cihaz İskonto Oranı (%) — [Önerilen Tavan: %{rec_dev_max:.1f}]:", min_value=0.0, max_value=30.0, value=rec_dev_max, step=0.5, key=f"c360_dev_disc_{sel_country}")
             dev_qty = st.number_input("Sipariş Cihaz Adedi:", min_value=1, max_value=50, value=1, step=1, key=f"c360_dev_qty_{sel_country}")
+
+            # Dynamic Hardware Volume Tier Advice Inline
+            if dev_qty == 1:
+                c360_dev_msg = "<span style='color:#EF4444;font-weight:700;'>❌ 1 Cihaz Kuralı:</span> İndirim ÖNERİLMEZ (%0). Standart transfer fiyatı ($8,500 USD) tavizsiz korunmalıdır."
+                c360_dev_bg = "rgba(239,68,68,0.12)"
+                c360_dev_bdr = "#EF4444"
+            elif dev_qty == 2:
+                c360_dev_msg = "<span style='color:#FBBF24;font-weight:700;'>ℹ️ 2 Cihaz:</span> Filo sayılmaz. Yalnızca peşin ödemede sembolik azami %2-3 verilebilir."
+                c360_dev_bg = "rgba(255,184,0,0.12)"
+                c360_dev_bdr = "#F59E0B"
+            elif 3 <= dev_qty <= 5:
+                c360_dev_msg = "<span style='color:#00E676;font-weight:700;'>✅ Küçük Filo (3-5 Cihaz):</span> %5 - %8 İskonto önerilir ($7,820 - $8,075 USD)."
+                c360_dev_bg = "rgba(0,230,118,0.12)"
+                c360_dev_bdr = "#00E676"
+            elif 6 <= dev_qty <= 9:
+                c360_dev_msg = "<span style='color:#00F5FF;font-weight:700;'>🏢 Büyük Filo (6-9 Cihaz):</span> %8 - %10 İskonto önerilir ($7,650 - $7,820 USD)."
+                c360_dev_bg = "rgba(0,245,255,0.12)"
+                c360_dev_bdr = "#00F5FF"
+            else:
+                c360_dev_msg = "<span style='color:#C084FC;font-weight:700;'>🏆 İhale / Konsorsiyum Tavanı (10+ Cihaz):</span> Azami %10 - %12 İskonto. Cihaz brüt marjı >%50 kalmalıdır."
+                c360_dev_bg = "rgba(168,85,247,0.12)"
+                c360_dev_bdr = "#A855F7"
+
+            st.markdown(f"""
+            <div style="background:{c360_dev_bg};border:1px solid {c360_dev_bdr};border-radius:6px;padding:6px 10px;margin-top:4px;margin-bottom:8px;font-size:11px;color:#E2E8F0;">
+                {c360_dev_msg}
+            </div>
+            """, unsafe_allow_html=True)
             
             net_dev_unit = dev_list_price * (1.0 - (dev_disc_pct / 100.0))
             dev_disc_amount_unit = dev_list_price - net_dev_unit
@@ -21191,8 +21401,8 @@ elif active_view == "🌍 Country 360° Performance & Report":
             con_preset = st.selectbox(
                 "Sarf Ürün Grubu Seçin:",
                 [
-                    "Piezo Aktivasyon Dishleri (Z-Dish Array)",
-                    "Piezo Ca-Free Aktivasyon Medyası",
+                    "Elektriksel Aktivasyon Dishleri (ZEUS Electro Dish Array)",
+                    "Ca-Free Aktivasyon Medyası (Electroliquid Solution)",
                     "Trofektoderm Biyopsi Pipeti",
                     "Akıllı Kriyo-Goblet Seti",
                     "Genel Karma / Özel Sarf Paketi"
@@ -21214,9 +21424,34 @@ elif active_view == "🌍 Country 360° Performance & Report":
                 key=con_price_key
             )
             rec_sarf_max = float(pricing_fc.get('rec_sarf_discount', 10.0))
-            con_disc_pct = st.slider("Sarf İskonto Oranı (%):", min_value=0.0, max_value=35.0, value=rec_sarf_max, step=0.5, key=f"c360_con_disc_{sel_country}")
+            con_disc_pct = st.slider(f"Sarf İskonto Oranı (%) — [Önerilen Tavan: %{rec_sarf_max:.1f}]:", min_value=0.0, max_value=35.0, value=rec_sarf_max, step=0.5, key=f"c360_con_disc_{sel_country}")
             def_con_qty = int(pricing_fc.get('target_consumables_2027', 250))
             con_qty = st.number_input("Yıllık Taahhüt Edilen Sarf Miktarı (Kutu/Yıl):", min_value=10, max_value=5000, value=def_con_qty, step=25, key=f"c360_con_qty_{sel_country}")
+
+            # Dynamic Consumable Volume Threshold Advice & Cycle Equivalent
+            if con_qty < 150:
+                c360_con_msg = "<span style='color:#EF4444;font-weight:700;'>🚫 150 Kutu Altı Kuralı:</span> KESİNLİKLE İNDİRİM UYGULAMAYINIZ! Kutu başı liste fiyatı sabit tutulmalıdır."
+                c360_con_bg = "rgba(239,68,68,0.12)"
+                c360_con_bdr = "#EF4444"
+            elif 150 <= con_qty < 300:
+                c360_con_msg = "<span style='color:#FBBF24;font-weight:700;'>⚖️ Standart Tüketim (150-299 Kutu):</span> Liste fiyatı korunmalı veya peşin alımda azami %5 şartlı indirim uygulanabilir."
+                c360_con_bg = "rgba(255,184,0,0.12)"
+                c360_con_bdr = "#F59E0B"
+            elif 300 <= con_qty < 500:
+                c360_con_msg = "<span style='color:#00E676;font-weight:700;'>✅ Yüksek Hacim (300-499 Kutu):</span> %6 - %8 İskonto uygulanabilir."
+                c360_con_bg = "rgba(0,230,118,0.12)"
+                c360_con_bdr = "#00E676"
+            else:
+                c360_con_msg = "<span style='color:#C084FC;font-weight:700;'>💎 Büyük Zincir / İhale (500+ Kutu):</span> Azami %10 - %12 İskonto. Sarf marjı >%60 korunmalıdır."
+                c360_con_bg = "rgba(168,85,247,0.12)"
+                c360_con_bdr = "#A855F7"
+
+            st.markdown(f"""
+            <div style="background:{c360_con_bg};border:1px solid {c360_con_bdr};border-radius:6px;padding:6px 10px;margin-top:4px;margin-bottom:8px;font-size:11px;color:#E2E8F0;">
+                {c360_con_msg}
+                <div style="font-size:10px;color:#94A3B8;margin-top:2px;">🧪 <b>Siklüs Eşdeğeri:</b> {con_qty:,} Kutu = ~{con_qty * 10:,} Tedavi Siklüsü (1 Kutu Z-Dish = 10 Tedavi Vakası)</div>
+            </div>
+            """, unsafe_allow_html=True)
             
             net_con_unit = con_list_price * (1.0 - (con_disc_pct / 100.0))
             con_disc_amount_unit = con_list_price - net_con_unit
@@ -21353,11 +21588,11 @@ elif active_view == "🌍 Country 360° Performance & Report":
                 <div style="font-size:12px;color:#CBD5E1;line-height:1.75;background:rgba(0,0,0,0.25);padding:14px;border-radius:8px;">
                     <div style="margin-bottom:8px;">
                         <b style="color:#FF6B6B;">1. Tek Bir ZPS 26 Cihazı Olarak Değerlendirilirse:</b><br>
-                        Tek bir Piezoelektrik mikro-puls stimülatörü için $85,000 USD fiyat {sel_country} ve küresel tüp bebek pazarında <b>fahiş kalır</b>. Küresel pazarda en üst seviye piezo cihazı tavan fiyatı $22,000 USD bandındadır. Tek cihaz için bu fiyat verilirse distribütör ve klinik teklifi doğrudan reddeder.
+                        Tek bir Elektriksel oosit aktivasyon (AOA - The Spark of Life) sistemi için $85,000 USD fiyat {sel_country} ve küresel tüp bebek pazarında <b>fahiş kalır</b>. Küresel pazarda en üst seviye piezo cihazı tavan fiyatı $22,000 USD bandındadır. Tek cihaz için bu fiyat verilirse distribütör ve klinik teklifi doğrudan reddeder.
                     </div>
                     <div style="border-top:1px dashed rgba(255,255,255,0.1);padding-top:8px;">
                         <b style="color:#00E676;">2. Anahtar Teslim Kurumsal Filo / Kamu İhale Paketi Olarak Değerlendirilirse ($85,000 USD):</b><br>
-                        Eğer $85,000 USD bir <b>Turnkey IVF Laboratuvar Paketi</b> ise (Örneğin: <b>6 Adet ZPS 26 Piezo Cihazı + 2 Adet BioPSafe Biyopsi İstasyonu + 1.000 Kutu Z-Dish Sarf</b>);<br>
+                        Eğer $85,000 USD bir <b>Turnkey IVF Laboratuvar Paketi</b> ise (Örneğin: <b>6 Adet ZPS 26 Elektriksel AOA Cihazı + 2 Adet BioPSafe Biyopsi İstasyonu + 1.000 Kutu Z-Dish Sarf</b>);<br>
                         • <b>{sel_country} Kamu / Üniversite İhaleleri</b> (Mısır UPA / Kasr Al-Ainy, Suudi NUPCO, Türkiye KHGM vb.) bütçe limitlerine <b>TAM OTURUR VE MÜKEMMEL UYGUNDUR</b>.<br>
                         • Büyük özel tüp bebek hastane zincirleri (Cleopatra, Bahçeci, Dr. Sulaiman Al Habib vb.) için anahtar teslim laboratuvar teknoloji yenileme paketi olarak hızla onaylanır.
                     </div>
@@ -21391,7 +21626,7 @@ elif active_view == "🌍 Country 360° Performance & Report":
             'Saudi Arabia': "AMS Saudi tecrübesi ışığında, sahadaki cihazların atıl kalmasını önlemek için distribütör bünyesinde tam zamanlı 1 sertifikalı klinik embriyolog bulundurulması zorunlu tutulmalıdır. Q2 kotaları tutmazsa münhasırlık iptal edilmelidir.",
             'Algeria': "Cezayir Bankası ithalat dosyası (domiciliation) onay süreci 60 gün sürdüğünden siparişler 2 ay önceden açılmalı; tüm medikal etiketleme Fransızca hazırlanmalı ve SEPA/LC teyidi alınmalıdır.",
             'Turkey': "Türkiye'de yüksek siklus hacmine sahip Bahçeci ve Acıbadem zincirlerine yıllık 300+ aktivasyon dishi çekiş taahhüdü karşılığı konsinye model sunulmalı; ÜTS tekil karekod takibi eksiksiz yürütülmelidir.",
-            'Italy': "İtalya'da soğuk e-posta yaklaşımı kesinlikle terk edilmeli; Gynemed Italia distribütörlüğü veya SIERR kongresinde masa başı çalıştay ile GeneraLife ve Next Clinics zincirlerine CE MDR teknik dosyasıyla girilmelidir."
+            'Italy': "İtalya'da soğuk e-posta yaklaşımı kesinlikle terk edilmeli; Gynemed Italia distribütörlüğü veya SIERR kongresinde masa başı çalıştay ile GeneraLife ve Next Clinics zincirlerine CE Sertifikalı teknik dosyasıyla girilmelidir."
         }
         default_mgr_stance = default_mgr_stance_dict.get(sel_country, f"{sel_country} pazarında yerel MedTech distribütörü ile asgari yıllık alım kotası ve teyitli gayrikabili rücu akreditif şartıyla penetrasyon sağlanmalıdır.")
 
@@ -21517,7 +21752,7 @@ elif active_view == "🌍 Country 360° Performance & Report":
                 </div>
                 """, unsafe_allow_html=True)
         else:
-            st.info(f"{sel_country} pazarı için genel uluslararası CE MDR 2017/745 Class IIa ve ISO 13485 mevzuat hükümleri geçerlidir.")
+            st.info(f"{sel_country} pazarı için genel uluslararası CE Sertifikası (Class IIa) ve ISO 13485 mevzuat hükümleri geçerlidir.")
 
         # Executive Do's & Don'ts Card
         st.markdown(f"""
@@ -21540,7 +21775,7 @@ elif active_view == "🌍 Country 360° Performance & Report":
         dossier_text = f"""# ZEUS BIOSCIENCE — 360° ÜLKE İSTİHBARAT & PERFORMANS RAPORU
 ÜLKE: {sel_country}
 TARİH: 2026-11-14 | REFERANS: ZEUS-360-{sel_country.upper()}-2026
-SERTİFİKASYON: CE Device Certified (EU MDR 2017/745 Class IIa)
+SERTİFİKASYON: CE Device Certified (CE Sertifikalı Class IIa)
 
 1. FİNANSAL PERFORMANS (EXCEL ERP):
 - Toplam Ciro: ${tot_rev:,.2f} USD
@@ -22223,7 +22458,7 @@ elif active_view == "🧮 Pricing & Discount Calculator":
     # --------------------------------------------------------------------------
     with calc_tab3:
         st.markdown("### ZEUS Global IVF Pazar, Sağlık Bakanlığı Kararları & Regülasyon Kütüphanesi")
-        st.caption("Uluslararası tüp bebek pazarları, Resmi Sağlık Bakanlığı (MOH) kararları, CE/MDR tescil mevzuatı, gümrük GTIP kodları, PGT biyoetik kuralları, indirim-tahmin matrisleri ve satış stratejileri.")
+        st.caption("Uluslararası tüp bebek pazarları, Resmi Sağlık Bakanlığı (MOH) kararları, CE Sertifikalı tescil mevzuatı, gümrük GTIP kodları, PGT biyoetik kuralları, indirim-tahmin matrisleri ve satış stratejileri.")
 
         # Prioritize key active & target markets in selection dropdown
         prio_order = ["Egypt", "Jordan-Iraq", "Qatar", "Saudi Arabia", "Algeria", "Turkey", "Italy", "Germany", "Spain", "United Arab Emirates", "Kuwait", "Azerbaijan", "United Kingdom", "Jordan", "Iraq", "Palestine", "Belgium", "Bulgaria", "South Korea", "India"]
@@ -22302,8 +22537,8 @@ elif active_view == "🧮 Pricing & Discount Calculator":
                 <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
                     <div style="font-weight:700;color:#00F5FF;font-size:13.5px;margin-bottom:8px;">🏛️ Tescil Otoritesi & Ruhsatlandırma Protokolü</div>
                     • <b>Resmi Otorite:</b> <b>{cust_reg.get("authority_full", auth_name)}</b><br>
-                    • <b>Ruhsat & Tescil Protokolü:</b> {cust_reg.get("registration_path", "CE MDR Harmonize İthal İzni")}<br>
-                    • <b>Cihaz Uygunluğu:</b> <span style="background:rgba(0,230,118,0.15);color:#00E676;padding:2px 8px;border-radius:4px;font-weight:700;">CE Device Certified (EU MDR 2017/745 Class IIa)</span><br>
+                    • <b>Ruhsat & Tescil Protokolü:</b> {cust_reg.get("registration_path", "CE Sertifikalı Harmonize İthal İzni")}<br>
+                    • <b>Cihaz Uygunluğu:</b> <span style="background:rgba(0,230,118,0.15);color:#00E676;padding:2px 8px;border-radius:4px;font-weight:700;">CE Device Certified (CE Sertifikalı Tıbbi Cihaz)</span><br>
                     • <b>İthalat Zorluk Seviyesi:</b> {kb_macro["import_difficulty"]}
                 </div>
                 <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
@@ -22420,7 +22655,7 @@ elif active_view == "🧮 Pricing & Discount Calculator":
                     </div>
                     """, unsafe_allow_html=True)
             else:
-                st.info(f"{kb_country} pazarı için genel uluslararası CE MDR ve ISO 13485 medikal cihaz mevzuat hükümleri geçerlidir.")
+                st.info(f"{kb_country} pazarı için genel uluslararası CE Sertifikalı ve ISO 13485 medikal cihaz mevzuat hükümleri geçerlidir.")
 
         # Do's and Don'ts Card
         st.markdown(f"""
@@ -23878,7 +24113,7 @@ ZEUS BIOSCIENCE olarak geliştirdiğimiz 'Mismatch Blocker (ZMB-7T)' ve 'Smart C
    Mevcut sıvı azot tanklarınızı değiştirmeden saklama alanınızı 4 katına (cane başına 40 payet) çıkararak $35K–$50K yeni tank yatırımını önler. Sistemden hasta çağrıldığında hedef numunenin Tank, Kanister, Cane, Sekizgen Goblet ve Straw koordinatını 'nokta atışı' gösterir. Sıvı azot rezervuarlı sekizgen goblet, Cryo-Box ve alüminyum blok üçlüsü sayesinde numuneler tank dışına çıktığında asla ortam havasına maruz kalmaz; termal şok riski sıfırlanarak >%95 çözme canlılığı garanti edilir.
 
 ✔ Dünyada İlk BioPSafe (ZBB25-001) ve Kanıta Dayalı Pulse Stimulator (ZPS 26):
-   PGT biyopsisinde 13 IR sensörlü ve çift kameralı BioPSafe platformu ile sıfır PCR tüp karışıklığı; Baltacı et al. (%62 fertilizasyon) ve Tanaka et al. ROSI (90+ canlı doğum) kanıtlı Piezoelektrik oosit aktivatörü ile ekosistem tamamlanır.
+   PGT biyopsisinde 13 IR sensörlü ve çift kameralı BioPSafe platformu ile sıfır PCR tüp karışıklığı; Baltacı et al. (%62 fertilizasyon) ve Tanaka et al. ROSI (90+ canlı doğum) kanıtlı Elektriksel oosit aktivasyon (AOA) sistemi ile ekosistem tamamlanır.
 
 {target_clinic_name} için hazırladığımız 3 yıllık RFID sarf tasarruf fizibilitesini ve 15 dakikalık interaktif sistem sunumunu sizinle paylaşmaktan onur duyarız. 
 
