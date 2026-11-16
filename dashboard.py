@@ -40,6 +40,11 @@ def _safe_st_markdown(body, *args, **kwargs):
 
 st.markdown = _safe_st_markdown
 
+def get_system_datetime_display():
+    now_dt = datetime.now()
+    months_tr = ['', 'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık']
+    return f"{now_dt.day} {months_tr[now_dt.month]} {now_dt.year} • {now_dt.strftime('%H:%M:%S')}"
+
 # Custom Styling (ZGMI Executive Theme)
 st.markdown("""
 <style>
@@ -7538,8 +7543,15 @@ def render_login_gate():
                 else:
                     st.error("❌ Hatalı kullanıcı adı veya şifre! Lütfen bilgilerinizi kontrol ediniz.")
 
-            st.markdown("""
-            <div style="text-align: center; margin-top: 20px; font-size: 11px; color: #64748B;">
+            sys_dt_login = get_system_datetime_display()
+            st.markdown(f"""
+            <div style="text-align: center; margin-top: 14px; margin-bottom: 6px;">
+                <span style="display: inline-flex; align-items: center; gap: 6px; background: rgba(0, 245, 255, 0.06); border: 1px solid rgba(0, 245, 255, 0.2); padding: 4px 14px; border-radius: 16px; font-size: 11px; color: #CBD5E1; font-family: 'JetBrains Mono', monospace;">
+                    <span>🕒 Canlı Sistem Zamanı:</span>
+                    <b style="color: #00F5FF;">{sys_dt_login}</b>
+                </span>
+            </div>
+            <div style="text-align: center; margin-top: 8px; font-size: 11px; color: #64748B;">
                 <span style="display: inline-flex; align-items: center; gap: 6px; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); padding: 6px 16px; border-radius: 20px;">
                     <span style="color: #00F5FF;">🛡️</span> 256-Bit SSL Uçtan Uca Şifreli Kurumsal Yetkili Oturum
                 </span>
@@ -7579,6 +7591,7 @@ with st.sidebar:
     auth_user_role = st.session_state.get("auth_role", "Executive")
     auth_user_badge = st.session_state.get("auth_badge", "C-Level")
     
+    sys_dt_side = get_system_datetime_display()
     st.markdown(f'''
     <div style="background: rgba(0, 245, 255, 0.05); border: 1px solid rgba(0, 245, 255, 0.22); border-radius: 8px; padding: 8px 12px; margin-top: -6px; margin-bottom: 12px; font-size: 11.5px;">
         <div style="display: flex; justify-content: space-between; align-items: center;">
@@ -7587,6 +7600,10 @@ with st.sidebar:
         </div>
         <div style="font-weight: 700; color: #FFFFFF; font-size: 12.5px; margin-top: 2px;">👤 {auth_user_name}</div>
         <div style="color: #00F5FF; font-size: 10.5px;">{auth_user_role}</div>
+        <div style="border-top: 1px solid rgba(255,255,255,0.08); margin-top: 6px; padding-top: 6px; color: #94A3B8; font-size: 10px; display: flex; justify-content: space-between; align-items: center;">
+            <span>🕒 Canlı Sistem Saati:</span>
+            <b style="color: #00F5FF; font-family: 'JetBrains Mono', monospace; font-size: 10px;">{sys_dt_side}</b>
+        </div>
     </div>
     ''', unsafe_allow_html=True)
     
@@ -14168,7 +14185,19 @@ if active_view == "🧭 Executive Overview & 3D Globe":
             unsafe_allow_html=True
         )
     with col_h2:
-        st.markdown(f"<div style='text-align:right;padding-top:10px;'><span class='chip chip-ok'>System Online</span><br><small style='color:#8FA3C0;'>Seçili Dönem: <b>{year_sel}</b></small></div>", unsafe_allow_html=True)
+        sys_dt_hdr = get_system_datetime_display()
+        st.markdown(f'''
+        <div style='text-align:right;padding-top:4px;'>
+            <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.3);border-radius:20px;padding:4px 14px;margin-bottom:6px;box-shadow:0 0 12px rgba(0,245,255,0.15);">
+                <span style="color:#00E676;font-size:10px;">●</span>
+                <span style="color:#FFFFFF;font-weight:700;font-size:11px;letter-spacing:0.04em;">System Online</span>
+                <span style="color:rgba(255,255,255,0.25);">|</span>
+                <span style="color:#00F5FF;font-weight:700;font-size:11.5px;font-family:'JetBrains Mono',monospace;">🕒 {sys_dt_hdr}</span>
+            </div>
+            <br>
+            <small style='color:#8FA3C0;'>Seçili Dönem: <b>{year_sel}</b></small>
+        </div>
+        ''', unsafe_allow_html=True)
 
     # --------------------------------------------------------------------------
     # NETLİK VE ŞEFFAFLIK BİLGİLENDİRME BANNERI (YÖNETİCİ AÇIKLAMA MASASI)
