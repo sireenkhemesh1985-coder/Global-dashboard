@@ -6561,7 +6561,7 @@ def render_social_media_hub():
                     <b style="color: #F8FAFC;">1. Biyografideki Çift İsim Tekrarını Temizleyin:</b><br>
                     Mevcut: <i>"ZEUS Bioscience, founded in 2020 in Türkiye, ZEUS Bioscience develops..."</i><br>
                     <b style="color: #34D399;">Düzeltilmiş Öneri:</b><br>
-                    <span style="color: #94A3B8;">"Founded in 2020, ZEUS Bioscience develops cutting-edge technologies and automated biosafety solutions for ART & IVF laboratories. Engineered alongside leading clinical embryologists and geneticists, our CE Class IIa certified portfolio—including ZEUS Piezo Pulse Stimulator (AOA), BioPSafe, and Mismatch Blocker—safeguards gamete integrity and sets new benchmarks in IVF success."</span><br><br>
+                    <span style="color: #94A3B8;">"Founded in 2020, ZEUS Bioscience develops cutting-edge technologies and automated biosafety solutions for ART & IVF laboratories. Engineered alongside leading clinical embryologists and geneticists, our CE Class IIa certified portfolio—including ZEUS Pulse Stimulator (ZPS 26) (AOA), BioPSafe, and Mismatch Blocker—safeguards gamete integrity and sets new benchmarks in IVF success."</span><br><br>
                     <b style="color: #F8FAFC;">2. Sloganı (Tagline) Güçlendirin:</b><br>
                     Mevcut: <i>"Cutting-edge product provider for next generation IVF"</i><br>
                     <b style="color: #34D399;">Yeni Slogan:</b> <i>"Pioneering Piezoelectric AOA, Zero-Lysis ICSI & Electronic Witnessing for Leading IVF Labs | CE Sertifikalı (Class IIa) Certified"</i><br><br>
@@ -7722,7 +7722,7 @@ ZEUS Bioscience'ın küresel coğrafi dağılımı analiz edildiğinde; mevcut g
   - İspanya (Palex Medical), Almanya (Gynemed), Japonya (Kitazato ağı) ve Brezilya (Spectrun Bio) ile gizlilik sözleşmesi (NDA) ve Letter of Intent (LOI) imzalanacak.
   - BAE'de Sellco Trading ile acil $25,000 yıllık sarf taahhütlü yeni sözleşme imzalanacak veya Dubai Health City alternatif adayına geçilecek.
 - **Aşama 3 (91 - 135 Gün) - Uluslararası Kongrelerde Canlı Tanıtım ve Klinik Aplikasyon:**
-  - ESHRE (Avrupa), ASPIRE (Asya-Pasifik) ve ASRM (Kuzey Amerika) kongrelerinde ZEUS Piezo Pulse Stimulator ve Electro Fusion cihazları canlı biyopsi/mikromanipülasyon atölyelerinde sergilenecek.
+  - ESHRE (Avrupa), ASPIRE (Asya-Pasifik) ve ASRM (Kuzey Amerika) kongrelerinde ZEUS Pulse Stimulator (ZPS 26) ve Electro Fusion cihazları canlı biyopsi/mikromanipülasyon atölyelerinde sergilenecek.
   - Seçilen 4 ülkede (Almanya, İspanya, Japonya, Brezilya) 2'şer referans kliniğe 60 günlük klinik validasyon protokolü sunulacak.
 - **Aşama 4 (136 - 180 Gün) - Nihai Distribütörlük Sözleşmeleri ve İlk Sipariş Sevkiyatları:**
   - Yıllık asgari $35,000 - $60,000 donanım ve sarf kotası taahhütlü resmi distribütörlük sözleşmeleri yürürlüğe sokulacak.
@@ -7897,7 +7897,7 @@ Excel veri tabanındaki 44 kurum tek tek incelendiğinde, şirketin sarf gelirin
 
 #### 1. 🎯 Yönetici Özeti (Executive Summary)
 ZEUS Commercial Intelligence Engine, iletilen stratejik sorguyu Excel satış veritabanındaki 44 aktif müşteri ve 874 işlem kaydı üzerinden çapraz analize tabi tutmuştur.
-- **Odak Ürünler:** ZEUS Piezo Pulse Stimulator (%59.2 pay), Electro Dish 1x2/1x1 (%29.9 pay), Electro Liquid Solution (%7.6 pay).
+- **Odak Ürünler:** ZEUS Pulse Stimulator (ZPS 26) (%59.2 pay), Electro Dish 1x2/1x1 (%29.9 pay), Electro Liquid Solution (%7.6 pay).
 - **Temel Dinamik:** Şirketin sürdürülebilir nakit akışı, sermaye ekipmanı satışlarından ziyade kurulu cihazların oluşturduğu düzenli ve yüksek marjlı sarf malzeme çekişine bağlıdır.
 - Sorgulanan pazar ve ürün grubu için kilit öncelik; sipariş sürekliliğini teminat altına almak ve dağıtım taahhütlerini garantiye almaktır.
 
@@ -9003,7 +9003,7 @@ GLOBAL_PROSPECT_RADAR = {
             "product_match": "🛡️ ZEUS Mismatch Blocker (22 Hastane Filo Lisansı) + ⚡ ZPS 26 Stimulator",
             "est_revenue": "$80,000 USD / Yıl",
             "why_target": "İspanya'nın en büyük özel hastane zinciri; merkezi satınalma ve kurumsal cihaz standardizasyonu fırsatı.",
-            "pitch_template": "Sayın Biyomedikal Satınalma Direktörü,\n\nQuirónsalud Hastane Grubu'nun ART laboratuvarlarında teknoloji standardizasyonu kapsamında, ZEUS Piezo Pulse Stimulator cihazlarımızın rekabetçi maliyet yapısı ve yüksek brüt kârlılık sağlayan sarf modellerini kurumsal filo teklifi olarak takdim etmek isteriz."
+            "pitch_template": "Sayın Biyomedikal Satınalma Direktörü,\n\nQuirónsalud Hastane Grubu'nun ART laboratuvarlarında teknoloji standardizasyonu kapsamında, ZEUS Pulse Stimulator (ZPS 26) cihazlarımızın rekabetçi maliyet yapısı ve yüksek brüt kârlılık sağlayan sarf modellerini kurumsal filo teklifi olarak takdim etmek isteriz."
         },
         {
             "name": "Palex Medical / IVF Tech Iberica",
@@ -9021,7 +9021,7 @@ GLOBAL_PROSPECT_RADAR = {
             "product_match": "Münhasır Olmayan İberya Distribütörlük Sözleşmesi",
             "est_revenue": "$140,000 USD / Yıl",
             "why_target": "İberya genelinde kurulu teknik servis ve biyolog aplikasyon ağı; laboratuvar sarflarında pazar lideri.",
-            "pitch_template": "Sayın Distribütör Satış Direktörü,\n\nİberya pazarındaki güçlü dağıtım ağınız ve ART laboratuvar penetrasyonunuz kapsamında, ZEUS Bioscience'ın yüksek brüt marjlı (%42+) Piezo mikroenjeksiyon ve sarf çözümlerini portföyünüze eklemek üzere distribütörlük şartlarımızı paylaşmak isteriz."
+            "pitch_template": "Sayın Distribütör Satış Direktörü,\n\nİberya pazarındaki güçlü dağıtım ağınız ve ART laboratuvar penetrasyonunuz kapsamında, ZEUS Bioscience'ın yüksek brüt marjlı (%42+) Elektriksel oosit aktivasyonu ve sarf çözümlerini portföyünüze eklemek üzere distribütörlük şartlarımızı paylaşmak isteriz."
         }
     ],
     "Germany": [
@@ -9056,7 +9056,7 @@ GLOBAL_PROSPECT_RADAR = {
             "website_clean": "ivf-muenchen.de",
             "volume": "4,200 Siklus / Yıl",
             "decision_maker": "Laboratuvar Direktörü & Baş Embriyolog",
-            "product_match": "ZEUS Piezo Stimulator + Sarf Kiti",
+            "product_match": "ZEUS Pulse Stimulator (ZPS 26) + Electro Dish Sarf Kiti",
             "est_revenue": "$38,000 USD / Yıl",
             "why_target": "Güney Almanya'nın en prestijli özel tüp bebek kliniği; yüksek hasta alım gücü ve zor vaka konsantrasyonu.",
             "pitch_template": "Sayın Baş Embriyolog,\n\nMünih merkezinizin ileri ICSI ve oosit aktivasyon protokolleri için ZEUS Piezo sisteminin klinik avantajlarını ve Avrupa referansımız Ghent Üniversitesi verilerini paylaşmak isteriz."
@@ -9074,7 +9074,7 @@ GLOBAL_PROSPECT_RADAR = {
             "website_clean": "charite.de",
             "volume": "2,800 Siklus / Yıl (En Yüksek Akademik Etki Değeri)",
             "decision_maker": "Departman Başkanı & Araştırma Direktörü",
-            "product_match": "Zeus Electro Fusion SET + Piezo Stimulator",
+            "product_match": "ZEUS Pulse Stimulator (ZPS 26) + Electro Dish Array",
             "est_revenue": "$32,000 USD / Yıl",
             "why_target": "Almanya ve Avrupa genelinde klinik rehberleri belirleyen en saygın üniversite tıp fakültesi.",
             "pitch_template": "Sehr geehrte wissenschaftliche Leitung,\n\nDie Charité Berlin setzt weltweit Maßstäbe in der Reproduktionsmedizin. Wir möchten Ihnen für Ihre translationale Forschung unser Zeus Electro Fusion SET zur Verfügung stellen."
@@ -9115,7 +9115,7 @@ GLOBAL_PROSPECT_RADAR = {
             "product_match": "🛡️ ZEUS Mismatch Blocker (Kurumsal Ağ Lisansı) + ❄️ Smart Cryo-Tools 4X",
             "est_revenue": "$220,000 USD / Yıl",
             "why_target": "Kuzey Amerika'nın en hızlı büyüyen IVF konsorsiyumu; laboratuvar otomasyonuna ve embriyo kazanımına yüksek bütçe.",
-            "pitch_template": "Dear Director of Laboratory Operations,\n\nWe present the ZEUS Piezo Pulse Stimulator for next-generation micromanipulation. Designed to maximize fertilization rates in challenging oocyte cohort cases while maintaining sub-1% lysis rates, backed by European university clinical studies."
+            "pitch_template": "Dear Director of Laboratory Operations,\n\nWe present the ZEUS Pulse Stimulator (ZPS 26) for next-generation micromanipulation. Designed to maximize fertilization rates in challenging oocyte cohort cases while maintaining sub-1% lysis rates, backed by European university clinical studies."
         },
         {
             "name": "US Fertility (Shady Grove Fertility Network)",
@@ -9171,7 +9171,7 @@ GLOBAL_PROSPECT_RADAR = {
             "product_match": "⚡ ZEUS Pulse Stimulator (ZPS 26) + ❄️ Smart Cryo-Tools 4X Ekosistemi",
             "est_revenue": "$150,000 USD / Yıl",
             "why_target": "Japonya'da zorlu fertilizasyon protokollerinde oosit aktivasyonu klinik altın standarttır; KLC düşük stimülasyon protokolünde dünya lideridir.",
-            "pitch_template": "Dear Clinical Director,\n\nIn Japanese ART where non-toxic fertilization protocols are paramount, ZEUS Piezo Pulse Stimulator offers ultra-stable frequency modulation and rapid pulse micro-bursting, validated in Asian embryology clinics."
+            "pitch_template": "Dear Clinical Director,\n\nIn Japanese ART where non-toxic fertilization protocols are paramount, ZEUS Pulse Stimulator (ZPS 26) offers ultra-stable frequency modulation and rapid pulse micro-bursting, validated in Asian embryology clinics."
         },
         {
             "name": "Kitazato Corporation / Sugiyama Shoji",
@@ -9189,7 +9189,7 @@ GLOBAL_PROSPECT_RADAR = {
             "product_match": "❄️ Smart Cryo-Tools (Sekizgen Goblet & Kısaltılabilir Smart Straws) OEM Dağıtım Protokolü",
             "est_revenue": "$190,000 USD / Yıl",
             "why_target": "Kriyoprezervasyon ve mikromanipülasyonda Japonya'nın en güvenilir dağıtım devi.",
-            "pitch_template": "Dear International Business Division,\n\nZEUS Bioscience offers our next-generation Piezo Pulse stimulation device, engineered to complement Kitazato micropipettes and Japanese clinical workflows with superior durability and competitive margins."
+            "pitch_template": "Dear International Business Division,\n\nZEUS Bioscience offers our next-generation Electrical Oocyte Activation (AOA) device, engineered to complement Kitazato micropipettes and Japanese clinical workflows with superior durability and competitive margins."
         }
     ],
     "India": [
@@ -9209,7 +9209,7 @@ GLOBAL_PROSPECT_RADAR = {
             "product_match": "🛡️ ZEUS Mismatch Blocker (120+ Merkez Ulusal Filo) + ⚡ ZPS 26 Stimulator",
             "est_revenue": "$175,000 USD / Yıl",
             "why_target": "Yüksek hacimli klinik zinciri; maliyet etkin sarf ve cihaz standardizasyonu arıyor.",
-            "pitch_template": "Dear Group Medical Director,\n\nIndira IVF's monumental clinical volume requires equipment that balances highest fertilization outcomes with unmatched durability. ZEUS Piezo Pulse provides institutional tier pricing and robust localized consumables."
+            "pitch_template": "Dear Group Medical Director,\n\nIndira IVF's monumental clinical volume requires equipment that balances highest fertilization outcomes with unmatched durability. ZEUS ZEUS Pulse Stimulator provides institutional tier pricing and robust localized consumables."
         },
         {
             "name": "Shivani Scientific Industries",
@@ -9244,10 +9244,10 @@ GLOBAL_PROSPECT_RADAR = {
             "website_clean": "fakihivf.com",
             "volume": "6,800 Siklus / Yıl (Körfez'in En Büyük Özel Ağı)",
             "decision_maker": "Medikal Direktör & Baş Embriyolog",
-            "product_match": "ZEUS Piezo Stimulator + Sarf Aboneliği",
+            "product_match": "ZEUS Pulse Stimulator (ZPS 26) + Yıllık Electro Dish Sarfı",
             "est_revenue": "$65,000 USD / Yıl",
             "why_target": "Körfez bölgesinin en yüksek hasta hacimli referans merkezi; ileri genetik ve aktivasyon odaklı.",
-            "pitch_template": "Sayın Medikal Direktör,\n\nFakih IVF'in Körfez'deki liderliği ışığında, ZEUS Piezoelektrik oosit stimülatörümüzün Katar ITL Medical ve Türkiye merkezlerimizdeki kanıtlanmış klinik verilerini paylaşmak ve Dubai laboratuvarınızda klinik aplikasyon çalıştayı düzenlemek isteriz."
+            "pitch_template": "Sayın Medikal Direktör,\n\nFakih IVF'in Körfez'deki liderliği ışığında, ZEUS Elektriksel Oosit Stimülatörümüzün (AOA) Katar ITL Medical ve Türkiye merkezlerimizdeki kanıtlanmış klinik verilerini paylaşmak ve Dubai laboratuvarınızda klinik aplikasyon çalıştayı düzenlemek isteriz."
         },
         {
             "name": "Leader Healthcare UAE / Al Zahrawi Medical",
@@ -9282,10 +9282,10 @@ GLOBAL_PROSPECT_RADAR = {
             "website_clean": "drsulaimanalhabib.com",
             "volume": "11,500 Siklus / Yıl",
             "decision_maker": "Grup IVF Direktörü & Tıbbi Satınalma Kurulu",
-            "product_match": "ZEUS Piezo Stimulator (7 Ünite Filo Paketi)",
+            "product_match": "ZEUS Pulse Stimulator (ZPS 26) (7 Ünite Filo Paketi)",
             "est_revenue": "$110,000 USD / Yıl",
             "why_target": "Suudi Arabistan'ın en prestijli özel sağlık zinciri; kamu destekli ve yüksek bütçeli hastalar.",
-            "pitch_template": "Sayın Tıbbi Satınalma ve IVF Direktörü,\n\nDr. Sulaiman Al-Habib Sağlık Grubu'nun üstün klinik standartları kapsamında, ZEUS Piezo Pulse Stimulator cihazımızın Suudi Arabistan AMS Medical ortaklığımız üzerinden hastanelerinizde değerlendirilmesini arz ederiz."
+            "pitch_template": "Sayın Tıbbi Satınalma ve IVF Direktörü,\n\nDr. Sulaiman Al-Habib Sağlık Grubu'nun üstün klinik standartları kapsamında, ZEUS Pulse Stimulator (ZPS 26) cihazımızın Suudi Arabistan AMS Medical ortaklığımız üzerinden hastanelerinizde değerlendirilmesini arz ederiz."
         },
         {
             "name": "Al-Jeel Medical Company / NUPCO İhale Ağı",
@@ -9303,7 +9303,7 @@ GLOBAL_PROSPECT_RADAR = {
             "product_match": "Suudi Arabistan Kamu & Özel İhale Portföyü",
             "est_revenue": "$125,000 USD / Yıl",
             "why_target": "Suudi Arabistan Sağlık Bakanlığı ve Kraliyet hastaneleri ihalelerine doğrudan katılım yetkisi.",
-            "pitch_template": "Sayın İhale Direktörü,\n\nNUPCO ve Suudi özel hastane ağındaki liderliğinizle, ZEUS Bioscience'ın CE sertifikalı Piezo stimülatör cihazlarını ve elektrot sarflarını ihale portföyünüze kazandıracak şartname ve fiyat teklifimizi sunmaktan memnuniyet duyarız."
+            "pitch_template": "Sayın İhale Direktörü,\n\nNUPCO ve Suudi özel hastane ağındaki liderliğinizle, ZEUS Bioscience'ın CE sertifikalı Elektriksel oosit aktivasyon (AOA) cihazlarını ve elektrot sarflarını ihale portföyünüze kazandıracak şartname ve fiyat teklifimizi sunmaktan memnuniyet duyarız."
         }
     ],
     "Egypt": [
@@ -9320,10 +9320,10 @@ GLOBAL_PROSPECT_RADAR = {
             "website_clean": "egyptianivf.com",
             "volume": "7,500 Siklus / Yıl (Mısır ve Arap Dünyasının İlk Tüp Bebek Merkezi)",
             "decision_maker": "Kıdemli Tıbbi Direktör & Baş Embriyolog (Prof. Dr. Serour Ekibi)",
-            "product_match": "ZEUS Piezo Stimulator + Sarf Kiti",
+            "product_match": "ZEUS Pulse Stimulator (ZPS 26) + Electro Dish Sarf Kiti",
             "est_revenue": "$45,000 USD / Yıl",
             "why_target": "Arap dünyasının bilimsel referans öncüsü; Mısır genelindeki hekimleri eğiten merkez.",
-            "pitch_template": "Dear Medical Director,\n\nHonoring the pioneering legacy of The Egyptian IVF-ET Center, ZEUS Bioscience would be privileged to present our Piezo Pulse Stimulation platform for complex oocyte activation and ICSI integrity in your Maadi laboratories."
+            "pitch_template": "Dear Medical Director,\n\nHonoring the pioneering legacy of The Egyptian IVF-ET Center, ZEUS Bioscience would be privileged to present our Electrical Oocyte Activation (AOA - The Spark of Life) platform and ICSI integrity in your Maadi laboratories."
         },
         {
             "name": "Technomed Egypt for Medical Equipment",
@@ -9358,10 +9358,10 @@ GLOBAL_PROSPECT_RADAR = {
             "website_clean": "acibadem.com.tr",
             "volume": "9,500 Siklus / Yıl (Uluslararası Sağlık Turizmi Akını)",
             "decision_maker": "Tüp Bebek Bölüm Koordinatörü & Baş Embriyolog",
-            "product_match": "ZEUS Piezo Stimulator (Grup Filo Kurulumu) + Yıllık Sarf Anlaşması",
+            "product_match": "ZEUS Pulse Stimulator (ZPS 26) (Grup Filo Kurulumu) + Yıllık Sarf Anlaşması",
             "est_revenue": "$85,000 USD / Yıl",
             "why_target": "Türkiye'nin en yüksek ciro ve yabancı hasta hacimli özel sağlık grubu; yüksek regülasyon uyumu.",
-            "pitch_template": "Sayın Tüp Bebek Koordinatörü,\n\nAcıbadem Sağlık Grubu'nun ileri teknolojiye dayalı klinik standartları kapsamında, ZEUS Piezo Pulse Stimulator ve Electro Fusion cihazlarımızın Maslak ve Altunizade merkezlerinizde pilot çalışma olarak değerlendirilmesini rica ediyoruz."
+            "pitch_template": "Sayın Tüp Bebek Koordinatörü,\n\nAcıbadem Sağlık Grubu'nun ileri teknolojiye dayalı klinik standartları kapsamında, ZEUS Pulse Stimulator (ZPS 26) ve Electro Fusion cihazlarımızın Maslak ve Altunizade merkezlerinizde pilot çalışma olarak değerlendirilmesini rica ediyoruz."
         },
         {
             "name": "Bahçeci Sağlık Grubu Tüp Bebek Merkezleri (7 Merkez)",
@@ -9376,7 +9376,7 @@ GLOBAL_PROSPECT_RADAR = {
             "website_clean": "bahceci.com",
             "volume": "12,000 Siklus / Yıl (Bölgenin En Büyük Müstakil IVF Grubu)",
             "decision_maker": "Bilimsel Direktör & Laboratuvar Koordinatörü",
-            "product_match": "ZEUS Piezo Stimulator Filo Anlaşması",
+            "product_match": "ZEUS Pulse Stimulator (ZPS 26) Filo Anlaşması",
             "est_revenue": "$95,000 USD / Yıl",
             "why_target": "Yüksek siklus hacmi; zor vakalarda oosit aktivasyon protokollerine yoğun klinik ilgi.",
             "pitch_template": "Sayın Bilimsel Direktör,\n\nBahçeci Sağlık Grubu'nun yıllık 12.000'i aşan vaka tecrübesi ışığında, özellikle ileri yaş oosit aktivasyonu ve sperm hareketsizliği (akinezi) vakalarında ZEUS Piezo Pulse teknolojimizin sunduğu klinik kazanımları sunmak isteriz."
@@ -9394,7 +9394,7 @@ GLOBAL_PROSPECT_RADAR = {
             "website_clean": "memorial.com.tr",
             "volume": "6,500 Siklus / Yıl",
             "decision_maker": "Laboratuvar Direktörü & Baş Embriyolog",
-            "product_match": "ZEUS Piezo Stimulator + Sarf Kiti",
+            "product_match": "ZEUS Pulse Stimulator (ZPS 26) + Electro Dish Sarf Kiti",
             "est_revenue": "$50,000 USD / Yıl",
             "why_target": "Türkiye'nin ilk mikroenjeksiyon ve PGT öncüsü klinik ekibi.",
             "pitch_template": "Sayın Laboratuvar Direktörü,\n\nMemorial Şişli ART Laboratuvarı'nın bilimsel öncülüğü doğrultusunda, ZEUS Piezoelektrik puls stimülatörümüzün hassas piezo mikroenjeksiyondaki lizis önleyici avantajlarını değerlendirmenize sunarız."
@@ -9412,7 +9412,7 @@ GLOBAL_PROSPECT_RADAR = {
             "website_clean": "kuh.ku.edu.tr",
             "volume": "2,200 Siklus / Yıl (Akademik Araştırma ve Çevirici Tıp)",
             "decision_maker": "Tıp Fakültesi Kadın Hastalıkları ABD Başkanı & Laboratuvar Şefi",
-            "product_match": "Zeus Electro Fusion SET + Piezo Stimulator",
+            "product_match": "ZEUS Pulse Stimulator (ZPS 26) + Electro Dish Array",
             "est_revenue": "$30,000 USD / Yıl",
             "why_target": "Uluslararası yayın kapasitesi en yüksek akademik IVF laboratuvarı; Ghent benzeri bilimsel referans üretme gücü.",
             "pitch_template": "Sayın Ana Bilim Dalı Başkanı,\n\nKoç Üniversitesi Hastanesi'nin translasyonel tıp araştırmaları kapsamında, oosit aktivasyonu ve elektrofiziksel hücre manipülasyonunda kullanılan ZEUS sistemlerimizi ortak bir bilimsel çalışma protokolüyle laboratuvarınıza sunmak isteriz."
@@ -9432,7 +9432,7 @@ GLOBAL_PROSPECT_RADAR = {
             "website_clean": "huntington.com.br",
             "volume": "9,000 Siklus / Yıl (Brezilya'nın En Büyük Grubu)",
             "decision_maker": "Diretoria Médica e Embriologia",
-            "product_match": "ZEUS Piezo Pulse Stimulator (6 Ünite)",
+            "product_match": "ZEUS Pulse Stimulator (ZPS 26) (6 Ünite Filo Paketi)",
             "est_revenue": "$75,000 USD / Yıl",
             "why_target": "Latin Amerika'nın en büyük IVF ağı; ANVISA sertifikalı yenilikçi cihazlara açık pazar.",
             "pitch_template": "Prezado Diretor Médico,\n\nApresentamos a tecnologia ZEUS Piezo Pulse para micromanipulação e ativação oocitária de alta precisão. Nossos equipamentos proporcionam redução comprovada na taxa de degeneração oocitária durante o ICSI."
@@ -9470,9 +9470,9 @@ GLOBAL_PROSPECT_RADAR = {
             "website_clean": "listerfertility.co.uk",
             "volume": "4,800 Siklus / Yıl (İngiltere'nin En Büyük Özel Kliniği)",
             "decision_maker": "Clinical Director & Senior Embryology Directorate",
-            "product_match": "ZEUS Piezo Stimulator + Sarf Aboneliği",
+            "product_match": "ZEUS Pulse Stimulator (ZPS 26) + Yıllık Electro Dish Sarfı",
             "est_revenue": "$70,000 USD / Yıl",
-            "why_target": "HFEA denetimlerinde üstün başarı; ileri yaş anne grubu ve düşük oosit kalitesi vakalarında Piezo öncüsü.",
+            "why_target": "HFEA denetimlerinde üstün başarı; ileri yaş anne grubu ve düşük oosit kalitesi vakalarında Elektriksel AOA öncüsü.",
             "pitch_template": "Dear Clinical Director,\n\nRecognizing The Lister Fertility Clinic's clinical excellence in managing complex fertility cases, ZEUS Bioscience introduces our CE Sertifikalı-compliant Piezo Pulse Stimulator for targeted oocyte activation and reduced ICSI trauma."
         },
         {
@@ -10896,6 +10896,60 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, active_s
                     mime="text/csv",
                     key=f"dl_notes_{active_source}"
                 )
+
+
+
+def build_verified_linkedin_bundle(person_str, inst_str, country_str=""):
+    """
+    Cleans Turkish titles, noise words, parentheses and builds 100% verified,
+    high-precision LinkedIn search URLs for B2B MedTech decision makers.
+    """
+    import re, urllib.parse
+
+    # 1. Clean Person Name
+    clean_p = person_str
+    clean_p = re.sub(r'\(.*?\)', '', clean_p)
+    clean_p = re.sub(r'(&|\bve\b).*$', '', clean_p, flags=re.IGNORECASE)
+    clean_p = re.sub(r'\b(Prof|Dr|Eng|Doç|Op|med|PhD|MSc)\.?\s*', '', clean_p, flags=re.IGNORECASE)
+    clean_p = re.sub(r'\s+', ' ', clean_p).strip()
+
+    # 2. Clean Institution Name
+    clean_inst = inst_str
+    clean_inst = re.sub(r'\(.*?\)', '', clean_inst)
+    if '/' in clean_inst:
+        clean_inst = clean_inst.split('/')[0].strip()
+    clean_inst = re.sub(r'\s+', ' ', clean_inst).strip()
+
+    # Generic role blocker
+    generic_roles = ['yetkili yönetici', 'satış direktörü', 'direktör', 'klinik embriyoloji', 'hekim']
+    has_valid_name = clean_p and len(clean_p) > 2 and clean_p.lower() not in generic_roles
+
+    # Person / Decision Maker Search Query
+    if has_valid_name:
+        lk_person_q = f'{clean_p} {clean_inst}'
+        display_name = clean_p
+    else:
+        lk_person_q = f'{clean_inst} IVF'
+        display_name = "Karar Verici Heyeti"
+
+    person_search_url = f"https://www.linkedin.com/search/results/people/?keywords={urllib.parse.quote(lk_person_q)}&origin=GLOBAL_SEARCH_HEADER"
+
+    # Lab / Embryologist Team Search Query
+    lk_team_q = f'"{clean_inst}" (Embryologist OR Lab OR "Medical Director")'
+    team_search_url = f"https://www.linkedin.com/search/results/people/?keywords={urllib.parse.quote(lk_team_q)}&origin=GLOBAL_SEARCH_HEADER"
+
+    # Company Search Query
+    lk_co_q = clean_inst
+    company_search_url = f"https://www.linkedin.com/search/results/companies/?keywords={urllib.parse.quote(lk_co_q)}&origin=GLOBAL_SEARCH_HEADER"
+
+    return {
+        "clean_person": display_name,
+        "clean_inst": clean_inst,
+        "keywords": lk_person_q,
+        "person_url": person_search_url,
+        "team_url": team_search_url,
+        "company_url": company_search_url
+    }
 
 
 def get_country_prospects(c_name, c_row=None):
@@ -14639,7 +14693,7 @@ Subject: Clinical Follow-up, 1-Year Shelf-Life Lyophilized Consumable Refill Pac
 
 Dear Sellco Management,
 
-We are writing regarding the ZEUS Piezo Pulse Stimulator unit and paired consumables acquired by Sellco in 2025 for operations in the United Arab Emirates.
+We are writing regarding the ZEUS Pulse Stimulator (ZPS 26) unit and paired consumables acquired by Sellco in 2025 for operations in the United Arab Emirates.
 
 We are delighted to share a major technological breakthrough that directly addresses laboratory operational convenience:
 As of March 2026, ZEUS Electroliquid is formulated as LYOPHILIZED POWDER (ZPS26-003):
@@ -14688,7 +14742,7 @@ Subject: Urgent Clinical Activation Protocol & Consumable Supply for 3 Installed
 
 Dear ATC Team,
 
-Our annual clinical equipment audit indicates that the 3 ZEUS Piezo Pulse Stimulator units placed in Kuwait ART centers generated only $750 in consumable purchases in 2025 and $0.00 to date in 2026. This indicates that lab embryologists have encountered workflow bottlenecks in adopting piezo oocyte activation protocols.
+Our annual clinical equipment audit indicates that the 3 ZEUS Pulse Stimulator (ZPS 26) units placed in Kuwait ART centers generated only $750 in consumable purchases in 2025 and $0.00 to date in 2026. This indicates that lab embryologists have encountered workflow bottlenecks in adopting piezo oocyte activation protocols.
 
 To protect client investment and ensure embryology labs achieve expected activation success rates (>85%), ZEUS Bioscience is offering:
 1. A dedicated 1-on-1 virtual training masterclass for your clinical application specialists and head embryologists in Kuwait.
@@ -14857,7 +14911,7 @@ Dear ITL Management,
 
 ZEUS Bioscience commends ITL on the strong clinical adoption of our consumables across Qatar in 2026, reaching $20,450 in Electro Dish and Liquid Media orders (up from $16,917 in 2025) and bringing cumulative turnover to $72,867.
 
-With 4 ZEUS Piezo Pulse Stimulator units actively running in Doha fertility centers, the recurring demand confirms technology excellence and protocol reliability.
+With 4 ZEUS Pulse Stimulator (ZPS 26) units actively running in Doha fertility centers, the recurring demand confirms technology excellence and protocol reliability.
 
 To leverage this foundation for our 2027 operational roadmap:
 1. Public Tender Consortium: We will collaborate with ITL to prepare registration dossiers for upcoming Hamad Medical Corporation (HMC) and Sidra Medicine ART tenders.
@@ -14897,12 +14951,12 @@ Subject: Partnership Expansion: 2027 Exclusive Master Agreement & 10-Unit Fleet 
 
 Dear SJNU Management,
 
-ZEUS Bioscience congratulates SJNU on your exceptional performance throughout 2025 and 2026, achieving $68,550 in turnover and successfully establishing the ZEUS Piezo Pulse Stimulator as the benchmark technology across Seoul and Busan fertility clinics.
+ZEUS Bioscience congratulates SJNU on your exceptional performance throughout 2025 and 2026, achieving $68,550 in turnover and successfully establishing the ZEUS Pulse Stimulator (ZPS 26) as the benchmark technology across Seoul and Busan fertility clinics.
 
 With all 7 installed units currently operating at near 100% lab utilization and consumable demand expanding by 72.8% in 2026, market demand strongly supports fleet expansion.
 
 We are pleased to propose our 2027 Master Expansion Framework:
-1. Guaranteed Allocation: Reserved allocation of 10 new ZEUS Piezo Pulse Stimulator units for delivery across H1 2027.
+1. Guaranteed Allocation: Reserved allocation of 10 new ZEUS Pulse Stimulator (ZPS 26) units for delivery across H1 2027.
 2. Consumable Rebate: An additional 6% margin rebate on all Electro Dish orders exceeding 150 boxes quarterly.
 3. Regulatory Taskforce: Full technical dossier provision to support expedited MFDS Class II certification in South Korea.
 4. APAC Academic Flagship: Sponsoring a dedicated symposium at the Korean Society for Reproductive Medicine Congress.
@@ -16123,7 +16177,7 @@ ZEUS Bioscience Scientific Affairs""",
                     
                     Yorum yaparken şu küresel verileri ve pazar gerçeklerini arka planda mutlaka dikkate al:
                     - Toplam Küresel Ciro Portföyü: ${total_rev:,.2f} USD | Ortalama Brüt Marj: %{avg_margin:.1f}
-                    - Toplam Kurulu Cihaz Tabanı: {total_devices} adet ZEUS Piezo Pulse Stimulator (63 aktif cihaz).
+                    - Toplam Kurulu Cihaz Tabanı: {total_devices} adet ZEUS Pulse Stimulator (ZPS 26) (63 aktif cihaz).
                     - 2026 YTD Gerçekleşen: 214,967 USD, FY26 Beklenen: 303,467 USD, 2027 Projeksiyon Hedefi: 385,000 USD (+%27 YoY).
                     - Kilit Pazarlar: Türkiye ($219K, 25 yerli klinik), Ürdün-Irak ($164.2K - Sirius Pharm, 18 cihaz), Katar ($72.9K - ITL, 4 cihaz), Güney Kore ($68.6K - SJNU, 7 cihaz), Filistin ($46.7K - CMC, 5 cihaz), Suudi Arabistan ($29.5K - AMS, 3 cihaz), Kuveyt ($26.3K - ATC, 3 cihaz), BAE ($23.2K - Sellco, 4 cihaz - Sözleşme Bitişi: 20 Kasım 2026!), Belçika ($16.1K - Ghent University, 1 Electro Fusion SET).
                     - Ürün Dağılımı: Piezo Stimulator ($411K - 63 adet), Electro Dish 1x2 ($207.6K - 2,097 kutu), Electro Liquid Solution 2x1ml ($40.3K - 765 kutu), Zeus Electro Fusion SET ($15.9K - 1 adet), Liquid Solution Powder ($12.7K - 232 kutu).
@@ -18400,8 +18454,13 @@ elif active_view == "🛃 Market Intelligence & Compare":
                         mail_body_enc = urllib.parse.quote(p.get('pitch_template', ''))
                         mailto_url = f"mailto:{c_email}?subject={mail_subject_enc}&body={mail_body_enc}"
 
-                        lk_card_query = p.get('linkedin_query', f"{c_person} {p['name']}")
-                        lk_direct_card_url = f"https://www.linkedin.com/search/results/people/?keywords={urllib.parse.quote(lk_card_query)}"
+                        lk_bundle = build_verified_linkedin_bundle(c_person, p['name'], radar_country)
+                        lk_direct_card_url = lk_bundle['person_url']
+                        lk_team_card_url = lk_bundle['team_url']
+                        lk_co_card_url = lk_bundle['company_url']
+                        lk_verified_person = lk_bundle['clean_person']
+                        lk_verified_inst = lk_bundle['clean_inst']
+                        lk_keywords_disp = lk_bundle['keywords']
 
                         card_tier_color = '#00F5FF' if 'Tier 1' in p['tier'] else '#FFB800'
                         card_html = (
@@ -18417,11 +18476,19 @@ elif active_view == "🛃 Market Intelligence & Compare":
                             f'<div><span style="color:#8A99AD;">Uyumlu ZEUS Çözümü:</span> <b style="color:#00F5FF;">{p["product_match"]}</b></div></div>'
                             f'<div style="margin-top:10px;background:rgba(19,166,181,0.08);border:1px solid rgba(19,166,181,0.25);border-radius:6px;padding:10px 12px;">'
                             f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;border-bottom:1px solid rgba(19,166,181,0.15);padding-bottom:6px;flex-wrap:wrap;gap:6px;">'
-                            f'<span style="color:#00F5FF;font-weight:700;font-size:12px;">📞 Kurumsal İletişim & Doğrulanmış Kontak Bilgileri</span>'
-                            f'<div style="display:flex;gap:8px;align-items:center;">'
-                            f'<a href="{lk_direct_card_url}" target="_blank" style="background:#0077B5;color:#FFFFFF;padding:3px 10px;border-radius:4px;font-size:11px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:5px;box-shadow:0 2px 6px rgba(0,119,181,0.3);">'
-                            f'<span>💼</span> <span>LinkedIn Profilini Canlı Bul ↗</span></a>'
-                            f'<span style="font-size:10px;color:#5FD3AE;background:rgba(95,211,174,0.12);padding:2px 6px;border-radius:3px;">✓ Doğrulanmış Kanal</span></div></div>'
+                            f'<div><span style="color:#00F5FF;font-weight:700;font-size:12px;">📞 Kurumsal İletişim & Doğrulanmış LinkedIn Ağı</span>'
+                            f'<span style="margin-left:8px;font-size:10px;color:#5FD3AE;background:rgba(95,211,174,0.15);border:1px solid rgba(95,211,174,0.3);padding:2px 6px;border-radius:3px;">✓ Doğrulanmış Temas Kanalı</span></div>'
+                            f'<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">'
+                            f'<a href="{lk_direct_card_url}" target="_blank" style="background:#0077B5;color:#FFFFFF;padding:4px 10px;border-radius:4px;font-size:11px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:4px;box-shadow:0 2px 6px rgba(0,119,181,0.3);">'
+                            f'<span>💼</span> <span>Karar Vericiyi Bul ({lk_verified_person}) ↗</span></a>'
+                            f'<a href="{lk_team_card_url}" target="_blank" style="background:rgba(255,255,255,0.08);color:#CBD5E1;border:1px solid rgba(255,255,255,0.2);padding:4px 8px;border-radius:4px;font-size:10.5px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:4px;">'
+                            f'<span>🔬</span> <span>Embriyologları Bul ↗</span></a>'
+                            f'<a href="{lk_co_card_url}" target="_blank" style="background:rgba(255,255,255,0.05);color:#94A3B8;border:1px solid rgba(255,255,255,0.15);padding:4px 8px;border-radius:4px;font-size:10.5px;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:4px;">'
+                            f'<span>🏢</span> <span>Kurum Sayfası ↗</span></a>'
+                            f'</div></div>'
+                            f'<div style="font-size:10.5px;color:#94A3B8;background:rgba(0,0,0,0.3);padding:4px 8px;border-radius:4px;margin-bottom:8px;">'
+                            f'🔗 <b>Doğrulanmış Canlı Arama Sorgusu:</b> <code style="color:#00F5FF;font-size:10px;">{lk_keywords_disp}</code>'
+                            f'</div>'
                             f'<div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));gap:8px;font-size:12px;">'
                             f'<div><span style="color:#8A99AD;">👤 Yetkili Muhatap:</span> <b style="color:#FFFFFF;">{c_person}</b></div>'
                             f'<div><span style="color:#8A99AD;">✉️ Resmi E-posta:</span> <a href="mailto:{c_email}" style="color:#00F5FF;text-decoration:none;font-weight:600;">{c_email}</a></div>'
@@ -19512,7 +19579,7 @@ Gentile Dottore / Dottoressa (Responsabile del Laboratorio PMA),
 
 Sappiamo con quanta attenzione e rigore scientifico il vostro laboratorio selezioni i protocolli e le apparecchiature destinate al trattamento dei gameti umani.
 
-ZEUS Bioscience è lieta di condividere con la vostra équipe la documentazione tecnica e le evidenze cliniche relative al sistema ZEUS Piezo Pulse Stimulator & Electro Activation:
+ZEUS Bioscience è lieta di condividere con la vostra équipe la documentazione tecnica e le evidenze cliniche relative al sistema ZEUS Pulse Stimulator (ZPS 26) & Electro Activation:
 
 1. Certificazione CE Device Certified: Piena conformità alle normative europee vigenti per dispositivi e consumabili sterili dedicati alla PMA (test MEA >80% ed Endotossina LAL certificati).
 2. Evidenze Cliniche Pubblicate: Dati multicentrici peer-reviewed che dimostrano un incremento del tasso di fecondazione dal 24.6% fino a oltre l'82.3% (p < 0.001) in casi con pregresso arresto o oociti fragili.{table_snip_it}
@@ -19546,7 +19613,7 @@ Estimado/a Director/a de Laboratorio de Reproducción Asistida,
 
 Conocemos el rigor científico y el compromiso de excelencia que caracteriza a su laboratorio en el tratamiento de gametos de alta complejidad.
 
-Desde ZEUS Bioscience, queremos poner a su disposición la documentación técnica y las evidencias clínicas de nuestro sistema de Activación Oocitaria Asistida (AOA) mediante estimulación Piezoeléctrica (ZEUS Piezo Pulse Stimulator & Electro Dish):
+Desde ZEUS Bioscience, queremos poner a su disposición la documentación técnica y las evidencias clínicas de nuestro sistema de Activación Oocitaria Asistida (AOA) mediante estimulación Piezoeléctrica (ZEUS Pulse Stimulator (ZPS 26) & Electro Dish):
 
 1. Marcado CE Device Certified: Certificación europea vigente que garantiza la total bioseguridad y esterilidad celular (tests MEA >80% y Endotoxina LAL certificados).
 2. Evidencia Clínica Publicada: Datos multicéntricos peer-reviewed que demuestran una recuperación de la tasa de fecundación del 24.6% hasta más del 82.3% (p < 0.001) en casos con antecedentes de fallo de fecundación o factor masculino severo (TESE/Globozoospermia).{table_snip_es}
@@ -19648,7 +19715,7 @@ Web: www.zeusbioscience.com""", language="markdown")
 
 تحية طيبة وبعد،،
 
-انطلاقاً من ريادتكم العلمية في معالجة أصعب حالات العقم المستعصي، يسعدنا في شركة ZEUS Bioscience أن نضع بين أيديكم الملف الإكلينيكي لجهاز التحفيز الكهروبيزوي المتقدم (ZEUS Piezo Pulse Stimulator & Electro Dish):
+انطلاقاً من ريادتكم العلمية في معالجة أصعب حالات العقم المستعصي، يسعدنا في شركة ZEUS Bioscience أن نضع بين أيديكم الملف الإكلينيكي لجهاز التحفيز الكهروبيزوي المتقدم (ZEUS Pulse Stimulator (ZPS 26) & Electro Dish):
 
 1. شهادة الاعتماد الأوروبي (CE Device Certified): مطابقة تامة لمعايير السلامة البيولوجية واختبارات سلامة الأجنة (MEA >80% & Endotoxin Free).
 2. نتائج إكلينيكية موثقة: أثبتت الدراسات العلمية المنشورة قدرة تقنية (Elektriksel AOA) على رفع معدلات الإخصاب من 24.6% إلى أكثر من 82.3% (p < 0.001) في حالات انعدام الحيوانات المنوية، تشوهات الحيوانات الشديدة (Globozoospermia)، وفشل التنشيط المسبق.{table_snip_ar}
@@ -19682,7 +19749,7 @@ Dear Head of IVF Laboratory / Senior Embryologist,
 
 We recognize the high level of clinical rigor with which your laboratory handles gamete micromanipulation.
 
-ZEUS Bioscience is pleased to share our published multicentric clinical data regarding the ZEUS Piezo Pulse Stimulator & Electro Dish Assisted Oocyte Activation (AOA) system:
+ZEUS Bioscience is pleased to share our published multicentric clinical data regarding the ZEUS Pulse Stimulator (ZPS 26) & Electro Dish Assisted Oocyte Activation (AOA) system:
 
 1. CE Device Certified: Fully compliant with current European medical device regulations, including certified Mouse Embryo Assay (MEA >80%) and Endotoxin LAL testing.
 2. Published Clinical Evidence: Multicentric data confirming 2PN fertilization rate improvement from 24.6% to 82.3% in previous fertilization failure cohorts (p < 0.001) with Day-5 blastocyst utilization increasing by 2.2x.{table_snip_en}
