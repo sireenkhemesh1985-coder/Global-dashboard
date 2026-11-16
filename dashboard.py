@@ -1,5 +1,5 @@
 # ZEUS Global Market Intelligence (ZGMI) — Live Production Build: v2.9.0 (2026-11-15 - Unified 4-Hub Architecture)
-from datetime import datetime
+from datetime import datetime, timezone, timedelta
 import re
 import json
 import io
@@ -41,7 +41,9 @@ def _safe_st_markdown(body, *args, **kwargs):
 st.markdown = _safe_st_markdown
 
 def get_system_datetime_display():
-    now_dt = datetime.now()
+    # Turkey Standard Time (UTC+3 / TRT)
+    tr_tz = timezone(timedelta(hours=3))
+    now_dt = datetime.now(tr_tz)
     months_tr = ['', 'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık']
     return f"{now_dt.day} {months_tr[now_dt.month]} {now_dt.year} • {now_dt.strftime('%H:%M:%S')}"
 
@@ -14175,7 +14177,7 @@ if active_view == "🧭 Executive Overview & 3D Globe":
             st.info("Video simülasyon bileşeni hazırlanıyor...")
 
     # Header Banner
-    col_h1, col_h2 = st.columns([3, 1])
+    col_h1, col_h2 = st.columns([2.5, 1.5])
     with col_h1:
         st.markdown(
             "<div><span class='chip chip-info'>Executive Overview</span>"
@@ -14188,11 +14190,11 @@ if active_view == "🧭 Executive Overview & 3D Globe":
         sys_dt_hdr = get_system_datetime_display()
         st.markdown(f'''
         <div style='text-align:right;padding-top:4px;'>
-            <div style="display:inline-flex;align-items:center;gap:6px;background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.3);border-radius:20px;padding:4px 14px;margin-bottom:6px;box-shadow:0 0 12px rgba(0,245,255,0.15);">
+            <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.3);border-radius:20px;padding:5px 14px;margin-bottom:6px;box-shadow:0 0 12px rgba(0,245,255,0.15);white-space:nowrap;">
                 <span style="color:#00E676;font-size:10px;">●</span>
                 <span style="color:#FFFFFF;font-weight:700;font-size:11px;letter-spacing:0.04em;">System Online</span>
-                <span style="color:rgba(255,255,255,0.25);">|</span>
-                <span style="color:#00F5FF;font-weight:700;font-size:11.5px;font-family:'JetBrains Mono',monospace;">🕒 {sys_dt_hdr}</span>
+                <span style="color:rgba(0,245,255,0.4);">|</span>
+                <span style="color:#00F5FF;font-weight:700;font-size:12px;font-family:'JetBrains Mono',monospace;">🕒 {sys_dt_hdr}</span>
             </div>
             <br>
             <small style='color:#8FA3C0;'>Seçili Dönem: <b>{year_sel}</b></small>
