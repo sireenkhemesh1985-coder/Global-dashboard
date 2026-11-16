@@ -8282,7 +8282,7 @@ def format_executive_directive_block(custom_note, eff_lang, strat_mode="clinical
 
     # ENGLISH
     if eff_lang == "en":
-        sections = []
+        sections = [f"• Executive Directive & Custom Terms (Yönetici Özel Talimatı):\n\"{cn}\""]
         if has_eshre_guideline:
             sections.append(
                 "• ESHRE Guideline Compliance for Assisted Oocyte Activation (AOA):\n"
@@ -8307,14 +8307,12 @@ def format_executive_directive_block(custom_note, eff_lang, strat_mode="clinical
                 "• ESHRE Congress VIP Stand Invitation:\n"
                 "We cordially invite your senior embryology and executive delegation to visit the ZEUS Bioscience booth at the upcoming ESHRE Congress for an exclusive protocol workshop."
             )
-        if not sections:
-            sections.append(f"• Executive Directive & Tailored Term:\n\"{cn}\"")
 
-        return "\n\n------------------------------------------------------------\n📌 EXECUTIVE DIRECTIVE: ESHRE GUIDELINES & CLINICAL WHITEPAPER\n------------------------------------------------------------\n" + "\n\n".join(sections) + "\n------------------------------------------------------------\n"
+        return "\n\n------------------------------------------------------------\n📌 EXECUTIVE DIRECTIVE & TAILORED PROPOSAL CLAUSE (YÖNETİCİ ÖZEL TALİMATI):\n------------------------------------------------------------\n" + "\n\n".join(sections) + "\n------------------------------------------------------------\n"
 
     # TURKISH
     elif eff_lang == "tr":
-        sections = []
+        sections = [f"• Yönetici Talimatı ve Özel Teklif Hükmü:\n\"{cn}\""]
         if has_eshre_guideline:
             sections.append(
                 "• ESHRE Kılavuzu Uyumu (Elektriksel Oosit Aktivasyonu - AOA):\n"
@@ -8335,14 +8333,12 @@ def format_executive_directive_block(custom_note, eff_lang, strat_mode="clinical
                 "• ESHRE Kongresi VIP Stand Daveti:\n"
                 "2027 ESHRE kongresinde ZEUS Bioscience standımızda kıdemli embriyoloji heyetinizi VIP olarak ağırlamaktan onur duyarız."
             )
-        if not sections:
-            sections.append(f"• Özel Yönetici Talimatı:\n\"{cn}\"")
 
-        return "\n\n------------------------------------------------------------\n📌 YÖNETİCİ TALİMATI: ESHRE AOA KILAVUZ UYUMU & KLİNİK WHITEPAPER\n------------------------------------------------------------\n" + "\n\n".join(sections) + "\n------------------------------------------------------------\n"
+        return "\n\n------------------------------------------------------------\n📌 YÖNETİCİ TALİMATI & ÖZEL TEKLİF HÜKMÜ:\n------------------------------------------------------------\n" + "\n\n".join(sections) + "\n------------------------------------------------------------\n"
 
     # ITALIAN
     elif eff_lang == "it":
-        sections = []
+        sections = [f"• Disposizioni Strategiche & Nota Direzionale (Yönetici Talimatı):\n\"{cn}\""]
         if has_eshre_guideline:
             sections.append(
                 "• Conformità alle Linee Guida ESHRE per l'Attivazione Oocitaria Assistita (AOA):\n"
@@ -8358,14 +8354,12 @@ def format_executive_directive_block(custom_note, eff_lang, strat_mode="clinical
                 "• Condizioni Commerciali per Flotta Istituzionale:\n"
                 "Come concordato dalla direzione, confermiamo uno sconto del 10% sulla flotta hardware e tariffe consumabili Z-Dish bloccate su base pluriennale."
             )
-        if not sections:
-            sections.append(f"• Disposizioni Strategiche Direzionali:\n\"{cn}\"")
 
-        return "\n\n------------------------------------------------------------\n📌 DISPOSIZIONI STRATEGICHE: LINEE GUIDA ESHRE & WHITEPAPER CLINICO\n------------------------------------------------------------\n" + "\n\n".join(sections) + "\n------------------------------------------------------------\n"
+        return "\n\n------------------------------------------------------------\n📌 DISPOSIZIONI STRATEGICHE: DIRETTIVA ESECUTIVA & NOTE PERSONALIZZATE:\n------------------------------------------------------------\n" + "\n\n".join(sections) + "\n------------------------------------------------------------\n"
 
     # SPANISH
     elif eff_lang == "es":
-        sections = []
+        sections = [f"• Directiva Ejecutiva y Cláusula Personalizada (Yönetici Talimatı):\n\"{cn}\""]
         if has_eshre_guideline:
             sections.append(
                 "• Cumplimiento de las Guías Clínicas ESHRE (AOA Eléctrico):\n"
@@ -8381,14 +8375,12 @@ def format_executive_directive_block(custom_note, eff_lang, strat_mode="clinical
                 "• Condiciones Especiales de Flota Institucional:\n"
                 "Confirmamos un 10% de descuento en la adquisición de flota de equipos y tarifas preferenciales en consumibles Z-Dish por volumen anual."
             )
-        if not sections:
-            sections.append(f"• Directiva Ejecutiva Personalizada:\n\"{cn}\"")
 
-        return "\n\n------------------------------------------------------------\n📌 DIRECTIVA EJECUTIVA: GUÍAS ESHRE DE AOA Y WHITEPAPER CLÍNICO\n------------------------------------------------------------\n" + "\n\n".join(sections) + "\n------------------------------------------------------------\n"
+        return "\n\n------------------------------------------------------------\n📌 DIRECTIVA EJECUTIVA: CLÁUSULA PERSONALIZADA & CONDICIONES ESPECIALES:\n------------------------------------------------------------\n" + "\n\n".join(sections) + "\n------------------------------------------------------------\n"
 
     # GERMAN
     elif eff_lang == "de":
-        sections = []
+        sections = [f"• Strategische Direktionsvorgabe & Sonderklausel (Yönetici Talimatı):\n\"{cn}\""]
         if has_eshre_guideline:
             sections.append(
                 "• Einhaltung der ESHRE-Leitlinien für Assistierte Oozyten-Aktivierung (AOA):\n"
@@ -8399,14 +8391,12 @@ def format_executive_directive_block(custom_note, eff_lang, strat_mode="clinical
                 "• Beigefügtes Klinisches Whitepaper (Executive Scientific Brief):\n"
                 "Im Anhang finden Sie unser 1-seitiges Executive Whitepaper mit publizierten multizentrischen Daten: Steigerung der 2PN-Befruchtung auf 82,3% bei TFF, 2,2-facher Zuwachs an Tag-5-Blastozysten und CE-Zertifizierung mit MEA >80%."
             )
-        if not sections:
-            sections.append(f"• Strategische Direktionsvorgabe:\n\"{cn}\"")
 
-        return "\n\n------------------------------------------------------------\n📌 STRATEGISCHE VORGABE: ESHRE-LEITLINIEN FÜR AOA & KLINISCHES WHITEPAPER\n------------------------------------------------------------\n" + "\n\n".join(sections) + "\n------------------------------------------------------------\n"
+        return "\n\n------------------------------------------------------------\n📌 STRATEGISCHE VORGABE: DIREKTIONSANWEISUNG & SONDERKONDITIONEN:\n------------------------------------------------------------\n" + "\n\n".join(sections) + "\n------------------------------------------------------------\n"
 
     # FRENCH
     elif eff_lang == "fr":
-        sections = []
+        sections = [f"• Directive Exécutive & Termes Personnalisés (Yönetici Talimatı):\n\"{cn}\""]
         if has_eshre_guideline:
             sections.append(
                 "• Conformité aux recommandations ESHRE pour l'Activation Ovocytaire Assistée (AOA):\n"
@@ -8417,14 +8407,12 @@ def format_executive_directive_block(custom_note, eff_lang, strat_mode="clinical
                 "• Whitepaper Clinique Joint (Executive Scientific Brief):\n"
                 "Veuillez trouver ci-joint notre Whitepaper Clinique Exécutif résumant nos résultats multicentriques: fertilisation 2PN atteignant 82.3% en échec de fécondation, blastocystes J5 multipliés par 2.2 et marquage CE Classe IIa."
             )
-        if not sections:
-            sections.append(f"• Directive Exécutive Personnalisée:\n\"{cn}\"")
 
-        return "\n\n------------------------------------------------------------\n📌 DIRECTIVE EXÉCUTIVE: CONFORMITÉ AUX RECOMMANDATIONS ESHRE (AOA) & WHITEPAPER\n------------------------------------------------------------\n" + "\n\n".join(sections) + "\n------------------------------------------------------------\n"
+        return "\n\n------------------------------------------------------------\n📌 DIRECTIVE EXÉCUTIVE: TERMES PERSONNALISÉS & DISPOSITIONS SPÉCIALES:\n------------------------------------------------------------\n" + "\n\n".join(sections) + "\n------------------------------------------------------------\n"
 
     # ARABIC
     elif eff_lang == "ar":
-        sections = []
+        sections = [f"• التوجيه التنفيذي الخاص والشروط المحددة (Yönetici Talimatı):\n\"{cn}\""]
         if has_eshre_guideline:
             sections.append(
                 "• التوافق التام مع إرشادات الجمعية الأوروبية للخصوبة (ESHRE) للتنشيط الكهربائي (AOA):\n"
@@ -8435,10 +8423,8 @@ def format_executive_directive_block(custom_note, eff_lang, strat_mode="clinical
                 "• الملف الإكلينيكي المرفق (Clinical Whitepaper - Executive Brief):\n"
                 "نرفق لسيادتكم الملف العلمي التنفيذي الموثق: رفع نسب التخصيب 2PN إلى 82.3%، وزيادة أجنة اليوم الخامس 2.2 ضعف، بشهادة CE الأوروبية وفحص MEA >80%."
             )
-        if not sections:
-            sections.append(f"• التوجيه التنفيذي الخاص:\n\"{cn}\"")
 
-        return "\n\n------------------------------------------------------------\n📌 التوجيه التنفيذي: التوافق مع إرشادات ESHRE للتنشيط الكهربائي والملف الإكلينيكي\n------------------------------------------------------------\n" + "\n\n".join(sections) + "\n------------------------------------------------------------\n"
+        return "\n\n------------------------------------------------------------\n📌 التوجيه التنفيذي الخاص والشروط المعتمدة:\n------------------------------------------------------------\n" + "\n\n".join(sections) + "\n------------------------------------------------------------\n"
 
     return ""
 
@@ -8492,6 +8478,9 @@ I sistemi tradizionali di attivazione ovocitaria chimica (ionofori di calcio) e 
 
 ZEUS Bioscience propone a {name} un modello di flotta istituzionale e ammortamento ad alto rendimento basato su ZEUS Pulse Stimulator (Attivazione Oocitaria Elettrica AOA):
 
+
+{custom_block}
+
 1. Riduzione Capex del 35% & Payback Medio in 8.2 Mesi:
 Grazie al nostro programma istituzionale e all'eccellente tasso di sviluppo embrionale (79.37% embrioni di Grado I e II in coorti TFF), l'investimento si ripaga in media in 8.2 mesi operativi.
 
@@ -8499,7 +8488,7 @@ Grazie al nostro programma istituzionale e all'eccellente tasso di sviluppo embr
 Forniamo micropiastre sterili Electro Dish e soluzioni Electroliquid certificate CE e ISO 13485 a prezzi bloccati pluriennali, eliminando l'esposizione a costosi reagenti chimici ionofori.
 
 3. Modello di Partnership & Supporto Applicativo Dedicato:
-Offriamo alle vostre cliniche convenzionate l'affiancamento completo dei nostri specialisti di embriologia clinica per l'avvio immediato dei protocolli di attivazione elettrica fisiologica.{custom_block}
+Offriamo alle vostre cliniche convenzionate l'affiancamento completo dei nostri specialisti di embriologia clinica per l'avvio immediato dei protocolli di attivazione elettrica fisiologica.
 
 Saremmo lieti di presentare il piano di ammortamento e la matrice sconti flotta alla vostra commissione acquisti.
 
@@ -8523,6 +8512,9 @@ Nel momento in cui i laboratori PMA richiedono metodiche avanzate e non-tossiche
 
 ZEUS Bioscience invita {name} a valutare un accordo di distribuzione territoriale esclusiva per la linea ZEUS Pulse Stimulator:
 
+
+{custom_block}
+
 1. Margini Distributore Superiori (>42% Lordo su Hardware e Consumabili):
 Prezzi di cessione altamente competitivi su generatori ZEUS Pulse Stimulator e piastre sterili Electro Dish con entrate ricorrenti prevedibili.
 
@@ -8530,7 +8522,7 @@ Prezzi di cessione altamente competitivi su generatori ZEUS Pulse Stimulator e p
 Documentazione tecnica integrale, marcatura CE, test MEA >80% e LAL <0.05 EU/ml certificati, con pieno supporto per la rapida qualificazione a gare pubbliche e forniture private.
 
 3. Esclusività Territoriale e Certificazione Tecnica di Fabbrica:
-Supporto specialistico per workshop clinici, affiancamento co-marketing a congressi SIERR/ESHRE e training di certificazione ufficiale per i vostri specialisti di prodotto.{custom_block}
+Supporto specialistico per workshop clinici, affiancamento co-marketing a congressi SIERR/ESHRE e training di certificazione ufficiale per i vostri specialisti di prodotto.
 
 Desideriamo concordare un incontro esecutivo riservato per illustrare il modello margini prima della chiusura delle nomine per il mercato italiano.
 
@@ -8556,6 +8548,9 @@ Il sistema certificato CE ZEUS Pulse Stimulator (The Spark of Life) sostituisce 
 
 I 3 pilastri clinici comprovati del sistema ZEUS Pulse Stimulator:
 
+
+{custom_block}
+
 1. 79.37% di Embrioni Top Quality (Grado I e II) in Cicli TFF:
 I dati clinici dimostrano che il 79.37% degli ovociti stimolati elettricamente dopo fallimenti completi di fecondazione evolve con successo in embrioni di eccellente qualità morfologica.
 
@@ -8563,7 +8558,7 @@ I dati clinici dimostrano che il 79.37% degli ovociti stimolati elettricamente d
 La stimolazione elettrica bypassa la carenza di PLC-zeta spermatico, portando il tasso di fertilizzazione 2PN dall'24.6% all'82.3% (Baltaci et al., p < 0.001) e consentendo lo sviluppo sicuro di oltre 90 nati sani documentati dopo iniezione di spermatidi rotondi (ROSI, Tanaka et al. 2018), in pieno accordo con le raccomandazioni ESHRE 2024 per AOA.
 
 3. Sicurezza Biologica Assoluta & Certificazione CE:
-Completamente non tossico e biocompatibile, privo di esposizione a molecole chimiche estranee. Ogni lotto di piastre Electro Dish è convalidato da test MEA (Mouse Embryo Assay >80%) ed endotossine LAL <0.05 EU/ml.{custom_block}
+Completamente non tossico e biocompatibile, privo di esposizione a molecole chimiche estranee. Ogni lotto di piastre Electro Dish è convalidato da test MEA (Mouse Embryo Assay >80%) ed endotossine LAL <0.05 EU/ml.
 
 [SINTESI EVIDENZE CLINICHE (WHITEPAPER BENCHMARK)]:
 • Embrioni di Grado I e II in TFF: 79.37% di sviluppo morfologico ottimale
@@ -8608,6 +8603,9 @@ Los sistemas tradicionales de activación química con ionóforos de calcio conl
 
 ZEUS Bioscience pone a su disposición un modelo de flota institucional y amortización acelerada para el sistema ZEUS Pulse Stimulator (Activación Oocitaria Eléctrica - AOA):
 
+
+{custom_block}
+
 1. 35% de Reducción en Capex & Amortización en 8.2 Meses:
 Nuestra tecnología de pulsos eléctricos y el 79.37% de embriones Grado I/II en antecedentes de fallo total de fecundación permiten alcanzar el retorno completo de la inversión en 8.2 meses.
 
@@ -8615,7 +8613,7 @@ Nuestra tecnología de pulsos eléctricos y el 79.37% de embriones Grado I/II en
 Suministramos placas Electro Dish y soluciones de activación con certificación europea CE e ISO 13485 bajo acuerdos plurianuales blindados.
 
 3. Modelo de Alianza Institucional y Formación Especializada:
-Ofrecemos a su red de clínicas formación técnica avanzada presencial para sus embriólogos y soporte directo para la rápida integración operativa.{custom_block}
+Ofrecemos a su red de clínicas formación técnica avanzada presencial para sus embriólogos y soporte directo para la rápida integración operativa.
 
 Quedamos a su disposición para coordinar una reunión ejecutiva con su comité de adquisiciones.
 
@@ -8639,6 +8637,9 @@ Ante la creciente demanda de procedimientos avanzados de activación ovocitaria 
 
 ZEUS Bioscience invita a {name} a valorar un acuerdo de distribución regional:
 
+
+{custom_block}
+
 1. Márgenes Superiores (>42% Margen Bruto en Equipos y Consumibles):
 Precios de transferencia sumamente atractivos con un modelo de facturación recurrente en placas Electro Dish.
 
@@ -8646,7 +8647,7 @@ Precios de transferencia sumamente atractivos con un modelo de facturación recu
 Dossiers regulatorios validados, homologación MEA/LAL y soporte directo para licitaciones y ventas corporativas.
 
 3. Exclusividad de Zona y Soporte Técnico Directo:
-Respaldo científico en talleres clínicos, patrocinio conjunto en congresos SEF/ESHRE y certificación oficial de fábrica para sus especialistas.{custom_block}
+Respaldo científico en talleres clínicos, patrocinio conjunto en congresos SEF/ESHRE y certificación oficial de fábrica para sus especialistas.
 
 Nos complacería mantener una reunión ejecutiva para evaluar las condiciones de distribución antes del cierre del ejercicio.
 
@@ -8672,6 +8673,9 @@ El sistema ZEUS Pulse Stimulator (The Spark of Life), con Certificación CE, res
 
 Los 3 pilares clínicos contrastados de ZEUS Pulse Stimulator:
 
+
+{custom_block}
+
 1. 79.37% de Embriones de Grado I y II en Casos con Historial de TFF:
 Los estudios confirman que el 79.37% de los embriones activados tras fallos totales de fecundación evolucionan a embriones de máxima calidad morfológica.
 
@@ -8679,7 +8683,7 @@ Los estudios confirman que el 79.37% de los embriones activados tras fallos tota
 Restaura las oscilaciones de calcio en ausencia de PLC-zeta, elevando la tasa 2PN del 24.6% al 82.3% (Baltaci et al., p < 0.001) y respaldado por más de 90 niños nacidos sanos tras ROSI con activación eléctrica (Tanaka et al. 2018), en consonancia con la guía ESHRE 2024.
 
 3. Bioseguridad Total Sin Fármacos Químicos & Certificación CE:
-Totalmente libre de reactivos químicos externos. Cada lote de placas Electro Dish cuenta con validación MEA (>80%) y niveles de endotoxinas LAL <0.05 EU/ml.{custom_block}
+Totalmente libre de reactivos químicos externos. Cada lote de placas Electro Dish cuenta con validación MEA (>80%) y niveles de endotoxinas LAL <0.05 EU/ml.
 
 [RESUMEN DE EVIDENCIA CLÍNICA (WHITEPAPER BENCHMARK)]:
 • Embriones Grado I y II en TFF: 79.37% de desarrollo embrionario óptimo
@@ -8721,9 +8725,11 @@ Contacto Directo: +90 (212) 850 44 00 | E-mail: scientific@zeusbioscience.com | 
 angesichts der herausragenden klinischen Bedeutung von {name} in {city} ({volume}) stellt die nachhaltige Optimierung der Medizintechnik-Investitionen bei gleichzeitiger Senkung der Fallkosten eine vorrangige strategische Aufgabe dar.
 
 Das ZEUS ART-Flottenmodell für den ZEUS Pulse Stimulator (Elektrische Oozytenaktivierung - AOA) bietet Ihrem Institut:
+{custom_block}
+
 1. 35% geringere Investitionskosten (Capex) & Amortisation in durchschnittlich 8.2 Monaten (79.37% Top-Embryonen bei TFF).
 2. Preisstabilität bei CE-zertifizierten Verbrauchsmaterialien (Electro Dish & Electroliquid).
-3. Fachliche Begleitung und strukturierter klinischer Einführungsworkshop.{custom_block}
+3. Fachliche Begleitung und strukturierter klinischer Einführungsworkshop.
 
 Gerne stellen wir Ihrem Vorstand unsere Wirtschaftlichkeitsrechnung vor.
 
@@ -8742,9 +8748,11 @@ Kaufmännische Direktion | ZEUS Bioscience Europe"""
 die etablierte Fachpräsenz und das Servicenetzwerk von {name} im Bereich der Reproduktionsmedizin in {city} ({volume}) machen Ihr Unternehmen zum idealen Partner für moderne IVF-Technologien.
 
 Wir bieten {name} eine autorisierte Gebietsdistribution für den ZEUS Pulse Stimulator (Chemikalienfreie AOA):
+{custom_block}
+
 1. Attraktive Händlermargen (>42% Handelsspanne) mit stetig wiederkehrendem Verbrauchsmaterialumsatz.
 2. Vollständige CE-Zulassungsdossiers und technische Dokumentation (MEA >80%, LAL <0.05 EU/ml).
-3. Gebietsschutz und zertifizierte Herstellerschulungen für Ihre Servicetechniker.{custom_block}
+3. Gebietsschutz und zertifizierte Herstellerschulungen für Ihre Servicetechniker.
 
 Gerne besprechen wir die Kooperationsbedingungen im Rahmen eines persönlichen Gesprächs.
 
@@ -8767,10 +8775,12 @@ Bei Patientinnen mit rezidivierendem Total Fertilization Failure (TFF), niedrige
 Der CE-zertifizierte ZEUS Pulse Stimulator (The Spark of Life) induziert durch präzise mikroelektrische Impulse (DC & AC/DC) eine transiente Membranpermeabilisierung und stellt den natürlichen Einstrom physiologischer Kalziumoszillationen ($CaCa²⁺) wie bei natürlicher Befruchtung wieder her.
 
 Die 3 klinischen Kernstärken des ZEUS Pulse Stimulators:
+{custom_block}
+
 1. 79.37% Grade I & II Qualitäts-Embryonen bei TFF-Vorgeschichte:
 Klinische Evidenz belegt eine exzellente morphologische Entwicklung nach elektrischer Aktivierung.
 2. Signifikante Steigerung der 2PN-Befruchtungsrate von 24,6% auf 82,3% (Baltaci et al., p < 0.001) & 90 gesunde ROSI-Geburten (Tanaka et al. 2018), voll konform mit der ESHRE-Leitlinie 2024.
-3. 100% chemikalienfrei, biokompatibel und CE-zertifiziert mit MEA-Validierung (>80%) und Endotoxinen <0,05 EU/ml.{custom_block}
+3. 100% chemikalienfrei, biokompatibel und CE-zertifiziert mit MEA-Validierung (>80%) und Endotoxinen <0,05 EU/ml.
 
 [PUBLIKATIONEN & REFERENZEN]:
 1. Tanaka et al. (2018) — 90 Babies Born After ROSI & Electrical Oocyte Activation (2-Jahres-Follow-up).
@@ -8801,9 +8811,11 @@ E-Mail: scientific@zeusbioscience.com | Web: www.zeusbioscience.com"""
             body = f"""{salutation}
 
 Compte tenu du volume clinique d'excellence de {name} à {city} ({volume}), nous vous présentons notre offre de flotte technologique pour le stimulateur ovocytaire électrique ZEUS Pulse Stimulator:
+{custom_block}
+
 1. Réduction Capex de 35% et amortissement moyen en 8.2 mois (79.37% d'embryons Grado I/II en TFF).
 2. Sécurité d'approvisionnement et tarif consommables garanti avec certification CE.
-3. Accompagnement clinique et intégration opérationnelle dédiée.{custom_block}
+3. Accompagnement clinique et intégration opérationnelle dédiée.
 
 Bien cordialement,
 Direction Commerciale | ZEUS Bioscience Europe"""
@@ -8819,9 +8831,11 @@ Direction Commerciale | ZEUS Bioscience Europe"""
 
 Votre réseau de distribution médicale à {city} ({volume}) constitue un atout majeur pour la diffusion des technologies d'AMP.
 Nous vous proposons un accord de distribution exclusive pour ZEUS Pulse Stimulator (AOA Électrique non toxique):
+{custom_block}
+
 1. Marges distributeurs supérieures (>42% marge brute) avec revenus récurrents sur les boîtes Electro Dish.
 2. Dossiers techniques complets avec certification CE (MEA >80%, LAL <0.05 EU/ml).
-3. Protection territoriale et formation technique certifiée usine.{custom_block}
+3. Protection territoriale et formation technique certifiée usine.
 
 Sincères salutations,
 Direction du Développement International | ZEUS Bioscience Europe"""
@@ -8842,12 +8856,14 @@ Face aux échecs complets de fécondation (TFF), aux faibles taux de fécondatio
 Le système ZEUS Pulse Stimulator (The Spark of Life), certifié CE, génère des micro-impulsions électriques calibrées (DC & AC/DC) assurant une électroporation transitoire et restaurant les oscillations physiologiques de calcium intracellulaire ($CaCa²⁺).
 
 Les 3 atouts cliniques majeurs de ZEUS Pulse Stimulator:
+{custom_block}
+
 1. 79.37% d'Embryons de Haute Qualité (Grade I & II) en Contexte de TFF:
 Preuve clinique directe d'un développement morphologique optimal sans toxicité chimique.
 2. Résolution du Facteur Masculin Sévère (Baltaci et al. & Tanaka et al.):
 Hausse du taux 2PN de 24.6% à 82.3% (Baltaci et al., p < 0.001) et sécurité validée sur 90 enfants nés après activation électrique en ROSI (Tanaka et al. 2018), en accord avec les recommandations ESHRE 2024.
 3. 100% Sans Produits Chimiques & Certification CE:
-Validé par MEA (>80%) et endotoxines LAL <0.05 EU/ml.{custom_block}
+Validé par MEA (>80%) et endotoxines LAL <0.05 EU/ml.
 
 [RÉFÉRENCES SCIENTIFIQUES]:
 1. Tanaka et al. (2018) — 90 Babies Born After ROSI & Electrical Oocyte Activation.
@@ -8876,9 +8892,11 @@ scientific@zeusbioscience.com | www.zeusbioscience.com"""
             body = f"""{salutation}
 
 انطلاقاً من المكانة المتميزة لمركز {name} في {city} ({volume})، يسعدنا تقديم نموذج الشراكة المؤسسية المعتمد لجهاز التنشيط الكهربائي للبويضات ZEUS Pulse Stimulator:
+{custom_block}
+
 1. تخفيض تكلفة الاستثمار الرأسمالي (Capex) بنسبة 35% مع استرداد الاستثمار خلال 8.2 أشهر (79.37% أجنة ممتازة في حالات التنشيط الصعبة).
 2. ضمان توريد مستلزمات التنشيط (Electro Dish) بأسعار ثابتة ومعتمدة بشهادة المطابقة الأوروبية CE.
-3. دعم تطبيقي واعتماد بروتوكول إكلينيكي متقدم بإشراف خبرائنا.{custom_block}
+3. دعم تطبيقي واعتماد بروتوكول إكلينيكي متقدم بإشراف خبرائنا.
 
 وتفضلوا بقبول فائق الاحترام والتقدير،
 الإدارة التجارية والمشتريات المؤسسية | ZEUS Bioscience"""
@@ -8893,9 +8911,11 @@ scientific@zeusbioscience.com | www.zeusbioscience.com"""
             body = f"""{salutation}
 
 نظراً لريادتكم في توزيع التجهيزات المخبرية وتغطية مراكز الخصوبة في {city} ({volume})، ندعوكم لتقييم عقد التوزيع الحصري لجهاز ZEUS Pulse Stimulator (التنشيط الفيزيائي الآمن الخالي من الكيماويات):
+{custom_block}
+
 1. هوامش ربحية مجزية للموزع تتجاوز 42% مع مبيعات دورية منتظمة لأطباق Electro Dish.
 2. ملفات تسجيل فنية كاملة بشهادة المطابقة الأوروبية الرسمية CE (اختبارات MEA >80% و endotoxin <0.05).
-3. حماية إقليمية وتدريب فني معتمد لمهندسيكم.{custom_block}
+3. حماية إقليمية وتدريب فني معتمد لمهندسيكم.
 
 وتفضلوا بقبول الاحترام،
 إدارة تطوير الأعمال الدولية | ZEUS Bioscience"""
@@ -8916,10 +8936,12 @@ scientific@zeusbioscience.com | www.zeusbioscience.com"""
 يقدم نظام ZEUS Pulse Stimulator المعتمد بشهادة CE الرسمية بديلاً فيزيائياً فائق الأمان من خلال نبضات كهربائية دقيقة للغاية (DC & AC/DC) تحفز نفاذية الغشاء الخلوي مؤقتاً وتستعيد تذبذبات الكالسيوم الفسيولوجية الطبيعية ($CaCa²⁺) كما يحدث في التخصيب الطبيعي.
 
 أهم 3 ركائز إكلينيكية موثقة لنظام ZEUS Pulse Stimulator:
+{custom_block}
+
 1. 79.37% أجنة عالية الجودة (Grade I & II) في حالات فشل التخصيب السابق (TFF):
 نتائج موثقة تثبت تطور الأجنة بنجاح دون أي سمية كيميائية.
 2. رفع نسبة التخصيب 2PN من 24.6% إلى 82.3% (Baltaci et al., p < 0.001) وولادة أكثر من 90 طفلاً سليماً بعد التنشيط الكهربائي لحالات ROSI (Tanaka et al. 2018)، بما يتوافق تماماً مع توصيات الجمعية الأوروبية ESHRE 2024.
-3. أمان حيوي مطلق وخالٍ تماماً من المواد الكيميائية ومعتمد بشهادة CE مع اختبارات MEA >80% ومستويات endotoxin أقل من 0.05 EU/ml.{custom_block}
+3. أمان حيوي مطلق وخالٍ تماماً من المواد الكيميائية ومعتمد بشهادة CE مع اختبارات MEA >80% ومستويات endotoxin أقل من 0.05 EU/ml.
 
 [المراجع العلمية الموثقة]:
 1. Tanaka et al. (2018) — 90 Babies Born After ROSI & Electrical Oocyte Activation.
@@ -8952,9 +8974,11 @@ scientific@zeusbioscience.com | www.zeusbioscience.com"""
 Geleneksel kimyasal kalsiyum ionophore yöntemleri ve eski tip elektroporatörler yüksek sarf maliyeti, operasyonel değişkenlik ve embriyo toksisitesi riski yaratmaktadır.
 
 ZEUS Bioscience olarak ZEUS Pulse Stimulator (Elektriksel Oosit Aktivasyon - AOA) sistemimizle kurumunuza özel geliştirdiğimiz filo modelini sunuyoruz:
+{custom_block}
+
 1. %35 Daha Düşük İlk Yatırım & 8.2 Ayda Hızlı Geri Dönüş (ROI): TFF geçmişi olan zorlu vakalarda dahi %79.37 Grade I & II kaliteli embriyo gelişim oranıyla siklus kayıplarını önler ve yatırımı hızla amorti eder.
 2. Entegre Sarf Güvencesi ve Sabit Fiyat Protokolü: CE Sertifikalı ve ISO 13485 onaylı tek kullanımlık Electro Dish pleytleri ve aktivasyon solüsyonlarını sabit fiyat garantisiyle sunuyoruz.
-3. Kurumsal Teknoloji Entegrasyonu ve Yerinde Eğitim: Embriyoloji ekibinize yerinde klinik protokol eğitimi ve vaka çalıştayı desteği sağlıyoruz.{custom_block}
+3. Kurumsal Teknoloji Entegrasyonu ve Yerinde Eğitim: Embriyoloji ekibinize yerinde klinik protokol eğitimi ve vaka çalıştayı desteği sağlıyoruz.
 
 Kurumsal teklifimizi satınalma heyetinize sunmak üzere kısa bir toplantı planlamaktan onur duyarız.
 
@@ -8973,9 +8997,11 @@ ZEUS Bioscience Kurumsal Satınalma & Medikal Direktörlüğü | www.zeus-bio.co
 {name}'nin medikal teknoloji dağıtımındaki yaygın saha ağı ve laboratuvar penetrasyonu ({volume}), bölgedeki tüp bebek merkezlerinin modernizasyonunda kilit bir role sahiptir.
 
 Kliniklerin toksik kimyasal iyonoforlar yerine güvenli ve fiziksel Elektriksel Oosit Aktivasyon (AOA) teknolojilerine yöneldiği bu dönemde, yüksek brüt marjlı (%42+) portföyümüzü dağıtım ağınıza kazandırmak istiyoruz:
+{custom_block}
+
 1. Yüksek Brüt Marj & Düzenli Sarf Geliri: Donanımda cazip bayi transfer fiyatı ve patentli Electro Dish sarflarıyla düzenli nakit akışı.
 2. Tam Ruhsatlandırma ve Teknik Destek: Resmi CE sertifikası, ÜTS kayıt güvencesi ve sertifikalı teknik servis eğitimi.
-3. Bölge Koruması ve Yerel Pazarlama Desteği: Ulusal/uluslararası kongre katılımı ve yerinde klinik aplikasyon desteği.{custom_block}
+3. Bölge Koruması ve Yerel Pazarlama Desteği: Ulusal/uluslararası kongre katılımı ve yerinde klinik aplikasyon desteği.
 
 Yetkili bayilik şartlarımızı değerlendirmek üzere bir toplantı organize etmeyi arzu ederiz.
 
@@ -8999,6 +9025,9 @@ ZEUS Bioscience tarafından geliştirilen CE Sertifikalı ZEUS Pulse Stimulator 
 
 ZEUS Pulse Stimulator sisteminin 3 kanıtlanmış klinik üstünlüğü:
 
+
+{custom_block}
+
 1. TFF Vakalarında %79.37 Grade I & II Kaliteli Embriyo Gelişimi:
 Klinik veri havuzumuz, daha önce döllenme başarısızlığı yaşamış kohortlarda elektriksel aktivasyon sonrası embriyoların %79.37'sinin en yüksek kalitede (Grade I ve II) geliştiğini kanıtlamaktadır.
 
@@ -9006,7 +9035,7 @@ Klinik veri havuzumuz, daha önce döllenme başarısızlığı yaşamış kohor
 Spermde PLC-zeta proteini bulunmadığında dahi elektriksel uyarı fizyolojik kalsiyum dalgalarını tetikleyerek 2PN döllenme oranını %24.6'dan %82.3'e yükseltir (Baltacı et al., p < 0.001). Tanaka ve ekibinin (2018) çalışmasında elektriksel aktivasyonla dünyaya gelen 90 ROSI bebeğinin 2 yaşına kadar doğal gebeliklerle tamamen eşdeğer gelişim gösterdiği ispatlanmıştır. ESHRE 2024 rehberi de düşük döllenme ve globozoospermide AOA'yı açıkça önermektedir.
 
 3. %100 Kimyasalsız Biyouyumluluk & CE Sertifikası Güvencesi:
-Kimyasal ionofor maruziyeti olmadan saf fiziksel uyarım sağlar. Tüm Electro Dish pleytleri lot bazlı MEA (>%80 blastokist) ve LAL endotoksin (<0.05 EU/ml) onaylıdır.{custom_block}
+Kimyasal ionofor maruziyeti olmadan saf fiziksel uyarım sağlar. Tüm Electro Dish pleytleri lot bazlı MEA (>%80 blastokist) ve LAL endotoksin (<0.05 EU/ml) onaylıdır.
 
 [BİLİMSEL KLİNİK VERİ ÖZETİ (WHITEPAPER BENCHMARK)]:
 • TFF Vakalarında Grade I & II Kaliteli Embriyo: %79.37 Başarı
@@ -9053,6 +9082,9 @@ Fertility networks currently confront high recurrent costs and epigenetic cytoto
 
 ZEUS Bioscience offers an enterprise-grade capital equipment and consumable partnership for the ZEUS Pulse Stimulator (Electrical Oocyte Activation - AOA):
 
+
+{custom_block}
+
 1. 35% Capex Reduction & Rapid 8.2-Month Payback:
 Our enterprise fleet tier substantially lowers the upfront capital barrier. By delivering a 79.37% Grade I & II premium embryo formation rate even in historic Total Fertilization Failure (TFF) cohorts, our partners achieve full capital payback within an average of 8.2 months.
 
@@ -9060,7 +9092,7 @@ Our enterprise fleet tier substantially lowers the upfront capital barrier. By d
 We supply ISO 13485 and CE-Certified sterile Electro Dishes and Electroliquid activation solutions under predictable multi-year volume contracts, shielding your balance sheet from reagent price fluctuations.
 
 3. Dedicated Institutional Integration & Application Support:
-We offer comprehensive on-site clinical embryology training, protocol validation, and dedicated technical workflow integration for your affiliated centers.{custom_block}
+We offer comprehensive on-site clinical embryology training, protocol validation, and dedicated technical workflow integration for your affiliated centers.
 
 We would welcome the opportunity to present our financial feasibility model and volume discount matrix to your procurement committee.
 
@@ -9088,6 +9120,9 @@ As embryology laboratories across your market transition toward non-toxic, physi
 
 ZEUS Bioscience invites {name} to evaluate our exclusive or preferred regional distribution agreement for the ZEUS Pulse Stimulator platform:
 
+
+{custom_block}
+
 1. Unrivaled Distributor Margins (>42% Gross Hardware & Consumable Margin):
 We provide exceptionally attractive distributor transfer pricing on capital ZEUS Pulse Stimulators and recurring sterile Electro Dishes, unlocking predictable multi-year revenue.
 
@@ -9095,7 +9130,7 @@ We provide exceptionally attractive distributor transfer pricing on capital ZEUS
 Our in-house regulatory department provides full technical files, CE certificates, MEA >80% and LAL <0.05 EU/ml validations to accelerate national medical device registration and tender qualification.
 
 3. Protected Territory & Local Clinical Training:
-We guarantee rigorous territorial exclusivity, dedicated clinical workshop support, co-branded marketing at regional reproductive congresses, and factory certification for your technical product specialists.{custom_block}
+We guarantee rigorous territorial exclusivity, dedicated clinical workshop support, co-branded marketing at regional reproductive congresses, and factory certification for your technical product specialists.
 
 Before finalizing our regional distribution appointments for the forthcoming fiscal period, we would be delighted to review our commercial distributor agreement and margin model with your board.
 
@@ -9123,6 +9158,9 @@ ZEUS Bioscience has engineered the CE-Certified ZEUS Pulse Stimulator (The Spark
 
 The 3 proven clinical pillars of the ZEUS Pulse Stimulator system:
 
+
+{custom_block}
+
 1. 79.37% Grade I & II Embryo Formation in TFF Cohorts:
 Extensive clinical evidence confirms that 79.37% of activated oocytes with a documented history of total fertilization failure successfully develop into Grade I and Grade II top-quality embryos, rescuing cycles that would otherwise be discarded.
 
@@ -9130,7 +9168,7 @@ Extensive clinical evidence confirms that 79.37% of activated oocytes with a doc
 By bypassing sperm activation deficiencies, it restores 2PN fertilization rates from 24.6% to 82.3% (Baltaci et al., p < 0.001) and is clinically corroborated by more than 90 healthy babies born after round spermatid injection (ROSI) with electrical activation (Tanaka et al. 2018), showing normal 2-year physical and cognitive development in line with the ESHRE 2024 guideline recommendations.
 
 3. 100% Chemical-Free Biocompatibility & Official CE Certification:
-Eliminates all foreign chemical exposure, ensuring non-toxic embryonic development. Every lot of Electro Dishes and Electroliquid solution is validated by Mouse Embryo Assay (MEA >80%) and Endotoxin LAL <0.05 EU/ml testing.{custom_block}
+Eliminates all foreign chemical exposure, ensuring non-toxic embryonic development. Every lot of Electro Dishes and Electroliquid solution is validated by Mouse Embryo Assay (MEA >80%) and Endotoxin LAL <0.05 EU/ml testing.
 
 [CLINICAL EVIDENCE SUMMARY (WHITEPAPER BENCHMARK)]:
 • Grade I & II Embryos in TFF Cycles: 79.37% Optimal Morphological Development
@@ -19377,6 +19415,10 @@ elif active_view == "🛃 Market Intelligence & Compare":
 
                             pitch_state_key = f"pitch_data_{radar_country}_{idx}_{strat_mode}_{eff_selected_lang}"
 
+                            note_ver_key = f"note_ver_{radar_country}_{idx}"
+                            if note_ver_key not in st.session_state:
+                                st.session_state[note_ver_key] = 0
+
                             user_note_key = f"user_note_{radar_country}_{idx}"
                             if user_note_key not in st.session_state:
                                 st.session_state[user_note_key] = ""
@@ -19399,6 +19441,7 @@ elif active_view == "🛃 Market Intelligence & Compare":
                                 if st.button("📄 Klinik Whitepaper (Executive Brief)", key=f"chip_wp_{radar_country}_{idx}", use_container_width=True):
                                     target_wp_text = "you have to add the ESHRE guidline for the AOA and electrical activation. Also add the Klinik Whitepaper (Executive Scientific Brief)"
                                     st.session_state[user_note_key] = target_wp_text
+                                    st.session_state[note_ver_key] = st.session_state.get(note_ver_key, 0) + 1
                                     clear_pitch_cache_for_target(radar_country, idx)
                                     p_subj_gen, p_body_gen = build_executive_pitch(p, radar_country, strat_mode, target_wp_text, eff_selected_lang)
                                     st.session_state[pitch_state_key] = (p_subj_gen, p_body_gen)
@@ -19408,6 +19451,7 @@ elif active_view == "🛃 Market Intelligence & Compare":
                                 if st.button("📚 ESHRE Guideline & AOA Kanıtı", key=f"chip_eshre_guide_{radar_country}_{idx}", use_container_width=True):
                                     target_eshre_text = "ESHRE Good Practice Guidelines uyumlu kimyasalsız elektriksel oosit aktivasyonu (AOA) ve TFF vakalarında %79.4 başarı kanıtlarımızı vurgula."
                                     st.session_state[user_note_key] = target_eshre_text
+                                    st.session_state[note_ver_key] = st.session_state.get(note_ver_key, 0) + 1
                                     clear_pitch_cache_for_target(radar_country, idx)
                                     p_subj_gen, p_body_gen = build_executive_pitch(p, radar_country, strat_mode, target_eshre_text, eff_selected_lang)
                                     st.session_state[pitch_state_key] = (p_subj_gen, p_body_gen)
@@ -19417,6 +19461,7 @@ elif active_view == "🛃 Market Intelligence & Compare":
                                 if st.button("⚡ %10 Filo İndirimi & Konsinye", key=f"chip_disc_{radar_country}_{idx}", use_container_width=True):
                                     target_disc_text = "Kurumunuza 3+ cihaz alımında %10 kurumsal filo indirimi ve yıllık 200 kutu Z-Dish sarf taahhüdü durumunda özel birim fiyat avantajı teklif ediyoruz."
                                     st.session_state[user_note_key] = target_disc_text
+                                    st.session_state[note_ver_key] = st.session_state.get(note_ver_key, 0) + 1
                                     clear_pitch_cache_for_target(radar_country, idx)
                                     p_subj_gen, p_body_gen = build_executive_pitch(p, radar_country, strat_mode, target_disc_text, eff_selected_lang)
                                     st.session_state[pitch_state_key] = (p_subj_gen, p_body_gen)
@@ -19429,6 +19474,7 @@ elif active_view == "🛃 Market Intelligence & Compare":
                                 if st.button("🏛️ ESHRE Stand Daveti", key=f"chip_eshre_{radar_country}_{idx}", use_container_width=True):
                                     target_cong_text = "2027 ESHRE kongresinde ZEUS standımızda kıdemli ekibinizi VIP olarak ağırlamaktan ve vaka çalıştayımızı birlikte gerçekleştirmekten onur duyarız."
                                     st.session_state[user_note_key] = target_cong_text
+                                    st.session_state[note_ver_key] = st.session_state.get(note_ver_key, 0) + 1
                                     clear_pitch_cache_for_target(radar_country, idx)
                                     p_subj_gen, p_body_gen = build_executive_pitch(p, radar_country, strat_mode, target_cong_text, eff_selected_lang)
                                     st.session_state[pitch_state_key] = (p_subj_gen, p_body_gen)
@@ -19438,6 +19484,7 @@ elif active_view == "🛃 Market Intelligence & Compare":
                                 if st.button("🔬 %79.4 TFF Başarı Verisi", key=f"chip_tff_{radar_country}_{idx}", use_container_width=True):
                                     target_tff_text = "TFF ve globozoospermi vakalarında %79.37 Grade I-II kaliteli embriyo gelişimini ve Tanaka et al. 90 ROSI bebeği klinik kanıtlarımızı özellikle vurgulamak istiyoruz."
                                     st.session_state[user_note_key] = target_tff_text
+                                    st.session_state[note_ver_key] = st.session_state.get(note_ver_key, 0) + 1
                                     clear_pitch_cache_for_target(radar_country, idx)
                                     p_subj_gen, p_body_gen = build_executive_pitch(p, radar_country, strat_mode, target_tff_text, eff_selected_lang)
                                     st.session_state[pitch_state_key] = (p_subj_gen, p_body_gen)
@@ -19447,6 +19494,7 @@ elif active_view == "🛃 Market Intelligence & Compare":
                                 if st.button("🧪 Non-Toksik AOA", key=f"chip_chem_{radar_country}_{idx}", use_container_width=True):
                                     target_chem_text = "Toksik kimyasal kalsiyum ionoforlarına (A23187) kıyasla tamamen kimyasalsız ve güvenli elektriksel oosit aktivasyonu sağladığımızı belirtiyoruz."
                                     st.session_state[user_note_key] = target_chem_text
+                                    st.session_state[note_ver_key] = st.session_state.get(note_ver_key, 0) + 1
                                     clear_pitch_cache_for_target(radar_country, idx)
                                     p_subj_gen, p_body_gen = build_executive_pitch(p, radar_country, strat_mode, target_chem_text, eff_selected_lang)
                                     st.session_state[pitch_state_key] = (p_subj_gen, p_body_gen)
@@ -19455,11 +19503,12 @@ elif active_view == "🛃 Market Intelligence & Compare":
 
                             c_box_col1, c_box_col2 = st.columns([3.0, 1.0])
                             with c_box_col1:
+                                curr_note_ver = st.session_state.get(note_ver_key, 0)
                                 user_custom_note = st.text_area(
                                     "Yorumunuz:",
                                     value=st.session_state.get(user_note_key, ""),
                                     placeholder="Örn: ESHRE kongresinde standımıza VIP ağırlama teklif et, 3 cihaz alımına %10 filo indirimi ve 200 kutu Z-Dish taahhüdü öner, CE belgemizi ve %79.4 TFF başarı oranımızı vurgula...",
-                                    key=f"user_note_input_{radar_country}_{idx}",
+                                    key=f"user_note_input_{radar_country}_{idx}_{curr_note_ver}",
                                     height=75,
                                     label_visibility="collapsed"
                                 )
@@ -19468,9 +19517,19 @@ elif active_view == "🛃 Market Intelligence & Compare":
                                 st.write("")
                                 ai_gen_btn = st.button("🚀 Yorumuma Göre Maili Oluştur", key=f"ai_btn_{radar_country}_{idx}", type="primary", use_container_width=True)
 
+                            # Auto-sync pitch if user edited their note in the text area
+                            last_rendered_note_key = f"last_note_{radar_country}_{idx}_{strat_mode}_{eff_selected_lang}"
+                            if user_custom_note.strip() != st.session_state.get(last_rendered_note_key, "").strip():
+                                st.session_state[last_rendered_note_key] = user_custom_note.strip()
+                                p_subj_dyn, p_body_dyn = build_executive_pitch(p, radar_country, strat_mode, user_custom_note, eff_selected_lang)
+                                st.session_state[pitch_state_key] = (p_subj_dyn, p_body_dyn)
+                                st.session_state[pitch_ver_key] = st.session_state.get(pitch_ver_key, 0) + 1
+
                             if ai_gen_btn:
                                 clear_pitch_cache_for_target(radar_country, idx)
-                                active_api_key = os.environ.get("GEMINI_API_KEY", "")
+                                st.session_state[user_note_key] = user_custom_note
+                                st.session_state[last_rendered_note_key] = user_custom_note.strip()
+                                active_api_key = get_gemini_api_key()
                                 gen_success = False
                                 if active_api_key:
                                     try:
@@ -19504,9 +19563,10 @@ Hedef Dil: {target_lang_full}
 
 KRİTİK KURALLAR:
 1. DİL KURALI: Mektup ve konu başlığı KESİNLİKLE {target_lang_full} dilinde yazılmalıdır!
-2. ESHRE GUIDELINE & KLİNİK WHITEPAPER: Eğer yönetici yorumunda ESHRE Guideline veya Klinik Whitepaper talep ediliyorsa, mektubun gövdesine ESHRE AOA kılavuz uyumunu ve ekli 1 sayfalık Klinik Whitepaper (Executive Scientific Brief) detaylarını (%82.3 döllenme, 2.2 kat blastosist artışı, MEA >%80, CE Class IIa) profesyonelce ekle!
-3. TEKNOLOJİ DOĞRULUĞU: ZEUS Pulse Stimulator Piezo-ICSI DEĞİLDİR! Elektriksel oosit aktivasyon (AOA - The Spark of Life) sistemidir.
-4. CE BELGELENDİRME: Asla "MDR" yazma! Yalnızca "CE Sertifikalı" / "CE Certified" olarak belirt.
+2. YÖNETİCİ TALİMATI & ÖZEL NOT: Yönetici tarafından yazılan "{user_custom_note}" talimatını mektubun en can alıcı noktasına resmi ve etkileyici bir madde / teklif şartı olarak ekle!
+3. ESHRE GUIDELINE & KLİNİK WHITEPAPER: Eğer yönetici yorumunda ESHRE Guideline veya Klinik Whitepaper talep ediliyorsa, mektubun gövdesine ESHRE AOA kılavuz uyumunu ve ekli 1 sayfalık Klinik Whitepaper (Executive Scientific Brief) detaylarını (%82.3 döllenme, 2.2 kat blastosist artışı, MEA >%80, CE Class IIa) profesyonelce ekle!
+4. TEKNOLOJİ DOĞRULUĞU: ZEUS Pulse Stimulator Piezo-ICSI DEĞİLDİR! Elektriksel oosit aktivasyon (AOA - The Spark of Life) sistemidir.
+5. CE BELGELENDİRME: Asla "MDR" yazma! Yalnızca "CE Sertifikalı" / "CE Certified" olarak belirt.
 
 Çıktıyı tam olarak şu formatta ver:
 SUBJECT: [Konu başlığı]
