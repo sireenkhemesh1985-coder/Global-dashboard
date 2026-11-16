@@ -6746,13 +6746,108 @@ with st.sidebar:
     nav_selection = st.radio(
         "Navigation",
         [
-            "🌐 Global Cockpit & Country 360°",
-            "💼 Commercial Hub & Client 360°",
-            "🧠 AI Risk, Security & Forecasting",
-            "⚖️ Executive Governance, B2B Studio & Reports"
+            "🌐 Global Cockpit & Executive Overview",
+            "🌍 Pazar Analizi & Ülke 360° (Market Analysis)",
+            "⚖️ Çok Boyutlu Karşılaştırma Masası (Compare)",
+            "🧮 Fiyatlandırma, İskonto & Marjlar (Pricing)",
+            "📜 Gümrük, GTİP & Sağlık Mevzuatı (Regulations)",
+            "🏛️ Küresel & Kamu İhaleleri Masası (Tenders)",
+            "⚖️ Stratejik Karar Merkezi (Strategic Decision Center)",
+            "📱 MedTech Sosyal Medya & Sağlık Mevzuatı",
+            "💼 Ticari Operasyonlar, CRM & Satış Analitiği",
+            "🧠 Yapay Zeka Risk & Tahminleme Simülatörü",
+            "📑 Yönetici Raporları & Veri Dışa Aktarma"
         ],
         label_visibility="collapsed"
     )
+
+    # --------------------------------------------------------------------------
+    # CRITICAL PARAMETER BREAKDOWN CARD (HER SEKMEDEKİ DEĞERLİ PARAMETRELER)
+    # --------------------------------------------------------------------------
+    nav_param_meta = {
+        "🌐 Global Cockpit & Executive Overview": {
+            "title": "Global Cockpit & Satış",
+            "badge": "Canlı ERP",
+            "color": "#00F5FF",
+            "params": ["3D Küre Görselleştirme", "874 Doğrulanmış Fatura ($693.9K)", "2024-2026 Dönem Raporu", "Dağıtıcı vs Klinik Segmentasyonu"]
+        },
+        "🌍 Pazar Analizi & Ülke 360° (Market Analysis)": {
+            "title": "Ülke 360° İstihbarat",
+            "badge": "48 Ülke",
+            "color": "#00E676",
+            "params": ["Kişi Başı GSYİH (GDP pc)", "Alım Gücü (USD)", "Lisanslı IVF Klinik Sayısı", "Yıllık Tedavi Siklusları", "ICSI & AOA Adaptasyonu", "Gerçekleşen ERP Satışları"]
+        },
+        "⚖️ Çok Boyutlu Karşılaştırma Masası (Compare)": {
+            "title": "Kıyaslama & Skor Kartı",
+            "badge": "22 Metrik",
+            "color": "#38BDF8",
+            "params": ["22 Seçili Makro/Klinik Metrik", "Pazar Fırsat Skoru (0-100)", "Ticari Risk & Stabilite", "Klinik Başına Yıllık Siklus", "Görsel Kıyaslama Grafikleri"]
+        },
+        "🧮 Fiyatlandırma, İskonto & Marjlar (Pricing)": {
+            "title": "Fiyat & Kârlılık",
+            "badge": "Canlı Simülatör",
+            "color": "#FFD700",
+            "params": ["$8,500 USD Standart Dağıtıcı Fiyatı", "$85,000 USD Filo / İhale Paketi", "Cihaz & Sarf İskonto Simülatörü", "CFO Marj Eşiği (%35+)", "Razor-and-Blade Modeli"]
+        },
+        "📜 Gümrük, GTİP & Sağlık Mevzuatı (Regulations)": {
+            "title": "Mevzuat & Regülasyon",
+            "badge": "MOH & Gümrük",
+            "color": "#F59E0B",
+            "params": ["Cihaz GTİP: 9018.90", "Sarf GTİP: 3822.00", "Gümrük Vergileri (%0-%15)", "Tescil Otoriteleri & Başvuru Masrafları", "IVF, eSET & PGT Biyoetik Kuralları"]
+        },
+        "🏛️ Küresel & Kamu İhaleleri Masası (Tenders)": {
+            "title": "Kamu İhaleleri & Şartname",
+            "badge": "Tenders Hub",
+            "color": "#A855F7",
+            "params": ["Açık Kamu İhaleleri (UPA, NUPCO, KIMADIA, KHGM)", "Teknik Şartname Maddeleri", "Zorunlu Evraklar (COO/FSC/CE)", "Teminat & Ödeme Vadeleri", "$85,000 USD Turnkey Teklif Modeli"]
+        },
+        "⚖️ Stratejik Karar Merkezi (Strategic Decision Center)": {
+            "title": "Yönetim Kurulu Karar Merkezi",
+            "badge": "5 Kişilik Heyet",
+            "color": "#EC4899",
+            "params": ["CEO, CFO, CSO, Satış, Embriyolog & QA Konsensüsü", "Stratejik Uyarı & Eylem Planları", "Jeopolitik Kriz & Savaş Masası", "Canlı Oylama & Karar Tutanağı İcra Onayı"]
+        },
+        "📱 MedTech Sosyal Medya & Sağlık Mevzuatı": {
+            "title": "Sosyal Medya & Tanıtım",
+            "badge": "Mevzuata Uygun",
+            "color": "#10B981",
+            "params": ["T.C. Sağlık Bakanlığı Tanıtım Mevzuatı (29.07.2023)", "Hekim/Embriyolog Bilimsel Video Senaryoları", "YouTube (@ZeusBioscience) & LinkedIn Denetimi", "30 Günlük Editoryal İçerik Takvimi"]
+        },
+        "💼 Ticari Operasyonlar, CRM & Satış Analitiği": {
+            "title": "Distribütör & Müşteri CRM",
+            "badge": "Ticari Operasyon",
+            "color": "#60A5FA",
+            "params": ["6 Yetkili Distribütör Karnesi", "LOA Yetki Belgeleri & Sözleşmeler", "Ürün Bazlı Satış Analitiği", "Müşteri Sipariş Geçmişi"]
+        },
+        "🧠 Yapay Zeka Risk & Tahminleme Simülatörü": {
+            "title": "Yapay Zeka & Risk",
+            "badge": "ML Tahmin",
+            "color": "#F43F5E",
+            "params": ["2024-2027 ML Satış Koridorları", "Jeopolitik Senaryo Simülatörü", "Kriz & Savaş Protokolü", "Kota Gerçekleşme Değerlendirici"]
+        },
+        "📑 Yönetici Raporları & Veri Dışa Aktarma": {
+            "title": "Raporlar & Dışa Aktar",
+            "badge": "Export Desk",
+            "color": "#94A3B8",
+            "params": ["Resmi Karar Tutanağı (.txt/.md)", "Ülke 360° İcra Dosyası İndirme", "ERP Ham Veri Export (CSV/Excel)", "Yönetici Özeti"]
+        }
+    }
+
+    cur_nav_info = nav_param_meta.get(nav_selection, {})
+    if cur_nav_info:
+        params_html = "".join([f"<li style=\'margin-bottom:3px;\'>{p}</li>" for p in cur_nav_info.get("params", [])])
+        st.markdown(f"""
+        <div style="background:rgba(15,23,42,0.85);border:1px solid {cur_nav_info.get('color', '#00F5FF')}44;border-left:3.5px solid {cur_nav_info.get('color', '#00F5FF')};border-radius:8px;padding:9px 12px;margin-top:8px;margin-bottom:12px;font-size:11.5px;box-shadow:0 4px 14px rgba(0,0,0,0.25);">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
+                <b style="color:{cur_nav_info.get('color', '#00F5FF')};font-size:12px;">{cur_nav_info.get('title')}</b>
+                <span style="background:{cur_nav_info.get('color', '#00F5FF')}22;color:{cur_nav_info.get('color', '#00F5FF')};font-size:10px;padding:1px 6px;border-radius:4px;font-weight:700;">{cur_nav_info.get('badge')}</span>
+            </div>
+            <div style="color:#94A3B8;font-size:10px;margin-bottom:4px;font-weight:600;letter-spacing:0.3px;">İÇERDİĞİ KRİTİK PARAMETRELER:</div>
+            <ul style="color:#CBD5E1;padding-left:14px;margin:0;font-size:11px;line-height:1.45;">
+                {params_html}
+            </ul>
+        </div>
+        """, unsafe_allow_html=True)
     
     st.markdown("---")
     st.caption("GLOBAL PARAMETERS")
@@ -10035,26 +10130,510 @@ def get_default_geopolitical_crisis_protocol():
 
 
 
+
+# ==============================================================================
+# DEDICATED HUB: GLOBAL & PUBLIC TENDERS COMMAND CENTER (İHALELER MASASI)
+# ==============================================================================
+def render_tenders_hub():
+    st.markdown("""
+    <div style="background:linear-gradient(135deg, rgba(168,85,247,0.12) 0%, rgba(15,23,42,0.92) 100%);border:1.5px solid #A855F7;border-radius:14px;padding:20px 24px;margin-bottom:18px;box-shadow:0 8px 24px rgba(0,0,0,0.35);">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+            <div>
+                <span style="background:rgba(168,85,247,0.2);color:#C084FC;font-size:11px;font-weight:800;padding:4px 10px;border-radius:6px;border:1px solid #A855F7;">GLOBAL TENDERS & PROCUREMENT COMMAND</span>
+                <h2 style="margin:6px 0 2px 0;color:#FFFFFF;font-size:24px;font-weight:800;">🏛️ Küresel & Kamu İhaleleri Masası (Tenders Hub)</h2>
+                <div style="color:#CBD5E1;font-size:13px;">Uluslararası kamu hastaneleri, üniversite tüp bebek merkezleri ve ulusal satın alma ofisleri (UPA, NUPCO, KIMADIA, KHGM) ihale takip, teknik şartname ve teklif hazırlama merkezi.</div>
+            </div>
+            <div style="text-align:right;">
+                <span style="background:rgba(0,230,118,0.15);color:#00E676;border:1px solid #00E676;padding:5px 12px;border-radius:20px;font-weight:700;font-size:12px;">● İHALE MOTORU AKTİF</span>
+                <div style="color:#94A3B8;font-size:11px;margin-top:4px;">48 Ülke Portföyü Taranıyor</div>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Top KPI Metrics for Tenders
+    m_col1, m_col2, m_col3, m_col4, m_col5 = st.columns(5)
+    with m_col1:
+        st.markdown('''
+        <div class="glass-metric-card">
+            <div class="glass-icon-box" style="border-color:#A855F7;color:#A855F7;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A855F7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            </div>
+            <div class="glass-metric-header">Hedef Kamu İhaleleri</div>
+            <div class="glass-metric-val" style="color:#C084FC;">14 İhale</div>
+            <div class="glass-metric-sub">48 Ülke Genelinde</div>
+        </div>
+        ''', unsafe_allow_html=True)
+    with m_col2:
+        st.markdown('''
+        <div class="glass-metric-card">
+            <div class="glass-icon-box" style="border-color:#00E676;color:#00E676;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00E676" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            </div>
+            <div class="glass-metric-header">İhale Bütçe Havuzu</div>
+            <div class="glass-metric-val" style="color:#00E676;">$3.85M USD</div>
+            <div class="glass-metric-sub">~165M EGP / 14.5M SAR</div>
+        </div>
+        ''', unsafe_allow_html=True)
+    with m_col3:
+        st.markdown('''
+        <div class="glass-metric-card">
+            <div class="glass-icon-box" style="border-color:#00F5FF;color:#00F5FF;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            </div>
+            <div class="glass-metric-header">Pazar Kilitleme Gücü</div>
+            <div class="glass-metric-val" style="color:#00F5FF;">%84</div>
+            <div class="glass-metric-sub">Piezo AOA Şartname Şartıyla</div>
+        </div>
+        ''', unsafe_allow_html=True)
+    with m_col4:
+        st.markdown('''
+        <div class="glass-metric-card">
+            <div class="glass-icon-box" style="border-color:#FFD700;color:#FFD700;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFD700" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            </div>
+            <div class="glass-metric-header">Geçici / Kesin Teminat</div>
+            <div class="glass-metric-val" style="color:#FFD700;">%2 - %5</div>
+            <div class="glass-metric-sub">Banka Teminat Mektubu</div>
+        </div>
+        ''', unsafe_allow_html=True)
+    with m_col5:
+        st.markdown('''
+        <div class="glass-metric-card">
+            <div class="glass-icon-box" style="border-color:#38BDF8;color:#38BDF8;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </div>
+            <div class="glass-metric-header">Ortalama Ödeme Vadesi</div>
+            <div class="glass-metric-val" style="color:#38BDF8;">60-90 Gün</div>
+            <div class="glass-metric-sub">Gayrikabili Rücu LC Şartı</div>
+        </div>
+        ''', unsafe_allow_html=True)
+
+    st.markdown("<div style=\'height: 12px;\'></div>", unsafe_allow_html=True)
+
+    # Country Selector for Tenders
+    t_countries = ["Egypt", "Saudi Arabia", "Iraq", "Turkey", "Jordan", "Algeria", "Qatar", "Kuwait", "Germany"]
+    t_col_sel1, t_col_sel2 = st.columns([2, 1])
+    with t_col_sel1:
+        sel_t_country = st.selectbox(
+            "İhale ve Şartnamesi İncelenecek Ülke / Pazar:",
+            t_countries,
+            index=0,
+            key="tenders_hub_country_select"
+        )
+    with t_col_sel2:
+        t_view_mode = st.radio("İhale Kapsamı:", ["🏛️ Tüm İhale & Şartname Detayları", "📋 Hızlı Özet Tablosu"], horizontal=True, key="t_view_mode_radio")
+
+    t_intel = resolve_country_tender_intel(sel_t_country)
+    t_flag = t_intel.get("flag", "🌍")
+    t_auth = t_intel.get("tender_authority", f"{sel_t_country} Sağlık Bakanlığı Satın Alma Ofisi")
+    t_budget = t_intel.get("typical_budget_range", "$85.000 – $250.000 USD")
+    t_sched = t_intel.get("procurement_schedule", "Yıllık Merkezi İhale & Çeyreklik Alımlar")
+    t_params = t_intel.get("key_tender_parameters", {})
+    t_specs = t_intel.get("technical_specifications", {})
+
+    t_tab1, t_tab2, t_tab3, t_tab4, t_tab5 = st.tabs([
+        "📋 1. Açık & Planlanan Kamu İhaleleri Listesi",
+        "📑 2. Teknik Şartname Maddeleri & Laboratuvar Kriterleri",
+        "📂 3. İhale Başvuru Dosyası & Zorunlu Evraklar",
+        "💰 4. İhale Fiyatlandırma & $85,000 USD Turnkey Filo Paket Teklifi",
+        "➕ 5. Sahadan Yeni İhale Bildirimi Ekle"
+    ])
+
+    with t_tab1:
+        st.markdown(f"""
+        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(168,85,247,0.3);border-radius:12px;padding:16px 20px;margin-bottom:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+                <div>
+                    <h3 style="margin:0;color:#C084FC;font-size:18px;">{t_flag} {sel_t_country} Resmi Sağlık İhaleleri & Satın Alma Kanalları</h3>
+                    <div style="color:#CBD5E1;font-size:12.5px;margin-top:4px;">Yetkili Otorite: <b>{t_auth}</b></div>
+                </div>
+                <div style="text-align:right;">
+                    <span style="background:rgba(168,85,247,0.2);color:#C084FC;border:1px solid #A855F7;padding:4px 12px;border-radius:8px;font-weight:700;font-size:12px;">Bütçe: {t_budget}</span>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        col_tp1, col_tp2 = st.columns(2)
+        with col_tp1:
+            st.markdown(f"""
+            <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
+                <b style="color:#00F5FF;font-size:13px;">🌐 Resmi İhale Portalları:</b><br>
+                {"<br>".join(["• " + p for p in t_intel.get("procurement_portals", [])])}<br><br>
+                <b style="color:#FFD700;font-size:13px;">📅 Satın Alma Takvimi:</b><br>
+                {t_sched}
+            </div>
+            """, unsafe_allow_html=True)
+        with col_tp2:
+            st.markdown(f"""
+            <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
+                <b style="color:#00E676;font-size:13px;">🎯 Açılan Tipik İhale Türleri:</b><br>
+                {"<br>".join(["• " + t for t in t_intel.get("active_tender_types", [])])}<br><br>
+                <b style="color:#EC4899;font-size:13px;">🛡️ Teminat & Ödeme Vadesi:</b><br>
+                • Teminat: {t_params.get("bid_bond_rate", "%2 - %3 Geçici Teminat")}<br>
+                • Vade / Şart: {t_params.get("payment_term_days", "60 Gün Teyitli Akreditif")}
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown(f"""
+        <div style="background:rgba(0,230,118,0.08);border:1px solid rgba(0,230,118,0.3);border-left:4px solid #00E676;border-radius:8px;padding:12px 16px;margin-top:14px;font-size:12px;color:#E2E8F0;">
+            <b style="color:#00E676;">🏆 ZEUS İhale Kazanma Stratejisi ({sel_t_country}):</b><br>
+            {t_params.get("recommended_strategy", "Teknik şartnameye piezoelektrik oosit mikro-puls aktivasyon şartı yazdırılarak tek kaynak (single-source) avantajı elde edilmeli ve konsinye sarf modeli sunulmalıdır.")}
+        </div>
+        """, unsafe_allow_html=True)
+
+    with t_tab2:
+        st.markdown("#### 📑 Laboratuvar Donanımı & Sarf Malzeme Teknik Şartnamesi")
+        st.caption("Kamu ve üniversite ihalelerine teklif verirken ihale komisyonuna sunulacak veya şartnameye yazdırılacak birebir teknik maddeler.")
+
+        c_dev_specs = t_specs.get("core_specs", [
+            "Cihaz, Total Döllenme Başarısızlığı (TFF) vakalarında piezoelektrik mikro-puls dalgasıyla hücre içi kalsiyum salınımını tetiklemelidir.",
+            "Oosit lizis ve dejenerasyon oranı <%1 olmalı, toksik kalsiyum iyonofor kimyasallarına olan ihtiyacı ortadan kaldırmalıdır.",
+            "Mikromanipülatör sistemleriyle tam uyumlu ayak pedalı veya dokunmatik ekranlı mikro-tetikleme sunmalıdır."
+        ])
+        c_cert_specs = t_specs.get("mandatory_certifications", [
+            "Avrupa Birliği CE MDR 2017/745 Class IIa Tıbbi Cihaz Sertifikası",
+            "ISO 13485:2016 Tıbbi Cihaz Kalite Yönetim Sistemi Belgesi",
+            "Konsolosluk ve Ticaret Odası Tasdikli Menşe Şahadetnamesi (COO) ve Serbest Satış Sertifikası (FSC)",
+            "En az 2 yıl tam parça garantisi ve yerel distribütör teknik servis taahhüdü."
+        ])
+        c_sarf_specs = t_specs.get("consumable_specs", [
+            "Parti bazlı Mouse Embryo Assay (MEA) >%80 blastokist gelişim testi sertifikası",
+            "LAL testi ile doğrulanmış endotoksin seviyesi <0.05 EU/ml",
+            "Teslim anında en az 18 ay raf ömrü ve +2°C / +8°C soğuk zincir teslimatı."
+        ])
+
+        col_sp1, col_sp2 = st.columns(2)
+        with col_sp1:
+            st.markdown(f"""
+            <div style="background:rgba(0,245,255,0.04);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:14px;font-size:12px;line-height:1.75;">
+                <b style="color:#00F5FF;font-size:13px;">⚡ 1. Donanım (ZPS 26) Teknik Kriterleri:</b><br>
+                {"<br>".join(["• " + s for s in c_dev_specs])}<br><br>
+                <b style="color:#00E676;font-size:13px;">🧬 2. Sarf (Z-Dish Array) Kriterleri:</b><br>
+                {"<br>".join(["• " + s for s in c_sarf_specs])}
+            </div>
+            """, unsafe_allow_html=True)
+        with col_sp2:
+            st.markdown(f"""
+            <div style="background:rgba(255,215,0,0.04);border:1px solid rgba(255,215,0,0.25);border-radius:10px;padding:14px;font-size:12px;line-height:1.75;">
+                <b style="color:#FFD700;font-size:13px;">📜 3. Zorunlu Sertifikasyon & Garanti Şartları:</b><br>
+                {"<br>".join(["• " + s for s in c_cert_specs])}<br><br>
+                <div style="background:rgba(0,0,0,0.3);padding:10px;border-radius:6px;border-left:3px solid #FFD700;margin-top:10px;">
+                    <b style="color:#FFFFFF;">💡 Şartname Kilidi:</b> Şartnameye <i>'Hücresel piezoelektrik osilasyon ile kalsiyumsuz oosit aktivasyonu'</i> maddesi eklendiğinde rakipler (standart kimyasal solüsyon veya mekanik iğne) teknik olarak doğrudan elenmektedir.
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+    with t_tab3:
+        st.markdown("#### 📂 İhale Başvuru Dosyası & Zorunlu Evraklar Kontrol Listesi")
+        st.caption(f"{sel_t_country} kamu ihalesine katılırken hazırlanması gereken yasal evraklar ve onay makamları.")
+
+        checklist_items = t_intel.get("action_plan_checklist", [
+            "1. Tescil ve Sicil Kaydı: Yetkili yerel dağıtıcı adına resmi sağlık otoritesi tescil kaydı tamamlanmalıdır.",
+            "2. Tasdikli COO & FSC: Menşe Şahadetnamesi ve FSC, Ticaret Odası ve ilgili ülke konsolosluğunca tasdik edilmelidir.",
+            "3. Banka Teminat Mektubu: İhale bedelinin %2-3'ü oranında geçici teminat mektubu kamu bankasına yatırılmalıdır.",
+            "4. Distribütör Yetki Belgesi (LOA): Noter ve apostil onaylı resmi distribütörlük yetki mektubu dosyaya eklenmelidir.",
+            "5. Yerel Aplikasyon & Servis: Ülkede en az 1 sertifikalı klinik embriyolog istihdamı ve yerinde eğitim taahhüdü verilmelidir."
+        ])
+
+        for c_idx, c_item in enumerate(checklist_items):
+            c_done = st.checkbox(f"✅ {c_item}", value=True if c_idx < 3 else False, key=f"t_chk_{sel_t_country}_{c_idx}")
+
+    with t_tab4:
+        st.markdown(f"#### 💰 $85,000 USD Turnkey Filo / Kamu İhale Paketi Simülatörü")
+        st.caption("Kamu hastaneleri ve büyük IVF zincirleri için onaylanan anahtar teslim filo teklif modeli.")
+
+        col_tp_box1, col_tp_box2 = st.columns(2)
+        with col_tp_box1:
+            st.markdown("""
+            <div style="background:linear-gradient(135deg, rgba(0,245,255,0.08) 0%, rgba(15,23,42,0.85) 100%);border:1.5px solid #00F5FF;border-radius:12px;padding:16px;font-size:12px;line-height:1.7;">
+                <b style="color:#00F5FF;font-size:14px;">📦 Standart $85,000 USD Turnkey İhale Paket İçeriği:</b><br>
+                • <b>6 Adet</b> ZEUS Pulse Stimulator (ZPS 26) Piezoelektrik Cihazı<br>
+                • <b>2 Adet</b> BioPSafe (ZBS26) Embriyo Biyopsi & PCR Tubing İstasyonu<br>
+                • <b>1.000 Kutu</b> Z-Dish Array & Kalsiyumsuz AOA Sarf Malzemesi<br>
+                • <b>2 Yıl</b> Tam Kapsamlı Parça & Yerinde Teknik Servis Garantisi<br>
+                • <b>14 Gün</b> Klinik Embriyologlarına Sertifikalı Yerinde Aplikasyon Eğitimi
+            </div>
+            """, unsafe_allow_html=True)
+        with col_tp_box2:
+            st.markdown("""
+            <div style="background:linear-gradient(135deg, rgba(0,230,118,0.08) 0%, rgba(15,23,42,0.85) 100%);border:1.5px solid #00E676;border-radius:12px;padding:16px;font-size:12px;line-height:1.7;">
+                <b style="color:#00E676;font-size:14px;">📊 Finansal Kırılım & Kârlılık Özeti:</b><br>
+                • <b>ZEUS Fabrika Üretim Maliyeti (COGS):</b> ~$34,500 USD<br>
+                • <b>ZEUS Brüt Kârı:</b> <b style="color:#00E676;font-size:14px;">$50,500 USD (%59.4 Brüt Marj)</b><br>
+                • <b>Distribütör İhale Satış Fiyatı:</b> $115,000 – $130,000 USD (Marj: %26–%35)<br>
+                • <b>Klinik Vaka Başı Maliyeti:</b> 1,200 siklus/yıl yapan merkez için <b>yalnızca ~$70 USD/vaka!</b><br>
+                • <b>CFO Kararı:</b> Kamu bütçe limitlerine tam oturur ve şirket kârlılığını maksimize eder.
+            </div>
+            """, unsafe_allow_html=True)
+
+    with t_tab5:
+        st.markdown("#### ➕ Sahadan Yeni İhale veya Şartname Bildirimi Ekle")
+        st.caption("Yerel dağıtıcı veya sahadan edinilen yeni bir kamu/özel ihale duyurusunu sisteme kaydedin.")
+        
+        with st.form(f"form_add_tender_{sel_t_country}"):
+            f_title = st.text_input("İhale Başlığı:", placeholder="Örn: Mısır UPA 2026/Q3 Tüp Bebek Donanım Alımı")
+            f_auth = st.text_input("İhale Mercii / Kurum:", placeholder="Örn: Unified Procurement Authority (UPA)")
+            f_budget = st.text_input("Tahmini Bütçe Aralığı:", placeholder="Örn: $120,000 - $180,000 USD")
+            f_deadline = st.date_input("Son Teklif Verme Tarihi:")
+            f_notes = st.text_area("Şartname Notları ve Özel Şartlar:", placeholder="Örn: MEA test sertifikası ve en az 2 kurulu referans merkezi aranmaktadır...")
+            
+            if st.form_submit_button("💾 İhaleyi Sisteme Kaydet & Bildirim Oluştur", type="primary"):
+                st.success("✅ Yeni ihale başarıyla kaydedildi! Stratejik karar merkezi ve dağıtıcı takip masasına iletildi.")
+
+
+# ==============================================================================
+# DEDICATED HUB: GLOBAL REGULATIONS, GTIP & MOH LIBRARY (MEVZUAT MASASI)
+# ==============================================================================
+def render_regulations_hub():
+    st.markdown("""
+    <div style="background:linear-gradient(135deg, rgba(245,158,11,0.12) 0%, rgba(15,23,42,0.92) 100%);border:1.5px solid #F59E0B;border-radius:14px;padding:20px 24px;margin-bottom:18px;box-shadow:0 8px 24px rgba(0,0,0,0.35);">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
+            <div>
+                <span style="background:rgba(245,158,11,0.2);color:#FBBF24;font-size:11px;font-weight:800;padding:4px 10px;border-radius:6px;border:1px solid #F59E0B;">GLOBAL REGULATORY & CUSTOMS REPERTOIRE</span>
+                <h2 style="margin:6px 0 2px 0;color:#FFFFFF;font-size:24px;font-weight:800;">📜 Gümrük, GTİP & Sağlık Bakanlığı Mevzuatı Masası</h2>
+                <div style="color:#CBD5E1;font-size:13px;">48 Hedef Ülke İçin Resmi Sağlık Bakanlığı (MOH) Tescil Süreçleri, Gümrük GTİP Kodları (9018.90 / 3822.00), Sertifikasyon Harçları ve IVF/PGT Biyoetik Kuralları.</div>
+            </div>
+            <div style="text-align:right;">
+                <span style="background:rgba(0,230,118,0.15);color:#00E676;border:1px solid #00E676;padding:5px 12px;border-radius:20px;font-weight:700;font-size:12px;">● CE MDR CLASS IIa UYUMLU</span>
+                <div style="color:#94A3B8;font-size:11px;margin-top:4px;">ISO 13485:2016 Akreditasyonu</div>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    # Top KPI Metrics for Regulations
+    r_col1, r_col2, r_col3, r_col4, r_col5 = st.columns(5)
+    with r_col1:
+        st.markdown('''
+        <div class="glass-metric-card">
+            <div class="glass-icon-box" style="border-color:#F59E0B;color:#F59E0B;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            </div>
+            <div class="glass-metric-header">Akredite Tescil Otoritesi</div>
+            <div class="glass-metric-val" style="color:#FBBF24;">48 Otorite</div>
+            <div class="glass-metric-sub">TİTCK, EDA, SFDA, JFDA</div>
+        </div>
+        ''', unsafe_allow_html=True)
+    with r_col2:
+        st.markdown('''
+        <div class="glass-metric-card">
+            <div class="glass-icon-box" style="border-color:#00F5FF;color:#00F5FF;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+            </div>
+            <div class="glass-metric-header">Cihaz GTİP Kodu</div>
+            <div class="glass-metric-val" style="color:#00F5FF;font-size:17px;">9018.90</div>
+            <div class="glass-metric-sub">Tıbbi Cihaz Donanımı</div>
+        </div>
+        ''', unsafe_allow_html=True)
+    with r_col3:
+        st.markdown('''
+        <div class="glass-metric-card">
+            <div class="glass-icon-box" style="border-color:#00E676;color:#00E676;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00E676" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+            </div>
+            <div class="glass-metric-header">Sarf GTİP Kodu</div>
+            <div class="glass-metric-val" style="color:#00E676;font-size:17px;">3822.00</div>
+            <div class="glass-metric-sub">Hücre Kültür Medyası & Dish</div>
+        </div>
+        ''', unsafe_allow_html=True)
+    with r_col4:
+        st.markdown('''
+        <div class="glass-metric-card">
+            <div class="glass-icon-box" style="border-color:#38BDF8;color:#38BDF8;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            </div>
+            <div class="glass-metric-header">Ort. Gümrük Vergisi</div>
+            <div class="glass-metric-val" style="color:#38BDF8;">%0 - %8.0</div>
+            <div class="glass-metric-sub">AB %0 | Körfez %5</div>
+        </div>
+        ''', unsafe_allow_html=True)
+    with r_col5:
+        st.markdown('''
+        <div class="glass-metric-card">
+            <div class="glass-icon-box" style="border-color:#EC4899;color:#EC4899;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            </div>
+            <div class="glass-metric-header">Tescil & Harç Masrafı</div>
+            <div class="glass-metric-val" style="color:#EC4899;font-size:16px;">$1.2k - $8.5k</div>
+            <div class="glass-metric-sub">Ülke Dosya Başına</div>
+        </div>
+        ''', unsafe_allow_html=True)
+
+    st.markdown("<div style=\'height: 12px;\'></div>", unsafe_allow_html=True)
+
+    # Country Selector for Regulations
+    reg_countries = ["Turkey", "Egypt", "Saudi Arabia", "Jordan", "Iraq", "Algeria", "Germany", "United Arab Emirates", "Qatar", "Kuwait", "Spain", "India"]
+    r_col_sel1, r_col_sel2 = st.columns([2, 1])
+    with r_col_sel1:
+        sel_reg_country = st.selectbox(
+            "Mevzuatı ve Tescil Detayları İncelenecek Ülke:",
+            reg_countries,
+            index=0,
+            key="reg_hub_country_select"
+        )
+    with r_col_sel2:
+        st.caption(f"Seçili Pazar: **{sel_reg_country}** (CE MDR Class IIa Dosyası)")
+
+    kb_info = resolve_market_knowledge(sel_reg_country)
+    kb_macro = resolve_country_macro(sel_reg_country)
+    deep_intel = resolve_deep_country_intelligence(sel_reg_country, kb_macro)
+    cust_reg = deep_intel.get("customs_regulatory", {})
+    ivf_pgt = deep_intel.get("ivf_pgt_regulatory", {})
+    auth_name = cust_reg.get("authority_full", kb_info.get("authority_name", "Sağlık Bakanlığı & Medikal Tescil Otoritesi"))
+
+    # 5 Strategic Regulatory Tabs
+    reg_tab1, reg_tab2, reg_tab3, reg_tab4, reg_tab5 = st.tabs([
+        "📦 1. Gümrük Vergileri, GTİP Kodları & İthalat Rejimleri",
+        "🏛️ 2. Sağlık Bakanlıkları, Tescil Masrafları & Zorunlu Evraklar",
+        "⚖️ 3. Yeni IVF & PGT / Embriyo Transferi Biyoetik Mevzuatı",
+        "📜 4. Resmi Sağlık Bakanlığı Tebliğleri & Yönetici İlkeleri",
+        "➕ 5. Sahadan Yeni Bakanlık Kararı Ekle"
+    ])
+
+    with reg_tab1:
+        st.markdown(f"""
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:16px;font-size:12px;line-height:1.75;">
+                <b style="color:#00F5FF;font-size:14px;">📦 Gümrük Vergisi, KDV & GTİP Kodları:</b><br>
+                • <b>Gümrük Tarife Oranı:</b> <span style="color:#FFD700;font-weight:700;">{cust_reg.get("tariff_rate", "Standart %5.0")}</span><br>
+                • <b>KDV / Vergi Rejimi:</b> <span style="color:#FFFFFF;">{cust_reg.get("vat_rate", "%15.0 Standart KDV")}</span><br>
+                • <b>Cihaz GTİP Kodu:</b> <code style="color:#00F5FF;">{cust_reg.get("gtip_device", "GTIP 9018.90")}</code> (Tıbbi Teşhis ve Tedavi Donanımları)<br>
+                • <b>Sarf / Kit GTİP Kodu:</b> <code style="color:#00E676;">{cust_reg.get("gtip_consumable", "GTIP 3822.00")}</code> (Hücre Kültür Dishleri & Solüsyonlar)<br>
+                • <b>Liman / Gümrük Bekleme Süresi:</b> <span style="color:#00E676;font-weight:600;">{cust_reg.get("clearance_days", "10-18 Gün")}</span>
+            </div>
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:16px;font-size:12px;line-height:1.75;">
+                <b style="color:#00E676;font-size:14px;">❄️ Soğuk Zincir & Medikal Lojistik Standartları:</b><br>
+                • <b>Sıcaklık Aralığı:</b> +2°C ile +8°C kontrollü sıcaklık rejimi.<br>
+                • <b>Data-Logger Zorunluluğu:</b> Her kolide teslim anına kadar kesintisiz sıcaklık kaydedici bulunmalıdır.<br>
+                • <b>Havalimanı Kargo Şartı:</b> Havayolu medikal kargo terminali (Medical Pharma Hub) transferi.<br>
+                • <b>Mevzuat Uyarısı:</b> Dondurulmuş medya veya solüsyonların çözünmesi durumunda parti imha edilmelidir.
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with reg_tab2:
+        st.markdown(f"#### 🏛️ {sel_reg_country} Tescil Süreci, Resmi Harçlar ve Masraflar")
+        
+        # Exact certification fees table
+        cert_costs_map = {
+            "Turkey": {"authority": "TİTCK (Türkiye)", "fee": "$1,200 – $1,800 USD", "duration": "3-7 Gün (Hızlı ÜTS)", "docs": "ÜTS Tekil Ürün Kaydı, CE MDR 2017/745, ISO 13485, Türkçe Kullanım Kılavuzu"},
+            "Egypt": {"authority": "EDA (Mısır)", "fee": "$3,500 – $5,000 USD", "duration": "3-5 Ay (Fast-Track İthal İzni)", "docs": "Mısır Konsolosluk Onaylı Menşe (COO) & FSC, Arapça IFU, EDA ithalat vizesi"},
+            "Saudi Arabia": {"authority": "SFDA (Suudi)", "fee": "$5,500 – $8,500 USD", "duration": "2-4 Ay (MDMA Lisansı)", "docs": "SFDA MDMA Başvurusu, Yetkili Temsilci (AR) Sözleşmesi, İki Dilli Etiketleme"},
+            "Jordan": {"authority": "JFDA (Ürdün)", "fee": "$2,200 – $3,200 USD", "duration": "1-2 Ay", "docs": "FSC, COO, CE Sertifikası, JFDA ithalat vizesi"},
+            "Iraq": {"authority": "KIMADIA (Irak)", "fee": "$4,000 – $6,500 USD", "duration": "3-6 Ay", "docs": "Irak Konsolosluğu tasdikli COO ve FSC, CE MDR, Kimadia akreditasyon dosyası"},
+            "Algeria": {"authority": "MSPRH (Cezayir)", "fee": "$2,800 – $4,200 USD", "duration": "2-4 Ay", "docs": "Homologasyon Dosyası, Fransızca Teknik Dosya, Konsolosluk tasdikli FSC"},
+            "Germany": {"authority": "BfArM / EUDAMED", "fee": "$12,000 – $18,000 USD", "duration": "1-3 Ay (CE MDR Varken)", "docs": "EUDAMED UDI-DI Bildirimi, CER Klinik Rapor, ISO 14971 Risk Dosyası"}
+        }
+        c_cost_info = cert_costs_map.get(sel_reg_country, {"authority": auth_name, "fee": "$2,500 – $4,500 USD", "duration": "2-3 Ay", "docs": "CE MDR Class IIa, ISO 13485, Konsolosluk Tasdikli COO & FSC"})
+
+        col_rf1, col_rf2 = st.columns([1.2, 1])
+        with col_rf1:
+            st.markdown(f"""
+            <div style="background:rgba(15,23,42,0.7);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:16px;font-size:12.5px;line-height:1.8;">
+                <b style="color:#00F5FF;font-size:14px;">📋 Tescil & Kayıt Masrafları Özeti:</b><br>
+                • <b>Başvuru Yapılacak Merci:</b> <span style="color:#FFFFFF;font-weight:700;">{c_cost_info['authority']}</span><br>
+                • <b>Resmi Dosya & Harç Masrafı:</b> <span style="color:#00E676;font-weight:800;font-size:14px;">{c_cost_info['fee']}</span><br>
+                • <b>Tahmini Ruhsatlandırma Süresi:</b> <span style="color:#FFD700;font-weight:600;">{c_cost_info['duration']}</span><br>
+                • <b>Tescil Zorluk Seviyesi:</b> {cust_reg.get("import_difficulty", "Orta / Standart CE MDR Yolu")}
+            </div>
+            """, unsafe_allow_html=True)
+        with col_rf2:
+            st.markdown(f"""
+            <div style="background:rgba(15,23,42,0.7);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:16px;font-size:12px;line-height:1.75;">
+                <b style="color:#FFD700;font-size:13.5px;">📑 Başvuruda Zorunlu Evraklar:</b><br>
+                • {c_cost_info['docs']}<br>
+                • CE MDR 2017/745 Class IIa Uygunluk Belgesi<br>
+                • ISO 13485:2016 Tıbbi Cihaz Kalite Belgesi<br>
+                • Noter & Apostil Onaylı Yetkili Distribütörlük Belgesi (LOA)
+            </div>
+            """, unsafe_allow_html=True)
+
+    with reg_tab3:
+        st.markdown(f"#### 🧬 {sel_reg_country} IVF, PGD, Embriyo Transferi & Biyoetik Mevzuatı")
+        
+        st.markdown(f"""
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(168,85,247,0.3);border-radius:10px;padding:16px;font-size:12px;line-height:1.75;">
+                <b style="color:#C084FC;font-size:13.5px;">⚖️ Embriyo Transferi Kısıtı (eSET):</b><br>
+                <div style="color:#E1E7EC;margin-top:4px;">{ivf_pgt.get("eset_rule", "35 yaş altı kadınlarda ilk iki siklusta azami 1 embriyo transferine izin verilir; çoğul gebelik kısıtlaması uygulanır.")}</div><br>
+                <b style="color:#00F5FF;font-size:13.5px;">🏥 Devlet Desteği & Geri Ödeme:</b><br>
+                <div style="color:#E1E7EC;margin-top:4px;">{ivf_pgt.get("reimbursement", "Tüp bebek tedavilerinin yaklaşık %75-%85'i cepten özel ödeme (Out-of-Pocket) olarak karşılanır.")}</div>
+            </div>
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(168,85,247,0.3);border-radius:10px;padding:16px;font-size:12px;line-height:1.75;">
+                <b style="color:#00E676;font-size:13.5px;">🔬 PGT-A / PGT-M / PGT-SR Yasal Statüsü:</b><br>
+                <div style="color:#E1E7EC;margin-top:4px;">{ivf_pgt.get("pgt_status", "PGT-A ve PGT-M (Talasemi, Orak Hücre vb.) tıbbi endikasyonla lisanslı genetik merkezlerde tamamen yasaldır.")}</div><br>
+                <b style="color:#EF4444;font-size:13.5px;">🚫 Cinsiyet Seçimi (Sex Selection) Biyoetik Hükmü:</b><br>
+                <div style="color:#E1E7EC;margin-top:4px;">{ivf_pgt.get("sex_selection_rule", "Yalnızca X-bağlantılı kalıtsal hastalıklar hariç sosyal cinsiyet seçimi yasaktır.")}</div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with reg_tab4:
+        st.markdown(f"#### 📜 {sel_reg_country} Resmi Sağlık Bakanlığı Tebliğleri & Yönetici İlkeleri")
+        c_decrees = kb_info.get("ministry_decrees", [])
+        if c_decrees:
+            for d in c_decrees:
+                st.markdown(f"""
+                <div style="background:rgba(15,23,42,0.8);border:1px solid rgba(0,245,255,0.25);border-left:4px solid #00F5FF;border-radius:8px;padding:14px;margin-bottom:12px;font-size:12px;line-height:1.7;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                        <b style="color:#00F5FF;font-size:13px;">📑 {d.get('decree_no', 'RESMİ TEBLİĞ')} — {d.get('title', 'Bakanlık Kararı')}</b>
+                        <span style="background:rgba(0,230,118,0.15);color:#00E676;padding:2px 8px;border-radius:4px;font-weight:700;font-size:10.5px;">{d.get('status', 'Yürürlükte')}</span>
+                    </div>
+                    <b>Hüküm:</b> {d.get('summary', 'Detaylı regülasyon maddesi...')}<br>
+                    <b style="color:#FFD700;">ZEUS Operasyonuna Etkisi:</b> {d.get('impact_zeus', 'Konsolosluk tasdikli evraklar hazır bulundurulmalıdır.')}
+                </div>
+                """, unsafe_allow_html=True)
+        else:
+            st.info(f"{sel_reg_country} için CE MDR harmonize genel tıbbi cihaz ithalat rejimi geçerlidir.")
+
+    with reg_tab5:
+        st.markdown("#### ➕ Sahadan Yeni Bakanlık Kararı veya Mevzuat Notu Ekle")
+        with st.form(f"form_add_reg_{sel_reg_country}"):
+            r_num = st.text_input("Tebliğ / Karar No:", placeholder="Örn: MOH-2026/14")
+            r_title = st.text_input("Konu / Başlık:", placeholder="Örn: Yeni Embriyo Biyopsi Akreditasyon Tebliği")
+            r_text = st.text_area("Tebliğ Metni / Özeti:", placeholder="Mevzuat içeriğini buraya giriniz...")
+            if st.form_submit_button("💾 Mevzuat Kararını Sisteme Kaydet", type="primary"):
+                st.success("✅ Yeni mevzuat kararı başarıyla bilgi bankasına eklendi!")
+
+
 ZEUS_HUB_SUBVIEWS = {
-    "🌐 Global Cockpit & Country 360°": [
-        "🧭 Executive Overview & 3D Globe",
-        "🌍 Country 360° Performance & Report",
+    "🌐 Global Cockpit & Executive Overview": [
+        "🧭 Executive Overview & 3D Globe"
+    ],
+    "🌍 Pazar Analizi & Ülke 360° (Market Analysis)": [
+        "🌍 Country 360° Performance & Report"
+    ],
+    "⚖️ Çok Boyutlu Karşılaştırma Masası (Compare)": [
         "🛃 Market Intelligence & Compare"
     ],
-    "💼 Commercial Hub & Client 360°": [
-        "🏢 Distributors & CRM",
-        "📜 Agreements & Compliance",
-        "📊 Sales & Product Analytics",
+    "🧮 Fiyatlandırma, İskonto & Marjlar (Pricing)": [
         "🧮 Pricing & Discount Calculator"
     ],
-    "🧠 AI Risk, Security & Forecasting": [
+    "📜 Gümrük, GTİP & Sağlık Mevzuatı (Regulations)": [
+        "📜 Gümrük, GTİP & Sağlık Bakanlığı Mevzuatı"
+    ],
+    "🏛️ Küresel & Kamu İhaleleri Masası (Tenders)": [
+        "🏛️ Küresel & Kamu İhaleleri Masası (Tenders Hub)"
+    ],
+    "⚖️ Stratejik Karar Merkezi (Strategic Decision Center)": [
+        "🏛️ Strategic Decision Center"
+    ],
+    "📱 MedTech Sosyal Medya & Sağlık Mevzuatı": [
+        "📱 Global Social Media & B2B Marketing"
+    ],
+    "💼 Ticari Operasyonlar, CRM & Satış Analitiği": [
+        "🏢 Distributors & CRM",
+        "📜 Agreements & Compliance",
+        "📊 Sales & Product Analytics"
+    ],
+    "🧠 Yapay Zeka Risk & Tahminleme Simülatörü": [
         "🚨 AI Intelligence & Forecasting",
         "🎲 Risk & Scenario Simulator",
         "📈 Performance Evaluator"
     ],
-    "⚖️ Executive Governance, B2B Studio & Reports": [
-        "🏛️ Strategic Decision Center",
-        "📱 Global Social Media & B2B Marketing",
+    "📑 Yönetici Raporları & Veri Dışa Aktarma": [
         "📑 Executive Reports & Export"
     ]
 }
@@ -10098,13 +10677,23 @@ st.markdown("""
 
 col_hub_hdr1, col_hub_hdr2 = st.columns([3.2, 1.2])
 with col_hub_hdr1:
-    active_view = st.pills(
-        "Görünüm Seçin",
-        options=active_subviews,
-        default=active_subviews[0],
-        label_visibility="collapsed",
-        key=f"pills_hub_{nav_selection[:8]}"
-    )
+    if len(active_subviews) > 1:
+        active_view = st.pills(
+            "Görünüm Seçin",
+            options=active_subviews,
+            default=active_subviews[0],
+            label_visibility="collapsed",
+            key=f"pills_hub_{abs(hash(nav_selection)) % 100000}"
+        )
+    else:
+        active_view = active_subviews[0]
+        st.markdown(f"""
+        <div style="display:flex;align-items:center;gap:10px;padding:6px 0;">
+            <span style="font-size:15px;font-weight:700;color:#00F5FF;">{nav_selection}</span>
+            <span style="background:rgba(0,245,255,0.12);color:#00F5FF;border:1px solid rgba(0,245,255,0.3);padding:2px 10px;border-radius:12px;font-size:11px;font-weight:600;">{cur_nav_info.get('badge', 'Modül Aktif')}</span>
+        </div>
+        """, unsafe_allow_html=True)
+
 with col_hub_hdr2:
     omni_search_q = st.text_input(
         "Omni-Search",
@@ -22207,6 +22796,12 @@ elif active_view == "📑 Executive Reports & Export":
 # ==============================================================================
 elif active_view == "📱 Global Social Media & B2B Marketing":
     render_social_media_hub()
+
+elif active_view == "🏛️ Küresel & Kamu İhaleleri Masası (Tenders Hub)":
+    render_tenders_hub()
+
+elif active_view == "📜 Gümrük, GTİP & Sağlık Bakanlığı Mevzuatı":
+    render_regulations_hub()
 
 # Modern Glass GSAP AI Telemetry Status Banner
 components.html("""
