@@ -12217,56 +12217,138 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
 
 
 
-def build_verified_linkedin_bundle(person_str, inst_str, country_str=""):
+def clean_company_name(name):
+    """Strips legal suffixes and location tails so LinkedIn/Google search succeeds with high precision."""
+    import re
+    if not name:
+        return ""
+    name = re.sub(r'\(.*\)', '', name)
+    if '/' in name:
+        name = name.split('/')[0].strip()
+    
+    legal_suffixes = [
+        r'\bS\.?p\.?A\.?\b', r'\bS\.?r\.?l\.?\b', r'\bSpA\b', r'\bSrl\b',
+        r'\bGmbH\b', r'\bA\.?G\.?\b', r'\bAG\b',
+        r'\bLtd\.?\b', r'\bLimited\b', r'\bInc\.?\b', r'\bCorp\.?\b', r'\bCorporation\b',
+        r'\bA\.?Ş\.?\b', r'\bA\.?S\.?\b', r'\bK\.?S\.?C\.?P\.?\b', r'\bS\.?A\.?\b', r'\bS\.?L\.?\b',
+        r'\bLLC\b', r'\bPvt\.?\b', r'\bTic\.?\s*(ve\s*)?San\.?\b', r'\bSanayi\b', r'\bTicaret\b'
+    ]
+    for suf in legal_suffixes:
+        name = re.sub(suf, '', name, flags=re.IGNORECASE)
+    
+    name = re.sub(r'[,.\-_]+$', '', name.strip())
+    name = re.sub(r'\s+', ' ', name).strip()
+    return name
+
+
+def extract_real_person_or_role(person_str, clean_inst):
+    """Detects whether person_str represents an actual human or an institution/department."""
+    import re
+    if not person_str or len(person_str.strip()) < 3:
+        return None
+    
+    clean_inst_lower = clean_inst.lower()
+    p_lower = person_str.lower()
+    if clean_inst_lower and clean_inst_lower in p_lower:
+        return None
+
+    cand = person_str
+    cand = re.sub(r'\(.*\)', '', cand)
+    cand = re.sub(r'(&|\bve\b|\bwith\b|\band\b).*$', '', cand, flags=re.IGNORECASE)
+    
+    # Strictly bounded title removal - never touch words like Bio-Optica!
+    cand = re.sub(r'\b(Prof(\.|essor)?|Dr\b\.?|Doctor|Eng\b\.?|Doç\b\.?|Op\b\.?\s*Dr\b\.?|PhD|MSc|MD|Dott\.?ssa\b|Dottoressa\b|Dott\b\.?|Dottore\b)\s*', '', cand, flags=re.IGNORECASE)
+    cand = re.sub(r'^[.\s,]+', '', cand).strip()
+    cand = re.sub(r'[,.\-_]+$', '', cand).strip()
+    
+    role_words = [
+        'satınalma', 'satinalma', 'procurement', 'direktörlüğü', 'direktorlugu',
+        'yönetici', 'yonetici', 'direktör', 'direktor', 'ekibi', 'heyeti',
+        'departmanı', 'departmani', 'merkezi', 'biyomedikal', 'laboratuvar',
+        'embriyoloji', 'hekim-patron', 'klinik sahibi', 'baş embriyolog',
+        'direttore', 'responsabile', 'purchasing', 'sales director', 'managing director',
+        'general manager', 'yetkili', 'temsilci', 'başkan', 'baskan', 'kurul', 'lider',
+        'management', 'operations', 'medtech', 'distribütör', 'distributor', 'hizmetleri'
+    ]
+    if any(rw in cand.lower() for rw in role_words):
+        return None
+        
+    words = cand.split()
+    if 2 <= len(words) <= 4 and all(len(w) >= 2 for w in words):
+        return cand
+        
+    return None
+
+
+def build_verified_linkedin_bundle(person_str, inst_str, country_str="", category=""):
     """
     Cleans Turkish titles, noise words, parentheses and builds 100% verified,
-    high-precision LinkedIn search URLs for B2B MedTech decision makers.
+    high-precision LinkedIn & Google X-Ray search URLs for B2B MedTech decision makers.
     """
-    import re, urllib.parse
+    import urllib.parse
+    
+    clean_inst = clean_company_name(inst_str) or inst_str
+    real_person = extract_real_person_or_role(person_str, clean_inst)
+    
+    is_dist = any(k in category.lower() for k in ['distrib', 'medtech', 'tedarik', 'bayi', 'ihale', 'distributor']) or \
+              any(k in inst_str.lower() for k in ['distrib', 'technomed', 'technopharm', 'supplies', 'biomedical'])
 
-    # 1. Clean Person Name
-    clean_p = person_str
-    clean_p = re.sub(r'\(.*?\)', '', clean_p)
-    clean_p = re.sub(r'(&|\bve\b).*$', '', clean_p, flags=re.IGNORECASE)
-    clean_p = re.sub(r'\b(Prof|Dr|Eng|Doç|Op|med|PhD|MSc)\.?\s*', '', clean_p, flags=re.IGNORECASE)
-    clean_p = re.sub(r'\s+', ' ', clean_p).strip()
-
-    # 2. Clean Institution Name
-    clean_inst = inst_str
-    clean_inst = re.sub(r'\(.*?\)', '', clean_inst)
-    if '/' in clean_inst:
-        clean_inst = clean_inst.split('/')[0].strip()
-    clean_inst = re.sub(r'\s+', ' ', clean_inst).strip()
-
-    # Generic role blocker
-    generic_roles = ['yetkili yönetici', 'satış direktörü', 'direktör', 'klinik embriyoloji', 'hekim']
-    has_valid_name = clean_p and len(clean_p) > 2 and clean_p.lower() not in generic_roles
-
-    # Person / Decision Maker Search Query
-    if has_valid_name:
-        lk_person_q = f'{clean_p} {clean_inst}'
-        display_name = clean_p
+    # 1. Decision Maker (Button 1)
+    if real_person:
+        btn1_label = f"Karar Verici ({real_person})"
+        lk_p_q = f'"{real_person}" "{clean_inst}"'
+        gx_p_q = f'site:linkedin.com/in "{real_person}" "{clean_inst}"'
+        clean_p_disp = real_person
     else:
-        lk_person_q = f'{clean_inst} IVF'
-        display_name = "Karar Verici Heyeti"
+        if is_dist:
+            btn1_label = "Satınalma & Direktörler"
+            lk_p_q = f'"{clean_inst}" (Director OR Procurement OR Sales OR "General Manager")'
+            gx_p_q = f'site:linkedin.com/in "{clean_inst}" (Director OR Manager OR Procurement OR Sales)'
+            clean_p_disp = f"{clean_inst} Satınalma / Yönetim Heyeti"
+        else:
+            btn1_label = "Klinik & Lab Direktörü"
+            lk_p_q = f'"{clean_inst}" ("Lab Director" OR "Medical Director" OR "Chief Embryologist" OR "Direttore")'
+            gx_p_q = f'site:linkedin.com/in "{clean_inst}" ("Lab Director" OR "Medical Director" OR "Embryologist" OR "Direttore")'
+            clean_p_disp = f"{clean_inst} Lab & Medikal Direktörlüğü"
 
-    person_search_url = f"https://www.linkedin.com/search/results/people/?keywords={urllib.parse.quote(lk_person_q)}&origin=GLOBAL_SEARCH_HEADER"
+    # 2. Team (Button 2)
+    if is_dist:
+        btn2_label = "Satış & MedTech Ekibi"
+        lk_team_q = f'"{clean_inst}" (Sales OR Commerciale OR Specialist OR Marketing)'
+        gx_team_q = f'site:linkedin.com/in "{clean_inst}" (Sales OR Specialist OR Commerciale OR Marketing)'
+    else:
+        btn2_label = "Embriyologlar & Ekip"
+        lk_team_q = f'"{clean_inst}" (Embryologist OR Biologist OR "PMA" OR "IVF")'
+        gx_team_q = f'site:linkedin.com/in "{clean_inst}" (Embryologist OR Biologist OR "IVF" OR "ART")'
 
-    # Lab / Embryologist Team Search Query
-    lk_team_q = f'"{clean_inst}" (Embryologist OR Lab OR "Medical Director")'
-    team_search_url = f"https://www.linkedin.com/search/results/people/?keywords={urllib.parse.quote(lk_team_q)}&origin=GLOBAL_SEARCH_HEADER"
-
-    # Company Search Query
+    # 3. Company (Button 3)
     lk_co_q = clean_inst
+    gx_co_q = f'site:linkedin.com/company "{clean_inst}"'
+
+    # Safe Encoded URLs
+    person_search_url = f"https://www.linkedin.com/search/results/people/?keywords={urllib.parse.quote(lk_p_q)}&origin=GLOBAL_SEARCH_HEADER"
+    gx_person_url = f"https://www.google.com/search?q={urllib.parse.quote(gx_p_q)}"
+    
+    team_search_url = f"https://www.linkedin.com/search/results/people/?keywords={urllib.parse.quote(lk_team_q)}&origin=GLOBAL_SEARCH_HEADER"
+    gx_team_url = f"https://www.google.com/search?q={urllib.parse.quote(gx_team_q)}"
+    
     company_search_url = f"https://www.linkedin.com/search/results/companies/?keywords={urllib.parse.quote(lk_co_q)}&origin=GLOBAL_SEARCH_HEADER"
+    gx_company_url = f"https://www.google.com/search?q={urllib.parse.quote(gx_co_q)}"
 
     return {
-        "clean_person": display_name,
+        "clean_person": clean_p_disp,
         "clean_inst": clean_inst,
-        "keywords": lk_person_q,
+        "btn1_label": btn1_label,
+        "btn2_label": btn2_label,
+        "keywords": lk_p_q,
+        "gx_keywords": gx_p_q,
         "person_url": person_search_url,
+        "gx_person_url": gx_person_url,
         "team_url": team_search_url,
-        "company_url": company_search_url
+        "gx_team_url": gx_team_url,
+        "company_url": company_search_url,
+        "gx_company_url": gx_company_url,
+        "is_distributor": is_dist
     }
 
 
@@ -21125,19 +21207,30 @@ elif active_view == "🛃 Market Intelligence & Compare":
 
                 enc_q_scout = urllib.parse.quote(f'{full_lk_q_scout} {lk_country_scout}')
                 live_lk_scout_url = f"https://www.linkedin.com/search/results/people/?keywords={enc_q_scout}&origin=GLOBAL_SEARCH_HEADER"
+                gx_scout_q = f"site:linkedin.com/in ({full_lk_q_scout}) {lk_country_scout}"
+                live_gx_scout_url = f"https://www.google.com/search?q={urllib.parse.quote(gx_scout_q)}"
 
                 st.markdown(f"""
                 <div style="background:rgba(0,119,181,0.08);border:1.5px solid #0077B5;border-radius:10px;padding:14px 18px;margin:12px 0 16px 0;">
-                    <div style="font-size:13px;font-weight:700;color:#00F5FF;margin-bottom:4px;">🔗 LinkedIn Canlı Arama Sorgusu ({lk_country_scout}):</div>
-                    <code style="font-size:11.5px;color:#CBD5E1;word-break:break-all;">{full_lk_q_scout} {lk_country_scout}</code>
+                    <div style="font-size:13px;font-weight:700;color:#00F5FF;margin-bottom:4px;">🎯 Hedefli Arama Sorgusu ({lk_country_scout}):</div>
+                    <div style="font-size:11px;color:#8A99AD;margin-bottom:4px;">LinkedIn: <code style="color:#CCD7E6;">{full_lk_q_scout} {lk_country_scout}</code></div>
+                    <div style="font-size:11px;color:#8A99AD;">Google X-Ray (Şifresiz): <code style="color:#FFB800;">{gx_scout_q}</code></div>
                 </div>
                 """, unsafe_allow_html=True)
 
-                st.link_button(
-                    f"🚀 {lk_country_scout} Pazarında LinkedIn'de Canlı Ara (Tek Tıkla Yeni Sekmede Aç)",
-                    live_lk_scout_url,
-                    use_container_width=True
-                )
+                col_sc1, col_sc2 = st.columns(2)
+                with col_sc1:
+                    st.link_button(
+                        f"🚀 LinkedIn'de Canlı Ara ({lk_country_scout})",
+                        live_lk_scout_url,
+                        use_container_width=True
+                    )
+                with col_sc2:
+                    st.link_button(
+                        f"⚡ Google X-Ray ile Şifresiz Ara ({lk_country_scout})",
+                        live_gx_scout_url,
+                        use_container_width=True
+                    )
 
                 st.markdown("##### 📝 Kopyalanabilir LinkedIn B2B Outreach Şablonları")
                 scout_inmail_c1, scout_inmail_c2 = st.columns(2)
@@ -21275,17 +21368,23 @@ elif active_view == "🛃 Market Intelligence & Compare":
                         c_web = p.get('website', '#')
                         c_web_clean = p.get('website_clean', 'Web Sitesi')
                         
-                        mail_subject_enc = urllib.parse.quote(f"ZEUS Bioscience / {p['name']} — Advanced Piezo ICSI & Oocyte Activation Inquiry")
+                        mail_subject_enc = urllib.parse.quote(f"ZEUS Bioscience / {p['name']} — Advanced Electrical Oocyte Activation (AOA) Inquiry")
                         mail_body_enc = urllib.parse.quote(p.get('pitch_template', ''))
                         mailto_url = f"mailto:{c_email}?subject={mail_subject_enc}&body={mail_body_enc}"
 
-                        lk_bundle = build_verified_linkedin_bundle(c_person, p['name'], radar_country)
+                        lk_bundle = build_verified_linkedin_bundle(c_person, p['name'], radar_country, p.get('category', ''))
                         lk_direct_card_url = lk_bundle['person_url']
+                        gx_direct_card_url = lk_bundle['gx_person_url']
                         lk_team_card_url = lk_bundle['team_url']
+                        gx_team_card_url = lk_bundle['gx_team_url']
                         lk_co_card_url = lk_bundle['company_url']
+                        gx_co_card_url = lk_bundle['gx_company_url']
+                        lk_btn1_label = lk_bundle['btn1_label']
+                        lk_btn2_label = lk_bundle['btn2_label']
                         lk_verified_person = lk_bundle['clean_person']
                         lk_verified_inst = lk_bundle['clean_inst']
                         lk_keywords_disp = lk_bundle['keywords']
+                        gx_keywords_disp = lk_bundle['gx_keywords']
 
                         card_tier_color = '#00F5FF' if 'Tier 1' in p['tier'] else '#FFB800'
                         card_html = (
@@ -21301,18 +21400,21 @@ elif active_view == "🛃 Market Intelligence & Compare":
                             f'<div><span style="color:#8A99AD;">Uyumlu ZEUS Çözümü:</span> <b style="color:#00F5FF;">{p["product_match"]}</b></div></div>'
                             f'<div style="margin-top:10px;background:rgba(19,166,181,0.08);border:1px solid rgba(19,166,181,0.25);border-radius:6px;padding:10px 12px;">'
                             f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;border-bottom:1px solid rgba(19,166,181,0.15);padding-bottom:6px;flex-wrap:wrap;gap:6px;">'
-                            f'<div><span style="color:#00F5FF;font-weight:700;font-size:12px;">📞 Kurumsal İletişim & Doğrulanmış LinkedIn Ağı</span>'
+                            f'<div><span style="color:#00F5FF;font-weight:700;font-size:12px;">📞 Kurumsal İletişim & Doğrulanmış Arama Ağı</span>'
                             f'<span style="margin-left:8px;font-size:10px;color:#5FD3AE;background:rgba(95,211,174,0.15);border:1px solid rgba(95,211,174,0.3);padding:2px 6px;border-radius:3px;">✓ Doğrulanmış Temas Kanalı</span></div>'
                             f'<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">'
-                            f'<a href="{lk_direct_card_url}" target="_blank" style="background:#0077B5;color:#FFFFFF;padding:4px 10px;border-radius:4px;font-size:11px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:4px;box-shadow:0 2px 6px rgba(0,119,181,0.3);">'
-                            f'<span>💼</span> <span>Karar Vericiyi Bul ({lk_verified_person}) ↗</span></a>'
-                            f'<a href="{lk_team_card_url}" target="_blank" style="background:rgba(255,255,255,0.08);color:#CBD5E1;border:1px solid rgba(255,255,255,0.2);padding:4px 8px;border-radius:4px;font-size:10.5px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:4px;">'
-                            f'<span>🔬</span> <span>Embriyologları Bul ↗</span></a>'
-                            f'<a href="{lk_co_card_url}" target="_blank" style="background:rgba(255,255,255,0.05);color:#94A3B8;border:1px solid rgba(255,255,255,0.15);padding:4px 8px;border-radius:4px;font-size:10.5px;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:4px;">'
-                            f'<span>🏢</span> <span>Kurum Sayfası ↗</span></a>'
+                            f'<a href="{lk_direct_card_url}" target="_blank" style="background:#0077B5;color:#FFFFFF;padding:5px 10px;border-radius:4px;font-size:11px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:4px;box-shadow:0 2px 6px rgba(0,119,181,0.3);">'
+                            f'<span>💼</span> <span>LinkedIn: {lk_btn1_label} ↗</span></a>'
+                            f'<a href="{gx_direct_card_url}" target="_blank" style="background:#DC2626;color:#FFFFFF;padding:5px 10px;border-radius:4px;font-size:11px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:4px;box-shadow:0 2px 6px rgba(220,38,38,0.3);">'
+                            f'<span>⚡</span> <span>Google X-Ray (Şifresiz) ↗</span></a>'
+                            f'<a href="{lk_team_card_url}" target="_blank" style="background:rgba(255,255,255,0.08);color:#CBD5E1;border:1px solid rgba(255,255,255,0.2);padding:5px 8px;border-radius:4px;font-size:10.5px;font-weight:600;text-decoration:none;display:inline-flex;align-items:center;gap:4px;">'
+                            f'<span>👥</span> <span>{lk_btn2_label} ↗</span></a>'
+                            f'<a href="{lk_co_card_url}" target="_blank" style="background:rgba(255,255,255,0.05);color:#94A3B8;border:1px solid rgba(255,255,255,0.15);padding:5px 8px;border-radius:4px;font-size:10.5px;font-weight:500;text-decoration:none;display:inline-flex;align-items:center;gap:4px;">'
+                            f'<span>🏢</span> <span>Kurum Profili ↗</span></a>'
                             f'</div></div>'
-                            f'<div style="font-size:10.5px;color:#94A3B8;background:rgba(0,0,0,0.3);padding:4px 8px;border-radius:4px;margin-bottom:8px;">'
-                            f'🔗 <b>Doğrulanmış Canlı Arama Sorgusu:</b> <code style="color:#00F5FF;font-size:10px;">{lk_keywords_disp}</code>'
+                            f'<div style="font-size:10.5px;color:#94A3B8;background:rgba(0,0,0,0.3);padding:6px 10px;border-radius:4px;margin-bottom:8px;line-height:1.5;">'
+                            f'<div>🎯 <b>Doğrulanmış LinkedIn Arama:</b> <code style="color:#00F5FF;font-size:10.5px;">{lk_keywords_disp}</code></div>'
+                            f'<div style="margin-top:2px;">⚡ <b>Google X-Ray (Şifresiz / Açık Ağ):</b> <code style="color:#FFB800;font-size:10.5px;">{gx_keywords_disp}</code> <span style="color:#8A99AD;font-size:10px;">(LinkedIn oturumunuz açık değilse "⚡ Google X-Ray" butonu ile hedeflere şifresiz ulaşabilirsiniz)</span></div>'
                             f'</div>'
                             f'<div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));gap:8px;font-size:12px;">'
                             f'<div><span style="color:#8A99AD;">👤 Yetkili Muhatap:</span> <b style="color:#FFFFFF;">{c_person}</b></div>'
@@ -21662,9 +21764,9 @@ BODY:
                                     )
 
                             with card_out_tab2:
-                                lk_card_kw = p.get('linkedin_query', f"{c_person} {p['name']}")
-                                lk_card_url = f"https://www.linkedin.com/search/results/people/?keywords={urllib.parse.quote(lk_card_kw)}"
-                                lk_clean_name = c_person.split('(')[0].strip()
+                                lk_card_url = lk_bundle['person_url']
+                                gx_card_url = lk_bundle['gx_person_url']
+                                lk_clean_name = lk_bundle['clean_person']
                                 
                                 user_lk_directive = st.session_state.get(user_note_key, "").lower()
                                 lk_has_eshre_wp = any(w in user_lk_directive for w in ["eshre", "guideline", "guidline", "whitepaper", "scientific brief", "kılavuz", "rehber"])
@@ -21707,11 +21809,19 @@ BODY:
                                 
                                 st.text_area("📋 300 Karakterlik LinkedIn Bağlantı İsteği Notu (Kopyalayabilirsiniz):", value=lk_conn_note[:300], height=85, key=f"lk_conn_note_{p['name'][:10]}_{idx}_{eff_selected_lang}")
                                 
-                                st.link_button(
-                                    f"🚀 {lk_clean_name} için LinkedIn Profilini Aç & Bağlantı Kur",
-                                    lk_card_url,
-                                    use_container_width=True
-                                )
+                                c_tab2_btn1, c_tab2_btn2 = st.columns(2)
+                                with c_tab2_btn1:
+                                    st.link_button(
+                                        f"💼 {lk_clean_name[:20]} LinkedIn Profilini Aç",
+                                        lk_card_url,
+                                        use_container_width=True
+                                    )
+                                with c_tab2_btn2:
+                                    st.link_button(
+                                        f"⚡ Google X-Ray ile Şifresiz Aç",
+                                        gx_card_url,
+                                        use_container_width=True
+                                    )
 
                 # Export CSV button
                 prospect_rows = []
@@ -22825,24 +22935,31 @@ Web: www.zeusbioscience.com""", language="markdown")
                 # Append country name to query
                 encoded_lk_query = urllib.parse.quote(f'{full_lk_query} {lk_country}')
                 live_linkedin_url = f"https://www.linkedin.com/search/results/people/?keywords={encoded_lk_query}&origin=GLOBAL_SEARCH_HEADER"
+                gx_country_q = f"site:linkedin.com/in ({full_lk_query}) {lk_country}"
+                live_gx_url = f"https://www.google.com/search?q={urllib.parse.quote(gx_country_q)}"
 
                 # Action Bar
                 st.markdown(f"""
                 <div style="background:rgba(0,119,181,0.08);border:1.5px solid #0077B5;border-radius:10px;padding:14px 18px;margin:12px 0 16px 0;">
-                    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
-                        <div>
-                            <span style="font-size:14px;font-weight:700;color:#00F5FF;">🔗 LinkedIn Canlı Arama Sorgusu ({lk_country}):</span><br>
-                            <code style="font-size:11.5px;color:#CBD5E1;word-break:break-all;">{full_lk_query} {lk_country}</code>
-                        </div>
-                    </div>
+                    <div style="font-size:14px;font-weight:700;color:#00F5FF;margin-bottom:4px;">🎯 Hedefli Arama Sorgusu ({lk_country}):</div>
+                    <div style="font-size:11px;color:#8A99AD;margin-bottom:4px;">LinkedIn: <code style="color:#CCD7E6;">{full_lk_query} {lk_country}</code></div>
+                    <div style="font-size:11px;color:#8A99AD;">Google X-Ray (Şifresiz): <code style="color:#FFB800;">{gx_country_q}</code></div>
                 </div>
                 """, unsafe_allow_html=True)
 
-                st.link_button(
-                    f"🚀 {lk_country} Pazarında LinkedIn'de Canlı Ara (Tek Tıkla Yeni Sekmede Başlat)",
-                    live_linkedin_url,
-                    use_container_width=True
-                )
+                col_lk_a, col_lk_b = st.columns(2)
+                with col_lk_a:
+                    st.link_button(
+                        f"🚀 LinkedIn'de Canlı Ara ({lk_country})",
+                        live_linkedin_url,
+                        use_container_width=True
+                    )
+                with col_lk_b:
+                    st.link_button(
+                        f"⚡ Google X-Ray ile Şifresiz Ara ({lk_country})",
+                        live_gx_url,
+                        use_container_width=True
+                    )
 
                 st.markdown("<br>", unsafe_allow_html=True)
 
@@ -22864,17 +22981,18 @@ Web: www.zeusbioscience.com""", language="markdown")
                         dm_loc = dm_item.get('Konum', lk_country)
                         dm_email = dm_item.get('Email', f"info@{c_slug}-clinic.org")
 
-                        # Personal search URL
-                        person_clean = dm_leader.split('&')[0].replace('Prof.', '').replace('Dr.', '').replace('Dott.', '').replace('Dott.ssa', '').strip()
-                        inst_clean = dm_inst.split('(')[0].strip()
-                        p_query_enc = urllib.parse.quote(f'"{person_clean}" {inst_clean}')
-                        p_linkedin_url = f"https://www.linkedin.com/search/results/people/?keywords={p_query_enc}&origin=GLOBAL_SEARCH_HEADER"
+                        # Personal search bundle
+                        p_bundle = build_verified_linkedin_bundle(dm_leader, dm_inst, lk_country)
+                        person_clean = p_bundle['clean_person']
+                        inst_clean = p_bundle['clean_inst']
+                        p_linkedin_url = p_bundle['person_url']
+                        p_gx_url = p_bundle['gx_person_url']
 
                         # Localized Note
                         if lk_country in ["Italy", "İtalya"]:
                             conn_msg = f"Gentile Dott./Dott.ssa {person_clean}, apprezzo molto il lavoro di {inst_clean}. In ZEUS Bioscience abbiamo sviluppato un protocollo CE (Elektriksel AOA) che porta la fecondazione nei casi TFF all'82.3%. Vorrei condividere il nostro whitepaper clinico. Cordiali saluti!"
                         elif lk_country in ["Spain", "İspanya"]:
-                            conn_msg = f"Estimado/a {person_clean}, sigo con gran interés su labor en {inst_clean}. Contamos con tecnología CE de activación oocitaria Piezo que eleva la fecundación al 82.3% en fallos previos. Me encantaría compartir nuestro whitepaper clínico. ¡Un cordial saludo!"
+                            conn_msg = f"Estimado/a {person_clean}, sigo con gran interés su labor en {inst_clean}. Contamos con tecnología CE de activación ovocitaria eléctrica (ZEUS Pulse Stimulator) que eleva la fecundación al 82.3% en fallos previos. Me encantaría compartir nuestro whitepaper clínico. ¡Un cordial saludo!"
                         else:
                             conn_msg = f"Dear {person_clean}, I follow the clinical excellence of {inst_clean} with great admiration. At ZEUS Bioscience, we developed a CE Sertifikalı (Class IIa) Elektriksel AOA protocol that achieves 82.3% fertilization in TFF cases. I would be honored to share our 1-page clinical whitepaper with your team."
 
@@ -22892,11 +23010,13 @@ Web: www.zeusbioscience.com""", language="markdown")
                             </div>
                             """, unsafe_allow_html=True)
                             
-                            c_btn1, c_btn2 = st.columns([1.2, 1.8])
+                            c_btn1, c_btn2, c_btn3 = st.columns([1.1, 1.1, 1.8])
                             with c_btn1:
-                                st.link_button(f"🔗 LinkedIn'de '{person_clean[:18]}' Profilini Bul", p_linkedin_url, use_container_width=True)
+                                st.link_button(f"💼 LinkedIn: {person_clean[:15]}", p_linkedin_url, use_container_width=True)
                             with c_btn2:
-                                with st.expander(f"📋 {person_clean} İçin Özel 300 Karakterlik LinkedIn Davet Notu", expanded=False):
+                                st.link_button(f"⚡ Google X-Ray", p_gx_url, use_container_width=True)
+                            with c_btn3:
+                                with st.expander(f"📋 {person_clean[:18]} Davet Notu", expanded=False):
                                     st.code(conn_msg, language="text")
 
                 st.markdown("<br>", unsafe_allow_html=True)
@@ -22923,12 +23043,12 @@ Web: www.zeusbioscience.com""", language="markdown")
                         st.markdown("##### 💬 Bağlantı İsteği & DM Şablonları")
                         st.text("Bağlantı Kabul Edildikten Sonraki DM (İtalyanca):")
                         st.code("""Gentile Dott./Dott.ssa [Soyadı], grazie per il collegamento.
-Come accennato, le allego il nostro Whitepaper clinico di 1 pagina sull'attivazione oocitaria Piezo (AOA) con marcatura CE.
+Come accennato, le allego il nostro Whitepaper clinico di 1 pagina sull'attivazione ovocitaria elettrica (ZEUS Pulse Stimulator AOA) con marcatura CE.
 Condividiamo volentieri con la vostra équipe il nostro Clinical Whitepaper e il protocollo applicativo CE per valutare i dati di recupero della fertilizzazione sui casi più complessi.
 Se per lei ha senso, posso inviarle la scheda tecnica o concordare una breve chiacchierata tecnica online di 10 minuti. Buona giornata!""", language="text")
                         st.text("Bağlantı Kabul Edildikten Sonraki DM (İngilizce - Global):")
                         st.code("""Dear Dr. [Last Name], thank you for connecting.
-As referenced, I am pleased to share our 1-page Clinical Whitepaper on non-toxic Piezo Oocyte Activation (AOA) under CE Sertifikalı (Class IIa) certification.
+As referenced, I am pleased to share our 1-page Clinical Whitepaper on non-toxic Electrical Oocyte Activation (ZEUS Pulse Stimulator AOA) under CE Sertifikalı (Class IIa) certification.
 Our clinical trials demonstrate an increase in fertilization from 24.6% to 82.3% in previous TFF cases with zero electrical cytolysis risk.
 I would welcome the opportunity to coordinate a brief 10-minute scientific briefing or arrange an evaluation protocol with your embryology team. Best regards!""", language="text")
 
