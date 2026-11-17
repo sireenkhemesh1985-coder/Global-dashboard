@@ -8567,6 +8567,8 @@ GLOBAL_COUNTRY_BUYING_BEHAVIOR = {
         "communication_channels": "Resmi İngilizce/Arapça E-posta + WhatsApp Yönetici İletişimi + VIP Kongre Daveti",
         "cultural_taboos": "KOL hekimi atlayıp sadece satın almacıyla görüşmek; pazarlık sürecini kişiselleştirmek; yavaş yanıt vermek.",
         "dining_hospitality_protocol": "Diyâfe & VIP Ağırlama Protokolü: Suudi Arabistan ve Körfez kültüründe iş ilişkisi kişisel hürmet ve cömert misafirperverlikle mühürlenir. ESHRE/MEFS kongrelerinde veya prestijli bir restoranda akşam yemeği daveti güven tesisinin zirvesidir. Masada asla doğrudan fiyat veya sert pazarlık açılmaz; önce hekime ve kliniğine saygı gösterilir, iş konusu tatlı ve Arap kahvesi faslında nezaketle açılır.",
+        "dining_contract_rule": "🔴 İlişki & Yemek Ön Koşullu (Yemeksiz Sözleşme İmzalanmaz)",
+        "contract_closing_strategy": "Suudi Arabistan ve Körfez'de sözleşme imzalamak için iş yemeği / ağırlama mutlak ön koşuldur. Yemeksiz, sadece e-posta ve resmi evrak üzerinden sözleşme dayatmak 'tüccar soğukluğu' olarak algılanır ve süreci kilitler. Satış Kapatma Stratejisi: 1) İlk temas ESHRE/MEFS'te veya yerinde klinikte hürmetle yapılır. 2) Saygın bir akşam yemeğinde veya kahve meclisinde hekimin klinik vizyonu dinlenir. 3) Sözleşme şartları ve filo iskontosu yemeğin başında değil, tatlı ve Arap kahvesi ikramında gayriresmi mutabakatla bağlanır. 4) Resmi sözleşme ertesi gün bu şahsi güven zemininde imzalanır.",
         "email_tone_guidance": "Yüksek saygı unvanları ('Distinguished Medical Director & Esteemed Leadership'), bölgesel öncülük vurgusu, Suudi Vizyon 2030 sağlık vizyonu uyumu ve VIP demo daveti.",
         "badge_color": "#00F5FF"
     },
@@ -8582,6 +8584,8 @@ GLOBAL_COUNTRY_BUYING_BEHAVIOR = {
         "communication_channels": "Akademik Unvanlı E-posta + WhatsApp üzerinden samimi ve doğrudan takip",
         "cultural_taboos": "Cihazı sıradan ticari mal gibi sunmak; profesörün klinik otoritesini sorgulamak; EGP cinsinden açık hesap vermek.",
         "dining_hospitality_protocol": "Nil Kenarı / Masa Başı Çalışma Yemeği: Mısır'da profesörler ve hekim-patronlarla akşam yemeği veya çalışma öğle yemeği güvenin anahtarıdır. TFF vakaları ve klinik başarılar masada tartışılır. Önemli Kural: Hesabı daima davet eden satıcı taraf ödemeli, hekimin mahcup edilmemesine ve akademik unvanına hürmet gösterilmesine azami dikkat edilmelidir.",
+        "dining_contract_rule": "🔴 İlişki & Yemek Ön Koşullu (Yemeksiz Sözleşme İmzalanmaz)",
+        "contract_closing_strategy": "Mısır pazarında profesör hekimlerin (Prof. Dr.) akademik ve ticari otoritesi mutlaktır; yüz yüze çalışma yemeği olmadan sözleşme imzalanması imkansızdır. Satış Kapatma Stratejisi: 1) Kahire'de Nil kenarında veya prestijli bir mekanda çalışma yemeği organize edilir. 2) Masada hekimin zorlu vakaları onore edilerek dinlenir, TFF'deki %82.3 döllenme başarısı tartışılır. 3) EGP devalüasyonuna karşı vaka başı $7-10 sarf maliyet güvencesi masada verilir. 4) Hesabı istisnasız satıcı öder ve masadaki sözlü mutabakat akreditifli sözleşmeye dönüştürülür.",
         "email_tone_guidance": "Akademik saygı ('Distinguished Professor & Medical Director'), TFF ve şiddetli erkek faktörü vakalarındaki başarı, vaka başı maliyet avantajı.",
         "badge_color": "#FFB800"
     },
@@ -8597,6 +8601,8 @@ GLOBAL_COUNTRY_BUYING_BEHAVIOR = {
         "communication_channels": "Resmi Almanca/İngilizce E-posta + 1 Sayfalık Executive Scientific Brief PDF",
         "cultural_taboos": "CE sertifikası sunamadan satışa kalkışmak; agresif ve süslü pazarlama dili kullanmak; veri kaynağı gösterememek.",
         "dining_hospitality_protocol": "Geschäftsessen (Ölçülü ve Resmi İş Yemeği): Almanya'da ilk temaslarda akşam yemeği daveti teklif edilmez; önce teknik dosya ve CE onayları geçmelidir. Süreç olgunlaştığında sakin ve resmi bir öğle/akşam yemeği uygundur. Önemli Kural: Katı hastane uyum (compliance/anti-bribery) kuralları nedeniyle aşırı lüks ağırlamalardan kaçınılmalı, hekimin kurum kurallarına göre kendi payını ödemek istemesi durumunda ısrarcı olunmamalıdır.",
+        "dining_contract_rule": "🟢 Şartname & Görev Odaklı (Yemeksiz Doğrudan Sözleşme Esastır)",
+        "contract_closing_strategy": "Almanya'da sözleşme imzalamak için ASLA yemek önceliği aranmaz; aksine erken aşamada yemek teklif etmek 'profesyonellikten uzak' veya 'hastane uyum (compliance) ihlali' olarak değerlendirilir. Satış Kapatma Stratejisi: 1) Doğrudan CE Class IIa sertifikası, ISO 13485 ve hakemli klinik yayınlar (Baltaci, Ebner, Tanaka) Einkauf ve biyomedikal komitesine iletilir. 2) Net şartname üzerinden dijital/resmi sözleşme imzalanır. 3) Yemek sadece sözleşme bittikten sonra veya kongrede ölçülü bir tebrik öğle yemeği ('Geschäftsessen') olarak planlanabilir.",
         "email_tone_guidance": "Kısa, net, objektif, pazarlama süslemelerinden tamamen arındırılmış, doğrudan klinik kanıt ve yasal standart odaklı resmi dil.",
         "badge_color": "#00E676"
     },
@@ -8612,6 +8618,8 @@ GLOBAL_COUNTRY_BUYING_BEHAVIOR = {
         "communication_channels": "Resmi E-posta + Hızlı WhatsApp & Telefon İletişimi + Yerinde Klinik Ziyaret",
         "cultural_taboos": "Arıza durumunda 24 saatte teknik destek verememek; ÜTS kayıtsız ürün teklif etmek.",
         "dining_hospitality_protocol": "Klinik Çay/Kahve & İş Yemeği: Türkiye'de sadece e-posta ile cihaz satılamaz. Klinik içi sıcak çay/kahve sohbeti ve ardından akşam yemeğinde yüz yüze samimiyet, hızlı yerel teknik servis güvencesi ve el sıkışma kararın %70'ini belirler.",
+        "dining_contract_rule": "🔴 İlişki & Yemek/Kahve Ön Koşullu (Yemeksiz Sözleşme İmzalanmaz)",
+        "contract_closing_strategy": "Türkiye'de MedTech satışlarının %80'i klinik ziyareti, çay/kahve ve ardından akşam yemeğinde yüz yüze sağlanan güvenle kapanır. E-postayla sözleşme göndermek süreci aylarca bekletir. Satış Kapatma Stratejisi: 1) Klinikte baş embriyolog ve hekime canlı demo yapılır. 2) Akşam yemeğinde veya kahve sohbetinde 24 saat içinde yerinde teknik servis garantisi ve referans kliniklerin başarıları masaya konur. 3) Karşılıklı iskonto ve konsinye şartları masada tokalaşarak kesinleştirilir ve sözleşme imzalanır.",
         "email_tone_guidance": "Saygılı, profesyonel ama samimi, Türkiye'deki referans kliniklere ve hızlı teknik servis altyapısına atıfta bulunan pratik ton.",
         "badge_color": "#EC4899"
     },
@@ -8627,6 +8635,8 @@ GLOBAL_COUNTRY_BUYING_BEHAVIOR = {
         "communication_channels": "Arapça/İngilizce E-posta + WhatsApp üzerinden doğrudan hekim/patron iletişimi",
         "cultural_taboos": "Sevkiyatta gecikmek; peşinat almadan açık hesap mal göndermek; yerel temsilciyi devre dışı bırakmak.",
         "dining_hospitality_protocol": "Ziyafet & Misafirperverlik Onuru: Irak kültüründe yemek ikramı bir onur meselesidir. Hekimin ziyafet davetini reddetmek ilişkiyi zedeler; birlikte akşam yemeği yemek iş ortaklığının kardeşlik bağıyla mühürlenmesidir.",
+        "dining_contract_rule": "🔴 İlişki & Yemek Ön Koşullu (Yemeksiz Sözleşme Güvensizlik Sayılır)",
+        "contract_closing_strategy": "Irak pazarında sofra paylaşımı sadakatin temelidir. Yemeksiz sözleşme teklif etmek ilişkiyi sadece paraya dayalı gösterir ve reddedilme riskini artırır. Satış Kapatma Stratejisi: 1) Distribütörümüz Sirius Pharm güvencesiyle Bağdat veya Erbil'de hekimle akşam yemeğinde buluşulur. 2) Hekimin ziyafet daveti varsa asla geri çevrilmez. 3) Masada karşılıklı güven tesis edildikten sonra cihaz ve sarf taahhüdü dostluk protokolüyle imzalanır.",
         "email_tone_guidance": "Kardeşlik ve saygı çerçevesinde, Bağdat/Erbil kliniklerine özel teknik destek taahhüdü içeren hürmetkar ton.",
         "badge_color": "#38BDF8"
     },
@@ -8642,6 +8652,8 @@ GLOBAL_COUNTRY_BUYING_BEHAVIOR = {
         "communication_channels": "Son derece kurumsal İngilizce e-posta + LinkedIn Executive Outreach + Video Konferans",
         "cultural_taboos": "Eski teknoloji hissi vermek; yavaş yanıt vermek; teknik servis SLA sözleşmesi sunmamak.",
         "dining_hospitality_protocol": "Executive Business Dining: Dubai ve Abu Dabi'de üst düzey uluslararası otel restoranlarında akşam yemeği veya ESHRE/Arab Health VIP resepsiyonları tercih edilir. Modern, küresel ve kurumsal bir ağırlama beklenir.",
+        "dining_contract_rule": "🟡 Hibrit Strateji (Executive Ağırlama Destekli Profesyonel Sözleşme)",
+        "contract_closing_strategy": "BAE pazarında sözleşme teknik ve finansal ROI fizibilitesiyle hazırlanır; ancak büyük filo anlaşmalarında VIP akşam yemeği veya Arab Health/ESHRE özel ağırlaması kararı hızlandıran ana katalizördür. Satış Kapatma Stratejisi: Kurumsal hastane zincirlerinin C-Level direktörleriyle resmi sunum yapılır, ardından prestijli bir mekanda akşam yemeğinde filo amortismanı netleştirilerek sözleşme kapatılır.",
         "email_tone_guidance": "Yenilikçi, dünya standartlarında mükemmeliyet ve Dubai/Abu Dabi merkezlerine özel kurumsal filo modeli.",
         "badge_color": "#10B981"
     },
@@ -8657,6 +8669,8 @@ GLOBAL_COUNTRY_BUYING_BEHAVIOR = {
         "communication_channels": "İtalyanca resmi e-posta + Telefonla kişisel takip + Kongre stand daveti.",
         "cultural_taboos": "Sadece İngilizceye sıkışıp İtalyanca doküman sunmamak; yerel distribütör desteği olmadan direkt satış yapmaya çalışmak.",
         "dining_hospitality_protocol": "Pranzo & Cena di Lavoro (İş Yemeği Kültürü): İtalya'da kişisel kolejiyalite ve sempati kurulmadan büyük sözleşme imzalanmaz. Uzun bir öğle veya akşam yemeğinde iyi yemek ve şarap eşliğinde mesleki vizyon paylaşımı kapıları sonuna kadar açar.",
+        "dining_contract_rule": "🔴 İlişki & Yemek Ön Koşullu (Yemeksiz Sözleşme İmzalanmaz)",
+        "contract_closing_strategy": "İtalyan laboratuvar şefleri ve medikal direktörleri sofrada oturup 'simpatia' (mesleki kimya ve kişisel uyum) yakalamadıkları firmalardan asla teknoloji almazlar. Satış Kapatma Stratejisi: 1) SIERR kongresinde veya Milano/Roma ziyaretinde uzun bir 'Pranzo di Lavoro' (öğle yemeği) veya 'Cena' organize edilir. 2) Masada iyi yemek ve şarap eşliğinde embriyoloji protokolleri tartışılır. 3) Kişisel güven mühürlendikten sonra yerel dağıtıcı (Palex/Gynemed) üzerinden vadeli sözleşme resmileştirilir.",
         "email_tone_guidance": "Sıcak, saygılı, İtalyanca dilinde, bilimsel ortaklık ve klinik iş birliği teklif eden ton.",
         "badge_color": "#F59E0B"
     },
@@ -8672,6 +8686,8 @@ GLOBAL_COUNTRY_BUYING_BEHAVIOR = {
         "communication_channels": "İspanyolca e-posta + Kongre toplantısı",
         "cultural_taboos": "İspanyolca materyal sağlamamak; yerel klinik protokolleri görmezden gelmek.",
         "dining_hospitality_protocol": "Comida de Negocios & Sobremesa: İspanya'da yemek sonrası kahve eşliğinde yapılan 1-2 saatlik masa sohbetinde ('sobremesa') en kritik kararlar olgunlaşır; insani yakınlık kurallardan önce gelir.",
+        "dining_contract_rule": "🔴 İlişki & Yemek Ön Koşullu (Sobremesa Kültürü Olmadan Karar Çıkmaz)",
+        "contract_closing_strategy": "İspanya'da yemek sonrası kahve eşliğinde yapılan 1-2 saatlik rahat sohbet ('Sobremesa'), sözleşmenin fiilen karara bağlandığı andır. Yemeksiz sözleşme teklif etmek İspanyol hekimlerde savunma refleksi doğurur. Satış Kapatma Stratejisi: ASEBIR kongresinde veya klinikte iş yemeği şarttır; insani güven oluştuğunda konsinye sarf ve cihaz anlaşması sobremesa esnasında el sıkışarak kapatılır.",
         "email_tone_guidance": "Kolejiyal, İspanyolca dilinde, klinik başarı ve hasta güvenliği vurgulu profesyonel ton.",
         "badge_color": "#F43F5E"
     },
@@ -8687,6 +8703,8 @@ GLOBAL_COUNTRY_BUYING_BEHAVIOR = {
         "communication_channels": "İngiliz iş etiğine tam uygun, son derece nezaketli, kısa ve kanıt odaklı e-posta.",
         "cultural_taboos": "HFEA ve UKCA/CE kurallarını göz ardı etmek; aşırı iddialı ve kanıtsız satış sloganları kullanmak.",
         "dining_hospitality_protocol": "Working Lunch & Katı NHS/ABPI Compliance: İngiltere'de katı rüşvetle mücadele (Bribery Act) ve NHS hediye/ağırlama limitleri nedeniyle lüks akşam yemekleri hekimler tarafından reddedilebilir. Kongrede hafif bir çalışma yemeği ('working lunch') veya ölçülü bir akşam yemeği tercih edilir.",
+        "dining_contract_rule": "⚠️ Katı Uyum & Compliance Kısıtlamalı (Yemek Teklifi Yasak / Doğrudan Sözleşme)",
+        "contract_closing_strategy": "İngiltere'de katı UK Bribery Act ve NHS Business Ethics kuralları gereği kamu hekimleri lüks akşam yemeklerini kabul edemez; bu durum rüşvet ve çıkar çatışması sayılır. ASLA sözleşme öncesi pahalı akşam yemeği teklif etmeyin. Satış Kapatma Stratejisi: Süreç tamamen HFEA mevzuat uyumu, toksik kimyasal taşınmasının sıfırlanması, NICE yönergeleri ve NHS Framework ihalesi üzerinden resmi olarak yürütülür ve kapatılır.",
         "email_tone_guidance": "İngiliz iş etiğine uygun, nezaketli, doğrudan laboratuvar verimliliği ve mevzuat uyumu odaklı profesyonel ton.",
         "badge_color": "#6366F1"
     }
@@ -8729,6 +8747,8 @@ def resolve_country_buying_behavior(country_name):
         "communication_channels": "Resmi E-posta + Video Konferans + Kongre Görüşmesi",
         "cultural_taboos": "Yasal CE sertifikası olmadan teklif vermek; teknik servis desteği taahhüt etmemek.",
         "dining_hospitality_protocol": "Saygılı ve Ölçülü İş Yemeği Protokolü: Yüz yüze temaslarda veya kongre esnasında akşam yemeği daveti güveni pekiştirir; yerel kültürel ve kurumsal etik kurallara riayet edilmelidir.",
+        "dining_contract_rule": "🟡 Pazarın Yapısına Göre Hibrit Strateji",
+        "contract_closing_strategy": "Kuzey Avrupa ve Anglo-Sakson pazarlarda yemeksiz doğrudan veri ve şartname üzerinden sözleşme tercih edilirken; Akdeniz, Orta Doğu ve Doğu Avrupa'da sözleşme öncesi yüz yüze ağırlama ve iş yemeği mutlak güven ön koşuludur.",
         "email_tone_guidance": "Klinik başarı, hasta güvenliği ve yatırım geri dönüşü odaklı resmi kurumsal dil.",
         "badge_color": "#00F5FF"
     }
@@ -8786,6 +8806,21 @@ def render_country_buying_behavior_card_html(country_name):
                 <b style="color:#FFB800;font-size:12.8px;">4. İş Yemeği, Akşam Yemeği & Ağırlama Protokolü (Business Dining & Hospitality Etiquette):</b>
             </div>
             <div style="color:#F1F5F9;">{b.get('dining_hospitality_protocol', 'Saygılı ve ölçülü iş yemeği protokolü esastır.')}</div>
+        </div>
+
+        <div style="background:linear-gradient(135deg, rgba(30,41,59,0.95) 0%, rgba(15,23,42,0.95) 100%);border:1.5px solid #FFD700;border-radius:10px;padding:14px 16px;margin-bottom:12px;box-shadow:0 4px 15px rgba(0,0,0,0.3);">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px;border-bottom:1px solid rgba(255,215,0,0.25);padding-bottom:8px;">
+                <div style="display:flex;align-items:center;gap:8px;">
+                    <span style="font-size:18px;">📋</span>
+                    <b style="color:#FFD700;font-size:13px;">5. Sözleşme İmzası Öncesi Yemek Önceliği & Satış Kapatma Stratejisi:</b>
+                </div>
+                <span style="background:rgba(255,215,0,0.15);color:#FFD700;border:1px solid #FFD700;padding:3px 10px;border-radius:6px;font-size:11px;font-weight:700;">
+                    {b.get('dining_contract_rule', 'Hibrit Sözleşme Modeli')}
+                </span>
+            </div>
+            <div style="color:#E2E8F0;font-size:11.8px;line-height:1.7;">
+                {b.get('contract_closing_strategy', '')}
+            </div>
         </div>
 
         <div style="background:rgba(0,0,0,0.3);border-radius:8px;padding:10px 14px;display:flex;flex-direction:column;gap:6px;font-size:11.5px;line-height:1.6;">
@@ -14563,6 +14598,308 @@ active_subviews = ZEUS_HUB_SUBVIEWS.get(nav_selection, [
     "🛃 Market Intelligence & Compare"
 ])
 
+
+def render_active_omni_search_hub(query_str):
+    """
+    Executes live multi-entity keyword search across Prospects/Clinics, Countries & Cultural
+    Negotiation Playbooks (including Dining & Contract Closing Strategies), Tenders, and Products.
+    """
+    if not query_str or not query_str.strip():
+        return
+
+    q_clean = query_str.strip()
+    q = q_clean.lower()
+
+    # 1. Search Prospects, Clinics & Distributors
+    matched_firms = []
+    seen_firm_keys = set()
+    for c_name, p_list in GLOBAL_PROSPECT_RADAR.items():
+        for p in p_list:
+            fk = (c_name, p.get('name', ''))
+            if fk in seen_firm_keys:
+                continue
+            p_txt = f"{p.get('name', '')} {c_name} {p.get('city', '')} {p.get('category', '')} {p.get('contact_person', '')} {p.get('email', '')} {p.get('strategy_rationale', '')} {p.get('tier', '')}".lower()
+            if q in p_txt:
+                seen_firm_keys.add(fk)
+                matched_firms.append({"country": c_name, **p})
+
+    # Also search in get_country_gtm_directory for any additional distributors
+    for c_name in ["Turkey", "Saudi Arabia", "Egypt", "Iraq", "Germany", "Italy", "Spain", "United Kingdom", "UAE", "Qatar", "Algeria", "Jordan"]:
+        try:
+            gtm_info = get_country_gtm_directory(c_name)
+            for dist in gtm_info.get('distributors', []):
+                d_name = dist.get('Firma', '')
+                fk = (c_name, d_name)
+                if fk in seen_firm_keys or not d_name:
+                    continue
+                d_txt = f"{d_name} {c_name} {dist.get('Şehir', '')} {dist.get('Odak / Yetkinlik', '')} {dist.get('İletişim / Web', '')}".lower()
+                if q in d_txt:
+                    seen_firm_keys.add(fk)
+                    matched_firms.append({
+                        "country": c_name,
+                        "name": d_name,
+                        "category": "🤝 MedTech & Laboratuvar Distribütörü",
+                        "tier": "⭐ Tier 1 (Öncelikli Dağıtıcı)",
+                        "city": dist.get('Şehir', f"{c_name} Merkez"),
+                        "contact_person": f"{d_name} Satınalma & Medikal Direktörlüğü",
+                        "email": dist.get('İletişim / Web', '').split('|')[0].strip() if '@' in dist.get('İletişim / Web', '') else "info@distributor.com",
+                        "phone": dist.get('Telefon', '+90 212 347 0000'),
+                        "web": dist.get('İletişim / Web', '').split('|')[1].strip() if '|' in dist.get('İletişim / Web', '') else "https://www.medtech.com",
+                        "strategy_rationale": dist.get('Odak / Yetkinlik', f"{c_name} genelinde yetkili dağıtım ağı")
+                    })
+        except Exception:
+            pass
+
+    # 2. Search Countries, Cultural Buying Behaviors, Dining & Contract Closing Strategies
+    matched_cultures = []
+    is_culture_search = any(term in q for term in ["yemek", "sofra", "ziyafet", "kahve", "dinner", "hospitality", "sözleşme", "contract", "kültür", "culture", "pazarlık", "iskonto", "uyum", "compliance", "öncelik", "kapatma"])
+    for c_name, b in GLOBAL_COUNTRY_BUYING_BEHAVIOR.items():
+        b_txt = f"{c_name} {b.get('culture_title', '')} {b.get('decision_hierarchy', '')} {b.get('bargaining_culture', '')} {b.get('bargaining_advice', '')} {b.get('dining_hospitality_protocol', '')} {b.get('dining_contract_rule', '')} {b.get('contract_closing_strategy', '')} {b.get('cultural_taboos', '')}".lower()
+        if q in b_txt or is_culture_search or (q in c_name.lower()):
+            matched_cultures.append({"country": c_name, **b})
+
+    # 3. Search Tenders & Procurement
+    matched_tenders = []
+    all_tender_countries = ["Saudi Arabia", "Egypt", "Turkey", "Iraq", "UAE", "Germany", "Spain", "Italy", "UK", "Jordan", "Qatar", "Algeria"]
+    is_tender_search = any(term in q for term in ["ihale", "tender", "şartname", "nupco", "upa", "dmo", "ekap", "kimadia", "ted", "kamu", "bütçe", "budget"])
+    for c_name in all_tender_countries:
+        try:
+            t_intel = resolve_country_tender_intel(c_name)
+            t_txt = f"{c_name} {t_intel.get('official_authority', '')} {t_intel.get('est_budget_range', '')}".lower()
+            for port in t_intel.get('procurement_portals', []):
+                t_txt += f" {port.get('portal_name', '')} {port.get('authority', '')} {port.get('tender_portal_url', '')}".lower()
+            for tend in t_intel.get('active_tenders', []):
+                t_txt += f" {tend.get('title', '')} {tend.get('authority', '')} {tend.get('status', '')}".lower()
+            if q in t_txt or is_tender_search or (q in c_name.lower()):
+                matched_tenders.append({"country": c_name, "intel": t_intel})
+        except Exception:
+            pass
+
+    # 4. Search Devices, Consumables & Regulations
+    prod_items = [
+        {
+            "title": "ZEUS Pulse Stimulator (ZPS 26)",
+            "badge": "⚡ Elektriksel Oosit Aktivasyon Donanımı (AOA)",
+            "specs": "Patentli mikro-puls fizyolojik stimülasyon, non-toksik elektriksel tetikleme (The Spark of Life), 4-havuzlu Z-Dish uyumlu.",
+            "price": "$8,500 - $12,500 USD (Turnkey Laboratuvar Paketinde Avantajlı Fiyat)",
+            "cert": "CE Sertifikalı (Class IIa Tıbbi Cihaz - MDR Değil)",
+            "indications": "Total Fertilizasyon Başarısızlığı (TFF), Düşük Döllenme (<%30), Oosit Aktivasyon Kusuru, Şiddetli Erkek Faktörü (ROSI / Tanaka et al.)."
+        },
+        {
+            "title": "BioPSafe Gelişmiş Biyopsi İstasyonu",
+            "badge": "🧬 Trofektoderm & Blastosist Biyopsi İstasyonu",
+            "specs": "Entegre ısıtmalı tabla, mikromanipülatör montaj kiti, hücre aspirasyon modülü, titreşimsiz ergonomik tasarım.",
+            "price": "$14,500 - $18,000 USD",
+            "cert": "CE Sertifikalı (Class I)",
+            "indications": "PGT-A / PGT-M genetik tanı öncesi güvenli trofektoderm biyopsisi."
+        },
+        {
+            "title": "Z-Dish 4x5 Mikro Kuyu Sarf Plakası",
+            "badge": "🧫 Steril Tek Kullanımlık Embriyoloji Diski",
+            "specs": "4 havuz × 5 oosit = maksimum 20 oosit/dish kapasitesi. Özel altın kaplama mikro-elektrot aralığı.",
+            "price": "$100 USD / Kutu (10 Adet Dish)",
+            "cert": "Parti Bazlı Mouse Embryo Assay (MEA >%80) & LAL Endotoksin (<0.05 EU/ml) Onaylı",
+            "indications": "Elektriksel oosit aktivasyonu işlem sarfı."
+        },
+        {
+            "title": "Electroliquid Fizyolojik Aktivasyon Tamponu",
+            "badge": "🧪 İyon Dengeli İletken Çözelti",
+            "specs": "Elektriksel mikro-puls iletimini optimize eden, oosit membran stabilitesini koruyan tampon solüsyon.",
+            "price": "$65 USD / Şişe (20 ml)",
+            "cert": "ISO 13485 & CE Sertifikalı",
+            "indications": "Z-Dish kuyu içi iletim ortamı."
+        },
+        {
+            "title": "CE Sertifikasyonu (MDR Değil, CE Class IIa)",
+            "badge": "📜 Tıbbi Cihaz Ruhsatlandırma & Uyumluluk",
+            "specs": "ZEUS Pulse Stimulator (ZPS 26) Avrupa Birliği CE Class IIa Medikal Sertifikasına sahiptir. ASLA MDR olarak belirtilmez.",
+            "price": "Uluslararası Tescil Dosyası Mevcut",
+            "cert": "CE Class IIa (Notified Body Onaylı)",
+            "indications": "AB üyesi ülkeler ve CE tanıyan tüm pazarlarda doğrudan satış yetkisi."
+        },
+        {
+            "title": "SFDA & NUPCO Uyumluluğu (Suudi Arabistan)",
+            "badge": "🇸🇦 SFDA MDMA Ruhsatı & NUPCO Çerçeve Kriterleri",
+            "specs": "Suudi Arabistan Gıda ve İlaç Kurumu (SFDA) tıbbi cihaz pazarlama izni (MDMA) ve NUPCO kamu ihaleleri şartname uyumu.",
+            "price": "NUPCO Çerçeve İhalesi Kapsamında",
+            "cert": "SFDA MDMA & GHTF Uyumlu",
+            "indications": "Kraliyet hastaneleri ve özel IVF zincirlerinde tedarik."
+        },
+        {
+            "title": "EDA İthalat Onayı (Mısır)",
+            "badge": "🇪🇬 EDA Tescili & UPA Kamu Tedariği",
+            "specs": "Mısır İlaç Kurumu (EDA) medikal cihaz tescili ve UPA (Muvahhad Satın Alma Kurumu) kamu tedarik şartnamelerine uyum.",
+            "price": "Vaka Başı $7 - $10 USD Sarf Ekonomisi",
+            "cert": "EDA Medical Device Registration",
+            "indications": "Kasr Al-Ainy ve özel IVF zincirleri tedariği."
+        },
+        {
+            "title": "TİTCK / ÜTS Tekil Barkod Tescili (Türkiye)",
+            "badge": "🇹🇷 Ürün Takip Sistemi (ÜTS) & DMO Sağlık Market",
+            "specs": "Sağlık Bakanlığı TİTCK ÜTS sistemine tekil barkod ve karekod kaydı, DMO Sağlık Market üzerinden doğrudan kamu siparişi.",
+            "price": "DMO & Kamu Çerçeve Anlaşmalı",
+            "cert": "TİTCK ÜTS Kayıtlı & CE Belgeli",
+            "indications": "Türkiye kamu hastaneleri ve özel tüp bebek zincirleri."
+        }
+    ]
+    is_prod_search = any(term in q for term in ["cihaz", "ürün", "device", "zps", "biopsafe", "zdish", "z-dish", "sarf", "fiyat", "ce", "mdr", "sfda", "eda", "üts", "titck", "hfea", "mevzuat", "sertifika"])
+    matched_products = []
+    for pr in prod_items:
+        pr_txt = f"{pr['title']} {pr['badge']} {pr['specs']} {pr['cert']} {pr['indications']}".lower()
+        if q in pr_txt or is_prod_search:
+            matched_products.append(pr)
+
+    tot_matches = len(matched_firms) + len(matched_cultures) + len(matched_tenders) + len(matched_products)
+
+    # Render Header Card with Clear Button
+    st.markdown(f"""
+    <div style="background:linear-gradient(135deg, rgba(15,23,42,0.96) 0%, rgba(30,41,59,0.94) 100%);border:1.5px solid #00F5FF;border-radius:12px;padding:14px 18px;margin-bottom:14px;box-shadow:0 6px 20px rgba(0,245,255,0.2);">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+            <div style="display:flex;align-items:center;gap:10px;">
+                <span style="font-size:20px;">🔍</span>
+                <div>
+                    <h4 style="margin:0;color:#FFFFFF;font-size:16px;font-weight:800;">
+                        Canlı Arama Sonuçları: <span style="color:#00F5FF;">"{q_clean}"</span>
+                    </h4>
+                    <div style="color:#94A3B8;font-size:12px;margin-top:2px;">
+                        Toplam <b style="color:#00E676;">{tot_matches}</b> sonuç eşleşti ({len(matched_firms)} Kurum/Firma, {len(matched_cultures)} Kültür & Sözleşme Stratejisi, {len(matched_tenders)} İhale, {len(matched_products)} Ürün/Mevzuat)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    c_btn1, c_btn2 = st.columns([1.2, 4.0])
+    with c_btn1:
+        if st.button("❌ Aramayı Temizle (Normale Dön)", key="btn_clear_omni_search_active", use_container_width=True):
+            st.session_state["omni_search_input"] = ""
+            st.rerun()
+
+    if tot_matches == 0:
+        st.warning(f"'{q_clean}' ifadesine uygun sonuç bulunamadı. Lütfen firma adı, ülke (örn: Saudi, Italy, Egypt), cihaz (ZPS 26, BioPSafe) veya anahtar kelime (yemek, ihale, sözleşme) ile tekrar deneyin.")
+        return
+
+    # Tabs for categories
+    s_tab1, s_tab2, s_tab3, s_tab4 = st.tabs([
+        f"🏢 Firmalar & Klinikler ({len(matched_firms)})",
+        f"🌍 Kültürel Satış & Sözleşme Stratejisi ({len(matched_cultures)})",
+        f"🏛️ İhaleler & Şartnameler ({len(matched_tenders)})",
+        f"⚡ Cihaz, Ürün & Mevzuat ({len(matched_products)})"
+    ])
+
+    with s_tab1:
+        if not matched_firms:
+            st.info("Bu aramaya uygun firma veya klinik kaydı bulunamadı.")
+        else:
+            for idx_f, f_item in enumerate(matched_firms[:25]):
+                f_name = f_item.get('name', 'Bilinmeyen Kurum')
+                f_c = f_item.get('country', '')
+                f_cat = f_item.get('category', 'Sağlık Kurumu')
+                f_tier = f_item.get('tier', '⭐ Tier 1')
+                f_city = f_item.get('city', '')
+                f_person = f_item.get('contact_person', 'Yetkili')
+                f_email = f_item.get('email', 'info@clinic.com')
+                f_phone = f_item.get('phone', '')
+                f_web = f_item.get('web', '')
+                f_strat = f_item.get('strategy_rationale', '')
+
+                st.markdown(f"""
+                <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,245,255,0.22);border-radius:8px;padding:12px 14px;margin-bottom:10px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+                        <b style="color:#00F5FF;font-size:14px;">{f_name}</b>
+                        <span style="background:rgba(0,245,255,0.12);color:#00F5FF;border:1px solid rgba(0,245,255,0.3);padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:700;">{f_c} • {f_tier}</span>
+                    </div>
+                    <div style="color:#CBD5E1;font-size:11.8px;margin-top:4px;">
+                        📍 <b>Şehir / Kategori:</b> {f_city} | {f_cat}<br>
+                        👤 <b>Yetkili Muhatap:</b> {f_person}<br>
+                        ✉️ <b>E-posta:</b> <a href="mailto:{f_email}" style="color:#38BDF8;text-decoration:none;">{f_email}</a> {f'| 📞 <b>Telefon:</b> {f_phone}' if f_phone else ''} {f'| 🌐 <a href="{f_web}" target="_blank" style="color:#00F5FF;text-decoration:none;">Web</a>' if f_web else ''}
+                    </div>
+                    {f'<div style="color:#94A3B8;font-size:11px;margin-top:4px;border-top:1px dashed rgba(255,255,255,0.08);padding-top:4px;">💡 <b>Stratejik Gerekçe:</b> {f_strat}</div>' if f_strat else ''}
+                </div>
+                """, unsafe_allow_html=True)
+
+    with s_tab2:
+        if not matched_cultures:
+            st.info("Bu aramaya uygun kültürel satış veya sözleşme kuralı bulunamadı.")
+        else:
+            for c_item in matched_cultures:
+                c_name = c_item.get('country', '')
+                c_title = c_item.get('culture_title', '')
+                c_rule = c_item.get('dining_contract_rule', 'Hibrit Sözleşme Modeli')
+                c_strat = c_item.get('contract_closing_strategy', '')
+                c_dining = c_item.get('dining_hospitality_protocol', '')
+                c_bargain = c_item.get('bargaining_advice', '')
+
+                st.markdown(f"""
+                <div style="background:linear-gradient(135deg, rgba(30,41,59,0.92) 0%, rgba(15,23,42,0.92) 100%);border:1.5px solid #FFD700;border-radius:10px;padding:14px;margin-bottom:12px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:6px;border-bottom:1px solid rgba(255,215,0,0.2);padding-bottom:6px;">
+                        <div>
+                            <span style="font-size:15px;color:#FFFFFF;font-weight:800;">🌍 {c_name}</span>
+                            <span style="color:#FFD700;font-size:12px;margin-left:8px;font-weight:700;">{c_title}</span>
+                        </div>
+                        <span style="background:rgba(255,215,0,0.15);color:#FFD700;border:1px solid #FFD700;padding:3px 8px;border-radius:5px;font-size:10.5px;font-weight:700;">
+                            {c_rule}
+                        </span>
+                    </div>
+                    <div style="color:#F1F5F9;font-size:12px;line-height:1.65;margin-bottom:8px;">
+                        <b style="color:#FFD700;">🤝 Sözleşme Öncesi Yemek & Kapatma Stratejisi:</b><br>
+                        {c_strat}
+                    </div>
+                    <div style="color:#CBD5E1;font-size:11.5px;line-height:1.6;border-top:1px dashed rgba(255,255,255,0.08);padding-top:6px;">
+                        🍽️ <b>İş Yemeği & Ağırlama Protokolü:</b> {c_dining}<br>
+                        🏷️ <b>Pazarlık & İskonto Yaklaşımı:</b> {c_bargain}
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+
+    with s_tab3:
+        if not matched_tenders:
+            st.info("Bu aramaya uygun ihale kaydı bulunamadı.")
+        else:
+            for t_item in matched_tenders:
+                t_country = t_item.get('country', '')
+                t_intel = t_item.get('intel', {})
+                t_auth = t_intel.get('official_authority', 'Sağlık Bakanlığı')
+                t_bgt = t_intel.get('est_budget_range', '$150,000 - $350,000 USD')
+
+                st.markdown(f"""
+                <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,230,118,0.25);border-radius:8px;padding:12px 14px;margin-bottom:10px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+                        <b style="color:#00E676;font-size:13.5px;">🏛️ {t_country} Sağlık İhaleleri & Satın Alma Kanalları</b>
+                        <span style="background:rgba(0,230,118,0.12);color:#00E676;border:1px solid rgba(0,230,118,0.3);padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:700;">Bütçe: {t_bgt}</span>
+                    </div>
+                    <div style="color:#CBD5E1;font-size:11.8px;margin-top:4px;">
+                        🏛️ <b>Yetkili Otorite:</b> {t_auth}
+                    </div>
+                    <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;">
+                """, unsafe_allow_html=True)
+                for port in t_intel.get('procurement_portals', []):
+                    p_name = port.get('portal_name', 'Portal')
+                    p_url = port.get('tender_portal_url', '#')
+                    st.markdown(f'<a href="{p_url}" target="_blank" style="display:inline-block;background:rgba(0,245,255,0.1);color:#00F5FF;border:1px solid rgba(0,245,255,0.3);padding:3px 8px;border-radius:4px;font-size:11px;text-decoration:none;">🔗 {p_name}</a>', unsafe_allow_html=True)
+                st.markdown("</div></div>", unsafe_allow_html=True)
+
+    with s_tab4:
+        if not matched_products:
+            st.info("Bu aramaya uygun ürün veya mevzuat kaydı bulunamadı.")
+        else:
+            for pr in matched_products:
+                st.markdown(f"""
+                <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,245,255,0.25);border-radius:8px;padding:12px 14px;margin-bottom:10px;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+                        <b style="color:#00F5FF;font-size:14px;">{pr['title']}</b>
+                        <span style="background:rgba(0,245,255,0.12);color:#00F5FF;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:700;">{pr['badge']}</span>
+                    </div>
+                    <div style="color:#CBD5E1;font-size:11.8px;margin-top:4px;line-height:1.6;">
+                        🔬 <b>Spesifikasyon:</b> {pr['specs']}<br>
+                        📜 <b>Sertifikasyon:</b> <span style="color:#00E676;font-weight:700;">{pr['cert']}</span> | 💰 <b>Fiyat:</b> <span style="color:#FFD700;font-weight:700;">{pr['price']}</span><br>
+                        🎯 <b>Klinik Endikasyon:</b> {pr['indications']}
+                    </div>
+                </div>
+                """, unsafe_allow_html=True)
+    st.markdown("---")
+
 # Universal Hub Header & Subview Switcher
 st.markdown("""
 <style>
@@ -14624,14 +14961,9 @@ with col_hub_hdr2:
 if not active_view:
     active_view = active_subviews[0]
 
-# Quick Omni-Search Match Alert
+# Active Live Omni-Search Hub
 if omni_search_q and omni_search_q.strip():
-    q_term = omni_search_q.strip()
-    st.markdown(f"""
-    <div style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(0, 245, 255, 0.4); border-radius: 10px; padding: 10px 16px; margin-bottom: 14px;">
-        <b style="color: #00F5FF; font-size: 13px;">🔍 Omni-Search Aktif: '{q_term}'</b> | <span style="font-size: 12px; color: #CBD5E1;">İlgili modüllere doğrudan erişmek için yukarıdaki alt sekmeleri kullanabilirsiniz.</span>
-    </div>
-    """, unsafe_allow_html=True)
+    render_active_omni_search_hub(omni_search_q.strip())
 
 if active_view == "🧭 Executive Overview & 3D Globe":
     # Interactive Video Tour & Simulation Expander
@@ -20610,6 +20942,13 @@ elif active_view == "🛃 Market Intelligence & Compare":
                     "📍 Niş / Akademik"
                 ])
 
+            # Live Prospect Keyword Search
+            prospect_live_search = st.text_input(
+                "🔍 Bu Ülkedeki Kurum, Hekim veya Şehir Filtrele:",
+                placeholder="Örn: Palex, Cleopatra, Bedaya, Milano, Dr. Sulaiman, GeneraLife...",
+                key=f"pscout_kw_search_{radar_country}"
+            )
+
             # Country AI Landscape Summary Card
             dist_info = dist_by_code.get(target_country_row['code'], {})
             if target_country_row['code'] in ['JO', 'IQ', 'JI']:
@@ -20669,11 +21008,16 @@ elif active_view == "🛃 Market Intelligence & Compare":
             
             # Apply filters
             filtered_prospects = []
+            p_kw = prospect_live_search.strip().lower() if 'prospect_live_search' in locals() and prospect_live_search else ""
             for p in prospects_list:
                 if prospect_cat_filter != "Tüm Hedef Kurumlar" and p['category'] != prospect_cat_filter:
                     continue
                 if tier_filter != "Tüm Seviyeler" and p['tier'] != tier_filter:
                     continue
+                if p_kw:
+                    p_haystack = f"{p.get('name','')} {p.get('city','')} {p.get('contact_person','')} {p.get('email','')} {p.get('strategy_rationale','')}".lower()
+                    if p_kw not in p_haystack:
+                        continue
                 filtered_prospects.append(p)
                 
             if not filtered_prospects:
@@ -21030,6 +21374,9 @@ BODY:
                                     </div>
                                     <div style="background:rgba(0,0,0,0.25);padding:6px 8px;border-radius:6px;border-left:2.5px solid #FFB800;">
                                         <b style="color:#FFB800;">🍽️ İş Yemeği & Ağırlama:</b><br><span style="color:#E2E8F0;">{cult_playbook.get('dining_hospitality_protocol', '')}</span>
+                                    </div>
+                                    <div style="background:rgba(0,0,0,0.25);padding:6px 8px;border-radius:6px;border-left:2.5px solid #FFD700;">
+                                        <b style="color:#FFD700;">📋 Sözleşme & Yemek Kuralı:</b><br><span style="color:#E2E8F0;">{cult_playbook.get('dining_contract_rule', '')}</span>
                                     </div>
                                     <div style="background:rgba(0,0,0,0.25);padding:6px 8px;border-radius:6px;border-left:2.5px solid #FF6B6B;">
                                         <b style="color:#FF6B6B;">🚫 Kırmızı Çizgi (Tabu):</b><br><span style="color:#E2E8F0;">{cult_playbook.get('cultural_taboos')}</span>
