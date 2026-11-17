@@ -9708,7 +9708,7 @@ def get_country_gtm_directory(c_name, c_row=None):
             "distributors": [
                 {"Firma": "Gynemed Italia S.r.l.", "Şehir": "Milano / Roma", "Odak / Yetkinlik": "Safkan IVF Laboratuvar Cihaz & Sarfları", "İletişim / Web": "info@gynemed.it | gynemed.de", "Telefon": "+39 02 8903 1100"},
                 {"Firma": "Bio-Optica Milano S.p.A.", "Şehir": "Milano", "Odak / Yetkinlik": "Kamu İhaleleri (Gara d'Appalto) & Steril Sarf", "İletişim / Web": "info@bio-optica.it | bio-optica.it", "Telefon": "+39 02 2127 131"},
-                {"Firma": "Palex Medical Italia", "Şehir": "Segrate (Milano)", "Odak / Yetkinlik": "Büyük Hastane & Özel IVF Zincirleri Ağı", "İletişim / Web": "italia@palexmedical.com | palexmedical.com", "Telefon": "+39 02 2692 1100"},
+                {"Firma": "Palex Medical Italia", "Şehir": "Segrate (Milano)", "Odak / Yetkinlik": "Büyük Hastane & Özel IVF Zincirleri Ağı", "İletişim / Web": "info@palexmedical.com | palexmedical.com", "Telefon": "+39 02 2692 1100"},
                 {"Firma": "Cryo Bio System Italia", "Şehir": "Piacenza", "Odak / Yetkinlik": "Oosit & Embriyo Kriyoprezervasyon Dağıtımı", "İletişim / Web": "cbsitalia@cryobiosystem.com", "Telefon": "+39 0523 590 110"},
                 {"Firma": "Medical Technology PMA", "Şehir": "Bologna", "Odak / Yetkinlik": "Anahtar Teslim PMA Mikromanipülasyon Kurulumu", "İletişim / Web": "info@medicaltechnology.it", "Telefon": "+39 051 614 2200"}
             ],
@@ -9794,7 +9794,7 @@ def get_country_gtm_directory(c_name, c_row=None):
             "distributors": [
                 {"Firma": "Biopharm Algérie MedTech", "Şehir": "Cezayir", "Odak / Yetkinlik": "Lider İlaç ve Medikal Cihaz Dağıtıcısı", "İletişim / Web": "contact@biopharm-dz.com", "Telefon": "+213 21 50 88 00"},
                 {"Firma": "SARL MediTech Maghreb", "Şehir": "Cezayir & Oran", "Odak / Yetkinlik": "Safkan IVF Laboratuvar Donanımı & Sarf", "İletişim / Web": "commercial@meditech-maghreb.dz", "Telefon": "+213 23 45 11 22"},
-                {"Firma": "Hikma Pharma Algérie (Bölgesel Medikal Acente)", "Şehir": "Cezayir", "Odak / Yetkinlik": "Hastane ve Klinik Dağıtımı", "İletişim / Web": "algeria@hikma.com", "Telefon": "+213 21 69 44 00"},
+                {"Firma": "Hikma Pharma Algérie (Bölgesel Medikal Acente)", "Şehir": "Cezayir", "Odak / Yetkinlik": "Hastane ve Klinik Dağıtımı", "İletişim / Web": "info@hikma.com | hikma.com", "Telefon": "+213 21 69 44 00"},
                 {"Firma": "El-Kendy Lab Supplies", "Şehir": "Konstantin & Annaba", "Odak / Yetkinlik": "Doğu Cezayir Laboratuvar İkmal", "İletişim / Web": "sales@elkendy-dz.com", "Telefon": "+213 31 88 22 11"}
             ],
             "decision_makers": [
