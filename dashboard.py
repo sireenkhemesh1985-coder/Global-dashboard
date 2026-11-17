@@ -7789,21 +7789,28 @@ with st.sidebar:
     
     st.markdown("<div style='height: 4px;'></div>", unsafe_allow_html=True)
     
+    main_nav_opts = [
+        "🌐 Global Cockpit & Executive Overview",
+        "🌍 Pazar Analizi & Ülke 360° (Market Analysis)",
+        "⚖️ Çok Boyutlu Karşılaştırma Masası (Compare)",
+        "🧮 Fiyatlandırma, İskonto & Marjlar (Pricing)",
+        "📜 Gümrük, GTİP & Sağlık Mevzuatı (Regulations)",
+        "🏛️ Küresel & Kamu İhaleleri Masası (Tenders)",
+        "⚖️ Stratejik Karar Merkezi (Strategic Decision Center)",
+        "📱 MedTech Sosyal Medya & Sağlık Mevzuatı",
+        "💼 Ticari Operasyonlar, CRM & Satış Analitiği",
+        "🧠 Yapay Zeka Risk & Tahminleme Simülatörü",
+        "📑 Yönetici Raporları & Veri Dışa Aktarma"
+    ]
+    if "main_nav_radio" not in st.session_state:
+        st.session_state["main_nav_radio"] = main_nav_opts[0]
+    elif st.session_state["main_nav_radio"] not in main_nav_opts:
+        st.session_state["main_nav_radio"] = main_nav_opts[0]
+
     nav_selection = st.radio(
         "Navigation",
-        [
-            "🌐 Global Cockpit & Executive Overview",
-            "🌍 Pazar Analizi & Ülke 360° (Market Analysis)",
-            "⚖️ Çok Boyutlu Karşılaştırma Masası (Compare)",
-            "🧮 Fiyatlandırma, İskonto & Marjlar (Pricing)",
-            "📜 Gümrük, GTİP & Sağlık Mevzuatı (Regulations)",
-            "🏛️ Küresel & Kamu İhaleleri Masası (Tenders)",
-            "⚖️ Stratejik Karar Merkezi (Strategic Decision Center)",
-            "📱 MedTech Sosyal Medya & Sağlık Mevzuatı",
-            "💼 Ticari Operasyonlar, CRM & Satış Analitiği",
-            "🧠 Yapay Zeka Risk & Tahminleme Simülatörü",
-            "📑 Yönetici Raporları & Veri Dışa Aktarma"
-        ],
+        main_nav_opts,
+        key="main_nav_radio",
         label_visibility="collapsed"
     )
 
@@ -12272,20 +12279,21 @@ def get_country_prospects(c_name, c_row=None):
     return prospects
 
 def get_default_distributor_quotas():
+    # 100% Consistent with authoritative COUNTRY_MACRO_IVF data dictionary
     return {
         'ATC_Kuwait': {
             'id': 'ATC_Kuwait',
             'name': 'ADVANCED TECHNOLOGY COMPANY K.S.C.P. (ATC)',
             'country': 'Kuwait',
             'country_flag': '🇰🇼 Kuveyt',
-            'gdp_pc': '$52,000 USD (Yüksek Alım Gücü)',
-            'clinics': 14,
-            'cycles': '8,500 Siklus / Yıl',
+            'gdp_pc': '$38,500 USD (Yüksek Alım Gücü - Körfez)',
+            'clinics': 12,
+            'cycles': '4,500 Siklus / Yıl',
             'customs': '%5.0 (Körfez Gümrük Birliği - Düşük Engel)',
             'installed_devices': 3,
             'historical_summary': '2025: 3 Cihaz ($25.5K) | 2026: 0 Cihaz, 9 Kutu Sarf ($750)',
             'status_diagnosis': '⚠️ UYUYAN / PASİF DİSTRİBÜTÖR (Atıl Cihaz Tehlikesi)',
-            'ai_rationale': 'Kuveyt kişi başı $52K GSYİH ile dünyanın en zengin pazarlarından biridir ve %5 gümrük vergisi ithalatta maliyet baskısı yaratmamaktadır. Sahadaki 3 kurulu Piezo cihazı yılda klinik başına en az 25-30 kutu dish tüketme potansiyeline sahiptir (asgari 75-90 kutu sarf). ATC 2026 yılında yalnızca $750 sarf alarak cihazları atıl bırakmıştır. 2027 için asgari sarf çekişi zorunlu tutulmalı ve 1 yeni cihaz kotası konulmalıdır.',
+            'ai_rationale': 'Kuveyt kişi başı $38.5K GSYİH ile Körfez\'in en istikrarlı ve alım gücü yüksek pazarlarından biridir (MOH vatandaşların IVF tedavisini tam karşılar) ve %5 gümrük vergisi ithalatta maliyet baskısı yaratmamaktadır. Pazardaki 12 klinikten 3\'ünde ZEUS kurulu olup klinik başına yılda en az 25-30 kutu dish tüketme potansiyeline sahiptir (asgari 75-90 kutu sarf). ATC 2026 yılında yalnızca $750 sarf alarak cihazları atıl bırakmıştır. 2027 için asgari sarf çekişi zorunlu tutulmalı ve 1 yeni cihaz kotası konulmalıdır.',
             'ai_target_devices': 1,
             'ai_target_consumables': 75,
             'ai_target_revenue': 14750.0,
@@ -12302,7 +12310,7 @@ def get_default_distributor_quotas():
             'name': 'ASSISTED MEDICAL SOLUTION EST (AMS)',
             'country': 'Saudi Arabia',
             'country_flag': '🇸🇦 Suudi Arabistan',
-            'gdp_pc': '$32,000 USD (G20 MENA Lideri)',
+            'gdp_pc': '$32,500 USD (G20 MENA Lideri)',
             'clinics': 38,
             'cycles': '22,000 Siklus / Yıl',
             'customs': '%5.0 (SFDA Medikal Cihaz Tescili Gerekli)',
@@ -12326,14 +12334,14 @@ def get_default_distributor_quotas():
             'name': 'SIRIUS PHARM COMPANY',
             'country': 'Jordan-Iraq',
             'country_flag': '🇯🇴🇮🇶 Ürdün & Irak',
-            'gdp_pc': '$4,800 USD (Orta Gelir)',
-            'clinics': 55,
+            'gdp_pc': '$4,900 USD (Orta Gelir)',
+            'clinics': 45,
             'cycles': '28,000 Siklus / Yıl',
             'customs': '%6.0 - %10.0 (Kimadia / JFDA İthalat İzni)',
             'installed_devices': 18,
             'historical_summary': '2024: 8 Cihaz, 140 Sarf | 2025: 10 Cihaz, 299 Sarf | 2026: 236 Sarf ($19K)',
             'status_diagnosis': '🏆 LOKOMOTİF DİSTRİBÜTÖR (Münhasır Dağıtıcı)',
-            'ai_rationale': '18 kurulu cihaz ile ZEUS\'un en büyük kurulu tabanına sahiptir. Ürdün ve Irak pazarında toplam 55 klinik bulunmaktadır. Mevcut 18 cihazın yıllık teorik tüketim kapasitesi 550-700 kutu sarftır. Bağdat ve Amman ihalelerinde yeni 4 Piezo cihazı ve 600 kutu sarf kotası rasyonel ve ulaşılabilirdir.',
+            'ai_rationale': '18 kurulu cihaz ile ZEUS\'un en büyük kurulu tabanına sahiptir. Ürdün ve Irak pazarında toplam 45 klinik bulunmaktadır. Mevcut 18 cihazın yıllık teorik tüketim kapasitesi 550-700 kutu sarftır. Bağdat ve Amman ihalelerinde yeni 4 Piezo cihazı ve 600 kutu sarf kotası rasyonel ve ulaşılabilirdir.',
             'ai_target_devices': 4,
             'ai_target_consumables': 600,
             'ai_target_revenue': 78000.0,
@@ -12350,14 +12358,14 @@ def get_default_distributor_quotas():
             'name': 'INTERNATIONAL TECHNICAL LEGACY (ITL)',
             'country': 'Qatar',
             'country_flag': '🇶🇦 Katar',
-            'gdp_pc': '$82,000 USD (Dünya Lideri Alım Gücü)',
-            'clinics': 8,
+            'gdp_pc': '$86,000 USD (Dünya Lideri Alım Gücü)',
+            'clinics': 6,
             'cycles': '4,500 Siklus / Yıl',
             'customs': '%5.0 (MoPH Hızlı Gümrükleme)',
             'installed_devices': 4,
             'historical_summary': '2025: 4 Cihaz, 202 Sarf ($52.3K) | 2026: 247 Sarf ($20.6K)',
             'status_diagnosis': '💎 YÜKSEK VERİMLİ AKTİF DİSTRİBÜTÖR (Cihaz Başı Lider)',
-            'ai_rationale': 'Katar kişi başı $82K GSYİH ile en zengin pazardır. ITL, 4 cihazla yıllık 247 kutu sarf tüketerek cihaz başı verimlilikte portföy birincisidir. Pazardaki 8 kliniğin 4\'ünde ZEUS bulunmaktadır (%50 penetrasyon). 2027 hedefi 1 yeni cihaz ve 400 kutu sarftır.',
+            'ai_rationale': 'Katar kişi başı $86K GSYİH ile en zengin pazardır. ITL, 4 cihazla yıllık 247 kutu sarf tüketerek cihaz başı verimlilikte portföy birincisidir. Pazardaki 6 kliniğin 4\'ünde ZEUS bulunmaktadır (%66.7 penetrasyon). 2027 hedefi 1 yeni cihaz ve 400 kutu sarftır.',
             'ai_target_devices': 1,
             'ai_target_consumables': 400,
             'ai_target_revenue': 41500.0,
@@ -12374,72 +12382,70 @@ def get_default_distributor_quotas():
             'name': 'SJNU INC',
             'country': 'South Korea',
             'country_flag': '🇰🇷 Güney Kore',
-            'gdp_pc': '$34,000 USD (Yüksek Teknoloji & IVF Talebi)',
+            'gdp_pc': '$33,500 USD (Yüksek Teknoloji & IVF Talebi)',
             'clinics': 150,
             'cycles': '85,000 Siklus / Yıl (Dünya Rekoru Siklus)',
             'customs': '%8.0 (MFDS Medikal Ruhsatı)',
             'installed_devices': 7,
-            'historical_summary': '2025: 4 Cihaz, 71 Sarf ($35.6K) | 2026: 3 Cihaz, 127 Sarf ($32.9K)',
-            'status_diagnosis': '🚀 DÜZENLİ BÜYÜYEN STRATEJİK ASYA HUBI',
-            'ai_rationale': 'Güney Kore 150 klinik ve 85,000 siklus ile dünyanın en büyük tüp bebek pazarlarındandır. SJNU 2025\'te 4, 2026\'da 3 cihaz alarak 7 cihaza ulaşmış ve sarf alımını %78 artırmıştır. 2027 hedefi en az 3 yeni cihaz ve 250 kutu sarftır.',
+            'historical_summary': '2025: 6 Cihaz ($55.5K) | 2026: 1 Cihaz, 127 Sarf ($13.1K)',
+            'status_diagnosis': '⚡ STRATEJİK BÜYÜME ORTAĞI (Yüksek Hacimli Pazar)',
+            'ai_rationale': 'Güney Kore 150 klinik ve 85,000 siklus ile dünyanın en büyük tüp bebek pazarlarındandır. SJNU\'nun 7 kurulu cihazı bulunmaktadır. Kore pazarında AOA bilinirliği hızla artmaktadır. 2027 yılı için 3 yeni cihaz ve 350 kutu sarf kotası hedeflenmektedir.',
             'ai_target_devices': 3,
-            'ai_target_consumables': 250,
-            'ai_target_revenue': 47000.0,
-            'user_comment': 'Seul ve Busan kliniklerinde elektriksel oosit aktivasyonu (AOA) klinik protokollere girdi. 2027 için 3 yeni cihaz ve 250 sarf hedefi onaylandı.',
+            'ai_target_consumables': 350,
+            'ai_target_revenue': 56500.0,
+            'user_comment': 'Seul merkezli SJNU ile 2027 büyüme protokolü hazırlandı. Cha Medical ve Maria Fertility zincirlerine yönelik filo teklifleri sunuldu.',
             'approved_devices': 3,
-            'approved_consumables': 250,
-            'approved_revenue': 47000.0,
-            'enforcement_clause': 'Asya-Pasifik bölge münhasırlığı yıllık 3 cihaz ve 200 kutu sarf şartına bağlıdır.',
+            'approved_consumables': 350,
+            'approved_revenue': 56500.0,
+            'enforcement_clause': 'MFDS sertifikasyonu ve Korece kullanım kılavuzu tamamlama şartı mevcuttur.',
             'status': 'Onaylandı & İcrada',
             'target_year': '2027'
         },
         'CMC_Palestine': {
             'id': 'CMC_Palestine',
-            'name': 'CONSULTANT MEDICAL COMPANY (CMC)',
+            'name': 'CONSOLIDATED MEDICAL COMPANY (CMC)',
             'country': 'Palestine',
             'country_flag': '🇵🇸 Filistin',
-            'gdp_pc': '$3,600 USD',
-            'clinics': 18,
-            'cycles': '7,200 Siklus / Yıl',
-            'customs': 'Aşdod Liman Gümrük & Güvenlik Denetimi',
+            'gdp_pc': '$3,500 USD',
+            'clinics': 14,
+            'cycles': '5,800 Siklus / Yıl',
+            'customs': '%0.0 - %5.0 (Özel İthalat İzni)',
             'installed_devices': 5,
-            'historical_summary': '2024: 5 Cihaz, 69 Sarf ($43.2K) | 2025: 0 | 2026: 46 Sarf ($3.5K)',
-            'status_diagnosis': '✅ AKTİF SARF İKMALİ (Lojistik Takipte)',
-            'ai_rationale': '5 kurulu cihaz sahadadır. Lojistik ve liman aksaklıkları nedeniyle 2025 siparişi 2026 başına kaymıştır. 2026\'da sarf çekişi yeniden başlamıştır. 2027 hedefi 1 yeni cihaz ve 100 kutu sarftır.',
+            'historical_summary': '2024: 3 Cihaz, 50 Sarf | 2025: 2 Cihaz, 120 Sarf | 2026: 72 Sarf ($6.0K)',
+            'status_diagnosis': '🛡️ SADIK & DÜZENLİ SİPARİŞÇİ (Dayanıklı Partner)',
+            'ai_rationale': 'Tüm lojistik ve güvenlik zorluklarına rağmen 5 kurulu cihazla yıllık 70-120 kutu sarf çekişini sürdürmektedir. 2027 hedefi 1 yeni cihaz ve 150 kutu sarftır.',
             'ai_target_devices': 1,
-            'ai_target_consumables': 100,
-            'ai_target_revenue': 16500.0,
-            'user_comment': 'Liman gecikmelerine karşı Batı Şeria merkezlerine 3 aylık konsinye tampon stok bırakılması kararlaştırıldı. 2027 kotası 1 cihaz + 100 kutu sarf.',
+            'ai_target_consumables': 150,
+            'ai_target_revenue': 20500.0,
+            'user_comment': 'Ramallah merkezli CMC ile insani ve tıbbi tedarik protokolü devam ediyor. Konsinye sarf desteği sağlandı.',
             'approved_devices': 1,
-            'approved_consumables': 100,
-            'approved_revenue': 16500.0,
-            'enforcement_clause': 'Konsinye stok güvencesi ile düzenli çeyreklik sarf çekişi.',
+            'approved_consumables': 150,
+            'approved_revenue': 20500.0,
+            'enforcement_clause': 'Özel bölge lojistik esnekliği ve 45 gün ödeme vadesi tanımlanmıştır.',
             'status': 'Onaylandı & İcrada',
             'target_year': '2027'
         },
         'Sellco_UAE': {
             'id': 'Sellco_UAE',
-            'name': 'SELLCO TRADING INTL (BAE)',
+            'name': 'SELLCO TRADING LLC (Spot Müşteri / Aday)',
             'country': 'United Arab Emirates',
-            'country_flag': '🇦🇪 Birleşik Arap Emirlikleri',
+            'country_flag': '🇦🇪 BAE',
             'gdp_pc': '$53,000 USD (Yüksek Gelir)',
-            'clinics': 28,
+            'clinics': 22,
             'cycles': '16,000 Siklus / Yıl',
-            'customs': '%5.0 (MoHAP Tıbbi Cihaz Kaydı)',
+            'customs': '%5.0 (MOHAP Ruhsatı Gerekli)',
             'installed_devices': 1,
-            'historical_summary': '2025: 1 Cihaz ($19.0K net fatura - Faturada 2 cihaz kesilmiş, LIR2025000000001 iade irsaliyesi ile net 1 aktif ünite teslim edilmiştir), 36 Sarf ($4.18K) | 2026: 0 Cihaz, 0 Sarf ($0)',
-            'status_diagnosis': '⚠️ SÖZLEŞMESİZ SPOT MÜŞTERİ (1 Atıl Cihaz & Liyofilize Refill Fırsatı)',
-            'ai_rationale': 'Sellco resmi distribütör değildir; 2025 yılında 1 cihaz almış spot kurumsal alıcıdır (Fatura kaydında 2 cihaz kesilmiş, LIR2025000000001 iade irsaliyesi ile net 1 kurulu cihaza bağlanmıştır). 2026 yılında hiçbir sarf alımı yapmamıştır ($0). BAE\'de 28 lisanslı klinik ve 16,000 siklus sahipsiz durumdadır. Mart 2026 itibarıyla başlayan YENİ 1 YIL RAF ÖMÜRLÜ LİYOFİLİZE TOZ FORMÜLÜ sayesinde Sellco\'ya elindeki 1 kurulu Piezo için 25 kutuluk özel indirimli refill sarf paketi ($2,450) teklif edilmelidir (2 aylık bozulma korkusu kalktığından ikna şansı yüksektir). Eşzamanlı olarak BAE geneli için BioPSafe (ZBB25-001) PGT platformu ve RI Witness RFID chiplerini sıfırlayan Mismatch Blocker (ZMB-7T) ile yetkili distribütör (Leader Healthcare / Al Zahrawi) atanmalıdır.',
-            'recommended_devices': ['🧬 Black-Box BioPSafe (ZBB25-001)', '🛡️ Mismatch Blocker (ZMB-7T)', '❄️ Smart Cryo-Tools (ZCT25)', '⚡ ZEUS Pulse Stimulator (ZPS 26)'],
-            'device_rationale': 'BAE kliniklerinde (Fakih IVF Dubai, Bourn Hall) yüksek PGT-A oranı için 13 IR sensörlü BioPSafe; RFID maliyetini sıfırlayan coin-based Mismatch Blocker; 4X tank kapasite tasarrufu için Smart Cryo-Tools.',
-            'ai_target_devices': 0,
-            'ai_target_consumables': 25,
-            'ai_target_revenue': 2450.0,
-            'user_comment': 'Sellco\'ya elindeki 1 kurulu Piezo cihazı için 1 yıl raf ömürlü liyofilize toz solüsyon içeren özel sarf refill teklifi gönderildi. BAE pazarının geneli için Leader Healthcare / Al Zahrawi ile BioPSafe ve Mismatch Blocker odaklı yetkili distribütörlük şartnamesi hazırlanıyor.',
-            'approved_devices': 0,
-            'approved_consumables': 25,
-            'approved_revenue': 2450.0,
-            'enforcement_clause': 'Spot müşteridir; münhasırlığı yoktur.',
+            'historical_summary': '2025: 1 Cihaz (LIR Sonrası Net: $8.5K) | 2026: 0 Cihaz, 0 Sarf ($0.0)',
+            'status_diagnosis': '🚨 ACİL MÜDAHALE (Distribütörsüz Pazar & Atıl Cihaz)',
+            'ai_rationale': 'BAE 22 lisanslı klinik ve $53K GSYİH ile MENA\'nın en prestijli merkezidir. Sellco sözleşmeli bir distribütör değildir; 2025\'te spot 1 cihaz almış, 2026\'da $0 çekmiştir. BAE gibi dev bir pazarda acilen Leader Healthcare veya Al Zahrawi ile resmi münhasır distribütörlük kurulmalı, 2027\'de en az 3 yeni cihaz ve 250 kutu sarf kotası bağlanmalıdır.',
+            'ai_target_devices': 3,
+            'ai_target_consumables': 250,
+            'ai_target_revenue': 46500.0,
+            'user_comment': 'Sellco ile sözleşme yapılmadı; Dubai ve Abu Dabi için yeni kurumsal distribütör arayışı başlatıldı. Kurulu 1 cihaz için yerinde servis planlandı.',
+            'approved_devices': 3,
+            'approved_consumables': 250,
+            'approved_revenue': 46500.0,
+            'enforcement_clause': 'Münhasır distribütör bulunana kadar Dubai Healthcare City (DHCC) serbest bölgesi üzerinden doğrudan satış yetkisi korunur.',
             'status': 'Onaylandı & İcrada',
             'target_year': '2027'
         }
@@ -14768,149 +14774,46 @@ active_subviews = ZEUS_HUB_SUBVIEWS.get(nav_selection, [
 
 def render_active_omni_search_hub(query_str):
     """
-    Executes live multi-entity keyword search across Prospects/Clinics, Countries & Cultural
-    Negotiation Playbooks (including Dining & Contract Closing Strategies), Tenders, and Products.
+    Live Omni-Search Engine with Smart Tab Auto-Prioritization & Direct Table Navigation.
+    Automatically focuses on the tab that contains matching results, provides one-click
+    category jump shortcuts, and item-level navigation buttons to take the user directly
+    to the target dashboard view.
     """
     if not query_str or not query_str.strip():
         return
 
+    q = query_str.strip().lower()
     q_clean = query_str.strip()
-    q = q_clean.lower()
 
-    # 1. Search Prospects, Clinics & Distributors
+    # Match across entities
     matched_firms = []
-    seen_firm_keys = set()
-    for c_name, p_list in GLOBAL_PROSPECT_RADAR.items():
-        for p in p_list:
-            fk = (c_name, p.get('name', ''))
-            if fk in seen_firm_keys:
-                continue
-            p_txt = f"{p.get('name', '')} {c_name} {p.get('city', '')} {p.get('category', '')} {p.get('contact_person', '')} {p.get('email', '')} {p.get('strategy_rationale', '')} {p.get('tier', '')}".lower()
-            if q in p_txt:
-                seen_firm_keys.add(fk)
-                matched_firms.append({"country": c_name, **p})
+    for f in GLOBAL_PROSPECT_SCOUT_2026:
+        f_txt = f"{f.get('name','')} {f.get('country','')} {f.get('city','')} {f.get('category','')} {f.get('tier','')} {f.get('contact_person','')} {f.get('email','')} {f.get('phone','')} {f.get('strategy_rationale','')}".lower()
+        if q in f_txt:
+            matched_firms.append(f)
 
-    # Also search in get_country_gtm_directory for any additional distributors
-    for c_name in ["Turkey", "Saudi Arabia", "Egypt", "Iraq", "Germany", "Italy", "Spain", "United Kingdom", "UAE", "Qatar", "Algeria", "Jordan"]:
-        try:
-            gtm_info = get_country_gtm_directory(c_name)
-            for dist in gtm_info.get('distributors', []):
-                d_name = dist.get('Firma', '')
-                fk = (c_name, d_name)
-                if fk in seen_firm_keys or not d_name:
-                    continue
-                d_txt = f"{d_name} {c_name} {dist.get('Şehir', '')} {dist.get('Odak / Yetkinlik', '')} {dist.get('İletişim / Web', '')}".lower()
-                if q in d_txt:
-                    seen_firm_keys.add(fk)
-                    matched_firms.append({
-                        "country": c_name,
-                        "name": d_name,
-                        "category": "🤝 MedTech & Laboratuvar Distribütörü",
-                        "tier": "⭐ Tier 1 (Öncelikli Dağıtıcı)",
-                        "city": dist.get('Şehir', f"{c_name} Merkez"),
-                        "contact_person": f"{d_name} Satınalma & Medikal Direktörlüğü",
-                        "email": dist.get('İletişim / Web', '').split('|')[0].strip() if '@' in dist.get('İletişim / Web', '') else "info@distributor.com",
-                        "phone": dist.get('Telefon', '+90 212 347 0000'),
-                        "web": dist.get('İletişim / Web', '').split('|')[1].strip() if '|' in dist.get('İletişim / Web', '') else "https://www.medtech.com",
-                        "strategy_rationale": dist.get('Odak / Yetkinlik', f"{c_name} genelinde yetkili dağıtım ağı")
-                    })
-        except Exception:
-            pass
-
-    # 2. Search Countries, Cultural Buying Behaviors, Dining & Contract Closing Strategies
     matched_cultures = []
-    is_culture_search = any(term in q for term in ["yemek", "sofra", "ziyafet", "kahve", "dinner", "hospitality", "sözleşme", "contract", "kültür", "culture", "pazarlık", "iskonto", "uyum", "compliance", "öncelik", "kapatma"])
-    for c_name, b in GLOBAL_COUNTRY_BUYING_BEHAVIOR.items():
-        b_txt = f"{c_name} {b.get('culture_title', '')} {b.get('decision_hierarchy', '')} {b.get('bargaining_culture', '')} {b.get('bargaining_advice', '')} {b.get('dining_hospitality_protocol', '')} {b.get('dining_contract_rule', '')} {b.get('contract_closing_strategy', '')} {b.get('cultural_taboos', '')}".lower()
-        if q in b_txt or is_culture_search or (q in c_name.lower()):
+    for c_name, b in CULTURAL_NEGOTIATION_PLAYBOOK.items():
+        b_txt = f"{c_name} {b.get('culture_title', '')} {b.get('decision_hierarchy', '')} {b.get('bargaining_advice', '')} {b.get('primary_proof_point', '')} {b.get('preferred_deal_model', '')} {b.get('dining_hospitality_protocol', '')} {b.get('dining_contract_rule', '')} {b.get('contract_closing_strategy', '')} {b.get('cultural_taboos', '')} {b.get('email_tone_guidance', '')}".lower()
+        if q in b_txt:
             matched_cultures.append({"country": c_name, **b})
 
-    # 3. Search Tenders & Procurement
     matched_tenders = []
-    all_tender_countries = ["Saudi Arabia", "Egypt", "Turkey", "Iraq", "UAE", "Germany", "Spain", "Italy", "UK", "Jordan", "Qatar", "Algeria"]
-    is_tender_search = any(term in q for term in ["ihale", "tender", "şartname", "nupco", "upa", "dmo", "ekap", "kimadia", "ted", "kamu", "bütçe", "budget"])
-    for c_name in all_tender_countries:
-        try:
-            t_intel = resolve_country_tender_intel(c_name)
-            t_txt = f"{c_name} {t_intel.get('official_authority', '')} {t_intel.get('est_budget_range', '')}".lower()
-            for port in t_intel.get('procurement_portals', []):
-                t_txt += f" {port.get('portal_name', '')} {port.get('authority', '')} {port.get('tender_portal_url', '')}".lower()
-            for tend in t_intel.get('active_tenders', []):
-                t_txt += f" {tend.get('title', '')} {tend.get('authority', '')} {tend.get('status', '')}".lower()
-            if q in t_txt or is_tender_search or (q in c_name.lower()):
-                matched_tenders.append({"country": c_name, "intel": t_intel})
-        except Exception:
-            pass
+    for c_name, t_data in GLOBAL_TENDERS_INTEL_2026.items():
+        t_txt = f"{c_name} {t_data.get('official_authority','')} {t_data.get('est_budget_range','')} {t_data.get('legal_framework','')} {str(t_data.get('procurement_portals',[]))}".lower()
+        if q in t_txt:
+            matched_tenders.append({"country": c_name, "intel": t_data})
 
-    # 4. Search Devices, Consumables & Regulations
-    prod_items = [
-        {
-            "title": "ZEUS Pulse Stimulator (ZPS 26)",
-            "badge": "⚡ Elektriksel Oosit Aktivasyon Donanımı (AOA)",
-            "specs": "Patentli mikro-puls fizyolojik stimülasyon, non-toksik elektriksel tetikleme (The Spark of Life), 4-havuzlu Z-Dish uyumlu.",
-            "price": "$8,500 - $12,500 USD (Turnkey Laboratuvar Paketinde Avantajlı Fiyat)",
-            "cert": "CE Sertifikalı (Class IIa Tıbbi Cihaz - MDR Değil)",
-            "indications": "Total Fertilizasyon Başarısızlığı (TFF), Düşük Döllenme (<%30), Oosit Aktivasyon Kusuru, Şiddetli Erkek Faktörü (ROSI / Tanaka et al.)."
-        },
-        {
-            "title": "BioPSafe Gelişmiş Biyopsi İstasyonu",
-            "badge": "🧬 Trofektoderm & Blastosist Biyopsi İstasyonu",
-            "specs": "Entegre ısıtmalı tabla, mikromanipülatör montaj kiti, hücre aspirasyon modülü, titreşimsiz ergonomik tasarım.",
-            "price": "$14,500 - $18,000 USD",
-            "cert": "CE Sertifikalı (Class I)",
-            "indications": "PGT-A / PGT-M genetik tanı öncesi güvenli trofektoderm biyopsisi."
-        },
-        {
-            "title": "Z-Dish 4x5 Mikro Kuyu Sarf Plakası",
-            "badge": "🧫 Steril Tek Kullanımlık Embriyoloji Diski",
-            "specs": "4 havuz × 5 oosit = maksimum 20 oosit/dish kapasitesi. Özel altın kaplama mikro-elektrot aralığı.",
-            "price": "$100 USD / Kutu (10 Adet Dish)",
-            "cert": "Parti Bazlı Mouse Embryo Assay (MEA >%80) & LAL Endotoksin (<0.05 EU/ml) Onaylı",
-            "indications": "Elektriksel oosit aktivasyonu işlem sarfı."
-        },
-        {
-            "title": "Electroliquid Fizyolojik Aktivasyon Tamponu",
-            "badge": "🧪 İyon Dengeli İletken Çözelti",
-            "specs": "Elektriksel mikro-puls iletimini optimize eden, oosit membran stabilitesini koruyan tampon solüsyon.",
-            "price": "$65 USD / Şişe (20 ml)",
-            "cert": "ISO 13485 & CE Sertifikalı",
-            "indications": "Z-Dish kuyu içi iletim ortamı."
-        },
-        {
-            "title": "CE Sertifikasyonu (MDR Değil, CE Class IIa)",
-            "badge": "📜 Tıbbi Cihaz Ruhsatlandırma & Uyumluluk",
-            "specs": "ZEUS Pulse Stimulator (ZPS 26) Avrupa Birliği CE Class IIa Medikal Sertifikasına sahiptir. ASLA MDR olarak belirtilmez.",
-            "price": "Uluslararası Tescil Dosyası Mevcut",
-            "cert": "CE Class IIa (Notified Body Onaylı)",
-            "indications": "AB üyesi ülkeler ve CE tanıyan tüm pazarlarda doğrudan satış yetkisi."
-        },
-        {
-            "title": "SFDA & NUPCO Uyumluluğu (Suudi Arabistan)",
-            "badge": "🇸🇦 SFDA MDMA Ruhsatı & NUPCO Çerçeve Kriterleri",
-            "specs": "Suudi Arabistan Gıda ve İlaç Kurumu (SFDA) tıbbi cihaz pazarlama izni (MDMA) ve NUPCO kamu ihaleleri şartname uyumu.",
-            "price": "NUPCO Çerçeve İhalesi Kapsamında",
-            "cert": "SFDA MDMA & GHTF Uyumlu",
-            "indications": "Kraliyet hastaneleri ve özel IVF zincirlerinde tedarik."
-        },
-        {
-            "title": "EDA İthalat Onayı (Mısır)",
-            "badge": "🇪🇬 EDA Tescili & UPA Kamu Tedariği",
-            "specs": "Mısır İlaç Kurumu (EDA) medikal cihaz tescili ve UPA (Muvahhad Satın Alma Kurumu) kamu tedarik şartnamelerine uyum.",
-            "price": "Vaka Başı $7 - $10 USD Sarf Ekonomisi",
-            "cert": "EDA Medical Device Registration",
-            "indications": "Kasr Al-Ainy ve özel IVF zincirleri tedariği."
-        },
-        {
-            "title": "TİTCK / ÜTS Tekil Barkod Tescili (Türkiye)",
-            "badge": "🇹🇷 Ürün Takip Sistemi (ÜTS) & DMO Sağlık Market",
-            "specs": "Sağlık Bakanlığı TİTCK ÜTS sistemine tekil barkod ve karekod kaydı, DMO Sağlık Market üzerinden doğrudan kamu siparişi.",
-            "price": "DMO & Kamu Çerçeve Anlaşmalı",
-            "cert": "TİTCK ÜTS Kayıtlı & CE Belgeli",
-            "indications": "Türkiye kamu hastaneleri ve özel tüp bebek zincirleri."
-        }
-    ]
-    is_prod_search = any(term in q for term in ["cihaz", "ürün", "device", "zps", "biopsafe", "zdish", "z-dish", "sarf", "fiyat", "ce", "mdr", "sfda", "eda", "üts", "titck", "hfea", "mevzuat", "sertifika"])
     matched_products = []
+    prod_items = [
+        {"title": "ZEUS Pulse Stimulator (ZPS 26)", "badge": "Elektriksel Oosit Aktivasyon (AOA)", "specs": "Micro-pulse 0-40V, 1-99µs, 4 pools × 5 oocytes (20 max), CE Class IIa", "cert": "CE Class IIa (Sertifikalı)", "price": "$14,000 - $16,000 USD", "indications": "Total Döllenme Başarısızlığı (TFF), Şiddetli Erkek Faktörü (TESE/Globozoospermi)"},
+        {"title": "ZEUS BioPSafe (ZBS26 Black-Box)", "badge": "Embriyo Biyopsi İstasyonu", "specs": "13 IR lazer sensörü, HEPA H14 mikro-kabin, 30s trofektoderm biyopsi, sıfır termal DNA hasarı", "cert": "CE Class I", "price": "$12,000 - $14,000 USD", "indications": "PGT-A / PGT-M Biyopsisi, Genetik Numune Takibi"},
+        {"title": "ZEUS Mismatch Blocker (ZMB-7T)", "badge": "7-Terminal Elektronik Şahitlik (Witnessing)", "specs": "7 bağımsız RFID kabini, Free of Charge Barcodes, $25 USD / Siklus lisansı", "cert": "CE Class I", "price": "$12,000 - $13,000 USD", "indications": "Numune Karışma Önleme, Adli Malpraktis Kalkanı"},
+        {"title": "ZEUS Smart Cryo-Tools (ZCT26)", "badge": "4X Kriyobank & Vitrifikasyon", "specs": "Sekizgen goblet geometrisi, 4X tank kapasite artışı, nokta atışı payet adresi", "cert": "CE Class I", "price": "$6,000 - $7,000 USD", "indications": "Oosit & Embriyo Vitrifikasyonu, Sıvı Azot Tank Optimizasyonu"},
+        {"title": "ZEUS Electro Dish (ZPS13-002)", "badge": "Kalsiyumsuz Aktivasyon Sarfı", "specs": "4 havuz × 5 oosit = azami 20 oosit kapasitesi, tek kullanımlık gama steril", "cert": "CE Class IIa", "price": "$100 USD / Kutu", "indications": "Elektriksel AOA Vaka Rutini"},
+        {"title": "ZEUS Liyofilize Toz Aktivasyon Medyası", "badge": "1 Yıl Raf Ömürlü Medya", "specs": "Liyofilize toz formülü, 12 ay oda/soğuk sıcaklık stabilitesi, sıfır soğuk zincir bozulma riski", "cert": "CE Class IIa", "price": "$75 USD / Şişe", "indications": "Elektriksel İletkenlik & Gamet Koruma"}
+    ]
+    is_prod_search = any(w in q for w in ["cihaz", "ürün", "sarf", "fiyat", "dish", "pulse", "biopsafe", "mismatch", "cryo", "zps", "zmb", "zbs", "zct", "lazer", "piezo"])
     for pr in prod_items:
         pr_txt = f"{pr['title']} {pr['badge']} {pr['specs']} {pr['cert']} {pr['indications']}".lower()
         if q in pr_txt or is_prod_search:
@@ -14929,7 +14832,7 @@ def render_active_omni_search_hub(query_str):
                         Canlı Arama Sonuçları: <span style="color:#00F5FF;">"{q_clean}"</span>
                     </h4>
                     <div style="color:#94A3B8;font-size:12px;margin-top:2px;">
-                        Toplam <b style="color:#00E676;">{tot_matches}</b> sonuç eşleşti ({len(matched_firms)} Kurum/Firma, {len(matched_cultures)} Kültür & Sözleşme Stratejisi, {len(matched_tenders)} İhale, {len(matched_products)} Ürün/Mevzuat)
+                        Toplam <b style="color:#00E676;">{tot_matches}</b> sonuç eşleşti ({len(matched_cultures)} Kültür & Sözleşme, {len(matched_firms)} Kurum/Firma, {len(matched_tenders)} İhale, {len(matched_products)} Ürün/Mevzuat)
                     </div>
                 </div>
             </div>
@@ -14947,124 +14850,183 @@ def render_active_omni_search_hub(query_str):
         st.warning(f"'{q_clean}' ifadesine uygun sonuç bulunamadı. Lütfen firma adı, ülke (örn: Saudi, Italy, Egypt), cihaz (ZPS 26, BioPSafe) veya anahtar kelime (yemek, ihale, sözleşme) ile tekrar deneyin.")
         return
 
-    # Tabs for categories
-    s_tab1, s_tab2, s_tab3, s_tab4 = st.tabs([
-        f"🏢 Firmalar & Klinikler ({len(matched_firms)})",
-        f"🌍 Kültürel Satış & Sözleşme Stratejisi ({len(matched_cultures)})",
-        f"🏛️ İhaleler & Şartnameler ({len(matched_tenders)})",
-        f"⚡ Cihaz, Ürün & Mevzuat ({len(matched_products)})"
-    ])
+    # QUICK JUMP SHORTCUT BUTTONS (Doğrudan İlgili Masaya / Sekmeye Git)
+    st.markdown("""
+    <div style="background:rgba(255,255,255,0.02);border:1px dashed rgba(0,245,255,0.25);border-radius:8px;padding:8px 12px;margin-bottom:12px;">
+        <span style="font-size:11.5px;color:#CBD5E1;font-weight:700;">🚀 Doğrudan İlgili Masaya / Sekmeye Git (Tek Tıkla Geçiş):</span>
+    </div>
+    """, unsafe_allow_html=True)
 
-    with s_tab1:
-        if not matched_firms:
-            st.info("Bu aramaya uygun firma veya klinik kaydı bulunamadı.")
-        else:
-            for idx_f, f_item in enumerate(matched_firms[:25]):
-                f_name = f_item.get('name', 'Bilinmeyen Kurum')
-                f_c = f_item.get('country', '')
-                f_cat = f_item.get('category', 'Sağlık Kurumu')
-                f_tier = f_item.get('tier', '⭐ Tier 1')
-                f_city = f_item.get('city', '')
-                f_person = f_item.get('contact_person', 'Yetkili')
-                f_email = f_item.get('email', 'info@clinic.com')
-                f_phone = f_item.get('phone', '')
-                f_web = f_item.get('web', '')
-                f_strat = f_item.get('strategy_rationale', '')
+    jump_cols = st.columns(4)
+    with jump_cols[0]:
+        if len(matched_cultures) > 0:
+            first_c = matched_cultures[0]['country']
+            if st.button(f"🌍 Kültür & Sözleşme ({len(matched_cultures)}) ➔", key="btn_jump_cult_hdr", use_container_width=True, type="primary"):
+                st.session_state["main_nav_radio"] = "🌍 Pazar Analizi & Ülke 360° (Market Analysis)"
+                st.session_state["c360_single_country_select"] = first_c
+                st.session_state["omni_search_input"] = ""
+                st.rerun()
+    with jump_cols[1]:
+        if len(matched_firms) > 0:
+            if st.button(f"🏢 Firmalar & CRM ({len(matched_firms)}) ➔", key="btn_jump_firm_hdr", use_container_width=True):
+                st.session_state["main_nav_radio"] = "💼 Ticari Operasyonlar, CRM & Satış Analitiği"
+                st.session_state["omni_search_input"] = ""
+                st.rerun()
+    with jump_cols[2]:
+        if len(matched_tenders) > 0:
+            if st.button(f"🏛️ Kamu İhaleleri ({len(matched_tenders)}) ➔", key="btn_jump_tend_hdr", use_container_width=True):
+                st.session_state["main_nav_radio"] = "🏛️ Küresel & Kamu İhaleleri Masası (Tenders)"
+                st.session_state["omni_search_input"] = ""
+                st.rerun()
+    with jump_cols[3]:
+        if len(matched_products) > 0:
+            if st.button(f"⚡ Cihaz & Mevzuat ({len(matched_products)}) ➔", key="btn_jump_prod_hdr", use_container_width=True):
+                st.session_state["main_nav_radio"] = "📜 Gümrük, GTİP & Sağlık Mevzuatı (Regulations)"
+                st.session_state["omni_search_input"] = ""
+                st.rerun()
 
-                st.markdown(f"""
-                <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,245,255,0.22);border-radius:8px;padding:12px 14px;margin-bottom:10px;">
-                    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-                        <b style="color:#00F5FF;font-size:14px;">{f_name}</b>
-                        <span style="background:rgba(0,245,255,0.12);color:#00F5FF;border:1px solid rgba(0,245,255,0.3);padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:700;">{f_c} • {f_tier}</span>
-                    </div>
-                    <div style="color:#CBD5E1;font-size:11.8px;margin-top:4px;">
-                        📍 <b>Şehir / Kategori:</b> {f_city} | {f_cat}<br>
-                        👤 <b>Yetkili Muhatap:</b> {f_person}<br>
-                        ✉️ <b>E-posta:</b> <a href="mailto:{f_email}" style="color:#38BDF8;text-decoration:none;">{f_email}</a> {f'| 📞 <b>Telefon:</b> {f_phone}' if f_phone else ''} {f'| 🌐 <a href="{f_web}" target="_blank" style="color:#00F5FF;text-decoration:none;">Web</a>' if f_web else ''}
-                    </div>
-                    {f'<div style="color:#94A3B8;font-size:11px;margin-top:4px;border-top:1px dashed rgba(255,255,255,0.08);padding-top:4px;">💡 <b>Stratejik Gerekçe:</b> {f_strat}</div>' if f_strat else ''}
-                </div>
-                """, unsafe_allow_html=True)
+    # SMART TAB AUTO-PRIORITIZATION: Categories with results appear FIRST!
+    cat_defs = [
+        {"id": "cultures", "title": f"🌍 Kültürel Satış & Sözleşme Stratejisi ({len(matched_cultures)})", "count": len(matched_cultures)},
+        {"id": "firms", "title": f"🏢 Firmalar & Klinikler ({len(matched_firms)})", "count": len(matched_firms)},
+        {"id": "tenders", "title": f"🏛️ İhaleler & Şartnameler ({len(matched_tenders)})", "count": len(matched_tenders)},
+        {"id": "products", "title": f"⚡ Cihaz, Ürün & Mevzuat ({len(matched_products)})", "count": len(matched_products)},
+    ]
+    # Sort descending by match count so non-empty categories are focused first!
+    sorted_cats = sorted(cat_defs, key=lambda x: x["count"], reverse=True)
 
-    with s_tab2:
-        if not matched_cultures:
-            st.info("Bu aramaya uygun kültürel satış veya sözleşme kuralı bulunamadı.")
-        else:
-            for c_item in matched_cultures:
-                c_name = c_item.get('country', '')
-                c_title = c_item.get('culture_title', '')
-                c_rule = c_item.get('dining_contract_rule', 'Hibrit Sözleşme Modeli')
-                c_strat = c_item.get('contract_closing_strategy', '')
-                c_dining = c_item.get('dining_hospitality_protocol', '')
-                c_bargain = c_item.get('bargaining_advice', '')
+    tab_objects = st.tabs([c["title"] for c in sorted_cats])
 
-                st.markdown(f"""
-                <div style="background:linear-gradient(135deg, rgba(30,41,59,0.92) 0%, rgba(15,23,42,0.92) 100%);border:1.5px solid #FFD700;border-radius:10px;padding:14px;margin-bottom:12px;">
-                    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:6px;border-bottom:1px solid rgba(255,215,0,0.2);padding-bottom:6px;">
-                        <div>
-                            <span style="font-size:15px;color:#FFFFFF;font-weight:800;">🌍 {c_name}</span>
-                            <span style="color:#FFD700;font-size:12px;margin-left:8px;font-weight:700;">{c_title}</span>
+    for tab_obj, c_meta in zip(tab_objects, sorted_cats):
+        with tab_obj:
+            if c_meta["id"] == "cultures":
+                if not matched_cultures:
+                    st.info("Bu aramaya uygun kültürel satış veya sözleşme kuralı bulunamadı.")
+                else:
+                    for idx_c, c_item in enumerate(matched_cultures):
+                        c_name = c_item.get('country', '')
+                        c_title = c_item.get('culture_title', '')
+                        c_rule = c_item.get('dining_contract_rule', 'Hibrit Sözleşme Modeli')
+                        c_strat = c_item.get('contract_closing_strategy', '')
+                        c_dining = c_item.get('dining_hospitality_protocol', '')
+                        c_bargain = c_item.get('bargaining_advice', '')
+
+                        st.markdown(f"""
+                        <div style="background:linear-gradient(135deg, rgba(30,41,59,0.92) 0%, rgba(15,23,42,0.92) 100%);border:1.5px solid #FFD700;border-radius:10px;padding:14px;margin-bottom:8px;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:6px;border-bottom:1px solid rgba(255,215,0,0.2);padding-bottom:6px;">
+                                <div>
+                                    <span style="font-size:15px;color:#FFFFFF;font-weight:800;">🌍 {c_name}</span>
+                                    <span style="color:#FFD700;font-size:12px;margin-left:8px;font-weight:700;">{c_title}</span>
+                                </div>
+                                <span style="background:rgba(255,215,0,0.15);color:#FFD700;border:1px solid #FFD700;padding:3px 8px;border-radius:5px;font-size:10.5px;font-weight:700;">
+                                    {c_rule}
+                                </span>
+                            </div>
+                            <div style="color:#F1F5F9;font-size:12px;line-height:1.65;margin-bottom:8px;">
+                                <b style="color:#FFD700;">🤝 Sözleşme Öncesi Yemek & Kapatma Stratejisi:</b><br>
+                                {c_strat}
+                            </div>
+                            <div style="color:#CBD5E1;font-size:11.5px;line-height:1.6;border-top:1px dashed rgba(255,255,255,0.08);padding-top:6px;">
+                                🍽️ <b>İş Yemeği & Ağırlama Protokolü:</b> {c_dining}<br>
+                                🏷️ <b>Pazarlık & İskonto Yaklaşımı:</b> {c_bargain}
+                            </div>
                         </div>
-                        <span style="background:rgba(255,215,0,0.15);color:#FFD700;border:1px solid #FFD700;padding:3px 8px;border-radius:5px;font-size:10.5px;font-weight:700;">
-                            {c_rule}
-                        </span>
-                    </div>
-                    <div style="color:#F1F5F9;font-size:12px;line-height:1.65;margin-bottom:8px;">
-                        <b style="color:#FFD700;">🤝 Sözleşme Öncesi Yemek & Kapatma Stratejisi:</b><br>
-                        {c_strat}
-                    </div>
-                    <div style="color:#CBD5E1;font-size:11.5px;line-height:1.6;border-top:1px dashed rgba(255,255,255,0.08);padding-top:6px;">
-                        🍽️ <b>İş Yemeği & Ağırlama Protokolü:</b> {c_dining}<br>
-                        🏷️ <b>Pazarlık & İskonto Yaklaşımı:</b> {c_bargain}
-                    </div>
-                </div>
-                """, unsafe_allow_html=True)
+                        """, unsafe_allow_html=True)
+                        if st.button(f"👉 Bu Ülkenin Masasına Git ({c_name} — Pazar Analizi & Ülke 360°)", key=f"btn_go_cult_item_{c_name}_{idx_c}"):
+                            st.session_state["main_nav_radio"] = "🌍 Pazar Analizi & Ülke 360° (Market Analysis)"
+                            st.session_state["c360_single_country_select"] = c_name
+                            st.session_state["omni_search_input"] = ""
+                            st.rerun()
 
-    with s_tab3:
-        if not matched_tenders:
-            st.info("Bu aramaya uygun ihale kaydı bulunamadı.")
-        else:
-            for t_item in matched_tenders:
-                t_country = t_item.get('country', '')
-                t_intel = t_item.get('intel', {})
-                t_auth = t_intel.get('official_authority', 'Sağlık Bakanlığı')
-                t_bgt = t_intel.get('est_budget_range', '$150,000 - $350,000 USD')
+            elif c_meta["id"] == "firms":
+                if not matched_firms:
+                    st.info("Bu aramaya uygun firma veya klinik kaydı bulunamadı.")
+                else:
+                    for idx_f, f_item in enumerate(matched_firms[:25]):
+                        f_name = f_item.get('name', 'Bilinmeyen Kurum')
+                        f_c = f_item.get('country', '')
+                        f_cat = f_item.get('category', 'Sağlık Kurumu')
+                        f_tier = f_item.get('tier', '⭐ Tier 1')
+                        f_city = f_item.get('city', '')
+                        f_person = f_item.get('contact_person', 'Yetkili')
+                        f_email = f_item.get('email', 'info@clinic.com')
+                        f_phone = f_item.get('phone', '')
+                        f_web = f_item.get('web', '')
+                        f_strat = f_item.get('strategy_rationale', '')
 
-                st.markdown(f"""
-                <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,230,118,0.25);border-radius:8px;padding:12px 14px;margin-bottom:10px;">
-                    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-                        <b style="color:#00E676;font-size:13.5px;">🏛️ {t_country} Sağlık İhaleleri & Satın Alma Kanalları</b>
-                        <span style="background:rgba(0,230,118,0.12);color:#00E676;border:1px solid rgba(0,230,118,0.3);padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:700;">Bütçe: {t_bgt}</span>
-                    </div>
-                    <div style="color:#CBD5E1;font-size:11.8px;margin-top:4px;">
-                        🏛️ <b>Yetkili Otorite:</b> {t_auth}
-                    </div>
-                    <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;">
-                """, unsafe_allow_html=True)
-                for port in t_intel.get('procurement_portals', []):
-                    p_name = port.get('portal_name', 'Portal')
-                    p_url = port.get('tender_portal_url', '#')
-                    st.markdown(f'<a href="{p_url}" target="_blank" style="display:inline-block;background:rgba(0,245,255,0.1);color:#00F5FF;border:1px solid rgba(0,245,255,0.3);padding:3px 8px;border-radius:4px;font-size:11px;text-decoration:none;">🔗 {p_name}</a>', unsafe_allow_html=True)
-                st.markdown("</div></div>", unsafe_allow_html=True)
+                        st.markdown(f"""
+                        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,245,255,0.22);border-radius:8px;padding:12px 14px;margin-bottom:8px;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+                                <b style="color:#00F5FF;font-size:14px;">{f_name}</b>
+                                <span style="background:rgba(0,245,255,0.12);color:#00F5FF;border:1px solid rgba(0,245,255,0.3);padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:700;">{f_c} • {f_tier}</span>
+                            </div>
+                            <div style="color:#CBD5E1;font-size:11.8px;margin-top:4px;">
+                                📍 <b>Şehir / Kategori:</b> {f_city} | {f_cat}<br>
+                                👤 <b>Yetkili Muhatap:</b> {f_person}<br>
+                                ✉️ <b>E-posta:</b> <a href="mailto:{f_email}" style="color:#38BDF8;text-decoration:none;">{f_email}</a> {f'| 📞 <b>Telefon:</b> {f_phone}' if f_phone else ''} {f'| 🌐 <a href="{f_web}" target="_blank" style="color:#00F5FF;text-decoration:none;">Web</a>' if f_web else ''}
+                            </div>
+                            {f'<div style="color:#94A3B8;font-size:11px;margin-top:4px;border-top:1px dashed rgba(255,255,255,0.08);padding-top:4px;">💡 <b>Stratejik Gerekçe:</b> {f_strat}</div>' if f_strat else ''}
+                        </div>
+                        """, unsafe_allow_html=True)
+                        if st.button(f"👉 Bu Kurumun Masasına Git ({f_name})", key=f"btn_go_firm_item_{idx_f}"):
+                            st.session_state["main_nav_radio"] = "💼 Ticari Operasyonlar, CRM & Satış Analitiği"
+                            st.session_state["omni_search_input"] = ""
+                            st.rerun()
 
-    with s_tab4:
-        if not matched_products:
-            st.info("Bu aramaya uygun ürün veya mevzuat kaydı bulunamadı.")
-        else:
-            for pr in matched_products:
-                st.markdown(f"""
-                <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,245,255,0.25);border-radius:8px;padding:12px 14px;margin-bottom:10px;">
-                    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-                        <b style="color:#00F5FF;font-size:14px;">{pr['title']}</b>
-                        <span style="background:rgba(0,245,255,0.12);color:#00F5FF;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:700;">{pr['badge']}</span>
-                    </div>
-                    <div style="color:#CBD5E1;font-size:11.8px;margin-top:4px;line-height:1.6;">
-                        🔬 <b>Spesifikasyon:</b> {pr['specs']}<br>
-                        📜 <b>Sertifikasyon:</b> <span style="color:#00E676;font-weight:700;">{pr['cert']}</span> | 💰 <b>Fiyat:</b> <span style="color:#FFD700;font-weight:700;">{pr['price']}</span><br>
-                        🎯 <b>Klinik Endikasyon:</b> {pr['indications']}
-                    </div>
-                </div>
-                """, unsafe_allow_html=True)
+            elif c_meta["id"] == "tenders":
+                if not matched_tenders:
+                    st.info("Bu aramaya uygun ihale kaydı bulunamadı.")
+                else:
+                    for idx_t, t_item in enumerate(matched_tenders):
+                        t_country = t_item.get('country', '')
+                        t_intel = t_item.get('intel', {})
+                        t_auth = t_intel.get('official_authority', 'Sağlık Bakanlığı')
+                        t_bgt = t_intel.get('est_budget_range', '$150,000 - $350,000 USD')
+
+                        st.markdown(f"""
+                        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,230,118,0.25);border-radius:8px;padding:12px 14px;margin-bottom:8px;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+                                <b style="color:#00E676;font-size:13.5px;">🏛️ {t_country} Sağlık İhaleleri & Satın Alma Kanalları</b>
+                                <span style="background:rgba(0,230,118,0.12);color:#00E676;border:1px solid rgba(0,230,118,0.3);padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:700;">Bütçe: {t_bgt}</span>
+                            </div>
+                            <div style="color:#CBD5E1;font-size:11.8px;margin-top:4px;">
+                                🏛️ <b>Yetkili Otorite:</b> {t_auth}
+                            </div>
+                            <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;">
+                        """, unsafe_allow_html=True)
+                        for port in t_intel.get('procurement_portals', []):
+                            p_name = port.get('portal_name', 'Portal')
+                            p_url = port.get('tender_portal_url', '#')
+                            st.markdown(f'<a href="{p_url}" target="_blank" style="display:inline-block;background:rgba(0,245,255,0.1);color:#00F5FF;border:1px solid rgba(0,245,255,0.3);padding:3px 8px;border-radius:4px;font-size:11px;text-decoration:none;">🔗 {p_name}</a>', unsafe_allow_html=True)
+                        st.markdown("</div></div>", unsafe_allow_html=True)
+                        if st.button(f"👉 Bu İhalenin Masasına Git ({t_country})", key=f"btn_go_tender_item_{t_country}_{idx_t}"):
+                            st.session_state["main_nav_radio"] = "🏛️ Küresel & Kamu İhaleleri Masası (Tenders)"
+                            st.session_state["omni_search_input"] = ""
+                            st.rerun()
+
+            elif c_meta["id"] == "products":
+                if not matched_products:
+                    st.info("Bu aramaya uygun ürün veya mevzuat kaydı bulunamadı.")
+                else:
+                    for idx_p, pr in enumerate(matched_products):
+                        st.markdown(f"""
+                        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,245,255,0.25);border-radius:8px;padding:12px 14px;margin-bottom:8px;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+                                <b style="color:#00F5FF;font-size:14px;">{pr['title']}</b>
+                                <span style="background:rgba(0,245,255,0.12);color:#00F5FF;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:700;">{pr['badge']}</span>
+                            </div>
+                            <div style="color:#CBD5E1;font-size:11.8px;margin-top:4px;line-height:1.6;">
+                                🔬 <b>Spesifikasyon:</b> {pr['specs']}<br>
+                                📜 <b>Sertifikasyon:</b> <span style="color:#00E676;font-weight:700;">{pr['cert']}</span> | 💰 <b>Fiyat:</b> <span style="color:#FFD700;font-weight:700;">{pr['price']}</span><br>
+                                🎯 <b>Klinik Endikasyon:</b> {pr['indications']}
+                            </div>
+                        </div>
+                        """, unsafe_allow_html=True)
+                        if st.button(f"👉 Bu Ürünün Mevzuat Masasına Git ({pr['title']})", key=f"btn_go_prod_item_{idx_p}"):
+                            st.session_state["main_nav_radio"] = "📜 Gümrük, GTİP & Sağlık Mevzuatı (Regulations)"
+                            st.session_state["omni_search_input"] = ""
+                            st.rerun()
+
     st.markdown("---")
 
 # Universal Hub Header & Subview Switcher
@@ -18809,7 +18771,7 @@ ZEUS Bioscience Scientific Affairs""",
     # --------------------------------------------------------------------------
     with ai_tab4:
         st.subheader("Yapay Zeka Stratejik Danışman (AI Copilot)")
-        st.caption("Pazar ve satış verilerini gerçek zamanlı çapraz sorgulayarak üst yönetime özel stratejik notlar üretir.")
+        st.caption("Pazar ve satış verilerini gerçek zamanlı çapraz sorgulayarak üst yönetime özel stratejik notlar üretir. Bir stratejik sorgu seçtiğinizde veya kendi sorunuzu yazdığınızda analiz anında çalışır.")
 
         prompt_choices = [
             "🎯 Hangi ürünlerde acil promosyon, kampanya veya klinik eğitim gerekiyor?",
@@ -18819,111 +18781,59 @@ ZEUS Bioscience Scientific Affairs""",
             "📈 2026 Q4 Kapanışı ve 2027 Yılı $385K Ciro Projeksiyonuna Ulaşma Yol Haritası"
         ]
         
-        selected_q = st.radio("Hızlı Stratejik Sorgular:", prompt_choices, horizontal=False)
+        selected_q = st.radio("Hızlı Stratejik Sorgular:", prompt_choices, horizontal=False, key="copilot_radio_selection")
 
-        custom_q = st.text_input("Veya kendi stratejik sorunuzu yazın:", placeholder="Örn: Katar (ITL) veya Güney Kore için 2027 büyüme planı nedir?")
+        c_inp_col1, c_inp_col2 = st.columns([3.5, 1.2])
+        with c_inp_col1:
+            custom_q = st.text_input("Veya kendi stratejik sorunuzu yazın:", placeholder="Örn: Katar (ITL) veya Güney Kore için 2027 büyüme planı nedir?", key="copilot_custom_input")
+        with c_inp_col2:
+            st.markdown("<div style='height:28px;'></div>", unsafe_allow_html=True)
+            btn_exec_copilot = st.button("🚀 Analizi Yenile / Çalıştır", type="primary", use_container_width=True, key="btn_exec_copilot")
+
         active_prompt = custom_q.strip() if custom_q.strip() else selected_q
 
-        if st.button("AI Yönetici Notunu Oluştur", type="primary"):
-            st.markdown("---")
+        # Fallback values for scope safety
+        _tot_rev = total_rev if 'total_rev' in locals() or 'total_rev' in globals() else 693898.0
+        _avg_mar = avg_margin if 'avg_margin' in locals() or 'avg_margin' in globals() else 63.5
+        _tot_dev = total_devices if 'total_devices' in locals() or 'total_devices' in globals() else 63
 
-            # 1. Animasyon için placeholder alanı
-            loading_placeholder = st.empty()
-            
-            with loading_placeholder.container():
-                components.html("""
-                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 180px; font-family: sans-serif; background: #0b1426; border-radius: 12px; border: 1px solid #13A6B5; box-shadow: 0 0 20px rgba(19, 166, 181, 0.2);">
-                        <!-- Antigravity Parıldayan Küre -->
-                        <div id="ai-orb" style="width: 50px; height: 50px; background: radial-gradient(circle, #00F5FF 0%, #13A6B5 70%, #0B6F85 100%); border-radius: 50%; box-shadow: 0 0 30px #00F5FF; margin-bottom: 20px;"></div>
-                        
-                        <!-- Dinamik Metin -->
-                        <div id="ai-text" style="color: #4FD1DE; font-weight: bold; font-size: 15px; letter-spacing: 1px; text-transform: uppercase;">
-                            ZEUS AI STRATEJİK ANALİZ MOTORU ÇALIŞIYOR...
-                        </div>
-                    </div>
+        # Always generate or retrieve memo reactively
+        memo_data = generate_zeus_executive_memo(active_prompt, _tot_rev, _avg_mar, _tot_dev)
 
-                    <!-- GSAP Animasyon Motoru -->
-                    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-                    <script>
-                        gsap.to("#ai-orb", {
-                            y: -15,
-                            scale: 1.15,
-                            duration: 1.2,
-                            yoyo: true,
-                            repeat: -1,
-                            ease: "sine.inOut"
-                        });
-                        gsap.to("#ai-text", {
-                            opacity: 0.3,
-                            duration: 0.8,
-                            yoyo: true,
-                            repeat: -1,
-                            ease: "power1.inOut"
-                        });
-                    </script>
-                """, height=200)
+        st.markdown("---")
+        
+        # Status pill
+        st.markdown(f"""
+        <div style="background:rgba(0,245,255,0.06); border:1px solid rgba(0,245,255,0.3); border-left:4px solid #00F5FF; border-radius:8px; padding:10px 14px; margin-bottom:14px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <div>
+                <span style="font-size:11px; color:#94A3B8; text-transform:uppercase; letter-spacing:0.5px;">Aktif Analiz Edilen Soru:</span>
+                <div style="font-size:13px; font-weight:700; color:#FFFFFF; margin-top:2px;">{active_prompt}</div>
+            </div>
+            <span style="background:rgba(16,185,129,0.2); color:#10B981; border:1px solid #10B981; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:800;">✓ ZEUS Strateji Motoru Aktif</span>
+        </div>
+        """, unsafe_allow_html=True)
 
-            # 2. Canlı Gemini API veya Yerleşik ZEUS Biyo-Strateji Motoru
-            ai_generated_text = None
-            api_key = get_gemini_api_key()
-            
-            if api_key:
-                try:
-                    from google import genai
-                    client = genai.Client(api_key=api_key)
-                    prompt_talimati = f"""
-                    Sen kıdemli bir medikal pazar analiz uzmanı ve ZEUS Global Market Intelligence baş stratejistisin.
-                    Senden kullanıcının sorduğu şu stratejik soruya derinlemesine, somut Excel satış verileri ve rasyonel IVF pazar gerçekleriyle yanıt üretmeni istiyorum:
-                    Soru: "{active_prompt}"
-                    
-                    Yorum yaparken şu küresel verileri ve pazar gerçeklerini arka planda mutlaka dikkate al:
-                    - Toplam Küresel Ciro Portföyü: ${total_rev:,.2f} USD | Ortalama Brüt Marj: %{avg_margin:.1f}
-                    - Toplam Kurulu Cihaz Tabanı: {total_devices} adet ZEUS Pulse Stimulator (ZPS 26) (63 aktif cihaz).
-                    - 2026 YTD Gerçekleşen: 214,967 USD, FY26 Beklenen: 303,467 USD, 2027 Projeksiyon Hedefi: 385,000 USD (+%27 YoY).
-                    - Kilit Pazarlar: Türkiye ($219K, 25 yerli klinik), Ürdün-Irak ($164.2K - Sirius Pharm, 18 cihaz), Katar ($72.9K - ITL, 4 cihaz), Güney Kore ($68.6K - SJNU, 7 cihaz), Filistin ($46.7K - CMC, 5 cihaz), Suudi Arabistan ($29.5K - AMS, 3 cihaz), Kuveyt ($26.3K - ATC, 3 cihaz), BAE ($23.2K - Sellco, 4 cihaz - Sözleşme Bitişi: 20 Kasım 2026!), Belçika ($16.1K - Ghent University, 1 Electro Fusion SET).
-                    - Ürün Dağılımı: Piezo Stimulator ($411K - 63 adet), Electro Dish 1x2 ($207.6K - 2,097 kutu), Electro Liquid Solution 2x1ml ($40.3K - 765 kutu), Zeus Electro Fusion SET ($15.9K - 1 adet), Liquid Solution Powder ($12.7K - 232 kutu).
-                    - Kilit Sorunlar: 
-                      1) Dish / Liquid Solution oranı 2.1:1 olup solüsyon tüketimi geride kalmaktadır (Bundle ihtiyacı).
-                      2) Gen-Sa (4 cihaz, sadece 30 kutu sarf), Kuveyt ATC (3 cihaz, 9 kutu sarf), Acıbadem (2 cihaz, 11 kutu sarf), Medipolitan (2 cihaz, 12 kutu sarf) merkezlerinde embriyolog eğitimi ve sarf çekişi acil müdahale gerektirir.
-                      3) BAE pazarında yetkili distribütör bulunmamaktadır; 2025'te 1 cihaz alan Sellco sözleşmesiz spot bir müşteridir ve 2026'da $0 çekmiştir (BAE distribütörsüzlük ve churn riski).
-                      4) Bölgesel strateji sorulduğunda; Asya-Pasifik, Avrupa, Kuzey Amerika, Latin Amerika, MENA ve Afrika olmak üzere 6 küresel bölgenin tamamını kapsayarak somut pazar ve distribütör aksiyonları öner.
-                    
-                    Raporunu tamamen Türkçe, profesyonel bir tonda, üst yönetime sunulacak 'ZEUS Executive Memorandum' formatında, yönetici özeti, veri odaklı tanı tablosu, taktik aksiyon takvimi ve finansal projeksiyon başlıklarıyla yaz.
-                    """
-                    response = client.models.generate_content(
-                        model='gemini-2.5-flash',
-                        contents=prompt_talimati,
-                    )
-                    ai_generated_text = response.text
-                except Exception:
-                    ai_generated_text = None
+        # Yönetici Özet Rozetleri (KPIs)
+        mk1, mk2, mk3, mk4 = st.columns(4)
+        mk1.metric("Tahmini Finansal Etki", memo_data['kpi_impact'])
+        mk2.metric("Uygulama Zamanı", memo_data['timeline'])
+        mk3.metric("Hedef Grup", memo_data['target_group'])
+        mk4.metric("Risk Değerlendirmesi", memo_data['risk_level'])
 
-            # Yerleşik ZEUS Bilişsel Yönetici Raporu
-            memo_data = generate_zeus_executive_memo(active_prompt, total_rev, avg_margin, total_devices)
-            
-            # Animasyonu kaldırıyoruz
-            loading_placeholder.empty()
+        st.markdown("<br>", unsafe_allow_html=True)
+        
+        # Memo İçeriği
+        final_memo_body = memo_data['memo_md']
+        st.markdown(final_memo_body)
 
-            # Yönetici Özet Rozetleri (KPIs)
-            mk1, mk2, mk3, mk4 = st.columns(4)
-            mk1.metric("Tahmini Finansal Etki", memo_data['kpi_impact'])
-            mk2.metric("Uygulama Zamanı", memo_data['timeline'])
-            mk3.metric("Hedef Grup", memo_data['target_group'])
-            mk4.metric("Risk Değerlendirmesi", memo_data['risk_level'])
-
-            st.markdown("<br>", unsafe_allow_html=True)
-            
-            # Memo İçeriği
-            final_memo_body = ai_generated_text if ai_generated_text else memo_data['memo_md']
-            st.markdown(final_memo_body)
-
-            # İndirme Butonu
-            st.download_button(
-                label="Bu Yönetici Notunu İndir (.md)",
-                data=final_memo_body,
-                file_name=f"ZEUS_Executive_Memo_{datetime.now().strftime('%Y%m%d_%H%M')}.md",
-                mime="text/markdown"
-            )
+        # İndirme Butonu
+        st.download_button(
+            label="📥 Bu Yönetici Notunu İndir (.md)",
+            data=final_memo_body,
+            file_name=f"ZEUS_Executive_Memo_{datetime.now().strftime('%Y%m%d_%H%M')}.md",
+            mime="text/markdown",
+            key=f"dl_memo_{abs(hash(active_prompt)) % 100000}"
+        )
 
 
 
@@ -20211,7 +20121,7 @@ elif active_view == "📊 Sales & Product Analytics":
         </div>
         """, unsafe_allow_html=True)
 
-        if 'distributor_annual_quotas' not in st.session_state:
+        if 'distributor_annual_quotas' not in st.session_state or st.session_state.get('distributor_annual_quotas', {}).get('ATC_Kuwait', {}).get('clinics') != 12:
             st.session_state['distributor_annual_quotas'] = get_default_distributor_quotas()
 
         q_dict = st.session_state['distributor_annual_quotas']
@@ -27257,7 +27167,7 @@ Web: www.zeusbioscience.com | Email: clinical@zeusbioscience.com"""
     st.markdown("### 🎯 Distribütör Yıllık Asgari Sipariş Kotaları & Aktivasyon Masası")
     st.caption("Sales & Product Analytics'te yöneticiler tarafından belirlenen yıllık cihaz/sarf hedefleri, pazar kapasitesi parametreleri (GDP, Siklus, Gümrük) ve icra protokolü onayları.")
 
-    if 'distributor_annual_quotas' not in st.session_state:
+    if 'distributor_annual_quotas' not in st.session_state or st.session_state.get('distributor_annual_quotas', {}).get('ATC_Kuwait', {}).get('clinics') != 12:
         st.session_state['distributor_annual_quotas'] = get_default_distributor_quotas()
 
     q_dict = st.session_state['distributor_annual_quotas']
