@@ -8365,6 +8365,7 @@ def format_executive_directive_block(custom_note, eff_lang, strat_mode="clinical
     has_whitepaper = any(w in cn_lower for w in ["whitepaper", "white paper", "scientific brief", "brief", "klinik whitepaper", "bilimsel dosya", "vaka dosyası", "clinical brief", "dossier", "white-paper"])
     has_discount = any(w in cn_lower for w in ["indirim", "iskonto", "discount", "sconto", "descuento", "rabatt", "remise", "filo", "fleet", "%", "quote", "fiyat"])
     has_congress = any(w in cn_lower for w in ["eshre kongre", "stand", "booth", "vip", "davet", "invitation", "congress", "kongresi"])
+    has_dinner = any(w in cn_lower for w in ["yemek", "akşam yemeği", "dinner", "cena", "dîner", "cena di lavoro", "comida", "عشاء", "ضيافة", "ziyafet", "hospitality", "ağırlama", "restoran", "restaurant", "öğle yemeği", "kahve", "coffee"])
 
     # ENGLISH
     if eff_lang == "en":
@@ -8393,6 +8394,11 @@ def format_executive_directive_block(custom_note, eff_lang, strat_mode="clinical
                 "• ESHRE Congress VIP Stand Invitation:\n"
                 "We cordially invite your senior embryology and executive delegation to visit the ZEUS Bioscience booth at the upcoming ESHRE Congress for an exclusive protocol workshop."
             )
+        if has_dinner:
+            sections.append(
+                "• VIP Business Dinner & Executive Hospitality Invitation:\n"
+                "On the occasion of the upcoming congress or our scheduled executive delegation visit, we would be deeply honored to host your esteemed clinical leadership for a private VIP dinner and scientific discussion to review protocol integration and strategic partnership opportunities in a cordial setting."
+            )
 
         return "\n\n------------------------------------------------------------\n📌 EXECUTIVE DIRECTIVE & TAILORED PROPOSAL CLAUSE (YÖNETİCİ ÖZEL TALİMATI):\n------------------------------------------------------------\n" + "\n\n".join(sections) + "\n------------------------------------------------------------\n"
 
@@ -8419,6 +8425,11 @@ def format_executive_directive_block(custom_note, eff_lang, strat_mode="clinical
                 "• ESHRE Kongresi VIP Stand Daveti:\n"
                 "2027 ESHRE kongresinde ZEUS Bioscience standımızda kıdemli embriyoloji heyetinizi VIP olarak ağırlamaktan onur duyarız."
             )
+        if has_dinner:
+            sections.append(
+                "• VIP Akşam Yemeği & Bilimsel İstişare Daveti:\n"
+                "Yaklaşan kongre sürecinde veya kurumunuza gerçekleştireceğimiz heyet ziyareti vesilesiyle, klinik heyetinizi ve saygıdeğer direktörünüzü özel bir akşam yemeğinde (VIP Business Dinner & Strategic Discussion) ağırlamaktan, klinik tecrübelerimizi ve iş birliği vizyonumuzu samimi bir sofrada değerlendirmekten büyük onur duyarız."
+            )
 
         return "\n\n------------------------------------------------------------\n📌 YÖNETİCİ TALİMATI & ÖZEL TEKLİF HÜKMÜ:\n------------------------------------------------------------\n" + "\n\n".join(sections) + "\n------------------------------------------------------------\n"
 
@@ -8439,6 +8450,11 @@ def format_executive_directive_block(custom_note, eff_lang, strat_mode="clinical
             sections.append(
                 "• Condizioni Commerciali per Flotta Istituzionale:\n"
                 "Come concordato dalla direzione, confermiamo uno sconto del 10% sulla flotta hardware e tariffe consumabili Z-Dish bloccate su base pluriennale."
+            )
+        if has_dinner:
+            sections.append(
+                "• Invito Esclusivo a Cena di Lavoro & Confronto Scientifico VIP:\n"
+                "In occasione del prossimo congresso o della nostra visita istituzionale, avremmo il vero piacere e l'onore di invitare la Vostra stimata direzione clinica a una cena di lavoro per approfondire in un contesto informale e collegiale i protocolli clinici e le sinergie di partnership."
             )
 
         return "\n\n------------------------------------------------------------\n📌 DISPOSIZIONI STRATEGICHE: DIRETTIVA ESECUTIVA & NOTE PERSONALIZZATE:\n------------------------------------------------------------\n" + "\n\n".join(sections) + "\n------------------------------------------------------------\n"
@@ -8461,6 +8477,11 @@ def format_executive_directive_block(custom_note, eff_lang, strat_mode="clinical
                 "• Condiciones Especiales de Flota Institucional:\n"
                 "Confirmamos un 10% de descuento en la adquisición de flota de equipos y tarifas preferenciales en consumibles Z-Dish por volumen anual."
             )
+        if has_dinner:
+            sections.append(
+                "• Invitación a Cena de Trabajo & Encuentro Científico VIP:\n"
+                "Con motivo del próximo congreso o de nuestra próxima visita, sería un auténtico honor invitar a su prestigiosa dirección médica a una cena de trabajo exclusiva para compartir visiones clínicas y evaluar sinergias institucionales."
+            )
 
         return "\n\n------------------------------------------------------------\n📌 DIRECTIVA EJECUTIVA: CLÁUSULA PERSONALIZADA & CONDICIONES ESPECIALES:\n------------------------------------------------------------\n" + "\n\n".join(sections) + "\n------------------------------------------------------------\n"
 
@@ -8476,6 +8497,11 @@ def format_executive_directive_block(custom_note, eff_lang, strat_mode="clinical
             sections.append(
                 "• Beigefügtes Klinisches Whitepaper (Executive Scientific Brief):\n"
                 "Im Anhang finden Sie unser 1-seitiges Executive Whitepaper mit publizierten multizentrischen Daten: Steigerung der 2PN-Befruchtung auf 82,3% bei TFF, 2,2-facher Zuwachs an Tag-5-Blastozysten und CE-Zertifizierung mit MEA >80%."
+            )
+        if has_dinner:
+            sections.append(
+                "• Einladung zum Arbeitsessen & Wissenschaftlichen Dialog:\n"
+                "Im Rahmen des kommenden Fachkongresses oder unseres Besuchs laden wir Ihre ärztliche Leitung herzlich zu einem Arbeitsessen ein, um die klinischen Daten und Implementierungsmodalitäten im persönlichen Rahmen zu besprechen."
             )
 
         return "\n\n------------------------------------------------------------\n📌 STRATEGISCHE VORGABE: DIREKTIONSANWEISUNG & SONDERKONDITIONEN:\n------------------------------------------------------------\n" + "\n\n".join(sections) + "\n------------------------------------------------------------\n"
@@ -8493,6 +8519,11 @@ def format_executive_directive_block(custom_note, eff_lang, strat_mode="clinical
                 "• Whitepaper Clinique Joint (Executive Scientific Brief):\n"
                 "Veuillez trouver ci-joint notre Whitepaper Clinique Exécutif résumant nos résultats multicentriques: fertilisation 2PN atteignant 82.3% en échec de fécondation, blastocystes J5 multipliés par 2.2 et marquage CE Classe IIa."
             )
+        if has_dinner:
+            sections.append(
+                "• Invitation à un Dîner de Travail & Échange Scientifique VIP:\n"
+                "À l'occasion du prochain congrès ou de notre visite, nous serions très honorés de convier votre direction médicale à un dîner de travail afin d'échanger sur les perspectives cliniques et de partenariat."
+            )
 
         return "\n\n------------------------------------------------------------\n📌 DIRECTIVE EXÉCUTIVE: TERMES PERSONNALISÉS & DISPOSITIONS SPÉCIALES:\n------------------------------------------------------------\n" + "\n\n".join(sections) + "\n------------------------------------------------------------\n"
 
@@ -8508,6 +8539,11 @@ def format_executive_directive_block(custom_note, eff_lang, strat_mode="clinical
             sections.append(
                 "• الملف الإكلينيكي المرفق (Clinical Whitepaper - Executive Brief):\n"
                 "نرفق لسيادتكم الملف العلمي التنفيذي الموثق: رفع نسب التخصيب 2PN إلى 82.3%، وزيادة أجنة اليوم الخامس 2.2 ضعف، بشهادة CE الأوروبية وفحص MEA >80%."
+            )
+        if has_dinner:
+            sections.append(
+                "• دعوة عشاء عمل واستضافة علمية رفيعة المستوى (VIP Business Dinner Invitation):\n"
+                "يسعدنا ويشرفنا توجيه دعوة خاصة لسيادتكم ولفريقكم الطبي الموقر لحضور عشاء عمل علمي على هامش المؤتمر القادم أو خلال زيارتنا الميدانية، لمناقشة البروتوكولات الإكلينيكية وتعزيز أواصر الشراكة الاستراتيجية."
             )
 
         return "\n\n------------------------------------------------------------\n📌 التوجيه التنفيذي الخاص والشروط المعتمدة:\n------------------------------------------------------------\n" + "\n\n".join(sections) + "\n------------------------------------------------------------\n"
@@ -8530,6 +8566,7 @@ GLOBAL_COUNTRY_BUYING_BEHAVIOR = {
         "preferred_deal_model": "CAPEX Cihaz Satın Alma + 2 Yıl Parça Garantisi veya NUPCO Çerçeve İhalesi",
         "communication_channels": "Resmi İngilizce/Arapça E-posta + WhatsApp Yönetici İletişimi + VIP Kongre Daveti",
         "cultural_taboos": "KOL hekimi atlayıp sadece satın almacıyla görüşmek; pazarlık sürecini kişiselleştirmek; yavaş yanıt vermek.",
+        "dining_hospitality_protocol": "Diyâfe & VIP Ağırlama Protokolü: Suudi Arabistan ve Körfez kültüründe iş ilişkisi kişisel hürmet ve cömert misafirperverlikle mühürlenir. ESHRE/MEFS kongrelerinde veya prestijli bir restoranda akşam yemeği daveti güven tesisinin zirvesidir. Masada asla doğrudan fiyat veya sert pazarlık açılmaz; önce hekime ve kliniğine saygı gösterilir, iş konusu tatlı ve Arap kahvesi faslında nezaketle açılır.",
         "email_tone_guidance": "Yüksek saygı unvanları ('Distinguished Medical Director & Esteemed Leadership'), bölgesel öncülük vurgusu, Suudi Vizyon 2030 sağlık vizyonu uyumu ve VIP demo daveti.",
         "badge_color": "#00F5FF"
     },
@@ -8544,6 +8581,7 @@ GLOBAL_COUNTRY_BUYING_BEHAVIOR = {
         "preferred_deal_model": "Konsinye Cihaz + Yıllık Sarf Çekiş Taahhüdü veya Esnek Taksit / Teyitli Akreditif",
         "communication_channels": "Akademik Unvanlı E-posta + WhatsApp üzerinden samimi ve doğrudan takip",
         "cultural_taboos": "Cihazı sıradan ticari mal gibi sunmak; profesörün klinik otoritesini sorgulamak; EGP cinsinden açık hesap vermek.",
+        "dining_hospitality_protocol": "Nil Kenarı / Masa Başı Çalışma Yemeği: Mısır'da profesörler ve hekim-patronlarla akşam yemeği veya çalışma öğle yemeği güvenin anahtarıdır. TFF vakaları ve klinik başarılar masada tartışılır. Önemli Kural: Hesabı daima davet eden satıcı taraf ödemeli, hekimin mahcup edilmemesine ve akademik unvanına hürmet gösterilmesine azami dikkat edilmelidir.",
         "email_tone_guidance": "Akademik saygı ('Distinguished Professor & Medical Director'), TFF ve şiddetli erkek faktörü vakalarındaki başarı, vaka başı maliyet avantajı.",
         "badge_color": "#FFB800"
     },
@@ -8558,6 +8596,7 @@ GLOBAL_COUNTRY_BUYING_BEHAVIOR = {
         "preferred_deal_model": "CAPEX Bütçe Satın Alımı + 2 Yıl Tam Kapsamlı Teknik Servis Bakım Anlaşması (SLA)",
         "communication_channels": "Resmi Almanca/İngilizce E-posta + 1 Sayfalık Executive Scientific Brief PDF",
         "cultural_taboos": "CE sertifikası sunamadan satışa kalkışmak; agresif ve süslü pazarlama dili kullanmak; veri kaynağı gösterememek.",
+        "dining_hospitality_protocol": "Geschäftsessen (Ölçülü ve Resmi İş Yemeği): Almanya'da ilk temaslarda akşam yemeği daveti teklif edilmez; önce teknik dosya ve CE onayları geçmelidir. Süreç olgunlaştığında sakin ve resmi bir öğle/akşam yemeği uygundur. Önemli Kural: Katı hastane uyum (compliance/anti-bribery) kuralları nedeniyle aşırı lüks ağırlamalardan kaçınılmalı, hekimin kurum kurallarına göre kendi payını ödemek istemesi durumunda ısrarcı olunmamalıdır.",
         "email_tone_guidance": "Kısa, net, objektif, pazarlama süslemelerinden tamamen arındırılmış, doğrudan klinik kanıt ve yasal standart odaklı resmi dil.",
         "badge_color": "#00E676"
     },
@@ -8572,6 +8611,7 @@ GLOBAL_COUNTRY_BUYING_BEHAVIOR = {
         "preferred_deal_model": "Sarf Taahhütlü Konsinye Cihaz (Razor-and-Blade) veya DMO Sağlık Market Siparişi",
         "communication_channels": "Resmi E-posta + Hızlı WhatsApp & Telefon İletişimi + Yerinde Klinik Ziyaret",
         "cultural_taboos": "Arıza durumunda 24 saatte teknik destek verememek; ÜTS kayıtsız ürün teklif etmek.",
+        "dining_hospitality_protocol": "Klinik Çay/Kahve & İş Yemeği: Türkiye'de sadece e-posta ile cihaz satılamaz. Klinik içi sıcak çay/kahve sohbeti ve ardından akşam yemeğinde yüz yüze samimiyet, hızlı yerel teknik servis güvencesi ve el sıkışma kararın %70'ini belirler.",
         "email_tone_guidance": "Saygılı, profesyonel ama samimi, Türkiye'deki referans kliniklere ve hızlı teknik servis altyapısına atıfta bulunan pratik ton.",
         "badge_color": "#EC4899"
     },
@@ -8586,6 +8626,7 @@ GLOBAL_COUNTRY_BUYING_BEHAVIOR = {
         "preferred_deal_model": "Nakit / Teyitli LC veya KIMADIA Yıllık Devlet İhalesi",
         "communication_channels": "Arapça/İngilizce E-posta + WhatsApp üzerinden doğrudan hekim/patron iletişimi",
         "cultural_taboos": "Sevkiyatta gecikmek; peşinat almadan açık hesap mal göndermek; yerel temsilciyi devre dışı bırakmak.",
+        "dining_hospitality_protocol": "Ziyafet & Misafirperverlik Onuru: Irak kültüründe yemek ikramı bir onur meselesidir. Hekimin ziyafet davetini reddetmek ilişkiyi zedeler; birlikte akşam yemeği yemek iş ortaklığının kardeşlik bağıyla mühürlenmesidir.",
         "email_tone_guidance": "Kardeşlik ve saygı çerçevesinde, Bağdat/Erbil kliniklerine özel teknik destek taahhüdü içeren hürmetkar ton.",
         "badge_color": "#38BDF8"
     },
@@ -8600,6 +8641,7 @@ GLOBAL_COUNTRY_BUYING_BEHAVIOR = {
         "preferred_deal_model": "Turnkey Paket (Donanım + Yıllık Sarf + Tam Servis Bakım Anlaşması)",
         "communication_channels": "Son derece kurumsal İngilizce e-posta + LinkedIn Executive Outreach + Video Konferans",
         "cultural_taboos": "Eski teknoloji hissi vermek; yavaş yanıt vermek; teknik servis SLA sözleşmesi sunmamak.",
+        "dining_hospitality_protocol": "Executive Business Dining: Dubai ve Abu Dabi'de üst düzey uluslararası otel restoranlarında akşam yemeği veya ESHRE/Arab Health VIP resepsiyonları tercih edilir. Modern, küresel ve kurumsal bir ağırlama beklenir.",
         "email_tone_guidance": "Yenilikçi, dünya standartlarında mükemmeliyet ve Dubai/Abu Dabi merkezlerine özel kurumsal filo modeli.",
         "badge_color": "#10B981"
     },
@@ -8614,6 +8656,7 @@ GLOBAL_COUNTRY_BUYING_BEHAVIOR = {
         "preferred_deal_model": "Yerel Dağıtıcı (Gynemed Italia vb.) üzerinden vadeli faturalama.",
         "communication_channels": "İtalyanca resmi e-posta + Telefonla kişisel takip + Kongre stand daveti.",
         "cultural_taboos": "Sadece İngilizceye sıkışıp İtalyanca doküman sunmamak; yerel distribütör desteği olmadan direkt satış yapmaya çalışmak.",
+        "dining_hospitality_protocol": "Pranzo & Cena di Lavoro (İş Yemeği Kültürü): İtalya'da kişisel kolejiyalite ve sempati kurulmadan büyük sözleşme imzalanmaz. Uzun bir öğle veya akşam yemeğinde iyi yemek ve şarap eşliğinde mesleki vizyon paylaşımı kapıları sonuna kadar açar.",
         "email_tone_guidance": "Sıcak, saygılı, İtalyanca dilinde, bilimsel ortaklık ve klinik iş birliği teklif eden ton.",
         "badge_color": "#F59E0B"
     },
@@ -8628,6 +8671,7 @@ GLOBAL_COUNTRY_BUYING_BEHAVIOR = {
         "preferred_deal_model": "Yerel Distribütör / Konsinye Sarf Modeli",
         "communication_channels": "İspanyolca e-posta + Kongre toplantısı",
         "cultural_taboos": "İspanyolca materyal sağlamamak; yerel klinik protokolleri görmezden gelmek.",
+        "dining_hospitality_protocol": "Comida de Negocios & Sobremesa: İspanya'da yemek sonrası kahve eşliğinde yapılan 1-2 saatlik masa sohbetinde ('sobremesa') en kritik kararlar olgunlaşır; insani yakınlık kurallardan önce gelir.",
         "email_tone_guidance": "Kolejiyal, İspanyolca dilinde, klinik başarı ve hasta güvenliği vurgulu profesyonel ton.",
         "badge_color": "#F43F5E"
     },
@@ -8642,6 +8686,7 @@ GLOBAL_COUNTRY_BUYING_BEHAVIOR = {
         "preferred_deal_model": "NHS Çerçeve Anlaşması veya Özel Zincir Yıllık Sarf Tedarik Sözleşmesi.",
         "communication_channels": "İngiliz iş etiğine tam uygun, son derece nezaketli, kısa ve kanıt odaklı e-posta.",
         "cultural_taboos": "HFEA ve UKCA/CE kurallarını göz ardı etmek; aşırı iddialı ve kanıtsız satış sloganları kullanmak.",
+        "dining_hospitality_protocol": "Working Lunch & Katı NHS/ABPI Compliance: İngiltere'de katı rüşvetle mücadele (Bribery Act) ve NHS hediye/ağırlama limitleri nedeniyle lüks akşam yemekleri hekimler tarafından reddedilebilir. Kongrede hafif bir çalışma yemeği ('working lunch') veya ölçülü bir akşam yemeği tercih edilir.",
         "email_tone_guidance": "İngiliz iş etiğine uygun, nezaketli, doğrudan laboratuvar verimliliği ve mevzuat uyumu odaklı profesyonel ton.",
         "badge_color": "#6366F1"
     }
@@ -8683,6 +8728,7 @@ def resolve_country_buying_behavior(country_name):
         "preferred_deal_model": "CAPEX Cihaz Satışı veya Sarf Taahhütlü Konsinye Modeli",
         "communication_channels": "Resmi E-posta + Video Konferans + Kongre Görüşmesi",
         "cultural_taboos": "Yasal CE sertifikası olmadan teklif vermek; teknik servis desteği taahhüt etmemek.",
+        "dining_hospitality_protocol": "Saygılı ve Ölçülü İş Yemeği Protokolü: Yüz yüze temaslarda veya kongre esnasında akşam yemeği daveti güveni pekiştirir; yerel kültürel ve kurumsal etik kurallara riayet edilmelidir.",
         "email_tone_guidance": "Klinik başarı, hasta güvenliği ve yatırım geri dönüşü odaklı resmi kurumsal dil.",
         "badge_color": "#00F5FF"
     }
@@ -8732,6 +8778,14 @@ def render_country_buying_behavior_card_html(country_name):
                 <b style="color:#10B981;font-size:12px;">📦 Tercih Edilen Ticari Model:</b><br>
                 <span style="color:#94A3B8;">{b['preferred_deal_model']}</span>
             </div>
+        </div>
+
+        <div style="background:linear-gradient(90deg, rgba(255,184,0,0.12) 0%, rgba(30,41,59,0.55) 100%);border:1.2px solid rgba(255,184,0,0.4);border-radius:8px;padding:12px 14px;margin-bottom:12px;font-size:11.8px;line-height:1.65;box-shadow:0 3px 10px rgba(0,0,0,0.25);">
+            <div style="display:flex;align-items:center;gap:8px;margin-bottom:5px;">
+                <span style="font-size:16px;">🍽️</span>
+                <b style="color:#FFB800;font-size:12.8px;">4. İş Yemeği, Akşam Yemeği & Ağırlama Protokolü (Business Dining & Hospitality Etiquette):</b>
+            </div>
+            <div style="color:#F1F5F9;">{b.get('dining_hospitality_protocol', 'Saygılı ve ölçülü iş yemeği protokolü esastır.')}</div>
         </div>
 
         <div style="background:rgba(0,0,0,0.3);border-radius:8px;padding:10px 14px;display:flex;flex-direction:column;gap:6px;font-size:11.5px;line-height:1.6;">
@@ -20826,6 +20880,29 @@ elif active_view == "🛃 Market Intelligence & Compare":
                                     st.session_state[pitch_ver_key] = st.session_state.get(pitch_ver_key, 0) + 1
                                     st.rerun()
 
+                            # Row 3 of directive chips: VIP Dinner & Clinical Hospitality
+                            chip_r3_c1, chip_r3_c2 = st.columns([1.5, 1.5])
+                            with chip_r3_c1:
+                                if st.button("🍽️ VIP Akşam Yemeği & Kongre Daveti", key=f"chip_dinner_{radar_country}_{idx}", use_container_width=True):
+                                    target_dinner_text = "Kongrede veya şehir ziyaretimiz vesilesiyle saygıdeğer direktörünüz ve embriyoloji heyetinizi özel bir akşam yemeğinde (VIP Business Dinner & Scientific Discussion) ağırlamak ve klinik iş birliğimizi masada değerlendirmek istiyoruz."
+                                    st.session_state[user_note_key] = target_dinner_text
+                                    st.session_state[note_ver_key] = st.session_state.get(note_ver_key, 0) + 1
+                                    clear_pitch_cache_for_target(radar_country, idx)
+                                    p_subj_gen, p_body_gen = build_executive_pitch(p, radar_country, strat_mode, target_dinner_text, eff_selected_lang)
+                                    st.session_state[pitch_state_key] = (p_subj_gen, p_body_gen)
+                                    st.session_state[pitch_ver_key] = st.session_state.get(pitch_ver_key, 0) + 1
+                                    st.rerun()
+                            with chip_r3_c2:
+                                if st.button("☕ Klinik İçi Kahve & Demo Ziyareti", key=f"chip_coffee_{radar_country}_{idx}", use_container_width=True):
+                                    target_coffee_text = "Klinik direktörünüz ve baş embriyoloğunuzla merkezinizde kısa bir kahve eşliğinde tanışmak, 15 dakikalık kompakt ZPS 26 demo sunumunu gerçekleştirmek istiyoruz."
+                                    st.session_state[user_note_key] = target_coffee_text
+                                    st.session_state[note_ver_key] = st.session_state.get(note_ver_key, 0) + 1
+                                    clear_pitch_cache_for_target(radar_country, idx)
+                                    p_subj_gen, p_body_gen = build_executive_pitch(p, radar_country, strat_mode, target_coffee_text, eff_selected_lang)
+                                    st.session_state[pitch_state_key] = (p_subj_gen, p_body_gen)
+                                    st.session_state[pitch_ver_key] = st.session_state.get(pitch_ver_key, 0) + 1
+                                    st.rerun()
+
                             c_box_col1, c_box_col2 = st.columns([3.0, 1.0])
                             with c_box_col1:
                                 curr_note_ver = st.session_state.get(note_ver_key, 0)
@@ -20897,6 +20974,7 @@ KRİTİK KURALLAR:
 - İletişim Tonu: {resolve_country_buying_behavior(radar_country)['email_tone_guidance']}
 - En Etkili İkna Noktası: {resolve_country_buying_behavior(radar_country)['primary_proof_point']}
 - Pazarlık/İskonto Yaklaşımı: {resolve_country_buying_behavior(radar_country)['bargaining_advice']}
+- İş Yemeği & Ağırlama Protokolü: {resolve_country_buying_behavior(radar_country).get('dining_hospitality_protocol', '')}
 - Kaçınılması Gereken Kırmızı Çizgi (Tabu): {resolve_country_buying_behavior(radar_country)['cultural_taboos']}
 Mektubun tonunu ve teklif kurgusunu bu kültürel B2B satın alma davranışına tam olarak uyarla!
 
@@ -20949,6 +21027,9 @@ BODY:
                                     </div>
                                     <div style="background:rgba(0,0,0,0.25);padding:6px 8px;border-radius:6px;border-left:2.5px solid #00E676;">
                                         <b style="color:#00E676;">🎯 Öncelikli İkna Unsuru:</b><br><span style="color:#E2E8F0;">{cult_playbook.get('primary_proof_point')}</span>
+                                    </div>
+                                    <div style="background:rgba(0,0,0,0.25);padding:6px 8px;border-radius:6px;border-left:2.5px solid #FFB800;">
+                                        <b style="color:#FFB800;">🍽️ İş Yemeği & Ağırlama:</b><br><span style="color:#E2E8F0;">{cult_playbook.get('dining_hospitality_protocol', '')}</span>
                                     </div>
                                     <div style="background:rgba(0,0,0,0.25);padding:6px 8px;border-radius:6px;border-left:2.5px solid #FF6B6B;">
                                         <b style="color:#FF6B6B;">🚫 Kırmızı Çizgi (Tabu):</b><br><span style="color:#E2E8F0;">{cult_playbook.get('cultural_taboos')}</span>
