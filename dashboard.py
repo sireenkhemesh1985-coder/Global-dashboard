@@ -4359,6 +4359,17 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
     </div>
     """, unsafe_allow_html=True)
     
+    cult_b = resolve_country_buying_behavior(target_country)
+    st.markdown(f"""
+    <div style="background:rgba(15,23,42,0.85);border:1.5px solid {cult_b.get('badge_color', '#00F5FF')};border-radius:8px;padding:8px 12px;margin-bottom:12px;font-size:11.5px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+        <div>
+            <b style="color:#00F5FF;">🤝 {target_country} Müzakere Davranışı:</b> <span style="color:#FFFFFF;font-weight:700;">{cult_b.get('bargaining_culture')}</span>
+            <span style="color:#94A3B8;margin-left:6px;">— {cult_b.get('bargaining_advice')}</span>
+        </div>
+        <span style="background:rgba(255,255,255,0.06);color:#CBD5E1;padding:2px 8px;border-radius:4px;font-size:10px;">⏱️ Karar: {cult_b.get('decision_speed')}</span>
+    </div>
+    """, unsafe_allow_html=True)
+
     col_c1, col_c2 = st.columns(2)
     
     rec_dev_max = float(pricing_fc.get('rec_device_discount', 10.0))
@@ -8504,6 +8515,400 @@ def format_executive_directive_block(custom_note, eff_lang, strat_mode="clinical
     return ""
 
 
+# ==============================================================================
+# GLOBAL B2B BUYING BEHAVIOR & CULTURAL NEGOTIATION PLAYBOOK
+# ==============================================================================
+GLOBAL_COUNTRY_BUYING_BEHAVIOR = {
+    "Saudi Arabia": {
+        "culture_title": "İlişki & Prestij Odaklı (KOL-Centric / High-Context)",
+        "decision_hierarchy": "Merkez Direktörü / KOL Hekim Mutlak Karar Vericidir",
+        "decision_speed": "Orta-Hızlı (KOL ikna olursa 1-2 haftada bağlanır)",
+        "trust_building": "Yüz Yüze İtibar & Prestij — ESHRE/MEFS kongrelerinde VIP görüşme, merkezde yerinde demo ve saygı protokolü esastır.",
+        "bargaining_culture": "Zorunlu Sembolik Pazarlık Payı (%10 - %15 İskonto)",
+        "bargaining_advice": "Liste fiyatından mutlaka sembolik bir 'Yönetici / Filo İskontosu' payı bırakılmalıdır. İndirimsiz teklif profesyonel nezaketsizlik sayılabilir.",
+        "primary_proof_point": "Prestijli Referanslar, Üst Segment Klinik İmajı & Kraliyet/Bölgesel Sağlık Standartlarına Uyum",
+        "preferred_deal_model": "CAPEX Cihaz Satın Alma + 2 Yıl Parça Garantisi veya NUPCO Çerçeve İhalesi",
+        "communication_channels": "Resmi İngilizce/Arapça E-posta + WhatsApp Yönetici İletişimi + VIP Kongre Daveti",
+        "cultural_taboos": "KOL hekimi atlayıp sadece satın almacıyla görüşmek; pazarlık sürecini kişiselleştirmek; yavaş yanıt vermek.",
+        "email_tone_guidance": "Yüksek saygı unvanları ('Distinguished Medical Director & Esteemed Leadership'), bölgesel öncülük vurgusu, Suudi Vizyon 2030 sağlık vizyonu uyumu ve VIP demo daveti.",
+        "badge_color": "#00F5FF"
+    },
+    "Egypt": {
+        "culture_title": "Akademik Otorite & Fiyat Hassas (Prof. Dr. Odaklı)",
+        "decision_hierarchy": "Üniversite Profesörleri (Prof. Dr.) & Klinik Sahibi Kıdemli Hekimler",
+        "decision_speed": "Orta-Yavaş (Döviz kuru ve banka onayları süreci uzatabilir)",
+        "trust_building": "Akademik Saygı & Kişisel Hekim Bağı — Profesörün yayınlarına atıf yapmak kapıyı açar. Kahire'de masa başı çalıştay şarttır.",
+        "bargaining_culture": "Çok Sert Fiyat Pazarlığı (%12 - %15 İskonto Beklentisi)",
+        "bargaining_advice": "EGP devalüasyonu nedeniyle vaka başı maliyet ($7 - $10 USD) öne çıkarılmalı; liste fiyatında mutlaka esnek müzakere tamponu tutulmalıdır.",
+        "primary_proof_point": "Düşük Vaka Başı Sarf Maliyeti + Total Fertilizasyon Başarısızlığı (TFF) Vakalarında Klinik Gebelik Artışı",
+        "preferred_deal_model": "Konsinye Cihaz + Yıllık Sarf Çekiş Taahhüdü veya Esnek Taksit / Teyitli Akreditif",
+        "communication_channels": "Akademik Unvanlı E-posta + WhatsApp üzerinden samimi ve doğrudan takip",
+        "cultural_taboos": "Cihazı sıradan ticari mal gibi sunmak; profesörün klinik otoritesini sorgulamak; EGP cinsinden açık hesap vermek.",
+        "email_tone_guidance": "Akademik saygı ('Distinguished Professor & Medical Director'), TFF ve şiddetli erkek faktörü vakalarındaki başarı, vaka başı maliyet avantajı.",
+        "badge_color": "#FFB800"
+    },
+    "Germany": {
+        "culture_title": "Rasyonel, Metodik & Standart Odaklı (No-Nonsense / Low-Context)",
+        "decision_hierarchy": "Klinik Şefi + Biyomedikal Mühendisi + Satın Alma (Einkauf) Ortak Konsensüsü",
+        "decision_speed": "Yavaş & Metodik (3 - 6 ay süren teknik ve klinik validasyon)",
+        "trust_building": "Veri & Standart Odaklı — Kişisel ilişkiden ziyade teknik dosya, ISO 13485 ve CE Sertifikası (Class IIa) esastır.",
+        "bargaining_culture": "Sabit Net Fiyat (Pazarlık Payı Çok Düşük: %3 - %5)",
+        "bargaining_advice": "Fiyat baştan adil ve şeffaf verilmelidir. Yüksek indirim teklif etmek Alman komitesinde 'İlk fiyat şişirilmişti' güvensizliği doğurur.",
+        "primary_proof_point": "Bağımsız Hakemli Yayınlar (Baltaci, Ebner, Tanaka), MEA >%80 Parti Test Raporları ve Arıza Duruş Garantisi (Uptime)",
+        "preferred_deal_model": "CAPEX Bütçe Satın Alımı + 2 Yıl Tam Kapsamlı Teknik Servis Bakım Anlaşması (SLA)",
+        "communication_channels": "Resmi Almanca/İngilizce E-posta + 1 Sayfalık Executive Scientific Brief PDF",
+        "cultural_taboos": "CE sertifikası sunamadan satışa kalkışmak; agresif ve süslü pazarlama dili kullanmak; veri kaynağı gösterememek.",
+        "email_tone_guidance": "Kısa, net, objektif, pazarlama süslemelerinden tamamen arındırılmış, doğrudan klinik kanıt ve yasal standart odaklı resmi dil.",
+        "badge_color": "#00E676"
+    },
+    "Turkey": {
+        "culture_title": "Pragmatik & Hekim-Yönetici Hibriti (İlişki + Hızlı ROI)",
+        "decision_hierarchy": "Merkez Sahibi Hekim / Baş Embriyolog + Satın Alma Müdürü",
+        "decision_speed": "Hızlı-Orta (İhtiyaç net ve referans tanıdıksa 2-3 haftada karar)",
+        "trust_building": "Hibrit Güven Modeli — Tanınmış Türk hocaların referansı, yüz yüze çay/kahve görüşmesi ve hızlı yerli teknik servis garantisi.",
+        "bargaining_culture": "Orta-Yüksek Pazarlık Payı (%8 - %10 İskonto)",
+        "bargaining_advice": "Peşin ödemede veya yıllık sarf taahhüdünde filo indirimi mutlaka talep edilir. Başlangıçta %5-8 iskonto marjı saklanmalıdır.",
+        "primary_proof_point": "Canlı Merkez Demosu + ÜTS Tekil Barkod Kaydı + Referans Kliniklerin Başarı Oranları",
+        "preferred_deal_model": "Sarf Taahhütlü Konsinye Cihaz (Razor-and-Blade) veya DMO Sağlık Market Siparişi",
+        "communication_channels": "Resmi E-posta + Hızlı WhatsApp & Telefon İletişimi + Yerinde Klinik Ziyaret",
+        "cultural_taboos": "Arıza durumunda 24 saatte teknik destek verememek; ÜTS kayıtsız ürün teklif etmek.",
+        "email_tone_guidance": "Saygılı, profesyonel ama samimi, Türkiye'deki referans kliniklere ve hızlı teknik servis altyapısına atıfta bulunan pratik ton.",
+        "badge_color": "#EC4899"
+    },
+    "Iraq": {
+        "culture_title": "Kişisel Otorite & Sadakat Odaklı (Levant / Bağdat Protokolü)",
+        "decision_hierarchy": "Özelde Klinik Sahibi Hekim; Kamuda KIMADIA Komisyonu",
+        "decision_speed": "Özelde Çok Hızlı; Kamuda İhale Takvimine Bağlı",
+        "trust_building": "Yüksek Güven & Yüz Yüze Sadakat — Yerel partnerimiz Sirius Pharm güvencesi ve Bağdat'ta yerinde servis şarttır.",
+        "bargaining_culture": "Yüksek Pazarlık Payı (%10 - %15 İskonto)",
+        "bargaining_advice": "Pazarlık dostluk ve iş ortaklığının doğal parçası kabul edilir. Liste fiyatında makul müzakere alanı bırakılmalıdır.",
+        "primary_proof_point": "Kamal Al-Samarrai Hastanesi ve Amman referansları; dayanıklı, sahada kanıtlanmış donanım.",
+        "preferred_deal_model": "Nakit / Teyitli LC veya KIMADIA Yıllık Devlet İhalesi",
+        "communication_channels": "Arapça/İngilizce E-posta + WhatsApp üzerinden doğrudan hekim/patron iletişimi",
+        "cultural_taboos": "Sevkiyatta gecikmek; peşinat almadan açık hesap mal göndermek; yerel temsilciyi devre dışı bırakmak.",
+        "email_tone_guidance": "Kardeşlik ve saygı çerçevesinde, Bağdat/Erbil kliniklerine özel teknik destek taahhüdü içeren hürmetkar ton.",
+        "badge_color": "#38BDF8"
+    },
+    "United Arab Emirates": {
+        "culture_title": "Global MedTech Yatırımcısı & İleri Teknoloji Odaklı",
+        "decision_hierarchy": "Büyük Hastane Grupları (Mediclinic, Burjeel, Fakeeh) C-Level & Medikal Kurul",
+        "decision_speed": "Hızlı & Hedef Odaklı",
+        "trust_building": "Uluslararası Akreditasyon (JCI, CAP) & İleri Teknoloji İmajı",
+        "bargaining_culture": "Orta (%6 - %8 İskonto)",
+        "bargaining_advice": "Fiyattan ziyade teknolojik üstünlük, hasta memnuniyeti ve servis SLA sözleşmesi önceliklidir.",
+        "primary_proof_point": "MoHAP/DHA tescili, ESHRE guideline uyumu, dijital iş akışı kolaylığı.",
+        "preferred_deal_model": "Turnkey Paket (Donanım + Yıllık Sarf + Tam Servis Bakım Anlaşması)",
+        "communication_channels": "Son derece kurumsal İngilizce e-posta + LinkedIn Executive Outreach + Video Konferans",
+        "cultural_taboos": "Eski teknoloji hissi vermek; yavaş yanıt vermek; teknik servis SLA sözleşmesi sunmamak.",
+        "email_tone_guidance": "Yenilikçi, dünya standartlarında mükemmeliyet ve Dubai/Abu Dabi merkezlerine özel kurumsal filo modeli.",
+        "badge_color": "#10B981"
+    },
+    "Italy": {
+        "culture_title": "İlişki & Mesleki Kolejiyalite Odaklı (High-Context Avrupa)",
+        "decision_hierarchy": "Klinik Direktörü & Bölgesel Laboratuvar Şefi",
+        "decision_speed": "Orta (Bürokratik onay süreçleri uzayabilir)",
+        "trust_building": "Mesleki Kolejiyalite & İlişki — İtalyanca iletişim ve yerel distribütör varlığı çok büyük güven sağlar.",
+        "bargaining_culture": "Orta (%5 - %8 İskonto)",
+        "bargaining_advice": "Bütçe kısıtlarına göre esneklik ve uzun vade beklenir; paket teklifler tercih edilir.",
+        "primary_proof_point": "SIERR / ESHRE kongre sunumları, bağımsız Avrupa klinik verileri.",
+        "preferred_deal_model": "Yerel Dağıtıcı (Gynemed Italia vb.) üzerinden vadeli faturalama.",
+        "communication_channels": "İtalyanca resmi e-posta + Telefonla kişisel takip + Kongre stand daveti.",
+        "cultural_taboos": "Sadece İngilizceye sıkışıp İtalyanca doküman sunmamak; yerel distribütör desteği olmadan direkt satış yapmaya çalışmak.",
+        "email_tone_guidance": "Sıcak, saygılı, İtalyanca dilinde, bilimsel ortaklık ve klinik iş birliği teklif eden ton.",
+        "badge_color": "#F59E0B"
+    },
+    "Spain": {
+        "culture_title": "Klinik Mükemmeliyet & Hekim Ortaklığı Odaklı",
+        "decision_hierarchy": "Medikal Direktör & Baş Embriyolog",
+        "decision_speed": "Orta (Klinik validasyon sonrası hızlı karar)",
+        "trust_building": "İspanyolca profesyonel iletişim, ASEBIR/ESHRE bağlantıları.",
+        "bargaining_culture": "Orta (%5 - %8 İskonto)",
+        "bargaining_advice": "Fiyat esnekliğinden ziyade vaka başı sarf maliyeti ve embriyo gelişim kalitesi ön plandadır.",
+        "primary_proof_point": "ASEBIR kongre verileri, blastosist dönüşüm oranı (>%80 MEA).",
+        "preferred_deal_model": "Yerel Distribütör / Konsinye Sarf Modeli",
+        "communication_channels": "İspanyolca e-posta + Kongre toplantısı",
+        "cultural_taboos": "İspanyolca materyal sağlamamak; yerel klinik protokolleri görmezden gelmek.",
+        "email_tone_guidance": "Kolejiyal, İspanyolca dilinde, klinik başarı ve hasta güvenliği vurgulu profesyonel ton.",
+        "badge_color": "#F43F5E"
+    },
+    "United Kingdom": {
+        "culture_title": "Mevzuat, Kanıt & İş Akışı Standartları Odaklı (HFEA / NHS)",
+        "decision_hierarchy": "NHS Trust Tedarik Kurulu veya Özel Zincir (Care Fertility, TFP) Tıbbi Kurulu",
+        "decision_speed": "Metodik & Süreç Odaklı",
+        "trust_building": "HFEA ve NICE Mevzuat Uyumu + Sağlık Ekonomisi Analizi (ROI).",
+        "bargaining_culture": "İhale Çerçeve Sözleşmesi Kuralı — Kamu alımlarında şeffaf ve sabit marj.",
+        "bargaining_advice": "Fiyat şeffaflığı esastır. Kimyasal kalsiyum iyonoforların yarattığı COSHH risklerini ortadan kaldırması en büyük ekonomik argümandır.",
+        "primary_proof_point": "HFEA denetimlerine tam uyum, toksik kimyasal taşınmasının laboratuvar riskini sıfırlaması.",
+        "preferred_deal_model": "NHS Çerçeve Anlaşması veya Özel Zincir Yıllık Sarf Tedarik Sözleşmesi.",
+        "communication_channels": "İngiliz iş etiğine tam uygun, son derece nezaketli, kısa ve kanıt odaklı e-posta.",
+        "cultural_taboos": "HFEA ve UKCA/CE kurallarını göz ardı etmek; aşırı iddialı ve kanıtsız satış sloganları kullanmak.",
+        "email_tone_guidance": "İngiliz iş etiğine uygun, nezaketli, doğrudan laboratuvar verimliliği ve mevzuat uyumu odaklı profesyonel ton.",
+        "badge_color": "#6366F1"
+    }
+}
+
+
+def resolve_country_buying_behavior(country_name):
+    """
+    Resolves B2B buying behavior, decision hierarchy, bargaining ritual, and cultural communication
+    guidance for any country with robust aliases and dynamic fallback.
+    """
+    c = str(country_name).strip() if country_name else ""
+    alias_map = {
+        "Turkey": "Turkey", "Türkiye": "Turkey", "TR": "Turkey",
+        "Saudi Arabia": "Saudi Arabia", "Suudi Arabistan": "Saudi Arabia", "KSA": "Saudi Arabia",
+        "Egypt": "Egypt", "Mısır": "Egypt", "EG": "Egypt",
+        "Iraq": "Iraq", "Irak": "Iraq", "IQ": "Iraq", "Jordan-Iraq": "Iraq",
+        "Algeria": "Algeria", "Cezayir": "Algeria", "DZ": "Algeria",
+        "Jordan": "Jordan", "Ürdün": "Jordan", "JO": "Jordan",
+        "Germany": "Germany", "Almanya": "Germany", "DE": "Germany",
+        "Italy": "Italy", "İtalya": "Italy", "IT": "Italy",
+        "Spain": "Spain", "İspanya": "Spain", "ES": "Spain",
+        "United Kingdom": "United Kingdom", "İngiltere": "United Kingdom", "UK": "United Kingdom",
+        "UAE": "United Arab Emirates", "United Arab Emirates": "United Arab Emirates", "BAE": "United Arab Emirates",
+        "Qatar": "Saudi Arabia", "Kuwait": "Saudi Arabia"
+    }
+    target_k = alias_map.get(c, c)
+    if target_k in GLOBAL_COUNTRY_BUYING_BEHAVIOR:
+        return GLOBAL_COUNTRY_BUYING_BEHAVIOR[target_k]
+    
+    return {
+        "culture_title": f"Bölgesel B2B MedTech Satın Alma Modeli ({c})",
+        "decision_hierarchy": "Merkez Direktörü & Klinik Komitesi Ortak Değerlendirmesi",
+        "decision_speed": "Orta (Validasyon ve tescil sürecine bağlı)",
+        "trust_building": "Uluslararası CE Class IIa sertifikasyonu, MEA test güvencesi ve klinik kanıtlar.",
+        "bargaining_culture": "Standart Pazarlık Payı (%5 - %8 İskonto)",
+        "bargaining_advice": "Liste fiyatından makul bir filo/peşin iskonto payı bırakılarak teklif verilmelidir.",
+        "primary_proof_point": "Klinik Whitepaper, Hakemli Yayınlar ve Yerel Distribütör Teknik Servis Güvencesi",
+        "preferred_deal_model": "CAPEX Cihaz Satışı veya Sarf Taahhütlü Konsinye Modeli",
+        "communication_channels": "Resmi E-posta + Video Konferans + Kongre Görüşmesi",
+        "cultural_taboos": "Yasal CE sertifikası olmadan teklif vermek; teknik servis desteği taahhüt etmemek.",
+        "email_tone_guidance": "Klinik başarı, hasta güvenliği ve yatırım geri dönüşü odaklı resmi kurumsal dil.",
+        "badge_color": "#00F5FF"
+    }
+
+
+def render_country_buying_behavior_card_html(country_name):
+    """
+    Renders the executive Country B2B Buying Behavior, Decision Hierarchy & Negotiation Playbook Card.
+    """
+    b = resolve_country_buying_behavior(country_name)
+    color = b.get("badge_color", "#00F5FF")
+    
+    html = f"""
+    <div style="background:linear-gradient(135deg, rgba(15,23,42,0.95) 0%, rgba(30,41,59,0.92) 100%);border:1.5px solid {color};border-radius:12px;padding:18px 20px;margin:16px 0;box-shadow:0 6px 20px rgba(0,0,0,0.35);">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:10px;">
+            <div style="display:flex;align-items:center;gap:10px;">
+                <span style="background:rgba(0,245,255,0.12);border:1px solid {color};color:{color};font-size:18px;padding:6px 10px;border-radius:8px;">🤝</span>
+                <div>
+                    <h4 style="margin:0;color:#FFFFFF;font-size:16px;font-weight:800;">{country_name} B2B Satın Alma Kültürü, Karar Hiyerarşisi & Müzakere Modeli</h4>
+                    <div style="color:{color};font-size:12px;font-weight:700;margin-top:2px;">{b['culture_title']}</div>
+                </div>
+            </div>
+            <div style="text-align:right;">
+                <span style="background:rgba(255,255,255,0.06);color:#CBD5E1;border:1px solid rgba(255,255,255,0.15);padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;">
+                    ⏱️ Karar Hızı: {b['decision_speed']}
+                </span>
+            </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(230px, 1fr));gap:12px;margin-bottom:12px;">
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,245,255,0.2);border-radius:8px;padding:12px;font-size:11.8px;line-height:1.65;">
+                <b style="color:#00F5FF;font-size:12.5px;">🏛️ 1. Karar Alma Hiyerarşisi:</b><br>
+                <span style="color:#E2E8F0;">{b['decision_hierarchy']}</span><br><br>
+                <b style="color:#38BDF8;font-size:12px;">🤝 İletişim & Güven Modeli:</b><br>
+                <span style="color:#94A3B8;">{b['trust_building']}</span>
+            </div>
+
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,215,0,0.25);border-radius:8px;padding:12px;font-size:11.8px;line-height:1.65;">
+                <b style="color:#FFD700;font-size:12.5px;">🏷️ 2. Pazarlık & İskonto Ritüeli:</b><br>
+                <span style="color:#FFD700;font-weight:700;">{b['bargaining_culture']}</span><br>
+                <div style="color:#CBD5E1;margin-top:4px;">{b['bargaining_advice']}</div>
+            </div>
+
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,230,118,0.25);border-radius:8px;padding:12px;font-size:11.8px;line-height:1.65;">
+                <b style="color:#00E676;font-size:12.5px;">🎯 3. En Etkili İkna Unsuru:</b><br>
+                <span style="color:#E2E8F0;">{b['primary_proof_point']}</span><br><br>
+                <b style="color:#10B981;font-size:12px;">📦 Tercih Edilen Ticari Model:</b><br>
+                <span style="color:#94A3B8;">{b['preferred_deal_model']}</span>
+            </div>
+        </div>
+
+        <div style="background:rgba(0,0,0,0.3);border-radius:8px;padding:10px 14px;display:flex;flex-direction:column;gap:6px;font-size:11.5px;line-height:1.6;">
+            <div>
+                <b style="color:#FF6B6B;">🚫 Kritik Kırmızı Çizgi (Kültürel Tabu / Deal Breaker):</b> 
+                <span style="color:#CBD5E1;">{b['cultural_taboos']}</span>
+            </div>
+            <div style="border-top:1px dashed rgba(255,255,255,0.08);padding-top:6px;">
+                <b style="color:#00F5FF;">✉️ E-Posta & İletişim Tonu Rehberi:</b> 
+                <span style="color:#CBD5E1;">{b['email_tone_guidance']}</span>
+            </div>
+        </div>
+    </div>
+    """
+    return html
+
+
+def format_country_cultural_pitch_block(country_name, eff_lang, strategy_mode="clinical"):
+    """
+    Generates an authoritative, culturally tailored negotiation and procurement positioning clause
+    embedded inside outreach emails based on the target country's specific B2B buying behavior.
+    """
+    c = str(country_name).strip() if country_name else ""
+    c_lower = c.lower()
+    
+    # Egypt
+    if any(k in c_lower for k in ["egypt", "mısır", "misir", "cairo"]):
+        if eff_lang == "ar":
+            return (
+                "• نموذج التوريد المرن والتكلفة الاقتصادية لدعم المراكز في مصر:\n"
+                "مراعاةً للأولويات الاقتصادية ودعم عيادات الخصوبة في مصر، تتيح ZEUS Bioscience معادلة اقتصادية فائقة التميز بتكلفة استهلاكية تتراوح بين 7.00 إلى 10.00 دولار لكل حالة مع خيارات توريد مؤسسية مرنة وفتح اعتمادات مستندية ميسرة لحماية ميزانية المركز من تقلبات سعر الصرف."
+            )
+        elif eff_lang == "tr":
+            return (
+                "• Mısır Pazarına Özel Vaka Başı Sarf Ekonomisi & Esnek Tedarik:\n"
+                "Mısır pazarındaki döviz ve bütçe hassasiyetleri gözetilerek, ZEUS Bioscience vaka başına yalnızca $7.00 - $10.00 USD sarf maliyeti ve devalüasyon riskini bertaraf eden esnek konsinye / akreditifli kurumsal satın alma modelleri sunmaktadır."
+            )
+        else:
+            return (
+                "• Tailored Procurement & Per-Case Economics for Egyptian Centers:\n"
+                "Reflecting Egypt's healthcare economic priorities, ZEUS Bioscience delivers an ultra-efficient consumable economics of $7.00 - $10.00 USD per clinical case, alongside flexible institutional acquisition structures (including consumable-backed consignment and verified LC options) to insulate your center against currency volatility."
+            )
+
+    # Saudi Arabia & GCC
+    elif any(k in c_lower for k in ["saudi", "arabistan", "suudi", "ksa", "riyadh", "jeddah", "qatar", "katar", "uae", "emirates", "kuwait"]):
+        if eff_lang == "ar":
+            return (
+                "• التوافق مع رؤية المملكة 2030 وبرامج التميز الصحي الإقليمي:\n"
+                "تماشياً مع مستهدفات التحول الصحي ورؤية 2030 لرفع جودة مخرجات علاج العقم، نخصص لمركزكم الموقر باقة الشراكة المؤسسية المتقدمة (Executive Fleet Tier) مع تدريب إكلينيكي معتمد لخبرائكم ودعوة خاصة لقيادتكم الطبية في ملتقيات ESHRE و MEFS."
+            )
+        elif eff_lang == "tr":
+            return (
+                "• Suudi Arabistan & Körfez Sağlık Vizyonu (Vision 2030) Uyumu:\n"
+                "Bölgenin prestijli sağlık standartları ve Suudi Vizyon 2030 hedefleri doğrultusunda, kurumunuza özel Yönetici Filo Paketi, ESHRE/MEFS VIP heyet daveti ve sertifikalı klinik embriyolog yerinde eğitim desteği tahsis edilmektedir."
+            )
+        else:
+            return (
+                "• Alignment with Saudi Vision 2030 & GCC Reproductive Center Excellence:\n"
+                "In alignment with Vision 2030 healthcare transformation goals and regional clinical leadership, we dedicate an Executive Institutional Tier for your center, featuring factory certification, on-site clinical protocol onboarding, and priority executive hosting at international congresses (ESHRE / MEFS)."
+            )
+
+    # Germany / DACH
+    elif any(k in c_lower for k in ["germany", "deutschland", "almanya", "austria", "switzerland"]):
+        if eff_lang == "de":
+            return (
+                "• Regulatorische Konformität & Transparente Wirtschaftlichkeit für Deutschland:\n"
+                "Für deutsche Spitzenzentren garantieren wir lückenlose Dokumentation gemäß CE-Klasse IIa und ISO 13485 sowie chargenbezogene MEA-Zertifikate (>80%). Wir bieten faire, transparente Nettopreise und standardisierte SLA-Wartungsverträge ohne künstliche Margenaufschläge."
+            )
+        elif eff_lang == "tr":
+            return (
+                "• Almanya / DACH Pazarı Rasyonel Standart ve CE Güvencesi:\n"
+                "Alman klinik standartlarına tam uyumlu olarak; CE Class IIa, ISO 13485 ve parti bazlı MEA test raporları (>%80) eksiksiz sunulmakta, şeffaf net fiyatlandırma ve 2 yıl tam kapsamlı SLA teknik servis garantisi sağlanmaktadır."
+            )
+        else:
+            return (
+                "• Regulatory Compliance & Transparent Net Economics for Germany/DACH:\n"
+                "Adhering strictly to German clinical validation standards, we provide turnkey CE Class IIa and ISO 13485 certification packages, lot-specific MEA certificates (>80%), and transparent net contract pricing with comprehensive SLA technical uptime guarantees."
+            )
+
+    # Turkey
+    elif any(k in c_lower for k in ["turkey", "türkiye", "turkiye"]):
+        return (
+            "• Türkiye Pazarı Yerel Teknik Servis & ÜTS Güvencesi:\n"
+            "Türkiye'deki referans üniversite ve özel tüp bebek merkezlerimizin klinik tecrübesi doğrultusunda; T.C. Sağlık Bakanlığı ÜTS tekil barkod kaydı, İstanbul merkezli 24 saatte yerinde teknik servis ve ikame cihaz güvencesi ile yıllık sarf çekiş taahhütlü esnek konsinye modelleri sunmaktayız."
+        )
+
+    # Iraq / Levant
+    elif any(k in c_lower for k in ["iraq", "irak", "baghdad", "erbil", "jordan"]):
+        if eff_lang == "ar":
+            return (
+                "• التزامنا بدعم مراكز العراق والمنطقة بالدعم الفني المباشر:\n"
+                "استناداً إلى نجاح منظوماتنا في المراكز الرائدة كمركز كمال السامرائي وعمان، نضمن لمركزكم الموقر إمداداً لوجستياً مستمراً مع وكيلنا المعتمد، وتوفير قطع الغيار والتدريب الموقعي في بغداد وأربيل مع شروط دفع ميسرة."
+            )
+        else:
+            return (
+                "• Dedicated Technical Support & Field Partnership for Iraq & Levant:\n"
+                "Corroborated by our clinical footprint across premier regional centers (such as Kamal Al-Samarrai Hospital and Amman), we ensure seamless logistics through our verified regional partner, on-site technical support in Baghdad and Erbil, and flexible procurement terms."
+            )
+
+    # Italy
+    elif any(k in c_lower for k in ["italy", "italia", "italya"]):
+        if eff_lang == "it":
+            return (
+                "• Presidio Territoriale & Collaborazione Scientifica per l'Italia:\n"
+                "Attraverso una solida rete tecnica e logistica sul territorio italiano e in piena aderenza agli standard SIERR/ESHRE, offriamo documentazione ufficiale CE Classe IIa, affiancamento applicativo in lingua italiana e contratti quadro flessibili per centri singoli o gruppi ospedalieri."
+            )
+        else:
+            return (
+                "• Dedicated Territorial Support & Clinical Collaboration for Italy:\n"
+                "Supported by premier Italian reproductive logistics channels and aligned with SIERR/ESHRE guidelines, we provide CE Class IIa technical compliance, Italian-language clinical specialist training, and predictable consumable contracts."
+            )
+
+    # Spain
+    elif any(k in c_lower for k in ["spain", "españa", "espana", "ispanya"]):
+        if eff_lang == "es":
+            return (
+                "• Soporte Clínico Especializado y Alianza Territorial para España:\n"
+                "En estrecha sintonía con las recomendaciones de ASEBIR y ESHRE, aseguramos disponibilidad inmediata de consumibles certificados CE Clase IIa, formación clínica especializada en español y modelos de suministro adaptados a clínicas individuales o redes multicéntricas."
+            )
+        else:
+            return (
+                "• Dedicated Territorial Support & Clinical Collaboration for Spain:\n"
+                "Aligned with ASEBIR and ESHRE guidelines, we guarantee CE Class IIa technical compliance, specialized Spanish-language clinical onboarding, and tailored consumable agreements."
+            )
+
+    # UK
+    elif any(k in c_lower for k in ["united kingdom", "uk", "britain", "england", "ingiltere"]):
+        return (
+            "• UK HFEA Compliance & COSHH Risk Elimination:\n"
+            "Engineered to satisfy rigorous UK HFEA standards, the ZEUS Pulse Stimulator completely eliminates hazardous calcium ionophore chemical handling under COSHH regulations, streamlining embryology workflow while delivering measurable clinical and health-economic ROI."
+        )
+
+    # Global / Default
+    else:
+        if eff_lang == "tr":
+            return (
+                f"• {country_name} Pazarına Özel Regülasyon Uyumu & Yerel Distribütör Modeli:\n"
+                "Uluslararası CE Class IIa ve ISO 13485 sertifikasyonumuzla pazarınızın sağlık otoritesi gereksinimlerine tam uyumlu teknik dosya, cazip distribütör marjları (>%42) ve uzman klinik eğitim desteği sağlamaktayız."
+            )
+        elif eff_lang == "ar":
+            return (
+                f"• التوافق الإقليمي مع معايير الجودة والتوريد ({country_name}):\n"
+                "بفضل شهادة CE Class IIa الأوروبية ومعايير ISO 13485، نضمن التوافق الكامل مع اللوائح الصحية المحلية، مع توفير هوامش توزيع مجزية ودعم فني وإكلينيكي متكامل."
+            )
+        else:
+            return (
+                f"• Regional Regulatory Alignment & Partner Economics ({country_name}):\n"
+                "Backed by European CE Class IIa certification and ISO 13485 quality standards, we provide turnkey technical dossiers for local regulatory clearance, highly favorable distributor margin structures (>42%), and comprehensive clinical onboarding."
+            )
+
+
+def inject_cultural_block_into_pitch(body, cult_pitch_block, eff_lang):
+    """
+    Injects the cultural negotiation clause cleanly right before the closing salutation
+    ensuring that every generated email adheres to country buying behavior.
+    """
+    if not cult_pitch_block or cult_pitch_block.strip() in body:
+        return body
+        
+    closing_markers = [
+        "\nBest regards,", "\nWarm regards,", "\nSincerely,",
+        "\nCordiali saluti,", "\nDistinti saluti,",
+        "\nSaludos cordiales,", "\nAtentamente,",
+        "\nMit freundlichen Grüßen,", "\nMit besten Grüßen,",
+        "\nCordialement,", "\nBien cordialement,",
+        "\nوتفضلوا بقبول", "\nمع خالص التحية", "\nمع أطيب التحيات", "\nمع فائق الاحترام",
+        "\nSaygılarımızla,", "\nEn derin saygılarımızla,", "\nİş birliği dileklerimizle,"
+    ]
+    
+    for marker in closing_markers:
+        if marker in body:
+            parts = body.split(marker, 1)
+            return parts[0].rstrip() + "\n\n" + cult_pitch_block.strip() + "\n" + marker + parts[1]
+            
+    return body.rstrip() + "\n\n" + cult_pitch_block.strip() + "\n"
+
+
 def build_executive_pitch(p, country_name, strategy_mode="clinical", custom_note="", lang_code="auto"):
     """
     Generates an authoritative, highly persuasive B2B outreach email tailored for
@@ -9270,6 +9675,8 @@ Warm regards,
 Medical Directorate & Scientific Affairs | ZEUS Bioscience Europe
 Direct Contact: +90 (212) 850 44 00 | Email: scientific@zeusbioscience.com | Web: www.zeusbioscience.com"""
 
+    cult_pitch_block = format_country_cultural_pitch_block(country_name, eff_lang, strategy_mode)
+    body = inject_cultural_block_into_pitch(body, cult_pitch_block, eff_lang)
     return subject, body
 
 
@@ -20478,6 +20885,13 @@ KRİTİK KURALLAR:
 3. ESHRE GUIDELINE & KLİNİK WHITEPAPER: Eğer yönetici yorumunda ESHRE Guideline veya Klinik Whitepaper talep ediliyorsa, mektubun gövdesine ESHRE AOA kılavuz uyumunu ve ekli 1 sayfalık Klinik Whitepaper (Executive Scientific Brief) detaylarını (%82.3 döllenme, 2.2 kat blastosist artışı, MEA >%80, CE Class IIa) profesyonelce ekle!
 4. TEKNOLOJİ DOĞRULUĞU: ZEUS Pulse Stimulator Piezo-ICSI DEĞİLDİR! Elektriksel oosit aktivasyon (AOA - The Spark of Life) sistemidir.
 5. CE BELGELENDİRME: Asla "MDR" yazma! Yalnızca "CE Sertifikalı" / "CE Certified" olarak belirt.
+6. ÜLKE B2B SATIN ALMA KÜLTÜRÜ & MÜZAKERE TONU ({radar_country}):
+- Satın Alma & Müzakere Modeli: {resolve_country_buying_behavior(radar_country)['culture_title']}
+- İletişim Tonu: {resolve_country_buying_behavior(radar_country)['email_tone_guidance']}
+- En Etkili İkna Noktası: {resolve_country_buying_behavior(radar_country)['primary_proof_point']}
+- Pazarlık/İskonto Yaklaşımı: {resolve_country_buying_behavior(radar_country)['bargaining_advice']}
+- Kaçınılması Gereken Kırmızı Çizgi (Tabu): {resolve_country_buying_behavior(radar_country)['cultural_taboos']}
+Mektubun tonunu ve teklif kurgusunu bu kültürel B2B satın alma davranışına tam olarak uyarla!
 
 Çıktıyı tam olarak şu formatta ver:
 SUBJECT: [Konu başlığı]
@@ -20509,6 +20923,35 @@ BODY:
 
                             curr_ver = st.session_state.get(pitch_ver_key, 0)
                             curr_subj, curr_body = st.session_state.get(pitch_state_key, build_executive_pitch(p, radar_country, strat_mode, user_custom_note, eff_selected_lang))
+
+                            cult_playbook = resolve_country_buying_behavior(radar_country)
+                            cp_color = cult_playbook.get('badge_color', '#00F5FF')
+                            st.markdown(f"""
+                            <div style="background:rgba(15,23,42,0.92);border:1.5px solid {cp_color};border-radius:10px;padding:12px 14px;margin-bottom:12px;box-shadow:0 4px 12px rgba(0,0,0,0.3);">
+                                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:6px;">
+                                    <span style="font-size:12.5px;color:#FFFFFF;font-weight:800;">
+                                        🤝 <b>{radar_country} B2B Satın Alma Kültürü & Müzakere Rehberi:</b> <span style="color:{cp_color};">{cult_playbook.get('culture_title')}</span>
+                                    </span>
+                                    <span style="background:rgba(255,255,255,0.08);color:#CBD5E1;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:700;">
+                                        ⏱️ Karar Hızı: {cult_playbook.get('decision_speed')}
+                                    </span>
+                                </div>
+                                <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));gap:8px;font-size:11.2px;line-height:1.55;">
+                                    <div style="background:rgba(0,0,0,0.25);padding:6px 8px;border-radius:6px;border-left:2.5px solid #FFD700;">
+                                        <b style="color:#FFD700;">🏷️ Pazarlık Yaklaşımı:</b><br><span style="color:#E2E8F0;">{cult_playbook.get('bargaining_advice')}</span>
+                                    </div>
+                                    <div style="background:rgba(0,0,0,0.25);padding:6px 8px;border-radius:6px;border-left:2.5px solid #00E676;">
+                                        <b style="color:#00E676;">🎯 Öncelikli İkna Unsuru:</b><br><span style="color:#E2E8F0;">{cult_playbook.get('primary_proof_point')}</span>
+                                    </div>
+                                    <div style="background:rgba(0,0,0,0.25);padding:6px 8px;border-radius:6px;border-left:2.5px solid #FF6B6B;">
+                                        <b style="color:#FF6B6B;">🚫 Kırmızı Çizgi (Tabu):</b><br><span style="color:#E2E8F0;">{cult_playbook.get('cultural_taboos')}</span>
+                                    </div>
+                                </div>
+                                <div style="font-size:10.8px;color:#94A3B8;margin-top:6px;border-top:1px dashed rgba(255,255,255,0.08);padding-top:4px;">
+                                    ℹ️ <i>Mail İletişim Tonu: {cult_playbook.get('email_tone_guidance')}</i>
+                                </div>
+                            </div>
+                            """, unsafe_allow_html=True)
 
                             edited_subj = st.text_input("📌 E-posta Konu Başlığı (Subject):", value=curr_subj, key=f"subj_disp_{radar_country}_{idx}_{strat_mode}_{eff_selected_lang}_{curr_ver}")
                             edited_body = st.text_area("Özelleştirilmiş İletişim Metni (Email Body):", value=curr_body, height=270, key=f"body_disp_{radar_country}_{idx}_{strat_mode}_{eff_selected_lang}_{curr_ver}")
@@ -23412,6 +23855,15 @@ elif active_view == "🌍 Country 360° Performance & Report":
             max_oocytes_c360 = total_dishes_c360 * 20
             patient_cycles_c360 = total_dishes_c360
 
+            net_con_unit = con_list_price * (1.0 - (con_disc_pct / 100.0))
+            con_disc_amount_unit = con_list_price - net_con_unit
+            con_tot_rev = net_con_unit * con_qty
+            con_tot_disc = con_disc_amount_unit * con_qty
+            est_con_cogs = con_list_price * 0.32 * con_qty
+            est_con_margin_usd = con_tot_rev - est_con_cogs
+            est_con_margin_pct = (est_con_margin_usd / con_tot_rev * 100.0) if con_tot_rev > 0 else 0.0
+            con_warn = con_disc_pct > rec_sarf_max
+
             st.markdown(f"""
             <div style="background:{c360_con_bg};border:1.5px solid {c360_con_bdr};border-radius:8px;padding:10px 14px;margin-top:6px;margin-bottom:10px;font-size:12px;color:#E2E8F0;box-shadow:0 3px 10px rgba(0,0,0,0.25);">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:6px;">
@@ -23442,15 +23894,6 @@ elif active_view == "🌍 Country 360° Performance & Report":
                 </div>
             </div>
             """, unsafe_allow_html=True)
-            
-            net_con_unit = con_list_price * (1.0 - (con_disc_pct / 100.0))
-            con_disc_amount_unit = con_list_price - net_con_unit
-            con_tot_rev = net_con_unit * con_qty
-            con_tot_disc = con_disc_amount_unit * con_qty
-            est_con_cogs = con_list_price * 0.32 * con_qty
-            est_con_margin_usd = con_tot_rev - est_con_cogs
-            est_con_margin_pct = (est_con_margin_usd / con_tot_rev * 100.0) if con_tot_rev > 0 else 0.0
-            con_warn = con_disc_pct > rec_sarf_max
             
             st.markdown(f"""
             <div style="background:#0F192E;border:1px solid {'#FF6B6B' if con_warn else '#FFB800'};border-radius:10px;padding:12px;font-size:12px;line-height:1.65;margin-top:10px;">
@@ -23597,6 +24040,7 @@ elif active_view == "🌍 Country 360° Performance & Report":
         # PILLAR 5: SATIŞ STRATEJİSİ, CİHAZ & SARF MODELLERİ VE SÖZLEŞME KORUMA KILAVUZU
         # ----------------------------------------------------------------------
         st.markdown(f"### 🎯 5. {sel_country} Satış Stratejisi, Cihaz & Sarf Modelleri ve Sözleşme Koruma Kılavuzu")
+        st.markdown(render_country_buying_behavior_card_html(sel_country), unsafe_allow_html=True)
         render_deep_sales_strategy_ui(sel_country, c_deep, pricing_fc)
         st.markdown("<br>", unsafe_allow_html=True)
 
