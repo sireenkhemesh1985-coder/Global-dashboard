@@ -4601,21 +4601,24 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
             sarf_inline_bg = "rgba(168,85,247,0.12)"
             sarf_inline_border = "#A855F7"
 
-        total_dishes_val = sarf_qty * 10
-        total_pools_val = total_dishes_val * 4
-        max_oocytes_val = total_dishes_val * 20
-        patient_cycles_val = total_dishes_val
+        total_dishes_val = sarf_qty # 4 Pool Tek Dish mimarisi (1 Kutu/Paket = 1 Dish)
+        total_pools_val = total_dishes_val * 4 # Her Dish 4 bağımsız mikro-pool haznesine sahiptir
+        max_oocytes_val = total_dishes_val * 20 # 4 Pool x 5 Oosit = Dish başına azami 20 oosit
+        patient_cycles_val = total_dishes_val # 1 Dish tam 1 hastanın tüm oositlerini (20 oosite kadar) tek başına eksiksiz karşılar
+        cost_per_dish = net_sarf_unit
+        cost_per_pool = cost_per_dish / 4.0
+        cost_per_oocyte = cost_per_dish / 20.0
 
         st.markdown(f"""
         <div style="background:{sarf_inline_bg};border:1.5px solid {sarf_inline_border};border-radius:8px;padding:10px 14px;margin-top:6px;margin-bottom:10px;font-size:12px;color:#E2E8F0;box-shadow:0 3px 10px rgba(0,0,0,0.25);">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:6px;">
                 <div>{sarf_inline_msg}</div>
                 <span style="background:rgba(0,245,255,0.15);color:#00F5FF;border:1px solid #00F5FF;padding:2px 8px;border-radius:4px;font-weight:700;font-size:10.5px;">
-                    ⚡ 4 Pool × 5 Oosit = Max 20 Oosit/Dish
+                    ⚡ 4 Pool Tek Dish (Max 20 Oosit/Dish)
                 </span>
             </div>
             <div style="font-size:12.5px;color:#00F5FF;margin-top:6px;font-weight:800;border-top:1px solid rgba(255,255,255,0.08);padding-top:6px;">
-                🧪 <b>Siklüs & Oosit Kapasitesi:</b> {sarf_qty:,} Kutu = {total_dishes_val:,} Dish = ~{patient_cycles_val:,} Hasta Tedavi Siklüsü
+                🧪 <b>Siklüs & Oosit Kapasitesi:</b> {sarf_qty:,} Kutu = {total_dishes_val:,} Dish (4-Pool) = ~{patient_cycles_val:,} Hasta Tedavi Siklüsü
             </div>
             <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(170px, 1fr));gap:8px;margin-top:6px;font-size:11px;">
                 <div style="background:rgba(0,0,0,0.35);padding:6px 10px;border-radius:6px;border-left:2.5px solid #00F5FF;">
@@ -4627,12 +4630,12 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
                     <b style="color:#00E676;font-size:13px;">{max_oocytes_val:,} Oosit</b> (Max 20/Dish)
                 </div>
                 <div style="background:rgba(0,0,0,0.35);padding:6px 10px;border-radius:6px;border-left:2.5px solid #FFD700;">
-                    <span style="color:#94A3B8;">Vaka Başı / Oosit Başı:</span><br>
-                    <b style="color:#FFD700;font-size:13px;">${net_sarf_unit/10.0:,.2f} / Vaka</b> <span style="color:#8FA3C0;font-size:10px;">(${net_sarf_unit/200.0:,.2f}/Oosit)</span>
+                    <span style="color:#94A3B8;">Vaka Başı / Pool Başı:</span><br>
+                    <b style="color:#FFD700;font-size:13px;">${cost_per_dish:,.2f} / Vaka</b> <span style="color:#8FA3C0;font-size:10px;">(${cost_per_pool:,.2f}/Pool | ${cost_per_oocyte:,.2f}/Oosit)</span>
                 </div>
             </div>
             <div style="font-size:10.5px;color:#8FA3C0;margin-top:6px;line-height:1.45;">
-                ℹ️ <i>Klinik Yükleme Kuralı: 1 ZEUS Electro Dish 4 ayrı elektrotlu pool'den oluşur; her pool'e max 5 oosit yüklenerek tek dish'te toplam 20 oosit aynı anda aktive edilir. Bir hastadan ortalama 8–15 oosit toplandığından, 1 Dish tam 1 hasta siklüsünü (20 oosite kadar) tek başına eksiksiz karşılar.</i>
+                ℹ️ <i>4 Pool Tek Dish Kuralı: 1 ZEUS Electro Dish 4 ayrı elektrotlu mikro-havuzdan (pool) oluşur. Her pool'e max 5 oosit yüklenerek tek dish'te toplam 20 oosit aynı anda aktive edilir. Bir hastadan ortalama 8–15 oosit toplandığından, 1 Dish tam 1 hasta siklüsünü (20 oosite kadar) tek başına eksiksiz karşılar.</i>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -4694,6 +4697,117 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
         </div>
     </div>
     """, unsafe_allow_html=True)
+
+    # --------------------------------------------------------------------------
+    # KLİNİK YATIRIM GERİ DÖNÜŞÜ & ROI HESAPLAMA MOTORU (CLINICAL ROI SIMULATOR)
+    # --------------------------------------------------------------------------
+    def_aoa_fee = 650.0 if is_high_income else (450.0 if is_mid_income else 350.0)
+    
+    st.markdown("""
+    <div style="margin-top:16px;margin-bottom:6px;">
+        <span style="font-size:14.5px;font-weight:800;color:#00E676;letter-spacing:0.5px;">
+            🏥 KLİNİK YATIRIM GERİ DÖNÜŞÜ & ROI ANALİZİ (CLINICAL ROI & PAYBACK SIMULATOR)
+        </span>
+        <div style="font-size:11.5px;color:#94A3B8;margin-top:2px;">
+            Tüp bebek kliniklerinin ZEUS ZPS 26 ve 4-Pool Electro Dish yatırımıyla sağladığı hasta başı net nakit kârı, cihaz amortisman eşiği ve yıllık yatırım getirisi (ROI).
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    roi_input_c1, roi_input_c2 = st.columns(2)
+    with roi_input_c1:
+        clinic_aoa_fee = st.slider(
+            f"🏥 Kliniğin Hastaya Fatura Ettiği AOA İşlem Bedeli ($ USD / Vaka):",
+            min_value=200.0,
+            max_value=1500.0,
+            value=float(def_aoa_fee),
+            step=25.0,
+            key=f"{key_prefix}_clinic_aoa_fee_{target_country}",
+            help="Tüp bebek merkezlerinin TFF / mikroenjeksiyon yetmezliği vakalarında hastaya sunduğu Elektriksel Oosit Aktivasyon (AOA) add-on prosedür ücreti."
+        )
+    with roi_input_c2:
+        def_clinic_annual_cases = min(sarf_qty, max(20, round(sarf_qty / max(1, dev_qty))))
+        clinic_cases_yr = st.slider(
+            f"📊 Kliniğin Yıllık AOA Hasta Hacmi (Vaka / Yıl):",
+            min_value=10,
+            max_value=max(100, int(sarf_qty)),
+            value=int(def_clinic_annual_cases),
+            step=5,
+            key=f"{key_prefix}_clinic_cases_yr_{target_country}",
+            help="Bir kliniğin yılda elektrik aktivasyon uyguladığı toplam hasta sayısı."
+        )
+
+    # ROI Calculations
+    c_unit_dev = net_dev_unit if net_dev_unit > 0 else 7650.0
+    c_unit_dish = net_sarf_unit if net_sarf_unit > 0 else 66.0
+    c_margin_per_case = clinic_aoa_fee - c_unit_dish
+    c_margin_pct = (c_margin_per_case / clinic_aoa_fee * 100.0) if clinic_aoa_fee > 0 else 0.0
+
+    c_breakeven_cases = math.ceil(c_unit_dev / c_margin_per_case) if c_margin_per_case > 0 else 999
+    c_payback_months = (c_breakeven_cases / clinic_cases_yr * 12.0) if clinic_cases_yr > 0 else 12.0
+
+    c_yr1_rev = clinic_cases_yr * clinic_aoa_fee
+    c_yr1_opex = clinic_cases_yr * c_unit_dish
+    c_yr1_profit = c_yr1_rev - c_yr1_opex - c_unit_dev
+    c_yr1_roi = (c_yr1_profit / (c_unit_dev + c_yr1_opex) * 100.0) if (c_unit_dev + c_yr1_opex) > 0 else 0.0
+    c_yr2_recurring = c_yr1_rev - c_yr1_opex
+    c_3yr_net = (3 * c_yr2_recurring) - c_unit_dev
+
+    c_pool_maliyet = c_unit_dish / 4.0
+    c_oosit_maliyet = c_unit_dish / 20.0
+
+    st.markdown(f"""
+    <div style="background:linear-gradient(135deg, rgba(15,23,42,0.98) 0%, rgba(0,230,118,0.06) 50%, rgba(0,245,255,0.08) 100%);border:1.5px solid #00E676;border-radius:12px;padding:16px 18px;margin-bottom:14px;box-shadow:0 6px 20px rgba(0,230,118,0.12);">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:8px;">
+            <div style="display:flex;align-items:center;gap:8px;">
+                <span style="font-size:18px;">💎</span>
+                <span style="color:#FFFFFF;font-weight:800;font-size:14px;">Klinik Kârlılık & Amortisman Karnesi (4 Pool Tek Dish Modeli)</span>
+            </div>
+            <span style="background:rgba(0,230,118,0.18);color:#00E676;border:1px solid #00E676;padding:3px 10px;border-radius:6px;font-weight:800;font-size:11px;">
+                🚀 KLİNİK NET BRÜT MARJI: %{c_margin_pct:.1f}
+            </span>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(4, 1fr);gap:10px;margin-bottom:12px;">
+            <div style="background:rgba(0,230,118,0.08);border:1px solid rgba(0,230,118,0.3);border-radius:8px;padding:10px 12px;text-align:center;">
+                <div style="font-size:10.5px;color:#94A3B8;font-weight:700;text-transform:uppercase;">Vaka Başı Klinik Kârı</div>
+                <div style="font-size:18px;font-weight:900;color:#00E676;margin-top:2px;">+${c_margin_per_case:,.2f} USD</div>
+                <div style="font-size:10px;color:#CBD5E1;">Hasta: ${clinic_aoa_fee:,.0f} | Sarf: -${c_unit_dish:,.2f}</div>
+            </div>
+            <div style="background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.3);border-radius:8px;padding:10px 12px;text-align:center;">
+                <div style="font-size:10.5px;color:#94A3B8;font-weight:700;text-transform:uppercase;">Cihaz Amortisman Eşiği</div>
+                <div style="font-size:18px;font-weight:900;color:#00F5FF;margin-top:2px;">{c_breakeven_cases} Vaka</div>
+                <div style="font-size:10px;color:#CBD5E1;">${c_unit_dev:,.0f} USD Donanım Çıkar</div>
+            </div>
+            <div style="background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.3);border-radius:8px;padding:10px 12px;text-align:center;">
+                <div style="font-size:10.5px;color:#94A3B8;font-weight:700;text-transform:uppercase;">Amortisman Süresi</div>
+                <div style="font-size:18px;font-weight:900;color:#FFD700;margin-top:2px;">~{c_payback_months:.1f} Ay</div>
+                <div style="font-size:10px;color:#CBD5E1;">Yılda {clinic_cases_yr} Vakada</div>
+            </div>
+            <div style="background:rgba(192,132,252,0.08);border:1px solid rgba(192,132,252,0.3);border-radius:8px;padding:10px 12px;text-align:center;">
+                <div style="font-size:10.5px;color:#94A3B8;font-weight:700;text-transform:uppercase;">1. Yıl Net Kâr (ROI)</div>
+                <div style="font-size:18px;font-weight:900;color:#C084FC;margin-top:2px;">+${c_yr1_profit:,.0f} USD</div>
+                <div style="font-size:10px;color:#C084FC;">Net ROI: %{c_yr1_roi:.1f}</div>
+            </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:11.8px;line-height:1.65;">
+            <div style="background:rgba(0,0,0,0.25);border:1px solid rgba(0,245,255,0.2);border-radius:8px;padding:10px 12px;">
+                <b style="color:#00F5FF;">💡 4 Pool Tek Dish Mimari Üstünlüğü:</b><br>
+                • <b>4 Mikro-Pool:</b> 1 Dish 4 ayrı elektrotlu hazneden oluşur (Pool başı sarf maliyeti yalnızca <b>${c_pool_maliyet:,.2f} USD</b>, oosit başı <b>${c_oosit_maliyet:,.2f} USD</b>).<br>
+                • <b>Eksiksiz 1 Vaka Kapasitesi:</b> 1 hastanın 8–15 oositlik tüm rezervi tek bir dishte aynı anda aktive edilir. Klinik başına ek sarf faturası çıkmaz.<br>
+                • <b>Sıfır RFID & Çip Dayatması:</b> Rakipler gibi yıllık $8,000 yazılım lisansı veya $25-30 çipli kap dayatması yoktur; maliyet tamamen şeffaftır.
+            </div>
+            <div style="background:rgba(0,0,0,0.25);border:1px solid rgba(0,230,118,0.2);border-radius:8px;padding:10px 12px;">
+                <b style="color:#00E676;">📈 Klinik & Gebelik Kurtarma Değeri (Clinical ROI):</b><br>
+                • <b>%82.3 Döllenme Başarısı:</b> TFF vakalarında döllenme oranını <%10'dan %82.3'e çıkararak iptal edilmekten kurtarılan her IVF siklüsü kliniğe <b>$4,000 - $6,000 USD</b> değer kazandırır.<br>
+                • <b>3 Yıllık Net Kazanç:</b> Cihaz ilk aylarda kendini amorti ettikten sonra kliniğe 3 yılda net <b>+${c_3yr_net:,.0f} USD</b> saf nakit bırakır.<br>
+                • <b>Toksik Kimyasal Riski Sıfır:</b> Kalsiyum İyonofor (A23187) gibi embriyotoksik kimyasallar yerine CE Class IIa belgeli güvenli elektriksel uyarım sağlar.
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
 
     # --------------------------------------------------------------------------
     # 1. ÜLKE İNDİRİM GEREKLİLİK VE KARAR MOTORU (İndirim Gerekli mi / Gereksiz mi?)
@@ -4854,16 +4968,16 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
     # --------------------------------------------------------------------------
     # 3. KLİNİK SİKLÜS BAZLI SARF DOĞRULAMASI & KAPASİTE KALİBRASYONU
     # --------------------------------------------------------------------------
-    total_dishes = sarf_qty * 10
-    total_pools = total_dishes * 4
-    max_oocytes = total_dishes * 20
-    patient_cycles = total_dishes # 1 dish covers 1 patient cycle up to 20 oocytes (4 pools x 5)
+    total_dishes = sarf_qty # 4 Pool Tek Dish (1 Kutu/Paket = 1 Dish)
+    total_pools = total_dishes * 4 # Her Dish 4 bağımsız mikro-pool
+    max_oocytes = total_dishes * 20 # 4 Pool x 5 = 20 oosit/dish
+    patient_cycles = total_dishes # 1 dish covers 1 patient cycle up to 20 oocytes
     avg_clinic_cycles = round(country_cycles / clinics_num) if clinics_num > 0 else 500
-    avg_clinic_boxes = round(avg_clinic_cycles / 10)
+    avg_clinic_boxes = round(avg_clinic_cycles)
     covered_clinics = round(patient_cycles / avg_clinic_cycles, 1) if avg_clinic_cycles > 0 else 1.0
     
-    min_needed_boxes = dev_qty * 25 # 250 cycles/machine/yr
-    opt_needed_boxes = dev_qty * 45 # 450 cycles/machine/yr
+    min_needed_boxes = dev_qty * 15 # 15 cycles/machine/yr
+    opt_needed_boxes = dev_qty * 40 # 40 cycles/machine/yr
     
     if sarf_qty < min_needed_boxes:
         cycle_status_badge = "background:rgba(239,68,68,0.15);color:#EF4444;border:1px solid #EF4444;"
@@ -4930,15 +5044,16 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
         sarf_suit_status = "⚠️ SARF FİYATI GİRİLMEDİ"
         sarf_suit_badge = "background:rgba(255,255,255,0.08);color:#94A3B8;border:1px solid rgba(255,255,255,0.2);"
         sarf_suit_text = f"{target_country} için standart Z-Dish kutu fiyatı giriniz (Örn: $75 - $100 USD/kutu)."
-    elif 65.0 <= sarf_price <= 110.0:
-        vaka_basi_sarf = net_sarf_unit / 10.0 # kutuda 10 dish (her biri max 20 oosit)
-        oosit_basi_sarf = vaka_basi_sarf / 20.0 # max 20 oosit tam yüklemede oosit başı maliyet
+    elif 50.0 <= sarf_price <= 150.0:
+        vaka_basi_sarf = net_sarf_unit # 1 Dish = 1 Hasta Tedavi Siklüsü
+        pool_basi_sarf = vaka_basi_sarf / 4.0 # Her Dish'te 4 Mikro-Pool
+        oosit_basi_sarf = vaka_basi_sarf / 20.0 # 4 Pool x 5 = Max 20 Oosit
         sarf_suit_status = f"✅ {target_country} İÇİN OPTİMUM SARF FİYATI"
         sarf_suit_badge = "background:rgba(0,230,118,0.18);color:#00E676;border:1px solid #00E676;"
         sarf_suit_text = (
-            f"<b>${net_sarf_unit:,.2f} USD/Kutu (${vaka_basi_sarf:,.2f} USD/Vaka | ${oosit_basi_sarf:,.2f} USD/Oosit):</b> Kutu başına 10 aktivasyon dishi "
-            f"(1 Dish = 4 Pool × 5 Oosit = Max 20 Oosit) ile vaka başı sarf maliyeti yalnızca <b>${vaka_basi_sarf:,.2f} USD</b> olmaktadır. "
-            f"{target_country} ortalama IVF tedavi ücreti içinde bu maliyet <b><%1 pay</b> alır ve klinik bütçesini hiç sarsmaz. "
+            f"<b>${net_sarf_unit:,.2f} USD/Dish (${vaka_basi_sarf:,.2f} USD/Vaka | ${pool_basi_sarf:,.2f} USD/Pool | ${oosit_basi_sarf:,.2f} USD/Oosit):</b> "
+            f"4 Pool Tek Dish mimarisi (1 Dish = 4 Pool × 5 = Max 20 Oosit) ile vaka başı sarf maliyeti yalnızca <b>${vaka_basi_sarf:,.2f} USD</b> olmaktadır. "
+            f"{target_country} ortalama IVF tedavi ücreti içinde bu maliyet <b><%1.5 pay</b> alır ve klinik bütçesini hiç sarsmaz. "
             f"<b>{sarf_qty} Kutu Yıllık Taahhüt</b>, tam {total_dishes:,} Dish / {total_pools:,} Pool ile <b>{max_oocytes:,} oosit</b> ve "
             f"<b>{patient_cycles:,} hasta siklüsünü</b> kapsayarak ZEUS'a <b>${sarf_tot_net:,.2f} USD/Yıl</b> kesintisiz, "
             f"yüksek kârlı (%{sarf_margin_pct:.1f}) nakit akışı sağlar."
@@ -24426,10 +24541,10 @@ elif active_view == "🌍 Country 360° Performance & Report":
                 c360_con_bg = "rgba(168,85,247,0.12)"
                 c360_con_bdr = "#A855F7"
 
-            total_dishes_c360 = con_qty * 10
-            total_pools_c360 = total_dishes_c360 * 4
-            max_oocytes_c360 = total_dishes_c360 * 20
-            patient_cycles_c360 = total_dishes_c360
+            total_dishes_c360 = con_qty # 4 Pool Tek Dish mimarisi (1 Kutu = 1 Dish)
+            total_pools_c360 = total_dishes_c360 * 4 # Her Dish 4 bağımsız mikro-pool
+            max_oocytes_c360 = total_dishes_c360 * 20 # 4 Pool x 5 = 20 oosit/dish
+            patient_cycles_c360 = total_dishes_c360 # 1 Dish = 1 Hasta Tedavi Siklüsü
 
             net_con_unit = con_list_price * (1.0 - (con_disc_pct / 100.0))
             con_disc_amount_unit = con_list_price - net_con_unit
@@ -24440,16 +24555,20 @@ elif active_view == "🌍 Country 360° Performance & Report":
             est_con_margin_pct = (est_con_margin_usd / con_tot_rev * 100.0) if con_tot_rev > 0 else 0.0
             con_warn = con_disc_pct > rec_sarf_max
 
+            cost_per_dish_c360 = net_con_unit
+            cost_per_pool_c360 = cost_per_dish_c360 / 4.0
+            cost_per_oocyte_c360 = cost_per_dish_c360 / 20.0
+
             st.markdown(f"""
             <div style="background:{c360_con_bg};border:1.5px solid {c360_con_bdr};border-radius:8px;padding:10px 14px;margin-top:6px;margin-bottom:10px;font-size:12px;color:#E2E8F0;box-shadow:0 3px 10px rgba(0,0,0,0.25);">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:6px;">
                     <div>{c360_con_msg}</div>
                     <span style="background:rgba(0,245,255,0.15);color:#00F5FF;border:1px solid #00F5FF;padding:2px 8px;border-radius:4px;font-weight:700;font-size:10.5px;">
-                        ⚡ 4 Pool × 5 Oosit = Max 20 Oosit/Dish
+                        ⚡ 4 Pool Tek Dish (Max 20 Oosit/Dish)
                     </span>
                 </div>
                 <div style="font-size:12.5px;color:#00F5FF;margin-top:6px;font-weight:800;border-top:1px solid rgba(255,255,255,0.08);padding-top:6px;">
-                    🧪 <b>Siklüs & Oosit Kapasitesi:</b> {con_qty:,} Kutu = {total_dishes_c360:,} Dish = ~{patient_cycles_c360:,} Hasta Tedavi Siklüsü
+                    🧪 <b>Siklüs & Oosit Kapasitesi:</b> {con_qty:,} Kutu = {total_dishes_c360:,} Dish (4-Pool) = ~{patient_cycles_c360:,} Hasta Tedavi Siklüsü
                 </div>
                 <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(170px, 1fr));gap:8px;margin-top:6px;font-size:11px;">
                     <div style="background:rgba(0,0,0,0.35);padding:6px 10px;border-radius:6px;border-left:2.5px solid #00F5FF;">
@@ -24461,12 +24580,12 @@ elif active_view == "🌍 Country 360° Performance & Report":
                         <b style="color:#00E676;font-size:13px;">{max_oocytes_c360:,} Oosit</b> (Max 20/Dish)
                     </div>
                     <div style="background:rgba(0,0,0,0.35);padding:6px 10px;border-radius:6px;border-left:2.5px solid #FFD700;">
-                        <span style="color:#94A3B8;">Vaka Başı / Oosit Başı:</span><br>
-                        <b style="color:#FFD700;font-size:13px;">${net_con_unit/10.0:,.2f} / Vaka</b> <span style="color:#8FA3C0;font-size:10px;">(${net_con_unit/200.0:,.2f}/Oosit)</span>
+                        <span style="color:#94A3B8;">Vaka Başı / Pool Başı:</span><br>
+                        <b style="color:#FFD700;font-size:13px;">${cost_per_dish_c360:,.2f} / Vaka</b> <span style="color:#8FA3C0;font-size:10px;">(${cost_per_pool_c360:,.2f}/Pool | ${cost_per_oocyte_c360:,.2f}/Oosit)</span>
                     </div>
                 </div>
                 <div style="font-size:10.5px;color:#8FA3C0;margin-top:6px;line-height:1.45;">
-                    ℹ️ <i>Klinik Yükleme Kuralı: 1 ZEUS Electro Dish 4 ayrı elektrotlu pool'den oluşur; her pool'e max 5 oosit yüklenerek tek dish'te toplam 20 oosit aynı anda aktive edilir. Bir hastadan ortalama 8–15 oosit toplandığından, 1 Dish tam 1 hasta siklüsünü (20 oosite kadar) tek başına eksiksiz karşılar.</i>
+                    ℹ️ <i>4 Pool Tek Dish Kuralı: 1 ZEUS Electro Dish 4 ayrı elektrotlu mikro-havuzdan (pool) oluşur; her pool'e max 5 oosit yüklenerek tek dish'te toplam 20 oosit aynı anda aktive edilir. Bir hastadan ortalama 8–15 oosit toplandığından, 1 Dish tam 1 hasta siklüsünü (20 oosite kadar) tek başına eksiksiz karşılar.</i>
                 </div>
             </div>
             """, unsafe_allow_html=True)
