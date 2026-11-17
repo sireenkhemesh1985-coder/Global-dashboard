@@ -7787,39 +7787,6 @@ with st.sidebar:
                 del st.session_state[k]
         st.rerun()
 
-    # OFFICIAL REGULATORY & QUALITY ACCREDITATION BADGES (SIDEBAR)
-    st.markdown('''
-    <div style="background:linear-gradient(135deg, rgba(15,23,42,0.95) 0%, rgba(30,41,59,0.90) 100%);border:1.5px solid #00F5FF;border-radius:10px;padding:10px 12px;margin:8px 0 10px 0;box-shadow:0 4px 14px rgba(0,245,255,0.18);">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:5px;">
-            <span style="font-size:10px;font-weight:800;color:#00F5FF;letter-spacing:0.6px;text-transform:uppercase;">🏛️ RESMİ KALİTE & AKREDİTASYON</span>
-            <span style="background:rgba(0,230,118,0.18);color:#00E676;border:1px solid #00E676;font-size:8.5px;font-weight:800;padding:1px 5px;border-radius:3px;">ONAYLI</span>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;">
-            <div style="background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.3);border-radius:6px;padding:5px 6px;text-align:center;">
-                <div style="color:#00F5FF;font-weight:900;font-size:11px;">🇪🇺 CE Certified</div>
-                <div style="color:#CBD5E1;font-size:8px;font-weight:600;">Class IIa Medical</div>
-            </div>
-            <div style="background:rgba(0,230,118,0.08);border:1px solid rgba(0,230,118,0.3);border-radius:6px;padding:5px 6px;text-align:center;">
-                <div style="color:#00E676;font-weight:900;font-size:11px;">ISO 13485</div>
-                <div style="color:#CBD5E1;font-size:8px;font-weight:600;">Tıbbi Cihaz Kalite</div>
-            </div>
-            <div style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.3);border-radius:6px;padding:5px 6px;text-align:center;">
-                <div style="color:#FBBF24;font-weight:900;font-size:11px;">ISO 14001</div>
-                <div style="color:#CBD5E1;font-size:8px;font-weight:600;">Çevre Yönetimi</div>
-            </div>
-            <div style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.3);border-radius:6px;padding:5px 6px;text-align:center;">
-                <div style="color:#C084FC;font-weight:900;font-size:11px;">ISO 45001</div>
-                <div style="color:#CBD5E1;font-size:8px;font-weight:600;">İş Sağlığı & Güv.</div>
-            </div>
-        </div>
-        <div style="margin-top:6px;border-top:1px dashed rgba(255,255,255,0.08);padding-top:4px;font-size:9px;color:#94A3B8;text-align:center;">
-            ⚡ <b>Elektriksel AOA Teknolojisi</b> · Lazer İçermez
-        </div>
-    </div>
-    ''', unsafe_allow_html=True)
-    
-    st.markdown("<div style='height: 4px;'></div>", unsafe_allow_html=True)
-    
     main_nav_opts = [
         "🌐 Global Cockpit & Executive Overview",
         "🌍 Pazar Analizi & Ülke 360° (Market Analysis)",
@@ -14803,6 +14770,13 @@ active_subviews = ZEUS_HUB_SUBVIEWS.get(nav_selection, [
 ])
 
 
+# Module-level aliases for Omni-Search compatibility
+if 'GLOBAL_COUNTRY_BUYING_BEHAVIOR' in globals() and 'CULTURAL_NEGOTIATION_PLAYBOOK' not in globals():
+    CULTURAL_NEGOTIATION_PLAYBOOK = GLOBAL_COUNTRY_BUYING_BEHAVIOR
+
+if 'GLOBAL_TENDER_PROCUREMENT_INTEL' in globals() and 'GLOBAL_TENDERS_INTEL_2026' not in globals():
+    GLOBAL_TENDERS_INTEL_2026 = GLOBAL_TENDER_PROCUREMENT_INTEL
+
 def render_active_omni_search_hub(query_str):
     """
     Live Omni-Search Engine with Smart Tab Auto-Prioritization & Direct Table Navigation.
@@ -14818,20 +14792,44 @@ def render_active_omni_search_hub(query_str):
 
     # Match across entities
     matched_firms = []
-    for f in GLOBAL_PROSPECT_SCOUT_2026:
-        f_txt = f"{f.get('name','')} {f.get('country','')} {f.get('city','')} {f.get('category','')} {f.get('tier','')} {f.get('contact_person','')} {f.get('email','')} {f.get('phone','')} {f.get('strategy_rationale','')}".lower()
-        if q in f_txt:
-            matched_firms.append(f)
+    if 'GLOBAL_PROSPECT_RADAR' in globals():
+        for c_k, p_list in GLOBAL_PROSPECT_RADAR.items():
+            for f in p_list:
+                f_txt = f"{f.get('name','')} {c_k} {f.get('country','')} {f.get('city','')} {f.get('category','')} {f.get('tier','')} {f.get('contact_person','')} {f.get('email','')} {f.get('phone','')} {f.get('strategy_rationale','')} {f.get('why_target','')} {f.get('product_match','')}".lower()
+                if q in f_txt:
+                    item_copy = dict(f)
+                    item_copy['country'] = f.get('country') or c_k
+                    item_copy['strategy_rationale'] = f.get('strategy_rationale') or f.get('why_target', '')
+                    matched_firms.append(item_copy)
+
+    if 'dists_with_rev' in globals():
+        for d in dists_with_rev:
+            d_txt = f"{d.get('name','')} {d.get('country_name','')} {d.get('city','')} {d.get('account_type','')} {d.get('primary_contact','')} {d.get('email','')}".lower()
+            if q in d_txt:
+                matched_firms.append({
+                    'name': d.get('name'),
+                    'country': d.get('country_name'),
+                    'city': d.get('city', ''),
+                    'category': d.get('account_type', 'Distribütör'),
+                    'tier': '⭐ Tier 1' if d.get('revenue', 0) > 20000 else 'Tier 2',
+                    'contact_person': d.get('primary_contact', 'Yetkili'),
+                    'email': d.get('email', 'info@distributor.com'),
+                    'phone': d.get('phone', ''),
+                    'web': d.get('website', ''),
+                    'strategy_rationale': f"Toplam Ciro: ${d.get('revenue', 0):,.2f} | Kurulu Taban: {d.get('devices_count', 0)} Cihaz | Durum: {d.get('status', 'active')}"
+                })
 
     matched_cultures = []
-    for c_name, b in CULTURAL_NEGOTIATION_PLAYBOOK.items():
+    _culture_source = globals().get('GLOBAL_COUNTRY_BUYING_BEHAVIOR') or globals().get('CULTURAL_NEGOTIATION_PLAYBOOK') or {}
+    for c_name, b in _culture_source.items():
         b_txt = f"{c_name} {b.get('culture_title', '')} {b.get('decision_hierarchy', '')} {b.get('bargaining_advice', '')} {b.get('primary_proof_point', '')} {b.get('preferred_deal_model', '')} {b.get('dining_hospitality_protocol', '')} {b.get('dining_contract_rule', '')} {b.get('contract_closing_strategy', '')} {b.get('cultural_taboos', '')} {b.get('email_tone_guidance', '')}".lower()
         if q in b_txt:
             matched_cultures.append({"country": c_name, **b})
 
     matched_tenders = []
-    for c_name, t_data in GLOBAL_TENDERS_INTEL_2026.items():
-        t_txt = f"{c_name} {t_data.get('official_authority','')} {t_data.get('est_budget_range','')} {t_data.get('legal_framework','')} {str(t_data.get('procurement_portals',[]))}".lower()
+    _tender_source = globals().get('GLOBAL_TENDER_PROCUREMENT_INTEL') or globals().get('GLOBAL_TENDERS_INTEL_2026') or {}
+    for c_name, t_data in _tender_source.items():
+        t_txt = f"{c_name} {t_data.get('tender_authority','')} {t_data.get('official_authority','')} {t_data.get('typical_budget_range','')} {t_data.get('est_budget_range','')} {t_data.get('legal_framework','')} {str(t_data.get('procurement_portals',[]))}".lower()
         if q in t_txt:
             matched_tenders.append({"country": c_name, "intel": t_data})
 
@@ -15026,8 +15024,12 @@ def render_active_omni_search_hub(query_str):
                             <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;">
                         """, unsafe_allow_html=True)
                         for port in t_intel.get('procurement_portals', []):
-                            p_name = port.get('portal_name', 'Portal')
-                            p_url = port.get('tender_portal_url', '#')
+                            if isinstance(port, dict):
+                                p_name = port.get('portal_name', 'Portal')
+                                p_url = port.get('tender_portal_url', '#')
+                            else:
+                                p_name = str(port)
+                                p_url = '#'
                             st.markdown(f'<a href="{p_url}" target="_blank" style="display:inline-block;background:rgba(0,245,255,0.1);color:#00F5FF;border:1px solid rgba(0,245,255,0.3);padding:3px 8px;border-radius:4px;font-size:11px;text-decoration:none;">🔗 {p_name}</a>', unsafe_allow_html=True)
                         st.markdown("</div></div>", unsafe_allow_html=True)
                         if st.button(f"👉 Bu İhalenin Masasına Git ({t_country})", key=f"btn_go_tender_item_{t_country}_{idx_t}"):
