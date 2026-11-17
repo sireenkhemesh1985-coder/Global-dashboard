@@ -11464,7 +11464,7 @@ ZEUS_COMPETITIVE_INTELLIGENCE_2026 = {
     }
 }
 
-def render_competitor_intelligence_and_deal_desk(selected_markets=None, active_source="compare"):
+def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_df=None, active_source="compare", *args, **kwargs):
     """
     Renders the comprehensive Competitor Intelligence, Technical Proximity,
     Winning Sales Strategies, Recommended Contract Clauses, and Executive Decision Notes Desk.
@@ -11472,7 +11472,14 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, active_s
     if 'executive_competitor_decision_notes' not in st.session_state:
         st.session_state['executive_competitor_decision_notes'] = get_default_competitor_decision_notes()
 
-    target_markets_list = selected_markets if (selected_markets and len(selected_markets) > 0) else ["Türkiye", "Spain", "Germany", "Egypt", "UAE", "Saudi Arabia", "Jordan", "Iraq", "Qatar", "Algeria", "Italy"]
+    if selected_markets and len(selected_markets) > 0:
+        target_markets_list = selected_markets
+    elif country_df is not None and hasattr(country_df, 'get') and 'Country' in country_df:
+        target_markets_list = [c for c in country_df['Country'].dropna().unique().tolist() if c]
+    elif country_df is not None and hasattr(country_df, '__getitem__') and 'Country' in country_df:
+        target_markets_list = [c for c in country_df['Country'].dropna().unique().tolist() if c]
+    else:
+        target_markets_list = ["Türkiye", "Spain", "Germany", "Egypt", "UAE", "Saudi Arabia", "Jordan", "Iraq", "Qatar", "Algeria", "Italy"]
 
     st.markdown("### ⚔️ ZEUS vs. Küresel Rakipler, Fark Analizi & Sözleşme Stratejisi")
     st.caption("Uluslararası tüp bebek (IVF/ART) pazarındaki dev rakiplerin ne sattığı, ZEUS cihazlarıyla donanımsal/klinik yakınlığı, sahada rakipleri eleme ve daha çok satma taktikleri, distribütör/hastane sözleşme hükümleri ve Stratejik Karar Merkezi ile entegre Yönetici Karar Not Defteri.")
@@ -11719,11 +11726,11 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, active_s
         note_col1, note_col2 = st.columns([1.6, 1.4])
         with note_col1:
             st.markdown("##### 📝 Yeni Stratejik Karar / Müzakere Notu Ekle")
-            with st.form("form_competitor_decision_note", clear_on_submit=True):
+            with st.form(f"form_competitor_decision_note_{active_source}", clear_on_submit=True):
                 f_c1, f_c2 = st.columns(2)
                 with f_c1:
-                    f_country = st.selectbox("🎯 Hedef Pazar / Ülke:", target_markets_list, key="f_note_country")
-                    f_clinic = st.text_input("🏥 Kurum / Distribütör Adı:", placeholder="Örn: Memorial Şişli, Palex Medical, Nile IVF", key="f_note_clinic")
+                    f_country = st.selectbox("🎯 Hedef Pazar / Ülke:", target_markets_list, key=f"f_note_country_{active_source}")
+                    f_clinic = st.text_input("🏥 Kurum / Distribütör Adı:", placeholder="Örn: Memorial Şişli, Palex Medical, Nile IVF", key=f"f_note_clinic_{active_source}")
                 with f_c2:
                     f_comp = st.selectbox("⚔️ Hedeflenen Rakip Firma:", [
                         "Eppendorf SE & Prime Tech (PiezoXpert)",
@@ -11731,14 +11738,14 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, active_s
                         "Hamilton Thorne (Lykos Lazer) & Vitrolife",
                         "Cryo Bio System & Kitazato (Kriyo)",
                         "Cook Medical & Origio (Rutin Sarflar)"
-                    ], key="f_note_comp")
+                    ], key=f"f_note_comp_{active_source}")
                     f_zeus_prod = st.selectbox("🛡️ Konumlandırılan ZEUS Ürünü:", [
                         "ZEUS Pulse Stimulator (ZPS 26)",
                         "ZEUS Mismatch Blocker (ZMB-7T)",
                         "ZEUS BioPSafe (ZBS26 Black-Box)",
                         "ZEUS Smart Cryo-Tools (ZCT25)",
                         "$85,000 USD Turnkey Filo Paketi"
-                    ], key="f_note_zeus_prod")
+                    ], key=f"f_note_zeus_prod_{active_source}")
 
                 f_strategy = st.selectbox("🎯 Uygulanacak Satış & Kazanma Stratejisi:", [
                     "🔬 Klinik Kanıt & Hakemli Yayın Kalkanı (Baltacı / Ebner sub-%1.2 lizis)",
@@ -11746,7 +11753,7 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, active_s
                     "🚀 $85,000 USD Turnkey Filo Paketi & Ezici ROI (8.2 Ay Amortisman)",
                     "⛔ Kesinlikle Demo Yok - 14 Günlük Yerinde Ücretli Vaka Çalıştayı",
                     "🤝 Yerel Distribütöre %45+ Brüt Marj & Münhasır Bölge Teşviği"
-                ], key="f_note_strategy")
+                ], key=f"f_note_strategy_{active_source}")
 
                 f_clauses = st.multiselect("📜 Sözleşmeye Eklenecek Bağlayıcı Hükümler:", [
                     "Asgari Yıllık Sarf Satın Alma Taahhüdü (60-75 Kutu)",
@@ -11754,13 +11761,13 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, active_s
                     "Fiyat Koruma & Kur Riski Tamponu ($ USD Endeksli)",
                     "60-Günlük Tesis İçi Konsinye Depolama & Banka Teminatı",
                     "Regülasyon ve Tescil Belgelerinin Münhasırlığı ($100K Cezai Şart)"
-                ], default=["Asgari Yıllık Sarf Satın Alma Taahhüdü (60-75 Kutu)", "Fiyat Koruma & Kur Riski Tamponu ($ USD Endeksli)"])
+                ], default=["Asgari Yıllık Sarf Satın Alma Taahhüdü (60-75 Kutu)", "Fiyat Koruma & Kur Riski Tamponu ($ USD Endeksli)"], key=f"f_note_clauses_{active_source}")
 
                 f_memo = st.text_area(
                     "✍️ Yönetici Karar Tutanağı & Müzakere Notu:",
                     placeholder="Müzakere taktikleri, hekimin itirazına verilecek cevaplar, verilecek azami iskonto ve sözleşme özel şartları...",
                     height=100,
-                    key="f_note_memo"
+                    key=f"f_note_memo_{active_source}"
                 )
 
                 f_author = st.selectbox("👤 Karar Verici Yetkili:", [
@@ -11768,7 +11775,7 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, active_s
                     "CSO & Baş Embriyolog Heyeti",
                     "CFO & Uluslararası İş Geliştirme",
                     "Bölge Satış Direktörü & Hukuk Müşavirliği"
-                ], key="f_note_author")
+                ], key=f"f_note_author_{active_source}")
 
                 submit_note = st.form_submit_button("💾 Karar Notunu Kaydet & Strategic Decision Center'a İlet", type="primary", use_container_width=True)
                 if submit_note:
@@ -11817,7 +11824,7 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, active_s
                             <span style="color:#5FD3AE;">✓ {n_item['status']}</span>
                         </div>
                         """, unsafe_allow_html=True)
-                        if st.button(f"🗑️ Notu Sil ({n_item['id']})", key=f"del_note_{n_item['id']}_{idx_n}"):
+                        if st.button(f"🗑️ Notu Sil ({n_item['id']})", key=f"del_note_{active_source}_{n_item['id']}_{idx_n}"):
                             st.session_state['executive_competitor_decision_notes'].pop(idx_n)
                             st.rerun()
 
