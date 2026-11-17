@@ -8559,16 +8559,16 @@ GLOBAL_COUNTRY_BUYING_BEHAVIOR = {
         "culture_title": "İlişki & Prestij Odaklı (KOL-Centric / High-Context)",
         "decision_hierarchy": "Merkez Direktörü / KOL Hekim Mutlak Karar Vericidir",
         "decision_speed": "Orta-Hızlı (KOL ikna olursa 1-2 haftada bağlanır)",
-        "trust_building": "Yüz Yüze İtibar & Prestij — ESHRE/MEFS kongrelerinde VIP görüşme, merkezde yerinde demo ve saygı protokolü esastır.",
+        "trust_building": "Yüz Yüze İtibar & Prestij — ESHRE ve Suudi Arabistan'da düzenlenecek yeni MEFS kongresinde VIP görüşme, merkezde yerinde demo ve saygı protokolü esastır.",
         "bargaining_culture": "Zorunlu Sembolik Pazarlık Payı (%10 - %15 İskonto)",
         "bargaining_advice": "Liste fiyatından mutlaka sembolik bir 'Yönetici / Filo İskontosu' payı bırakılmalıdır. İndirimsiz teklif profesyonel nezaketsizlik sayılabilir.",
         "primary_proof_point": "Prestijli Referanslar, Üst Segment Klinik İmajı & Kraliyet/Bölgesel Sağlık Standartlarına Uyum",
         "preferred_deal_model": "CAPEX Cihaz Satın Alma + 2 Yıl Parça Garantisi veya NUPCO Çerçeve İhalesi",
         "communication_channels": "Resmi İngilizce/Arapça E-posta + WhatsApp Yönetici İletişimi + VIP Kongre Daveti",
         "cultural_taboos": "KOL hekimi atlayıp sadece satın almacıyla görüşmek; pazarlık sürecini kişiselleştirmek; yavaş yanıt vermek.",
-        "dining_hospitality_protocol": "Diyâfe & VIP Ağırlama Protokolü: Suudi Arabistan ve Körfez kültüründe iş ilişkisi kişisel hürmet ve cömert misafirperverlikle mühürlenir. ESHRE/MEFS kongrelerinde veya prestijli bir restoranda akşam yemeği daveti güven tesisinin zirvesidir. Masada asla doğrudan fiyat veya sert pazarlık açılmaz; önce hekime ve kliniğine saygı gösterilir, iş konusu tatlı ve Arap kahvesi faslında nezaketle açılır.",
+        "dining_hospitality_protocol": "Diyâfe & VIP Ağırlama Protokolü: Suudi Arabistan ve Körfez kültüründe iş ilişkisi kişisel hürmet ve cömert misafirperverlikle mühürlenir. ESHRE ve Suudi Arabistan'da düzenlenecek yeni MEFS kongresinde prestijli bir akşam yemeği daveti güven tesisinin zirvesidir. Masada asla doğrudan fiyat veya sert pazarlık açılmaz; önce hekime ve kliniğine saygı gösterilir, iş konusu tatlı ve Arap kahvesi faslında nezaketle açılır.",
         "dining_contract_rule": "🔴 İlişki & Yemek Ön Koşullu (Yemeksiz Sözleşme İmzalanmaz)",
-        "contract_closing_strategy": "Suudi Arabistan ve Körfez'de sözleşme imzalamak için iş yemeği / ağırlama mutlak ön koşuldur. Yemeksiz, sadece e-posta ve resmi evrak üzerinden sözleşme dayatmak 'tüccar soğukluğu' olarak algılanır ve süreci kilitler. Satış Kapatma Stratejisi: 1) İlk temas ESHRE/MEFS'te veya yerinde klinikte hürmetle yapılır. 2) Saygın bir akşam yemeğinde veya kahve meclisinde hekimin klinik vizyonu dinlenir. 3) Sözleşme şartları ve filo iskontosu yemeğin başında değil, tatlı ve Arap kahvesi ikramında gayriresmi mutabakatla bağlanır. 4) Resmi sözleşme ertesi gün bu şahsi güven zemininde imzalanır.",
+        "contract_closing_strategy": "Suudi Arabistan ve Körfez'de sözleşme imzalamak için iş yemeği / ağırlama mutlak ön koşuldur. Yemeksiz, sadece e-posta ve resmi evrak üzerinden sözleşme dayatmak 'tüccar soğukluğu' olarak algılanır ve süreci kilitler. Satış Kapatma Stratejisi: 1) İlk temas ESHRE veya Suudi Arabistan'da düzenlenecek yeni MEFS kongresinde hürmetle yapılır. 2) Saygın bir akşam yemeğinde veya kahve meclisinde hekimin klinik vizyonu dinlenir. 3) Sözleşme şartları ve filo iskontosu yemeğin başında değil, tatlı ve Arap kahvesi ikramında gayriresmi mutabakatla bağlanır. 4) Resmi sözleşme ertesi gün bu şahsi güven zemininde imzalanır.",
         "email_tone_guidance": "Yüksek saygı unvanları ('Distinguished Medical Director & Esteemed Leadership'), bölgesel öncülük vurgusu, Suudi Vizyon 2030 sağlık vizyonu uyumu ve VIP demo daveti.",
         "badge_color": "#00F5FF"
     },
@@ -22066,6 +22066,21 @@ BODY:
                     ],
                     "action": "Madrid ve Valencia merkezli 5 büyük zincirin bilimsel direktörlerine İspanyolca LinkedIn ve doğrudan e-posta ile Whitepaper sunumu."
                 }
+            elif any(k in c_l for k in ["saudi", "arabia", "suudi"]):
+                return {
+                    "flag": "🇸🇦", "country": "Suudi Arabistan (Saudi Arabia)", "phase": 1,
+                    "phase_label": "FAZ 1: Yüksek Bütçe & Prestij Odaklı Pazarlar (0 - 60 Gün)",
+                    "color": "#00F5FF", "market_size": f"{clinics} Klinik | ~{cycles:,} Siklus | ${gdp_pc:,} GSYİH | Bütçe: $150K - $350K",
+                    "summary_bullet": f"{clinics} klinik, {cycles:,} siklus; Suudi Arabistan'da düzenlenecek yeni MEFS kongresinde canlı vaka çalıştayı ve AMS Saudi iş birliği ile penetrasyon sağlanmalıdır.",
+                    "decision_maker": "Merkez Direktörleri / KOL Hekimler & Kraliyet Hastaneleri Satın Alma Heyeti",
+                    "barrier": "Yerel mevzuat, dil ve sekreterlik filtreleri nedeniyle soğuk e-postalar düşük dönüşüm üretir. Bağımsız klinik kanıt, SFDA uyumu ve CE Certified teknik dosya talep edilir.",
+                    "recipe": [
+                        "Suudi Arabistan'da düzenlenecek yeni MEFS kongresinde ZEUS VIP standı ve canlı vaka çalıştayı organizasyonu.",
+                        "1 Sayfalık Klinik Whitepaper (2PN %82.3 döllenme ve blastosist verileri) ile bilimsel güven tesisi.",
+                        "Suudi Arabistan yerel partneri AMS Saudi ve NUPCO çerçeve anlaşması üzerinden saha penetrasyonu."
+                    ],
+                    "action": "Suudi Arabistan'da düzenlenecek yeni MEFS kongresi vesilesiyle önde gelen IVF zincirlerine (Dr. Sulaiman Al Habib vb.) yönelik protokol takdimi ve VIP davet."
+                }
             elif any(k in c_l for k in ["egypt", "mısır"]):
                 return {
                     "flag": "🇪🇬", "country": "Mısır (Egypt)", "phase": 1,
@@ -22077,7 +22092,7 @@ BODY:
                     "recipe": [
                         "Kahire ve İskenderiye'deki lider profesörlere (Prof. Aboulghar, Prof. Amer vb.) doğrudan Arapça/İngilizce yönetici özeti.",
                         "Peşin ödemeli donanım satışı ve yerel kurye ile sarf teslim garantisi.",
-                        "Kahire'de düzenlenecek MEFS kongresinde canlı vaka çalıştayı."
+                        "Kahire ve İskenderiye yerel tüp bebek sempozyumlarında ve referans kliniklerde (Nile IVF, Egyptian IVF) canlı vaka çalıştayı."
                     ],
                     "action": "Hedef listedeki 15 öncü IVF patronuna doğrudan WhatsApp ve telefon ile ulaşılarak cihaz alım şartlarının sunulması."
                 }
