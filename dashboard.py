@@ -6442,12 +6442,69 @@ def render_responsive_script_table(data_list, font_size_str="14px (Standart)", v
                         f'{val}</td>'
                     )
                 elif ctype == "thumb":
+                    v_low = val.lower()
+                    if "0.8%" in val or "lysis" in v_low:
+                        bg_grad = "linear-gradient(135deg, #091a2e 0%, #172554 100%)"
+                        border_col = "#00F5FF"
+                        accent_badge = "CLINICAL DATA"
+                        main_txt = "0.8% LYSIS vs 8.5%?"
+                        sub_txt = "⚡ PIEZO ICSI VS SHARP NEEDLE"
+                        dur = "14:20"
+                        tag_color = "#38BDF8"
+                    elif "laser" in v_low or "biopsafe" in v_low:
+                        bg_grad = "linear-gradient(135deg, #2b1104 0%, #451a03 100%)"
+                        border_col = "#F59E0B"
+                        accent_badge = "DNA INTEGRITY"
+                        main_txt = "STOP LASER DAMAGE"
+                        sub_txt = "🔬 30-SEC BIOPSY | ZERO HEAT"
+                        dur = "08:45"
+                        tag_color = "#FBBF24"
+                    elif "mismatch" in v_low or "zero error" in v_low or "manipülatör" in v_low or "rfid" in v_low:
+                        bg_grad = "linear-gradient(135deg, #022c22 0%, #064e3b 100%)"
+                        border_col = "#10B981"
+                        accent_badge = "BIO-SECURITY"
+                        main_txt = "ZERO ERROR IVF"
+                        sub_txt = "🔒 7-TERMINAL RFID LOCK"
+                        dur = "18:30"
+                        tag_color = "#34D399"
+                    else:
+                        bg_grad = "linear-gradient(135deg, #2e1065 0%, #3b0764 100%)"
+                        border_col = "#C084FC"
+                        accent_badge = "MASTERCLASS"
+                        main_txt = "IVF MASTERCLASS"
+                        sub_txt = "⭐ 4K FULL CLINICAL PROTOCOL"
+                        dur = "49:01"
+                        tag_color = "#E879F9"
+
+                    thumb_card = (
+                        f'<div style="background:{bg_grad}; border:1.5px solid {border_col}; border-radius:8px; '
+                        f'padding:8px 10px; width:220px; box-shadow:0 4px 12px rgba(0,0,0,0.4); text-align:left; '
+                        f'box-sizing:border-box; margin:0 auto;">'
+                        f'<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:5px;">'
+                        f'<span style="background:#EF4444; color:#FFFFFF; font-size:8px; font-weight:900; padding:1.5px 5px; border-radius:3px; letter-spacing:0.5px;">▶ YOUTUBE</span>'
+                        f'<span style="background:rgba(0,0,0,0.6); color:{tag_color}; font-size:7.5px; font-weight:800; padding:1px 5px; border-radius:3px; border:1px solid {border_col};">{accent_badge}</span>'
+                        f'</div>'
+                        f'<div style="font-size:11.5px; font-weight:900; color:#FFFFFF; line-height:1.2; text-transform:uppercase; text-shadow:0 2px 4px rgba(0,0,0,0.8); margin:3px 0;">'
+                        f'{main_txt}'
+                        f'</div>'
+                        f'<div style="font-size:8.5px; color:#CBD5E1; font-weight:700; margin-bottom:6px;">'
+                        f'{sub_txt}'
+                        f'</div>'
+                        f'<div style="display:flex; justify-content:space-between; align-items:center; border-top:1px dashed rgba(255,255,255,0.15); padding-top:4px;">'
+                        f'<div style="display:flex; align-items:center; gap:4px;">'
+                        f'<span style="display:inline-block; width:16px; height:16px; background:#EF4444; border-radius:50%; text-align:center; line-height:16px; color:#fff; font-size:7.5px; font-weight:900;">▶</span>'
+                        f'<span style="font-size:8px; color:#94A3B8; font-weight:700;">16:9 HD</span>'
+                        f'</div>'
+                        f'<span style="background:rgba(0,0,0,0.8); color:#F8FAFC; font-size:8px; font-weight:800; padding:1px 5px; border-radius:3px;">⏱️ {dur}</span>'
+                        f'</div>'
+                        f'</div>'
+                        f'<div style="font-size:10px; color:#94A3B8; margin-top:5px; text-align:center;">{val}</div>'
+                    )
+
                     td = (
-                        f'<td style="padding:14px 14px; vertical-align:top; border-bottom:1px solid rgba(255,255,255,0.08); '
-                        f'min-width:{min_w}; color:#F59E0B; font-size:{meta_px}px; font-weight:700; '
-                        f'white-space:normal !important; word-wrap:break-word; overflow-wrap:break-word;">'
-                        f'<div style="background:rgba(245,158,11,0.12); border:1px solid rgba(245,158,11,0.25); padding:6px 10px; border-radius:6px;">'
-                        f'🖼️ {val}</div></td>'
+                        f'<td style="padding:10px; vertical-align:middle; border-bottom:1px solid rgba(255,255,255,0.08); '
+                        f'min-width:{min_w}; text-align:center;">'
+                        f'{thumb_card}</td>'
                     )
                 else:
                     td = (
@@ -6806,12 +6863,116 @@ def render_social_media_hub():
             """, unsafe_allow_html=True)
 
         st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+        
+        # VISUAL YOUTUBE THUMBNAIL SHOWCASE GALLERY
+        st.markdown("""
+        <div style="background:linear-gradient(135deg, rgba(15,23,42,0.85) 0%, rgba(10,25,47,0.95) 100%); border:1px solid rgba(0,245,255,0.3); border-radius:12px; padding:18px; margin-bottom:20px; box-shadow:0 8px 24px rgba(0,0,0,0.35);">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px;">
+                <div>
+                    <b style="color:#00F5FF; font-size:15px;">🎬 Canlı YouTube Küçük Resim (Thumbnail) Tasarım Stüdyosu</b>
+                    <div style="color:#94A3B8; font-size:12px; margin-top:2px;">Kanalın Tıklama Oranını (CTR) patlatacak 16:9 yüksek kontrastlı görsel kapak kartları</div>
+                </div>
+                <span style="background:rgba(239,68,68,0.2); color:#EF4444; border:1px solid rgba(239,68,68,0.4); padding:3px 12px; border-radius:14px; font-weight:800; font-size:11.5px;">▶ 4 KANAL VİDEOSU AKTİF TASARIM</span>
+            </div>
+
+            <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:14px;">
+                <!-- Video 1 Thumbnail -->
+                <div style="background:linear-gradient(135deg, #091a2e 0%, #172554 100%); border:1.5px solid #00F5FF; border-radius:10px; padding:12px; box-shadow:0 4px 16px rgba(0,245,255,0.2); position:relative; overflow:hidden;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                        <span style="background:#EF4444; color:#fff; font-size:8.5px; font-weight:900; padding:2px 6px; border-radius:3px;">▶ YOUTUBE</span>
+                        <span style="background:rgba(0,0,0,0.6); color:#38BDF8; font-size:8px; font-weight:800; padding:1px 6px; border-radius:3px; border:1px solid #00F5FF;">CLINICAL EVIDENCE</span>
+                    </div>
+                    <div style="font-size:14px; font-weight:900; color:#FDE047; text-transform:uppercase; line-height:1.2; text-shadow:0 2px 8px rgba(0,0,0,0.9); margin-bottom:4px;">
+                        0.8% LYSIS vs 8.5%?
+                    </div>
+                    <div style="font-size:9.5px; color:#A5F3FC; font-weight:700; margin-bottom:10px;">
+                        SPLIT GÖRSEL · ZEUS PIEZO VS SHARP NEEDLE
+                    </div>
+                    <div style="background:rgba(0,0,0,0.4); border-radius:6px; padding:6px 8px; margin-bottom:8px; font-size:9px; color:#CBD5E1; display:flex; justify-content:space-between;">
+                        <span><b style="color:#EF4444;">❌ Standart:</b> %8.5 Lizis</span>
+                        <span><b style="color:#10B981;">✅ ZEUS:</b> <%0.8 Lizis</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(255,255,255,0.1); padding-top:6px;">
+                        <span style="color:#94A3B8; font-size:8.5px; font-weight:700;">Hedef CTR: <b style="color:#34D399;">%9.2</b></span>
+                        <span style="background:rgba(0,0,0,0.85); color:#fff; font-size:8.5px; font-weight:800; padding:2px 6px; border-radius:3px;">⏱️ 14:20</span>
+                    </div>
+                </div>
+
+                <!-- Video 2 Thumbnail -->
+                <div style="background:linear-gradient(135deg, #2b1104 0%, #451a03 100%); border:1.5px solid #F59E0B; border-radius:10px; padding:12px; box-shadow:0 4px 16px rgba(245,158,11,0.2); position:relative; overflow:hidden;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                        <span style="background:#EF4444; color:#fff; font-size:8.5px; font-weight:900; padding:2px 6px; border-radius:3px;">▶ YOUTUBE</span>
+                        <span style="background:rgba(0,0,0,0.6); color:#FBBF24; font-size:8px; font-weight:800; padding:1px 6px; border-radius:3px; border:1px solid #F59E0B;">BIOPSAFE BIOPSY</span>
+                    </div>
+                    <div style="font-size:14px; font-weight:900; color:#F87171; text-transform:uppercase; line-height:1.2; text-shadow:0 2px 8px rgba(0,0,0,0.9); margin-bottom:4px;">
+                        STOP LASER DAMAGE!
+                    </div>
+                    <div style="font-size:9.5px; color:#FED7AA; font-weight:700; margin-bottom:10px;">
+                        30-SEC BIOPSY · ZERO THERMAL DNA DECAY
+                    </div>
+                    <div style="background:rgba(0,0,0,0.4); border-radius:6px; padding:6px 8px; margin-bottom:8px; font-size:9px; color:#CBD5E1; display:flex; justify-content:space-between;">
+                        <span><b style="color:#EF4444;">⚠️ Lazer Isısı:</b> DNA Hasarı</span>
+                        <span><b style="color:#10B981;">✅ BioPSafe:</b> Güvenli Biyopsi</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(255,255,255,0.1); padding-top:6px;">
+                        <span style="color:#94A3B8; font-size:8.5px; font-weight:700;">Hedef CTR: <b style="color:#34D399;">%7.8</b></span>
+                        <span style="background:rgba(0,0,0,0.85); color:#fff; font-size:8.5px; font-weight:800; padding:2px 6px; border-radius:3px;">⏱️ 08:45</span>
+                    </div>
+                </div>
+
+                <!-- Video 3 Thumbnail -->
+                <div style="background:linear-gradient(135deg, #022c22 0%, #064e3b 100%); border:1.5px solid #10B981; border-radius:10px; padding:12px; box-shadow:0 4px 16px rgba(16,185,129,0.2); position:relative; overflow:hidden;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                        <span style="background:#EF4444; color:#fff; font-size:8.5px; font-weight:900; padding:2px 6px; border-radius:3px;">▶ YOUTUBE</span>
+                        <span style="background:rgba(0,0,0,0.6); color:#34D399; font-size:8px; font-weight:800; padding:1px 6px; border-radius:3px; border:1px solid #10B981;">ELECTRONIC WITNESS</span>
+                    </div>
+                    <div style="font-size:14px; font-weight:900; color:#34D399; text-transform:uppercase; line-height:1.2; text-shadow:0 2px 8px rgba(0,0,0,0.9); margin-bottom:4px;">
+                        ZERO ERROR IVF!
+                    </div>
+                    <div style="font-size:9.5px; color:#A7F3D0; font-weight:700; margin-bottom:10px;">
+                        7-TERMINAL RFID INTERLOCK SYSTEM
+                    </div>
+                    <div style="background:rgba(0,0,0,0.4); border-radius:6px; padding:6px 8px; margin-bottom:8px; font-size:9px; color:#CBD5E1; display:flex; justify-content:space-between;">
+                        <span><b style="color:#EF4444;">⚠️ Numune Karışması:</b> Adli Ceza</span>
+                        <span><b style="color:#10B981;">✅ Kilit:</b> %100 Engel</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(255,255,255,0.1); padding-top:6px;">
+                        <span style="color:#94A3B8; font-size:8.5px; font-weight:700;">Hedef CTR: <b style="color:#34D399;">%8.4</b></span>
+                        <span style="background:rgba(0,0,0,0.85); color:#fff; font-size:8.5px; font-weight:800; padding:2px 6px; border-radius:3px;">⏱️ 18:30</span>
+                    </div>
+                </div>
+
+                <!-- Video 4 Thumbnail -->
+                <div style="background:linear-gradient(135deg, #2e1065 0%, #3b0764 100%); border:1.5px solid #C084FC; border-radius:10px; padding:12px; box-shadow:0 4px 16px rgba(192,132,252,0.2); position:relative; overflow:hidden;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+                        <span style="background:#EF4444; color:#fff; font-size:8.5px; font-weight:900; padding:2px 6px; border-radius:3px;">▶ YOUTUBE</span>
+                        <span style="background:rgba(0,0,0,0.6); color:#E879F9; font-size:8px; font-weight:800; padding:1px 6px; border-radius:3px; border:1px solid #C084FC;">4K MASTERCLASS</span>
+                    </div>
+                    <div style="font-size:14px; font-weight:900; color:#FDE047; text-transform:uppercase; line-height:1.2; text-shadow:0 2px 8px rgba(0,0,0,0.9); margin-bottom:4px;">
+                        IVF MASTERCLASS
+                    </div>
+                    <div style="font-size:9.5px; color:#E9D5FF; font-weight:700; margin-bottom:10px;">
+                        ELECTRICAL AOA · BIOPSY · RFID WITNESSING
+                    </div>
+                    <div style="background:rgba(0,0,0,0.4); border-radius:6px; padding:6px 8px; margin-bottom:8px; font-size:9px; color:#CBD5E1; display:flex; justify-content:space-between;">
+                        <span><b style="color:#F59E0B;">⭐ 49:01 Dk:</b> Tam Klinik Eğitimi</span>
+                        <span><b style="color:#10B981;">✅ 4K:</b> Canlı Vaka</span>
+                    </div>
+                    <div style="display:flex; justify-content:space-between; align-items:center; border-top:1px solid rgba(255,255,255,0.1); padding-top:6px;">
+                        <span style="color:#94A3B8; font-size:8.5px; font-weight:700;">Hedef CTR: <b style="color:#34D399;">%11.5</b></span>
+                        <span style="background:rgba(0,0,0,0.85); color:#fff; font-size:8.5px; font-weight:800; padding:2px 6px; border-radius:3px;">⏱️ 49:01</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
         st.markdown("### 📊 Başlık & Küçük Resim Formülünü (CTR) Güncelleyin")
         ctr_table = [
-            {"Mevcut Başlık": "Zeus Pulse Stimulator – Complete Overview", "Önerilen Yeni Başlık (Yüksek CTR)": "Piezo ICSI vs Sharp Needle: How to Achieve <0.8% Oocyte Lysis & Rescue TFF Cycles", "Küçük Resim (Thumbnail) Metni": "0.8% LYSIS vs 8.5%? (Split Görsel)"},
-            {"Mevcut Başlık": "Zeus BioPSafe – Embryo Biopsy & PCR Tube Traceability", "Önerilen Yeni Başlık (Yüksek CTR)": "30-Second Trophectoderm Biopsy with Zero Thermal DNA Damage | Zeus BioPSafe", "Küçük Resim (Thumbnail) Metni": "STOP LASER DAMAGE (Hücre Ayrılma)"},
-            {"Mevcut Başlık": "ZEUS Mismatch Blocker | Electronic Witnessing for IVF Labs", "Önerilen Yeni Başlık (Yüksek CTR)": "How Leading IVF Labs Prevent Sample Mix-ups: 7-Station RFID Electronic Witnessing", "Küçük Resim (Thumbnail) Metni": "ZERO ERROR IVF (Manipülatör Kilit)"},
-            {"Mevcut Başlık": "Zeus Bioscience (49 Dk)", "Önerilen Yeni Başlık (Yüksek CTR)": "Full Clinical Masterclass: Electrical Oocyte Activation (AOA), Embryo Biopsy & Electronic Witnessing in IVF", "Küçük Resim (Thumbnail) Metni": "IVF MASTERCLASS (4K Canlı Vaka)"},
+            {"Mevcut Başlık": "Zeus Pulse Stimulator – Complete Overview", "Önerilen Yeni Başlık (Yüksek CTR)": "Piezo ICSI vs Sharp Needle: How to Achieve <0.8% Oocyte Lysis & Rescue TFF Cycles", "Küçük Resim (Thumbnail)": "0.8% LYSIS vs 8.5%? (Split Görsel)"},
+            {"Mevcut Başlık": "Zeus BioPSafe – Embryo Biopsy & PCR Tube Traceability", "Önerilen Yeni Başlık (Yüksek CTR)": "30-Second Trophectoderm Biopsy with Zero Thermal DNA Damage | Zeus BioPSafe", "Küçük Resim (Thumbnail)": "STOP LASER DAMAGE (Hücre Ayrılma)"},
+            {"Mevcut Başlık": "ZEUS Mismatch Blocker | Electronic Witnessing for IVF Labs", "Önerilen Yeni Başlık (Yüksek CTR)": "How Leading IVF Labs Prevent Sample Mix-ups: 7-Station RFID Electronic Witnessing", "Küçük Resim (Thumbnail)": "ZERO ERROR IVF (Manipülatör Kilit)"},
+            {"Mevcut Başlık": "Zeus Bioscience (49 Dk)", "Önerilen Yeni Başlık (Yüksek CTR)": "Full Clinical Masterclass: Electrical Oocyte Activation (AOA), Embryo Biopsy & Electronic Witnessing in IVF", "Küçük Resim (Thumbnail)": "IVF MASTERCLASS (4K Canlı Vaka)"},
         ]
         render_responsive_script_table(ctr_table, font_size_str='13px (Küçük)', view_mode='📋 Tablo')
 
@@ -11376,7 +11537,7 @@ def get_default_competitor_decision_notes():
             "selected_strategy": "🔬 Klinik Kanıt & Hakemli Yayın Kalkanı (Baltacı / Ebner sub-%1.2 lizis)",
             "contract_clauses": [
                 "Asgari Yıllık Sarf Satın Alma Taahhüdü (60 Kutu Z-Dish)",
-                "Kesinlikle Ücretsiz Demo Yok - 14 Günlük Yerinde Vaka Çalıştayı",
+                "Yüksek Sarf Taahhüdü (100+ Kutu) Şartlı Demo / Ücretli Vaka Çalıştayı",
                 "Fiyat Koruma & Kur Riski Tamponu ($ USD Endeksli)"
             ],
             "decision_note": "Memorial Şişli'de Prof. Dr. Semra Kahraman heyetine Eppendorf'un %4-8 mekanik hasar oranına karşı Baltacı et al. sub-%1.2 lizis ve TFF %82.3 döllenme verisi sunulacak. Kliniğe ücretsiz demo yerine 14 günlük yerinde vaka çalıştayı ve 25 kutuluk başlangıç paketi faturalandırılacak.",
@@ -11407,13 +11568,13 @@ def get_default_competitor_decision_notes():
             "clinic_or_dist": "TechnoPharm Egypt & The Egyptian IVF-ET Center",
             "target_competitor": "Hamilton Thorne (Lykos Lazer) & Vitrolife",
             "our_product": "ZEUS BioPSafe (ZBS26 Black-Box Biyopsi) + ZPS 26",
-            "selected_strategy": "🚀 $85,000 USD Turnkey Filo Paketi & Ezici ROI (8.2 Ay Amortisman)",
+            "selected_strategy": "🚀 $45,000 - $50,000 USD Komple Donanım Paketi & Ezici Maliyet Avantajı",
             "contract_clauses": [
                 "60-Günlük Tesis İçi Konsinye Depolama & Banka Teminatı",
                 "Asgari Yıllık Sarf Satın Alma Taahhüdü (75 Kutu Sarf)",
                 "Tescil Belgelerinin Münhasırlığı ($100K Cezai Şart)"
             ],
-            "decision_note": "Kahire pazarında hekim-patronlara bireysel cihaz yerine $85K'lık komple anahtar teslim filo paketi teklif edilecek. TechnoPharm'a EDA tescil dosyası teslim edilirken sözleşmeye münhasırlık cezai şartı ($100K) eklendi.",
+            "decision_note": "Kahire pazarında hekim-patronlara rakiplerin tek bir piezo veya lazer ünitesi fiyatına ($50K-$80K) tüm ZEUS portföyünü (ZPS 26 + BioPSafe + Mismatch Blocker + Smart Cryo) içeren ~$45,000 - $50,000 USD'lik komple donanım paketi teklif edilecek. TechnoPharm'a EDA tescil dosyası teslim edilirken sözleşmeye münhasırlık cezai şartı ($100K) eklendi.",
             "author": "CEO & Bölge Satış Direktörü",
             "status": "Sözleşme Taslağı Hazırlandı"
         }
@@ -11448,7 +11609,7 @@ ZEUS_COMPETITIVE_INTELLIGENCE_2026 = {
         "winning_sales_strategy": [
             "1. 'Bilimsel Kanıt Masası': Baş embriyolog ve laboratuvar direktörünün önüne Baltacı et al. (p<0.001) ve Ebner et al. literatürünü koyarak, donanım değil 'gebelik garantileyen klinik protokol' sattığımızı kanıtlayın.",
             "2. 'Sıfır Lizis Vurgusu': Zorlu ve az sayıda oositi olan yaşlı anne adaylarında lizisin tolere edilemeyeceğini, ZEUS'un <%1.2 lizis oranıyla her yumurtayı kurtardığını vurgulayın.",
-            "3. 'Kesinlikle Demo Yok - 14 Günlük Vaka Çalıştayı': Ücretsiz deneme vermek yerine, en zorlu 15 TFF vakasında yerinde 14 günlük vaka çalıştayı ve 25 kutuluk Z-Dish kitini paket olarak satın."
+            "3. 'Yüksek Sarf Taahhüdü Yoksa Demo Yok': Demo ancak yüksek hacimli bağlayıcı sarf taahhüdü (yıllık 100+ kutu Z-Dish) verilirse açılabilir; aksi takdirde en zorlu 15 TFF vakasında yerinde 14 günlük ücretli vaka çalıştayı faturalandırılır."
         ],
         "recommended_contract_clauses": [
             "• Asgari Yıllık Sarf Satın Alma Taahhüdü: Kurulu cihaz başına yılda en az 60 kutu Z-Dish (Electro Dish) çekiş şartı. Aksi takdirde garanti ve aplikatör desteği askıya alınır.",
@@ -11745,20 +11906,20 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
         with strat_c2:
             st.markdown("""
             <div style="background:#0F192E;border:1px solid rgba(255,184,0,0.3);border-left:4px solid #FFB800;border-radius:8px;padding:14px;margin-bottom:12px;">
-                <h5 style="color:#FFB800;margin:0 0 6px 0;">3. $85,000 USD Turnkey Filo Avantajı (The Fleet Bundle Kill Shot)</h5>
+                <h5 style="color:#FFB800;margin:0 0 6px 0;">3. $45,000 – $50,000 USD Komple Donanım Paketi (The All-In-One Lab Suite Kill Shot)</h5>
                 <div style="font-size:12px;color:#CCD7E6;line-height:1.6;">
-                    • <b>Taktik:</b> Rakipler tek bir piezo veya lazer ünitesi için $50K-$80K isterken; ZEUS'un $85,000 USD Anahtar Teslim Filo Paketi teklifi sunun.<br>
-                    • <b>Vurucu Cümle:</b> <i>"Tek bir cihaz fiyatına laboratuvarınızın tüm oosit aktivasyonunu (ZPS 26), genetik biyopsisini (BioPSafe), şahitliğini (Mismatch Blocker) ve krio tank kapasitesini (Smart Cryo) 450 kutu sarfla birlikte modernize edin. Yatırım 8.2 ayda amorti olur."</i>
+                    • <b>Taktik:</b> Rakipler yalnızca TEK bir piezo veya lazer ünitesi için $50,000 - $80,000 USD isterken; ZEUS'un TÜM 4 cihazlık laboratuvar donanım portföyü (ZPS 26 Elektriksel AOA + BioPSafe Biyopsi + Mismatch Blocker 7-Terminal Şahitlik + Smart Cryo-Tools) toplam yaklaşık <b>$45,000 – $50,000 USD</b> anahtar teslim paket olarak sunulur.<br>
+                    • <b>Vurucu Cümle:</b> <i>"Rakiplerin sadece tek bir lazer ünitesi fiyatına ($55K-$85K), laboratuvarınızın TÜM oosit aktivasyonunu (ZPS 26), genetik biyopsisini (BioPSafe), elektronik numune şahitliğini (Mismatch Blocker) ve 4X krio tank kapasitesini (Smart Cryo-Tools) komple modernize edin. 4 cihazlık komple ZEUS laboratuvar donanımı yaklaşık $45,000 - $50,000 USD'dir ve yatırım kendini 4.5 ayda amorti eder."</i>
                 </div>
             </div>
             """, unsafe_allow_html=True)
 
             st.markdown("""
             <div style="background:#0F192E;border:1px solid rgba(244,63,94,0.3);border-left:4px solid #F43F5E;border-radius:8px;padding:14px;margin-bottom:12px;">
-                <h5 style="color:#F43F5E;margin:0 0 6px 0;">4. Kesinlikle Demo Yok: 14 Günlük Ücretli Vaka Çalıştayı Modeli</h5>
+                <h5 style="color:#F43F5E;margin:0 0 6px 0;">4. Şartlı Demo Kuralı: Yüksek Sarf Taahhüdü Yoksa Demo Yok (The High-Volume Consumable Gate)</h5>
                 <div style="font-size:12px;color:#CCD7E6;line-height:1.6;">
-                    • <b>Taktik:</b> Sahada personelin ilgilenmediği veya dolaba kaldırdığı ücretsiz demo cihaz verme hatasına asla düşmeyin.<br>
-                    • <b>Vurucu Cümle:</b> <i>"Ücretsiz demo vermiyoruz; çünkü teknoloji uzman aplikatör eşliğinde doğru protokol gerektirir. En zorlu 15 TFF hastanız için 14 günlük yerinde vaka çalıştayı ve 25 kutuluk Z-Dish kitimizi faturalandırarak sonuçları birlikte görelim."</i>
+                    • <b>Taktik:</b> Sahada ilgisiz kalan veya dolaba kaldırılan ücretsiz demo verme hatasına asla düşmeyin. Demo cihaz <b>YALNIZCA yüksek hacimli bağlayıcı sarf taahhüdü (yıllık asgari 100+ kutu Z-Dish çekiş sözleşmesi veya banka teminatı)</b> verilirse açılabilir. Yüksek sarf taahhüdü vermeyen kurumlara ise ücretsiz demo <b>KESİNLİKLE YOKTUR</b>; bunun yerine 14 günlük yerinde ücretli vaka çalıştayı ve başlangıç kiti faturalandırılır.<br>
+                    • <b>Vurucu Cümle:</b> <i>"Kurumunuza taahhütsüz serbest demo cihaz bırakmıyoruz; çünkü teknoloji uzman aplikatör eşliğinde klinik protokol ve sarf disiplini gerektirir. Demo kurulumu ancak yıllık asgari 100+ kutu Z-Dish resmi sarf çekiş taahhüdüyle açılabilir. Alternatif olarak, en zorlu 15 TFF hastanız için 14 günlük yerinde vaka çalıştayı ve 25 kutuluk Z-Dish kitimizi faturalandırarak başarıyı birlikte doğrulayalım."</i>
                 </div>
             </div>
             """, unsafe_allow_html=True)
@@ -11802,6 +11963,12 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
                     <b>Sözleşme Metni:</b> <i>"ZEUS Bioscience tarafından distribütöre tescil amacıyla sağlanan CE Sertifikası (Class IIa), ISO 13485 ve Free Sales Certificate (FSC) belgeleri sadece ZEUS tescilli ürünleri için kullanılabilir. Bu belgelerin rakip ürünlerin ithalatında veya izinsiz yan ürün kaydında kullanılması durumunda $100,000 USD cezai şart uygulanır ve LOA derhal feshedilir."</i>
                 </div>
             </div>
+            <div style="background:#0F192E;border:1px solid rgba(244,63,94,0.3);border-radius:8px;padding:14px;grid-column: 1 / -1;">
+                <div style="font-size:13px;font-weight:700;color:#F43F5E;margin-bottom:6px;">6. Şartlı Demo ve Yüksek Sarf Taahhüdü Hükmü (The High-Volume Consumable Gate)</div>
+                <div style="font-size:11.5px;color:#CBD5E1;line-height:1.6;">
+                    <b>Sözleşme Metni:</b> <i>"Klinik veya hastaneye demo amaçlı cihaz tahsisi, YALNIZCA merkezin yıllık asgari 100 kutu Z-Dish (veya eşdeğeri onaylı aktivasyon sarfı) resmi satın alma taahhüdünü gayrikabili rücu imzalaması ve banka teminatı vermesi şartıyla icra edilir. Yüksek hacimli bağlayıcı sarf taahhüdü verilmemesi durumunda ücretsiz demo cihaz kesinlikle verilmez; alternatif olarak merkeze 14 günlük yerinde klinik aplikasyon eğitimi ve 25 kutuluk başlangıç kiti bedeli faturalandırılarak vaka çalıştayı icra edilir."</i>
+                </div>
+            </div>
         </div>
         """, unsafe_allow_html=True)
 
@@ -11833,14 +12000,14 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
                         "ZEUS Mismatch Blocker (ZMB-7T)",
                         "ZEUS BioPSafe (ZBS26 Black-Box)",
                         "ZEUS Smart Cryo-Tools (ZCT25)",
-                        "$85,000 USD Turnkey Filo Paketi"
+                        "$45,000 - $50,000 USD Komple Donanım Paketi (Tüm Cihazlar)"
                     ], key=f"f_note_zeus_prod_{active_source}")
 
                 f_strategy = st.selectbox("🎯 Uygulanacak Satış & Kazanma Stratejisi:", [
                     "🔬 Klinik Kanıt & Hakemli Yayın Kalkanı (Baltacı / Ebner sub-%1.2 lizis)",
                     "💼 OPEX Kurtarma Stratejisi (Free of Charge Barkod + Siklus Başı $25 USD — Yıllık $15,000+ Net Tasarruf)",
-                    "🚀 $85,000 USD Turnkey Filo Paketi & Ezici ROI (8.2 Ay Amortisman)",
-                    "⛔ Kesinlikle Demo Yok - 14 Günlük Yerinde Ücretli Vaka Çalıştayı",
+                    "🚀 $45,000 - $50,000 USD Komple Donanım Paketi & Ezici Maliyet Avantajı",
+                    "⛔ Yüksek Sarf Taahhüdü Şartı (100+ Kutu) Yoksa Demo Yok (Veya Ücretli Çalıştay)",
                     "🤝 Yerel Distribütöre %45+ Brüt Marj & Münhasır Bölge Teşviği"
                 ], key=f"f_note_strategy_{active_source}")
 
