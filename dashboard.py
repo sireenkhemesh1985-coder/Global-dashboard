@@ -4537,7 +4537,7 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
                 "Elektriksel Aktivasyon Dishleri (ZEUS Electro Dish Array)",
                 "Ca-Free Aktivasyon Medyası (Electroliquid Solution)",
                 "BioPSafe Trofektoderm Biyopsi Pipeti",
-                "ZEUS Mismatch Blocker RFID Etiket & Çip Seti",
+                "ZEUS Mismatch Blocker 2D Barkod & Döngü Lisansı ($25 USD/Cycle — Barkodlar Ücretsiz)",
                 "CryoProtect Vitrifikasyon & Çözme Kiti",
                 "Özel Sarf / Manuel Giriş"
             ],
@@ -10762,13 +10762,13 @@ ZEUS_CLINICAL_DEVICE_PORTFOLIO = {
         'name': 'ZEUS Mismatch Blocker Electronic Witnessing System',
         'category': 'Kurumsal Tüp Bebek Elektronik Şahitlik & Numune Karışıklığı Engelleme Sistemi',
         'icon': '🛡️',
-        'tagline': 'QR Kod Teknolojisi, 7 Özel Terminal ve Siklus Başına Kontör (Coin) Modeliyle Sıfır Hata Şahitliği',
+        'tagline': 'Free of Charge 2D Barkodlar, 7 Özel Terminal ve Siklus Başı $25 USD Lisans Modeliyle Sıfır Hata Şahitliği',
         'manual_model': 'ZEUS Mismatch Blocker 7-Terminal Witnessing Network (ZEUS Bioscience / GenSa)',
         'catalog_codes': {
             'terminals': 'ZMB-7T (7 İstasyonlu Özelleşmiş Kablosuz Dokunmatik Terminal Ağı)',
             'wristbands': 'ZMB-WB (Kadın & Erkek Partner İçin Suya ve Kimyasallara Dayanıklı Barkodlu Bileklikler)',
             'dish_labels': 'ZMB-LBL (Laminar Kabin ve Isıtmalı Tablaya Dayanıklı Steril Petri ve Tüp Etiketleri)',
-            'coin_credit': 'ZMB-COIN (Sanal POS Üzerinden Anında Yüklenen Siklus Başı Kontör Kredisi)'
+            'coin_credit': 'ZMB-CYCLE ($25 USD / Siklus Başı Güvenli Doğrulama & Mobil Şahitlik Lisansı — Barkodlar Ücretsiz)'
         },
         'specs': {
             'terminals': [
@@ -10780,7 +10780,7 @@ ZEUS_CLINICAL_DEVICE_PORTFOLIO = {
                 'Terminal 6 (Mikromanipülatör / İnverted Mikroskop): 2PN fertilizasyon, Gün 3/Gün 5 AA/AB/BB embriyo kalite skorlaması (standart görsel kılavuzlar)',
                 'Terminal 7 (Dondurma & Kriyobanka): Tank, kanister, cane, goblet ve payet optimal adresleme & çözme öncesi mobil barkod teyidi'
             ],
-            'economic_advantage': 'Pahalı RFID çipli sistemlere (RI Witness, Matcher) karşı devrim: Ücretsiz ve sınırsız barkod kullanımı + Sanal POS ile anında yüklenen siklus başı kontör (coin) kredisi. Klinik sarf maliyetini %75 düşürür!',
+            'economic_advantage': 'Pahalı RFID çipli sistemlere (RI Witness, Matcher) karşı devrim: Tamamen ÜCRETSİZ ve sınırsız 2D barkod kullanımı (Free of Charge Barcodes) + Siklus başına $25 USD güvenli doğrulama lisansı. Yıllık 1.000 siklusta ($25,000 USD), RI Witness ($35,000 - $40,000 USD) sistemine göre kliniğe her yıl $10,000 - $15,000 net nakit tasarrufu sağlar!',
             'security_logic': 'Active Patient Lock (Ekranda sadece işlemdeki hasta aktiftir; çapraz veri riski sıfırdır), Zero-Lift Scanning (Numuneler ısıtmalı tabladan kaldırılmadan taranır; 37°C ve pH korunur), Akıllı Anlık Uyarı (Farklı hasta barkodunda derhal alarm verir)',
             'remote_mobile': '7/24 Doktor & Hasta Mobil Uygulaması: Hekimler ve hastalar embriyo gelişim raporlarına uzaktan güvenle erişebilir',
             'hardware': 'Endüstriyel Dokunmatik Tabletler, Kablosuz Barkod Okuyucular, Yüksek Hızlı Termal Bileklik ve Etiket Yazıcıları'
@@ -10806,7 +10806,7 @@ ZEUS_CLINICAL_DEVICE_PORTFOLIO = {
         'trigger_conditions': 'Yıllık >400 siklus, çoklu embriyolog kadrosu veya kurumsal marka itibar koruması.',
         'base_price': 32000,
         'cogs': 16500,
-        'sarf_multiplier': 'Siklus başına kontör (coin) kredisi ve sarf barkod kitleri ($12–$20 / hasta siklusu)'
+        'sarf_multiplier': 'Free of Charge (Ücretsiz) Kriyojenik 2D Barkodlar + Siklus başına $25 USD doğrulama lisansı (1.000 siklus = $25,000 USD/yıl)'
     },
     'smart_cryo': {
         'id': 'smart_cryo',
@@ -11390,7 +11390,7 @@ def get_default_competitor_decision_notes():
             "clinic_or_dist": "IVI-RMA Global & Palex Medical",
             "target_competitor": "CooperSurgical / RI (RI Witness RFID)",
             "our_product": "ZEUS Mismatch Blocker (ZMB-7T)",
-            "selected_strategy": "💼 OPEX Kurtarma Stratejisi (RFID Siklus Başı $30 vs ZEUS $7.5 - %75 Tasarruf)",
+            "selected_strategy": "💼 OPEX Kurtarma Stratejisi (Free of Charge Barkod + Siklus Başı $25 USD — Yıllık $15,000+ Net Tasarruf)",
             "contract_clauses": [
                 "Yıllık Asgari 500 Siklus Kontör (Cycle Coin) Çekiş Şartı",
                 "Münhasırlık ve Performans İhlali Şartı (6 Ayda Asgari Kota)",
@@ -11474,13 +11474,13 @@ ZEUS_COMPETITIVE_INTELLIGENCE_2026 = {
         "proximity_pct": 88,
         "proximity_label": "%88 Fonksiyonel Benzerlik (İkisi de Karışmayı Önler)",
         "technical_gap_analysis": [
-            "• Sarf Maliyeti & OPEX: RI Witness her dish ve tüpün altına pahalı RFID etiket yapıştırılmasını zorunlu kılar (siklus başı $30 masraf); ZEUS Mismatch Blocker sınırsız ücretsiz 2D barkod ve mikro-kontör modeliyle siklus maliyetini $7.5 USD'ye (%75 tasarruf) indirir.",
+            "• Sarf Maliyeti & OPEX: RI Witness her dish ve tüpün altına pahalı RFID etiket yapıştırılmasını zorunlu kılar (siklus başı $35-$40 masraf); ZEUS Mismatch Blocker ise Free of Charge (ücretsiz) 2D barkod ve döngü başına $25 USD lisans modeliyle klinik bütçesini korur, gereksiz RFID çip israfını sıfırlar.",
             "• Biyolojik Radyasyon: RI Witness gametlerin hemen altında yüksek frekanslı RF alanı oluşturur; ZEUS %100 optik barkod okuyucuyla sıfır EMF radyasyonu ile gamet sağlığını korur.",
             "• Bağımsız 7 Terminal Koruması: OPU, Androloji, ICSI, Biyopsi, Kriyodepolama, Çözme, Transfer noktalarının her birinde bağımsız doğrulama.",
             "• Donanım Kilidi Yok: Kliniği tek bir tüp bebek kabinine hapsetmez, her türlü steril kabin ve masaüstü inkübatörle dakikalar içinde entegre olur."
         ],
         "winning_sales_strategy": [
-            "1. 'OPEX Kurtarma Tablosu': Yıllık 1.000 siklus yapan bir kliniğin RI Witness'a yılda $30,000 USD çip parası ödediğini, ZEUS ile bu masrafın $7,500'e inip kliniğe yılda $22,500 net nakit kalacağını CFO'ya sunun.",
+            "1. 'OPEX Kurtarma Tablosu': Yıllık 1.000 siklus yapan bir kliniğin RI Witness çiplerine yılda $35,000 - $40,000 USD ödediğini; ZEUS Mismatch Blocker'da barkodların tamamen ücretsiz (Free of Charge) olduğunu ve siklus başına yalnızca $25 USD ödendiğini (1.000 siklus = $25,000 USD), böylece kliniğe yılda $10,000 - $15,000 USD (3 yılda $45,000 USD) net nakit kaldığını CFO'ya sunun.",
             "2. 'Sıfır EMF Güvenliği': Baş embriyologlara gametlerin altına yerleştirilen radyo antenleri yerine %100 biyogüvenli optik şahitliğin etik ve klinik üstünlüğünü işleyin."
         ],
         "recommended_contract_clauses": [
@@ -11737,7 +11737,7 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
                 <h5 style="color:#00E676;margin:0 0 6px 0;">2. OPEX Kurtarma Stratejisi (The RFID Trap Breaker)</h5>
                 <div style="font-size:12px;color:#CCD7E6;line-height:1.6;">
                     • <b>Taktik:</b> CooperSurgical RI Witness kullanan veya teklif alan kliniklerin CFO'suna 3 yıllık Toplam Sahip Olma Maliyeti (TCO) çıkarın.<br>
-                    • <b>Vurucu Cümle:</b> <i>"Yılda 1.000 siklus yapan kliniğiniz RI Witness çiplerine her yıl $30,000 USD ödüyor. ZEUS Mismatch Blocker çipsiz 2D barkod ve döngü kontörü modeliyle bu masrafı $7,500'e indirir. Kalan $22,500 her yıl doğrudan kâr hanenize yazılır."</i>
+                    • <b>Vurucu Cümle:</b> <i>"Yılda 1.000 siklus yapan kliniğiniz RI Witness çiplerine her yıl $35,000 - $40,000 USD ödüyor. ZEUS Mismatch Blocker'da 2D barkodlar tamamen ücretsizdir (Free of Charge Barcodes) ve döngü başına yalnızca $25 USD ödersiniz (1.000 siklus = $25,000 USD). Kalan $10,000 - $15,000 her yıl doğrudan kâr hanenize yazılır; 3 yılda $45,000 net nakit tasarruf edersiniz."</i>
                 </div>
             </div>
             """, unsafe_allow_html=True)
@@ -11838,7 +11838,7 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
 
                 f_strategy = st.selectbox("🎯 Uygulanacak Satış & Kazanma Stratejisi:", [
                     "🔬 Klinik Kanıt & Hakemli Yayın Kalkanı (Baltacı / Ebner sub-%1.2 lizis)",
-                    "💼 OPEX Kurtarma Stratejisi (RFID Siklus Başı $30 vs ZEUS $7.5 - %75 Tasarruf)",
+                    "💼 OPEX Kurtarma Stratejisi (Free of Charge Barkod + Siklus Başı $25 USD — Yıllık $15,000+ Net Tasarruf)",
                     "🚀 $85,000 USD Turnkey Filo Paketi & Ezici ROI (8.2 Ay Amortisman)",
                     "⛔ Kesinlikle Demo Yok - 14 Günlük Yerinde Ücretli Vaka Çalıştayı",
                     "🤝 Yerel Distribütöre %45+ Brüt Marj & Münhasır Bölge Teşviği"
@@ -21762,7 +21762,7 @@ BODY:
                             <div style="background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.25);border-radius:6px;padding:10px;">
                                 <b style="color:#00F5FF;font-size:12px;">✅ ZEUS Mismatch Blocker Üstünlüğü:</b>
                                 <ul style="color:#CCD7E6;font-size:11px;margin:6px 0 0 16px;padding:0;line-height:1.5;">
-                                    <li><b>Coin Modeli & Sınırsız Ücretsiz Barkod:</b> Döngü başı tek kontör, %100 bedava barkod; %75 OPEX tasarrufu.</li>
+                                    <li><b>Free of Charge Barkod & $25 USD Siklus Lisansı:</b> 2D barkodlar tamamen ücretsizdir (Free of Charge); döngü başı sabit $25 USD lisans ile şeffaf maliyet.</li>
                                     <li><b>7 Terminalli Tam Süreç:</b> OPU Ameliyathanesinde doktora dönük sessiz oosit sayacı ekranından kriyobankaya.</li>
                                     <li><b>Sıfır Kağıt / Dijital Embriyoloji:</b> Mikroskop başında 2PN, Day 3/5 skorları dokunmatik kaydedilir.</li>
                                     <li><b>3'lü 7/24 Mobil Ekosistem:</b> Doktor, embriyolog ve hasta için özel iOS/Android mobil uygulaması.</li>
@@ -26827,8 +26827,8 @@ elif active_view == "🏛️ Strategic Decision Center":
         st.markdown("""
         <div style="background:#0F192E;border:1px solid rgba(0,245,255,0.3);border-radius:8px;padding:12px;text-align:center;">
             <div style="color:#8A99AD;font-size:11px;font-weight:600;">SARF TASARRUF ÇARPANI</div>
-            <div style="color:#00F5FF;font-size:22px;font-weight:800;">%70 – %80</div>
-            <div style="color:#5FD3AE;font-size:11px;">Döngü Başı Kontör vs $25 Çip</div>
+            <div style="color:#00F5FF;font-size:22px;font-weight:800;">$25 / CYCLE</div>
+            <div style="color:#5FD3AE;font-size:11px;">Barkodlar Ücretsiz (Free of Charge)</div>
         </div>
         """, unsafe_allow_html=True)
     with rfid_kpi2:
@@ -26879,7 +26879,7 @@ elif active_view == "🏛️ Strategic Decision Center":
             {
                 "Stratejik Boyut": "1. Sarf Maliyeti & Fiyatlandırma Modeli",
                 "Geleneksel RFID (RI Witness / Matcher)": "❌ Ağır Tekrarlayan Maliyet: Her siklusta petri/tüp başına $15–$30 RFID çipli kap zorunluluğu. Yıllık $20K–$60K döviz kaybı.",
-                "ZEUS Mismatch Blocker & Kriyomimari": "✅ Sınırsız Ücretsiz Barkod + Sanal POS Kontör (Coin) Kredisi: Siklus başına tek bir sembolik kredi; barkodlar %100 ücretsizdir. Klinik OPEX giderlerini %75 azaltır.",
+                "ZEUS Mismatch Blocker & Kriyomimari": "✅ Free of Charge 2D Barkodlar + $25 USD / Siklus Doğrulama Lisansı: Tüm kriyojenik 2D barkodlar tamamen ücretsizdir; döngü başına yalnızca $25 USD lisans ödenir. 1.000 siklusta yılda $10,000–$15,000 net tasarruf sağlar.",
                 "Klinik & Finansal Avantaj": "Sarf bağımlılığı yok; bütçe öngörülebilir ve kontrol altında."
             },
             {
@@ -26921,11 +26921,13 @@ elif active_view == "🏛️ Strategic Decision Center":
 
         rc1, rc2, rc3 = st.columns(3)
         with rc1:
-            sim_cycles = st.slider("🏥 Yıllık Tedavi Siklus Hacmi (Cycles):", min_value=100, max_value=5000, value=800, step=50, key="sim_rfid_cycles")
+            sim_cycles = st.slider("🏥 Yıllık Tedavi Siklus Hacmi (Cycles):", min_value=100, max_value=5000, value=1000, step=50, key="sim_rfid_cycles")
         with rc2:
-            sim_rfid_cost = st.slider("💳 Mevcut RFID Çip/Sarf Maliyeti ($ / Siklus):", min_value=10, max_value=35, value=22, step=1, key="sim_rfid_chip_cost")
+            sim_rfid_cost = st.slider("💳 Mevcut RFID Çip/Sarf Maliyeti ($ / Siklus):", min_value=25, max_value=50, value=35, step=1, key="sim_rfid_chip_cost")
         with rc3:
-            sim_zeus_coin = st.slider("🪙 ZEUS Coin Kredi Bedeli ($ / Siklus):", min_value=3, max_value=10, value=6, step=1, key="sim_zeus_coin_cost")
+            sim_zeus_coin = st.slider("🛡️ ZEUS Mismatch Blocker Lisans Bedeli ($ / Siklus):", min_value=15, max_value=35, value=25, step=1, key="sim_zeus_coin_cost")
+
+        st.caption("ℹ️ **ZEUS Modeli:** Tüm 2D barkodlar **Tamamen Ücretsizdir (Free of Charge Barcodes)**. Yalnızca döngü başına **$25 USD** doğrulama lisansı ödenir.")
 
         curr_rfid_total = sim_cycles * sim_rfid_cost
         zeus_coin_total = sim_cycles * sim_zeus_coin
@@ -26943,9 +26945,9 @@ elif active_view == "🏛️ Strategic Decision Center":
                     <span style="color:#CCD7E6;font-size:11px;">{sim_cycles:,} siklus x ${sim_rfid_cost}/çip</span>
                 </div>
                 <div style="background:rgba(0,245,255,0.1);border:1px solid rgba(0,245,255,0.3);border-radius:8px;padding:12px;">
-                    <span style="color:#80D8FF;font-size:11.5px;font-weight:600;">ZEUS COIN MODELİ MALİYETİ</span>
+                    <span style="color:#80D8FF;font-size:11.5px;font-weight:600;">ZEUS MISMATCH BLOCKER MALİYETİ</span>
                     <h3 style="color:#00F5FF;margin:4px 0;font-size:24px;">${zeus_coin_total:,.0f} USD</h3>
-                    <span style="color:#CCD7E6;font-size:11px;">Sınırsız Barkod + ${sim_zeus_coin}/kontör</span>
+                    <span style="color:#CCD7E6;font-size:11px;">Free of Charge Barkod + $25/Siklus</span>
                 </div>
                 <div style="background:rgba(0,230,118,0.12);border:1.5px solid #00E676;border-radius:8px;padding:12px;">
                     <span style="color:#B9F6CA;font-size:11.5px;font-weight:700;">YILLIK NET KLİNİK TASARRUFU</span>
@@ -27000,8 +27002,8 @@ Bugün dünya genelinde pek çok öncü merkez gibi, sizlerin de muhtemelen RI W
 
 ZEUS BIOSCIENCE olarak geliştirdiğimiz 'Mismatch Blocker (ZMB-7T)' ve 'Smart Cryo-Tools' ekosistemi, bu 4 kritik boşluğu radikal ve zekice bir mimariyle kapatmaktadır:
 
-✔ Sınırsız Ücretsiz Barkod & Döngü Başı Kontör (Coin) Modeli:
-   Kliniğinizi pahalı çipli petri kaplarına mahkûm etmiyoruz. Barkod etiketleri %100 ücretsiz ve sınırsızdır. Sanal POS üzerinden anında tanımlanan döngü başı tek bir kontör (coin) kredisiyle şahitlik sarfiyatınızı net %75 düşürüyoruz.
+✔ Free of Charge (Ücretsiz) Barkodlar & Döngü Başına $25 USD Lisans Modeli:
+   Kliniğinizi pahalı RFID çipli petri kaplarına mahkûm etmiyoruz. Tüm 2D kriyojenik barkod etiketleri %100 ÜCRETSİZDİR (Free of charge). Siklus başına yalnızca sabit $25 USD güvenli şahitlik lisansı ödeyerek, yıllık 1.000 siklusta ($25,000 USD) kliniğinize her yıl $10,000 - $15,000 net nakit tasarrufu sağlıyoruz.
 
 ✔ 7 İstasyonlu Tam Dijital Ağ & Elle Not Tutmaya Son:
    Hasta kayıt masasından OPU ameliyathanesindeki sessiz canlı oosit sayacına (doktorun karşısındaki ekran sözlü oosit bağırma hatasını bitirir), androloji kabininden mikromanipülatör başına kadar 7 terminal. Embriyolog dokunmatik ekranda tek dokunuşla 2PN, oosit maturasyonu ve Gün 3/5 AA-AB skorlarını kaydeder; sistem anında müdahale edilemez TRF raporunu üretir. Artık kağıtla not tutmak tarihe karışır.
@@ -27045,8 +27047,8 @@ Like many elite IVF institutions worldwide, you likely rely on RI Witness or a c
 
 ZEUS Bioscience has engineered an integrated platform that fundamentally solves these four bottlenecks:
 
-✔ Coin-Based Model with Unlimited Free Barcodes:
-   We eliminate proprietary chip dependency. All cryo-resistant 2D barcodes are 100% free of charge. Clinics purchase on-demand cycle credits (coins) via Virtual POS, slashing annual witnessing OPEX by 70% to 80%.
+✔ Free of Charge 2D Barcodes & Fixed $25 USD per Cycle License:
+   We eliminate proprietary RFID chip dependency. All cryo-resistant 2D barcodes are 100% free of charge. Clinics simply pay a fixed $25 USD authorization license per cycle ($25,000/yr for 1,000 cycles), saving $10,000 to $15,000+ annually compared to recurring RFID chip expenditures.
 
 ✔ 7-Terminal Specialized Network (Zero Handwriting):
    Covering Patient Registration (T1), Sperm Collection (T2), OPU Theater with a live silent oocyte counter display facing the surgeon (T3), Andrology (T4), Embryology (T5), Micromanipulator with single-touch standardized morphology scoring (T6), and Freezing Room (T7). Embryologists log 2PN, cleavage, and blastocyst grades digitally at the scope—paper records are permanently eliminated.
