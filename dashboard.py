@@ -8020,17 +8020,12 @@ with st.sidebar:
         st.rerun()
 
     main_nav_opts = [
-        "🌐 Global Cockpit & Executive Overview",
-        "🌍 Pazar Analizi & Ülke 360° (Market Analysis)",
-        "⚖️ Çok Boyutlu Karşılaştırma Masası (Compare)",
-        "🧮 Fiyatlandırma, İskonto & Marjlar (Pricing)",
-        "📜 Gümrük, GTİP & Sağlık Mevzuatı (Regulations)",
-        "🏛️ Küresel & Kamu İhaleleri Masası (Tenders)",
-        "⚖️ Stratejik Karar Merkezi (Strategic Decision Center)",
-        "📱 MedTech Sosyal Medya & Sağlık Mevzuatı",
-        "💼 Ticari Operasyonlar, CRM & Satış Analitiği",
-        "🧠 Yapay Zeka Risk & Tahminleme Simülatörü",
-        "📑 Yönetici Raporları & Veri Dışa Aktarma"
+        "🌐 1. Global Yönetim & ERP Kokpiti",
+        "🌍 2. Pazar İstihbaratı & Ülke 360°",
+        "⚖️ 3. Stratejik Karar & Rakip Kıyaslama",
+        "💰 4. Fiyatlandırma, Sarf & Klinik ROI",
+        "🤝 5. Distribütör Ağı & CRM Operasyonları",
+        "🔮 6. Yapay Zeka Stratejik Danışman"
     ]
     if "main_nav_radio" not in st.session_state:
         st.session_state["main_nav_radio"] = main_nav_opts[0]
@@ -8048,71 +8043,74 @@ with st.sidebar:
     # CRITICAL PARAMETER BREAKDOWN CARD (HER SEKMEDEKİ DEĞERLİ PARAMETRELER)
     # --------------------------------------------------------------------------
     nav_param_meta = {
-        "🌐 Global Cockpit & Executive Overview": {
-            "title": "Global Cockpit & Satış",
-            "badge": "Canlı ERP",
+        "🌐 1. Global Yönetim & ERP Kokpiti": {
+            "title": "Global Kokpit & Satış",
+            "badge": "Canlı ERP ($693.9K)",
             "color": "#00F5FF",
-            "params": ["3D Küre Görselleştirme", "874 Doğrulanmış Fatura ($693.9K)", "2024-2026 Dönem Raporu", "Dağıtıcı vs Klinik Segmentasyonu"]
+            "params": [
+                "3D Dünya Küresi & Küresel Satışlar",
+                "874 Doğrulanmış Fatura ($693,898 USD)",
+                "Cihaz vs Tekrar Eden Sarf Trendleri",
+                "Resmi Raporlar & Ham Veri Export"
+            ]
         },
-        "🌍 Pazar Analizi & Ülke 360° (Market Analysis)": {
+        "🌍 2. Pazar İstihbaratı & Ülke 360°": {
             "title": "Ülke 360° İstihbarat",
-            "badge": "48 Ülke",
+            "badge": "48 Ülke Tam Kapsam",
             "color": "#00E676",
-            "params": ["Kişi Başı GSYİH (GDP pc)", "Alım Gücü (USD)", "Lisanslı IVF Klinik Sayısı", "Yıllık Tedavi Siklusları", "ICSI & AOA Adaptasyonu", "Gerçekleşen ERP Satışları"]
+            "params": [
+                "Makro Metrikler (GSYİH, Klinikler, 52K Siklus)",
+                "Doğrulanmış Müşteri & Distribütör Radarı",
+                "Gümrük, İthalat & Biyoetik Mevzuatı",
+                "Kamu İhale Teknik Şartnameleri (.txt)",
+                "Kültürel Müzakere & Yemek Protokolü"
+            ]
         },
-        "⚖️ Çok Boyutlu Karşılaştırma Masası (Compare)": {
-            "title": "Kıyaslama & Skor Kartı",
-            "badge": "22 Metrik & Rakip",
+        "⚖️ 3. Stratejik Karar & Rakip Kıyaslama": {
+            "title": "Strateji & Kıyaslama",
+            "badge": "Pazar Karar Masası",
             "color": "#38BDF8",
-            "params": ["22 Seçili Makro/Klinik Metrik", "ZEUS vs Rakipler (Eppendorf, RI Witness, Vitrolife)", "Satış Kazanma Stratejileri", "Tavsiye Edilen Sözleşme Maddeleri", "Yönetici Karar Not Defteri"]
+            "params": [
+                "ZEUS vs Eppendorf, RI Witness, Vitrolife",
+                "RFID OPEX Kurtarma (Yıllık $15K Net Kâr)",
+                "$45,000 - $50,000 USD Komple Filo Paketi",
+                "Şartlı Demo Kuralı (100+ Kutu Taahhüt)",
+                "Çok Boyutlu 22-Metrik Karşılaştırma"
+            ]
         },
-        "🧮 Fiyatlandırma, İskonto & Marjlar (Pricing)": {
-            "title": "Fiyat & Kârlılık",
+        "💰 4. Fiyatlandırma, Sarf & Klinik ROI": {
+            "title": "Fiyatlandırma & Klinik ROI",
             "badge": "Canlı Simülatör",
             "color": "#FFD700",
-            "params": ["$8,500 USD Standart Dağıtıcı Fiyatı", "$85,000 USD Filo / İhale Paketi", "Cihaz & Sarf İskonto Simülatörü", "CFO Marj Eşiği (%35+)", "Razor-and-Blade Modeli"]
+            "params": [
+                "$8,500 USD Standart Dağıtıcı Fiyatı",
+                "4 Pool Tek Dish (20 Oosit/Dish = 1 Siklus)",
+                "Vaka Başı $6.60 USD Sarf Maliyeti",
+                "Klinik Yatırım Geri Dönüşü (%700+ Net ROI)",
+                "Marj Koruması (%35+ Brüt Marj)"
+            ]
         },
-        "📜 Gümrük, GTİP & Sağlık Mevzuatı (Regulations)": {
-            "title": "Mevzuat & Regülasyon",
-            "badge": "MOH & Gümrük",
-            "color": "#F59E0B",
-            "params": ["Cihaz GTİP: 9018.90", "Sarf GTİP: 3822.00", "Gümrük Vergileri (%0-%15)", "Tescil Otoriteleri & Başvuru Masrafları", "IVF, eSET & PGT Biyoetik Kuralları"]
-        },
-        "🏛️ Küresel & Kamu İhaleleri Masası (Tenders)": {
-            "title": "Kamu İhaleleri & Şartname",
-            "badge": "Tenders Hub",
-            "color": "#A855F7",
-            "params": ["Açık Kamu İhaleleri (UPA, NUPCO, KIMADIA, KHGM)", "Teknik Şartname Maddeleri", "Zorunlu Evraklar (COO/FSC/CE)", "Teminat & Ödeme Vadeleri", "$85,000 USD Turnkey Teklif Modeli"]
-        },
-        "⚖️ Stratejik Karar Merkezi (Strategic Decision Center)": {
-            "title": "Yönetim Kurulu Karar Merkezi",
-            "badge": "5 Kişilik Heyet",
-            "color": "#EC4899",
-            "params": ["Küresel Rakip Analizi & Pazar Farkları", "Sözleşme Şartnamesi & Bağlayıcı Hükümler", "Yönetici Karar Not Defteri", "CEO, CFO, CSO, Satış & Embriyolog Konsensüsü", "Jeopolitik Kriz & Savaş Masası"]
-        },
-        "📱 MedTech Sosyal Medya & Sağlık Mevzuatı": {
-            "title": "Sosyal Medya & Tanıtım",
-            "badge": "Mevzuata Uygun",
-            "color": "#10B981",
-            "params": ["T.C. Sağlık Bakanlığı Tanıtım Mevzuatı (29.07.2023)", "Hekim/Embriyolog Bilimsel Video Senaryoları", "YouTube (@ZeusBioscience) & LinkedIn Denetimi", "30 Günlük Editoryal İçerik Takvimi"]
-        },
-        "💼 Ticari Operasyonlar, CRM & Satış Analitiği": {
-            "title": "Distribütör & Müşteri CRM",
+        "🤝 5. Distribütör Ağı & CRM Operasyonları": {
+            "title": "Distribütör Ağı & CRM",
             "badge": "Ticari Operasyon",
             "color": "#60A5FA",
-            "params": ["6 Yetkili Distribütör Karnesi", "LOA Yetki Belgeleri & Sözleşmeler", "Ürün Bazlı Satış Analitiği", "Müşteri Sipariş Geçmişi"]
+            "params": [
+                "6 Yetkili Distribütör Performans Karnesi",
+                "Cihaz & Sarf Alım Denetim Matrisi",
+                "LOA Yetki Belgeleri & Sözleşme Takibi",
+                "Atıl Cihaz Alarmları & Re-Aktivasyon Planı"
+            ]
         },
-        "🧠 Yapay Zeka Risk & Tahminleme Simülatörü": {
-            "title": "Yapay Zeka & Risk",
-            "badge": "ML Tahmin",
-            "color": "#F43F5E",
-            "params": ["2024-2027 ML Satış Koridorları", "Jeopolitik Senaryo Simülatörü", "Kriz & Savaş Protokolü", "Kota Gerçekleşme Değerlendirici"]
-        },
-        "📑 Yönetici Raporları & Veri Dışa Aktarma": {
-            "title": "Raporlar & Dışa Aktar",
-            "badge": "Export Desk",
-            "color": "#94A3B8",
-            "params": ["Resmi Karar Tutanağı (.txt/.md)", "Ülke 360° İcra Dosyası İndirme", "ERP Ham Veri Export (CSV/Excel)", "Yönetici Özeti"]
+        "🔮 6. Yapay Zeka Stratejik Danışman": {
+            "title": "Yapay Zeka & İletişim",
+            "badge": "AI Copilot & GTM",
+            "color": "#EC4899",
+            "params": [
+                "Yapay Zeka Stratejik Danışman (Anında Memo)",
+                "B2B Outreach Stüdyosu (6 Dilde Mektup)",
+                "2027 Projeksiyonu ($385K Projeksiyon)",
+                "MedTech Sosyal Medya & Tanıtım Rehberi"
+            ]
         }
     }
 
@@ -15038,42 +15036,32 @@ def render_regulations_hub():
 
 
 ZEUS_HUB_SUBVIEWS = {
-    "🌐 Global Cockpit & Executive Overview": [
-        "🧭 Executive Overview & 3D Globe"
+    "🌐 1. Global Yönetim & ERP Kokpiti": [
+        "🌐 3D Dünya Küresi & ERP Satışları",
+        "📊 Cihaz vs Sarf Gelir Trendleri",
+        "📑 Yönetici Raporları & Veri İndirme"
     ],
-    "🌍 Pazar Analizi & Ülke 360° (Market Analysis)": [
-        "🌍 Country 360° Performance & Report"
+    "🌍 2. Pazar İstihbaratı & Ülke 360°": [
+        "🌍 Ülke 360° & Müşteri Radarı",
+        "📑 Gümrük, İthalat & Biyoetik Mevzuatı",
+        "🏛️ Kamu İhaleleri & Şartnameler"
     ],
-    "⚖️ Çok Boyutlu Karşılaştırma Masası (Compare)": [
-        "🛃 Market Intelligence & Compare"
+    "⚖️ 3. Stratejik Karar & Rakip Kıyaslama": [
+        "⚖️ Çok Boyutlu 22-Metrik Kıyaslama",
+        "⚔️ Stratejik Karar Masası (RFID Trap Breaker)",
+        "📜 Sözleşme Hükümleri & Hukuki Şartname"
     ],
-    "🧮 Fiyatlandırma, İskonto & Marjlar (Pricing)": [
-        "🧮 Pricing & Discount Calculator"
+    "💰 4. Fiyatlandırma, Sarf & Klinik ROI": [
+        "💰 Fiyatlandırma, 4-Pool Dish & Klinik ROI"
     ],
-    "📜 Gümrük, GTİP & Sağlık Mevzuatı (Regulations)": [
-        "📜 Gümrük, GTİP & Sağlık Bakanlığı Mevzuatı"
+    "🤝 5. Distribütör Ağı & CRM Operasyonları": [
+        "🤝 Yetkili Distribütör Karneleri & CRM",
+        "🚨 Atıl Cihaz, Churn & Re-Aktivasyon",
+        "🔍 Risk & Jeopolitik Senaryolar"
     ],
-    "🏛️ Küresel & Kamu İhaleleri Masası (Tenders)": [
-        "🏛️ Küresel & Kamu İhaleleri Masası (Tenders Hub)"
-    ],
-    "⚖️ Stratejik Karar Merkezi (Strategic Decision Center)": [
-        "🏛️ Strategic Decision Center"
-    ],
-    "📱 MedTech Sosyal Medya & Sağlık Mevzuatı": [
-        "📱 Global Social Media & B2B Marketing"
-    ],
-    "💼 Ticari Operasyonlar, CRM & Satış Analitiği": [
-        "🏢 Distributors & CRM",
-        "📜 Agreements & Compliance",
-        "📊 Sales & Product Analytics"
-    ],
-    "🧠 Yapay Zeka Risk & Tahminleme Simülatörü": [
-        "🚨 AI Intelligence & Forecasting",
-        "🎲 Risk & Scenario Simulator",
-        "📈 Performance Evaluator"
-    ],
-    "📑 Yönetici Raporları & Veri Dışa Aktarma": [
-        "📑 Executive Reports & Export"
+    "🔮 6. Yapay Zeka Stratejik Danışman": [
+        "🤖 Yapay Zeka Stratejik Danışman (AI Copilot)",
+        "📱 MedTech Sosyal Medya & B2B İletişim"
     ]
 }
 
@@ -15205,26 +15193,26 @@ def render_active_omni_search_hub(query_str):
         if len(matched_cultures) > 0:
             first_c = matched_cultures[0]['country']
             if st.button(f"🌍 Kültür & Sözleşme ({len(matched_cultures)}) ➔", key="btn_jump_cult_hdr", use_container_width=True, type="primary"):
-                st.session_state["main_nav_radio"] = "🌍 Pazar Analizi & Ülke 360° (Market Analysis)"
+                st.session_state["main_nav_radio"] = "🌍 2. Pazar İstihbaratı & Ülke 360°"
                 st.session_state["c360_single_country_select"] = first_c
                 st.session_state["omni_search_input"] = ""
                 st.rerun()
     with jump_cols[1]:
         if len(matched_firms) > 0:
             if st.button(f"🏢 Firmalar & CRM ({len(matched_firms)}) ➔", key="btn_jump_firm_hdr", use_container_width=True):
-                st.session_state["main_nav_radio"] = "💼 Ticari Operasyonlar, CRM & Satış Analitiği"
+                st.session_state["main_nav_radio"] = "🤝 5. Distribütör Ağı & CRM Operasyonları"
                 st.session_state["omni_search_input"] = ""
                 st.rerun()
     with jump_cols[2]:
         if len(matched_tenders) > 0:
             if st.button(f"🏛️ Kamu İhaleleri ({len(matched_tenders)}) ➔", key="btn_jump_tend_hdr", use_container_width=True):
-                st.session_state["main_nav_radio"] = "🏛️ Küresel & Kamu İhaleleri Masası (Tenders)"
+                st.session_state["main_nav_radio"] = "🌍 2. Pazar İstihbaratı & Ülke 360°"
                 st.session_state["omni_search_input"] = ""
                 st.rerun()
     with jump_cols[3]:
         if len(matched_products) > 0:
             if st.button(f"⚡ Cihaz & Mevzuat ({len(matched_products)}) ➔", key="btn_jump_prod_hdr", use_container_width=True):
-                st.session_state["main_nav_radio"] = "📜 Gümrük, GTİP & Sağlık Mevzuatı (Regulations)"
+                st.session_state["main_nav_radio"] = "🌍 2. Pazar İstihbaratı & Ülke 360°"
                 st.session_state["omni_search_input"] = ""
                 st.rerun()
 
@@ -15276,7 +15264,7 @@ def render_active_omni_search_hub(query_str):
                         </div>
                         """, unsafe_allow_html=True)
                         if st.button(f"👉 Bu Ülkenin Masasına Git ({c_name} — Pazar Analizi & Ülke 360°)", key=f"btn_go_cult_item_{c_name}_{idx_c}"):
-                            st.session_state["main_nav_radio"] = "🌍 Pazar Analizi & Ülke 360° (Market Analysis)"
+                            st.session_state["main_nav_radio"] = "🌍 2. Pazar İstihbaratı & Ülke 360°"
                             st.session_state["c360_single_country_select"] = c_name
                             st.session_state["omni_search_input"] = ""
                             st.rerun()
@@ -15312,7 +15300,7 @@ def render_active_omni_search_hub(query_str):
                         </div>
                         """, unsafe_allow_html=True)
                         if st.button(f"👉 Bu Kurumun Masasına Git ({f_name})", key=f"btn_go_firm_item_{idx_f}"):
-                            st.session_state["main_nav_radio"] = "💼 Ticari Operasyonlar, CRM & Satış Analitiği"
+                            st.session_state["main_nav_radio"] = "🤝 5. Distribütör Ağı & CRM Operasyonları"
                             st.session_state["omni_search_input"] = ""
                             st.rerun()
 
@@ -15347,7 +15335,7 @@ def render_active_omni_search_hub(query_str):
                             st.markdown(f'<a href="{p_url}" target="_blank" style="display:inline-block;background:rgba(0,245,255,0.1);color:#00F5FF;border:1px solid rgba(0,245,255,0.3);padding:3px 8px;border-radius:4px;font-size:11px;text-decoration:none;">🔗 {p_name}</a>', unsafe_allow_html=True)
                         st.markdown("</div></div>", unsafe_allow_html=True)
                         if st.button(f"👉 Bu İhalenin Masasına Git ({t_country})", key=f"btn_go_tender_item_{t_country}_{idx_t}"):
-                            st.session_state["main_nav_radio"] = "🏛️ Küresel & Kamu İhaleleri Masası (Tenders)"
+                            st.session_state["main_nav_radio"] = "🌍 2. Pazar İstihbaratı & Ülke 360°"
                             st.session_state["omni_search_input"] = ""
                             st.rerun()
 
@@ -15370,7 +15358,7 @@ def render_active_omni_search_hub(query_str):
                         </div>
                         """, unsafe_allow_html=True)
                         if st.button(f"👉 Bu Ürünün Mevzuat Masasına Git ({pr['title']})", key=f"btn_go_prod_item_{idx_p}"):
-                            st.session_state["main_nav_radio"] = "📜 Gümrük, GTİP & Sağlık Mevzuatı (Regulations)"
+                            st.session_state["main_nav_radio"] = "🌍 2. Pazar İstihbaratı & Ülke 360°"
                             st.session_state["omni_search_input"] = ""
                             st.rerun()
 
@@ -15457,7 +15445,7 @@ if not active_view:
 if omni_search_q and omni_search_q.strip():
     render_active_omni_search_hub(omni_search_q.strip())
 
-if active_view == "🧭 Executive Overview & 3D Globe":
+if active_view in ["🌐 3D Dünya Küresi & ERP Satışları", "🌐 Executive Overview & 3D Globe"]:
     # Interactive Video Tour & Simulation Expander
     with st.expander("🎬 ZGMI Portalı 60 Saniyelik Canlı Video Simülasyonu & İnteraktif Ürün Turu", expanded=False):
         sim_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "zgmi_video_simulation.html")
@@ -17194,7 +17182,7 @@ if active_view == "🧭 Executive Overview & 3D Globe":
 # ==============================================================================
 
 
-elif active_view == "🚨 AI Intelligence & Forecasting":
+elif active_view in ["🤖 Yapay Zeka Stratejik Danışman (AI Copilot)", "🔮 AI Intelligence & Forecasting"]:
     st.title("AI Commercial Intelligence & Predictive Analytics")
     st.caption("Yapay zeka ve makine öğrenmesi destekli kurumsal satış projeksiyonu, anomali tespiti ve pazar optimizasyonu.")
 
@@ -19205,7 +19193,7 @@ ZEUS Bioscience Scientific Affairs""",
 # 5. VIEW: DISTRIBUTORS & CRM
 # ==============================================================================
 
-elif active_view == "🏢 Distributors & CRM":
+elif active_view in ["🤝 Yetkili Distribütör Karneleri & CRM", "🤝 Distributors & CRM"]:
     def format_partner_device_distribution(dev_cnt_by_yr):
         """Formats device count by year like '3 Adet (3x\'25)' or '18 Adet (9x\'24, 5x\'25, 4x\'26)'"""
         tot = dev_cnt_by_yr.get('ALL', 0)
@@ -19528,7 +19516,7 @@ elif active_view == "🏢 Distributors & CRM":
                 st.dataframe(disp_zero_dev, use_container_width=True, hide_index=True)
                 st.caption("ℹ️ Acıbadem, CMC, Halil Ruso, Medipolitan, Seda Erdem ve Bisan'a yapılan $0 bedelli cihaz sevkleri klinik konsinye statüsünde izlenmektedir.")
 
-elif active_view == "📜 Agreements & Compliance":
+elif active_view in ["📜 Sözleşme Hükümleri & Hukuki Şartname", "📜 Agreements & Compliance"]:
     st.title("International Agreements, LOA & Regulatory Compliance")
     st.caption("Distribütörlük sözleşmeleri, LOA yetki belgeleri, yerel (Türkiye) ve uluslararası müşteri tedarik protokolleri yönetimi.")
 
@@ -19785,7 +19773,7 @@ elif active_view == "📜 Agreements & Compliance":
 # ==============================================================================
 # 7. VIEW: SALES & PRODUCT ANALYTICS
 # ==============================================================================
-elif active_view == "📊 Sales & Product Analytics":
+elif active_view in ["📊 Cihaz vs Sarf Gelir Trendleri", "📊 Sales & Product Analytics"]:
     st.title("Multi-Dimensional Sales & Product Analytics")
     st.caption("Excel satış veri tabanındaki (874 fatura satırı) doğrulanmış cihaz/sarf dökümleri, ürün bazlı hasılat ve distribütör performans analitiği.")
 
@@ -20633,7 +20621,7 @@ elif active_view == "📊 Sales & Product Analytics":
                 'Durum': 'Aktif' if d.get('status') == 'active' else 'Pasif'
             })
         st.dataframe(pd.DataFrame(all_table), use_container_width=True, hide_index=True)
-elif active_view == "🛃 Market Intelligence & Compare":
+elif active_view in ["⚖️ Çok Boyutlu 22-Metrik Kıyaslama", "⚖️ Market Intelligence & Compare"]:
     st.title("Global IVF Market Intelligence & Country Comparison")
     st.caption("Resmi Dünya Bankası (WDI 2023/2024) ve uluslararası ESHRE/CDC tüp bebek kayıtlarına dayalı çok boyutlu pazar, ekonomik güç ve klinik teknoloji kıyaslama merkezi.")
 
@@ -24038,7 +24026,7 @@ Cihaz, tüp bebek (IVF/ICSI) laboratuvarlarında Total Döllenme Başarısızlı
 # ==============================================================================
 # VIEW: COUNTRY 360° PERFORMANCE & INTELLIGENCE REPORT
 # ==============================================================================
-elif active_view == "🌍 Country 360° Performance & Report":
+elif active_view in ["🌍 Ülke 360° & Müşteri Radarı", "🌍 Country 360° Performance & Report"]:
     st.title("🌍 Country 360° Performance & Intelligence Dossier")
     st.caption("Tek ekranda bütünleşik ülke karnesi: Gerçekleşen satışlar ve filo büyüklüğü, makroekonomi, gümrük GTİP ve ithalat mevzuatı, yeni IVF & PGT biyoetik kuralları, iskonto-tahmin matrisleri, 5 kişilik uzman heyeti görüşleri ve satış stratejisi.")
 
@@ -25347,7 +25335,7 @@ SERTİFİKASYON: CE Device Certified (CE Sertifikalı Class IIa)
 # ==============================================================================
 # 9. VIEW: PRICING & DISCOUNT CALCULATOR
 # ==============================================================================
-elif active_view == "🧮 Pricing & Discount Calculator":
+elif active_view in ["💰 Fiyatlandırma, 4-Pool Dish & Klinik ROI", "💰 Pricing & Discount Calculator"]:
     st.title("Commercial Discount & Margin Impact Calculator")
     st.caption("Çok Boyutlu Fiyatlandırma ve İskonto Karar Motoru: Ülke GSYİH (GDP), Yaşam Standardı, Ulusal IVF Destek Rejimi, AI Algoritmik Analitiği ve Uzman Görüşü / Bilgi Bankası (Knowledge Base) ile sentezlenmiş stratejik karar merkezi.")
 
@@ -26170,7 +26158,7 @@ elif active_view == "🧮 Pricing & Discount Calculator":
 
 # 10. VIEW: RISK & SCENARIO SIMULATOR
 # ==============================================================================
-elif active_view == "🎲 Risk & Scenario Simulator":
+elif active_view in ["🔍 Risk & Jeopolitik Senaryolar", "⚠️ Risk & Scenario Simulator"]:
     st.title("Commercial Risk & Financial Scenario Simulator")
     st.caption("ZEUS Ticari Risk Simülatörü: Satış senaryoları, döviz & talep şokları, teslimat gecikmesi ve sözleşme bazlı tahsilat modellemesi.")
 
@@ -26515,7 +26503,7 @@ Modellenen senaryoda; **%{sim_fx} kur baskısı**, **%{sim_demand} talep dalgala
 # ==============================================================================
 # 11. VIEW: DISTRIBUTOR PERFORMANCE EVALUATOR
 # ==============================================================================
-elif active_view == "📈 Performance Evaluator":
+elif active_view in ["🚨 Atıl Cihaz, Churn & Re-Aktivasyon", "📈 Performance Evaluator"]:
     st.title("Partner Operational & Strategic Performance Scorecard")
     st.caption("Excel satış kayıtlarındaki gerçek yıllık cihaz/sarf dökümleri, gerçek YoY büyüme oranları ve çeyreklik sipariş düşüş analizi.")
 
@@ -26989,7 +26977,7 @@ elif active_view == "📈 Performance Evaluator":
 # ==============================================================================
 # 12. VIEW: STRATEGIC DECISION CENTER
 # ==============================================================================
-elif active_view == "🏛️ Strategic Decision Center":
+elif active_view in ["⚔️ Stratejik Karar Masası (RFID Trap Breaker)", "⚖️ Strategic Decision Center"]:
     st.title("Strategic Decision Center & Executive Board Room")
     st.caption("Configurable weighted multi-criteria assessment framework for critical corporate authorizations, competitor displacement and commercial expansion.")
 
@@ -27904,7 +27892,7 @@ Web: www.zeusbioscience.com | Email: clinical@zeusbioscience.com"""
 # ==============================================================================
 # 13. VIEW: EXECUTIVE REPORTS & EXPORT
 # ==============================================================================
-elif active_view == "📑 Executive Reports & Export":
+elif active_view in ["📑 Yönetici Raporları & Veri İndirme", "📄 Executive Reports & Export"]:
     st.title("Executive Governance Reports & Export Center")
     st.caption("Generate formal distribution audit briefings and export certified commercial datasets.")
 
@@ -28106,13 +28094,13 @@ elif active_view == "📑 Executive Reports & Export":
 # ==============================================================================
 # 14. VIEW: GLOBAL SOCIAL MEDIA & B2B MARKETING
 # ==============================================================================
-elif active_view == "📱 Global Social Media & B2B Marketing":
+elif active_view in ["📱 MedTech Sosyal Medya & B2B İletişim", "📱 Global Social Media & B2B Marketing"]:
     render_social_media_hub()
 
-elif active_view == "🏛️ Küresel & Kamu İhaleleri Masası (Tenders Hub)":
+elif active_view in ["🏛️ Kamu İhaleleri & Şartnameler", "🏛️ Küresel & Kamu İhaleleri Masası (Tenders Hub)"]:
     render_tenders_hub()
 
-elif active_view == "📜 Gümrük, GTİP & Sağlık Bakanlığı Mevzuatı":
+elif active_view in ["📑 Gümrük, İthalat & Biyoetik Mevzuatı", "📑 Gümrük, GTİP & Sağlık Bakanlığı Mevzuatı"]:
     render_regulations_hub()
 
 # Universal Bottom 'Back to Top' Button (Every Page)
