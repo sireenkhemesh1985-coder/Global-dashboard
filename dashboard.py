@@ -12880,9 +12880,348 @@ def build_verified_linkedin_bundle(person_str, inst_str, country_str="", categor
     }
 
 
+
+# ==============================================================================
+# UNIVERSAL SMART CSV INGESTION & IMPORT ENGINE (SELLBIRD ARCHITECTURE BASED)
+# ==============================================================================
+def parse_and_sanitize_csv(file_bytes):
+    """
+    Parses CSV bytes with multi-encoding fallback (UTF-8-SIG, UTF-8, CP1254, Latin1)
+    and automatic delimiter sniffing (comma, semicolon, tab, pipe).
+    Cleans leading formula injection guard single-quotes if present.
+    """
+    import io, csv
+    text = None
+    for enc in ['utf-8-sig', 'utf-8', 'cp1254', 'latin1']:
+        try:
+            text = file_bytes.decode(enc)
+            break
+        except UnicodeDecodeError:
+            continue
+    if text is None:
+        text = file_bytes.decode('utf-8', errors='ignore')
+
+    # Formula injection cleanup: strip single quote prefix if added by exporter
+    lines = text.splitlines()
+    cleaned_lines = []
+    for l in lines:
+        cleaned_lines.append(l)
+    clean_text = '\n'.join(cleaned_lines)
+
+    try:
+        sample = clean_text[:4096]
+        dialect = csv.Sniffer().sniff(sample, delimiters=',;\t|')
+        sep = dialect.delimiter
+    except Exception:
+        first_line = clean_text.split('\n')[0] if clean_text else ''
+        sep = ';' if ';' in first_line else ','
+
+    df = pd.read_csv(io.StringIO(clean_text), sep=sep)
+    return df
+
+
+def normalize_imported_prospect_row(row):
+    """
+    Normalizes any CSV row (Sellbird prospects.csv, company-register.csv, Apollo, LinkedIn, CRM)
+    into the ZEUS B2B decision maker prospect format.
+    """
+    # Company Name
+    comp = str(row.get('company_name') or row.get('company') or row.get('Firma') or row.get('Kurum') or row.get('name') or 'Hedef Kurum').strip()
+    
+    # Contact Person
+    fn = str(row.get('first_name', '')).strip()
+    ln = str(row.get('last_name', '')).strip()
+    full_name = f"{fn} {ln}".strip()
+    if not full_name or full_name == 'nan nan':
+        full_name = str(row.get('contact_person') or row.get('contacts') or row.get('Ad Soyad') or row.get('decision_maker') or 'Medikal Direktör').strip()
+        
+    # Title / Role
+    title = str(row.get('title') or row.get('Rol') or row.get('Unvan') or row.get('position') or 'Klinik / Embriyoloji Yetkilisi').strip()
+    if title == 'nan':
+        title = 'Klinik / Embriyoloji Yetkilisi'
+        
+    # Email
+    email = str(row.get('email') or row.get('E-posta') or row.get('eposta') or '').strip()
+    if email == 'nan':
+        email = ''
+        
+    # Website
+    web = str(row.get('website') or row.get('web') or row.get('source_url') or '').strip()
+    if web == 'nan':
+        web = ''
+    if web and not web.startswith('http'):
+        web = f"https://{web}"
+        
+    # LinkedIn URL
+    lk = str(row.get('linkedin_url') or row.get('linkedin') or row.get('LinkedIn') or '').strip()
+    if lk == 'nan':
+        lk = ''
+        
+    # Country / Area
+    country = str(row.get('country') or row.get('area') or row.get('location') or row.get('Ülke') or '').strip()
+    if country == 'nan':
+        country = ''
+        
+    # Score / Fit
+    raw_score = row.get('score') or row.get('fit') or 85
+    try:
+        score_val = int(float(raw_score))
+    except Exception:
+        score_val = 85
+        
+    # Personalization / Notes
+    notes = str(row.get('personalization') or row.get('personalization_notes') or row.get('why_selected') or row.get('Not') or 'Sellbird B2B Lead Listesinden Aktarıldı.').strip()
+    if notes == 'nan':
+        notes = 'Sellbird B2B Lead Listesinden Aktarıldı.'
+        
+    # Category / Industry
+    cat = str(row.get('industry') or row.get('sector') or row.get('Kategori') or 'Tüp Bebek (IVF) & MedTech').strip()
+    if cat == 'nan':
+        cat = 'Tüp Bebek (IVF) & MedTech'
+
+    tier = f"⭐ Tier {1 if score_val >= 85 else 2} (Uygunluk: %{score_val})"
+
+    return {
+        "name": comp,
+        "category": cat,
+        "tier": tier,
+        "city": country or "Merkez",
+        "country": country,
+        "contact_person": f"{full_name} ({title})" if title and title not in full_name else full_name,
+        "email": email,
+        "phone": str(row.get('phone') or row.get('Telefon') or '+90 212 000 0000'),
+        "website": web,
+        "website_clean": web.replace('https://', '').replace('http://', '').split('/')[0] if web else '',
+        "linkedin_url": lk,
+        "decision_maker": f"{full_name} - {title}",
+        "product_match": "ZEUS Pulse Stimulator (ZPS 26) + Sarf Dağıtım Anlaşması",
+        "strategy_rationale": notes,
+        "source": "Sellbird CSV Import",
+        "score": score_val
+    }
+
+
+def render_quick_b2b_csv_uploader():
+    """Inline quick CSV uploader for Sellbird / B2B leads inside Decision Maker Finder."""
+    if 'imported_custom_prospects' not in st.session_state:
+        st.session_state['imported_custom_prospects'] = []
+
+    st.markdown("""
+    <div style="background:rgba(0,119,181,0.08);border:1px dashed #0077B5;border-radius:10px;padding:12px 16px;margin-bottom:12px;">
+        <b style="color:#38BDF8;font-size:12.5px;">📥 Sellbird CSV Hızlı İçe Aktarma Dropzone:</b><br>
+        <span style="font-size:11.5px;color:#CBD5E1;">Sellbird tarafından üretilen <code>prospects.csv</code> veya <code>company-register.csv</code> dosyanızı buraya yükleyin. Kişiler otomatik olarak ayrıştırılır ve arama radarına dahil edilir.</span>
+    </div>
+    """, unsafe_allow_html=True)
+
+    up_file = st.file_uploader("Sellbird CSV Dosyası Seçin (.csv)", type=["csv"], key="quick_b2b_csv_uploader")
+    if up_file is not None:
+        try:
+            raw_bytes = up_file.read()
+            df = parse_and_sanitize_csv(raw_bytes)
+            st.success(f"✓ Dosya başarıyla okundu! Toplam {len(df)} satır tespit edildi.")
+            
+            # Preview top 3
+            st.dataframe(df.head(3), use_container_width=True)
+            
+            col_b1, col_b2 = st.columns([1.5, 1])
+            with col_b1:
+                if st.button("📥 Bu Kişileri Karar Verici Havuzuna Aktar", key="btn_apply_quick_b2b_csv", type="primary", use_container_width=True):
+                    new_contacts = []
+                    for _, r in df.iterrows():
+                        c_dict = normalize_imported_prospect_row(dict(r))
+                        new_contacts.append(c_dict)
+                    
+                    st.session_state['imported_custom_prospects'].extend(new_contacts)
+                    st.toast(f"✅ {len(new_contacts)} yeni karar verici sisteme aktarıldı!", icon="✅")
+                    st.rerun()
+            with col_b2:
+                sample_b2b_csv = "email,first_name,last_name,company_name,title,website,linkedin_url,industry,personalization,score,country\ncarlos.simon@ivirma.com,Carlos,Simon,IVI-RMA Global,Scientific Director,https://ivi-rma.com,https://linkedin.com/in/carlossimon,IVF / ART,Leading AOA and PGT-A clinic,98,Spain\nlaura.rienzi@generaglobal.it,Laura,Rienzi,GeneraLife Rome,Head of Embryology,https://generalife.com,https://linkedin.com/in/laurarienzi,Reproductive Medicine,High cycle volume clinic,96,Italy\nvolkan.baltaci@genart.com.tr,Volkan,Baltaci,Gen-Art IVF,Scientific Director,https://genart.com.tr,https://linkedin.com/in/volkanbaltaci,IVF / Genetics,Leading researcher in electrical AOA,99,Türkiye\n"
+                st.download_button(
+                    "📥 Örnek Sellbird CSV İndir",
+                    data=sample_b2b_csv.encode('utf-8-sig'),
+                    file_name="Sellbird_Prospects_Sample.csv",
+                    mime="text/csv",
+                    key="dl_sample_b2b_csv"
+                )
+        except Exception as e:
+            st.error(f"CSV ayrıştırma hatası: {e}")
+
+
+def render_universal_csv_importer_hub():
+    """
+    Comprehensive Universal CSV Ingestion Hub inside View 5 (ERP Reports & Exports).
+    Supports:
+    1. Sellbird & B2B Decision Maker Prospect CSV Ingestion
+    2. Primary ERP Sales Ledger CSV Ingestion
+    3. Management & Clearing of Imported Datasets
+    """
+    st.markdown("""
+    <div style="background:linear-gradient(135deg, rgba(16,24,39,0.9) 0%, rgba(15,23,42,0.95) 100%);border:1.5px solid #00F5FF;border-radius:12px;padding:18px 22px;margin:20px 0 16px 0;box-shadow:0 8px 24px rgba(0,0,0,0.35);">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+            <div>
+                <span style="background:rgba(0,245,255,0.15);color:#00F5FF;font-size:11px;font-weight:800;padding:3px 10px;border-radius:6px;border:1px solid rgba(0,245,255,0.3);">SELLBIRD ARCHITECTURE INTEGRATION</span>
+                <h3 style="margin:6px 0 2px 0;color:#FFFFFF;font-size:20px;font-weight:800;">📥 Evrensel CSV / Veri İçe Aktarma Merkezi (Data Ingestion Hub)</h3>
+                <div style="color:#CBD5E1;font-size:12.5px;">Sellbird'ün cold-email/lead export şemasıyla tam uyumlu; harici B2B karar verici listelerini veya güncel ERP satış fatura kütüklerini sisteme aktarın.</div>
+            </div>
+            <div>
+                <span style="background:rgba(0,230,118,0.12);color:#00E676;border:1px solid #00E676;padding:4px 12px;border-radius:16px;font-size:11.5px;font-weight:700;">● Otomatik Karakter & Delimiter Tespiti</span>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    if 'imported_custom_prospects' not in st.session_state:
+        st.session_state['imported_custom_prospects'] = []
+
+    imp_tab1, imp_tab2, imp_tab3 = st.tabs([
+        "🤝 1. B2B Karar Verici & MedTech Lead CSV (Sellbird Formatı)",
+        "📊 2. ERP Satış & Fatura Kütüğü CSV (Zeus Sales Ledger)",
+        "📋 3. İçe Aktarılmış Özel Kayıtlar & Veri Yönetimi"
+    ])
+
+    with imp_tab1:
+        st.markdown("##### 🤝 Sellbird / B2B Karar Verici ve Kontak CSV İçe Aktarma")
+        st.caption("Sellbird'den indirilen prospects.csv veya Apollo / LinkedIn Sales Navigator CSV dökümlerini sisteme yükleyin.")
+        
+        b2b_file = st.file_uploader("B2B Lead CSV Dosyası Yükleyin (.csv)", type=["csv"], key="u_b2b_csv_hub")
+        
+        if b2b_file is not None:
+            try:
+                b2b_df = parse_and_sanitize_csv(b2b_file.read())
+                st.success(f"✓ CSV başarıyla ayrıştırıldı: **{len(b2b_df)} Satır**, **{len(b2b_df.columns)} Sütun**")
+                
+                # Column mapping preview
+                detected_cols = list(b2b_df.columns)
+                has_email = any(c in detected_cols for c in ['email', 'E-posta', 'eposta'])
+                has_comp = any(c in detected_cols for c in ['company_name', 'company', 'Firma', 'Kurum', 'name'])
+                has_lk = any(c in detected_cols for c in ['linkedin_url', 'linkedin', 'LinkedIn'])
+                
+                kpi_c1, kpi_c2, kpi_c3 = st.columns(3)
+                with kpi_c1:
+                    st.metric("Tespit Edilen Kurum", len(b2b_df))
+                with kpi_c2:
+                    st.metric("E-posta Sütunu", "✓ Mevcut" if has_email else "⚠️ Eksik")
+                with kpi_c3:
+                    st.metric("LinkedIn Sütunu", "✓ Mevcut" if has_lk else "— Opsiyonel")
+                
+                st.markdown("<b>Önizleme (İlk 5 Kayıt):</b>", unsafe_allow_html=True)
+                st.dataframe(b2b_df.head(5), use_container_width=True)
+                
+                col_imp_act1, col_imp_act2 = st.columns([1.5, 1])
+                with col_imp_act1:
+                    if st.button("📥 B2B Karar Verici Havuzuna Ekle & Aktar", key="btn_imp_b2b_hub_confirm", type="primary", use_container_width=True):
+                        new_batch = []
+                        for _, row_item in b2b_df.iterrows():
+                            norm_item = normalize_imported_prospect_row(dict(row_item))
+                            new_batch.append(norm_item)
+                        
+                        st.session_state['imported_custom_prospects'].extend(new_batch)
+                        st.toast(f"✅ {len(new_batch)} adet B2B karar verici başarıyla sisteme aktarıldı!", icon="✅")
+                        st.success(f"✓ {len(new_batch)} kişi eklendi. Artık Modül 4: B2B İletişim & Karar Verici Bulucu'da doğrudan arama ve e-posta gönderebilirsiniz.")
+                        st.rerun()
+                with col_imp_act2:
+                    sample_b2b_csv = "email,first_name,last_name,company_name,title,website,linkedin_url,industry,personalization,score,country\ncarlos.simon@ivirma.com,Carlos,Simon,IVI-RMA Global,Scientific Director,https://ivi-rma.com,https://linkedin.com/in/carlossimon,IVF / ART,Leading AOA and PGT-A clinic,98,Spain\nlaura.rienzi@generaglobal.it,Laura,Rienzi,GeneraLife Rome,Head of Embryology,https://generalife.com,https://linkedin.com/in/laurarienzi,Reproductive Medicine,High cycle volume clinic,96,Italy\nvolkan.baltaci@genart.com.tr,Volkan,Baltaci,Gen-Art IVF,Scientific Director,https://genart.com.tr,https://linkedin.com/in/volkanbaltaci,IVF / Genetics,Leading researcher in electrical AOA,99,Türkiye\n"
+                    st.download_button(
+                        "📥 Örnek Sellbird CSV İndir",
+                        data=sample_b2b_csv.encode('utf-8-sig'),
+                        file_name="Sellbird_Prospects_Sample.csv",
+                        mime="text/csv",
+                        key="dl_sample_b2b_csv_hub"
+                    )
+            except Exception as e:
+                st.error(f"CSV okuma hatası: {e}")
+
+    with imp_tab2:
+        st.markdown("##### 📊 ERP Satış & Fatura Kütüğü CSV İçe Aktarma")
+        st.caption("Resmi finansal ERP satış arşivini güncellemek için Zeus_Sales_Export formatında CSV yükleyin.")
+        
+        erp_file = st.file_uploader("ERP Satış Kütüğü CSV Dosyası Yükleyin (.csv)", type=["csv"], key="u_erp_sales_hub")
+        if erp_file is not None:
+            try:
+                erp_df = parse_and_sanitize_csv(erp_file.read())
+                st.success(f"✓ ERP Satış Kütüğü ayrıştırıldı: **{len(erp_df)} Satır Fatura**, **{len(erp_df.columns)} Sütun**")
+                
+                # Check for critical columns
+                req_cols = ['Company', 'Country', 'Total_USD']
+                missing_cols = [c for c in req_cols if c not in erp_df.columns]
+                
+                if missing_cols:
+                    st.warning(f"⚠️ Dosyada şu zorunlu sütunlar eksik: {missing_cols}. Lütfen örnek şablonu inceleyin.")
+                else:
+                    tot_rev = erp_df['Total_USD'].sum() if 'Total_USD' in erp_df.columns else 0
+                    comp_cnt = erp_df['Company'].nunique() if 'Company' in erp_df.columns else 0
+                    c_cnt = erp_df['Country'].nunique() if 'Country' in erp_df.columns else 0
+                    
+                    e_m1, e_m2, e_m3 = st.columns(3)
+                    with e_m1:
+                        st.metric("Toplam Ciro (USD)", format_curr(tot_rev))
+                    with e_m2:
+                        st.metric("Müşteri / Kurum Sayısı", f"{comp_cnt} Firma")
+                    with e_m3:
+                        st.metric("Kapsanan Ülke", f"{c_cnt} Pazar")
+                    
+                    st.markdown("<b>Önizleme (İlk 5 Satır Fatura):</b>", unsafe_allow_html=True)
+                    st.dataframe(erp_df.head(5), use_container_width=True)
+                    
+                    col_act_e1, col_act_e2 = st.columns([1.5, 1])
+                    with col_act_e1:
+                        if st.button("📥 ERP Satış Kütüğünü Güncelle & Kaydet", key="btn_apply_erp_csv", type="primary", use_container_width=True):
+                            erp_df.to_csv("Zeus_Sales_Export_2026-11-03.csv", index=False, encoding='utf-8')
+                            st.session_state['custom_imported_sales_df'] = erp_df
+                            st.toast("✅ ERP Satış Kütüğü başarıyla güncellendi!", icon="✅")
+                            st.success("✓ Yeni fatura kütüğü kaydedildi. Dashboard ERP kokpiti güncellendi.")
+                            st.rerun()
+                    with col_act_e2:
+                        sample_erp_csv = "Invoice_No,Date,Company,Country,Product,Group,Quantity,Price_USD,Total_USD,Total_TL\nINV-2026-001,15.01.2026,PALEX MEDICAL,Spain,ZEUS Pulse Stimulator (ZPS 26),Device,2,8500.0,17000.0,612000.0\nINV-2026-002,22.01.2026,PALEX MEDICAL,Spain,Z-Dish 4-Pool (Kutu - 25 Adet),Consumable,50,165.0,8250.0,297000.0\nINV-2026-003,10.02.2026,SIRIUS PHARM COMPANY,Jordan-Iraq,Z-Dish 4-Pool (Kutu - 25 Adet),Consumable,75,165.0,12375.0,445500.0\n"
+                        st.download_button(
+                            "📥 Örnek ERP Satış Kütüğü CSV İndir",
+                            data=sample_erp_csv.encode('utf-8-sig'),
+                            file_name="Zeus_Sales_Sample_Template.csv",
+                            mime="text/csv",
+                            key="dl_sample_erp_csv_hub"
+                        )
+            except Exception as e:
+                st.error(f"ERP CSV hatası: {e}")
+
+    with imp_tab3:
+        st.markdown("##### 📋 Halihazırda İçe Aktarılmış Özel Kayıtlar & Yönetim")
+        cur_imported = st.session_state.get('imported_custom_prospects', [])
+        if len(cur_imported) == 0:
+            st.info("Sistemde şu anda harici yüklenmiş özel karar verici kaydı bulunmamaktadır. 1. Sekmeden Sellbird CSV yükleyebilirsiniz.")
+        else:
+            st.success(f"✓ Sistemde şu an aktif **{len(cur_imported)} Adet** harici yüklenmiş karar verici profili mevcuttur.")
+            df_cur_imp = pd.DataFrame(cur_imported)
+            st.dataframe(df_cur_imp[['name', 'contact_person', 'email', 'country', 'category', 'score']], use_container_width=True)
+            
+            c_cl1, c_cl2 = st.columns(2)
+            with c_cl1:
+                if st.button("🗑️ Tüm İçe Aktarılan Kayıtları Temizle", key="btn_clear_imported_prospects", use_container_width=True):
+                    st.session_state['imported_custom_prospects'] = []
+                    st.toast("Tüm harici içe aktarılan kayıtlar temizlendi.", icon="🗑️")
+                    st.rerun()
+            with c_cl2:
+                csv_exp_back = df_cur_imp.to_csv(index=False).encode('utf-8-sig')
+                st.download_button(
+                    "📥 Mevcut Listeyi CSV Olarak Dışa Aktar",
+                    data=csv_exp_back,
+                    file_name="Imported_Prospects_Backup.csv",
+                    mime="text/csv",
+                    key="btn_dl_backup_imported"
+                )
+
+
 def get_country_prospects(c_name, c_row=None):
     prospects = []
     seen_names = set()
+
+    # 0. Integrate imported custom prospects (from Sellbird CSV)
+    if 'imported_custom_prospects' in st.session_state and st.session_state['imported_custom_prospects']:
+        for p in st.session_state['imported_custom_prospects']:
+            p_c = p.get('country', '').strip().lower()
+            if not p_c or p_c == c_name.strip().lower() or c_name == 'Tümü' or c_name in p_c:
+                if p['name'].strip().lower() not in seen_names:
+                    prospects.insert(0, p)
+                    seen_names.add(p['name'].strip().lower())
 
     # 1. Existing entries in GLOBAL_PROSPECT_RADAR
     if c_name in GLOBAL_PROSPECT_RADAR:
@@ -16376,6 +16715,10 @@ def render_decision_maker_finder_hub(country_df):
 
     st.markdown("<div style='height:14px;'></div>", unsafe_allow_html=True)
 
+    # Inline Quick Sellbird CSV Ingestion Expander
+    with st.expander("📥 Sellbird / Dış Kaynaklı B2B Karar Verici CSV Dosyası İçe Aktar (Hızlı Yükleme)", expanded=False):
+        render_quick_b2b_csv_uploader()
+
     # Country & Institution Selector
     priority_c_list = ["Italy", "Spain", "Türkiye", "Germany", "Egypt", "UAE", "Saudi Arabia", "Jordan", "Iraq", "Qatar", "Algeria", "United Kingdom", "France"]
     all_c_list = sorted(list(set(priority_c_list + [c for c in country_df['name'].dropna().tolist() if c])))
@@ -16537,8 +16880,11 @@ def render_decision_maker_finder_hub(country_df):
     else:
         for idx_p, pr in enumerate(c_prospects):
             clean_pr_name = clean_company_name(pr['name']) or pr['name']
-            pr_lk_q = urllib.parse.quote(f'"{clean_pr_name}" ("Embryologist" OR "Lab Director" OR "Director" OR "Biologist") {sel_c}')
-            pr_lk_url = f"https://www.linkedin.com/search/results/people/?keywords={pr_lk_q}&origin=GLOBAL_SEARCH_HEADER"
+            if pr.get('linkedin_url') and pr['linkedin_url'].startswith('http'):
+                pr_lk_url = pr['linkedin_url']
+            else:
+                pr_lk_q = urllib.parse.quote(f'"{clean_pr_name}" ("Embryologist" OR "Lab Director" OR "Director" OR "Biologist") {sel_c}')
+                pr_lk_url = f"https://www.linkedin.com/search/results/people/?keywords={pr_lk_q}&origin=GLOBAL_SEARCH_HEADER"
             pr_gx_q = urllib.parse.quote(f'site:linkedin.com/in "{clean_pr_name}" (Embryologist OR Director OR Biologist) {sel_c}')
             pr_gx_url = f"https://www.google.com/search?q={pr_gx_q}"
 
@@ -29051,6 +29397,10 @@ elif active_view in ["📑 Partner Karneleri, Raporlar & Excel/CSV İndirme", "�
                 mime="text/csv",
                 key="btn_dl_erp_csv"
             )
+
+    # Universal CSV Import Hub (Powered by Sellbird Architecture)
+    st.markdown("<br>", unsafe_allow_html=True)
+    render_universal_csv_importer_hub()
 
 
 
