@@ -11759,6 +11759,69 @@ VERIFIED_CLINIC_DIRECTORY = {
 # ==============================================================================
 # ZEUS COMPETITIVE INTELLIGENCE & DEAL DESK (RAKİP FİRMALAR & SÖZLEŞME STRATEJİSİ)
 # ==============================================================================
+def evaluate_decision_note(note):
+    """
+    Evaluates a competitor decision note against Karar Merkezi corporate governance:
+    - 4-Pool Dish ROI ($6.60 USD/vaka)
+    - Zero Free Demo Rule (Only 100+ boxes consumable commitment or paid workshop)
+    - Electrical AOA Clinical Protocol (sub-%1.2 lysis, CE Class IIa, zero EMF)
+    - Hard currency / price protection ($ USD pegged)
+    """
+    memo = (note.get('decision_note', '') + " " + note.get('selected_strategy', '') + " " + " ".join(note.get('contract_clauses', []))).lower()
+    
+    score = 75
+    findings = []
+    
+    # 1. Consumable & 4-Pool ROI Check
+    if any(k in memo for k in ['4 pool', '4-pool', 'z-dish', 'sarf taahhüdü', '100+ kutu', '60 kutu', '75 kutu', '100 kutu', 'kontör', 'cycle coin']):
+        score += 15
+        findings.append("✓ 4-Pool Tek Dish ($6.60/vaka) ROI ve bağlayıcı asgari sarf çekiş taahhüdü mevcut.")
+    else:
+        score -= 15
+        findings.append("⚠️ Bağlayıcı asgari sarf taahhüdü maddesi tespit edilemedi; sarf riski mevcut.")
+        
+    # 2. Free Demo Compliance
+    if any(k in memo for k in ['ücretsiz demo yok', 'demo yok', 'ücretli vaka çalıştayı', 'vaka çalıştayı', 'şartlı demo', 'ücretli çalıştay', 'başlangıç paketi']):
+        score += 10
+        findings.append("✓ Ücretsiz demo engellendi (Yalnızca 100+ kutu şartlı demo veya ücretli çalıştay onaylı).")
+    elif 'ücretsiz demo' in memo or 'serbest demo' in memo:
+        score -= 25
+        findings.append("⛔ Ücretsiz demo verme riski tespit edildi (Yönetim Kurulu Kararıyla Kesinlikle Yasaktır).")
+        
+    # 3. Clinical & Legal Compliance
+    if any(k in memo for k in ['baltacı', 'ebner', 'sub-%1.2', 'lizis', 'ce sertifikalı', 'class iia', 'sıfır emf', 'ir sensör']):
+        score += 5
+        findings.append("✓ Hakemli klinik yayın ve patentli donanım üstünlüğü ile desteklendi.")
+        
+    # 4. Financial & Currency Guarantee
+    if any(k in memo for k in ['usd', 'dolar', 'fiyat koruma', 'kur riski', 'teminat', 'cezai şart']):
+        score += 5
+        findings.append("✓ Fiyat koruma ($ USD endeksli) veya banka teminatı güvencesi alındı.")
+        
+    score = max(25, min(99, score))
+    
+    if score >= 85:
+        risk = "Düşük Risk (Yüksek Finansal Getiri)"
+        color = "#00E676"
+        auto_verdict = "Onaylandı & İcrada"
+    elif score >= 65:
+        risk = "Kontrollü Risk (Şartlı Takip)"
+        color = "#FFB800"
+        auto_verdict = "Şartlı Onay / İncelemede"
+    else:
+        risk = "Yüksek Risk (Taviz / İhlal)"
+        color = "#F43F5E"
+        auto_verdict = "Revize Gerekli / Red"
+        
+    return {
+        "score": score,
+        "risk_level": risk,
+        "badge_color": color,
+        "auto_verdict": auto_verdict,
+        "findings": findings
+    }
+
+
 def get_default_competitor_decision_notes():
     return [
         {
@@ -11770,13 +11833,30 @@ def get_default_competitor_decision_notes():
             "our_product": "ZEUS Pulse Stimulator (ZPS 26)",
             "selected_strategy": "🔬 Klinik Kanıt & Hakemli Yayın Kalkanı (Baltacı / Ebner sub-%1.2 lizis)",
             "contract_clauses": [
-                "Asgari Yıllık Sarf Satın Alma Taahhüdü (60 Kutu Z-Dish)",
+                "Asgari Yıllık Sarf Satın Alma Taahhüdü (75 Kutu 4-Pool Z-Dish)",
                 "Yüksek Sarf Taahhüdü (100+ Kutu) Şartlı Demo / Ücretli Vaka Çalıştayı",
                 "Fiyat Koruma & Kur Riski Tamponu ($ USD Endeksli)"
             ],
-            "decision_note": "Memorial Şişli'de Prof. Dr. Semra Kahraman heyetine Eppendorf'un %4-8 mekanik hasar oranına karşı Baltacı et al. sub-%1.2 lizis ve TFF %82.3 döllenme verisi sunulacak. Kliniğe ücretsiz demo yerine 14 günlük yerinde vaka çalıştayı ve 25 kutuluk başlangıç paketi faturalandırılacak.",
+            "decision_note": "Memorial Şişli'de Prof. Dr. Semra Kahraman heyetine Eppendorf'un %4-8 mekanik hasar oranına karşı Baltacı et al. sub-%1.2 lizis ve TFF %82.3 döllenme verisi sunuldu. 4 havuzlu tek Z-Dish ($6.60 USD / hasta vaka maliyeti) ile 4 kat hızlı ROI gösterildi. Kliniğe ücretsiz demo verilmeyecek; 14 günlük yerinde vaka çalıştayı ve 25 kutuluk başlangıç paketi faturalandırılacak.",
             "author": "Yönetici Heyeti (CSO & Ticari Direktör)",
-            "status": "İcrada & Görüşme Aşamasında"
+            "status": "Onaylandı & İcrada"
+        },
+        {
+            "id": "NOTE-IT-01",
+            "timestamp": "2026-11-17 14:10",
+            "country": "Italy",
+            "clinic_or_dist": "Palex Medical Italia & Bio-Optica Milano (İtalya 162 Klinik Ağı)",
+            "target_competitor": "Eppendorf SE & Cryo Bio System",
+            "our_product": "ZEUS Pulse Stimulator (ZPS 26) + Smart Cryo-Tools (ZCT25)",
+            "selected_strategy": "🔬 Klinik Kanıt & Hakemli Yayın Kalkanı (Baltacı / Ebner sub-%1.2 lizis)",
+            "contract_clauses": [
+                "Asgari Yıllık Sarf Satın Alma Taahhüdü (100 Kutu 4-Pool Z-Dish)",
+                "Yüksek Sarf Taahhüdü (100+ Kutu) Şartlı Demo / Ücretli Vaka Çalıştayı",
+                "Fiyat Koruma & Kur Riski Tamponu ($ USD Endeksli)"
+            ],
+            "decision_note": "İtalya pazarında 162 IVF merkezine ulaşım için Palex Medical Italia ve Bio-Optica ile distribütörlük masasında. Eppendorf Piezo yerine patentli Elektriksel AOA ZPS 26 ve tek hastada 1 adet 4-Pool Z-Dish ($6.60 USD/vaka) ROI avantajı sunuldu. Ücretsiz demo talebi reddedildi, 100 kutu Z-Dish çekiş taahhüdü bağlandı.",
+            "author": "Yönetici Heyeti (CEO & Uluslararası İş Geliştirme)",
+            "status": "Onaylandı & İcrada"
         },
         {
             "id": "NOTE-ES-01",
@@ -11793,7 +11873,7 @@ def get_default_competitor_decision_notes():
             ],
             "decision_note": "IVI-RMA Global'de yıllık 45.000 siklusun oluşturduğu devasa RFID çip masrafı ($1.35M/yıl) gösterilecek. ZEUS Mismatch Blocker ile yıllık %75 OPEX tasarrufu sağlanabileceği CFO ve Bilimsel Direktöre raporlandı. Palex Medical distribütörlük sözleşmesine 6 ayda en az 2 filo paketi kotası bağlandı.",
             "author": "CFO & Uluslararası İş Geliştirme",
-            "status": "Yönetim Kurulu Onayında"
+            "status": "Onaylandı & İcrada"
         },
         {
             "id": "NOTE-EG-01",
@@ -11810,7 +11890,7 @@ def get_default_competitor_decision_notes():
             ],
             "decision_note": "Kahire pazarında hekim-patronlara rakiplerin tek bir piezo veya lazer ünitesi fiyatına ($50K-$80K) tüm ZEUS portföyünü (ZPS 26 + BioPSafe + Mismatch Blocker + Smart Cryo) içeren ~$45,000 - $50,000 USD'lik komple donanım paketi teklif edilecek. TechnoPharm'a EDA tescil dosyası teslim edilirken sözleşmeye münhasırlık cezai şartı ($100K) eklendi.",
             "author": "CEO & Bölge Satış Direktörü",
-            "status": "Sözleşme Taslağı Hazırlandı"
+            "status": "Onaylandı & İcrada"
         }
     ]
 
@@ -12019,6 +12099,36 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
         st.markdown("#### 🏢 Global Rakiplerin Ürünleri, Fiyatları ve ZEUS Donanımlarıyla Yakınlık Kıyaslaması")
         st.caption("Aşağıdaki matris, IVF sektöründe pazar lideri konumundaki üreticilerin ürün portföyünü, fiyat aralıklarını, ZEUS cihazlarıyla olan teknolojik yakınlığını ve ZEUS'un ezici klinik/donanımsal üstünlüklerini ortaya koyar.")
 
+        # --------------------------------------------------------------------------
+        # STRATEGIC POLICY & GOVERNANCE NOTE BANNER (BINDING DECISION CRITERIA)
+        # --------------------------------------------------------------------------
+        st.markdown("""
+        <div style="background:rgba(0,245,255,0.06);border:1.5px solid #00F5FF;border-left:5px solid #00F5FF;border-radius:10px;padding:14px 18px;margin-bottom:16px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px;">
+                <span style="font-size:13.5px;font-weight:700;color:#00F5FF;letter-spacing:0.5px;">📌 STRATEJİK YÖNETİCİ NOTU & KARAR MERKEZİ DEĞERLENDİRME ESASLARI:</span>
+                <span style="background:rgba(0,230,118,0.15);color:#00E676;font-size:11px;font-weight:700;padding:3px 10px;border-radius:6px;border:1px solid rgba(0,230,118,0.3);">✓ Karar Merkezine Bağlayıcı Kural Olarak Tanımlandı</span>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:12px;font-size:12px;color:#CCD7E6;line-height:1.55;">
+                <div style="background:rgba(15,23,42,0.7);border-left:3px solid #00F5FF;padding:10px 12px;border-radius:6px;">
+                    <b style="color:#00F5FF;">1. Z-Dish Protokolü & Klinik ROI:</b><br>
+                    1 ZEUS Electro Dish = <b>4 bağımsız mikro-havuz (pool) × 5 oosit = Azami 20 oosit</b> aktivasyon kapasitesi. 1 hasta siklusu için tek 1 dish yeterlidir. Vaka başı sarf maliyeti <b>$6.60 USD</b> olup kliniğe 4 kat daha hızlı yatırım geri dönüşü (ROI) sağlar.
+                </div>
+                <div style="background:rgba(15,23,42,0.7);border-left:3px solid #00E676;padding:10px 12px;border-radius:6px;">
+                    <b style="color:#00E676;">2. Teknoloji Ayrımı (Elektriksel AOA):</b><br>
+                    ZPS 26 mekanik piezo delme veya termal lazer değildir; patentli mikro-akım <b>Elektriksel Oosit Aktivasyonudur (AOA)</b>. Sıfır termal/mekanik hasar ve sub-%1.2 lizis garantilidir (Eppendorf'un %4-8 mekanik hasarına karşı).
+                </div>
+                <div style="background:rgba(15,23,42,0.7);border-left:3px solid #FFB800;padding:10px 12px;border-radius:6px;">
+                    <b style="color:#FFB800;">3. Şartlı Demo & Yüksek Sarf Kuralı:</b><br>
+                    Sahada serbest/ücretsiz demo <b>KESİNLİKLE YASAKTIR</b>. Demo ancak <b>yıllık asgari 100+ kutu bağlayıcı Z-Dish sarf taahhüdü</b> ile onaylanır; aksi halde 14 günlük yerinde ücretli vaka çalıştayı ve 25 kutuluk başlangıç paketi faturalandırılır.
+                </div>
+                <div style="background:rgba(15,23,42,0.7);border-left:3px solid #F43F5E;padding:10px 12px;border-radius:6px;">
+                    <b style="color:#F43F5E;">4. Karar Merkezinde Değerlendirme Kriteri:</b><br>
+                    Karar Masası tüm teklifleri ve sahadan gelen talepleri bu kurallara göre değerlendirir. Sarf taahhüdü içermeyen cihaz indirimi veya demo talepleri karar motoru tarafından otomatik olarak <b>"Revize / Şartlı"</b> olarak işaretlenir.
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
         # Comparison Scorecard Table
         comp_table_html = """
         <div style="overflow-x:auto;margin-bottom:20px;">
@@ -12031,6 +12141,7 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
                     <th style="padding:10px 12px;">Teknolojik Yakınlık</th>
                     <th style="padding:10px 12px;">ZEUS'un Ezici Üstünlüğü</th>
                     <th style="padding:10px 12px;">Kliniğe Net Katma Değer</th>
+                    <th style="padding:10px 12px;min-width:180px;">📌 Karar Notu & Saha Değerlendirmesi</th>
                 </tr>
             </thead>
             <tbody>
@@ -12039,8 +12150,9 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
                     <td style="padding:10px 12px;"><b style="color:#FFB800;">PiezoXpert & PMM-150FU</b><br><span style="color:#94A3B8;">$38,000 - $55,000 USD</span></td>
                     <td style="padding:10px 12px;"><b style="color:#00F5FF;">ZEUS Pulse Stimulator (ZPS 26)</b><br><span style="color:#5FD3AE;">$8,500 USD Taban</span></td>
                     <td style="padding:10px 12px;"><span style="background:rgba(0,245,255,0.12);color:#00F5FF;padding:2px 8px;border-radius:4px;font-weight:700;">%82 Yakınlık</span></td>
-                    <td style="padding:10px 12px;"><b style="color:#00E676;">CE Sertifikalı (Class IIa) tescili</b>, sub-%1.2 lizis (vs %6 mekanik hasar), 16 oosit eşzamanlı Z-Dish array.</td>
+                    <td style="padding:10px 12px;"><b style="color:#00E676;">CE Sertifikalı (Class IIa) tescili</b>, sub-%1.2 lizis (vs %6 mekanik hasar), <b>4 Havuzlu Tek Z-Dish (4 Pool × 5 Oosit = 20 Oosit Eşzamanlı Kapasite, tek hasta siklusu başına 1 dish = $6.60 USD)</b>.</td>
                     <td style="padding:10px 12px;color:#CCD7E6;">TFF vakalarında %24'ten %82.3'e döllenme artışı ve 4 kat daha hızlı yatırım geri dönüşü (ROI).</td>
+                    <td style="padding:10px 12px;color:#CBD5E1;font-size:11.5px;"><b style="color:#00F5FF;">🔬 Klinik Kanıt & ROI:</b> Baltacı et al. yayın kalkanı. 4-Pool tek dish ($6.60/vaka) ile 4 kat hızlı ROI. Demo ancak 100+ kutu sarf taahhüdüyle verilir.</td>
                 </tr>
                 <tr style="border-bottom:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.015);">
                     <td style="padding:10px 12px;"><b style="color:#FFFFFF;">🇺🇸 CooperSurgical / RI</b><br><span style="color:#8FA3C0;font-size:11px;">ABD & İngiltere</span></td>
@@ -12049,6 +12161,7 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
                     <td style="padding:10px 12px;"><span style="background:rgba(0,230,118,0.12);color:#00E676;padding:2px 8px;border-radius:4px;font-weight:700;">%88 Yakınlık</span></td>
                     <td style="padding:10px 12px;"><b style="color:#00E676;">Sıfır EMF Radyasyonu</b>, sınırsız ücretsiz 2D barkod, döngü başı mikro-kontörle %75 OPEX tasarrufu.</td>
                     <td style="padding:10px 12px;color:#CCD7E6;">1,000 siklusta her yıl $22,500 USD doğrudan OPEX tasarrufu ve gametlerin altında radyasyonsuz güvenlik.</td>
+                    <td style="padding:10px 12px;color:#CBD5E1;font-size:11.5px;"><b style="color:#00E676;">💼 RFID Trap Breaker:</b> $35/siklus RFID çipine karşı ücretsiz 2D barkod + $25 kontör. Kliniğe yıllık $15,000+ doğrudan tasarruf TCO analizi sunulmalı.</td>
                 </tr>
                 <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
                     <td style="padding:10px 12px;"><b style="color:#FFFFFF;">🇺🇸 Hamilton Thorne & 🇸🇪 Vitrolife</b><br><span style="color:#8FA3C0;font-size:11px;">ABD & İsveç</span></td>
@@ -12057,6 +12170,7 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
                     <td style="padding:10px 12px;"><span style="background:rgba(255,184,0,0.12);color:#FFB800;padding:2px 8px;border-radius:4px;font-weight:700;">%78 Yakınlık</span></td>
                     <td style="padding:10px 12px;"><b style="color:#00E676;">13 Kızılötesi Optik Sensör</b>, çift tabletli denetim izi, PCR tüpü şerit atlama hatasını sıfırlayan akıllı tepsi.</td>
                     <td style="padding:10px 12px;color:#CCD7E6;">PGT-A/M genetik biyopsilerinde numune karıştırma riskini donanımsal kilitler, lazerle tam uyumlu çalışır.</td>
+                    <td style="padding:10px 12px;color:#CBD5E1;font-size:11.5px;"><b style="color:#FFB800;">🛡️ Lazerle Tamamlama:</b> Lazerle rekabet etme, tamamla. 13 IR optik sensör ile PCR tüp karıştırma riskini sıfırla, PGT-A hukuki risk kalkanı sun.</td>
                 </tr>
                 <tr>
                     <td style="padding:10px 12px;"><b style="color:#FFFFFF;">🇫🇷 Cryo Bio System & 🇯🇵 Kitazato</b><br><span style="color:#8FA3C0;font-size:11px;">Fransa & Japonya</span></td>
@@ -12065,6 +12179,7 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
                     <td style="padding:10px 12px;"><span style="background:rgba(168,85,247,0.12);color:#C084FC;padding:2px 8px;border-radius:4px;font-weight:700;">%85 Yakınlık</span></td>
                     <td style="padding:10px 12px;"><b style="color:#00E676;">Cane başına 40 payet</b> (vs standart 10 payet), sekizgen LN2 rezervuarlı goblet, >%95 çözme canlılığı.</td>
                     <td style="padding:10px 12px;color:#CCD7E6;">Kliniğin $50,000 yeni azot tankı almasını ve laboratuvar zeminini genişletmesini engeller.</td>
+                    <td style="padding:10px 12px;color:#CBD5E1;font-size:11.5px;"><b style="color:#C084FC;">📦 Tank OPEX Kalkanı:</b> $50,000 yeni tank yerine 4X kit (cane başına 40 payet). Metrekare ve sıvı azot tasarrufu ile 100 kutu vitrifikasyon taahhüdü bağla.</td>
                 </tr>
             </tbody>
         </table>
@@ -12107,6 +12222,136 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
                 </div>
             </div>
             """, unsafe_allow_html=True)
+
+        st.markdown("<div style='height:16px;'></div>", unsafe_allow_html=True)
+
+        # ----------------------------------------------------------------------
+        # INLINE DECISION NOTE RECORDER & LIVE EVALUATION DESK (TAB 1 INTEGRATION)
+        # ----------------------------------------------------------------------
+        st.markdown("#### ✍️ Buraya Yeni Karar Notu Ekle & Karar Merkezinde Değerlendir")
+        st.caption("Bu kıyaslama masasındaki rakipler karşısında sahada alınan kararları veya klinik taleplerini buraya yazabilirsiniz. Not anında kaydedilir ve Karar Masası Değerlendirme Motoru tarafından otomatik puanlanır.")
+
+        with st.expander("➕ Yeni Stratejik Karar / Müzakere Notu Girişi (Buradan Ekle)", expanded=False):
+            with st.form(f"form_inline_tab1_decision_note_{active_source}", clear_on_submit=True):
+                it1_c1, it1_c2 = st.columns(2)
+                with it1_c1:
+                    it1_country = st.selectbox("🎯 Hedef Pazar / Ülke:", target_markets_list, key=f"t1_f_country_{active_source}")
+                    it1_clinic = st.text_input("🏥 Kurum / Distribütör Adı:", placeholder="Örn: Memorial Şişli, Palex Medical, Nile IVF", key=f"t1_f_clinic_{active_source}")
+                with it1_c2:
+                    it1_comp = st.selectbox("⚔️ Hedeflenen Rakip Firma:", [
+                        "Eppendorf SE & Prime Tech (PiezoXpert)",
+                        "CooperSurgical / RI (RI Witness RFID)",
+                        "Hamilton Thorne (Lykos Lazer) & Vitrolife",
+                        "Cryo Bio System & Kitazato (Kriyo)",
+                        "Cook Medical & Origio (Rutin Sarflar)"
+                    ], key=f"t1_f_comp_{active_source}")
+                    it1_zeus_prod = st.selectbox("🛡️ Konumlandırılan ZEUS Ürünü:", [
+                        "ZEUS Pulse Stimulator (ZPS 26) [4-Pool Z-Dish]",
+                        "ZEUS Mismatch Blocker (ZMB-7T)",
+                        "ZEUS BioPSafe (ZBS26 Black-Box)",
+                        "ZEUS Smart Cryo-Tools (ZCT25)",
+                        "$45,000 - $50,000 USD Komple Donanım Paketi (Tüm Cihazlar)"
+                    ], key=f"t1_f_zeus_prod_{active_source}")
+
+                it1_strategy = st.selectbox("🎯 Uygulanacak Satış & Kazanma Stratejisi:", [
+                    "🔬 Klinik Kanıt & Hakemli Yayın Kalkanı (Baltacı / Ebner sub-%1.2 lizis, 4-Pool ROI $6.60/vaka)",
+                    "💼 OPEX Kurtarma Stratejisi (Free of Charge Barkod + Siklus Başı $25 USD — Yıllık $15,000+ Net Tasarruf)",
+                    "🚀 $45,000 - $50,000 USD Komple Donanım Paketi & Ezici Maliyet Avantajı",
+                    "⛔ Yüksek Sarf Taahhüdü Şartı (100+ Kutu) Yoksa Demo Yok (Veya Ücretli Çalıştay)",
+                    "🤝 Yerel Distribütöre %45+ Brüt Marj & Münhasır Bölge Teşviği"
+                ], key=f"t1_f_strategy_{active_source}")
+
+                it1_clauses = st.multiselect("📜 Sözleşmeye Eklenecek Bağlayıcı Hükümler:", [
+                    "Asgari Yıllık Sarf Satın Alma Taahhüdü (75-100 Kutu 4-Pool Z-Dish)",
+                    "Yüksek Sarf Taahhüdü (100+ Kutu) Şartlı Demo / Ücretli Vaka Çalıştayı",
+                    "Münhasırlık ve Performans İhlali Şartı (6 Ayda Asgari Kota)",
+                    "Fiyat Koruma & Kur Riski Tamponu ($ USD Endeksli)",
+                    "60-Günlük Tesis İçi Konsinye Depolama & Banka Teminatı",
+                    "Regülasyon ve Tescil Belgelerinin Münhasırlığı ($100K Cezai Şart)"
+                ], default=["Asgari Yıllık Sarf Satın Alma Taahhüdü (75-100 Kutu 4-Pool Z-Dish)", "Fiyat Koruma & Kur Riski Tamponu ($ USD Endeksli)"], key=f"t1_f_clauses_{active_source}")
+
+                it1_memo = st.text_area(
+                    "✍️ Yönetici Karar Tutanağı & Müzakere Notu:",
+                    placeholder="Müzakere taktikleri, hekimin itirazına verilecek cevaplar, 4-pool tek dish ROI ve verilecek azami sözleşme şartları...",
+                    height=95,
+                    key=f"t1_f_memo_{active_source}"
+                )
+
+                it1_author = st.selectbox("👤 Karar Verici Yetkili:", [
+                    "Yönetim Kurulu & CEO",
+                    "CSO & Baş Embriyolog Heyeti",
+                    "CFO & Uluslararası İş Geliştirme",
+                    "Bölge Satış Direktörü & Hukuk Müşavirliği"
+                ], key=f"t1_f_author_{active_source}")
+
+                it1_submit = st.form_submit_button("💾 Karar Notunu Kaydet & Karar Merkezine İlet", type="primary", use_container_width=True)
+                if it1_submit:
+                    if it1_memo.strip():
+                        new_note_entry = {
+                            "id": f"NOTE-{it1_country[:2].upper()}-{len(st.session_state['executive_competitor_decision_notes']) + 1:02d}",
+                            "timestamp": datetime.now().strftime("%Y-%m-%d %H:%M"),
+                            "country": it1_country,
+                            "clinic_or_dist": it1_clinic.strip() if it1_clinic.strip() else f"{it1_country} Referans Kurumu",
+                            "target_competitor": it1_comp,
+                            "our_product": it1_zeus_prod,
+                            "selected_strategy": it1_strategy,
+                            "contract_clauses": it1_clauses,
+                            "decision_note": it1_memo.strip(),
+                            "author": it1_author,
+                            "status": "Onaylandı & İcrada"
+                        }
+                        st.session_state['executive_competitor_decision_notes'].insert(0, new_note_entry)
+                        st.success(f"✓ {it1_country} pazarında {it1_comp} karşısındaki karar notu başarıyla kaydedildi ve Karar Merkezi değerlendirme masasına aktarıldı!")
+                        st.rerun()
+                    else:
+                        st.error("Lütfen karar notu içeriğini boş bırakmayınız.")
+
+        # Display Live Evaluated Notes right here on Tab 1
+        st.markdown("##### 📋 Bu Masada Kayıtlı Karar Notları & Karar Masası Hükmü")
+        t1_notes = st.session_state.get('executive_competitor_decision_notes', [])
+        
+        if len(t1_notes) == 0:
+            st.info("Henüz kayıtlı karar notu bulunmamaktadır.")
+        else:
+            for idx_t1, n_item in enumerate(t1_notes):
+                eval_res = evaluate_decision_note(n_item)
+                with st.expander(f"📌 [{n_item['id']}] {n_item['country']} — {n_item['clinic_or_dist']} | Skoru: %{eval_res['score']} ({n_item['status']})", expanded=(idx_t1 == 0)):
+                    ev_c1, ev_c2 = st.columns([1.6, 1.4])
+                    with ev_c1:
+                        st.markdown(f"""
+                        <div style="font-size:11.5px;color:#CCD7E6;line-height:1.5;">
+                            <b>⚔️ Hedef Rakip:</b> <span style="color:#FFB800;">{n_item['target_competitor']}</span><br>
+                            <b>🛡️ ZEUS Çözümü:</b> <span style="color:#00F5FF;">{n_item['our_product']}</span><br>
+                            <b>🎯 Uygulanacak Strateji:</b> <span style="color:#00E676;">{n_item['selected_strategy']}</span><br>
+                            <b>📜 Sözleşme Hükümleri:</b> <span style="color:#CBD5E1;">{' • '.join(n_item['contract_clauses'])}</span>
+                        </div>
+                        <div style="background:rgba(0,0,0,0.3);border-left:3px solid #00F5FF;padding:8px 10px;border-radius:4px;margin:8px 0;font-size:12px;color:#FFFFFF;">
+                            <b>✍️ Yönetici Karar Tutanağı:</b><br>{n_item['decision_note']}
+                        </div>
+                        <div style="font-size:11px;color:#8FA3C0;display:flex;justify-content:space-between;">
+                            <span>👤 Yetkili: {n_item['author']}</span>
+                            <span>⏱️ {n_item['timestamp']}</span>
+                        </div>
+                        """, unsafe_allow_html=True)
+                    with ev_c2:
+                        st.markdown(f"""
+                        <div style="background:rgba(15,23,42,0.7);border:1px solid {eval_res['badge_color']};border-radius:8px;padding:12px;">
+                            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                                <span style="font-size:12px;font-weight:700;color:{eval_res['badge_color']};">🧠 Karar Merkezi Değerlendirmesi</span>
+                                <span style="background:rgba(0,245,255,0.12);color:#00F5FF;font-weight:700;font-size:11px;padding:2px 8px;border-radius:4px;">%{eval_res['score']}/100</span>
+                            </div>
+                            <div style="font-size:11px;color:#CBD5E1;margin-bottom:6px;"><b>Risk Düzeyi:</b> <span style="color:{eval_res['badge_color']};font-weight:600;">{eval_res['risk_level']}</span></div>
+                            <div style="font-size:11px;color:#CCD7E6;line-height:1.45;margin-bottom:8px;">
+                                {'<br>'.join(eval_res['findings'])}
+                            </div>
+                            <div style="font-size:11px;font-weight:700;color:#FFFFFF;border-top:1px solid rgba(255,255,255,0.08);padding-top:6px;">
+                                Karar Statüsü: <span style="color:{eval_res['badge_color']};">{n_item['status']}</span>
+                            </div>
+                        </div>
+                        """, unsafe_allow_html=True)
+                        if st.button(f"🗑️ Notu Sil ({n_item['id']})", key=f"del_tab1_note_{active_source}_{n_item['id']}_{idx_t1}"):
+                            st.session_state['executive_competitor_decision_notes'].pop(idx_t1)
+                            st.rerun()
 
     # --------------------------------------------------------------------------
     # SUB-TAB 2: SATIŞ KAZANMA STRATEJİLERİ (BATTLECARDS)
@@ -12297,7 +12542,8 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
                 st.info("Henüz kayıtlı karar notu bulunmamaktadır.")
             else:
                 for idx_n, n_item in enumerate(all_saved_notes):
-                    with st.expander(f"📌 [{n_item['id']}] {n_item['country']} — {n_item['clinic_or_dist']} ({n_item['timestamp']})", expanded=(idx_n == 0)):
+                    ev_info = evaluate_decision_note(n_item)
+                    with st.expander(f"📌 [{n_item['id']}] {n_item['country']} — {n_item['clinic_or_dist']} | Skoru: %{ev_info['score']} ({n_item['status']})", expanded=(idx_n == 0)):
                         st.markdown(f"""
                         <div style="font-size:11.5px;color:#CCD7E6;line-height:1.5;">
                             <b>⚔️ Rakip Firma:</b> <span style="color:#FFB800;">{n_item['target_competitor']}</span><br>
@@ -12309,9 +12555,16 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
                         <div style="background:rgba(0,0,0,0.3);border-left:3px solid #00F5FF;padding:8px 10px;border-radius:4px;margin:8px 0;font-size:12px;color:#FFFFFF;">
                             <b>✍️ Karar Notu:</b><br>{n_item['decision_note']}
                         </div>
+                        <div style="background:rgba(15,23,42,0.7);border:1px solid {ev_info['badge_color']};border-radius:6px;padding:8px 10px;margin-bottom:8px;font-size:11.5px;">
+                            <div style="display:flex;justify-content:space-between;color:{ev_info['badge_color']};font-weight:700;">
+                                <span>🧠 Karar Merkezi Değerlendirmesi (%{ev_info['score']}/100)</span>
+                                <span>{ev_info['risk_level']}</span>
+                            </div>
+                            <div style="color:#CCD7E6;font-size:11px;margin-top:4px;">{'<br>'.join(ev_info['findings'])}</div>
+                        </div>
                         <div style="font-size:11px;color:#8FA3C0;display:flex;justify-content:space-between;">
                             <span>👤 {n_item['author']}</span>
-                            <span style="color:#5FD3AE;">✓ {n_item['status']}</span>
+                            <span style="color:{ev_info['badge_color']};font-weight:700;">● {n_item['status']}</span>
                         </div>
                         """, unsafe_allow_html=True)
                         if st.button(f"🗑️ Notu Sil ({n_item['id']})", key=f"del_note_{active_source}_{n_item['id']}_{idx_n}"):
@@ -27005,6 +27258,108 @@ elif active_view in ["⚔️ Rakip Kıyaslama & RFID Trap Breaker", "⚔️ Stra
         render_competitor_intelligence_and_deal_desk(None, country_df, active_source="sdc")
 
     st.markdown("---")
+
+    # --------------------------------------------------------------------------
+    # EXECUTIVE BOARD EVALUATION: COMPETITOR DECISION NOTES & GOVERNANCE DESK
+    # --------------------------------------------------------------------------
+    st.markdown("### 🏛️ Karar Masası Rakip & Müzakere Notları Değerlendirme ve İcra Onayı")
+    st.caption("Pazar ve rakip bazında sahada veya masada alınan tüm kararların kurumsal esaslara (4-Pool Tek Dish ROI $6.60/vaka, Şartlı Demo 100+ Kutu Kuralı, Döviz Koruma) göre Karar Merkezi resmi icra değerlendirmesi.")
+
+    if 'executive_competitor_decision_notes' not in st.session_state:
+        st.session_state['executive_competitor_decision_notes'] = get_default_competitor_decision_notes()
+
+    all_sdc_notes = st.session_state['executive_competitor_decision_notes']
+    
+    # High-level Metrics Row for Notes Evaluation
+    sdc_n_total = len(all_sdc_notes)
+    sdc_n_approved = sum(1 for n in all_sdc_notes if "Onaylandı" in n.get('status', ''))
+    sdc_n_avg_score = int(sum(evaluate_decision_note(n)['score'] for n in all_sdc_notes) / sdc_n_total) if sdc_n_total > 0 else 0
+    sdc_n_pending = sum(1 for n in all_sdc_notes if "İnceleme" in n.get('status', '') or "Şartlı" in n.get('status', ''))
+
+    ev_k1, ev_k2, ev_k3, ev_k4 = st.columns(4)
+    with ev_k1:
+        st.markdown(f"""
+        <div style="background:#0F192E;border:1px solid rgba(0,245,255,0.3);border-radius:8px;padding:12px;text-align:center;">
+            <div style="color:#8FA3C0;font-size:11px;font-weight:600;">TOPLAM KARAR NOTU</div>
+            <div style="color:#00F5FF;font-size:22px;font-weight:800;">{sdc_n_total} Not</div>
+            <div style="color:#CBD5E1;font-size:11px;">Aktif Kıyaslama Masasında</div>
+        </div>
+        """, unsafe_allow_html=True)
+    with ev_k2:
+        st.markdown(f"""
+        <div style="background:#0F192E;border:1px solid rgba(0,230,118,0.3);border-radius:8px;padding:12px;text-align:center;">
+            <div style="color:#8FA3C0;font-size:11px;font-weight:600;">ONAYLANAN İCRA PLANI</div>
+            <div style="color:#00E676;font-size:22px;font-weight:800;">{sdc_n_approved} Strateji</div>
+            <div style="color:#CBD5E1;font-size:11px;">Yürürlükte & Sahada İcrada</div>
+        </div>
+        """, unsafe_allow_html=True)
+    with ev_k3:
+        st.markdown(f"""
+        <div style="background:#0F192E;border:1px solid rgba(255,184,0,0.3);border-radius:8px;padding:12px;text-align:center;">
+            <div style="color:#8FA3C0;font-size:11px;font-weight:600;">ORTALAMA KARAR SKORU</div>
+            <div style="color:#FFB800;font-size:22px;font-weight:800;">%{sdc_n_avg_score}</div>
+            <div style="color:#CBD5E1;font-size:11px;">Kurumsal Politika Uyumu</div>
+        </div>
+        """, unsafe_allow_html=True)
+    with ev_k4:
+        st.markdown(f"""
+        <div style="background:#0F192E;border:1px solid rgba(168,85,247,0.3);border-radius:8px;padding:12px;text-align:center;">
+            <div style="color:#8FA3C0;font-size:11px;font-weight:600;">ŞARTLI / İNCELEMEDE</div>
+            <div style="color:#C084FC;font-size:22px;font-weight:800;">{sdc_n_pending} Not</div>
+            <div style="color:#CBD5E1;font-size:11px;">Müzakere Masasında</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    st.markdown("<div style='height:12px;'></div>", unsafe_allow_html=True)
+
+    # Detailed Evaluation Cards
+    for idx_sn, s_note in enumerate(all_sdc_notes):
+        ev_item = evaluate_decision_note(s_note)
+        is_appr_s = ("Onaylandı" in s_note.get('status', ''))
+        bcol_s = ev_item['badge_color']
+        
+        st.markdown(f"""
+        <div style="background:#0F192E;border:1.5px solid {bcol_s};border-radius:10px;padding:16px 20px;margin-bottom:12px;box-shadow:0 4px 14px rgba(0,0,0,0.3);">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:8px;">
+                <span style="font-size:13.5px;font-weight:700;color:{bcol_s};">📌 [{s_note['id']}] {s_note['country']} — {s_note['clinic_or_dist']}</span>
+                <span style="background:rgba(255,255,255,0.06);border:1px solid {bcol_s};color:{bcol_s};padding:3px 10px;border-radius:6px;font-weight:700;font-size:11.5px;">
+                    Skor: %{ev_item['score']} | {s_note['status']}
+                </span>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:10px;font-size:12px;color:#CBD5E1;margin-bottom:8px;">
+                <div><b>⚔️ Hedef Rakip:</b> <span style="color:#FFB800;">{s_note['target_competitor']}</span></div>
+                <div><b>🛡️ ZEUS Donanımı:</b> <span style="color:#00F5FF;">{s_note['our_product']}</span></div>
+                <div><b>🎯 Seçilen Taktik:</b> <span style="color:#00E676;">{s_note['selected_strategy']}</span></div>
+                <div><b>👤 Karar Verici:</b> <span style="color:#E2E8F0;">{s_note['author']} ({s_note['timestamp']})</span></div>
+            </div>
+            <div style="background:rgba(0,0,0,0.25);border-left:3px solid #00F5FF;padding:9px 12px;border-radius:4px;margin-bottom:8px;font-size:12px;color:#FFFFFF;line-height:1.5;">
+                <b>✍️ Yönetici Karar Notu & Müzakere Tutanakları:</b><br>{s_note['decision_note']}
+            </div>
+            <div style="background:rgba(0,245,255,0.04);border:1px solid rgba(0,245,255,0.2);border-radius:6px;padding:8px 12px;font-size:11.5px;color:#CCD7E6;">
+                <b style="color:{bcol_s};">🧠 Karar Merkezi Otomatik Denetim Raporu ({ev_item['risk_level']}):</b><br>
+                {' • '.join(ev_item['findings'])}
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # Action Buttons for Decision Center
+        btn_c1, btn_c2, btn_c3, btn_c4 = st.columns([1.5, 1.5, 1.2, 2.8])
+        with btn_c1:
+            if st.button(f"✅ Kararı Onayla ({s_note['id']})", key=f"btn_appr_sdc_note_{s_note['id']}_{idx_sn}", use_container_width=True):
+                s_note['status'] = 'Onaylandı & İcrada'
+                st.rerun()
+        with btn_c2:
+            if st.button(f"⚠️ Şartlı / Revize ({s_note['id']})", key=f"btn_cond_sdc_note_{s_note['id']}_{idx_sn}", use_container_width=True):
+                s_note['status'] = 'Şartlı Onay / İncelemede'
+                st.rerun()
+        with btn_c3:
+            if st.button(f"❌ Reddet ({s_note['id']})", key=f"btn_rej_sdc_note_{s_note['id']}_{idx_sn}", use_container_width=True):
+                s_note['status'] = 'Revize Gerekli / Red'
+                st.rerun()
+        with btn_c4:
+            st.empty()
+
+    st.markdown("<div style='height:14px;'></div>", unsafe_allow_html=True)
 
     # --------------------------------------------------------------------------
     # TOP EXECUTIVE EVALUATION BOARD: STRATEGIC ALERTS IMPLEMENTATION REVIEW
