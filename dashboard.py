@@ -4487,6 +4487,29 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
     </div>
     """, unsafe_allow_html=True)
 
+    # --------------------------------------------------------------------------
+    # 0. RESOLVE COUNTRY METRICS & INCOME TIERS
+    # --------------------------------------------------------------------------
+    macro = resolve_country_macro(target_country)
+    
+    matched_code = None
+    for c_tuple in COUNTRIES_RAW:
+        if target_country.lower() in [c_tuple[1].lower(), c_tuple[0].lower()] or (target_country in ['Turkey', 'Türkiye', 'TR'] and c_tuple[0] == 'TR'):
+            matched_code = c_tuple[0]
+            break
+            
+    real_stat = REAL_WORLD_BANK_IVF_DATA.get(matched_code, {})
+    gdp_val = real_stat.get('gdp_pc', macro.get('gdp_pc', 12000))
+    country_cycles = real_stat.get('cycles', macro.get('total_annual_cycles', 25000))
+    clinics_num = real_stat.get('clinics', macro.get('clinics', 20))
+    customs_val = macro.get('customs_tariff_pct', 5.0)
+    living_code = macro.get('living_standard_code', 'Middle Income')
+
+    is_high_income = gdp_val >= 25000 or target_country in ['Kuwait', 'Qatar', 'UAE', 'Germany', 'Switzerland', 'USA', 'Spain', 'United Kingdom', 'Australia', 'Saudi Arabia', 'Belgium', 'Netherlands']
+    is_mid_income = (10000 <= gdp_val < 25000) and not is_high_income
+    is_low_income = gdp_val < 10000 and not is_high_income
+
+
     col_c1, col_c2 = st.columns(2)
     
     rec_dev_max = float(pricing_fc.get('rec_device_discount', 10.0))
@@ -4503,11 +4526,11 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
             st.session_state[sarf_k] = 100.0
             st.rerun()
     with q_col2:
-        if st.button("🏢 Kurumsal Filo / İhale Paketi ($85,000 USD Bütçe)", key=f"btn_fleet_preset_{key_prefix}_{target_country}", use_container_width=True):
+        if st.button("🏢 4 Cihazlık Komple Donanım Filo Paketi (~$45K - $50K Bütçe)", key=f"btn_fleet_preset_{key_prefix}_{target_country}", use_container_width=True):
             st.session_state[dev_k] = 8500.0
-            st.session_state[f"{key_prefix}_dev_qty_{target_country}"] = 8
+            st.session_state[f"{key_prefix}_dev_qty_{target_country}"] = 4
             st.session_state[sarf_k] = 100.0
-            st.session_state[f"{key_prefix}_sarf_qty_{target_country}"] = 450
+            st.session_state[f"{key_prefix}_sarf_qty_{target_country}"] = 150
             st.rerun()
     with q_col3:
         if st.button("🔄 Sıfırla (Manuel)", key=f"btn_reset_preset_{key_prefix}_{target_country}", use_container_width=True):
@@ -4929,26 +4952,6 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
     # --------------------------------------------------------------------------
     # 1. ÜLKE İNDİRİM GEREKLİLİK VE KARAR MOTORU (İndirim Gerekli mi / Gereksiz mi?)
     # --------------------------------------------------------------------------
-    macro = resolve_country_macro(target_country)
-    
-    # Resolve real country code & accurate cycle & clinics data
-    matched_code = None
-    for c_tuple in COUNTRIES_RAW:
-        if target_country.lower() in [c_tuple[1].lower(), c_tuple[0].lower()] or (target_country in ['Turkey', 'Türkiye', 'TR'] and c_tuple[0] == 'TR'):
-            matched_code = c_tuple[0]
-            break
-            
-    real_stat = REAL_WORLD_BANK_IVF_DATA.get(matched_code, {})
-    gdp_val = real_stat.get('gdp_pc', macro.get('gdp_pc', 12000))
-    country_cycles = real_stat.get('cycles', macro.get('total_annual_cycles', 25000))
-    clinics_num = real_stat.get('clinics', macro.get('clinics', 20))
-    customs_val = macro.get('customs_tariff_pct', 5.0)
-    living_code = macro.get('living_standard_code', 'Middle Income')
-
-    # Income Tier Segmentation for Discount Necessity
-    is_high_income = gdp_val >= 25000 or target_country in ['Kuwait', 'Qatar', 'UAE', 'Germany', 'Switzerland', 'USA', 'Spain', 'United Kingdom', 'Australia', 'Saudi Arabia', 'Belgium', 'Netherlands']
-    is_mid_income = (10000 <= gdp_val < 25000) and not is_high_income
-    is_low_income = gdp_val < 10000 and not is_high_income
 
     if is_high_income:
         country_disc_verdict = "❌ İNDİRİM GEREKSİZ / LİSTE FİYATINI KORUYUN ($8,500 USD)"
