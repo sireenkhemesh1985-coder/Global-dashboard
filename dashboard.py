@@ -17731,6 +17731,16 @@ st.markdown('''
 </div>
 ''', unsafe_allow_html=True)
 
+# 45-SECOND STRATEGIC VIDEO SIMULATION & PRODUCT TOUR (Pazar, Gümrük, İhale, Rakip & Karar Masası)
+with st.expander("🎬 ZEUS ZGMI 45 Saniyelik Canlı Video Simülasyonu & Stratejik Tur (Pazar, Gümrük, İhaleler, Rakipler & Karar Masası)", expanded=False):
+    sim_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "zgmi_video_simulation.html")
+    if os.path.exists(sim_file_path):
+        with open(sim_file_path, "r", encoding="utf-8") as f_sim:
+            sim_html = f_sim.read()
+        components.html(sim_html, height=620, scrolling=False)
+    else:
+        st.info("Video simülasyon bileşeni hazırlanıyor...")
+
 with st.container(key="zgmi_top_control_dock"):
     col_hub_hdr1, col_hub_hdr2 = st.columns([3.35, 1.05], vertical_alignment="center")
     with col_hub_hdr1:
@@ -17789,8 +17799,8 @@ if omni_search_q and omni_search_q.strip():
     render_active_omni_search_hub(omni_search_q.strip())
 
 if active_view in ["🌐 3D Dünya Küresi & Canlı ERP Kokpiti", "🌐 3D Dünya Küresi & ERP Satışları", "🌐 Executive Overview & 3D Globe"]:
-    # Interactive Video Tour & Simulation Expander
-    with st.expander("🎬 ZGMI Portalı 60 Saniyelik Canlı Video Simülasyonu & İnteraktif Ürün Turu", expanded=False):
+    # Interactive Video Tour & Simulation Expander (45s Strategic Tour)
+    with st.expander("🎬 ZEUS ZGMI 45 Saniyelik Canlı Video Simülasyonu & İnteraktif Ürün Turu", expanded=False):
         sim_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "zgmi_video_simulation.html")
         if os.path.exists(sim_file_path):
             with open(sim_file_path, "r", encoding="utf-8") as f_sim:
