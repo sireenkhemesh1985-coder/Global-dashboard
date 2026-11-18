@@ -439,8 +439,11 @@
           <button onclick="seekTo(33)" class="px-2 py-0.5 rounded text-[11px] font-semibold bg-white/5 hover:bg-[#A855F7]/20 hover:text-[#A855F7] transition border border-white/10">4. Karar Merkezi & Rapor</button>
         </div>
 
-        <!-- Speed Selector -->
-        <div class="flex items-center gap-1">
+        <!-- Download Video & Speed Controls -->
+        <div class="flex items-center gap-2">
+          <a id="btnDownloadVideo" href="zeus_zgmi_45s_simulation_tr.mp4" download="zeus_zgmi_45s_simulation_tr.mp4" class="px-2.5 py-1 rounded text-[11px] font-bold bg-[#00E676]/20 text-[#00E676] hover:bg-[#00E676]/30 border border-[#00E676]/40 transition flex items-center gap-1">
+            📥 Video İndir (.MP4)
+          </a>
           <button onclick="toggleSpeed()" class="px-2.5 py-0.5 rounded text-[11px] font-mono bg-white/5 hover:bg-white/10 text-[#94A3B8] hover:text-white transition border border-white/10">
             Hız: <span id="btnSpeedVal" class="text-[#00F5FF] font-bold">1.0x</span>
           </button>

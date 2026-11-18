@@ -17756,6 +17756,18 @@ with st.expander("🎬 ZEUS ZGMI 45 Saniyelik Canlı Video Simülasyonu & Strate
         with open(sim_file_path, "r", encoding="utf-8") as f_sim:
             sim_html = f_sim.read()
         components.html(sim_html, height=620, scrolling=False)
+        
+        mp4_tr_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "zeus_zgmi_45s_simulation_tr.mp4")
+        if os.path.exists(mp4_tr_path):
+            with open(mp4_tr_path, "rb") as f_mp4:
+                st.download_button(
+                    label="📥 45 Saniyelik Tanıtım Videosunu İndir (.MP4 — 1080p Full HD)",
+                    data=f_mp4.read(),
+                    file_name="zeus_zgmi_45s_simulation_tr.mp4",
+                    mime="video/mp4",
+                    use_container_width=True,
+                    key="btn_dl_tr_simulation_video"
+                )
     else:
         st.info("Video simülasyon bileşeni hazırlanıyor...")
 
