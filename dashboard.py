@@ -362,48 +362,196 @@ st.markdown("""
         box-shadow: 0 0 14px rgba(0, 245, 255, 0.15) !important;
     }
 
-    /* Modern Glass Buttons */
-    .stButton > button {
-        background: linear-gradient(135deg, rgba(0, 245, 255, 0.14) 0%, rgba(19, 166, 181, 0.24) 100%) !important;
-        border: 1px solid rgba(0, 245, 255, 0.35) !important;
-        border-radius: 9px !important;
-        color: #FFFFFF !important;
+    /* ====================================================================== */
+    /* ULTRA-LUXURY GLASSMORPHIC BUTTON & INPUT SYSTEM (NON-AI EXECUTIVE UI)  */
+    /* ====================================================================== */
+
+    /* 1. Universal Secondary Glass Buttons (All standard st.button secondary) */
+    .stButton > button,
+    button[kind="secondary"],
+    button[data-testid="baseButton-secondary"],
+    button[data-testid="stBaseButton-secondary"],
+    div[data-testid="stButton"] button {
+        background: linear-gradient(145deg, rgba(16, 26, 46, 0.85) 0%, rgba(9, 16, 30, 0.90) 100%) !important;
+        border: 1px solid rgba(0, 245, 255, 0.28) !important;
+        border-radius: 10px !important;
+        color: #F1F5F9 !important;
         font-weight: 600 !important;
         font-size: 13px !important;
         letter-spacing: 0.02em !important;
-        padding: 8px 18px !important;
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        backdrop-filter: blur(10px) !important;
-        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.2) !important;
+        padding: 7px 18px !important;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        backdrop-filter: blur(16px) !important;
+        -webkit-backdrop-filter: blur(16px) !important;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6) !important;
     }
-    .stButton > button:hover {
-        background: linear-gradient(135deg, rgba(0, 245, 255, 0.26) 0%, rgba(19, 166, 181, 0.42) 100%) !important;
+    .stButton > button:hover,
+    button[kind="secondary"]:hover,
+    button[data-testid="baseButton-secondary"]:hover,
+    button[data-testid="stBaseButton-secondary"]:hover,
+    div[data-testid="stButton"] button:hover {
+        background: linear-gradient(145deg, rgba(0, 245, 255, 0.18) 0%, rgba(19, 166, 181, 0.32) 100%) !important;
         border-color: #00F5FF !important;
-        box-shadow: 0 0 20px rgba(0, 245, 255, 0.3) !important;
+        color: #00F5FF !important;
+        box-shadow: 0 0 20px rgba(0, 245, 255, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
         transform: translateY(-2px) !important;
     }
-    .stButton > button[kind="primary"] {
-        background: linear-gradient(135deg, #00F5FF 0%, #0B6F85 100%) !important;
-        color: #070B14 !important;
-        font-weight: 700 !important;
-        border: none !important;
-        box-shadow: 0 0 22px rgba(0, 245, 255, 0.45) !important;
+    .stButton > button:active,
+    button[kind="secondary"]:active,
+    button[data-testid="baseButton-secondary"]:active {
+        transform: translateY(0) scale(0.98) !important;
+        box-shadow: 0 0 10px rgba(0, 245, 255, 0.3) !important;
     }
 
-    /* Modern Glass Inputs & Selectboxes */
+    /* 2. Universal Primary Glass Buttons (st.button type="primary") */
+    .stButton > button[kind="primary"],
+    button[kind="primary"],
+    button[data-testid="baseButton-primary"],
+    button[data-testid="stBaseButton-primary"],
+    div[data-testid="stButton"] button[kind="primary"] {
+        background: linear-gradient(135deg, #00F5FF 0%, #0284C7 100%) !important;
+        border: 1px solid rgba(255, 255, 255, 0.45) !important;
+        border-radius: 10px !important;
+        color: #070B14 !important;
+        font-weight: 800 !important;
+        font-size: 13px !important;
+        letter-spacing: 0.02em !important;
+        padding: 7px 20px !important;
+        backdrop-filter: blur(16px) !important;
+        -webkit-backdrop-filter: blur(16px) !important;
+        box-shadow: 0 4px 20px rgba(0, 245, 255, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
+        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        text-shadow: none !important;
+    }
+    .stButton > button[kind="primary"]:hover,
+    button[kind="primary"]:hover,
+    button[data-testid="baseButton-primary"]:hover,
+    button[data-testid="stBaseButton-primary"]:hover {
+        background: linear-gradient(135deg, #38BDF8 0%, #00F5FF 100%) !important;
+        border-color: #FFFFFF !important;
+        color: #070B14 !important;
+        box-shadow: 0 0 28px rgba(0, 245, 255, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.6) !important;
+        transform: translateY(-2px) !important;
+    }
+
+    /* 3. Popover Trigger Buttons (e.g. Düzenle) */
+    div[data-testid="stPopover"] > button,
+    button[data-testid="stBaseButton-popover"] {
+        background: linear-gradient(145deg, rgba(16, 26, 46, 0.85) 0%, rgba(9, 16, 30, 0.90) 100%) !important;
+        border: 1px solid rgba(0, 245, 255, 0.28) !important;
+        border-radius: 10px !important;
+        color: #F1F5F9 !important;
+        font-weight: 600 !important;
+        font-size: 13px !important;
+        padding: 7px 18px !important;
+        backdrop-filter: blur(16px) !important;
+        transition: all 0.25s ease !important;
+    }
+    div[data-testid="stPopover"] > button:hover {
+        border-color: #00F5FF !important;
+        color: #00F5FF !important;
+        box-shadow: 0 0 20px rgba(0, 245, 255, 0.4) !important;
+        transform: translateY(-2px) !important;
+    }
+
+    /* 4. Streamlit Pills & ButtonGroup (Universal Frosted Glass Capsule Bar) */
+    div[data-testid="stButtonGroup"],
+    .stButtonGroup {
+        background: rgba(11, 19, 36, 0.80) !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        border: 1px solid rgba(0, 245, 255, 0.25) !important;
+        border-radius: 9999px !important;
+        padding: 3px 6px !important;
+        gap: 6px !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        width: fit-content !important;
+        max-width: 100% !important;
+    }
+    /* Pill Element - Unselected */
+    div[data-testid="stButtonGroup"] [data-variant="pills"],
+    div[data-testid="stButtonGroup"] button,
+    button[data-testid="stBaseButton-pills"],
+    button[data-testid="baseButton-pills"],
+    div[data-testid="stButtonGroup"] [role="radio"] {
+        background: rgba(255, 255, 255, 0.03) !important;
+        border: 1px solid rgba(255, 255, 255, 0.06) !important;
+        border-radius: 9999px !important;
+        color: #94A3B8 !important;
+        font-size: 12.5px !important;
+        font-weight: 500 !important;
+        letter-spacing: 0.01em !important;
+        padding: 6px 16px !important;
+        transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        backdrop-filter: blur(10px) !important;
+        white-space: nowrap !important;
+    }
+    /* Pill Element - Hover */
+    div[data-testid="stButtonGroup"] [data-variant="pills"]:hover,
+    div[data-testid="stButtonGroup"] button:hover,
+    button[data-testid="stBaseButton-pills"]:hover,
+    button[data-testid="baseButton-pills"]:hover {
+        background: rgba(0, 245, 255, 0.10) !important;
+        border-color: rgba(0, 245, 255, 0.45) !important;
+        color: #FFFFFF !important;
+        box-shadow: 0 0 16px rgba(0, 245, 255, 0.28) !important;
+        transform: translateY(-1px) !important;
+    }
+    /* Pill Element - Active / Selected */
+    div[data-testid="stButtonGroup"] [data-variant="pills"][data-selected="true"],
+    div[data-testid="stButtonGroup"] [data-variant="pills"][data-selected],
+    div[data-testid="stButtonGroup"] [data-variant="pills"][aria-selected="true"],
+    div[data-testid="stButtonGroup"] button[data-selected="true"],
+    div[data-testid="stButtonGroup"] button[aria-selected="true"],
+    button[data-testid="stBaseButton-pillsActive"],
+    button[data-testid="baseButton-pillsActive"],
+    button[kind="pillsActive"],
+    div[data-testid="stButtonGroup"] [role="radio"][aria-checked="true"] {
+        background: linear-gradient(135deg, rgba(0, 245, 255, 0.28) 0%, rgba(16, 185, 129, 0.22) 100%) !important;
+        border: 1.5px solid #00F5FF !important;
+        border-radius: 9999px !important;
+        color: #FFFFFF !important;
+        font-weight: 700 !important;
+        box-shadow: 0 0 20px rgba(0, 245, 255, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+        text-shadow: 0 0 10px rgba(0, 245, 255, 0.6) !important;
+        transform: translateY(-1px) !important;
+    }
+
+    /* 5. Modern Glass Inputs & Selectboxes */
     div[data-baseweb="select"] > div,
     div[data-baseweb="input"] > div {
-        background: rgba(13, 21, 38, 0.65) !important;
-        border: 1px solid rgba(0, 245, 255, 0.18) !important;
-        border-radius: 9px !important;
+        background: rgba(13, 21, 38, 0.75) !important;
+        border: 1px solid rgba(0, 245, 255, 0.22) !important;
+        border-radius: 10px !important;
         color: #F8FAFC !important;
-        backdrop-filter: blur(12px) !important;
-        transition: all 0.2s ease !important;
+        backdrop-filter: blur(14px) !important;
+        transition: all 0.25s ease !important;
     }
     div[data-baseweb="select"] > div:hover,
     div[data-baseweb="input"] > div:hover {
-        border-color: rgba(0, 245, 255, 0.5) !important;
-        box-shadow: 0 0 14px rgba(0, 245, 255, 0.15) !important;
+        border-color: rgba(0, 245, 255, 0.55) !important;
+        box-shadow: 0 0 16px rgba(0, 245, 255, 0.22) !important;
+    }
+    div[data-baseweb="select"] > div:focus-within,
+    div[data-baseweb="input"] > div:focus-within {
+        border-color: #00F5FF !important;
+        box-shadow: 0 0 20px rgba(0, 245, 255, 0.4) !important;
+    }
+
+    /* 6. Specialized Bottom Navigation Glass Dock */
+    div[class*="st-key-zgmi_bottom_nav_dock"] {
+        background: linear-gradient(145deg, rgba(13, 21, 38, 0.75) 0%, rgba(9, 16, 30, 0.88) 100%) !important;
+        border: 1px solid rgba(0, 245, 255, 0.22) !important;
+        border-radius: 14px !important;
+        padding: 8px 16px !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+        margin-top: 24px !important;
+        margin-bottom: 12px !important;
     }
 
     /* Dataframes & Tables */
@@ -17408,33 +17556,74 @@ def render_active_omni_search_hub(query_str):
 
     st.markdown("---")
 
-# Universal Hub Header & Subview Switcher
+# Universal Hub Header & Subview Switcher (Ultra-Luxury Glassmorphic Console Dock)
 st.markdown("""
 <style>
-    div[data-testid="stPills"] {
+    /* Executive Glass Capsule Dock Container */
+    div[class*="st-key-zgmi_top_control_dock"] {
+        background: linear-gradient(145deg, rgba(13, 21, 38, 0.78) 0%, rgba(9, 16, 30, 0.88) 100%) !important;
+        border: 1px solid rgba(0, 245, 255, 0.22) !important;
+        border-radius: 14px !important;
+        padding: 5px 12px !important;
+        backdrop-filter: blur(20px) !important;
+        -webkit-backdrop-filter: blur(20px) !important;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
         margin-bottom: 14px !important;
     }
-    div[data-testid="stPills"] button {
-        background: rgba(15, 23, 42, 0.65) !important;
-        border: 1px solid rgba(0, 245, 255, 0.22) !important;
-        color: #E2E8F0 !important;
-        border-radius: 20px !important;
-        padding: 6px 16px !important;
-        font-size: 13px !important;
-        font-weight: 500 !important;
+    /* Circular Navigation Glass Buttons */
+    div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stColumn"]:first-child button,
+    div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stColumn"]:last-child button,
+    div[class*="st-key-btn_prev_"] button,
+    div[class*="st-key-btn_next_"] button {
+        border-radius: 50% !important;
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        max-width: 36px !important;
+        padding: 0 !important;
+        margin: 0 auto !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: rgba(15, 23, 42, 0.85) !important;
+        border: 1px solid rgba(0, 245, 255, 0.32) !important;
+        color: #00F5FF !important;
+        font-size: 20px !important;
+        font-weight: 700 !important;
+        line-height: 1 !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    }
+    div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stColumn"]:first-child button:hover,
+    div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stColumn"]:last-child button:hover,
+    div[class*="st-key-btn_prev_"] button:hover,
+    div[class*="st-key-btn_next_"] button:hover {
+        background: rgba(0, 245, 255, 0.22) !important;
+        border-color: #00F5FF !important;
+        color: #FFFFFF !important;
+        box-shadow: 0 0 20px rgba(0, 245, 255, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+        transform: scale(1.1) !important;
+    }
+    /* Seamless Pills within Dock */
+    div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stButtonGroup"] {
+        background: transparent !important;
+        border: none !important;
+        box-shadow: none !important;
+        padding: 0 !important;
+        gap: 6px !important;
+    }
+    /* Integrated Omni-Search Capsule */
+    div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stTextInput"] div[data-baseweb="input"] {
+        border-radius: 9999px !important;
+        background: rgba(15, 23, 42, 0.85) !important;
+        border: 1px solid rgba(0, 245, 255, 0.25) !important;
+        height: 36px !important;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
         transition: all 0.2s ease !important;
     }
-    div[data-testid="stPills"] button:hover {
-        border-color: rgba(0, 245, 255, 0.6) !important;
-        background: rgba(0, 245, 255, 0.1) !important;
-        box-shadow: 0 0 12px rgba(0, 245, 255, 0.2) !important;
-    }
-    div[data-testid="stPills"] button[aria-selected="true"] {
-        background: linear-gradient(90deg, rgba(0, 245, 255, 0.25) 0%, rgba(19, 166, 181, 0.15) 100%) !important;
-        border: 1px solid #00F5FF !important;
-        color: #00F5FF !important;
-        font-weight: 700 !important;
-        box-shadow: 0 0 16px rgba(0, 245, 255, 0.3) !important;
+    div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stTextInput"] div[data-baseweb="input"]:focus-within {
+        border-color: #00F5FF !important;
+        box-shadow: 0 0 20px rgba(0, 245, 255, 0.45) !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -17455,54 +17644,55 @@ st.markdown('''
 </div>
 ''', unsafe_allow_html=True)
 
-col_hub_hdr1, col_hub_hdr2 = st.columns([3.4, 1.0])
-with col_hub_hdr1:
-    if len(active_subviews) > 1:
-        pills_key = f"pills_hub_{abs(hash(nav_selection)) % 100000}"
-        if pills_key not in st.session_state or st.session_state[pills_key] not in active_subviews:
-            st.session_state[pills_key] = active_subviews[0]
+with st.container(key="zgmi_top_control_dock"):
+    col_hub_hdr1, col_hub_hdr2 = st.columns([3.35, 1.05], vertical_alignment="center")
+    with col_hub_hdr1:
+        if len(active_subviews) > 1:
+            pills_key = f"pills_hub_{abs(hash(nav_selection)) % 100000}"
+            if pills_key not in st.session_state or st.session_state[pills_key] not in active_subviews:
+                st.session_state[pills_key] = active_subviews[0]
 
-        curr_p_idx = active_subviews.index(st.session_state[pills_key])
+            curr_p_idx = active_subviews.index(st.session_state[pills_key])
 
-        c_arr_prev, c_arr_pills, c_arr_next = st.columns([0.07, 0.86, 0.07])
-        with c_arr_prev:
-            if st.button("◀", key=f"btn_prev_{pills_key}", help="Önceki Görünüme Git (Geri)", use_container_width=True):
-                new_p_idx = (curr_p_idx - 1) % len(active_subviews)
-                st.session_state[pills_key] = active_subviews[new_p_idx]
-                st.rerun()
+            c_arr_prev, c_arr_pills, c_arr_next = st.columns([0.055, 0.89, 0.055], vertical_alignment="center")
+            with c_arr_prev:
+                if st.button("‹", key=f"btn_prev_{pills_key}", help="Önceki Görünüme Git (Geri)", use_container_width=True):
+                    new_p_idx = (curr_p_idx - 1) % len(active_subviews)
+                    st.session_state[pills_key] = active_subviews[new_p_idx]
+                    st.rerun()
 
-        with c_arr_pills:
-            active_view = st.pills(
-                "Görünüm Seçin",
-                options=active_subviews,
-                label_visibility="collapsed",
-                key=pills_key
-            )
+            with c_arr_pills:
+                active_view = st.pills(
+                    "Görünüm Seçin",
+                    options=active_subviews,
+                    label_visibility="collapsed",
+                    key=pills_key
+                )
 
-        with c_arr_next:
-            if st.button("▶", key=f"btn_next_{pills_key}", help="Sonraki Görünüme Git (İleri)", use_container_width=True):
-                new_p_idx = (curr_p_idx + 1) % len(active_subviews)
-                st.session_state[pills_key] = active_subviews[new_p_idx]
-                st.rerun()
+            with c_arr_next:
+                if st.button("›", key=f"btn_next_{pills_key}", help="Sonraki Görünüme Git (İleri)", use_container_width=True):
+                    new_p_idx = (curr_p_idx + 1) % len(active_subviews)
+                    st.session_state[pills_key] = active_subviews[new_p_idx]
+                    st.rerun()
 
-        if not active_view:
-            active_view = st.session_state[pills_key]
-    else:
-        active_view = active_subviews[0]
-        st.markdown(f"""
-        <div style="display:flex;align-items:center;gap:10px;padding:6px 0;">
-            <span style="font-size:15px;font-weight:700;color:#00F5FF;">{nav_selection}</span>
-            <span style="background:rgba(0,245,255,0.12);color:#00F5FF;border:1px solid rgba(0,245,255,0.3);padding:2px 10px;border-radius:12px;font-size:11px;font-weight:600;">{cur_nav_info.get('badge', 'Modül Aktif')}</span>
-        </div>
-        """, unsafe_allow_html=True)
+            if not active_view:
+                active_view = st.session_state[pills_key]
+        else:
+            active_view = active_subviews[0]
+            st.markdown(f"""
+            <div style="display:flex;align-items:center;gap:10px;padding:4px 0;">
+                <span style="font-size:14px;font-weight:700;color:#00F5FF;letter-spacing:0.02em;">{nav_selection}</span>
+                <span style="background:rgba(0,245,255,0.12);color:#00F5FF;border:1px solid rgba(0,245,255,0.3);padding:2px 10px;border-radius:12px;font-size:11px;font-weight:600;">{cur_nav_info.get('badge', 'Modül Aktif')}</span>
+            </div>
+            """, unsafe_allow_html=True)
 
-with col_hub_hdr2:
-    omni_search_q = st.text_input(
-        "Omni-Search",
-        placeholder="🔍 Firma, Ülke veya Cihaz...",
-        label_visibility="collapsed",
-        key="omni_search_input"
-    )
+    with col_hub_hdr2:
+        omni_search_q = st.text_input(
+            "Omni-Search",
+            placeholder="🔍 Firma, Ülke veya Cihaz...",
+            label_visibility="collapsed",
+            key="omni_search_input"
+        )
 
 if not active_view:
     active_view = active_subviews[0]
@@ -26392,16 +26582,10 @@ elif active_view in ["🌐 Tekil Ülke 360° (Tüm Bilgiler, Mevzuat & İletişi
         if k not in c360_options:
             c360_options.append(k)
 
-    # Mode Selector
-    c360_mode = st.radio(
-        "Rapor ve Analiz Modu Seçin:",
-        [
-            "🌐 Tek Ülke 360° Tam İstihbarat & Performans Dosyası (Single Country 360° Dossier)",
-            "⚖️ Çoklu Ülke Birebir Karşılaştırma Masası (Country vs Country Comparative Matrix)"
-        ],
-        horizontal=True,
-        key="c360_main_mode_radio"
-    )
+    # Mode Selector (Streamlined & Synced with Navigation Hub)
+    c360_mode = "Tek Ülke"
+    if "Çoklu Ülke" in active_view:
+        c360_mode = "Çoklu Ülke" 
 
     # --------------------------------------------------------------------------
     # MODE 1: SINGLE COUNTRY 360° DOSSIER
@@ -29893,19 +30077,20 @@ if len(active_subviews) > 1:
     b_next_idx = (b_curr_idx + 1) % len(active_subviews)
 
     st.markdown("<hr style='border-color:rgba(255,255,255,0.08);margin:32px 0 16px 0;'>", unsafe_allow_html=True)
-    b_nav1, b_nav2, b_nav3 = st.columns([1.5, 2.2, 1.5])
-    with b_nav1:
-        prev_sub_label = active_subviews[b_prev_idx].split('(')[0].strip()
-        if st.button(f"◀ Önceki: {prev_sub_label}", key=f"bot_prev_nav_{b_pills_key}", use_container_width=True):
-            st.session_state[b_pills_key] = active_subviews[b_prev_idx]
-            st.rerun()
-    with b_nav2:
-        st.markdown(f"<div style='text-align:center;color:#8FA3C0;font-size:12px;padding-top:6px;'>🧭 Görünüm <b>{b_curr_idx + 1} / {len(active_subviews)}</b> · <span style='color:#00F5FF;'>{active_subviews[b_curr_idx].split('(')[0].strip()}</span></div>", unsafe_allow_html=True)
-    with b_nav3:
-        next_sub_label = active_subviews[b_next_idx].split('(')[0].strip()
-        if st.button(f"Sonraki: {next_sub_label} ▶", key=f"bot_next_nav_{b_pills_key}", use_container_width=True):
-            st.session_state[b_pills_key] = active_subviews[b_next_idx]
-            st.rerun()
+    with st.container(key="zgmi_bottom_nav_dock"):
+        b_nav1, b_nav2, b_nav3 = st.columns([1.5, 2.2, 1.5], vertical_alignment="center")
+        with b_nav1:
+            prev_sub_label = active_subviews[b_prev_idx].split('(')[0].strip()
+            if st.button(f"‹ Önceki: {prev_sub_label}", key=f"bot_prev_nav_{b_pills_key}", use_container_width=True):
+                st.session_state[b_pills_key] = active_subviews[b_prev_idx]
+                st.rerun()
+        with b_nav2:
+            st.markdown(f"<div style='text-align:center;color:#8FA3C0;font-size:12px;'>🧭 Görünüm <b>{b_curr_idx + 1} / {len(active_subviews)}</b> · <span style='color:#00F5FF;font-weight:600;'>{active_subviews[b_curr_idx].split('(')[0].strip()}</span></div>", unsafe_allow_html=True)
+        with b_nav3:
+            next_sub_label = active_subviews[b_next_idx].split('(')[0].strip()
+            if st.button(f"Sonraki: {next_sub_label} ›", key=f"bot_next_nav_{b_pills_key}", use_container_width=True):
+                st.session_state[b_pills_key] = active_subviews[b_next_idx]
+                st.rerun()
 
 # Universal Bottom 'Back to Top' Button (Every Page)
 render_back_to_top_button()
