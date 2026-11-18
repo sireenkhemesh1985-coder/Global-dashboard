@@ -16327,9 +16327,10 @@ def render_risk_scenario_simulator_view():
                 """, unsafe_allow_html=True)
 
             # 30 günlük ay modeli: Peşinat gün 0'da tahsil edilir. Taksit i, (i*30 + wire_delay) gününde ödenir.
-            inst_30 = sum(monthly_inst for i in range(1, n_inst + 1) if (i * 30 + wire_delay) <= 30)
-            inst_60 = sum(monthly_inst for i in range(1, n_inst + 1) if (i * 30 + wire_delay) <= 60)
-            inst_90 = sum(monthly_inst for i in range(1, n_inst + 1) if (i * 30 + wire_delay) <= 90)
+            n_inst_int = int(n_inst)
+            inst_30 = sum(monthly_inst for i in range(1, n_inst_int + 1) if (i * 30 + wire_delay) <= 30)
+            inst_60 = sum(monthly_inst for i in range(1, n_inst_int + 1) if (i * 30 + wire_delay) <= 60)
+            inst_90 = sum(monthly_inst for i in range(1, n_inst_int + 1) if (i * 30 + wire_delay) <= 90)
 
             cf_30 = down_amt + inst_30
             cf_60 = down_amt + inst_60
@@ -16344,19 +16345,20 @@ def render_risk_scenario_simulator_view():
                 rent_months = st.slider("Sözleşme Süresi (Ay)", 1, 120, 12, 1)
                 wire_delay = st.slider("Kira Tahsilat Gecikmesi (Gün)", 0, 90, 0, 5)
         
-            total_rent = monthly_rent * rent_months
+            rent_months_int = int(rent_months)
+            total_rent = monthly_rent * rent_months_int
             with p_in3:
                 st.markdown(f"""
                 <div style="background:rgba(240,188,87,0.08);padding:10px;border-radius:8px;border:1px solid #F0BC57;font-size:13px;">
                     <b>Aylık Kira Bedeli:</b> {format_curr(monthly_rent)}<br>
-                    <b>Planlanan Toplam Kira:</b> {format_curr(total_rent)} ({rent_months} Ay)<br>
+                    <b>Planlanan Toplam Kira:</b> {format_curr(total_rent)} ({rent_months_int} Ay)<br>
                     <span style="color:#F0BC57;font-size:11px;">* Kira tahsilatı satış cirosundan ayrı izlenir.</span>
                 </div>
                 """, unsafe_allow_html=True)
 
-            cf_30 = sum(monthly_rent for i in range(1, rent_months + 1) if (i * 30 + wire_delay) <= 30)
-            cf_60 = sum(monthly_rent for i in range(1, rent_months + 1) if (i * 30 + wire_delay) <= 60)
-            cf_90 = sum(monthly_rent for i in range(1, rent_months + 1) if (i * 30 + wire_delay) <= 90)
+            cf_30 = sum(monthly_rent for i in range(1, rent_months_int + 1) if (i * 30 + wire_delay) <= 30)
+            cf_60 = sum(monthly_rent for i in range(1, rent_months_int + 1) if (i * 30 + wire_delay) <= 60)
+            cf_90 = sum(monthly_rent for i in range(1, rent_months_int + 1) if (i * 30 + wire_delay) <= 90)
             rem_balance = max(0.0, total_rent - cf_90)
             plan_desc = f"{rent_months} Aylık Kiralama Sözleşmesi"
 
@@ -16581,11 +16583,27 @@ def render_churn_and_partner_performance_view():
         st.caption("Firma bazında sermaye ekipmanı satışları ile tekrar eden sarf malzeme tüketiminin yıl bazında resmi dökümü.")
 
         disp_y_df = y_df.copy()
-        disp_y_df['YoY Net Değişim'] = [
-            "—",
-            f"{yoy_25:+.1f}% (Cihaz: {dev_yoy_25:+.0f}%, Sarf: {con_yoy_25:+.1f}%)",
-            f"{yoy_26:+.1f}% (Cihaz: {dev_yoy_26:+.0f}%, Sarf: {con_yoy_26:+.1f}%)"
-        ]
+        yoy_col = ["—"]
+        for idx_y in range(1, len(y_df)):
+            prev_tot = float(y_df['Toplam Ciro'].iloc[idx_y - 1])
+            curr_tot = float(y_df['Toplam Ciro'].iloc[idx_y])
+            prev_dev = float(y_df['Cihaz Geliri'].iloc[idx_y - 1])
+            curr_dev = float(y_df['Cihaz Geliri'].iloc[idx_y])
+            prev_con = float(y_df['Sarf Geliri'].iloc[idx_y - 1])
+            curr_con = float(y_df['Sarf Geliri'].iloc[idx_y])
+            
+            if prev_tot > 0:
+                tot_pct = (curr_tot - prev_tot) / prev_tot * 100.0
+                tot_str = f"{tot_pct:+.1f}%"
+            elif curr_tot > 0:
+                tot_str = "+100.0%"
+            else:
+                tot_str = "0.0%"
+                
+            dev_str = f"{((curr_dev - prev_dev) / prev_dev * 100.0):+.0f}%" if prev_dev > 0 else ("+100%" if curr_dev > 0 else "0%")
+            con_str = f"{((curr_con - prev_con) / prev_con * 100.0):+.1f}%" if prev_con > 0 else ("+100%" if curr_con > 0 else "0%")
+            yoy_col.append(f"{tot_str} (Cihaz: {dev_str}, Sarf: {con_str})")
+        disp_y_df['YoY Net Değişim'] = yoy_col
         disp_y_df['Toplam Ciro'] = disp_y_df['Toplam Ciro'].apply(format_curr)
         disp_y_df['Cihaz Geliri'] = disp_y_df['Cihaz Geliri'].apply(format_curr)
         disp_y_df['Sarf Geliri'] = disp_y_df['Sarf Geliri'].apply(format_curr)
@@ -17799,16 +17817,6 @@ if omni_search_q and omni_search_q.strip():
     render_active_omni_search_hub(omni_search_q.strip())
 
 if active_view in ["🌐 3D Dünya Küresi & Canlı ERP Kokpiti", "🌐 3D Dünya Küresi & ERP Satışları", "🌐 Executive Overview & 3D Globe"]:
-    # Interactive Video Tour & Simulation Expander (45s Strategic Tour)
-    with st.expander("🎬 ZEUS ZGMI 45 Saniyelik Canlı Video Simülasyonu & İnteraktif Ürün Turu", expanded=False):
-        sim_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "zgmi_video_simulation.html")
-        if os.path.exists(sim_file_path):
-            with open(sim_file_path, "r", encoding="utf-8") as f_sim:
-                sim_html = f_sim.read()
-            components.html(sim_html, height=590, scrolling=False)
-        else:
-            st.info("Video simülasyon bileşeni hazırlanıyor...")
-
     # Header Banner
     col_h1, col_h2 = st.columns([2.5, 1.5])
     with col_h1:
@@ -21312,7 +21320,7 @@ ZEUS Bioscience Scientific Affairs""",
                 index=0,
                 key="sel_geo_country_ai"
             )
-        sel_code = code_by_label[selected_label]
+        sel_code = code_by_label.get(selected_label, sorted_codes[0] if sorted_codes else 'TR')
         sel_row = country_df[country_df['code'] == sel_code].iloc[0]
         
         # Seçilen Ülkenin İstihbarat Nesnesini Çek
@@ -24478,8 +24486,8 @@ BODY:
                             edited_subj = st.text_input("📌 E-posta Konu Başlığı (Subject):", value=curr_subj, key=f"subj_disp_{radar_country}_{idx}_{strat_mode}_{eff_selected_lang}_{curr_ver}")
                             edited_body = st.text_area("Özelleştirilmiş İletişim Metni (Email Body):", value=curr_body, height=270, key=f"body_disp_{radar_country}_{idx}_{strat_mode}_{eff_selected_lang}_{curr_ver}")
                             
-                            mail_subj_enc = urllib.parse.quote(edited_subj)
-                            mail_body_enc = urllib.parse.quote(edited_body)
+                            mail_subj_enc = urllib.parse.quote(str(edited_subj or ''))
+                            mail_body_enc = urllib.parse.quote(str(edited_body or ''))
                             dyn_mailto_url = f"mailto:{c_email}?subject={mail_subj_enc}&body={mail_body_enc}"
                             
                             st.markdown("---")
@@ -29065,7 +29073,7 @@ elif active_view in ["⚔️ Rakip Kıyaslama & RFID Trap Breaker", "⚔️ Stra
             index=0,
             key="sel_geo_country_sdc"
         )
-    sel_sdc_code = code_by_sdc_label[sel_sdc_label]
+    sel_sdc_code = code_by_sdc_label.get(sel_sdc_label, sorted_codes_sdc[0] if sorted_codes_sdc else 'EG')
     
     geo_p = get_country_geopolitical_intelligence(sel_sdc_code, country_df)
     if sel_sdc_code in st.session_state['country_geopolitical_protocols']:
