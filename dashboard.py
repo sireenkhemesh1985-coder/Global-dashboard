@@ -471,23 +471,26 @@ st.markdown("""
         width: fit-content !important;
         max-width: 100% !important;
     }
-    /* Pill Element - Unselected */
+    /* Pill Element - Unselected (Clear, readable, high contrast) */
     div[data-testid="stButtonGroup"] [data-variant="pills"],
     div[data-testid="stButtonGroup"] button,
     button[data-testid="stBaseButton-pills"],
     button[data-testid="baseButton-pills"],
     div[data-testid="stButtonGroup"] [role="radio"] {
-        background: rgba(255, 255, 255, 0.03) !important;
-        border: 1px solid rgba(255, 255, 255, 0.06) !important;
+        background: rgba(15, 23, 42, 0.75) !important;
+        border: 1px solid rgba(0, 245, 255, 0.22) !important;
         border-radius: 9999px !important;
-        color: #94A3B8 !important;
-        font-size: 12.5px !important;
-        font-weight: 500 !important;
+        color: #E2E8F0 !important;
+        font-size: 13px !important;
+        font-weight: 600 !important;
         letter-spacing: 0.01em !important;
-        padding: 6px 16px !important;
+        padding: 6px 18px !important;
         transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        backdrop-filter: blur(10px) !important;
+        backdrop-filter: blur(14px) !important;
         white-space: nowrap !important;
+        width: auto !important;
+        min-width: max-content !important;
+        max-width: none !important;
     }
     /* Pill Element - Hover */
     div[data-testid="stButtonGroup"] [data-variant="pills"]:hover,
@@ -4893,6 +4896,7 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
             sarf_inline_border = "#A855F7"
 
         total_dishes_val = sarf_qty # 4 Pool Tek Dish mimarisi (1 Kutu/Paket = 1 Dish)
+        patient_cycles_val = total_dishes_val # 1 Dish = 1 Hasta Tedavi Siklüsü (Azami 20 oosite kadar)
         total_pools_val = total_dishes_val * 4 # Her Dish 4 bağımsız mikro-pool haznesine sahiptir
         max_oocytes_val = total_dishes_val * 20 # 4 Pool x 5 Oosit = Dish başına azami 20 oosit
         cost_per_dish = net_sarf_unit
@@ -17570,23 +17574,23 @@ st.markdown("""
         box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
         margin-bottom: 14px !important;
     }
-    /* Circular Navigation Glass Buttons */
-    div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stColumn"]:first-child button,
-    div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stColumn"]:last-child button,
+    /* Circular Navigation Glass Buttons - PREV / NEXT ONLY */
     div[class*="st-key-btn_prev_"] button,
-    div[class*="st-key-btn_next_"] button {
+    div[class*="st-key-btn_next_"] button,
+    div[class*="st-key-bot_prev_nav_"] button,
+    div[class*="st-key-bot_next_nav_"] button {
         border-radius: 50% !important;
-        width: 36px !important;
-        height: 36px !important;
-        min-width: 36px !important;
-        max-width: 36px !important;
+        width: 38px !important;
+        height: 38px !important;
+        min-width: 38px !important;
+        max-width: 38px !important;
         padding: 0 !important;
         margin: 0 auto !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
         background: rgba(15, 23, 42, 0.85) !important;
-        border: 1px solid rgba(0, 245, 255, 0.32) !important;
+        border: 1px solid rgba(0, 245, 255, 0.35) !important;
         color: #00F5FF !important;
         font-size: 20px !important;
         font-weight: 700 !important;
@@ -17594,23 +17598,106 @@ st.markdown("""
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
         transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
     }
-    div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stColumn"]:first-child button:hover,
-    div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stColumn"]:last-child button:hover,
     div[class*="st-key-btn_prev_"] button:hover,
-    div[class*="st-key-btn_next_"] button:hover {
-        background: rgba(0, 245, 255, 0.22) !important;
+    div[class*="st-key-btn_next_"] button:hover,
+    div[class*="st-key-bot_prev_nav_"] button:hover,
+    div[class*="st-key-bot_next_nav_"] button:hover {
+        background: rgba(0, 245, 255, 0.24) !important;
         border-color: #00F5FF !important;
         color: #FFFFFF !important;
         box-shadow: 0 0 20px rgba(0, 245, 255, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
         transform: scale(1.1) !important;
     }
-    /* Seamless Pills within Dock */
+
+    /* Subview Pills - Always Full Width, High-Contrast & Beautifully Legible */
+    div[data-testid="stButtonGroup"],
     div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stButtonGroup"] {
         background: transparent !important;
         border: none !important;
         box-shadow: none !important;
         padding: 0 !important;
-        gap: 6px !important;
+        gap: 8px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        flex-wrap: nowrap !important;
+        max-width: 100% !important;
+    }
+
+    /* Pill Items: MUST NEVER BE CIRCLES OR SQUASHED */
+    div[data-testid="stButtonGroup"] button,
+    div[data-testid="stButtonGroup"] [data-variant="pills"],
+    div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stButtonGroup"] button,
+    div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stButtonGroup"] [data-variant="pills"],
+    button[data-testid="stBaseButton-pills"] {
+        width: auto !important;
+        min-width: max-content !important;
+        max-width: none !important;
+        height: 38px !important;
+        border-radius: 9999px !important;
+        background: rgba(15, 23, 42, 0.75) !important;
+        border: 1px solid rgba(0, 245, 255, 0.25) !important;
+        color: #E2E8F0 !important;
+        font-size: 13px !important;
+        font-weight: 600 !important;
+        letter-spacing: 0.01em !important;
+        padding: 6px 18px !important;
+        margin: 0 3px !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        white-space: nowrap !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        backdrop-filter: blur(14px) !important;
+        -webkit-backdrop-filter: blur(14px) !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-sizing: border-box !important;
+    }
+
+    div[data-testid="stButtonGroup"] button:hover,
+    div[data-testid="stButtonGroup"] [data-variant="pills"]:hover,
+    div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stButtonGroup"] button:hover {
+        background: rgba(0, 245, 255, 0.14) !important;
+        border-color: rgba(0, 245, 255, 0.55) !important;
+        color: #FFFFFF !important;
+        box-shadow: 0 0 16px rgba(0, 245, 255, 0.35) !important;
+        transform: translateY(-1px) !important;
+    }
+
+    /* Selected Pill - Ultra-Luxury Glow & High Contrast */
+    div[data-testid="stButtonGroup"] button[aria-selected="true"],
+    div[data-testid="stButtonGroup"] button[data-selected="true"],
+    div[data-testid="stButtonGroup"] [data-variant="pills"][data-selected="true"],
+    div[data-testid="stButtonGroup"] [data-variant="pills"][aria-selected="true"],
+    button[data-testid="stBaseButton-pillsActive"],
+    div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stButtonGroup"] button[aria-selected="true"],
+    div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stButtonGroup"] button[data-selected="true"] {
+        width: auto !important;
+        min-width: max-content !important;
+        max-width: none !important;
+        height: 38px !important;
+        border-radius: 9999px !important;
+        background: linear-gradient(135deg, rgba(0, 245, 255, 0.32) 0%, rgba(16, 185, 129, 0.24) 100%) !important;
+        border: 1.5px solid #00F5FF !important;
+        color: #FFFFFF !important;
+        font-size: 13px !important;
+        font-weight: 700 !important;
+        padding: 6px 20px !important;
+        box-shadow: 0 0 22px rgba(0, 245, 255, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
+        text-shadow: 0 0 8px rgba(0, 245, 255, 0.6) !important;
+        transform: translateY(-1px) !important;
+        white-space: nowrap !important;
+    }
+
+    /* Ensure text inside pill buttons never truncates or clips */
+    div[data-testid="stButtonGroup"] button *,
+    div[data-testid="stButtonGroup"] [data-variant="pills"] * {
+        white-space: nowrap !important;
+        overflow: visible !important;
+        text-overflow: clip !important;
+        font-size: 13px !important;
+        color: inherit !important;
     }
     /* Integrated Omni-Search Capsule */
     div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stTextInput"] div[data-baseweb="input"] {
