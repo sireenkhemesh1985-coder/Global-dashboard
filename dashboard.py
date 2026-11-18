@@ -11834,6 +11834,35 @@ def evaluate_decision_note(note):
     }
 
 
+def get_default_competitor_row_notes():
+    return {
+        "eppendorf": {
+            "ai_strategy": "🔬 Baltacı et al. hakemli yayın kalkanı. sub-%1.2 lizis vs %6 mekanik hasar. 4-Pool tek dish ($6.60/vaka) ile 4 kat hızlı ROI.",
+            "manager_note": "Sahada Eppendorf Piezo kurulu merkezlerde ücretsiz demo kesinlikle verilmeyecek; yalnızca 100+ kutu Z-Dish bağlayıcı sarf taahhüdüyle veya 14 günlük ücretli çalıştay ile girilecek.",
+            "updated_by": "CSO & Baş Embriyolog Heyeti",
+            "updated_at": "2026-11-18 10:00"
+        },
+        "coopersurgical_ri": {
+            "ai_strategy": "💼 RFID Trap Breaker: $35/siklus RFID çipine karşı ücretsiz 2D barkod + $25 kontör. Gametler altında sıfır EMF radyasyon.",
+            "manager_note": "Kliniğe yıllık $15,000+ doğrudan OPEX tasarrufu TCO analizi sunulmalı. Sözleşme süresi biten merkezlere 7 terminal Mismatch Blocker paketi teklif edilecek.",
+            "updated_by": "CFO & Uluslararası İş Geliştirme",
+            "updated_at": "2026-11-18 10:15"
+        },
+        "hamilton_vitrolife": {
+            "ai_strategy": "🛡️ Lazerle Tamamlama: Lazerle rekabet etme, tamamla. 13 IR optik sensör ile PCR tüp karıştırma riskini donanımsal olarak sıfırla.",
+            "manager_note": "PGT-A/M genetik biyopsilerinde numune karıştırma riskine karşı çift tabletli denetim kalkanı olarak konumlandırılacak.",
+            "updated_by": "Bölge Satış Direktörü & Hukuk Müşavirliği",
+            "updated_at": "2026-11-18 10:30"
+        },
+        "cryobio_kitazato": {
+            "ai_strategy": "📦 Tank OPEX Kalkanı: $50,000 yeni tank yerine 4X kit (cane başına 40 payet). Metrekare ve sıvı azot tasarrufu.",
+            "manager_note": "Yeni tank maliyetine girmek istemeyen kliniklere 4X Smart Cryo kiti sunularak en az 100 kutu vitrifikasyon sarfı taahhüdü bağlanacak.",
+            "updated_by": "Yönetim Kurulu & CEO",
+            "updated_at": "2026-11-18 10:45"
+        }
+    }
+
+
 def get_default_competitor_decision_notes():
     return [
         {
@@ -12047,6 +12076,9 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
     """
     if 'executive_competitor_decision_notes' not in st.session_state:
         st.session_state['executive_competitor_decision_notes'] = get_default_competitor_decision_notes()
+    if 'competitor_custom_notes' not in st.session_state:
+        st.session_state['competitor_custom_notes'] = get_default_competitor_row_notes()
+    comp_row_notes = st.session_state['competitor_custom_notes']
 
     if selected_markets and len(selected_markets) > 0:
         target_markets_list = selected_markets
@@ -12141,9 +12173,11 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
         </div>
         """, unsafe_allow_html=True)
 
-        # Comparison Scorecard Table
-        comp_table_html = """
-        <div style="overflow-x:auto;margin-bottom:20px;">
+        # Comparison Scorecard Table with AI vs Manager Separation
+        c_notes = st.session_state.get('competitor_custom_notes', get_default_competitor_row_notes())
+
+        comp_table_html = f"""
+        <div style="overflow-x:auto;margin-bottom:16px;">
         <table style="width:100%;border-collapse:collapse;font-size:12px;color:#CCD7E6;background:#0F192E;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);">
             <thead>
                 <tr style="background:#16243E;color:#00F5FF;border-bottom:2px solid rgba(0,245,255,0.3);text-align:left;">
@@ -12153,7 +12187,7 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
                     <th style="padding:10px 12px;">Teknolojik Yakınlık</th>
                     <th style="padding:10px 12px;">ZEUS'un Ezici Üstünlüğü</th>
                     <th style="padding:10px 12px;">Kliniğe Net Katma Değer</th>
-                    <th style="padding:10px 12px;min-width:180px;">📌 Karar Notu & Saha Değerlendirmesi</th>
+                    <th style="padding:10px 12px;min-width:270px;">📌 Karar Notu & Saha Değerlendirmesi</th>
                 </tr>
             </thead>
             <tbody>
@@ -12164,7 +12198,17 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
                     <td style="padding:10px 12px;"><span style="background:rgba(0,245,255,0.12);color:#00F5FF;padding:2px 8px;border-radius:4px;font-weight:700;">%82 Yakınlık</span></td>
                     <td style="padding:10px 12px;"><b style="color:#00E676;">CE Sertifikalı (Class IIa) tescili</b>, sub-%1.2 lizis (vs %6 mekanik hasar), <b>4 Havuzlu Tek Z-Dish (4 Pool × 5 Oosit = 20 Oosit Eşzamanlı Kapasite, tek hasta siklusu başına 1 dish = $6.60 USD)</b>.</td>
                     <td style="padding:10px 12px;color:#CCD7E6;">TFF vakalarında %24'ten %82.3'e döllenme artışı ve 4 kat daha hızlı yatırım geri dönüşü (ROI).</td>
-                    <td style="padding:10px 12px;color:#CBD5E1;font-size:11.5px;"><b style="color:#00F5FF;">🔬 Klinik Kanıt & ROI:</b> Baltacı et al. yayın kalkanı. 4-Pool tek dish ($6.60/vaka) ile 4 kat hızlı ROI. Demo ancak 100+ kutu sarf taahhüdüyle verilir.</td>
+                    <td style="padding:10px 12px;font-size:11px;">
+                        <div style="background:rgba(0,245,255,0.07);border-left:3px solid #00F5FF;padding:5px 8px;border-radius:4px;margin-bottom:6px;">
+                            <span style="font-weight:700;color:#00F5FF;font-size:10px;">🤖 ZEUS Yapay Zeka (AI) Stratejisi:</span><br>
+                            <span style="color:#CCD7E6;">{c_notes['eppendorf']['ai_strategy']}</span>
+                        </div>
+                        <div style="background:rgba(0,230,118,0.07);border-left:3px solid #00E676;padding:5px 8px;border-radius:4px;">
+                            <span style="font-weight:700;color:#00E676;font-size:10px;">✍️ Yönetici / Saha Notu:</span><br>
+                            <span style="color:#FFFFFF;font-weight:500;">{c_notes['eppendorf']['manager_note']}</span>
+                            <div style="font-size:9.5px;color:#8FA3C0;margin-top:2px;">👤 {c_notes['eppendorf'].get('updated_by', 'Yönetici')} · {c_notes['eppendorf'].get('updated_at', '')}</div>
+                        </div>
+                    </td>
                 </tr>
                 <tr style="border-bottom:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.015);">
                     <td style="padding:10px 12px;"><b style="color:#FFFFFF;">🇺🇸 CooperSurgical / RI</b><br><span style="color:#8FA3C0;font-size:11px;">ABD & İngiltere</span></td>
@@ -12173,7 +12217,17 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
                     <td style="padding:10px 12px;"><span style="background:rgba(0,230,118,0.12);color:#00E676;padding:2px 8px;border-radius:4px;font-weight:700;">%88 Yakınlık</span></td>
                     <td style="padding:10px 12px;"><b style="color:#00E676;">Sıfır EMF Radyasyonu</b>, sınırsız ücretsiz 2D barkod, döngü başı mikro-kontörle %75 OPEX tasarrufu.</td>
                     <td style="padding:10px 12px;color:#CCD7E6;">1,000 siklusta her yıl $22,500 USD doğrudan OPEX tasarrufu ve gametlerin altında radyasyonsuz güvenlik.</td>
-                    <td style="padding:10px 12px;color:#CBD5E1;font-size:11.5px;"><b style="color:#00E676;">💼 RFID Trap Breaker:</b> $35/siklus RFID çipine karşı ücretsiz 2D barkod + $25 kontör. Kliniğe yıllık $15,000+ doğrudan tasarruf TCO analizi sunulmalı.</td>
+                    <td style="padding:10px 12px;font-size:11px;">
+                        <div style="background:rgba(0,245,255,0.07);border-left:3px solid #00F5FF;padding:5px 8px;border-radius:4px;margin-bottom:6px;">
+                            <span style="font-weight:700;color:#00F5FF;font-size:10px;">🤖 ZEUS Yapay Zeka (AI) Stratejisi:</span><br>
+                            <span style="color:#CCD7E6;">{c_notes['coopersurgical_ri']['ai_strategy']}</span>
+                        </div>
+                        <div style="background:rgba(0,230,118,0.07);border-left:3px solid #00E676;padding:5px 8px;border-radius:4px;">
+                            <span style="font-weight:700;color:#00E676;font-size:10px;">✍️ Yönetici / Saha Notu:</span><br>
+                            <span style="color:#FFFFFF;font-weight:500;">{c_notes['coopersurgical_ri']['manager_note']}</span>
+                            <div style="font-size:9.5px;color:#8FA3C0;margin-top:2px;">👤 {c_notes['coopersurgical_ri'].get('updated_by', 'Yönetici')} · {c_notes['coopersurgical_ri'].get('updated_at', '')}</div>
+                        </div>
+                    </td>
                 </tr>
                 <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
                     <td style="padding:10px 12px;"><b style="color:#FFFFFF;">🇺🇸 Hamilton Thorne & 🇸🇪 Vitrolife</b><br><span style="color:#8FA3C0;font-size:11px;">ABD & İsveç</span></td>
@@ -12182,7 +12236,17 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
                     <td style="padding:10px 12px;"><span style="background:rgba(255,184,0,0.12);color:#FFB800;padding:2px 8px;border-radius:4px;font-weight:700;">%78 Yakınlık</span></td>
                     <td style="padding:10px 12px;"><b style="color:#00E676;">13 Kızılötesi Optik Sensör</b>, çift tabletli denetim izi, PCR tüpü şerit atlama hatasını sıfırlayan akıllı tepsi.</td>
                     <td style="padding:10px 12px;color:#CCD7E6;">PGT-A/M genetik biyopsilerinde numune karıştırma riskini donanımsal kilitler, lazerle tam uyumlu çalışır.</td>
-                    <td style="padding:10px 12px;color:#CBD5E1;font-size:11.5px;"><b style="color:#FFB800;">🛡️ Lazerle Tamamlama:</b> Lazerle rekabet etme, tamamla. 13 IR optik sensör ile PCR tüp karıştırma riskini sıfırla, PGT-A hukuki risk kalkanı sun.</td>
+                    <td style="padding:10px 12px;font-size:11px;">
+                        <div style="background:rgba(0,245,255,0.07);border-left:3px solid #00F5FF;padding:5px 8px;border-radius:4px;margin-bottom:6px;">
+                            <span style="font-weight:700;color:#00F5FF;font-size:10px;">🤖 ZEUS Yapay Zeka (AI) Stratejisi:</span><br>
+                            <span style="color:#CCD7E6;">{c_notes['hamilton_vitrolife']['ai_strategy']}</span>
+                        </div>
+                        <div style="background:rgba(0,230,118,0.07);border-left:3px solid #00E676;padding:5px 8px;border-radius:4px;">
+                            <span style="font-weight:700;color:#00E676;font-size:10px;">✍️ Yönetici / Saha Notu:</span><br>
+                            <span style="color:#FFFFFF;font-weight:500;">{c_notes['hamilton_vitrolife']['manager_note']}</span>
+                            <div style="font-size:9.5px;color:#8FA3C0;margin-top:2px;">👤 {c_notes['hamilton_vitrolife'].get('updated_by', 'Yönetici')} · {c_notes['hamilton_vitrolife'].get('updated_at', '')}</div>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td style="padding:10px 12px;"><b style="color:#FFFFFF;">🇫🇷 Cryo Bio System & 🇯🇵 Kitazato</b><br><span style="color:#8FA3C0;font-size:11px;">Fransa & Japonya</span></td>
@@ -12191,13 +12255,70 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
                     <td style="padding:10px 12px;"><span style="background:rgba(168,85,247,0.12);color:#C084FC;padding:2px 8px;border-radius:4px;font-weight:700;">%85 Yakınlık</span></td>
                     <td style="padding:10px 12px;"><b style="color:#00E676;">Cane başına 40 payet</b> (vs standart 10 payet), sekizgen LN2 rezervuarlı goblet, >%95 çözme canlılığı.</td>
                     <td style="padding:10px 12px;color:#CCD7E6;">Kliniğin $50,000 yeni azot tankı almasını ve laboratuvar zeminini genişletmesini engeller.</td>
-                    <td style="padding:10px 12px;color:#CBD5E1;font-size:11.5px;"><b style="color:#C084FC;">📦 Tank OPEX Kalkanı:</b> $50,000 yeni tank yerine 4X kit (cane başına 40 payet). Metrekare ve sıvı azot tasarrufu ile 100 kutu vitrifikasyon taahhüdü bağla.</td>
+                    <td style="padding:10px 12px;font-size:11px;">
+                        <div style="background:rgba(0,245,255,0.07);border-left:3px solid #00F5FF;padding:5px 8px;border-radius:4px;margin-bottom:6px;">
+                            <span style="font-weight:700;color:#00F5FF;font-size:10px;">🤖 ZEUS Yapay Zeka (AI) Stratejisi:</span><br>
+                            <span style="color:#CCD7E6;">{c_notes['cryobio_kitazato']['ai_strategy']}</span>
+                        </div>
+                        <div style="background:rgba(0,230,118,0.07);border-left:3px solid #00E676;padding:5px 8px;border-radius:4px;">
+                            <span style="font-weight:700;color:#00E676;font-size:10px;">✍️ Yönetici / Saha Notu:</span><br>
+                            <span style="color:#FFFFFF;font-weight:500;">{c_notes['cryobio_kitazato']['manager_note']}</span>
+                            <div style="font-size:9.5px;color:#8FA3C0;margin-top:2px;">👤 {c_notes['cryobio_kitazato'].get('updated_by', 'Yönetici')} · {c_notes['cryobio_kitazato'].get('updated_at', '')}</div>
+                        </div>
+                    </td>
                 </tr>
             </tbody>
         </table>
         </div>
         """
         st.markdown(comp_table_html, unsafe_allow_html=True)
+
+        # Interactive Competitor Row Note Editor Expander
+        with st.expander("✍️ Tablodaki Rakipler İçin Yönetici Saha Notlarını Düzenle & Güncelle (Her Satıra Not Yaz)", expanded=False):
+            st.caption("Aşağıdan istediğiniz rakibi seçerek sahada uygulayacağınız özel yönetici / saha notunu güncelleyebilirsiniz. Güncelleme anında tablonun 7. sütununa yansır.")
+            comp_select_edit = st.selectbox(
+                "Notunu Düzenlemek İstediğiniz Rakip:",
+                ["eppendorf", "coopersurgical_ri", "hamilton_vitrolife", "cryobio_kitazato"],
+                format_func=lambda k: {
+                    "eppendorf": "🇩🇪 🇯🇵 Eppendorf & Prime Tech (PiezoXpert)",
+                    "coopersurgical_ri": "🇺🇸 🇬🇧 CooperSurgical / RI (RI Witness)",
+                    "hamilton_vitrolife": "🇺🇸 🇸🇪 Hamilton Thorne & Vitrolife (Lykos Lazer)",
+                    "cryobio_kitazato": "🇫🇷 🇯🇵 Cryo Bio System & Kitazato (Kriyo Tank)"
+                }[k],
+                key=f"sel_comp_row_edit_{active_source}"
+            )
+            
+            cur_c_note = c_notes[comp_select_edit]
+            st.markdown(f"""
+            <div style="background:rgba(0,245,255,0.06);border:1px solid rgba(0,245,255,0.25);border-radius:6px;padding:8px 12px;margin-bottom:10px;">
+                <b style="color:#00F5FF;font-size:11px;">🤖 ZEUS Yapay Zeka (AI) Stratejisi (Sabit Sistem Önerisi):</b><br>
+                <span style="font-size:11.5px;color:#CCD7E6;">{cur_c_note['ai_strategy']}</span>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            new_mgr_note = st.text_area(
+                "✍️ Yönetici / Saha Değerlendirme Notu:",
+                value=cur_c_note['manager_note'],
+                height=80,
+                key=f"txt_mgr_row_note_{comp_select_edit}_{active_source}"
+            )
+            ed_c1, ed_c2 = st.columns([1.5, 1])
+            with ed_c1:
+                new_mgr_author = st.selectbox("👤 Notu Güncelleyen Yönetici:", [
+                    "CSO & Baş Embriyolog Heyeti",
+                    "CFO & Uluslararası İş Geliştirme",
+                    "Bölge Satış Direktörü & Hukuk Müşavirliği",
+                    "Yönetim Kurulu & CEO"
+                ], key=f"sel_mgr_auth_{comp_select_edit}_{active_source}")
+            with ed_c2:
+                st.markdown("<div style='height:28px;'></div>", unsafe_allow_html=True)
+                if st.button("💾 Notu Güncelle ve Kaydet", key=f"btn_save_row_note_{comp_select_edit}_{active_source}", type="primary", use_container_width=True):
+                    c_notes[comp_select_edit]['manager_note'] = new_mgr_note.strip()
+                    c_notes[comp_select_edit]['updated_by'] = new_mgr_author
+                    c_notes[comp_select_edit]['updated_at'] = datetime.now().strftime("%Y-%m-%d %H:%M")
+                    st.session_state['competitor_custom_notes'] = c_notes
+                    st.toast("✓ Rakip satır notu başarıyla güncellendi!", icon="✅")
+                    st.rerun()
 
         st.markdown("##### 🔍 Derinlemesine Rakip İnceleme Masası")
         sel_comp_card = st.selectbox(
@@ -12361,9 +12482,23 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
                             </div>
                         </div>
                         """, unsafe_allow_html=True)
-                        if st.button(f"🗑️ Notu Sil ({n_item['id']})", key=f"del_tab1_note_{active_source}_{n_item['id']}_{idx_t1}"):
-                            st.session_state['executive_competitor_decision_notes'].pop(idx_t1)
-                            st.rerun()
+                        col_t1_b1, col_t1_b2 = st.columns([1.2, 1])
+                        with col_t1_b1:
+                            with st.popover(f"✏️ Notu Güncelle ({n_item['id']})", use_container_width=True):
+                                st.markdown(f"**[{n_item['id']}] Yönetici Notunu Düzenle**")
+                                ed_t1_memo = st.text_area("✍️ Yönetici Karar Tutanağı:", value=n_item.get('decision_note', ''), height=100, key=f"ed_t1_memo_{active_source}_{n_item['id']}_{idx_t1}")
+                                ed_t1_status = st.selectbox("Karar Statüsü:", ["Onaylandı & İcrada", "Şartlı Onay / İncelemede", "Revize Gerekli / Red", "İcrada & Görüşme Aşamasında"], index=["Onaylandı & İcrada", "Şartlı Onay / İncelemede", "Revize Gerekli / Red", "İcrada & Görüşme Aşamasında"].index(n_item.get('status', 'Onaylandı & İcrada')) if n_item.get('status') in ["Onaylandı & İcrada", "Şartlı Onay / İncelemede", "Revize Gerekli / Red", "İcrada & Görüşme Aşamasında"] else 0, key=f"ed_t1_status_{active_source}_{n_item['id']}_{idx_t1}")
+                                if st.button("💾 Değişiklikleri Kaydet", key=f"btn_save_t1_{active_source}_{n_item['id']}_{idx_t1}", type="primary", use_container_width=True):
+                                    st.session_state['executive_competitor_decision_notes'][idx_t1]['decision_note'] = ed_t1_memo.strip()
+                                    st.session_state['executive_competitor_decision_notes'][idx_t1]['status'] = ed_t1_status
+                                    st.session_state['executive_competitor_decision_notes'][idx_t1]['timestamp'] = datetime.now().strftime("%Y-%m-%d %H:%M")
+                                    st.toast(f"✓ {n_item['id']} notu başarıyla güncellendi!", icon="✅")
+                                    st.rerun()
+                        with col_t1_b2:
+                            if st.button(f"🗑️ Notu Sil ({n_item['id']})", key=f"del_tab1_note_{active_source}_{n_item['id']}_{idx_t1}", use_container_width=True):
+                                st.session_state['executive_competitor_decision_notes'].pop(idx_t1)
+                                st.toast(f"✓ {n_item['id']} notu silindi.", icon="🗑️")
+                                st.rerun()
 
     # --------------------------------------------------------------------------
     # SUB-TAB 2: SATIŞ KAZANMA STRATEJİLERİ (BATTLECARDS)
@@ -12579,9 +12714,23 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
                             <span style="color:{ev_info['badge_color']};font-weight:700;">● {n_item['status']}</span>
                         </div>
                         """, unsafe_allow_html=True)
-                        if st.button(f"🗑️ Notu Sil ({n_item['id']})", key=f"del_note_{active_source}_{n_item['id']}_{idx_n}"):
-                            st.session_state['executive_competitor_decision_notes'].pop(idx_n)
-                            st.rerun()
+                        col_t4_b1, col_t4_b2 = st.columns([1.2, 1])
+                        with col_t4_b1:
+                            with st.popover(f"✏️ Notu Güncelle ({n_item['id']})", use_container_width=True):
+                                st.markdown(f"**[{n_item['id']}] Yönetici Notunu Düzenle**")
+                                ed_t4_memo = st.text_area("✍️ Yönetici Karar Tutanağı:", value=n_item.get('decision_note', ''), height=100, key=f"ed_t4_memo_{active_source}_{n_item['id']}_{idx_n}")
+                                ed_t4_status = st.selectbox("Karar Statüsü:", ["Onaylandı & İcrada", "Şartlı Onay / İncelemede", "Revize Gerekli / Red", "İcrada & Görüşme Aşamasında"], index=["Onaylandı & İcrada", "Şartlı Onay / İncelemede", "Revize Gerekli / Red", "İcrada & Görüşme Aşamasında"].index(n_item.get('status', 'Onaylandı & İcrada')) if n_item.get('status') in ["Onaylandı & İcrada", "Şartlı Onay / İncelemede", "Revize Gerekli / Red", "İcrada & Görüşme Aşamasında"] else 0, key=f"ed_t4_status_{active_source}_{n_item['id']}_{idx_n}")
+                                if st.button("💾 Değişiklikleri Kaydet", key=f"btn_save_t4_{active_source}_{n_item['id']}_{idx_n}", type="primary", use_container_width=True):
+                                    st.session_state['executive_competitor_decision_notes'][idx_n]['decision_note'] = ed_t4_memo.strip()
+                                    st.session_state['executive_competitor_decision_notes'][idx_n]['status'] = ed_t4_status
+                                    st.session_state['executive_competitor_decision_notes'][idx_n]['timestamp'] = datetime.now().strftime("%Y-%m-%d %H:%M")
+                                    st.toast(f"✓ {n_item['id']} notu başarıyla güncellendi!", icon="✅")
+                                    st.rerun()
+                        with col_t4_b2:
+                            if st.button(f"🗑️ Notu Sil ({n_item['id']})", key=f"del_note_{active_source}_{n_item['id']}_{idx_n}", use_container_width=True):
+                                st.session_state['executive_competitor_decision_notes'].pop(idx_n)
+                                st.toast(f"✓ {n_item['id']} notu silindi.", icon="🗑️")
+                                st.rerun()
 
                 # Export CSV button
                 df_notes = pd.DataFrame(all_saved_notes)
@@ -16126,7 +16275,7 @@ def render_churn_and_partner_performance_view():
 
 ZEUS_HUB_SUBVIEWS = {
     "🌍 1. Pazar İstihbaratı & Ülke Analizi (Market Analysis)": [
-        "🌐 Tekil Ülke 360° (Tüm Bilgiler, Mevzuat, İhale & İletişim)",
+        "🌐 Tekil Ülke 360° (Tüm Bilgiler, Mevzuat & İletişim)",
         "⚖️ Çoklu Ülke Kıyaslama Masası (Multi-Country Matrix)",
         "🏛️ Küresel Mevzuat & İhale Rehberi (Global Regulations & Tenders)"
     ],
@@ -16777,16 +16926,38 @@ st.markdown('''
 </div>
 ''', unsafe_allow_html=True)
 
-col_hub_hdr1, col_hub_hdr2 = st.columns([3.2, 1.2])
+col_hub_hdr1, col_hub_hdr2 = st.columns([3.4, 1.0])
 with col_hub_hdr1:
     if len(active_subviews) > 1:
-        active_view = st.pills(
-            "Görünüm Seçin",
-            options=active_subviews,
-            default=active_subviews[0],
-            label_visibility="collapsed",
-            key=f"pills_hub_{abs(hash(nav_selection)) % 100000}"
-        )
+        pills_key = f"pills_hub_{abs(hash(nav_selection)) % 100000}"
+        if pills_key not in st.session_state or st.session_state[pills_key] not in active_subviews:
+            st.session_state[pills_key] = active_subviews[0]
+
+        curr_p_idx = active_subviews.index(st.session_state[pills_key])
+
+        c_arr_prev, c_arr_pills, c_arr_next = st.columns([0.07, 0.86, 0.07])
+        with c_arr_prev:
+            if st.button("◀", key=f"btn_prev_{pills_key}", help="Önceki Görünüme Git (Geri)", use_container_width=True):
+                new_p_idx = (curr_p_idx - 1) % len(active_subviews)
+                st.session_state[pills_key] = active_subviews[new_p_idx]
+                st.rerun()
+
+        with c_arr_pills:
+            active_view = st.pills(
+                "Görünüm Seçin",
+                options=active_subviews,
+                label_visibility="collapsed",
+                key=pills_key
+            )
+
+        with c_arr_next:
+            if st.button("▶", key=f"btn_next_{pills_key}", help="Sonraki Görünüme Git (İleri)", use_container_width=True):
+                new_p_idx = (curr_p_idx + 1) % len(active_subviews)
+                st.session_state[pills_key] = active_subviews[new_p_idx]
+                st.rerun()
+
+        if not active_view:
+            active_view = st.session_state[pills_key]
     else:
         active_view = active_subviews[0]
         st.markdown(f"""
@@ -25451,7 +25622,7 @@ Cihaz, tüp bebek (IVF/ICSI) laboratuvarlarında Total Döllenme Başarısızlı
 # ==============================================================================
 # VIEW: COUNTRY 360° PERFORMANCE & INTELLIGENCE REPORT
 # ==============================================================================
-elif active_view in ["🌐 Tekil Ülke 360° (Tüm Bilgiler, Mevzuat, İhale & İletişim)", "🌍 Ülke 360° & Müşteri Radarı", "🌍 Country 360° Performance & Report"]:
+elif active_view in ["🌐 Tekil Ülke 360° (Tüm Bilgiler, Mevzuat & İletişim)", "🌐 Tekil Ülke 360° (Tüm Bilgiler, Mevzuat, İhale & İletişim)", "🌍 Ülke 360° & Müşteri Radarı", "🌍 Country 360° Performance & Report"]:
     st.title("🌍 Country 360° Performance & Intelligence Dossier")
     st.caption("Tek ekranda bütünleşik ülke karnesi: Gerçekleşen satışlar ve filo büyüklüğü, makroekonomi, gümrük GTİP ve ithalat mevzuatı, yeni IVF & PGT biyoetik kuralları, iskonto-tahmin matrisleri, 5 kişilik uzman heyeti görüşleri ve satış stratejisi.")
 
@@ -27685,32 +27856,48 @@ elif active_view in ["⚔️ Rakip Kıyaslama & RFID Trap Breaker", "⚔️ Stra
                 <div><b>🎯 Seçilen Taktik:</b> <span style="color:#00E676;">{s_note['selected_strategy']}</span></div>
                 <div><b>👤 Karar Verici:</b> <span style="color:#E2E8F0;">{s_note['author']} ({s_note['timestamp']})</span></div>
             </div>
-            <div style="background:rgba(0,0,0,0.25);border-left:3px solid #00F5FF;padding:9px 12px;border-radius:4px;margin-bottom:8px;font-size:12px;color:#FFFFFF;line-height:1.5;">
-                <b>✍️ Yönetici Karar Notu & Müzakere Tutanakları:</b><br>{s_note['decision_note']}
+            <div style="background:rgba(0,230,118,0.06);border-left:3px solid #00E676;padding:9px 12px;border-radius:4px;margin-bottom:8px;font-size:12px;color:#FFFFFF;line-height:1.5;">
+                <b style="color:#00E676;">✍️ Yönetici Karar Tutanağı & Saha Müzakere Notu:</b><br>{s_note['decision_note']}
             </div>
-            <div style="background:rgba(0,245,255,0.04);border:1px solid rgba(0,245,255,0.2);border-radius:6px;padding:8px 12px;font-size:11.5px;color:#CCD7E6;">
-                <b style="color:{bcol_s};">🧠 Karar Merkezi Otomatik Denetim Raporu ({ev_item['risk_level']}):</b><br>
+            <div style="background:rgba(0,245,255,0.05);border:1px solid rgba(0,245,255,0.25);border-radius:6px;padding:8px 12px;font-size:11.5px;color:#CCD7E6;">
+                <b style="color:#00F5FF;">🤖 ZEUS Karar Motoru (AI) Otomatik Denetim Raporu ({ev_item['risk_level']}):</b><br>
                 {' • '.join(ev_item['findings'])}
             </div>
         </div>
         """, unsafe_allow_html=True)
 
-        # Action Buttons for Decision Center
-        btn_c1, btn_c2, btn_c3, btn_c4 = st.columns([1.5, 1.5, 1.2, 2.8])
+        # Action Buttons for Decision Center with Instant State Update and Feedback
+        btn_c1, btn_c2, btn_c3, btn_c4 = st.columns([1.3, 1.3, 1.1, 1.3])
         with btn_c1:
-            if st.button(f"✅ Kararı Onayla ({s_note['id']})", key=f"btn_appr_sdc_note_{s_note['id']}_{idx_sn}", use_container_width=True):
-                s_note['status'] = 'Onaylandı & İcrada'
+            is_cur_appr = (s_note.get('status') == 'Onaylandı & İcrada')
+            btn_t1 = "primary" if is_cur_appr else "secondary"
+            if st.button(f"✅ Onayla ({s_note['id']})", key=f"btn_appr_sdc_note_{s_note['id']}_{idx_sn}", type=btn_t1, use_container_width=True):
+                st.session_state['executive_competitor_decision_notes'][idx_sn]['status'] = 'Onaylandı & İcrada'
+                st.toast(f"✅ [{s_note['id']}] {s_note['country']} kararı Onaylandı & İcrada statüsüne alındı!", icon="✅")
                 st.rerun()
         with btn_c2:
-            if st.button(f"⚠️ Şartlı / Revize ({s_note['id']})", key=f"btn_cond_sdc_note_{s_note['id']}_{idx_sn}", use_container_width=True):
-                s_note['status'] = 'Şartlı Onay / İncelemede'
+            is_cur_cond = ('Şartlı' in s_note.get('status', ''))
+            btn_t2 = "primary" if is_cur_cond else "secondary"
+            if st.button(f"⚠️ Şartlı ({s_note['id']})", key=f"btn_cond_sdc_note_{s_note['id']}_{idx_sn}", type=btn_t2, use_container_width=True):
+                st.session_state['executive_competitor_decision_notes'][idx_sn]['status'] = 'Şartlı Onay / İncelemede'
+                st.toast(f"⚠️ [{s_note['id']}] {s_note['country']} kararı Şartlı Onay / İncelemede statüsüne alındı!", icon="⚠️")
                 st.rerun()
         with btn_c3:
-            if st.button(f"❌ Reddet ({s_note['id']})", key=f"btn_rej_sdc_note_{s_note['id']}_{idx_sn}", use_container_width=True):
-                s_note['status'] = 'Revize Gerekli / Red'
+            is_cur_rej = ('Red' in s_note.get('status', ''))
+            btn_t3 = "primary" if is_cur_rej else "secondary"
+            if st.button(f"❌ Reddet ({s_note['id']})", key=f"btn_rej_sdc_note_{s_note['id']}_{idx_sn}", type=btn_t3, use_container_width=True):
+                st.session_state['executive_competitor_decision_notes'][idx_sn]['status'] = 'Revize Gerekli / Red'
+                st.toast(f"❌ [{s_note['id']}] {s_note['country']} kararı Reddedildi & Revize statüsüne alındı!", icon="❌")
                 st.rerun()
         with btn_c4:
-            st.empty()
+            with st.popover(f"✏️ Düzenle ({s_note['id']})", use_container_width=True):
+                st.markdown(f"**[{s_note['id']}] Yönetici Notunu Güncelle**")
+                pop_memo = st.text_area("✍️ Yönetici Karar Notu & Müzakere Tutanakları:", value=s_note.get('decision_note', ''), key=f"pop_memo_sdc_{s_note['id']}_{idx_sn}", height=90)
+                if st.button("💾 Notu Kaydet", key=f"btn_pop_save_{s_note['id']}_{idx_sn}", type="primary", use_container_width=True):
+                    st.session_state['executive_competitor_decision_notes'][idx_sn]['decision_note'] = pop_memo.strip()
+                    st.session_state['executive_competitor_decision_notes'][idx_sn]['timestamp'] = datetime.now().strftime("%Y-%m-%d %H:%M")
+                    st.toast(f"✓ [{s_note['id']}] notu başarıyla güncellendi!", icon="✅")
+                    st.rerun()
 
     st.markdown("<div style='height:14px;'></div>", unsafe_allow_html=True)
 
@@ -28370,7 +28557,8 @@ Web: www.zeusbioscience.com | Email: clinical@zeusbioscience.com"""
 
     st.markdown("<br>", unsafe_allow_html=True)
 
-    for q_id, q in q_dict.items():
+    for q_id, q_data in q_dict.items():
+        q = q_data
         is_appr = (q.get('status') == 'Onaylandı & İcrada')
         is_dorm = "UYUYAN" in q['status_diagnosis'] or "KRİTİK" in q['status_diagnosis'] or "SPOT" in q['status_diagnosis']
         b_col = "#FF5252" if is_dorm else "#00F5FF"
@@ -28887,6 +29075,29 @@ elif active_view in [
         render_tenders_hub()
     with t_tab2:
         render_regulations_hub()
+
+# Universal Subview Bottom Navigation Bar
+if len(active_subviews) > 1:
+    b_pills_key = f"pills_hub_{abs(hash(nav_selection)) % 100000}"
+    b_curr_view = st.session_state.get(b_pills_key, active_subviews[0])
+    b_curr_idx = active_subviews.index(b_curr_view) if b_curr_view in active_subviews else 0
+    b_prev_idx = (b_curr_idx - 1) % len(active_subviews)
+    b_next_idx = (b_curr_idx + 1) % len(active_subviews)
+
+    st.markdown("<hr style='border-color:rgba(255,255,255,0.08);margin:32px 0 16px 0;'>", unsafe_allow_html=True)
+    b_nav1, b_nav2, b_nav3 = st.columns([1.5, 2.2, 1.5])
+    with b_nav1:
+        prev_sub_label = active_subviews[b_prev_idx].split('(')[0].strip()
+        if st.button(f"◀ Önceki: {prev_sub_label}", key=f"bot_prev_nav_{b_pills_key}", use_container_width=True):
+            st.session_state[b_pills_key] = active_subviews[b_prev_idx]
+            st.rerun()
+    with b_nav2:
+        st.markdown(f"<div style='text-align:center;color:#8FA3C0;font-size:12px;padding-top:6px;'>🧭 Görünüm <b>{b_curr_idx + 1} / {len(active_subviews)}</b> · <span style='color:#00F5FF;'>{active_subviews[b_curr_idx].split('(')[0].strip()}</span></div>", unsafe_allow_html=True)
+    with b_nav3:
+        next_sub_label = active_subviews[b_next_idx].split('(')[0].strip()
+        if st.button(f"Sonraki: {next_sub_label} ▶", key=f"bot_next_nav_{b_pills_key}", use_container_width=True):
+            st.session_state[b_pills_key] = active_subviews[b_next_idx]
+            st.rerun()
 
 # Universal Bottom 'Back to Top' Button (Every Page)
 render_back_to_top_button()
