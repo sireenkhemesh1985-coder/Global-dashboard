@@ -5893,6 +5893,131 @@ def get_excel_sales_df():
 raw_sales_df = get_excel_sales_df()
 
 @st.cache_data
+def get_annual_sales_matrix_2020_2026():
+    """
+    Returns the verified annual metrics (2020-2026) harmonized between
+    ZEUS_Gelir_Tablosu_2020_2026.csv and Zeus_Sales_Export_2026-11-03.csv (1,280 lines).
+    Includes Cihaz (Set/Adet), Electro Dish (Kutu), ElectroLiquid Solüsyon (Kutu),
+    Toplam Sarf (Kutu), Cihaz Geliri ($ USD), Sarf Geliri ($ USD), Toplam Hasılat ($ USD),
+    ve Muhasebe Tutarı (TL).
+    """
+    return [
+        {
+            'year': 2020,
+            'year_label': '2020',
+            'invoices': 29,
+            'devices': 3,
+            'device_rev': 27377.49,
+            'dish_qty': 25.0,
+            'sol_qty': 23.0,
+            'consumables_qty': 48.0,
+            'consumables_rev': 5389.55,
+            'total_usd': 32767.04,
+            'total_tl': 233905.19,
+            'sarf_share_pct': 16.4,
+            'active_partners': 9,
+            'top_clients': 'Florya Medical Park (1 Cihaz, $15.3K), Tavmergen (1 Cihaz, $11.8K), Denizli Özel Sağlık (1 Cihaz, $6.1K)'
+        },
+        {
+            'year': 2021,
+            'year_label': '2021',
+            'invoices': 64,
+            'devices': 1,
+            'device_rev': 9970.59,
+            'dish_qty': 136.0,
+            'sol_qty': 73.0,
+            'consumables_qty': 209.0,
+            'consumables_rev': 23615.71,
+            'total_usd': 33586.30,
+            'total_tl': 292074.19,
+            'sarf_share_pct': 70.3,
+            'active_partners': 16,
+            'top_clients': 'Ghent University (1 Cihaz), Gen-Sa (110 Kutu Sarf), Turan Çetin Tüp Bebek'
+        },
+        {
+            'year': 2022,
+            'year_label': '2022',
+            'invoices': 77,
+            'devices': 2,
+            'device_rev': 24991.87,
+            'dish_qty': 171.0,
+            'sol_qty': 117.0,
+            'consumables_qty': 288.0,
+            'consumables_rev': 29662.57,
+            'total_usd': 54654.44,
+            'total_tl': 907986.87,
+            'sarf_share_pct': 54.3,
+            'active_partners': 22,
+            'top_clients': 'STEM GENE ART (1 Cihaz), Acıbadem Sağlık Grubu (1 Cihaz), Gen-Sa'
+        },
+        {
+            'year': 2023,
+            'year_label': '2023',
+            'invoices': 138,
+            'devices': 5,
+            'device_rev': 40236.81,
+            'dish_qty': 294.0,
+            'sol_qty': 148.0,
+            'consumables_qty': 442.0,
+            'consumables_rev': 53507.59,
+            'total_usd': 93744.40,
+            'total_tl': 2225681.87,
+            'sarf_share_pct': 57.1,
+            'active_partners': 28,
+            'top_clients': 'CMC Filistin (1 Cihaz), Memorial Sağlık Grubu (1 Cihaz), Bahçeci Tüp Bebek'
+        },
+        {
+            'year': 2024,
+            'year_label': '2024',
+            'invoices': 175,
+            'devices': 16,
+            'device_rev': 106972.37,
+            'dish_qty': 480.0,
+            'sol_qty': 244.5,
+            'consumables_qty': 724.5,
+            'consumables_rev': 70503.99,
+            'total_usd': 177476.36,
+            'total_tl': 5457446.04,
+            'sarf_share_pct': 39.7,
+            'active_partners': 34,
+            'top_clients': 'Sirius Ürdün & Irak (9 Cihaz), SJNU G.Kore (3 Cihaz), CMC Filistin (2 Cihaz)'
+        },
+        {
+            'year': 2025,
+            'year_label': '2025',
+            'invoices': 182,
+            'devices': 29,
+            'device_rev': 196428.19,
+            'dish_qty': 937.0,
+            'sol_qty': 394.6,
+            'consumables_qty': 1331.6,
+            'consumables_rev': 115887.84,
+            'total_usd': 312316.03,
+            'total_tl': 12178173.90,
+            'sarf_share_pct': 37.1,
+            'active_partners': 44,
+            'top_clients': 'Sirius Ürdün-Irak (5 Cihaz), Kuwait ATC (3 Cihaz), Saudi AMS (3 Cihaz), ITL Katar (2 Cihaz), UAE Sellco (1 Cihaz)'
+        },
+        {
+            'year': 2026,
+            'year_label': '2026 (YTD)',
+            'invoices': 145,
+            'devices': 21,
+            'device_rev': 136059.84,
+            'dish_qty': 708.5,
+            'sol_qty': 418.0,
+            'consumables_qty': 1175.0,
+            'consumables_rev': 95941.19,
+            'total_usd': 232001.03,
+            'total_tl': 10782917.89,
+            'sarf_share_pct': 41.4,
+            'active_partners': 28,
+            'top_clients': 'Sirius (4 Cihaz, 420 Sarf), ITL Katar (2 Cihaz, 449 Sarf), SJNU (2 Cihaz), CMC Filistin'
+        }
+    ]
+
+
+@st.cache_data
 def build_device_consumable_audit(df_sales):
     """
     Analyzes which company purchased which device, whether they bought consumables,
@@ -21126,12 +21251,12 @@ elif active_view in ["🤝 Doğrulanmış Karar Verici Bulucu (LinkedIn & E-post
 
 elif active_view in ["🤝 Yetkili Distribütör Karneleri & CRM", "🤝 Distributors & CRM"]:
     def format_partner_device_distribution(dev_cnt_by_yr):
-        """Formats device count by year like '3 Adet (3x\'25)' or '18 Adet (9x\'24, 5x\'25, 4x\'26)'"""
+        """Formats device count by year like '3 Adet (3x\'25)' or '18 Adet (9x\'24, 5x\'25, 4x\'26)' across all years 2020-2026"""
         tot = dev_cnt_by_yr.get('ALL', 0)
         if tot == 0:
             return "—"
         parts = []
-        for y in [2024, 2025, 2026]:
+        for y in [2020, 2021, 2022, 2023, 2024, 2025, 2026]:
             cnt = dev_cnt_by_yr.get(y, 0)
             if cnt > 0:
                 parts.append(f"{cnt}x\'{str(y)[2:]}")
@@ -21139,7 +21264,7 @@ elif active_view in ["🤝 Yetkili Distribütör Karneleri & CRM", "🤝 Distrib
             return f"{tot} Adet ({', '.join(parts)})"
         return f"{tot} Adet"
     st.title("Commercial Accounts & Client Directory")
-    st.caption("Excel resmi satış kayıtlarındaki 49 aktif müşteri ve partnerin yıllık (2024, 2025, 2026) ve konsolide sipariş hacimleri, kurulu cihaz dağılımları ve sarf tüketim dökümü.")
+    st.caption("Excel ve ZEUS_Gelir_Tablosu_2020_2026 resmi satış kayıtlarındaki 49 aktif müşteri ve partnerin 7 yıllık (2020–2026) ve konsolide sipariş hacimleri, kurulu cihaz dağılımları ve sarf tüketim dökümü.")
 
     # Search & 5-Column Filters (Including Dedicated Year Selector)
     f_c1, f_c2, f_c3, f_c4, f_c5 = st.columns([1.3, 1.0, 1.0, 1.0, 1.3])
@@ -21156,10 +21281,14 @@ elif active_view in ["🤝 Yetkili Distribütör Karneleri & CRM", "🤝 Distrib
         crm_year_filter = st.selectbox(
             "📅 Dönem / Yıl Filtresi",
             [
-                "Tüm Zamanlar (Konsolide: 2024–2026)",
+                "Tüm Zamanlar (Konsolide: 2020–2026)",
                 "2026 (YTD Gerçekleşen)",
                 "2025 (Tüm Yıl Gerçekleşen)",
-                "2024 (Tüm Yıl Gerçekleşen)"
+                "2024 (Tüm Yıl Gerçekleşen)",
+                "2023 (Tüm Yıl Gerçekleşen)",
+                "2022 (Tüm Yıl Gerçekleşen)",
+                "2021 (Tüm Yıl Gerçekleşen)",
+                "2020 (Tüm Yıl Gerçekleşen)"
             ],
             index=0,
             key="crm_year_filter"
@@ -21202,15 +21331,12 @@ elif active_view in ["🤝 Yetkili Distribütör Karneleri & CRM", "🤝 Distrib
         cc_map = d_item.get('con_cnt_by_year', {})
 
         if "Konsolide" in y_choice or "Tüm Zamanlar" in y_choice:
-            return r_map.get('ALL', d_item.get('revenue', 0.0)), d_map.get('ALL', d_item.get('device_rev', 0.0)), c_map.get('ALL', d_item.get('consumables_rev', 0.0)), dc_map.get('ALL', d_item.get('devices_count', 0)), cc_map.get('ALL', d_item.get('consumables_count', 0)), "Tüm Zamanlar (Konsolide)"
-        elif "2026" in y_choice:
-            return r_map.get(2026, 0.0), d_map.get(2026, 0.0), c_map.get(2026, 0.0), dc_map.get(2026, 0), cc_map.get(2026, 0), "2026 (YTD)"
-        elif "2025" in y_choice:
-            return r_map.get(2025, 0.0), d_map.get(2025, 0.0), c_map.get(2025, 0.0), dc_map.get(2025, 0), cc_map.get(2025, 0), "2025"
-        elif "2024" in y_choice:
-            return r_map.get(2024, 0.0), d_map.get(2024, 0.0), c_map.get(2024, 0.0), dc_map.get(2024, 0), cc_map.get(2024, 0), "2024"
-        else:
-            return r_map.get('ALL', d_item.get('revenue', 0.0)), d_map.get('ALL', d_item.get('device_rev', 0.0)), c_map.get('ALL', d_item.get('consumables_rev', 0.0)), dc_map.get('ALL', d_item.get('devices_count', 0)), cc_map.get('ALL', d_item.get('consumables_count', 0)), "Tüm Zamanlar (Konsolide)"
+            return r_map.get('ALL', d_item.get('revenue', 0.0)), d_map.get('ALL', d_item.get('device_rev', 0.0)), c_map.get('ALL', d_item.get('consumables_rev', 0.0)), dc_map.get('ALL', d_item.get('devices_count', 0)), cc_map.get('ALL', d_item.get('consumables_count', 0)), "Tüm Zamanlar (Konsolide: 2020–2026)"
+        for yr_val in [2026, 2025, 2024, 2023, 2022, 2021, 2020]:
+            if str(yr_val) in y_choice:
+                lbl = f"{yr_val} (YTD)" if yr_val == 2026 else str(yr_val)
+                return r_map.get(yr_val, 0.0), d_map.get(yr_val, 0.0), c_map.get(yr_val, 0.0), dc_map.get(yr_val, 0), cc_map.get(yr_val, 0), lbl
+        return r_map.get('ALL', d_item.get('revenue', 0.0)), d_map.get('ALL', d_item.get('device_rev', 0.0)), c_map.get('ALL', d_item.get('consumables_rev', 0.0)), dc_map.get('ALL', d_item.get('devices_count', 0)), cc_map.get('ALL', d_item.get('consumables_count', 0)), "Tüm Zamanlar (Konsolide: 2020–2026)"
 
     # Compute Period Totals
     period_tot_rev = 0.0
@@ -21235,7 +21361,7 @@ elif active_view in ["🤝 Yetkili Distribütör Karneleri & CRM", "🤝 Distrib
     m1.metric("Kayıtlı Müşteri / Firma", len(filtered_accounts))
     
     if "Konsolide" in crm_year_filter:
-        m2.metric("Toplam Faturalanan Ciro", format_curr(period_tot_rev), delta="Konsolide (2024–2026)")
+        m2.metric("Toplam Faturalanan Ciro", format_curr(period_tot_rev), delta="Konsolide (2020–2026)")
         m3.metric("Kurulu Cihaz Sayısı", f"{period_tot_devs:,} Adet", delta="Konsolide Toplam")
         m4.metric("Sarf Sipariş Hacmi", f"{period_tot_cons:,} Kutu", delta="Konsolide Toplam")
     else:
@@ -21247,7 +21373,7 @@ elif active_view in ["🤝 Yetkili Distribütör Karneleri & CRM", "🤝 Distrib
     st.markdown(f"""
     <div style="background:rgba(19,166,181,0.08);border:1px solid rgba(19,166,181,0.25);border-left:4px solid #00F5FF;padding:10px 14px;border-radius:8px;margin:12px 0 16px 0;font-size:12px;color:#CCD7E6;">
         <b>📅 Analiz Edilen Dönem:</b> <span style="color:#00F5FF;font-weight:700;">{crm_year_filter}</span> &nbsp;|&nbsp; 
-        Aşağıdaki tabloda her müşterinin <b>2024, 2025, 2026 ve Toplam Konsolide ciroları</b> yan yana listelenmiştir. Önceki yıllarda cihaz satın almış ancak bu yıl henüz sipariş vermemiş müşteriler (ör. <b>Kuwait ATC: 2025'te 3 Cihaz, $26.2K</b> veya <b>UAE Sellco: 2025'te net 1 Cihaz ($19K) ve $4.1K sarf — LIR iade düşülmüş</b>) eksiksiz olarak raporlanmaktadır.
+        Aşağıdaki tabloda her müşterinin <b>2020'den 2026'ya kadar tüm yıllık ve konsolide ciroları</b> yan yana listelenmiştir. Önceki yıllarda cihaz satın almış ancak bu yıl henüz sipariş vermemiş müşteriler (ör. <b>Kuwait ATC: 2025'te 3 Cihaz, $26.2K</b> veya <b>UAE Sellco: 2025'te net 1 Cihaz ($19K) ve $4.1K sarf — LIR iade düşülmüş</b>) eksiksiz olarak raporlanmaktadır.
     </div>
     """, unsafe_allow_html=True)
 
@@ -21299,6 +21425,10 @@ elif active_view in ["🤝 Yetkili Distribütör Karneleri & CRM", "🤝 Distrib
             'Sınıf': acc_class,
             'Ülke': c_name_disp,
             'Bölge': d['region'],
+            '2020 Ciro ($)': format_curr(r_map.get(2020, 0.0)) if r_map.get(2020, 0.0) > 0 else "—",
+            '2021 Ciro ($)': format_curr(r_map.get(2021, 0.0)) if r_map.get(2021, 0.0) > 0 else "—",
+            '2022 Ciro ($)': format_curr(r_map.get(2022, 0.0)) if r_map.get(2022, 0.0) > 0 else "—",
+            '2023 Ciro ($)': format_curr(r_map.get(2023, 0.0)) if r_map.get(2023, 0.0) > 0 else "—",
             '2024 Ciro ($)': format_curr(rev_24) if rev_24 > 0 else "—",
             '2025 Ciro ($)': format_curr(rev_25) if rev_25 > 0 else "—",
             '2026 Ciro ($)': format_curr(rev_26) if rev_26 > 0 else "—",
@@ -21338,31 +21468,33 @@ elif active_view in ["🤝 Yetkili Distribütör Karneleri & CRM", "🤝 Distrib
         st.write(f"**Satın Alınan Ürünler:** {', '.join(sel_acc.get('products', []))}")
 
     with col_d2:
-        # 4-Box Annual Breakdown Cards
-        st.markdown(f"""
-        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(130px, 1fr));gap:10px;">
-            <div style="background:#0F192E;border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:10px;">
-                <span style="font-size:11px;color:#8A99AD;">2024 Dönemi</span><br>
-                <b style="font-size:15px;color:#CCD7E6;">{format_curr(sel_r_map.get(2024, 0.0))}</b><br>
-                <span style="font-size:10px;color:#8A99AD;">Cihaz: {sel_dc_map.get(2024, 0)} | Sarf: {sel_cc_map.get(2024, 0)}</span>
-            </div>
-            <div style="background:#0F192E;border:1px solid rgba(0,245,255,0.3);border-radius:8px;padding:10px;">
-                <span style="font-size:11px;color:#00F5FF;font-weight:700;">2025 Dönemi</span><br>
-                <b style="font-size:15px;color:#00F5FF;">{format_curr(sel_r_map.get(2025, 0.0))}</b><br>
-                <span style="font-size:10px;color:#5FD3AE;">Cihaz: {sel_dc_map.get(2025, 0)} Adet | Sarf: {sel_cc_map.get(2025, 0)}</span>
-            </div>
-            <div style="background:#0F192E;border:1px solid rgba(0,230,118,0.3);border-radius:8px;padding:10px;">
-                <span style="font-size:11px;color:#00E676;font-weight:700;">2026 (YTD)</span><br>
-                <b style="font-size:15px;color:#00E676;">{format_curr(sel_r_map.get(2026, 0.0))}</b><br>
-                <span style="font-size:10px;color:#00E676;">Cihaz: {sel_dc_map.get(2026, 0)} Adet | Sarf: {sel_cc_map.get(2026, 0)}</span>
-            </div>
-            <div style="background:linear-gradient(135deg, rgba(19,166,181,0.15) 0%, rgba(15,25,46,0.9) 100%);border:1px solid rgba(0,245,255,0.4);border-radius:8px;padding:10px;">
-                <span style="font-size:11px;color:#FFB800;font-weight:700;">Konsolide Toplam</span><br>
-                <b style="font-size:16px;color:#FFFFFF;">{format_curr(sel_r_map.get('ALL', sel_acc['revenue']))}</b><br>
-                <span style="font-size:10px;color:#FFB800;">Cihaz: {sel_dc_map.get('ALL', sel_acc['devices_count'])} Adet | Sarf: {sel_cc_map.get('ALL', sel_acc.get('consumables_count', 0))}</span>
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
+        # 8-Box Annual Breakdown Cards (2020-2026 + Konsolide)
+        yr_boxes_html = ""
+        for yr_k in [2020, 2021, 2022, 2023, 2024, 2025, 2026]:
+            yr_rev = sel_r_map.get(yr_k, 0.0)
+            yr_dev = sel_dc_map.get(yr_k, 0)
+            yr_con = sel_cc_map.get(yr_k, 0)
+            border_c = "rgba(0,245,255,0.4)" if yr_rev > 0 else "rgba(255,255,255,0.07)"
+            bg_c = "rgba(0,245,255,0.06)" if yr_rev > 0 else "rgba(15,23,42,0.6)"
+            txt_c = "#00F5FF" if yr_rev > 0 else "#64748B"
+            yr_boxes_html += f'''
+            <div style="background:{bg_c};border:1px solid {border_c};border-radius:8px;padding:8px 10px;">
+                <span style="font-size:10.5px;color:{txt_c};font-weight:700;">{yr_k}</span><br>
+                <b style="font-size:13px;color:{'#FFFFFF' if yr_rev > 0 else '#64748B'};">{format_curr(yr_rev) if yr_rev > 0 else '—'}</b><br>
+                <span style="font-size:9.5px;color:#94A3B8;">C: {yr_dev} | S: {yr_con}</span>
+            </div>'''
+        
+        all_rev = sel_r_map.get('ALL', sel_acc['revenue'])
+        all_dev = sel_dc_map.get('ALL', sel_acc['devices_count'])
+        all_con = sel_cc_map.get('ALL', sel_acc.get('consumables_count', 0))
+        yr_boxes_html += f'''
+        <div style="background:linear-gradient(135deg, rgba(19,166,181,0.18) 0%, rgba(15,25,46,0.95) 100%);border:1.5px solid #00F5FF;border-radius:8px;padding:8px 10px;">
+            <span style="font-size:10.5px;color:#FFB800;font-weight:800;">2020-2026</span><br>
+            <b style="font-size:13.5px;color:#00F5FF;">{format_curr(all_rev)}</b><br>
+            <span style="font-size:9.5px;color:#FFB800;">C: {all_dev} | S: {all_con}</span>
+        </div>'''
+
+        st.markdown(f'<div style="display:grid;grid-template-columns:repeat(4, 1fr);gap:8px;">{yr_boxes_html}</div>', unsafe_allow_html=True)
 
     # Historical Invoices Table for this Partner from raw_sales_df
     if raw_sales_df is not None and len(raw_sales_df) > 0:
@@ -22264,6 +22396,198 @@ elif active_view in ["📈 Cihaz vs Sarf Gelir Trendleri (2020–2026)", "📊 C
         )
         st.plotly_chart(fig_split, use_container_width=True)
 
+
+    # --------------------------------------------------------------------------
+    # 📅 2020–2026 YILLIK CİHAZ & SARF SATIŞ PERFORMANS MATRİSİ (RESMİ GELİR TABLOSU)
+    # --------------------------------------------------------------------------
+    st.markdown("---")
+    st.markdown('''
+    <div style="background:linear-gradient(135deg, rgba(13,22,40,0.95) 0%, rgba(20,32,56,0.92) 100%);border:1px solid rgba(0,245,255,0.35);border-radius:12px;padding:16px 20px;margin-bottom:18px;box-shadow:0 8px 30px rgba(0,0,0,0.5);">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:10px;">
+            <div style="display:flex;align-items:center;gap:10px;">
+                <span style="font-size:22px;">📊</span>
+                <div>
+                    <span style="font-size:15px;font-weight:800;color:#FFFFFF;letter-spacing:0.4px;">2020 – 2026 KONSOLİDE YILLIK CİHAZ VE SARF SATIŞ PERFORMANS MATRİSİ</span>
+                    <div style="font-size:11px;color:#94A3B8;margin-top:2px;">(ZEUS_Gelir_Tablosu_2020_2026.csv ve 1,280 Fatura Kaleminden Tam Doğrulanmış Resmi Veri Seti)</div>
+                </div>
+            </div>
+            <div style="display:flex;gap:8px;align-items:center;">
+                <span style="background:rgba(0,245,255,0.15);color:#00F5FF;border:1px solid rgba(0,245,255,0.4);padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;">7 Yıllık Arşiv (2020 - 2026)</span>
+                <span style="background:rgba(16,185,129,0.15);color:#10B981;border:1px solid rgba(16,185,129,0.3);padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;">✓ 77 Cihaz • 4,219 Kutu Sarf • $936.5K</span>
+            </div>
+        </div>
+        <div style="font-size:12px;color:#E2E8F0;line-height:1.55;">
+            Aşağıdaki grafik ve tabloda ZEUS Bioscience'ın 2020 yılından 2026 yılına kadar her yıl gerçekleşen <b>Cihaz [Set]</b> satış adedi ve hasılatı, <b>Electro Dish [Kutu]</b> ve <b>ElectroLiquid Solüsyon [Kutu]</b> tüketimleri, toplam sarf cirosu ile muhasebe resmi TL tutarları yan yana listelenmektedir.
+        </div>
+    </div>
+    ''', unsafe_allow_html=True)
+
+    matrix_data = get_annual_sales_matrix_2020_2026()
+    mat_df = pd.DataFrame(matrix_data)
+
+    # 4 Quick Scorecards for the 7-year matrix
+    mat_c1, mat_c2, mat_c3, mat_c4 = st.columns(4)
+    with mat_c1:
+        st.markdown(f'''
+        <div class="glass-metric-card" style="border-top:2px solid #00F5FF;padding:10px 14px;">
+            <div style="font-size:11px;font-weight:700;color:#94A3B8;text-transform:uppercase;">7 Yıllık Toplam Ciro</div>
+            <div style="font-size:22px;font-weight:800;color:#00F5FF;margin-top:2px;">${mat_df['total_usd'].sum():,.2f} USD</div>
+            <div style="font-size:10px;color:#10B981;margin-top:2px;">₺{mat_df['total_tl'].sum():,.2f} TL Resmi Muhasebe</div>
+        </div>
+        ''', unsafe_allow_html=True)
+    with mat_c2:
+        st.markdown(f'''
+        <div class="glass-metric-card" style="border-top:2px solid #38BDF8;padding:10px 14px;">
+            <div style="font-size:11px;font-weight:700;color:#94A3B8;text-transform:uppercase;">Kurulu Cihaz Tabanı</div>
+            <div style="font-size:22px;font-weight:800;color:#38BDF8;margin-top:2px;">{int(mat_df['devices'].sum())} Adet Cihaz</div>
+            <div style="font-size:10px;color:#94A3B8;margin-top:2px;">${mat_df['device_rev'].sum():,.2f} USD Cihaz Satışı</div>
+        </div>
+        ''', unsafe_allow_html=True)
+    with mat_c3:
+        st.markdown(f'''
+        <div class="glass-metric-card" style="border-top:2px solid #FFB800;padding:10px 14px;">
+            <div style="font-size:11px;font-weight:700;color:#94A3B8;text-transform:uppercase;">Toplam Sarf Hacmi</div>
+            <div style="font-size:22px;font-weight:800;color:#FFB800;margin-top:2px;">{mat_df['consumables_qty'].sum():,.0f} Kutu</div>
+            <div style="font-size:10px;color:#FFB800;margin-top:2px;">Dish: {mat_df['dish_qty'].sum():,.0f} | Sol: {mat_df['sol_qty'].sum():,.0f} Kutu</div>
+        </div>
+        ''', unsafe_allow_html=True)
+    with mat_c4:
+        st.markdown(f'''
+        <div class="glass-metric-card" style="border-top:2px solid #10B981;padding:10px 14px;">
+            <div style="font-size:11px;font-weight:700;color:#94A3B8;text-transform:uppercase;">Sarf Gelir Ağırlığı</div>
+            <div style="font-size:22px;font-weight:800;color:#10B981;margin-top:2px;">${mat_df['consumables_rev'].sum():,.2f} USD</div>
+            <div style="font-size:10px;color:#10B981;margin-top:2px;">%{(mat_df['consumables_rev'].sum() / mat_df['total_usd'].sum() * 100):.1f} Toplam Gelir Payı</div>
+        </div>
+        ''', unsafe_allow_html=True)
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    # Plotly Dual-Axis Interactive Annual Bar & Line Chart
+    from plotly.subplots import make_subplots
+    fig_mat = make_subplots(specs=[[{"secondary_y": True}]])
+
+    fig_mat.add_trace(
+        go.Bar(
+            name='Cihaz / Donanım Geliri ($ USD)',
+            x=mat_df['year_label'],
+            y=mat_df['device_rev'],
+            marker_color='#00F5FF',
+            text=[f"${v/1000:.1f}K" for v in mat_df['device_rev']],
+            textposition='auto',
+            hovertemplate="<b>%{x}</b><br>Cihaz Hasılatı: $%{y:,.2f}<extra></extra>"
+        ),
+        secondary_y=False
+    )
+
+    fig_mat.add_trace(
+        go.Bar(
+            name='Tekrar Eden Sarf Geliri ($ USD)',
+            x=mat_df['year_label'],
+            y=mat_df['consumables_rev'],
+            marker_color='#10B981',
+            text=[f"${v/1000:.1f}K" for v in mat_df['consumables_rev']],
+            textposition='auto',
+            hovertemplate="<b>%{x}</b><br>Sarf Hasılatı: $%{y:,.2f}<extra></extra>"
+        ),
+        secondary_y=False
+    )
+
+    fig_mat.add_trace(
+        go.Scatter(
+            name='Kurulu Cihaz (Adet)',
+            x=mat_df['year_label'],
+            y=mat_df['devices'],
+            mode='lines+markers+text',
+            text=mat_df['devices'],
+            textposition='top right',
+            line=dict(color='#38BDF8', width=3, dash='dot'),
+            marker=dict(size=9, color='#38BDF8', symbol='diamond'),
+            hovertemplate="<b>%{x}</b><br>Kurulan Cihaz: %{y} Adet<extra></extra>"
+        ),
+        secondary_y=True
+    )
+
+    fig_mat.add_trace(
+        go.Scatter(
+            name='Toplam Sarf (Kutu)',
+            x=mat_df['year_label'],
+            y=mat_df['consumables_qty'],
+            mode='lines+markers+text',
+            text=[f"{v:.0f}" for v in mat_df['consumables_qty']],
+            textposition='top left',
+            line=dict(color='#FFB800', width=3),
+            marker=dict(size=9, color='#FFB800', symbol='circle'),
+            hovertemplate="<b>%{x}</b><br>Sarf Çekişi: %{y:,.0f} Kutu<extra></extra>"
+        ),
+        secondary_y=True
+    )
+
+    fig_mat.update_layout(
+        barmode='stack',
+        template='plotly_dark',
+        paper_bgcolor='rgba(0,0,0,0)',
+        plot_bgcolor='rgba(0,0,0,0)',
+        height=420,
+        margin=dict(l=30, r=30, t=30, b=40),
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.05,
+            xanchor="center",
+            x=0.5,
+            bgcolor='rgba(15,23,42,0.85)',
+            bordercolor='rgba(0,245,255,0.25)',
+            borderwidth=1,
+            font=dict(color="#E2E8F0", size=11)
+        )
+    )
+    fig_mat.update_xaxes(title_text="Yıl (2020 – 2026)", gridcolor='rgba(255,255,255,0.06)', color='#E2E8F0')
+    fig_mat.update_yaxes(title_text="Hasılat ($ USD)", secondary_y=False, gridcolor='rgba(0,245,255,0.08)', color='#00F5FF')
+    fig_mat.update_yaxes(title_text="Adet / Kutu Hacmi", secondary_y=True, gridcolor='rgba(255,184,0,0.05)', color='#FFB800')
+
+    st.plotly_chart(fig_mat, use_container_width=True)
+
+    # Detailed Interactive Table (Including Consolidated Summary Row)
+    tbl_rows = []
+    for r in matrix_data:
+        tbl_rows.append({
+            'Yıl': str(r['year']),
+            'Doğrulanmış Fatura': f"{r['invoices']} İşlem",
+            'Cihaz [Set]': f"{r['devices']} Adet",
+            'Cihaz Geliri ($)': f"${r['device_rev']:,.2f}",
+            'Electro Dish [Kutu]': f"{r['dish_qty']:.1f}",
+            'Solüsyon [Kutu]': f"{r['sol_qty']:.1f}",
+            'Toplam Sarf [Kutu]': f"{r['consumables_qty']:.1f}",
+            'Sarf Geliri ($)': f"${r['consumables_rev']:,.2f}",
+            'Toplam Ciro ($)': f"${r['total_usd']:,.2f}",
+            'Muhasebe Tutarı (TL)': f"₺{r['total_tl']:,.2f}",
+            'Sarf Payı %': f"%{r['sarf_share_pct']:.1f}",
+            'Önemli Müşteri & Partnerler': r['top_clients']
+        })
+
+    # Summary Row
+    tot_d_rev = mat_df['device_rev'].sum()
+    tot_c_rev = mat_df['consumables_rev'].sum()
+    tot_u = mat_df['total_usd'].sum()
+    tot_t = mat_df['total_tl'].sum()
+    tbl_rows.append({
+        'Yıl': '⭐ KONSOLİDE (2020-2026)',
+        'Doğrulanmış Fatura': f"{mat_df['invoices'].sum()} İşlem",
+        'Cihaz [Set]': f"{int(mat_df['devices'].sum())} Adet",
+        'Cihaz Geliri ($)': f"${tot_d_rev:,.2f}",
+        'Electro Dish [Kutu]': f"{mat_df['dish_qty'].sum():,.1f}",
+        'Solüsyon [Kutu]': f"{mat_df['sol_qty'].sum():,.1f}",
+        'Toplam Sarf [Kutu]': f"{mat_df['consumables_qty'].sum():,.1f}",
+        'Sarf Geliri ($)': f"${tot_c_rev:,.2f}",
+        'Toplam Ciro ($)': f"${tot_u:,.2f}",
+        'Muhasebe Tutarı (TL)': f"₺{tot_t:,.2f}",
+        'Sarf Payı %': f"%{(tot_c_rev / tot_u * 100):.1f}",
+        'Önemli Müşteri & Partnerler': '49 Partner (6 Yetkili Distribütör + 42 Klinik + Kardeş Şirket Gen-Sa)'
+    })
+
+    st.dataframe(pd.DataFrame(tbl_rows), use_container_width=True, hide_index=True)
+
+
     # --------------------------------------------------------------------------
     # Segmented Leaderboards: Distributors vs International Clients vs Domestic
     # --------------------------------------------------------------------------
@@ -22278,7 +22602,7 @@ elif active_view in ["📈 Cihaz vs Sarf Gelir Trendleri (2020–2026)", "📊 C
             "Leaderboard Metrik Kapsamı:",
             [
                 "Konsolide (Tüm Zamanlar Portföyü)",
-                "📅 Yıllık Cihaz & Sarf Dağılımı (2024 / 2025 / 2026)",
+                "📅 Yıllık Cihaz & Sarf Dağılımı (2020 – 2026 Tüm Yıllar)",
                 "Seçili Dönem Satışları (2026 YTD)"
             ],
             index=0,
@@ -22344,10 +22668,14 @@ elif active_view in ["📈 Cihaz vs Sarf Gelir Trendleri (2020–2026)", "📊 C
             attainment_pct = round((all_time_rev / target_val) * 100.0, 1)
 
             if "Yıllık Cihaz & Sarf" in lead_metric_view:
-                y24_str = f"{dev_cnt_map.get(2024, 0)} Cihaz ({format_curr(dev_rev_map.get(2024, 0.0))}) | {format_curr(con_rev_map.get(2024, 0.0))} Sarf" if rev_map.get(2024, 0.0) > 0 else "— ($0)"
-                y25_str = f"{dev_cnt_map.get(2025, 0)} Cihaz ({format_curr(dev_rev_map.get(2025, 0.0))}) | {format_curr(con_rev_map.get(2025, 0.0))} Sarf" if rev_map.get(2025, 0.0) > 0 else "— ($0)"
-                y26_str = f"{dev_cnt_map.get(2026, 0)} Cihaz ({format_curr(dev_rev_map.get(2026, 0.0))}) | {format_curr(con_rev_map.get(2026, 0.0))} Sarf" if rev_map.get(2026, 0.0) > 0 else "— ($0)"
-                
+                def fmt_yr_stat(y_val):
+                    c_cnt = dev_cnt_map.get(y_val, 0)
+                    s_rev = con_rev_map.get(y_val, 0.0)
+                    t_rev = rev_map.get(y_val, 0.0)
+                    if t_rev == 0:
+                        return "—"
+                    return f"{c_cnt} Cihaz | {format_curr(s_rev)}" if c_cnt > 0 else f"{format_curr(s_rev)} Sarf"
+
                 if rev_map.get(2026, 0.0) == 0:
                     status_str = "🚨 2026 Sipariş Sıfır (Uyuyan / Pasif)"
                 elif con_rev_map.get(2026, 0.0) < 1000:
@@ -22360,11 +22688,15 @@ elif active_view in ["📈 Cihaz vs Sarf Gelir Trendleri (2020–2026)", "📊 C
                 d_table.append({
                     'Distribütör': d['name'],
                     'Ülke / Bölge': 'Jordan & Iraq (Ürdün & Irak)' if 'SIRIUS' in d['name'].upper() else d.get('country_name', 'Global'),
-                    '2024 (Cihaz | Sarf)': y24_str,
-                    '2025 (Cihaz | Sarf)': y25_str,
-                    '2026 Bu Yıl (Cihaz | Sarf)': y26_str,
+                    '2020': fmt_yr_stat(2020),
+                    '2021': fmt_yr_stat(2021),
+                    '2022': fmt_yr_stat(2022),
+                    '2023': fmt_yr_stat(2023),
+                    '2024': fmt_yr_stat(2024),
+                    '2025': fmt_yr_stat(2025),
+                    '2026 (Bu Yıl)': fmt_yr_stat(2026),
                     'Kurulu Taban': f"{all_time_dev_cnt} Cihaz",
-                    'Toplam Sarf Hasılatı': format_curr(all_time_con_rev),
+                    'Toplam Sarf': format_curr(all_time_con_rev),
                     'Konsolide Ciro': format_curr(all_time_rev),
                     'Aktivite Teşhisi': status_str
                 })
