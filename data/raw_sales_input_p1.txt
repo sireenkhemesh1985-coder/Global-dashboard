@@ -1,0 +1,156 @@
+Kurum Adı,Sipariş Tarihi,Electro Dish [Kutu],ElectroLiquid Solüsyon [Kutu],Cihaz [Set],Toplam Tutar,Toplam Tutar (USD),Notlar,
+İstanbul Medical Park Florya,2020-06-27,1,1,1,105167.972,15340,"Haziran Ayında 
+106.138,50 TL
+15.481,60 USD 
+Tutarında Fatura Kesilmiştir.",(GENSA)
+Adana Turan Çetin Tüp Bebek,2020-06-29,1,0,0,970.53,141.6,,(GENSA)
+Denizli Özel Sağlık,2020-07-09,5,0,0,6075.26,885,"Temmuz Ayında 
+14.292,09 TL
+2.077,84 USD
+Tutarında Fatura Kesilmiştir.",(GENSA)
+Adana Turan Çetin Tüp Bebek,2020-07-18,1,0,0,970.86,141.6,,(GENSA)
+Adana Turan Çetin Tüp Bebek,2020-07-27,1,0,0,969.49,141.6,,(GENSA)
+Diyarbakır Diyarlife ,2020-07-27,1,1,1,5000.01,730.28,,
+Adana Turan Çetin Tüp Bebek,2020-07-28,0,1,0,581.77,84.96,,
+İstanbul Acıbadem Sağlık ,2020-07-31,0,1,0,694.7,94.4,,
+İskenderun Palmiye IVF,2020-08-19,1,0,0,1306.44,177,"Ağustos Ayında 
+91.183.62 TL
+12.354,60 USD
+Tutarında Fatura Kesilmiştir.",
+İstanbul Medical Park Florya,2020-08-26,0,3,0,2090.22,283.2,,
+İzmir Tavmergen ,2020-08-26,1,1,1,87092.26,11800,,
+İstanbul Acıbadem Sağlık ,2020-08-31,0,1,0,694.7,94.4,,
+Adana Turan Çetin Tüp Bebek,2020-09-15,1,0,0,1187.25,159.3,"Eylül Ayında 
+3.148,86 TL
+413,00 USD
+Tutarında Fatura Kesilmiştir.",
+İstanbul Acıbadem Sağlık ,2020-09-25,0,1,0,724.69,94.4,,
+Adana Turan Çetin Tüp Bebek,2020-09-29,1,0,0,1236.92,159.3,,
+Adana Turan Çetin Tüp Bebek,2020-10-05,0,1,0,657.82,84.96,"Ekim Ayında 
+6.502,77 TL
+816,56 USD
+Tutarında Fatura Kesilmiştir.",
+İstanbul Medical Park Florya,2020-10-09,0,1,0,746.45,94.4,,
+Adana Turan Çetin Tüp Bebek,2020-10-12,2,0,0,2523.79,318.6,,
+İstanbul Acıbadem Sağlık ,2020-10-27,0,1,0,750.69,94.4,,
+İskenderun Palmiye IVF,2020-10-30,1,1,0,1824.02,224.2,,
+Adana Turan Çetin Tüp Bebek,2020-11-09,0,1,0,720.16,84.96,"Kasım Ayında 
+4.995,78 TL
+631,06 USD
+Tutarında Fatura Kesilmiştir.",
+Diyarbakır Diyarlife ,2020-11-09,1,1,0,1000.23,118,,
+İstanbul Medical Park Florya,2020-11-14,0,2,0,1443.09,188.8,,
+Adana Turan Çetin Tüp Bebek,2020-11-16,1,0,0,1217.6,159.3,,
+RSM Bakü,2020-11-20,0,1,0,614.7,80,,
+Adana Turan Çetin Tüp Bebek,2020-12-07,1,0,0,1239.29,159.3,"Aralık Ayında 
+7.643,57 TL
+992,38 USD
+Tutarında Fatura Kesilmiştir.",
+İstanbul Acıbadem Sağlık ,2020-12-18,0,1,0,736.44,94.4,,
+İzmir Tavmergen ,2020-12-22,5,2,0,4954.96,644.28,,
+Adana Turan Çetin Tüp Bebek,2020-12-28,0,1,0,712.88,94.4,,
+,,,,,,,,
+,,25,23,3,233905.19200000007,32767.04,,
+Kurum Adı,Sipariş Tarihi,Electro Dish [Kutu],ElectroLiquid Solüsyon [Kutu],Cihaz [Set],Toplam Tutar (TL),Toplam Tutar (USD),Notlar
+Adana Turan Çetin Tüp Bebek,2021-01-04,1,0,0,1313.24,177,"Ocak Ayında 
+8.899,01 TL 
+1.195,34 USD
+Tutarında Fatura Kesilmiştir."
+İstanbul Medical Park Florya,2021-01-06,0,1,0,698.55,94.4,
+İskenderun Palmiye Tüp Bebek,2021-01-13,1,0,0,1320.56,177,
+Adana Turan Çetin Tüp Bebek,2021-01-20,1,0,0,1188.68,159.3,
+İzmir Tavmergen IVF,2021-01-21,5,1,0,4377.98,587.64,
+Adana Turan Çetin Tüp Bebek,2021-02-01,0,1,0,623.16,84.96,"Şubat Ayında 
+10.151,29 TL
+1.436,06 USD
+Tutarında Fatura Kesilmiştir."
+Adana Turan Çetin Tüp Bebek,2021-02-11,5,0,0,5626.48,796.5,
+İstanbul Medical Park Florya,2021-02-11,0,2,0,1333.68,188.8,
+İstanbul Acıbadem Sağlık ,2021-02-18,0,1,0,666.84,94.4,
+İskenderun Palmiye Tüp Bebek,2021-02-18,1,0,0,1239.71,177,
+İstanbul Acıbadem Sağlık ,2021-02-23,0,1,0,661.42,94.4,
+Diyarbakır Diyarlife IVF,2021-03-03,0,1,0,432.16,59,"Mart Ayında 
+8.242.11 TL
+1.054.92 USD
+Tutarında Fatura Kesilmiştir."
+İzmir Tavmergen IVF,2021-03-06,5,1,0,4207.82,559.32,
+Adana Turan Çetin Tüp Bebek,2021-03-09,0,1,0,646.33,84.96,
+İskenderun Palmiye Tüp Bebek,2021-03-10,1,0,0,1598.61,177,
+Diyarbakır Diyarlife IVF,2021-03-18,0,2,0,884.76,118,
+İzmir Tavmergen IVF,2021-03-31,0,1,0,472.43,56.64,
+Adana Turan Çetin Tüp Bebek,2021-04-06,0,1,0,817.46,84.96,"Nisan Ayında 
+9.430,58 TL
+969,96 USD
+Tutarında Fatura Kesilmiştir."
+İstanbul Medical Park Florya,2021-04-06,0,2,0,1816.58,188.8,
+Cihangir Çakıcı IVF,2021-04-10,0,1,0,567.61,59,
+Adana Turan Çetin Tüp Bebek,2021-04-26,4,0,0,6228.93,637.2,
+İzmir Tavmergen IVF,2021-05-03,5,1,0,5440.49,559.32,"Mayıs Ayında 
+33.318,83 TL
+3.709,96 USD
+Tutarında Fatura Kesilmiştir."
+Denizli Özel Sağlık,2021-05-05,5,1,0,10547.33,1073.8,
+Denizli Özel Sağlık,2021-05-17,5,1,0,8152.62,979.4,
+İstanbul Medical Park Florya,2021-05-17,0,2,0,1567.34,188.8,
+İzmir Tavmergen IVF,2021-05-18,0,1,0,473.62,56.64,
+İzmir Tavmergen IVF,2021-05-20,5,0,0,4436.82,531,
+Agen Biyoteknoloji (Fastener),2021-05-21,2,0,0,1981.77,236,
+Adana Turan Çetin Tüp Bebek,2021-05-27,0,1,0,718.84,85,
+İzmir Tavmergen IVF,2021-06-03,5,1,0,5084.03,587.64,"Haziran Ayında 
+139.187,67 TL
+16.594,94 USD
+Tutarında Fatura Kesilmiştir."
+İskenderun Palmiye Tüp Bebek,2021-06-03,1,0,0,1531.33,177,
+İstanbul Medical Park Florya,2021-06-09,0,2,0,813.49,94.4,
+Ukrayna IVMED,2021-06-11,26,8,1,113663.99,13560,
+Denizli Özel Sağlık,2021-06-11,5,1,0,8152.62,979.4,
+İzmir Tavmergen IVF,2021-06-11,5,1,0,4612.1,559.3,
+Adana Turan Çetin Tüp Bebek,2021-06-14,4,0,0,5330.11,637.2,
+Cihangir Çakıcı IVF,2021-07-07,2,1,0,3121.41,359.9,"Temmuz Ayında 
+14.797,18 TL
+1.714,60 USD
+Tutarında Fatura Kesilmiştir."
+İzmir Tavmergen IVF,2021-07-07,5,1,0,4854.95,559.3,
+Diyarbakır Diyarlife IVF,2021-07-10,0,1,0,513.31,59,
+Adana Turan Çetin Tüp Bebek,2021-07-12,0,2,0,1471.59,170,
+İstanbul Medical Park Florya,2021-07-17,0,6,0,4835.92,566.4,
+İzmir Tavmergen IVF,2021-08-05,0,1,0,478.44,56.64,"Ağustos Ayında 
+14.705,06 TL
+1.718,08 USD
+Tutarında Fatura Kesilmiştir."
+İstanbul Acıbadem Sağlık ,2021-08-05,0,1,0,797.41,94.4,
+Denizli Özel Sağlık,2021-08-11,5,1,0,8474.65,979.4,
+İzmir Tavmergen IVF,2021-08-18,5,0,0,4482.65,531,
+İzmir Tavmergen IVF,2021-08-31,0,1,0,471.91,56.64,
+Adana Turan Çetin Tüp Bebek,2021-09-06,4,0,0,5303.03,637.2,"Eylül Ayında 
+11.110,45 TL
+1.323,00 USD
+Tutarında Fatura Kesilmiştir."
+Ukrayna IVMED,2021-09-16,0,4,0,2709.79,320,
+İstanbul Medical Park Florya,2021-09-17,1,2,0,3097.63,365.8,
+Diyarbakır Diyarlife IVF,2021-10-02,0,1,0,523.69,59,"Ekim Ayında 
+11.090,24 TL
+1.230,96 USD
+Tutarında Fatura Kesilmiştir."
+İzmir Tavmergen IVF,2021-10-05,5,1,0,5219.12,587.64,
+Adana Turan Çetin Tüp Bebek,2021-10-11,1,1,0,1171.58,131.2,
+İstanbul Medical Park Florya,2021-10-14,0,3,0,2563.53,283.2,
+Adana Turan Çetin Tüp Bebek,2021-10-27,0,2,0,1612.32,169.92,
+İskenderun Palmiye Tüp Bebek,2021-11-05,1,0,0,1720.51,177,"Kasım Ayında 
+12.389,71 TL
+1.236,64 USD
+Tutarında Fatura Kesilmiştir."
+İzmir Tavmergen IVF,2021-11-10,5,1,0,5720.68,587.64,
+İstanbul Acıbadem Sağlık ,2021-11-15,0,1,0,837.16,94.4,
+İstanbul Medical Park Florya,2021-11-22,0,3,0,3174.13,283.2,
+İstanbul Acıbadem Sağlık ,2021-11-25,0,1,0,937.23,94.4,
+Adana Turan Çetin Tüp Bebek,2021-12-02,1,0,0,2368.31,177,"Aralık Ayında 
+18.752,06 TL
+1.401,84 USD
+Tutarında Fatura Kesilmiştir."
+İzmir Tavmergen IVF,2021-12-14,5,1,0,8399.43,587.64,
+Adana Turan Çetin Tüp Bebek,2021-12-20,1,0,0,2320.8,141.6,
+İskenderun Palmiye Tüp Bebek,2021-12-28,1,0,0,2022.69,177,
+Adana Turan Çetin Tüp Bebek,2021-12-28,2,0,0,3640.83,318.6,
+,,,,,,,
+,,136,73,1,292074.18999999994,33586.3,

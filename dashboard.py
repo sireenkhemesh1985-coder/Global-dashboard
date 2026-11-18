@@ -1631,7 +1631,7 @@ MARKET_KNOWLEDGE_BASE = {
         'expert_stance': 'Yüksek Hacim & Prestij Ortaklığı (Teknoloji Liderliği)',
         'expert_max_discount': 10.0,
         'expert_rec_sarf_disc': 12.0,
-        'clinical_dynamics': 'Kore dünyanın en düşük doğum oranına (0.72) sahip olup, devlet tüp bebek tedavilerini sınırsız desteklemektedir. Cha Medical, Maria Fertility gibi dev zincirler en son teknolojiyi (Piezo ICSI) arar.',
+        'clinical_dynamics': 'Kore dünyanın en düşük doğum oranına (0.72) sahip olup, devlet tüp bebek tedavilerini sınırsız desteklemektedir. Cha Medical, Maria Fertility gibi dev zincirler en son teknolojiyi (Elektriksel AOA) arar.',
         'regulatory_watch': 'MFDS (Ministry of Food and Drug Safety) tıbbi cihaz kayıt ve KGMP (Korea Good Manufacturing Practice) belgelendirmesi şarttır.',
         'competitor_threat': 'Japon NIKON, Narishige ve Olympus pazarda güçlü; ZEUS Pulse Stimulator (Elektriksel AOA) hassasiyetiyle bu markaların mikromanipülatörlerine mükemmel entegre olmaktadır.',
         'commercial_guardrails': 'SJNU Inc. ile yıllık en az 10 cihaz ve 400 kutu sarf kotası tanımlanmalı; Kore pazarında başarı Asya-Pasifik açılımının anahtarıdır.',
@@ -1641,7 +1641,7 @@ MARKET_KNOWLEDGE_BASE = {
                 'title': 'Tıbbi Cihazlar Yasası Kapsamında KGMP Denetim ve Sınıf II Tescil Kararı',
                 'date': '2024-04-05',
                 'status': '🟢 Yürürlükte / Zorunlu',
-                'summary': 'Kore sınırlarında Piezo hücre stimülatörlerinin satışı için MFDS KGMP kalite denetimi ve yerel temsilci (SJNU INC) yetkilendirmesi zorunludur.',
+                'summary': 'Kore sınırlarında ZEUS Pulse Stimulator (AOA) cihazlarının satışı için MFDS KGMP kalite denetimi ve yerel temsilci (SJNU INC) yetkilendirmesi zorunludur.',
                 'impact_zeus': 'SJNU INC adına düzenlenen KGMP tescil sertifikası 2027 sonuna kadar tam geçerlidir.',
                 'consumable_rule': 'İthal dish ve solüsyonlarda partiye özel endotoksin ve sitotoksisite analiz dökümleri aranır.'
             },
@@ -2070,7 +2070,7 @@ MARKET_KNOWLEDGE_BASE = {
                 'title': 'Tıbbi Cihaz ve Sarf Malzemeleri Devlet Tescili Kararı',
                 'date': '2023-12-05',
                 'status': '🟢 Yürürlükte / Zorunlu',
-                'summary': 'Bakü tüp bebek kliniklerinde kullanılacak Piezo cihazları ve sarf medyaları için AEM Devlet Tescil Şehadetnamesi ve menşe belgesi zorunludur.',
+                'summary': 'Bakü tüp bebek kliniklerinde kullanılacak ZEUS Pulse Stimulator cihazları ve sarf medyaları için AEM Devlet Tescil Şehadetnamesi ve menşe belgesi zorunludur.',
                 'impact_zeus': 'Türkiye TİTCK referanslı belgeler tescil sürecini hızlandırmaktadır.',
                 'consumable_rule': 'Parti analiz sertifikası faturaya eklenmelidir.'
             }
@@ -2130,7 +2130,7 @@ MARKET_KNOWLEDGE_BASE = {
                 'title': 'Dispositivi Medici per Procreazione Medicalmente Assistita (PMA) — Registro Nazionale',
                 'date': '2024-03-12',
                 'status': '🟢 Yürürlükte / Zorunlu',
-                'summary': 'Tüm piezo mikroenjeksiyon ve embriyoloji sarf malzemeleri Sağlık Bakanlığı RDM veritabanına kayıtlı olmalıdır.',
+                'summary': 'Tüm oosit stimülasyon ve mikroenjeksiyon ve embriyoloji sarf malzemeleri Sağlık Bakanlığı RDM veritabanına kayıtlı olmalıdır.',
                 'impact_zeus': 'ZEUS CE Device Certified Class IIa sertifikamız RDM sistemine doğrudan entegredir.',
                 'consumable_rule': 'Lot bazlı MEA >%80 ve Endotoxin <0.05 EU/ml sertifikası aranır.'
             }
@@ -3030,7 +3030,7 @@ COUNTRY_DEEP_INTELLIGENCE = {
             'target_segments': 'Büyük özel tüp bebek hastaneleri (Nile IVF, Egyptian IVF Center, Bedaya Hospital), Kahire & İskenderiye hekim-patron klinikleri (%85 pazar payı), üniversite araştırma merkezleri.',
             'channel_model': 'Kahire merkezli soğuk zincir ve teknik servis altyapısına sahip yetkili MedTech distribütörlüğü + doğrudan özel klinik konsinye ve aplikasyon destek modeli.',
             'clinical_pitch': 'Total Döllenme Başarısızlığı (TFF) vakalarında Elektriksel Oosit Aktivasyonu (AOA) protokolü ile 2PN oranını %24.6\'dan %82.3\'e çıkarma, sub-%1 oosit lizis oranı ve CE Device Certified güvencesi.',
-            'objection_handling': '"Döviz kısıtı var" itirazına: Sarf alım taahhüdü karşılığı cihaz taksitlendirmesi ve navlun muafiyeti sunun. "Mevcut mikromanipülatörle uyumlu mu?" sorusuna: Narishige ve Research Instruments mikromanipülatörlerine tak-çalıştır piezo adaptörü güvencesi verin.',
+            'objection_handling': '"Döviz kısıtı var" itirazına: Sarf alım taahhüdü karşılığı cihaz taksitlendirmesi ve navlun muafiyeti sunun. "Mevcut mikromanipülatörle uyumlu mu?" sorusuna: Narishige ve Research Instruments mikromanipülatörlerine tak-çalıştır elektriksel adaptörü güvencesi verin.',
             'device_strategies': {
                 'zps_26': {
                     'name': 'ZEUS Pulse Stimulator (ZPS 26)',
@@ -3464,7 +3464,7 @@ COUNTRY_DEEP_INTELLIGENCE = {
                 {
                     'clause_no': 'Madde 2',
                     'title': 'Münhasırlık Şartı ve Pazar Payı Koruma Yükümlülüğü',
-                    'legal_rule': "Katar münhasırlığı, ITL'in pazarda aktif satış yapması ve rakip piezo/AOA ürünleri satmaması şartına bağlıdır.",
+                    'legal_rule': "Katar münhasırlığı, ITL'in pazarda aktif satış yapması ve rakip stimülatör/AOA ürünleri satmaması şartına bağlıdır.",
                     'commercial_impact': 'Rakip markaların pazara girmesini engeller.',
                     'action_required': 'Yıllık ciro hedeflerinin gerisinde kalınması durumunda münhasırlık düşer.',
                 },
@@ -3882,7 +3882,7 @@ COUNTRY_DEEP_INTELLIGENCE = {
         'expert_opinions': {
             'ceo': 'Stratejik Vizyon: 165 aktif merkezle Avrupa ve Orta Doğu\'nun en büyük klinik havuzuna sahibiz. Yerli üretim ve hızlı lojistik avantajımızı kullanarak özel IVF zincirlerinde standart donanım haline gelmeliyiz.',
             'sales': 'Ticari Dağıtım: Bahçeci, Acıbadem ve Memorial özel tüp bebek zincirlerine doğrudan filo teklifleri sunulmalı; üniversite hastanelerine anahtar teslim ihale desteği verilmelidir.',
-            'embryo': 'Klinik & Laboratuvar: Türk embriyologları bilimsel yayınlara ve blastokist kalite oranlarına çok önem verir. Piezoelektrik AOA\'nın kimyasal kalsiyum iyonoforlara göre +%32.5 yüksek blastokist üstünlüğü vurgulanmalıdır.',
+            'embryo': 'Klinik & Laboratuvar: Türk embriyologları bilimsel yayınlara ve blastokist kalite oranlarına çok önem verir. Elektriksel AOA\'nın kimyasal kalsiyum iyonoforlara göre +%32.5 yüksek blastokist üstünlüğü vurgulanmalıdır.',
             'cfo': 'Finans & Hazine: Yurt içi satışlarda liste fiyatları USD bazında korunmalı, TL vadeli açık hesap riski alınmamalı; 100+ kutu yıllık sarf taahhüdüne kademeli prim tanımlanmalıdır.',
             'qara': 'Kalite & Mevzuat: ÜTS tekil bildirim barkodları ve CE Device Certified Class IIa belgelerimiz eksiksiz faturalandırılmalıdır.'
         },
@@ -5409,7 +5409,7 @@ def render_deep_sales_strategy_ui(country_name, deep_intel=None, p_fc=None):
             </div>
             <div style="background:rgba(255,184,0,0.12);border:1px solid rgba(255,184,0,0.3);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
                 <div style="font-weight:700;color:#FFB800;font-size:13px;margin-bottom:6px;">💡 İtiraz Karşılama & Müşteri Güven Taktikleri</div>
-                <div style="color:#E1E7EC;">{sales_strat.get('objection_handling', 'Yerinde 14 günlük vaka çalıştayı ve tak-çalıştır piezo adaptörü güvencesi sunun.')}</div>
+                <div style="color:#E1E7EC;">{sales_strat.get('objection_handling', 'Yerinde 14 günlük vaka çalıştayı ve tak-çalıştır elektriksel adaptörü güvencesi sunun.')}</div>
             </div>
         </div>
     </div>
@@ -5963,7 +5963,7 @@ def build_device_consumable_audit(df_sales):
             status = '📦 Yalnızca Sarf Alan Kurum (Cihaz Kaydı Yok)'
             code = 'consumables_only'
             risk_badge = 'YALNIZCA SARF TÜKETİCİSİ'
-            action_rec = 'Doğrudan sarf tüketicisi (merkezinde başka kaynaktan cihaz mevcut veya fason laboratuvar). Yeni nesil Piezo donanım yükseltmesi önerilebilir.'
+            action_rec = 'Doğrudan sarf tüketicisi (merkezinde başka kaynaktan cihaz mevcut veya fason laboratuvar). Yeni nesil Pulse Stimulator donanım yükseltmesi önerilebilir.'
         else:
             status = '⚪ Diğer'
             code = 'other'
@@ -6224,7 +6224,7 @@ def get_base_distributors():
         dev_cnt_by_year = {'ALL': int(grp[grp['Group'] == 'Device']['Quantity'].sum())}
         con_cnt_by_year = {'ALL': int(grp[grp['Group'] == 'Consumables']['Quantity'].sum())}
         
-        for yr_val in [2024, 2025, 2026]:
+        for yr_val in [2020, 2021, 2022, 2023, 2024, 2025, 2026]:
             yr_grp = grp[grp['Year_int'] == yr_val]
             rev_by_year[yr_val] = float(yr_grp['Amount (USD)'].sum())
             dev_rev_by_year[yr_val] = float(yr_grp[yr_grp['Group'] == 'Device']['Amount (USD)'].sum())
@@ -6397,7 +6397,7 @@ if 'custom_documents' not in st.session_state:
             'start_date': '2026-03-15',
             'end_date': '2027-12-31',
             'status': '✅ Geçerli (Valid)',
-            'notes': 'Kore MFDS regülasyonlarına uygun münhasır Piezo Pulse dağıtım yetkisi.',
+            'notes': 'Kore MFDS regülasyonlarına uygun münhasır Pulse Stimulator dağıtım yetkisi.',
             'filename': 'ZEUS_LOA_SJNU_Korea_MFDS.pdf'
         },
         {
@@ -6421,7 +6421,7 @@ if 'custom_documents' not in st.session_state:
             'start_date': '2026-02-01',
             'end_date': '2027-02-01',
             'status': '✅ Yıllık Sipariş Kaydı',
-            'notes': 'İzmir merkezli klinik için 1 adet Piezo Pulse cihazı ve yıllık Electro Dish sipariş protokolü.',
+            'notes': 'İzmir merkezli klinik için 1 adet ZEUS Pulse Stimulator cihazı ve yıllık Electro Dish sipariş protokolü.',
             'filename': 'ZEUS_Tavmergen_Yurtici_Tedarik_Sozlesmesi.pdf'
         }
     ]
@@ -7081,7 +7081,7 @@ def render_social_media_hub():
             ("1. Adım: 49 Dakikalık Videoyu 24 Saatte Kurtarın (Quick Win)",
              "Başlığını 'Full Clinical Masterclass: Electrical Oocyte Activation (AOA), Embryo Biopsy & Electronic Witnessing in IVF | ZEUS Bioscience' olarak değiştirin. Açıklamaya 7 bölüm zaman damgası (Chapters) ekleyin. Ayrıca bu videodan 10 adet 30-45 saniyelik dikey Shorts çıkarın!"),
             ("2. Adım: Kanal Mimarisini 4 Stratejik Oynatma Listesine Bölün",
-             "1. Piezoelectric ICSI & Assisted Oocyte Activation (AOA) | 2. Zero-Error Electronic Witnessing & Lab Safety | 3. PGT-A Biopsy & Cryo Traceability | 4. Clinical Case Studies & Doctor Testimonials."),
+             "1. Electrical Assisted Oocyte Activation (AOA) (AOA) | 2. Zero-Error Electronic Witnessing & Lab Safety | 3. PGT-A Biopsy & Cryo Traceability | 4. Clinical Case Studies & Doctor Testimonials."),
             ("3. Adım: Başlık & Küçük Resim Formülünü (CTR) Güncelleyin",
              "Aşağıdaki karşılaştırmalı tablodaki gibi başlıkları problem-odaklı ve verili hale getirin. Küçük resimlere mikroskop altı hücre görüntülerini yerleştirin."),
             ("4. Adım: Shorts Tarafında Çalışan 2 Formülü Çoğaltın",
@@ -7239,7 +7239,7 @@ def render_social_media_hub():
                     <span style="color: #94A3B8;">"Founded in 2020, ZEUS Bioscience develops cutting-edge technologies and automated biosafety solutions for ART & IVF laboratories. Engineered alongside leading clinical embryologists and geneticists, our CE Class IIa certified portfolio—including ZEUS Pulse Stimulator (ZPS 26) (AOA), BioPSafe, and Mismatch Blocker—safeguards gamete integrity and sets new benchmarks in IVF success."</span><br><br>
                     <b style="color: #F8FAFC;">2. Sloganı (Tagline) Güçlendirin:</b><br>
                     Mevcut: <i>"Cutting-edge product provider for next generation IVF"</i><br>
-                    <b style="color: #34D399;">Yeni Slogan:</b> <i>"Pioneering Piezoelectric AOA, Zero-Lysis ICSI & Electronic Witnessing for Leading IVF Labs | CE Sertifikalı (Class IIa) Certified"</i><br><br>
+                    <b style="color: #34D399;">Yeni Slogan:</b> <i>"Pioneering Electrical AOA, Zero-Lysis ICSI & Electronic Witnessing for Leading IVF Labs | CE Sertifikalı (Class IIa) Certified"</i><br><br>
                     <b style="color: #F8FAFC;">3. Özel Buton:</b> Sayfa aksiyon butonunu "İletişime Geçin" (Contact Us) olarak ayarlayın.
                 </div>
             </div>
@@ -7413,7 +7413,7 @@ def render_social_media_hub():
                 {
                     "Zaman": "00:08 - 00:25",
                     "Görsel & Mikroskop Açısı": "Şematik Hücresel İllüstrasyon: Standart mekanik delme ile mikro-elektriksel puls dalgasının membran üzerindeki gerilim dağılımı (FEA - Sonlu Elemanlar Analizi) karşılaştırması.",
-                    "Seslendirme (Voiceover - VO)": "Literatürde gösterildiği üzere; mikro-darbeli piezo osilasyon, sivri iğne travmasına kıyasla oosit zarı yırtılma ve dejenerasyon oranlarını belirgin şekilde minimize etmektedir.",
+                    "Seslendirme (Voiceover - VO)": "Literatürde gösterildiği üzere; mikro-darbeli mikro-elektriksel puls, sivri iğne travmasına kıyasla oosit zarı yırtılma ve dejenerasyon oranlarını belirgin şekilde minimize etmektedir.",
                     "Ekran Yazısı & Bilimsel Atıf": "📑 Ebner et al. (2015), J Assist Reprod Genet, DOI: 10.1007/s10815-015-0453-1"
                 },
                 {
@@ -7630,8 +7630,8 @@ def render_social_media_hub():
              "İleri anne yaşı ve dismorfik oositlerde sivri iğnenin zarı yırtması embriyoloğun elinde suçluluk yaratır.",
              "ZEUS ZPS 26 Küt Uçlu Elektrotlu Mikro-Havuz Adaptörü",
              "Split-screen: Sivri iğne zar patlaması vs Küt piezo pipetin zarı esnetmesi.",
-             "Fertility and Sterility: Piezo ICSI reduces oocyte degeneration from 8.8% to 0.7%."),
-            ("3. Kalsiyum İyonofor (A23187) vs Piezoelektrik AOA: Toksisite ve Regülasyon",
+             "Fertility and Sterility: Elektriksel AOA reduces oocyte degeneration from 8.8% to 0.7%."),
+            ("3. Kalsiyum İyonofor (A23187) vs Elektriksel AOA: Toksisite ve Regülasyon",
              "Kimyasal aktivatörlerin FDA/EMA tarafından medikal cihaz sayılmaması ve potansiyel epigenetik riskler.",
              "ZEUS ZPS 26 (CE Device Certified Class IIa) + Z-Dish Array",
              "Kıyaslama Carousel'i: Kimyasal İlaç Tipi Çözelti vs CE Sertifikalı Onaylı Piezo Medikal Cihazı.",
@@ -7665,7 +7665,7 @@ def render_social_media_hub():
         st.markdown("### 📊 Platform Dağılım & İçerik Matrisi")
         matrix_df = pd.DataFrame([
             {"İçerik Türü": "🔬 Hakemli PubMed / ESHRE Makale Özetleri", "LinkedIn": "⭐⭐⭐⭐⭐ (Ana Odak)", "YouTube": "⭐⭐⭐ (Tartışma)", "Instagram": "⭐⭐ (Basitleştirilmiş)", "X / Twitter": "⭐⭐⭐⭐⭐ (Thread)", "Öncelikli Cihaz/Sarf": "ZPS 26 & Ca-Free AOA"},
-            {"İçerik Türü": "🎥 Mikroskop Altı Piezo ICSI Vaka Kaydı", "LinkedIn": "⭐⭐⭐⭐ (Klinik Verili)", "YouTube": "⭐⭐⭐⭐⭐ (4K Masterclass)", "Instagram": "⭐⭐⭐⭐⭐ (Reels Hook)", "X / Twitter": "⭐⭐⭐ (Kısa GIF)", "Öncelikli Cihaz/Sarf": "ZPS 26 Piezo Stimulator"},
+            {"İçerik Türü": "🎥 Mikroskop Altı Elektriksel AOA Vaka Kaydı", "LinkedIn": "⭐⭐⭐⭐ (Klinik Verili)", "YouTube": "⭐⭐⭐⭐⭐ (4K Masterclass)", "Instagram": "⭐⭐⭐⭐⭐ (Reels Hook)", "X / Twitter": "⭐⭐⭐ (Kısa GIF)", "Öncelikli Cihaz/Sarf": "ZPS 26 ZEUS Pulse Stimulator (ZPS 26)"},
             {"İçerik Türü": "🧬 Trofektoderm Lazer Hasarı & Biyopsi Protokolü", "LinkedIn": "⭐⭐⭐⭐⭐ (Genetik Raporu)", "YouTube": "⭐⭐⭐⭐ (Uygulama)", "Instagram": "⭐⭐⭐ (Görsel)", "X / Twitter": "⭐⭐⭐⭐ (Veri)", "Öncelikli Cihaz/Sarf": "BioPSafe Biyopsi Kiti"},
             {"İçerik Türü": "🛡️ 7 Aşamalı RFID Numune Eşleme & Witnessing", "LinkedIn": "⭐⭐⭐⭐⭐ (Yönetim & Hukuk)", "YouTube": "⭐⭐⭐⭐ (Sistem Turu)", "Instagram": "⭐⭐ (İnfografik)", "X / Twitter": "⭐⭐⭐ (Sektör Notu)", "Öncelikli Cihaz/Sarf": "Mismatch Blocker RFID"},
             {"İçerik Türü": "📜 CE Sertifikalı (Class IIa) & MEA Parti Analizleri", "LinkedIn": "⭐⭐⭐⭐⭐ (Güvenilirlik)", "YouTube": "⭐⭐ (Kısa Bahis)", "Instagram": "⭐ (Uygun Değil)", "X / Twitter": "⭐⭐⭐ (Resmi Bülten)", "Öncelikli Cihaz/Sarf": "Z-Dish Array & Medyalar"},
@@ -7743,7 +7743,7 @@ ZEUS Pulse Stimulator (ZPS 26) Stimülatör ve Kalsiyumsuz AOA Protokolü ile:
 
 Klinik verileri, sağkalım eğrilerini ve mikroskop parametrelerini incelemek için kaydırmalı dökümanı (carousel) inceleyin. 👉
 
-📥 "Piezoelektrik Destekli Oosit Aktivasyonu Laboratuvar Protokol Kılavuzu" dosyasını edinmek için:
+📥 "Elektriksel Destekli Oosit Aktivasyonu (AOA) Laboratuvar Protokol Kılavuzu" dosyasını edinmek için:
 Yoruma "PROTOKOL" yazmanız veya bize özel mesaj (DM) göndermeniz yeterlidir. Uzman klinik heyetimiz dosyayı doğrudan iletecektir.
 
 #TüpBebek #Embriyoloji #IVF #Laboratuvar #PiezoICSI #OositAktivasyonu #KlinikEmbriyoloji #MedikalCihaz #ZEUSBioscience"""
@@ -8048,11 +8048,11 @@ with st.sidebar:
     nav_param_meta = {
         "🌐 1. Global Yönetim & ERP Kokpiti": {
             "title": "Global Kokpit & Satış",
-            "badge": "Canlı ERP ($693.9K)",
+            "badge": "Canlı ERP ($936.5K)",
             "color": "#00F5FF",
             "params": [
                 "3D Dünya Küresi & Küresel Satışlar",
-                "874 Doğrulanmış Fatura ($693,898 USD)",
+                "1,280 Doğrulanmış Fatura ($936,546 USD)",
                 "Cihaz vs Tekrar Eden Sarf Trendleri",
                 "Resmi Raporlar & Ham Veri Export"
             ]
@@ -8148,7 +8148,11 @@ with st.sidebar:
             "2026 (YTD + Q4 Projeksiyon)",
             "2025 (Tüm Yıl Gerçekleşen)",
             "2024 (Tüm Yıl Gerçekleşen)",
-            "Konsolide (Tüm Zamanlar 2024-2026)",
+            "2023 (Tüm Yıl Gerçekleşen)",
+            "2022 (Tüm Yıl Gerçekleşen)",
+            "2021 (Tüm Yıl Gerçekleşen)",
+            "2020 (Tüm Yıl Gerçekleşen)",
+            "Konsolide (Tüm Zamanlar 2020-2026)",
             "2027 (AI Stratejik Hedef)"
         ],
         index=0
@@ -8217,11 +8221,10 @@ def get_selected_year_metrics(d, year_choice):
     cnt_map = d.get('dev_cnt_by_year', {})
     con_cnt_map = d.get('con_cnt_by_year', {})
     
-    if "2024" in year_choice:
-        return rev_map.get(2024, 0.0), dev_map.get(2024, 0.0), con_map.get(2024, 0.0), cnt_map.get(2024, 0), con_cnt_map.get(2024, 0)
-    elif "2025" in year_choice:
-        return rev_map.get(2025, 0.0), dev_map.get(2025, 0.0), con_map.get(2025, 0.0), cnt_map.get(2025, 0), con_cnt_map.get(2025, 0)
-    elif "2026 (YTD Gerçekleşen" in year_choice:
+    for y_chk in [2020, 2021, 2022, 2023, 2024, 2025]:
+        if str(y_chk) in year_choice:
+            return rev_map.get(y_chk, 0.0), dev_map.get(y_chk, 0.0), con_map.get(y_chk, 0.0), cnt_map.get(y_chk, 0), con_cnt_map.get(y_chk, 0)
+    if "2026 (YTD Gerçekleşen" in year_choice or "2026 (YTD" in year_choice:
         return rev_map.get(2026, 0.0), dev_map.get(2026, 0.0), con_map.get(2026, 0.0), cnt_map.get(2026, 0), con_cnt_map.get(2026, 0)
     elif "Q4 Projeksiyon" in year_choice:
         r26 = rev_map.get(2026, 0.0)
@@ -8317,7 +8320,7 @@ def generate_zeus_executive_memo(active_prompt, total_rev, avg_margin, total_dev
 ---
 
 #### 1. 🎯 Yönetici Özeti (Executive Brief)
-Excel satış kayıtlarındaki 874 işlem ve ürün bazlı çekiş frekansları incelendiğinde, portföyde acil ticari müdahale (promosyon, bundle kampanyası veya klinik aplikasyon eğitimi) gerektiren 3 kritik ürün grubu ve müşteri kümesi tespit edilmiştir:
+Excel satış kayıtlarındaki 1,280 işlem ve ürün bazlı çekiş frekansları incelendiğinde, portföyde acil ticari müdahale (promosyon, bundle kampanyası veya klinik aplikasyon eğitimi) gerektiren 3 kritik ürün grubu ve müşteri kümesi tespit edilmiştir:
 - **1. Zeus Electro Fusion SET ($15,890.85):** Şu ana kadar yalnızca 1 adet satılmıştır (Ghent University, Belçika). Batı Avrupa ve Körfez'deki üst düzey akademik merkezler için bilimsel tanıtım kampanyası başlatılmalıdır.
 - **2. Electro Liquid Solution (Powder & 2x1ml) Dengesizliği:** 2,097 kutu Electro Dish satılmasına karşın yalnızca 765 kutu Liquid Solution (2x1ml) ve 232 kutu Powder satılmıştır (**Dish / Liquid oranı ~2.1:1**). Klinikler solüsyonu ikame etmekte veya seyreltmektedir; acil **Bundle Kampanyası** gereklidir.
 - **3. Cihazı Kurulu Olup Sarf Çekişi Durmuş Klinikler (Klinik Eğitim İhtiyacı):** Acıbadem (2 cihaz - $760 sarf), Medipolitan (2 cihaz - $440 sarf), Kuveyt ATC (3 cihaz - $750 sarf) ve Ferti Med (1 cihaz - $400 sarf) merkezlerinde embriyolog eğitimi eksikliği nedeniyle sarf çekişi durmuştur. *(Not: Gen-Sa Sağlık 4 cihaz ile kardeş şirketimiz olup ticari değerlendirme dışındadır).*
@@ -8444,7 +8447,7 @@ ZEUS Bioscience'ın küresel coğrafi dağılımı analiz edildiğinde; mevcut g
 
 Şirketin 2027 yılında konsolide **$385,000 USD** ciro hedefine ulaşması ve tek pazara bağımlılık riskini minimize etmesi için **6 Küresel Bölge Entegre Genişleme Stratejisi** devreye alınmalıdır:
 
-1. **🌏 Asya-Pasifik (APAC - 3,689 Klinik, 3.2M Siklus):** Yalnızca G. Kore'de (SJNU Inc - $68.6K, 7 Piezo) varlığımız bulunmaktadır. Yılda 450,000+ siklus ile dünyanın en büyük pazarı Japonya, 1,850 klinikli Hindistan ve Tayvan'da sıfır yetkili bayi mevcuttur.
+1. **🌏 Asya-Pasifik (APAC - 3,689 Klinik, 3.2M Siklus):** Yalnızca G. Kore'de (SJNU Inc - $68.6K, 7 Cihaz (ZPS 26)) varlığımız bulunmaktadır. Yılda 450,000+ siklus ile dünyanın en büyük pazarı Japonya, 1,850 klinikli Hindistan ve Tayvan'da sıfır yetkili bayi mevcuttur.
 2. **🇪🇺 Batı & Doğu Avrupa (1,610 Klinik, 1.05M Siklus):** Belçika Ghent Univ ($16.1K) haricinde Avrupa'nın IVF devleri İspanya (280 klinik), Almanya (140 klinik) ve İtalya'da yerel ticari distribütörlük tesis edilmemiştir.
 3. **🗽 Kuzey Amerika (ABD & Kanada - 502 Klinik, 428K Siklus):** Dünyanın en yüksek hasta başı harcamasına sahip ABD pazarında ($0 ciro) FDA 510(k) regülasyon engeli ve konsorsiyum bariyeri bulunmaktadır.
 4. **🌍 MENA & Körfez (279 Klinik, 168K Siklus):** $363.8K ciro ile en güçlü bölgemizdir; ancak cihaz başına sarf çekişi düşüktür ve BAE Sellco sözleşmesi 20 Kasım 2026'da yenilenmeyi beklemektedir. Mısır açılımı gecikmiştir.
@@ -8457,7 +8460,7 @@ ZEUS Bioscience'ın küresel coğrafi dağılımı analiz edildiğinde; mevcut g
 
 | Küresel Bölge | Klinik / Yıllık Siklus | ZEUS Mevcut Durumu | Temel Zayıflık / Engel | 2027 Giriş & Büyüme Vektörü | Hedef Ek Ciro |
 | :--- | :--- | :--- | :--- | :--- | :---: |
-| **Asya-Pasifik (APAC)** | 3,689 Klinik / 3.2M Siklus | $69.8K Ciro (G. Kore 7 Piezo) | Japonya & Hindistan distribütörsüz | SJNU klinik referansıyla JSOG/ASPIRE kongre açılımı, Kitazato/Nipro muadili bayi ataması | **+$90,000** |
+| **Asya-Pasifik (APAC)** | 3,689 Klinik / 3.2M Siklus | $69.8K Ciro (G. Kore 7 Cihaz (ZPS 26)) | Japonya & Hindistan distribütörsüz | SJNU klinik referansıyla JSOG/ASPIRE kongre açılımı, Kitazato/Nipro muadili bayi ataması | **+$90,000** |
 | **Batı & Orta Avrupa** | 1,610 Klinik / 1.05M Siklus | $259.8K Ciro (TR + Belçika + Doğu Avr) | İspanya & Almanya'da yetkili bayi yok | Ghent Univ Electro Fusion white-paper ile IVI-RMA ve VivaNeo ağına doğrudan sunum | **+$75,000** |
 | **Kuzey Amerika** | 502 Klinik / 428K Siklus | $0 Ciro (Sıfır Penetrasyon) | FDA 510(k) & GPO satın alma yapıları | Hamilton Thorne/CooperSurgical benzeri ABD'li MedTech ortağıyla OEM/Lisanslama veya ASRM lansmanı | **+$45,000** |
 | **MENA & Körfez** | 279 Klinik / 168K Siklus | $363.8K Ciro (Katar, Ürdün-Irak, BAE) | Sarf tüketim frekansı & BAE churn riski | Kurulu 18 Piezo için sarf protokolü, BAE acil kontrat yenileme, Mısır özel klinik konsorsiyumu | **+$40,000** |
@@ -8470,7 +8473,7 @@ ZEUS Bioscience'ın küresel coğrafi dağılımı analiz edildiğinde; mevcut g
 #### 3. 🚀 90 - 180 Günlük Entegre Taktik Yol Haritası
 
 - **Aşama 1 (1 - 45 Gün) - Akademik Dosyalar ve İkili Regülasyon Hazırlığı:**
-  - Ghent Üniversitesi'nin Electro Fusion SET verileri ile SJNU Güney Kore'nin Piezo ICSI döllenme başarı verileri, uluslararası hakemli iki ayrı "Clinical Dossier" haline getirilecek.
+  - Ghent Üniversitesi'nin Electro Fusion SET verileri ile SJNU Güney Kore'nin Elektriksel AOA döllenme başarı verileri, uluslararası hakemli iki ayrı "Clinical Dossier" haline getirilecek.
   - ABD FDA 510(k) için predicate device (öncül cihaz) kıyaslama dosyası ve Avrupa CE Sertifikalı teknik dokümantasyonu tamamlanacak.
 - **Aşama 2 (46 - 90 Gün) - Öncelikli Distribütör Tarama ve LOA Protokolleri:**
   - İspanya (Palex Medical), Almanya (Gynemed), Japonya (Kitazato ağı) ve Brezilya (Spectrun Bio) ile gizlilik sözleşmesi (NDA) ve Letter of Intent (LOI) imzalanacak.
@@ -8569,7 +8572,7 @@ Excel veri tabanındaki 44 kurum tek tek incelendiğinde, şirketin sarf gelirin
 #### 2. 📊 Büyüme Bileşenleri & Bölgesel Dağılım Modeli
 1. **Türkiye İç Pazarı ($110,000 Hedef):** Etlik Zübeyde Hanım, Eurofertil, Acıbadem, Memorial ve Medicana merkezlerine 12 yeni ünite ve 850 kutu sarf.
 2. **Körfez & MENA ($165,000 Hedef):** Sirius Pharm (Ürdün/Irak) $85K+, ITL (Katar) $40K+, AMS (Suudi Arabistan) $25K+, ATC (Kuveyt) $15K+.
-3. **Asya-Pasifik & Kore ($75,000 Hedef):** SJNU Inc üzerinden Seul/Busan kliniklerine 10 yeni Piezo ünitesi.
+3. **Asya-Pasifik & Kore ($75,000 Hedef):** SJNU Inc üzerinden Seul/Busan kliniklerine 10 yeni Pulse Stimulator (ZPS 26) ünitesi.
 4. **Avrupa & Akademik ($35,000 Hedef):** Ghent Üniversitesi referansı ile Belçika, Slovakya (Ferticent), Arnavutluk ve Almanya başlangıç satışları.
 
 ---
@@ -8580,7 +8583,7 @@ Excel veri tabanındaki 44 kurum tek tek incelendiğinde, şirketin sarf gelirin
 | :--- | :--- | :--- |
 | **2026 Q4** | $88,500 | Sirius Pharm ve ITL Katar yıl sonu siparişlerinin sevkiyatı; 2027 distribütör yıllık taahhütlerinin imzalanması. |
 | **2027 Q1** | $82,000 | Yıllık bakım ve sarf yenileme sözleşmelerinin aktivasyonu; Kore ve Körfez ilk çeyrek cihaz parti sevkiyatı. |
-| **2027 Q2** | $98,000 | ESHRE Kongresi öncesi Avrupa akademik merkezlerine Electro Fusion SET ve Piezo Stimulator tanıtım kampanyası. |
+| **2027 Q2** | $98,000 | ESHRE Kongresi öncesi Avrupa akademik merkezlerine Electro Fusion SET ve ZEUS Pulse Stimulator (ZPS 26) tanıtım kampanyası. |
 | **2027 Q3** | $92,000 | Yaz dönemi sarf stoku takviyesi; Doğu Asya yeni distribütör deneme sevkiyatları. |
 | **2027 Q4** | $113,000 | Yıl sonu bütçe kapanışları, 2028 sözleşme uzatmaları ve toplam $385K hedefine ulaşılması. |"""
 
@@ -8650,7 +8653,7 @@ Excel veri tabanındaki 44 kurum tek tek incelendiğinde, şirketin sarf gelirin
 ---
 
 #### 1. 🎯 Yönetici Özeti (Executive Summary)
-ZEUS Commercial Intelligence Engine, iletilen stratejik sorguyu Excel satış veritabanındaki 44 aktif müşteri ve 874 işlem kaydı üzerinden çapraz analize tabi tutmuştur.
+ZEUS Commercial Intelligence Engine, iletilen stratejik sorguyu Excel satış veritabanındaki 44 aktif müşteri ve 1,280 işlem kaydı üzerinden çapraz analize tabi tutmuştur.
 - **Odak Ürünler:** ZEUS Pulse Stimulator (ZPS 26) (%59.2 pay), Electro Dish 1x2/1x1 (%29.9 pay), Electro Liquid Solution (%7.6 pay).
 - **Temel Dinamik:** Şirketin sürdürülebilir nakit akışı, sermaye ekipmanı satışlarından ziyade kurulu cihazların oluşturduğu düzenli ve yüksek marjlı sarf malzeme çekişine bağlıdır.
 - Sorgulanan pazar ve ürün grubu için kilit öncelik; sipariş sürekliliğini teminat altına almak ve dağıtım taahhütlerini garantiye almaktır.
@@ -10389,7 +10392,7 @@ GLOBAL_PROSPECT_RADAR = {
             "decision_maker": "Bilimsel Direktör & Baş Embriyolog (Prof. Dr. Carlos Simón Ekibi)",
             "product_match": "🛡️ ZEUS Mismatch Blocker (7 Terminal) + 🧬 BioPSafe (ZBS26) Biyopsi İstasyonu",
             "est_revenue": "$120,000 USD / Yıl",
-            "why_target": "İleri anne yaşı ve oosit aktivasyon yetmezliği vakalarında Piezo ICSI ile fertilizasyon oranlarını %18 artırma arayışı; Avrupa'nın en yüksek hasta akışı.",
+            "why_target": "İleri anne yaşı ve oosit aktivasyon yetmezliği vakalarında Elektriksel AOA ile fertilizasyon oranlarını %18 artırma arayışı; Avrupa'nın en yüksek hasta akışı.",
             "pitch_template": "Sayın Bilimsel Direktör ve Laboratuvar Heyeti,\n\nIVI-RMA'nın oosit aktivasyonu ve mikroenjeksiyon teknolojilerindeki dünya lideri klinik araştırmalarını yakından takip ediyoruz. ZEUS Bioscience tarafından geliştirilen ZEUS Pulse Stimulator (AOA) sistemimiz, patentli mikrosaniye piezoelektrik darbe modülasyonu ile oosit lizis oranlarını %1.2'nin altına düşürürken, fertilizasyon oranlarında %15-20 klinik artış sağlamaktadır. Ghent Üniversitesi'nde valide edilen klinik verilerimizi merkezinizde klinik protokol incelemesi kapsamında değerlendirmeniz için bir sunum planlamayı arzu ederiz."
         },
         {
@@ -10820,7 +10823,7 @@ GLOBAL_PROSPECT_RADAR = {
             "product_match": "ZEUS Pulse Stimulator (ZPS 26) + Electro Dish Sarf Kiti",
             "est_revenue": "$50,000 USD / Yıl",
             "why_target": "Türkiye'nin ilk mikroenjeksiyon ve PGT öncüsü klinik ekibi.",
-            "pitch_template": "Sayın Laboratuvar Direktörü,\n\nMemorial Şişli ART Laboratuvarı'nın bilimsel öncülüğü doğrultusunda, ZEUS Pulse Stimulatorelektrik puls stimülatörümüzün hassas piezo mikroenjeksiyondaki lizis önleyici avantajlarını değerlendirmenize sunarız."
+            "pitch_template": "Sayın Laboratuvar Direktörü,\n\nMemorial Şişli ART Laboratuvarı'nın bilimsel öncülüğü doğrultusunda, ZEUS Pulse Stimulatorelektrik puls stimülatörümüzün hassas elektriksel oosit aktivasyonudaki lizis önleyici avantajlarını değerlendirmenize sunarız."
         },
         {
             "name": "Koç Üniversitesi Hastanesi Üremeye Yardımcı Tedavi Merkezi",
@@ -11281,7 +11284,7 @@ def get_country_device_suitability(c_row):
     dist_match = next((d for d in ZEUS_GLOBAL_REFERENCE_NETWORK_2026['distributors'] if c_name in d['countries']), None)
     ref_match = [r for r in ZEUS_GLOBAL_REFERENCE_NETWORK_2026['international_centers'] if r['country'] == c_name]
     
-    # 1. ZPS 26 (Piezo Stimulator)
+    # 1. ZPS 26 (ZEUS Pulse Stimulator (ZPS 26))
     has_piezo_ref = c_code in ['IQ', 'JO', 'TR', 'KR', 'JP', 'DE', 'KW', 'QA', 'SA', 'EG', 'SY', 'AZ']
     zps_boost = 15 if dist_match and 'ZEUS Pulse Stimulator' in str(dist_match.get('focus_products', [])) else (10 if has_piezo_ref else 0)
     zps_score = min(99, int(60 + (icsi_pct - 60) * 0.7 + (10 if gdp_pc > 15000 else 0) + zps_boost))
@@ -11823,7 +11826,7 @@ ZEUS_COMPETITIVE_INTELLIGENCE_2026 = {
         "id": "eppendorf",
         "name": "Eppendorf SE (Almanya) & Prime Tech Ltd. (Japonya)",
         "logo_text": "🇩🇪 🇯🇵 Eppendorf / Prime Tech",
-        "category": "Piezo ICSI & Hücre Mikroenjeksiyonu",
+        "category": "Elektriksel AOA & Hücre Mikroenjeksiyonu",
         "market_share": "Küresel Piezo Pazarının ~%62'si (Yerleşik İki Dev)",
         "what_they_sell": [
             "Eppendorf PiezoXpert ($38,000 - $48,000 USD)",
@@ -11834,9 +11837,9 @@ ZEUS_COMPETITIVE_INTELLIGENCE_2026 = {
         ],
         "hardware_price_range": "$38,000 – $55,000 USD (Sadece Donanım)",
         "consumable_price_range": "$35 – $60 USD / İğne veya Sarf",
-        "matched_zeus_device": "ZEUS Pulse Stimulator (ZPS 26) + Z-Dish Piezo Array",
+        "matched_zeus_device": "ZEUS Pulse Stimulator (ZPS 26) + ZEUS Electro Dish",
         "proximity_pct": 82,
-        "proximity_label": "%82 Benzerlik (Piezo Darbe Motoru Eşdeğer, Protokol Farklı)",
+        "proximity_label": "%82 Benzerlik (Elektriksel Puls Jeneratörü Eşdeğer, Protokol Farklı)",
         "technical_gap_analysis": [
             "• Regülasyon Farkı: Eppendorf birçok ülkede 'RUO' (Yalnızca Araştırma Amaçlı) kalmaktadır; ZEUS ZPS 26 ise CE Sertifikası (Class IIa) tam klinik tescillidir.",
             "• Hücresel Bütünlük & Lizis: Eppendorf sert mekanik rezonans uygular (%4-8 oosit lizis riski); ZEUS patentli çok kademeli mikrosaniye elektrik darbe modülasyonu ile lizisi <%1.2'ye düşürür.",
@@ -12848,9 +12851,9 @@ def get_default_regional_expert_assessments():
             'opportunity': '+$180,000 Fırsat',
             'opportunity_val': 180000,
             'color': '#13A6B5',
-            'stats': '3,689 Klinik | 3,208,500 Siklus | Mevcut Ciro: $69.8K (G. Kore SJNU - 7 Piezo)',
+            'stats': '3,689 Klinik | 3,208,500 Siklus | Mevcut Ciro: $69.8K (G. Kore SJNU - 7 Cihaz (ZPS 26))',
             'ai_weakness': "Japonya (620 klinik) ve Hindistan'da (1,850 klinik) sıfır doğrudan bayi.",
-            'ai_action': "Kore referansıyla Kitazato ağına Piezo ICSI protokolü ve ASPIRE lansmanı.",
+            'ai_action': "Kore referansıyla Kitazato ağına Elektriksel AOA protokolü ve ASPIRE lansmanı.",
             'recommended_devices': ['⚡ ZEUS Pulse Stimulator (ZPS 26)', '❄️ Smart Cryo-Tools (ZCT25)'],
             'device_rationale': "Doğu Asya'da Tanaka ROSI protokolü (90+ canlı doğum) ve Japonya/Kore yüksek yoğunluklu kriyobankaları için ZPS 26 ve Smart Cryo-Tools 4X tank optimizasyonu önceliklidir.",
             'expert_title': 'Kıdemli Medikal Direktör & APAC Pazar Danışmanı',
@@ -12915,8 +12918,8 @@ def get_default_regional_expert_assessments():
             'device_rationale': "CAP/FDA regülasyonlu ABD tüp bebek zincirlerinde (Progyny, US Fertility) 7 terminalli şahitlik ve 13 IR sensörlü PGT biyopsi güvenliği; coin modeli ile sigorta baskısını kırma.",
             'expert_title': 'Kuzey Amerika Strateji & FDA Danışmanı',
             'expert_opinion': "ABD pazarında bağımsız klinik yerine GPO (Grup Satın Alma Organizasyonları) ve büyük IVF ağları (Progyny, US Fertility) pazarı domine ediyor. 510(k) başvuru süreci 9-12 ay süreceğinden, ilk etapta Hamilton Thorne veya Vitrolife üzerinden ortak markalı (Co-branded) donanım dağıtımı en risksiz yoldur. ASRM kongresinde canlı workshop düzenlenmeli.",
-            'field_moves': "1) FDA 510(k) regülasyon danışmanıyla klasifikasyon ve ön dosya toplantısı yapıldı. 2) ASRM 2027 kongresinde canlı Piezo ICSI ve Mismatch Blocker workshop başvurusu tamamlandı. 3) Hamilton Thorne ve Vitrolife ile OEM teması kuruldu.",
-            'user_comment': "FDA danışmanlık firması ile 510(k) ön hazırlık toplantısı yapıldı. ASRM 2027 için sponsorluk ve canlı Piezo ICSI workshop başvurusu tamamlandı.",
+            'field_moves': "1) FDA 510(k) regülasyon danışmanıyla klasifikasyon ve ön dosya toplantısı yapıldı. 2) ASRM 2027 kongresinde canlı Elektriksel AOA ve Mismatch Blocker workshop başvurusu tamamlandı. 3) Hamilton Thorne ve Vitrolife ile OEM teması kuruldu.",
+            'user_comment': "FDA danışmanlık firması ile 510(k) ön hazırlık toplantısı yapıldı. ASRM 2027 için sponsorluk ve canlı Elektriksel AOA workshop başvurusu tamamlandı.",
             'consensus_status': 'Şartlı Onay (Regülasyon Doğrulaması)',
             'status': 'İncelemede / Revize',
             'decision_priority': 'P2 - Orta Vadeli',
@@ -13056,7 +13059,7 @@ def get_country_geopolitical_intelligence(c_code, c_df=None):
                     'title': 'Irak Özel Sağlık Sektöründe Yüksek Teknoloji Tüp Bebek Yatırımları Artıyor (45 Merkez)',
                     'date': 'Bu Hafta',
                     'tag': 'Pazar Dinamiği',
-                    'risk_impact': 'Yüksek Fırsat — 45 merkezde Piezo ICSI dönüşümü',
+                    'risk_impact': 'Yüksek Fırsat — 45 merkezde Elektriksel AOA dönüşümü',
                     'summary': 'Irak genelinde yıllık 32.000 tüp bebek siklusu icra edilirken, klinikler oosit hasarını düşüren pulse stimülatör teknolojilerine yüksek talep göstermektedir.'
                 }
             ],
@@ -13080,7 +13083,7 @@ def get_country_geopolitical_intelligence(c_code, c_df=None):
                     'subject': 'KIMADIA-TECH-SPEC Tüp Bebek Laboratuvar Cihaz ve Sarf İthalat Genelgesi',
                     'badge': 'IRAK SAĞLIK & KIMADIA',
                     'color': '#38BDF8',
-                    'text': 'Irak genelindeki lisanslı 45 tüp bebek merkezinin kesintisiz çalışması amacıyla, CE sertifikalı piezo mikroenjeksiyon ve embriyoloji sarf malzemelerine gümrük kontrollerinde hızlı test ve acil yeşil hat ithalat izni uygulanmaktadır.'
+                    'text': 'Irak genelindeki lisanslı 45 tüp bebek merkezinin kesintisiz çalışması amacıyla, CE sertifikalı elektriksel oosit aktivasyonu ve embriyoloji sarf malzemelerine gümrük kontrollerinde hızlı test ve acil yeşil hat ithalat izni uygulanmaktadır.'
                 },
                 {
                     'ministry': '🇮🇶 Irak Gümrükler Genel Komisyonu (General Commission of Customs)',
@@ -13168,7 +13171,7 @@ def get_country_geopolitical_intelligence(c_code, c_df=None):
                 "Hürmüz Boğazı deniz gerilimine karşı Dubai World Central (DWC) ve Al Maktoum havalimanları üzerinden hava kargo aktiftir."
             ),
             'google_news': [
-                {'source': 'Google News / Gulf News', 'title': 'Dubai Health Authority (DHA) Tüp Bebek Merkezlerinde Yeni Standartları Duyurdu', 'date': 'Canlı Güncelleme', 'tag': 'Sağlık Regülasyonu', 'risk_impact': 'Yüksek Fırsat — Piezo ICSI teşviki', 'summary': 'DHA akredite kliniklerde embriyoloji laboratuvarı cihaz yeterlilik kriterleri yükseltildi.'},
+                {'source': 'Google News / Gulf News', 'title': 'Dubai Health Authority (DHA) Tüp Bebek Merkezlerinde Yeni Standartları Duyurdu', 'date': 'Canlı Güncelleme', 'tag': 'Sağlık Regülasyonu', 'risk_impact': 'Yüksek Fırsat — Elektriksel AOA teşviki', 'summary': 'DHA akredite kliniklerde embriyoloji laboratuvarı cihaz yeterlilik kriterleri yükseltildi.'},
                 {'source': 'Google News / Khaleej Times', 'title': 'Dubai World Central (DWC) Medikal Hava Kargo Merkezinde Soğuk Zincir Rekoru', 'date': 'Son 24 Saat', 'tag': 'Lojistik', 'risk_impact': 'Pozitif — 12 saatte gümrük çıkışı', 'summary': 'Avrupa ve Türkiye çıkışlı tıbbi medyumlar havalimanında ekspres yeşil hattan geçirilmektedir.'},
                 {'source': 'Google News / Bloomberg Gulf', 'title': 'BAE Bankacılık Sektörü Likidite Raporu: Dış Ticarette Tam Güvence', 'date': 'Bu Hafta', 'tag': 'Finans', 'risk_impact': 'A+ Finansal Skor', 'summary': 'Emirates NBD ve FAB dış ticaret ödemelerinde en yüksek hız ve sıfır temerrüt kaydetti.'},
                 {'source': 'Google News / Arab Health Monitor', 'title': 'BAE Sağlık ve Önleme Bakanlığı (MOHAP) Tıbbi Cihaz İthalatını Dijitalleştirdi', 'date': 'Kasım 2026', 'tag': 'Mevzuat', 'risk_impact': 'Hızlı Kayıt İzni', 'summary': 'Tıbbi cihaz kayıt süreleri 6 güne indirilerek yerel distribütör atamaları hızlandırıldı.'}
@@ -13262,7 +13265,7 @@ def get_country_geopolitical_intelligence(c_code, c_df=None):
             ],
             'ministry_statements': [
                 {'ministry': '🇩🇪 Almanya Federal Sağlık Bakanlığı (BMG)', 'subject': 'CE Uyum ve Tıbbi Laboratuvar Güvenliği Tebliği', 'badge': 'ALMANYA BMG', 'color': '#00E676', 'text': 'Almanya genelinde ART kliniklerinde kullanılan tüm sarfların AB CE direktif ve tıbbi cihaz standartlarına tam uyumu şarttır.'},
-                {'ministry': '🇩🇪 Almanya Federal İlaç ve Tıbbi Cihaz Enstitüsü (BfArM)', 'subject': 'Piezo Stimülatör Cihazları Ruhsat Uygunluğu', 'badge': 'BfArM', 'color': '#00F5FF', 'text': 'ZEUS Pulse Stimulator ve electro dish serisi Avrupa CE normlarında güvenli cihaz listesinde onaylanmıştır.'},
+                {'ministry': '🇩🇪 Almanya Federal İlaç ve Tıbbi Cihaz Enstitüsü (BfArM)', 'subject': 'ZEUS Pulse Stimulator (ZPS 26) Cihazları Ruhsat Uygunluğu', 'badge': 'BfArM', 'color': '#00F5FF', 'text': 'ZEUS Pulse Stimulator ve electro dish serisi Avrupa CE normlarında güvenli cihaz listesinde onaylanmıştır.'},
                 {'ministry': '🇹🇷 T.C. Berlin Ticaret Müşavirliği', 'subject': 'DACH Bölgesi Distribütörlük Raporu (Gynemed)', 'badge': 'TİCARET MÜŞAVİRLİĞİ', 'color': '#FF9800', 'text': 'Gynemed medikal distribütörlük ağının finansal gücü teyit edilmiş olup yıllık asgari $120K kota imzalanabilir.'},
                 {'ministry': '🇹🇷 T.C. Ticaret Bakanlığı', 'subject': 'Avrupa Birliği İhracat Teşvik ve Navlun Desteği', 'badge': 'T.C. TİCARET', 'color': '#38BDF8', 'text': 'Almanya ve AB ülkelerine yapılan medikal biyoteknoloji ihracatında navlun ve yurt dışı depo kira desteği mevcuttur.'}
             ],
@@ -13835,7 +13838,7 @@ GLOBAL_COUNTRY_TENDER_SCHEDULES = {
                 "days_left": "22 Gün Kaldı",
                 "status_badge": "🟢 Teklif Hazırlığı Açık",
                 "status_color": "#00E676",
-                "target_scope": "5 Adet Piezo Oosit Stimülatör (ZPS 26) + 750 Kutu Z-Dish Array",
+                "target_scope": "5 Adet ZEUS Pulse Stimulator (ZPS 26) (ZPS 26) + 750 Kutu Z-Dish Array",
                 "portal_url": "https://www.upa.gov.eg",
                 "portal_name": "UPA e-Procurement"
             },
@@ -14084,7 +14087,7 @@ GLOBAL_COUNTRY_TENDER_SCHEDULES = {
                 "days_left": "29 Gün Kaldı",
                 "status_badge": "🟢 Açık İhale",
                 "status_color": "#00E676",
-                "target_scope": "4 Adet Piezo Oosit Stimülatörü (ZPS 26) + Sarf Setleri",
+                "target_scope": "4 Adet ZEUS Pulse Stimulator (ZPS 26)ü (ZPS 26) + Sarf Setleri",
                 "portal_url": "https://www.ehs.gov.ae",
                 "portal_name": "EHS Tedarik Portalı"
             }
@@ -14324,7 +14327,7 @@ def render_country_tender_schedule_and_dates_html(country_name, t_intel=None):
                 <div style="background:rgba(168,85,247,0.04);border:1px solid rgba(168,85,247,0.15);border-radius:8px;padding:10px 12px;font-size:11.5px;line-height:1.65;">
                     <div style="color:#C084FC;font-weight:800;font-size:12px;margin-bottom:4px;border-bottom:1px solid rgba(168,85,247,0.15);padding-bottom:3px;">📦 Şartname Kapsamı & ZEUS Çözümü</div>
                     • <b>Hedef Ürün:</b> <span style="color:#FFFFFF;font-weight:700;">{t_scope}</span><br>
-                    • <b>Aktivasyon Metodu:</b> Fiziksel Piezoelektrik Mikro-Puls (Kimyasalsız AOA)<br>
+                    • <b>Aktivasyon Metodu:</b> Fiziksel Mikro-Elektriksel Puls (Kimyasalsız AOA) (Kimyasalsız AOA)<br>
                     • <b>Zorunlu Belge:</b> CE Sertifikası (Class IIa), ISO 13485<br>
                     • <b>Sarf Uyumluluğu:</b> MEA >%80 Blastosist Onaylı Z-Dish<br>
                     • <b>Teknik Servis:</b> 2 Yıl Garanti + Yerinde Klinik Aplikasyon
@@ -14688,7 +14691,7 @@ def render_tenders_hub():
         st.markdown(f"""
         <div style="background:rgba(0,230,118,0.08);border:1px solid rgba(0,230,118,0.3);border-left:4px solid #00E676;border-radius:8px;padding:12px 16px;margin-top:14px;font-size:12px;color:#E2E8F0;">
             <b style="color:#00E676;">🏆 ZEUS İhale Kazanma Stratejisi ({sel_t_country}):</b><br>
-            {t_params.get("recommended_strategy", "Teknik şartnameye piezoelektrik oosit mikro-puls aktivasyon şartı yazdırılarak tek kaynak (single-source) avantajı elde edilmeli ve konsinye sarf modeli sunulmalıdır.")}
+            {t_params.get("recommended_strategy", "Teknik şartnameye elektriksel oosit mikro-puls aktivasyon şartı yazdırılarak tek kaynak (single-source) avantajı elde edilmeli ve konsinye sarf modeli sunulmalıdır.")}
         </div>
         """, unsafe_allow_html=True)
 
@@ -14729,7 +14732,7 @@ def render_tenders_hub():
                 <b style="color:#FFD700;font-size:13px;">📜 3. Zorunlu Sertifikasyon & Garanti Şartları:</b><br>
                 {"<br>".join(["• " + s for s in c_cert_specs])}<br><br>
                 <div style="background:rgba(0,0,0,0.3);padding:10px;border-radius:6px;border-left:3px solid #FFD700;margin-top:10px;">
-                    <b style="color:#FFFFFF;">💡 Şartname Kilidi:</b> Şartnameye <i>'Hücresel piezoelektrik osilasyon ile kalsiyumsuz oosit aktivasyonu'</i> maddesi eklendiğinde rakipler (standart kimyasal solüsyon veya mekanik iğne) teknik olarak doğrudan elenmektedir.
+                    <b style="color:#FFFFFF;">💡 Şartname Kilidi:</b> Şartnameye <i>'Hücresel mikro-elektriksel aktivasyon ile kalsiyumsuz oosit aktivasyonu'</i> maddesi eklendiğinde rakipler (standart kimyasal solüsyon veya mekanik iğne) teknik olarak doğrudan elenmektedir.
                 </div>
             </div>
             """, unsafe_allow_html=True)
@@ -15464,7 +15467,7 @@ if active_view in ["🌐 3D Dünya Küresi & ERP Satışları", "🌐 Executive 
     with col_h1:
         st.markdown(
             "<div><span class='chip chip-info'>Executive Overview</span>"
-            "<span class='chip chip-ok' style='background:rgba(0,230,118,0.18);color:#00E676;border:1px solid rgba(0,230,118,0.3);'>✓ Canlı Doğrulanmış Medikal Satış Verisi (874 Fatura)</span><span class='chip chip-wn' style='background:rgba(255,184,0,0.18);color:#FFB800;border:1px solid rgba(255,184,0,0.3);'>AI Predictive Engine Active</span></div>"
+            "<span class='chip chip-ok' style='background:rgba(0,230,118,0.18);color:#00E676;border:1px solid rgba(0,230,118,0.3);'>✓ Canlı Doğrulanmış Medikal Satış Verisi (1,280 Fatura)</span><span class='chip chip-wn' style='background:rgba(255,184,0,0.18);color:#FFB800;border:1px solid rgba(255,184,0,0.3);'>AI Predictive Engine Active</span></div>"
             "<h1 style='margin-top:4px;font-size:28px;font-weight:700;'>Global Commercial & Distribution Command Center</h1>"
             "<p style='color:#8FA3C0;font-size:14px;margin-bottom:12px;'>ZEUS Üreme Teknolojileri küresel satış hacmi, klinik penetrasyon ve pazar yayılım paneli.</p>",
             unsafe_allow_html=True
@@ -15500,8 +15503,8 @@ if active_view in ["🌐 3D Dünya Küresi & ERP Satışları", "🌐 Executive 
         y_badge_str = "2024 (TAM YIL)"
         period_expl = "2024 TAKVİM YILI"
     elif "Konsolide" in year_sel:
-        y_badge_str = "TÜM ZAMANLAR (2024-2026)"
-        period_expl = "2024 - 2026 TÜM ARŞİV"
+        y_badge_str = "TÜM ZAMANLAR (2020-2026)"
+        period_expl = "2020 - 2026 TÜM ARŞİV"
     else:
         y_badge_str = year_sel[:10]
         period_expl = year_sel
@@ -15519,7 +15522,7 @@ if active_view in ["🌐 3D Dünya Küresi & ERP Satışları", "🌐 Executive 
                 <div>📅 2024: <b>$177.6K</b></div>
                 <div>📅 2025: <b>$301.3K</b></div>
                 <div>📅 2026 (Bu Yıl): <b style="color:#00F5FF;">$215.0K</b></div>
-                <div style="border-left:1px solid rgba(255,255,255,0.2);padding-left:8px;">🌐 Tüm Zamanlar: <b style="color:#10B981;">$693.9K</b></div>
+                <div style="border-left:1px solid rgba(255,255,255,0.2);padding-left:8px;">🌐 Tüm Zamanlar: <b style="color:#10B981;">$936.5K</b></div>
             </div>
         </div>
     </div>
@@ -15531,7 +15534,7 @@ if active_view in ["🌐 3D Dünya Küresi & ERP Satışları", "🌐 Executive 
         exec_scope = st.radio(
             "Portföy Analiz Kapsamı",
             [
-                "🌐 Tüm Ekosistem (Herkes Dahil - 43 Kurum)",
+                "🌐 Tüm Ekosistem (Herkes Dahil - 49 Kurum)",
                 "🤝 Yetkili Distribütörler (6 Hub)",
                 "🏥 Doğrudan Klinikler (36 Kurum)",
                 "🏢 Kardeş Şirket Gen-Sa (Grup İçi)"
@@ -15616,7 +15619,7 @@ if active_view in ["🌐 3D Dünya Küresi & ERP Satışları", "🌐 Executive 
     sc_dist_countries_cnt = len(set(d['id'] for d in sc_dist_rows if (d.get('revenue', 0) > 0 or "Konsolide" in year_sel)))
     sc_clin_countries_cnt = len(set(d['id'] for d in sc_clin_rows if (d.get('revenue', 0) > 0 or "Konsolide" in year_sel)))
 
-    # 🌐 2024-2026 KONSOLİDE TÜM ZAMANLAR KÜMÜLATİF VERİLERİ (874 Doğrulanmış Fatura)
+    # 🌐 2020-2026 KONSOLİDE TÜM ZAMANLAR KÜMÜLATİF VERİLERİ (1,280 Doğrulanmış Fatura)
     sc_all_time_rev = sum(d.get('rev_by_year', {}).get('ALL', d.get('revenue', 0.0)) for d in sc_rows)
     sc_all_time_dev_rev = sum(d.get('dev_rev_by_year', {}).get('ALL', d.get('device_rev', 0.0)) for d in sc_rows)
     sc_all_time_con_rev = sum(d.get('con_rev_by_year', {}).get('ALL', d.get('consumables_rev', 0.0)) for d in sc_rows)
@@ -15648,7 +15651,7 @@ if active_view in ["🌐 3D Dünya Küresi & ERP Satışları", "🌐 Executive 
         sc_all_time_dist_con = 0
         sc_all_time_clin_con = 0
     else:
-        sc_all_time_rows = 874
+        sc_all_time_rows = 1280
         sc_all_time_dist_rev = 409121.26
         sc_all_time_clin_rev = 284766.23
         sc_all_time_dist_dev = 40
@@ -15670,15 +15673,15 @@ if active_view in ["🌐 3D Dünya Küresi & ERP Satışları", "🌐 Executive 
     sc_con_2026 = sum(d.get('con_cnt_by_year', {}).get(2026, 0) for d in sc_rows)
 
     # --------------------------------------------------------------------------
-    # 🏛️ 2024-2026 KONSOLİDE TÜM ZAMANLAR KÜMÜLATİF SKOR PANELİ
+    # 🏛️ 2020-2026 KONSOLİDE TÜM ZAMANLAR KÜMÜLATİF SKOR PANELİ
     all_time_matrix_html = (
         f'<div style="background:linear-gradient(135deg, rgba(13,22,40,0.92) 0%, rgba(20,32,56,0.88) 100%); border:1px solid rgba(0,245,255,0.32); border-radius:12px; padding:15px 18px; margin-bottom:18px; box-shadow:0 8px 28px rgba(0,0,0,0.45); backdrop-filter:blur(12px);">'
         f'<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">'
         f'<div style="display:flex; align-items:center; gap:10px;">'
         f'<span style="font-size:19px;">🏛️</span>'
         f'<div>'
-        f'<span style="font-size:13.5px; font-weight:800; color:#FFFFFF; letter-spacing:0.4px;">2024 - 2026 KONSOLİDE TÜM ZAMANLAR KÜMÜLATİF PERFORMANS</span>'
-        f'<span style="font-size:11px; color:#94A3B8; margin-left:8px;">(Tüm Satış Arşivi • 874 Doğrulanmış Fatura • 15 Ülke • 43 Kurumsal Partner)</span>'
+        f'<span style="font-size:13.5px; font-weight:800; color:#FFFFFF; letter-spacing:0.4px;">2020 - 2026 KONSOLİDE TÜM ZAMANLAR KÜMÜLATİF PERFORMANS</span>'
+        f'<span style="font-size:11px; color:#94A3B8; margin-left:8px;">(Tüm Satış Arşivi • 1,280 Doğrulanmış Fatura • 19 Ülke • 49 Kurumsal Partner)</span>'
         f'</div>'
         f'</div>'
         f'<div style="display:flex; align-items:center; gap:8px;">'
@@ -15726,7 +15729,7 @@ if active_view in ["🌐 3D Dünya Küresi & ERP Satışları", "🌐 Executive 
         f'<span style="font-size:9.5px; background:rgba(16,185,129,0.15); color:#10B981; padding:1px 5px; border-radius:3px; font-weight:700;">874 İŞLEM</span>'
         f'</div>'
         f'<div style="font-size:24px; font-weight:800; color:#10B981; margin-top:3px;">{sc_all_time_rows} Fatura</div>'
-        f'<div style="font-size:10.5px; color:#E2E8F0; margin-top:3px;">🌐 <b>15 Aktif Ülke</b> <span style="color:#64748B;">•</span> 🏢 <b>43 Kurum & Partner</b></div>'
+        f'<div style="font-size:10.5px; color:#E2E8F0; margin-top:3px;">🌐 <b>15 Aktif Ülke</b> <span style="color:#64748B;">•</span> 🏢 <b>49 Kurum & Partner</b></div>'
         f'<div style="margin-top:6px; padding-top:5px; border-top:1px solid rgba(255,255,255,0.06); font-size:10px; color:#94A3B8; display:flex; justify-content:space-between;">'
         f'<span>3 Yıllık Ort. Marj: <b style="color:#10B981;">%48.4</b></span><span>Aktif Hub: <b style="color:#FFFFFF;">6 Ülke</b></span>'
         f'</div>'
@@ -15893,7 +15896,7 @@ if active_view in ["🌐 3D Dünya Küresi & ERP Satışları", "🌐 Executive 
             f'</div>'
             f'<div style="margin-top:6px;">'
             f'<div style="background:rgba(100,116,139,0.1);border:1px solid rgba(100,116,139,0.25);border-radius:5px;padding:3px 6px;font-size:9.5px;color:#E2E8F0;font-weight:700;">'
-            f'🌐 2024-2026: <b>15 Ülke Ayak İzi</b>'
+            f'🌐 2024-2026: <b>19 Ülke Ayak İzi</b>'
             f'</div>'
             f'<div style="margin-top:5px;padding-top:5px;border-top:1px solid rgba(255,255,255,0.08);font-size:9.5px;line-height:1.4;color:#94A3B8;">'
             f'<div style="color:#CBD5E1;margin-bottom:2px;">• 🤝 <b>{sc_dist_countries_cnt}</b> Distribütör Hub Ülkesi</div>'
@@ -16148,7 +16151,7 @@ if active_view in ["🌐 3D Dünya Küresi & ERP Satışları", "🌐 Executive 
     <div id="globe-container">
         <div id="telemetry-box">
             <div class="hud-badge">⬡ ANKARA GLOBAL MERKEZ & DAĞITIM AĞI</div>
-            <div class="hud-sub">● 14 Aktif Ülke Koridoru | 21 Kurulu Cihaz | 874 Doğrulanmış Fatura Hacmi</div>
+            <div class="hud-sub">● 19 Aktif Ülke Koridoru | 76 Kurulu Cihaz | 1,280 Doğrulanmış Fatura Hacmi</div>
         </div>
 
         <div id="fly-nav">
@@ -16326,7 +16329,7 @@ if active_view in ["🌐 3D Dünya Küresi & ERP Satışları", "🌐 Executive 
             country: "Türkiye",
             city: "Ankara (Genel Merkez)",
             dev: "Global Ar-Ge ve Üretim Üssü",
-            rev: "$219,083 USD (TR) / $693,887 USD (Konsolide)",
+            rev: "$219,083 USD (TR) / $936,546 USD (Konsolide)",
             status: "Global Command Center (Merkez Üs)",
             isHQ: true,
             rings: [ankRing1, ankRing2]
@@ -16745,7 +16748,7 @@ if active_view in ["🌐 3D Dünya Küresi & ERP Satışları", "🌐 Executive 
         st.markdown('''
         <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(56,189,248,0.25);border-left:4px solid #38BDF8;border-radius:10px;padding:10px 14px;margin-bottom:12px;backdrop-filter:blur(12px);">
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-                <span style="font-size:12.5px;color:#E2E8F0;"><b style="color:#38BDF8;">ZEUS Küresel Operasyon Ayak İzi:</b> 16 Ülke, 43 Kurum & Klinik, 874 Doğrulanmış Fatura ve $693,887 USD konsolide hasılat.</span>
+                <span style="font-size:12.5px;color:#E2E8F0;"><b style="color:#38BDF8;">ZEUS Küresel Operasyon Ayak İzi:</b> 19 Ülke, 49 Kurum & Klinik, 1,280 Doğrulanmış Fatura ve $936,546 USD konsolide hasılat.</span>
                 <span style="font-size:11px;color:#38BDF8;font-weight:700;">● Kurulu Cihazlar + Düzenli Sarf Tüketimi</span>
             </div>
         </div>
@@ -16862,12 +16865,13 @@ if active_view in ["🌐 3D Dünya Küresi & ERP Satışları", "🌐 Executive 
         cur_year_con = [0.0] * 12
         
         if raw_sales_df is not None:
-            if "2024" in year_sel:
-                m_sub_df = raw_sales_df[raw_sales_df['Year_int'] == 2024]
-            elif "2025" in year_sel:
-                m_sub_df = raw_sales_df[raw_sales_df['Year_int'] == 2025]
-            elif "2026" in year_sel:
-                m_sub_df = raw_sales_df[raw_sales_df['Year_int'] == 2026]
+            sel_yr_found = None
+            for y_chk in [2020, 2021, 2022, 2023, 2024, 2025, 2026]:
+                if str(y_chk) in year_sel:
+                    sel_yr_found = y_chk
+                    break
+            if sel_yr_found is not None:
+                m_sub_df = raw_sales_df[raw_sales_df['Year_int'] == sel_yr_found]
             else:
                 m_sub_df = raw_sales_df
                 
@@ -17214,7 +17218,7 @@ elif active_view in ["🤖 Yapay Zeka Stratejik Danışman (AI Copilot)", "🔮 
     # --------------------------------------------------------------------------
     with ai_tab1:
         st.subheader("Düşüş Eğilimindeki Ürünler, Churn Alarmları ve AI Aksiyon Planı")
-        st.caption("Resmi fatura veritabanı (874 işlem kaydı) taranarak partner ve ürün bazında fiili sipariş düşüşleri ve atıl cihaz anomalileri tespit edilmiştir.")
+        st.caption("Resmi fatura veritabanı (1,280 işlem kaydı) taranarak partner ve ürün bazında fiili sipariş düşüşleri ve atıl cihaz anomalileri tespit edilmiştir.")
 
         # Data Basis Info Box
         st.markdown("""
@@ -17223,7 +17227,7 @@ elif active_view in ["🤖 Yapay Zeka Stratejik Danışman (AI Copilot)", "🔮 
                 🔍 ZEUS Yapay Zeka Satış & Anomali Teşhis Motoru (Veri Kaynağı: Gerçek Excel Fatura Veritabanı)
             </div>
             <div style="color:#CCD7E6; font-size:12.5px; line-height:1.5;">
-                Bu sekmedeki tüm tespitler, metrikler ve aksiyon kartları; <b>874 satırlık resmi satış veritabanı</b> (<code>Zeus_Sales_Export_2026-11-03.xlsx</code>), <b>43 kayıtlı partner</b>, <b>2024–2026 YTD fiili faturaları</b>, <b>66 kurulu cihaz tabanı</b> ve <b>cihaz başına sarf çekiş oranları</b> çapraz analiz edilerek üretilmiştir. Sentetik veya varsayımsal vaka içermez.
+                Bu sekmedeki tüm tespitler, metrikler ve aksiyon kartları; <b>1,280 satırlık resmi satış veritabanı (2020–2026)</b> (<code>Zeus_Sales_Export_2026-11-03.xlsx</code>), <b>49 kayıtlı partner</b>, <b>2020–2026 fiili faturaları</b>, <b>76 kurulu cihaz tabanı</b> ve <b>cihaz başına sarf çekiş oranları</b> çapraz analiz edilerek üretilmiştir. Sentetik veya varsayımsal vaka içermez.
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -17239,12 +17243,12 @@ elif active_view in ["🤖 Yapay Zeka Stratejik Danışman (AI Copilot)", "🔮 
             fill_value=0.0
         ).reset_index()
 
-        for yr in [2024, 2025, 2026]:
+        for yr in [2020, 2021, 2022, 2023, 2024, 2025, 2026]:
             if yr not in partner_pivot.columns:
                 partner_pivot[yr] = 0.0
 
         # Device, dish and liquid counts from actual Excel invoices
-        piezo_dev_map = excel_sales_df[excel_sales_df['Product'].str.contains('Device|Stimulator|Fusion', case=False, na=False)].groupby('Company')['Quantity'].sum().to_dict()
+        pulse_dev_map = excel_sales_df[excel_sales_df['Product'].str.contains('Device|Stimulator|Fusion', case=False, na=False)].groupby('Company')['Quantity'].sum().to_dict()
         dish_map = excel_sales_df[excel_sales_df['Product'].str.contains('Dish', case=False, na=False)].groupby('Company')['Quantity'].sum().to_dict()
         liquid_map = excel_sales_df[excel_sales_df['Product'].str.contains('Liquid', case=False, na=False)].groupby('Company')['Quantity'].sum().to_dict()
         top_prod_map = excel_sales_df.groupby('Company')['Product'].agg(lambda s: s.value_counts().index[0] if len(s) > 0 else 'Genel Sarf').to_dict()
@@ -17273,10 +17277,10 @@ elif active_view in ["🤖 Yapay Zeka Stratejik Danışman (AI Copilot)", "🔮 
             s26 = r[2026]
             diff_25_26 = s26 - s25
             pct_25_26 = ((s26 - s25) / s25 * 100.0) if s25 > 0 else (100.0 if s26 > 0 else 0.0)
-            devs = int(piezo_dev_map.get(c_name, 0))
+            devs = int(pulse_dev_map.get(c_name, 0))
             dishes = int(dish_map.get(c_name, 0))
             liquids = int(liquid_map.get(c_name, 0))
-            main_p = top_prod_map.get(c_name, 'Piezo Sarf')
+            main_p = top_prod_map.get(c_name, 'ZEUS Sarf')
 
             if s25 >= 1000 and s26 == 0:
                 status = '🔴 Churn Riski - Sipariş Kesildi'
@@ -17354,7 +17358,7 @@ elif active_view in ["🤖 Yapay Zeka Stratejik Danışman (AI Copilot)", "🔮 
         # Yapay Zeka Teşhis ve Aksiyon Kartları (Interactive AI Cards)
         # ----------------------------------------------------------------------
         st.markdown("#### Yapay Zeka Teşhis ve Aksiyon Kartları (100% Gerçek Veriyle Doğrulanmış)")
-        st.caption("Aşağıdaki kartlar resmi Excel fatura veritabanı (874 satır), cihaz adetleri ve sözleşme koşullarına göre tek tek denetlenmiş ve doğrulanmıştır.")
+        st.caption("Aşağıdaki kartlar resmi Excel fatura veritabanı (1,280 satır), cihaz adetleri ve sözleşme koşullarına göre tek tek denetlenmiş ve doğrulanmıştır.")
 
         action_filter = st.radio(
             "Aksiyon Kartı Filtresi",
@@ -17499,9 +17503,9 @@ elif active_view in ["🤖 Yapay Zeka Stratejik Danışman (AI Copilot)", "🔮 
             elif role == "Finans Müdürü":
                 revised_steps.append(f"<b>Tahsilat Güvencesi & Akreditifli Finansal Koruma (Finans Müdürü Kararı):</b> Vade uçurumunu kapatmak adına peşin/akreditifli ödeme veya banka teminat mektubu protokolü devreye alınarak nakit akışı %100 güvenceye bağlanmalıdır.")
             elif role == "Kıdemli Klinik Embriyolog":
-                revised_steps.append(f"<b>Acil Yerinde Klinik Protokol Eğitimi & Aplikasyon (Embriyolog Müdahalesi):</b> Laboratuvardaki embriyoloji ekibine 48 saat içinde 1-1 hands-on Piezo ICSI voltaj ayarları ve oosit aktivasyon SOP eğitimi verilmelidir.")
+                revised_steps.append(f"<b>Acil Yerinde Klinik Protokol Eğitimi & Aplikasyon (Embriyolog Müdahalesi):</b> Laboratuvardaki embriyoloji ekibine 48 saat içinde 1-1 hands-on Elektriksel AOA voltaj ayarları ve oosit aktivasyon SOP eğitimi verilmelidir.")
             elif has_staff or has_training:
-                revised_steps.append(f"<b>Acil Yerinde Klinik Eğitim & Validasyon ({role} Talebi):</b> Laboratuvardaki yeni embriyoloji ekibine 48 saat içinde 1-1 hands-on Piezo ICSI voltaj ve solüsyon protokolü eğitimi verilmeli.")
+                revised_steps.append(f"<b>Acil Yerinde Klinik Eğitim & Validasyon ({role} Talebi):</b> Laboratuvardaki yeni embriyoloji ekibine 48 saat içinde 1-1 hands-on Elektriksel AOA voltaj ve solüsyon protokolü eğitimi verilmeli.")
             elif has_competitor:
                 revised_steps.append(f"<b>Rakip İkamesine Karşı Klinik Kanıt & Karşı Teklif:</b> ZEUS'un blastosist gelişiminde sağladığı %18.4 klinik üstünlük verileri sunulmalı; rakip geçişini durdurmak için anında klinik numune seti ulaştırılmalı.")
             elif has_price:
@@ -17616,7 +17620,7 @@ Immediate Resolution: ZEUS Bioscience is actively incorporating this high-level 
                 user_expert_note = st.text_area(
                     "Uzman Görüşü / Saha İstihbaratı Notu (Specialist Field Observation):",
                     value=cur_note,
-                    placeholder="Örn: 'Klinik baş embriyoloğu değişti, yeni ekip piezo mikroenjeksiyon voltaj ayarlarını bilmiyor; acil 1 günlük yerinde klinik eğitim verilirse ayda 25 kutu tüketirler.' veya 'Rakip firma konsinye numune bıraktı, fiyat eşitlemesi ve 20 kutuluk test numune kiti talep ediliyor.'",
+                    placeholder="Örn: 'Klinik baş embriyoloğu değişti, yeni ekip elektriksel oosit aktivasyonu voltaj ayarlarını bilmiyor; acil 1 günlük yerinde klinik eğitim verilirse ayda 25 kutu tüketirler.' veya 'Rakip firma konsinye numune bıraktı, fiyat eşitlemesi ve 20 kutuluk test numune kiti talep ediliyor.'",
                     height=90,
                     key=f"inp_note_{case_id}"
                 )
@@ -17713,7 +17717,7 @@ To reactivate stimulation protocols across your partner clinics in Dubai and Abu
    - ZEUS BioPSafe (ZBB25-001): 13-IR-sensor witnessing platform for PGT-A embryo biopsy and PCR tube alignment.
    - ZEUS Mismatch Blocker (ZMB-7T): Comprehensive 7-terminal electronic witnessing replacing expensive RFID chips with zero-cost QR coins.
    - Smart Cryo-Tools (ZCT25): 4X tank capacity expansion with barcode-guided cane/goblet retrieval.
-3. Complimentary virtual clinical training for your embryology laboratory clients to standardize piezo ICSI stimulation protocols.
+3. Complimentary virtual clinical training for your embryology laboratory clients to standardize elektriksel AOA stimulation protocols.
 
 Please let us know your availability this week for a brief video conference.
 
@@ -17735,7 +17739,7 @@ ZEUS Bioscience Commercial & Client Management Division""",
                 case_id="atc_kuwait",
                 title_html='<strong style="color:#FF8A96;font-size:15px;">🔴 ADVANCED TECHNOLOGY COMPANY (ATC) — Kuveyt (K.S.C.P.)</strong>',
                 badge_html='<span class="chip chip-err">SARF ORANI %2.9 (ATIL CİHAZ)</span>',
-                fact_html='<b>Excel Fatura Kanıtı:</b> 2024: $0.00 | 2025: $26,250.00 (3 Piezo Stimulator = $25,500; 6 Dish = $600; 3 Liquid = $150) | <b>2026 YTD: $0.00 (-%100.0)</b><br><b>Kurulu Cihaz:</b> 3 Ünite ($25.5K) | <b>Toplam Sarf Çekişi:</b> Yalnızca $750 (6 Kutu Dish, 3 Flakon Solüsyon — Sarf/Cihaz Oranı: %2.9)',
+                fact_html='<b>Excel Fatura Kanıtı:</b> 2024: $0.00 | 2025: $26,250.00 (3 ZEUS Pulse Stimulator (ZPS 26) = $25,500; 6 Dish = $600; 3 Liquid = $150) | <b>2026 YTD: $0.00 (-%100.0)</b><br><b>Kurulu Cihaz:</b> 3 Ünite ($25.5K) | <b>Toplam Sarf Çekişi:</b> Yalnızca $750 (6 Kutu Dish, 3 Flakon Solüsyon — Sarf/Cihaz Oranı: %2.9)',
                 diag_text="ATC 15.12.2025 tarihinde 3 adet ZEUS Pulse Stimulator (AOA) cihazı ($25,500) almış, ancak yanına yalnızca 6 kutu Electro Dish ve 3 adet solüsyon ($750 sarf) eklemiştir. 2026 yılında ise tek bir sarf siparişi verilmemiştir. Kuveyt tüp bebek laboratuvarlarında embriyologlar protokol eğitimi eksikliğinden ötürü Piezo cihazlarını rutine alamamıştır.",
                 ai_action_steps=[
                     "<b>Klinik Destek Ziyareti (15 Gün):</b> Kuveyt\'teki embriyoloji ekiplerine online 1-1 \'Elektriksel Oosit Aktivasyonu (AOA) SOP\' eğitimi verilmeli.",
@@ -18027,7 +18031,7 @@ ZEUS Bioscience Scientific Affairs""",
         # Gerçek Satış Hareketlerine Göre Anomali ve Trend Matrisi (43 Accounts)
         # ----------------------------------------------------------------------
         st.markdown("#### Gerçek Satış Hareketlerine Göre Partner Sağlık ve Trend Matrisi")
-        st.caption("Resmi Excel veritabanındaki 43 partnerin 2024, 2025, 2026 YTD fiili faturaları, cihaz sayıları ve AI sağlık durumları.")
+        st.caption("Resmi Excel veritabanındaki 49 partnerin 2024, 2025, 2026 YTD fiili faturaları, cihaz sayıları ve AI sağlık durumları.")
 
         tb_filter = st.selectbox(
             "Tablo Filtresi",
@@ -18069,7 +18073,7 @@ ZEUS Bioscience Scientific Affairs""",
     # --------------------------------------------------------------------------
     st.markdown("---")
     st.subheader("Cihaz & Sarf Alım Denetim Matrisi: Kim Hangi Cihazı Aldı, Sarf Aldı mı? (Fatura & Tarihçe Analizi)")
-    st.caption("Excel satış veri tabanındaki (874 işlem) tüm faturalar çapraz taranarak; hangi kurumun hangi tarihte cihaz aldığı, sarf malzemesi alıp almadığı ve her iki kalemin kesin fatura tarihleri listelenmiştir.")
+    st.caption("Excel satış veri tabanındaki (1,280 işlem) tüm faturalar çapraz taranarak; hangi kurumun hangi tarihte cihaz aldığı, sarf malzemesi alıp almadığı ve her iki kalemin kesin fatura tarihleri listelenmiştir.")
 
     excel_sales_df = get_excel_sales_df()
     audit_data = build_device_consumable_audit(excel_sales_df)
@@ -19211,7 +19215,7 @@ elif active_view in ["🤝 Yetkili Distribütör Karneleri & CRM", "🤝 Distrib
             return f"{tot} Adet ({', '.join(parts)})"
         return f"{tot} Adet"
     st.title("Commercial Accounts & Client Directory")
-    st.caption("Excel resmi satış kayıtlarındaki 43 aktif müşteri ve partnerin yıllık (2024, 2025, 2026) ve konsolide sipariş hacimleri, kurulu cihaz dağılımları ve sarf tüketim dökümü.")
+    st.caption("Excel resmi satış kayıtlarındaki 49 aktif müşteri ve partnerin yıllık (2024, 2025, 2026) ve konsolide sipariş hacimleri, kurulu cihaz dağılımları ve sarf tüketim dökümü.")
 
     # Search & 5-Column Filters (Including Dedicated Year Selector)
     f_c1, f_c2, f_c3, f_c4, f_c5 = st.columns([1.3, 1.0, 1.0, 1.0, 1.3])
@@ -19778,7 +19782,7 @@ elif active_view in ["📜 Sözleşme Hükümleri & Hukuki Şartname", "📜 Agr
 # ==============================================================================
 elif active_view in ["📊 Cihaz vs Sarf Gelir Trendleri", "📊 Sales & Product Analytics"]:
     st.title("Multi-Dimensional Sales & Product Analytics")
-    st.caption("Excel satış veri tabanındaki (874 fatura satırı) doğrulanmış cihaz/sarf dökümleri, ürün bazlı hasılat ve distribütör performans analitiği.")
+    st.caption("Excel satış veri tabanındaki (1,280 fatura satırı) doğrulanmış cihaz/sarf dökümleri, ürün bazlı hasılat ve distribütör performans analitiği.")
 
     # Top KPI Metrics Row (3D Glass Hologram Cards)
     kpi_s1, kpi_s2, kpi_s3, kpi_s4 = st.columns(4)
@@ -19792,7 +19796,7 @@ elif active_view in ["📊 Cihaz vs Sarf Gelir Trendleri", "📊 Sales & Product
                 </div>
             </div>
             <div class="glass-metric-val" style="color:#00F5FF;font-size:24px;">{format_curr(total_rev)}</div>
-            <div style="font-size:11px;color:#10B981;font-weight:600;margin-top:4px;">● 874 Doğrulanmış Fatura Satırı</div>
+            <div style="font-size:11px;color:#10B981;font-weight:600;margin-top:4px;">● 1,280 Doğrulanmış Fatura Satırı</div>
         </div>
         ''', unsafe_allow_html=True)
     with kpi_s2:
@@ -20333,7 +20337,7 @@ elif active_view in ["📊 Cihaz vs Sarf Gelir Trendleri", "📊 Sales & Product
     lead_hdr_c1, lead_hdr_c2 = st.columns([1.5, 1])
     with lead_hdr_c1:
         st.subheader("Leaderboard: Ticari Partner & Distribütör Performans Tablosu")
-        st.caption("Excel satış kayıtlarındaki (874 fatura satırı) gerçek kümülatif hasılat, sahadaki toplam kurulu cihaz tabanı ve dönem gerçekleşmeleri.")
+        st.caption("Excel satış kayıtlarındaki (1,280 fatura satırı) gerçek kümülatif hasılat, sahadaki toplam kurulu cihaz tabanı ve dönem gerçekleşmeleri.")
     with lead_hdr_c2:
         lead_metric_view = st.radio(
             "Leaderboard Metrik Kapsamı:",
@@ -20603,7 +20607,7 @@ elif active_view in ["📊 Cihaz vs Sarf Gelir Trendleri", "📊 Sales & Product
 
     # 4. Consolidated Portfolio
     with lead_tab4:
-        st.markdown("##### Konsolide Tüm Portföy (43 Kurum)")
+        st.markdown("##### Konsolide Tüm Portföy (49 Kurum)")
         all_sorted = sorted(all_dists, key=lambda x: x.get('rev_by_year', {}).get('ALL', x.get('revenue', 0)), reverse=True)
         
         all_table = []
@@ -22576,7 +22580,7 @@ BODY:
                 return {
                     "flag": "🇹🇷", "country": "Türkiye (Turkey)", "phase": 1,
                     "phase_label": "FAZ 1: İç Pazar & Sarf Penetrasyonu (0 - 60 Gün)",
-                    "color": "#00F5FF", "market_size": f"{clinics} Klinik | ~{cycles:,} Siklus | 874 Fatura İç Pazar Verisi",
+                    "color": "#00F5FF", "market_size": f"{clinics} Klinik | ~{cycles:,} Siklus | 1,280 Fatura İç Pazar Verisi",
                     "summary_bullet": f"{clinics} klinik, {cycles:,} siklus; sahadaki uyuyan cihazlara yerinde aplikasyon eğitimi verilerek sarf nakit akışı hemen artırılmalıdır.",
                     "decision_maker": "Tüp Bebek Merkezi Sorumlu Hekimleri & Kıdemli Laboratuvar Embriyologları",
                     "barrier": "Sahada kurulu elektriksel AOA cihazları bulunmakta ancak bazılarında sarf alımı durmuş veya düşük kalmaktadır. Bariyer cihaz yokluğu değil, klinik rutin adaptasyonu ve sarf ikmalidir.",
@@ -23715,7 +23719,7 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
                 """, unsafe_allow_html=True)
 
                 # Global Comparison Matrix Table of 15 Key Markets
-                st.markdown("##### 🌐 Global Pazarlar Karşılaştırmalı Tıbbi Cihaz Tescil, Harç & Süre Tablosu (15 Ülke)")
+                st.markdown("##### 🌐 Global Pazarlar Karşılaştırmalı Tıbbi Cihaz Tescil, Harç & Süre Tablosu (19 Ülke)")
                 st.caption("Aşağıdaki master çizelge, ZEUS Pulse Stimulator (ZPS 26) Sınıf IIa cihazımızın farklı coğrafyalarda tescili için ödenmesi gereken resmi devlet harçlarını, konsolosluk onay masraflarını ve yerel acente maliyetlerini özetlemektedir.")
 
                 matrix_rows = []
@@ -24557,7 +24561,7 @@ elif active_view in ["🌍 Ülke 360° & Müşteri Radarı", "🌍 Country 360°
                 st.markdown(f"""
                 <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(0,230,118,0.2);border-radius:8px;padding:12px;font-size:11.8px;line-height:1.7;">
                     <b style="color:#00E676;font-size:12.5px;">📋 Şartname Kriterleri & Eylem Planı (ZPS 26):</b><br>
-                    • <b>Şartname Başlığı:</b> {ts_c360.get('device_title', 'Piezo Stimülatör')}<br>
+                    • <b>Şartname Başlığı:</b> {ts_c360.get('device_title', 'ZEUS Pulse Stimulator (ZPS 26)')}<br>
                     • <b>Zorunlu Kriterler:</b> Kimyasalsız mikro-elektriksel puls stimülasyonu, sub-%1 lizis, MEA >%80 analizli sarflar.<br>
                     • <b>Zorunlu Belgeler:</b> CE Sertifikalı (Class IIa), ISO 13485, Yerel tescil barkodu.<br><br>
                     <b style="color:#FFB800;">Eylem Planı:</b><br>
@@ -26778,7 +26782,7 @@ elif active_view in ["🚨 Atıl Cihaz, Churn & Re-Aktivasyon", "📈 Performanc
         if tot_all_dev > 0 and y_df['Cihaz (Adet)'].iloc[-1] == 0:
             st.info(f"ℹ️ **Cihaz vs Sarf Dönüşümü:** {eval_dist_name}, geçmiş yıllarda {tot_all_dev} adet Pulse Stimulator (AOA) cihazı alarak altyapısını kurmuştur. 2026'da cihaz alımının durması normal bir sermaye ekipmanı doyumudur; asıl takip edilmesi gereken metrik kurulu 5 cihazın oosit sarf tüketim sürekliliğidir.")
         elif tot_all_dev == 0:
-            st.info(f"ℹ️ **Sadece Sarf Alan Müşteri:** Bu partner henüz Piezo sermaye cihazı almamış olup yalnızca Electro Dish veya Solüsyon sarfı tüketmektedir.")
+            st.info(f"ℹ️ **Sadece Sarf Alan Müşteri:** Bu partner henüz Pulse Stimulator sermaye cihazı almamış olup yalnızca Electro Dish veya Solüsyon sarfı tüketmektedir.")
         else:
             st.success(f"ℹ️ **Aktif Büyüme:** Partner hem yeni cihaz kurulumu yapmakta hem de sarf malzeme hacmini büyütmektedir.")
 
@@ -28063,7 +28067,7 @@ elif active_view in ["📑 Yönetici Raporları & Veri İndirme", "📄 Executiv
     # Primary ERP Sales Ledger Export Section (.XLSX & .CSV)
     st.markdown("---")
     st.markdown("### 📥 Primary ERP Audited Sales Ledger (Zeus_Sales_Export_2026-11-03)")
-    st.caption("Tam 874 satırlık resmi finansal ERP satış kütüğünü doğrudan Excel (.xlsx) veya evrensel CSV formatında indirin.")
+    st.caption("Tam 1,280 satırlık resmi finansal ERP satış kütüğünü doğrudan Excel (.xlsx) veya evrensel CSV formatında indirin.")
     
     col_dl_x, col_dl_c = st.columns(2)
     erp_xlsx_path = "Zeus_Sales_Export_2026-11-03.xlsx"
