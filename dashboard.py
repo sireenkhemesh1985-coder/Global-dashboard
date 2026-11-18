@@ -4406,17 +4406,17 @@ def build_country_360_charts(country_name, c_macro, c_sales, target_rev_2027=500
         height=240
     )
 
-    # Chart 3: Historical + 2027 Target
-    years = ['2024', '2025', '2026 (YTD)', '2027 (Hedef)']
-    v24 = float(c_sales[c_sales['Year_int'] == 2024]['Amount (USD)'].sum()) if len(c_sales) > 0 and 'Year_int' in c_sales.columns else 0.0
-    v25 = float(c_sales[c_sales['Year_int'] == 2025]['Amount (USD)'].sum()) if len(c_sales) > 0 and 'Year_int' in c_sales.columns else 0.0
-    v26 = float(c_sales[c_sales['Year_int'] == 2026]['Amount (USD)'].sum()) if len(c_sales) > 0 and 'Year_int' in c_sales.columns else 0.0
-    c24 = int(c_sales[(c_sales['Year_int'] == 2024) & (c_sales['Group'] == 'Consumables')]['Quantity'].sum()) if len(c_sales) > 0 and 'Year_int' in c_sales.columns else 0
-    c25 = int(c_sales[(c_sales['Year_int'] == 2025) & (c_sales['Group'] == 'Consumables')]['Quantity'].sum()) if len(c_sales) > 0 and 'Year_int' in c_sales.columns else 0
-    c26 = int(c_sales[(c_sales['Year_int'] == 2026) & (c_sales['Group'] == 'Consumables')]['Quantity'].sum()) if len(c_sales) > 0 and 'Year_int' in c_sales.columns else 0
-
-    rev_vals = [v24, v25, v26, float(target_rev_2027)]
-    con_vals = [c24, c25, c26, int(target_con_2027)]
+    # Chart 3: Historical (2020-2026) + 2027 Target
+    years = ['2020', '2021', '2022', '2023', '2024', '2025', '2026', '2027 (Hedef)']
+    rev_vals = []
+    con_vals = []
+    for y_v in [2020, 2021, 2022, 2023, 2024, 2025, 2026]:
+        v_yr = float(c_sales[c_sales['Year_int'] == y_v]['Amount (USD)'].sum()) if len(c_sales) > 0 and 'Year_int' in c_sales.columns else 0.0
+        c_yr = int(c_sales[(c_sales['Year_int'] == y_v) & (c_sales['Group'] == 'Consumables')]['Quantity'].sum()) if len(c_sales) > 0 and 'Year_int' in c_sales.columns else 0
+        rev_vals.append(v_yr)
+        con_vals.append(c_yr)
+    rev_vals.append(float(target_rev_2027))
+    con_vals.append(int(target_con_2027))
 
     fig3 = go.Figure()
     fig3.add_trace(go.Bar(
@@ -4435,7 +4435,7 @@ def build_country_360_charts(country_name, c_macro, c_sales, target_rev_2027=500
         yaxis='y2'
     ))
     fig3.update_layout(
-        title=dict(text=f"📊 {country_name} 2024-2027 Ciro & Sarf Büyüme Trendi", font=dict(color='#FFB800', size=12)),
+        title=dict(text=f"📊 {country_name} 2020-2027 Ciro & Sarf Büyüme Trendi", font=dict(color='#FFB800', size=12)),
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
         showlegend=True,
@@ -16303,8 +16303,8 @@ def render_churn_and_partner_performance_view():
             partner_sales = raw_sales_df[raw_sales_df['Company'] == eval_dist_name].copy()
             partner_sales = partner_sales.sort_values('Date_dt')
 
-        # Build annual breakdown
-        years_list = [2024, 2025, 2026]
+        # Build annual breakdown across full 7 years (2020-2026)
+        years_list = [2020, 2021, 2022, 2023, 2024, 2025, 2026]
         y_stats = []
         for yr in years_list:
             ydf = partner_sales[partner_sales['Year_int'] == yr] if len(partner_sales) > 0 else pd.DataFrame()
@@ -16328,25 +16328,29 @@ def render_churn_and_partner_performance_view():
 
         y_df = pd.DataFrame(y_stats)
     
-        # Real YoY Growth
-        v24 = y_df['Toplam Ciro'].iloc[0]
-        v25 = y_df['Toplam Ciro'].iloc[1]
-        v26 = y_df['Toplam Ciro'].iloc[2]
+        # Dynamic YoY Growth for Recent Periods
+        def get_stat_val(df_in, col_k, y_num):
+            m = df_in[df_in['Yıl'].str.contains(str(y_num))]
+            return float(m[col_k].iloc[0]) if len(m) > 0 else 0.0
+
+        v24 = get_stat_val(y_df, 'Toplam Ciro', 2024)
+        v25 = get_stat_val(y_df, 'Toplam Ciro', 2025)
+        v26 = get_stat_val(y_df, 'Toplam Ciro', 2026)
     
         yoy_25 = ((v25 - v24) / v24 * 100.0) if v24 > 0 else (100.0 if v25 > 0 else 0.0)
         yoy_26 = ((v26 - v25) / v25 * 100.0) if v25 > 0 else (100.0 if v26 > 0 else 0.0)
 
         # Device YoY
-        d24 = y_df['Cihaz Geliri'].iloc[0]
-        d25 = y_df['Cihaz Geliri'].iloc[1]
-        d26 = y_df['Cihaz Geliri'].iloc[2]
+        d24 = get_stat_val(y_df, 'Cihaz Geliri', 2024)
+        d25 = get_stat_val(y_df, 'Cihaz Geliri', 2025)
+        d26 = get_stat_val(y_df, 'Cihaz Geliri', 2026)
         dev_yoy_25 = ((d25 - d24) / d24 * 100.0) if d24 > 0 else (100.0 if d25 > 0 else 0.0)
         dev_yoy_26 = ((d26 - d25) / d25 * 100.0) if d25 > 0 else (100.0 if d26 > 0 else 0.0)
 
         # Consumables YoY
-        c24 = y_df['Sarf Geliri'].iloc[0]
-        c25 = y_df['Sarf Geliri'].iloc[1]
-        c26 = y_df['Sarf Geliri'].iloc[2]
+        c24 = get_stat_val(y_df, 'Sarf Geliri', 2024)
+        c25 = get_stat_val(y_df, 'Sarf Geliri', 2025)
+        c26 = get_stat_val(y_df, 'Sarf Geliri', 2026)
         con_yoy_25 = ((c25 - c24) / c24 * 100.0) if c24 > 0 else (100.0 if c25 > 0 else 0.0)
         con_yoy_26 = ((c26 - c25) / c25 * 100.0) if c25 > 0 else (100.0 if c26 > 0 else 0.0)
 
@@ -26365,8 +26369,8 @@ elif active_view in ["🌐 Tekil Ülke 360° (Tüm Bilgiler, Mevzuat & İletişi
         tot_cons = int(c_sales[c_sales['Group'] == 'Consumables']['Quantity'].sum()) if has_sales else 0
         tot_invs = int(c_sales['Invoice'].nunique()) if has_sales else 0
 
-        # Annual breakdown
-        years_list = [2024, 2025, 2026]
+        # Annual breakdown across full 7 years (2020-2026)
+        years_list = [2020, 2021, 2022, 2023, 2024, 2025, 2026]
         annual_stats = []
         for y in years_list:
             ydf = c_sales[c_sales['Year_int'] == y] if has_sales else pd.DataFrame()
@@ -26388,10 +26392,10 @@ elif active_view in ["🌐 Tekil Ülke 360° (Tüm Bilgiler, Mevzuat & İletişi
             })
         df_annual = pd.DataFrame(annual_stats)
 
-        # YoY Growth
-        v24 = annual_stats[0]['Toplam Ciro ($USD)']
-        v25 = annual_stats[1]['Toplam Ciro ($USD)']
-        v26 = annual_stats[2]['Toplam Ciro ($USD)']
+        # YoY Growth (2025 vs 2024 and 2026 YTD)
+        v24 = float(c_sales[c_sales['Year_int'] == 2024]['Amount (USD)'].sum()) if has_sales else 0.0
+        v25 = float(c_sales[c_sales['Year_int'] == 2025]['Amount (USD)'].sum()) if has_sales else 0.0
+        v26 = float(c_sales[c_sales['Year_int'] == 2026]['Amount (USD)'].sum()) if has_sales else 0.0
         yoy_val = ((v25 - v24) / v24 * 100.0) if v24 > 0 else (100.0 if v25 > 0 else 0.0)
         companies_list = list(c_sales['Company'].unique()) if has_sales else []
 
@@ -29729,6 +29733,20 @@ elif active_view in ["📑 Partner Karneleri, Raporlar & Excel/CSV İndirme", "�
                 mime="text/csv",
                 key="btn_dl_erp_csv"
             )
+
+    # Secondary Gelir Tablosu (2020-2026) Download Button
+    gelir_tab_path = "ZEUS_Gelir_Tablosu_2020_2026.csv" if os.path.exists("ZEUS_Gelir_Tablosu_2020_2026.csv") else os.path.join("data", "ZEUS_Gelir_Tablosu_2020_2026.csv")
+    if os.path.exists(gelir_tab_path):
+        with open(gelir_tab_path, "rb") as f_gt:
+            gt_bytes = f_gt.read()
+        st.download_button(
+            label="🏛️ Resmi 7 Yıllık Gelir Tablosunu İndir (ZEUS_Gelir_Tablosu_2020_2026.csv)",
+            data=gt_bytes,
+            file_name="ZEUS_Gelir_Tablosu_2020_2026.csv",
+            mime="text/csv",
+            key="btn_dl_gelir_tablosu_csv",
+            use_container_width=True
+        )
 
     # Universal CSV Import Hub (Powered by Sellbird Architecture)
     st.markdown("<br>", unsafe_allow_html=True)
