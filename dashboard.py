@@ -8023,12 +8023,11 @@ with st.sidebar:
         st.rerun()
 
     main_nav_opts = [
-        "🌐 1. Global Yönetim & ERP Kokpiti",
-        "🌍 2. Pazar İstihbaratı & Ülke 360°",
-        "⚖️ 3. Stratejik Karar & Rakip Kıyaslama",
-        "💰 4. Fiyatlandırma, Sarf & Klinik ROI",
-        "🤝 5. Distribütör Ağı & CRM Operasyonları",
-        "🔮 6. Yapay Zeka Stratejik Danışman"
+        "🌍 1. Pazar İstihbaratı & Ülke Analizi (Market Analysis)",
+        "⚔️ 2. Stratejik Karar Merkezi & Uyarılar (Strategy & Alerts)",
+        "💰 3. Fiyatlandırma, Klinik ROI & AI Tahminleme (Pricing & AI)",
+        "📱 4. B2B İletişim, LinkedIn & Sosyal Medya (Outreach & Media)",
+        "📊 5. Global Satış Kokpiti & Raporlama (ERP & Reports)"
     ]
     if "main_nav_radio" not in st.session_state:
         st.session_state["main_nav_radio"] = main_nav_opts[0]
@@ -8046,73 +8045,68 @@ with st.sidebar:
     # CRITICAL PARAMETER BREAKDOWN CARD (HER SEKMEDEKİ DEĞERLİ PARAMETRELER)
     # --------------------------------------------------------------------------
     nav_param_meta = {
-        "🌐 1. Global Yönetim & ERP Kokpiti": {
-            "title": "Global Kokpit & Satış",
-            "badge": "Canlı ERP ($936.5K)",
-            "color": "#00F5FF",
-            "params": [
-                "3D Dünya Küresi & Küresel Satışlar",
-                "1,280 Doğrulanmış Fatura ($936,546 USD)",
-                "Cihaz vs Tekrar Eden Sarf Trendleri",
-                "Resmi Raporlar & Ham Veri Export"
-            ]
-        },
-        "🌍 2. Pazar İstihbaratı & Ülke 360°": {
-            "title": "Ülke 360° İstihbarat",
-            "badge": "48 Ülke Tam Kapsam",
+        "🌍 1. Pazar İstihbaratı & Ülke Analizi (Market Analysis)": {
+            "title": "Pazar Analizi & Ülke Masası",
+            "badge": "48 Ülke + Çoklu Kıyaslama",
             "color": "#00E676",
             "params": [
-                "Makro Metrikler (GSYİH, Klinikler, 52K Siklus)",
-                "Doğrulanmış Müşteri & Distribütör Radarı",
-                "Gümrük, İthalat & Biyoetik Mevzuatı",
-                "Kamu İhale Teknik Şartnameleri (.txt)",
-                "Kültürel Müzakere & Yemek Protokolü"
+                "Tekil Ülke 360° (WDI, ESHRE, Klinikler, 52K Siklus)",
+                "Çoklu Ülke Kıyaslama Masası (2-6 Ülke Yan Yana)",
+                "Doğrulanmış Karar Verici & Müşteri Radarı",
+                "Gümrük, İthalat & Biyoetik Mevzuat Haritası",
+                "Kamu İhaleleri & Şartnameler (14 İhale, $3.85M)",
+                "Kültürel Müzakere Playbook & İş Yapış Protokolü"
             ]
         },
-        "⚖️ 3. Stratejik Karar & Rakip Kıyaslama": {
-            "title": "Strateji & Kıyaslama",
-            "badge": "Pazar Karar Masası",
+        "⚔️ 2. Stratejik Karar Merkezi & Uyarılar (Strategy & Alerts)": {
+            "title": "Strateji & Erken Uyarı Kokpiti",
+            "badge": "Rekabet Masası & Risk Radarı",
             "color": "#38BDF8",
             "params": [
                 "ZEUS vs Eppendorf, RI Witness, Vitrolife",
-                "RFID OPEX Kurtarma (Yıllık $15K Net Kâr)",
-                "$45,000 - $50,000 USD Komple Filo Paketi",
-                "Şartlı Demo Kuralı (100+ Kutu Taahhüt)",
-                "Çok Boyutlu 22-Metrik Karşılaştırma"
+                "RFID OPEX Kilidi Kırma ($15,000 Yıllık Tasarruf)",
+                "Komple Laboratuvar Filo Paketi ($45K-$50K vs $120K)",
+                "🚨 Kritik Atıl Cihaz & Churn Erken Uyarıları",
+                "Jeopolitik & Döviz Riski Senaryoları",
+                "Kamu & Özel İhale Şartname Kilitleri (.txt)"
             ]
         },
-        "💰 4. Fiyatlandırma, Sarf & Klinik ROI": {
-            "title": "Fiyatlandırma & Klinik ROI",
-            "badge": "Canlı Simülatör",
+        "💰 3. Fiyatlandırma, Klinik ROI & AI Tahminleme (Pricing & AI)": {
+            "title": "Fiyatlandırma, ROI & AI Tahmin",
+            "badge": "Canlı Simülatör & ML Tahmin",
             "color": "#FFD700",
             "params": [
-                "$8,500 USD Standart Dağıtıcı Fiyatı",
+                "Ülke Gelir Grubuna Göre Dinamik Fiyatlandırma",
                 "4 Pool Tek Dish (20 Oosit/Dish = 1 Siklus)",
-                "Vaka Başı $6.60 USD Sarf Maliyeti",
+                "Vaka Başı $6.60 USD Sarf Maliyeti ($0.33/Oosit)",
                 "Klinik Yatırım Geri Dönüşü (%700+ Net ROI)",
-                "Marj Koruması (%35+ Brüt Marj)"
+                "🔮 AI 2026 Q4 & 2027 Ciro/Sarf Projeksiyonu",
+                "Razor-and-Blade Düzenli Sarf ARR Büyümesi"
             ]
         },
-        "🤝 5. Distribütör Ağı & CRM Operasyonları": {
-            "title": "Distribütör Ağı & CRM",
-            "badge": "Ticari Operasyon",
-            "color": "#60A5FA",
-            "params": [
-                "6 Yetkili Distribütör Performans Karnesi",
-                "Cihaz & Sarf Alım Denetim Matrisi",
-                "LOA Yetki Belgeleri & Sözleşme Takibi",
-                "Atıl Cihaz Alarmları & Re-Aktivasyon Planı"
-            ]
-        },
-        "🔮 6. Yapay Zeka Stratejik Danışman": {
-            "title": "Yapay Zeka & İletişim",
-            "badge": "AI Copilot & GTM",
+        "📱 4. B2B İletişim, LinkedIn & Sosyal Medya (Outreach & Media)": {
+            "title": "B2B Outreach & Sosyal Medya",
+            "badge": "Doğrulanmış İletişim & GTM",
             "color": "#EC4899",
             "params": [
-                "Yapay Zeka Stratejik Danışman (Anında Memo)",
-                "B2B Outreach Stüdyosu (6 Dilde Mektup)",
-                "2027 Projeksiyonu ($385K Projeksiyon)",
-                "MedTech Sosyal Medya & Tanıtım Rehberi"
+                "Doğrulanmış Karar Verici LinkedIn Canlı Arama",
+                "Google X-Ray Arama Linkleri (Clean Syntax)",
+                "6 Dilde Kişiselleştirilmiş B2B Pitch Mektubu",
+                "Güvenlik Uyarısı (info@ Bounced Mail Koruması)",
+                "MedTech Sosyal Medya Stüdyosu (LinkedIn & Reels)",
+                "Bilimsel AOA & Kongre İçerik Şablonları"
+            ]
+        },
+        "📊 5. Global Satış Kokpiti & Raporlama (ERP & Reports)": {
+            "title": "Global ERP Satış & Raporlama",
+            "badge": "Canlı ERP ($936.5K / 76 Cihaz)",
+            "color": "#00F5FF",
+            "params": [
+                "3D İnteraktif Dünya Küresi & Küresel Satışlar",
+                "1,280 Doğrulanmış Fatura ($936,546 USD / 31.97M TL)",
+                "2020-2026 7 Yıllık Gelir & Sarf Evrimi",
+                "49 Distribütörün Performans Karneleri",
+                "Resmi Satış Veritabanı Excel (.xlsx) & CSV İndirme"
             ]
         }
     }
@@ -15041,33 +15035,854 @@ def render_regulations_hub():
                 st.success("✅ Yeni mevzuat kararı başarıyla bilgi bankasına eklendi!")
 
 
+def render_risk_scenario_simulator_view():
+        st.title("Commercial Risk & Financial Scenario Simulator")
+        st.caption("ZEUS Ticari Risk Simülatörü: Satış senaryoları, döviz & talep şokları, teslimat gecikmesi ve sözleşme bazlı tahsilat modellemesi.")
+
+        # --------------------------------------------------------------------------
+        # 1. SATIŞ SENARYOSU GİRİŞLERİ (ÜLKE VE DÖNEM KAPSAMI)
+        # --------------------------------------------------------------------------
+        sc_f1, sc_f2 = st.columns([1.5, 1])
+        with sc_f1:
+            all_sim_countries = sorted(list(set(d['country_name'] for d in dists_with_rev)))
+            sc_country = st.selectbox("Simülasyon Ülke Kapsamı", ["Global (Tüm Ülkeler)"] + all_sim_countries)
+        with sc_f2:
+            sc_period = st.selectbox("Simülasyon Dönemi", ["Son 12 Ay (FY2026 / LTM)", "2026 Yılbaşından Bugüne (YTD)", "Son 6 Ay", "Son 3 Ay", "Tüm Kayıtlar"])
+
+        # Calculate base revenue dynamically from real dataset
+        if raw_sales_df is not None:
+            filtered_df = raw_sales_df.copy()
+            if sc_country != "Global (Tüm Ülkeler)":
+                filtered_df = filtered_df[filtered_df['Country'] == sc_country]
+            
+            if sc_period == "2026 Yılbaşından Bugüne (YTD)":
+                filtered_df = filtered_df[filtered_df['Year_int'] == 2026]
+            elif sc_period == "Son 6 Ay":
+                filtered_df = filtered_df[(filtered_df['Year_int'] == 2026) & (filtered_df['Month_int'] >= 5)]
+            elif sc_period == "Son 3 Ay":
+                filtered_df = filtered_df[(filtered_df['Year_int'] == 2026) & (filtered_df['Month_int'] >= 8)]
+            elif sc_period == "Son 12 Ay (FY2026 / LTM)":
+                filtered_df = filtered_df[(filtered_df['Year_int'] == 2026) | ((filtered_df['Year_int'] == 2025) & (filtered_df['Month_int'] >= 11))]
+            
+            base_sc_rev = float(filtered_df['Amount (USD)'].sum()) if len(filtered_df) > 0 else (total_rev if sc_country == "Global (Tüm Ülkeler)" else 15000.0)
+        else:
+            base_sc_rev = total_rev if sc_country == "Global (Tüm Ülkeler)" else 50000.0
+
+        st.markdown(f"**📌 Seçili Kapsam Baz Satış Cirosu:** `{format_curr(base_sc_rev)}` &nbsp;|&nbsp; Kapsam: `{sc_country}` &nbsp;|&nbsp; Dönem: `{sc_period}`")
+
+        # --------------------------------------------------------------------------
+        # 2. HAZIR SENARYOLAR (PRESETS)
+        # --------------------------------------------------------------------------
+        preset_choice = st.radio(
+            "Hazır Senaryo Modelleri",
+            ["Baz Senaryo (Neutral)", "Olumsuz Senaryo (Downside Stress)", "Olumlu Senaryo (Upside Expansion)", "Özel Parametreler (Custom)"],
+            horizontal=True
+        )
+
+        if preset_choice == "Baz Senaryo (Neutral)":
+            p_fx, p_dem, p_disc, p_delay = 0.0, 0.0, 0.0, 0
+        elif preset_choice == "Olumsuz Senaryo (Downside Stress)":
+            p_fx, p_dem, p_disc, p_delay = 12.0, -15.0, 6.0, 30
+        elif preset_choice == "Olumlu Senaryo (Upside Expansion)":
+            p_fx, p_dem, p_disc, p_delay = -5.0, 12.0, 0.0, 0
+        else:
+            p_fx, p_dem, p_disc, p_delay = 0.0, 0.0, 0.0, 0
+
+        s_c1, s_c2 = st.columns([1.1, 1.4])
+        with s_c1:
+            st.markdown("#### ️ Satış Senaryosu Girişleri")
+            sim_fx = st.slider("USD ve Yerel Para Birimleri Değişimi (%)", -15.0, 15.0, float(p_fx), 1.0, help="Pozitif değer ciroyu azaltacak yönde uygulanır. Örneğin +%10 kur girdisi tek başına ciroyu %4.5 düşürür.")
+            sim_demand = st.slider("Pazar Talebi Değişimi (%)", -30.0, 30.0, float(p_dem), 1.0, help="Satış hacmindeki genel talep artış/azalış değişimi.")
+            sim_disc = st.slider("İndirim ve Rekabet Baskısı (%)", 0.0, 20.0, float(p_disc), 1.0, help="ZEUS satış fiyatına uygulanan senaryo indirimi.")
+            sim_delay = st.slider("Sevkiyat Gecikmesi (Gün)", 0, 90, int(p_delay), 5, help="Teslimatın kaç gün ötelenebileceğini gösterir.")
+
+            # Ürün Maliyeti Girişi (Opsiyonel / Maliyet verisi kuralı)
+            with st.expander("💼 Kârlılık Hesabı İçin Ürün Maliyeti (COGS) Girişi", expanded=False):
+                st.caption("Ürün maliyeti girilene kadar brüt kâr ve marj alanlarında 'Maliyet verisi gerekli' yazacaktır.")
+                user_cogs_pct = st.number_input("Ürün Maliyet Oranı (%)", min_value=0.0, max_value=90.0, value=0.0, step=5.0, help="Maliyet oranı girildiğinde brüt kâr ve marj otomatik hesaplanır.")
+
+        # --------------------------------------------------------------------------
+        # 3. SENARYO HESAPLAMA MOTORU (FORMÜL KILAVUZUNA UYGUN)
+        # --------------------------------------------------------------------------
+        def calculate_scenario_rev(base_r, fx_val, dem_val, disc_val):
+            demand_factor = 1.0 + (dem_val / 100.0)
+            price_factor = 1.0 - (disc_val / 100.0)
+            fx_factor = 1.0 - (fx_val / 100.0) * 0.45  # +%10 kur -> -%4.5 ciro
+            return max(0.0, base_r * demand_factor * price_factor * fx_factor)
+
+        sim_rev = calculate_scenario_rev(base_sc_rev, sim_fx, sim_demand, sim_disc)
+        base_rev_val = calculate_scenario_rev(base_sc_rev, 0.0, 0.0, 0.0)
+        rev_delta = ((sim_rev - base_rev_val) / base_rev_val * 100.0) if base_rev_val > 0 else 0.0
+
+        # Kârlılık değerlendirmesi (Maliyet verisi gerekli kuralı)
+        has_cost = user_cogs_pct > 0.0
+        if has_cost:
+            sim_gp = sim_rev * (1.0 - user_cogs_pct / 100.0)
+            sim_margin = (sim_gp / sim_rev * 100.0) if sim_rev > 0 else 0.0
+            base_gp = base_rev_val * (1.0 - user_cogs_pct / 100.0)
+            gp_delta = ((sim_gp - base_gp) / base_gp * 100.0) if base_gp > 0 else 0.0
+        
+            gp_text = format_curr(sim_gp)
+            margin_text = f"{sim_margin:.1f}%"
+            gp_sub = f"{gp_delta:+.1f}% vs Baz"
+            margin_sub = f"%{user_cogs_pct:.1f} Maliyet Oranı"
+        else:
+            gp_text = "Maliyet verisi gerekli"
+            margin_text = "Maliyet verisi gerekli"
+            gp_sub = "Kârlılık için maliyet oranı giriniz"
+            margin_sub = "Maliyet verisi bekleniyor"
+
+        with s_c2:
+            st.markdown("#### Sonuç Göstergeleri (Finansal Etki)")
+            res1, res2 = st.columns(2)
+            res1.metric("Öngörülen Ciro", format_curr(sim_rev), delta=f"{rev_delta:+.1f}% vs Baz")
+            res2.metric("Teslimat Zamanlaması", f"+{sim_delay} Gün Öteleme" if sim_delay > 0 else "Zamanında (0 Gün)", delta="Baz Teslimat Planına Ek", delta_color="inverse" if sim_delay > 0 else "normal")
+
+            res3, res4 = st.columns(2)
+            res3.metric("Öngörülen Brüt Kâr", gp_text, delta=gp_sub if has_cost else None)
+            res4.metric("Öngörülen Brüt Marj", margin_text, delta=margin_sub if has_cost else None)
+
+            # Senaryo Kıyaslama Grafiği
+            sc_base_rev = calculate_scenario_rev(base_sc_rev, 0.0, 0.0, 0.0)
+            sc_down_rev = calculate_scenario_rev(base_sc_rev, 12.0, -15.0, 6.0)
+            sc_up_rev = calculate_scenario_rev(base_sc_rev, -5.0, 12.0, 0.0)
+
+            chart_data = [
+                {'Senaryo': 'Baz Senaryo', 'Öngörülen Ciro': sc_base_rev},
+                {'Senaryo': 'Olumsuz (Stress)', 'Öngörülen Ciro': sc_down_rev},
+                {'Senaryo': 'Olumlu (Upside)', 'Öngörülen Ciro': sc_up_rev},
+                {'Senaryo': 'Simüle Edilen', 'Öngörülen Ciro': sim_rev}
+            ]
+        
+            if has_cost:
+                for item in chart_data:
+                    item['Öngörülen Brüt Kâr'] = item['Öngörülen Ciro'] * (1.0 - user_cogs_pct / 100.0)
+                y_cols = ['Öngörülen Ciro', 'Öngörülen Brüt Kâr']
+                col_map = {'Öngörülen Ciro': '#7C93BD', 'Öngörülen Brüt Kâr': '#13A6B5'}
+            else:
+                y_cols = ['Öngörülen Ciro']
+                col_map = {'Öngörülen Ciro': '#00F5FF'}
+
+            fig_sc = px.bar(
+                pd.DataFrame(chart_data),
+                x='Senaryo', y=y_cols,
+                barmode='group',
+                color_discrete_map=col_map,
+                title="Satış Senaryoları Ciro Kıyaslaması"
+            )
+            fig_sc.update_layout(height=260, margin=dict(l=10, r=10, t=35, b=10))
+            st.plotly_chart(fig_sc, use_container_width=True)
+
+        st.markdown("---")
+
+        # --------------------------------------------------------------------------
+        # 4. ÖDEME VE TAHSİLAT SİMÜLATÖRÜ (WORD KILAVUZUNA UYGUN 4 MODEL)
+        # --------------------------------------------------------------------------
+        st.subheader("Ödeme & Tahsilat Simülatörü (Payment & Cash Flow Collection)")
+        st.caption("Tek bir sipariş, taksitli satış veya kira sözleşmesi için sözleşme koşullarına göre 30, 60 ve 90 günlük nakit girişlerini modeller.")
+
+        pay_model = st.radio(
+            "Ödeme ve Sözleşme Modeli Seçin:",
+            [
+                "Distribütör veya uluslararası müşteri · %100 peşin",
+                "Yerel müşteri · %100 peşin",
+                "Yerel müşteri · taksitli",
+                "Yerel müşteri · kiralama (Leasing)"
+            ],
+            horizontal=True
+        )
+
+        p_in1, p_in2, p_in3 = st.columns([1.2, 1.2, 1.4])
+
+        if pay_model == "Distribütör veya uluslararası müşteri · %100 peşin":
+            with p_in1:
+                order_val = st.number_input("Sipariş Tutarı ($ USD)", value=float(min(sim_rev if sim_rev > 0 else 45000.0, 45000.0)), step=5000.0)
+            with p_in2:
+                wire_delay = st.slider("Banka Transfer Gecikmesi (Gün)", 0, 90, 0, 5)
+            with p_in3:
+                st.info("ℹ️ Sevkiyat öncesi tam tutarın tahsil edilmesi esastır. Gecikme, banka akreditif veya SWIFT teyit süresini temsil eder.")
+
+            cf_30 = order_val if wire_delay <= 30 else 0.0
+            cf_60 = order_val if wire_delay <= 60 else 0.0
+            cf_90 = order_val if wire_delay <= 90 else 0.0
+            rem_balance = max(0.0, order_val - cf_90)
+            plan_desc = "Tam Peşin Ödeme (Sevkiyat Öncesi)"
+
+        elif pay_model == "Yerel müşteri · %100 peşin":
+            with p_in1:
+                order_val = st.number_input("Sipariş Tutarı ($ USD)", value=21000.0, step=1000.0)
+            with p_in2:
+                wire_delay = st.slider("Ödeme Gecikmesi (Gün)", 0, 90, 0, 5)
+            with p_in3:
+                st.info("ℹ️ Yurtiçi klinikler için peşin faturalı sipariş modeli. Gecikme, fatura vadesinden sonraki ötelemedir.")
+
+            cf_30 = order_val if wire_delay <= 30 else 0.0
+            cf_60 = order_val if wire_delay <= 60 else 0.0
+            cf_90 = order_val if wire_delay <= 90 else 0.0
+            rem_balance = max(0.0, order_val - cf_90)
+            plan_desc = "Tam Peşin Ödeme (Yerel Fatura)"
+
+        elif pay_model == "Yerel müşteri · taksitli":
+            with p_in1:
+                order_val = st.number_input("Sipariş Tutarı ($ USD)", value=12000.0, step=1000.0)
+                down_pct = st.slider("Peşinat Oranı (%)", 0.0, 100.0, 25.0, 5.0)
+            with p_in2:
+                n_inst = st.slider("Aylık Taksit Sayısı (Ay)", 1, 120, 6, 1)
+                wire_delay = st.slider("Gecikme (Gün)", 0, 90, 0, 5)
+        
+            down_amt = order_val * (down_pct / 100.0)
+            rem_loan = order_val - down_amt
+            monthly_inst = rem_loan / max(1, n_inst)
+        
+            with p_in3:
+                st.markdown(f"""
+                <div style="background:rgba(19,166,181,0.08);padding:10px;border-radius:8px;border:1px solid #13A6B5;font-size:13px;">
+                    <b>Peşinat Tutarı:</b> {format_curr(down_amt)} (%{down_pct:.0f})<br>
+                    <b>Kalan Bakiye:</b> {format_curr(rem_loan)}<br>
+                    <b>Eşit Aylık Taksit:</b> {format_curr(monthly_inst)} / Ay ({n_inst} Ay)
+                </div>
+                """, unsafe_allow_html=True)
+
+            # 30 günlük ay modeli: Peşinat gün 0'da tahsil edilir. Taksit i, (i*30 + wire_delay) gününde ödenir.
+            inst_30 = sum(monthly_inst for i in range(1, n_inst + 1) if (i * 30 + wire_delay) <= 30)
+            inst_60 = sum(monthly_inst for i in range(1, n_inst + 1) if (i * 30 + wire_delay) <= 60)
+            inst_90 = sum(monthly_inst for i in range(1, n_inst + 1) if (i * 30 + wire_delay) <= 90)
+
+            cf_30 = down_amt + inst_30
+            cf_60 = down_amt + inst_60
+            cf_90 = down_amt + inst_90
+            rem_balance = max(0.0, order_val - cf_90)
+            plan_desc = f"%{down_pct:.0f} Peşinat + {n_inst} Taksit"
+
+        else:  # Yerel müşteri · kiralama
+            with p_in1:
+                monthly_rent = st.number_input("Aylık Kira ($ USD)", value=1200.0, step=100.0)
+            with p_in2:
+                rent_months = st.slider("Sözleşme Süresi (Ay)", 1, 120, 12, 1)
+                wire_delay = st.slider("Kira Tahsilat Gecikmesi (Gün)", 0, 90, 0, 5)
+        
+            total_rent = monthly_rent * rent_months
+            with p_in3:
+                st.markdown(f"""
+                <div style="background:rgba(240,188,87,0.08);padding:10px;border-radius:8px;border:1px solid #F0BC57;font-size:13px;">
+                    <b>Aylık Kira Bedeli:</b> {format_curr(monthly_rent)}<br>
+                    <b>Planlanan Toplam Kira:</b> {format_curr(total_rent)} ({rent_months} Ay)<br>
+                    <span style="color:#F0BC57;font-size:11px;">* Kira tahsilatı satış cirosundan ayrı izlenir.</span>
+                </div>
+                """, unsafe_allow_html=True)
+
+            cf_30 = sum(monthly_rent for i in range(1, rent_months + 1) if (i * 30 + wire_delay) <= 30)
+            cf_60 = sum(monthly_rent for i in range(1, rent_months + 1) if (i * 30 + wire_delay) <= 60)
+            cf_90 = sum(monthly_rent for i in range(1, rent_months + 1) if (i * 30 + wire_delay) <= 90)
+            rem_balance = max(0.0, total_rent - cf_90)
+            plan_desc = f"{rent_months} Aylık Kiralama Sözleşmesi"
+
+        st.markdown("<br>", unsafe_allow_html=True)
+
+        # 4 Nakit Akışı Göstergesi (Word Kılavuzu: 30, 60, 90 Günlük Tahsilat ve Kalan Bakiye)
+        cf_c1, cf_c2, cf_c3, cf_c4 = st.columns(4)
+        cf_c1.metric("30 Günlük Nakit Girişi", format_curr(cf_30), delta="Birikimli Tahsilat")
+        cf_c2.metric("60 Günlük Nakit Girişi", format_curr(cf_60), delta=f"+{format_curr(cf_60 - cf_30)} İkinci Ay")
+        cf_c3.metric("90 Günlük Nakit Girişi", format_curr(cf_90), delta=f"+{format_curr(cf_90 - cf_60)} Üçüncü Ay")
+        cf_c4.metric("Kalan Alacak / Bakiye", format_curr(rem_balance), delta="Sözleşme Kalanı", delta_color="inverse" if rem_balance > 0 else "normal")
+
+        st.markdown("---")
+
+        # --------------------------------------------------------------------------
+        # 5. AI STRATEJİK RİSK & NAKİT AKIŞI RAPORU
+        # --------------------------------------------------------------------------
+        st.markdown("#### Yapay Zeka Finansal Risk & Senaryo Değerlendirmesi")
+        st.caption("Seçili satış şokları, teslimat gecikmesi ve tahsilat modelini ZEUS'un gerçek pazar yapısı ile çapraz sorgulayarak üst yönetime risk değerlendirmesi üretir.")
+
+        if st.button("AI Finansal Risk Değerlendirmesi Oluştur", type="primary"):
+            ai_risk_placeholder = st.empty()
+            with ai_risk_placeholder.container():
+                components.html("""
+                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 160px; font-family: sans-serif; background: #0b1426; border-radius: 12px; border: 1px solid #13A6B5; box-shadow: 0 0 20px rgba(19, 166, 181, 0.2);">
+                        <div id="risk-orb" style="width: 45px; height: 45px; background: radial-gradient(circle, #00F5FF 0%, #13A6B5 70%, #0B6F85 100%); border-radius: 50%; box-shadow: 0 0 25px #00F5FF; margin-bottom: 15px;"></div>
+                        <div style="color: #4FD1DE; font-weight: bold; font-size: 14px; letter-spacing: 1px; text-transform: uppercase;">
+                            ZEUS AI FİNANSAL RİSK ANALİZİ YAPIYOR...
+                        </div>
+                    </div>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+                    <script>
+                        gsap.to("#risk-orb", { y: -12, scale: 1.15, duration: 1.0, yoyo: true, repeat: -1, ease: "sine.inOut" });
+                    </script>
+                """, height=180)
+
+            ai_risk_text = None
+            api_key = get_gemini_api_key()
+            if api_key:
+                try:
+                    from google import genai
+                    client = genai.Client(api_key=api_key)
+                    risk_prompt = f"""
+                    Sen ZEUS Bioscience Baş Finans Direktörüsün (CFO & Commercial Risk Director).
+                    Aşağıdaki simülasyon ve tahsilat parametrelerini inceleyerek üst yönetim için bir 'Finansal Risk & Likidite Değerlendirmesi' hazırla:
+                
+                    Simülasyon Verileri:
+                    - Kapsam: {sc_country} ({sc_period})
+                    - Baz Ciro: {base_sc_rev:,.2f} USD -> Öngörülen Ciro: {sim_rev:,.2f} USD (Fark: {rev_delta:+.1f}%)
+                    - USD Kur Değişimi: %{sim_fx}, Talep Şoku: %{sim_demand}, İndirim Baskısı: %{sim_disc}
+                    - Sevkiyat Gecikmesi: {sim_delay} gün
+                    - Tahsilat Modeli: {pay_model} (Açıklama: {plan_desc})
+                    - 30 Günlük Nakit Girişi: {cf_30:,.2f} USD, 60 Günlük: {cf_60:,.2f} USD, 90 Günlük: {cf_90:,.2f} USD
+                    - 90 Gün Sonrası Kalan Alacak Bakiyesi: {rem_balance:,.2f} USD
+                
+                    Raporunu tamamen Türkçe, profesyonel, maddeler halinde ve somut 3 adet risk azaltma aksiyonu ile yaz.
+                    """
+                    response = client.models.generate_content(
+                        model='gemini-2.5-flash',
+                        contents=risk_prompt,
+                    )
+                    ai_risk_text = response.text
+                except Exception:
+                    ai_risk_text = None
+
+            if not ai_risk_text:
+                ai_risk_text = f"""### 📋 ZEUS FİNANSAL RİSK & LİKİDİTE YÖNETİCİ NOTU
+    **Referans Kodu:** `ZGMI-RISK-SIM-2026` | **Tarih:** Kasım 2026  
+    **Gizlilik:** `C-LEVEL & FİNANS KURULU İNCELEMESİ (GİZLİ)`  
+    **Analiz Kapsamı:** {sc_country} — {sc_period}  
+    **Simülasyon Sonucu:** Baz Ciro: **${base_sc_rev:,.2f}** ➔ Öngörülen Ciro: **${sim_rev:,.2f}** (Net Etki: **%{rev_delta:+.1f}**)
+
+    ---
+
+    #### 1. 🎯 Senaryo ve Likidite Özeti
+    Modellenen senaryoda; **%{sim_fx} kur baskısı**, **%{sim_demand} talep dalgalanması** ve **%{sim_disc} rekabet indirimi** altında satış hacmi **${sim_rev:,.2f}** seviyesine evrilmektedir.
+    - **Teslimat Gecikmesi:** {sim_delay} günlük operasyonel/gümrük gecikmesi, sipariş döngüsünü uzatmakta ve nakit akışını ötelemektedir.
+    - **Tahsilat Modeli ({pay_model}):**
+      * 30 Gün İçinde Beklenen Birikimli Nakit: **${cf_30:,.2f}**
+      * 60 Gün İçinde Beklenen Birikimli Nakit: **${cf_60:,.2f}**
+      * 90 Gün İçinde Beklenen Birikimli Nakit: **${cf_90:,.2f}**
+      * 90 Gün Sonrası Kalan Sözleşme Alacak Bakiyesi: **${rem_balance:,.2f}**
+    - **Kârlılık Durumu:** Ürün maliyeti verisi girilmediğinde brüt kâr ve marj ihtiyatlılık gereği hesaplanmamış ve ekranda *“Maliyet verisi gerekli”* olarak işaretlenmiştir.
+
+    ---
+
+    #### 2. 🛡️ 3 Adımlı Risk Azaltma ve Eylem Protokolü
+    1. **Döviz Dalgalanması ve Fiyat Koruması:** Kur volatilitesinin yüksek olduğu pazarlarda döviz kuru sözleşmeye bağlanmalı veya %100 peşin ödemede +%3 erken ödeme avantajı sunularak kur riski minimize edilmelidir.
+    2. **Sevkiyat ve Gecikme Yönetimi ({sim_delay} Gün):** Gecikmenin 30 günü aştığı durumlarda distribütör emniyet stoku zorunluluğu getirilmelidir.
+    3. **Taksitli / Kiralama Sözleşme Teminatı:** Yerel satışlarda peşinat oranının asgari %25 seviyesinde tutulması ve kalan bakiye için senet/teminat mektubu alınması nakit akışı emniyetini sağlar.
+    """
+
+            ai_risk_placeholder.empty()
+            st.markdown(ai_risk_text)
+
+            st.download_button(
+                label="Bu Risk & Senaryo Raporunu İndir (.md)",
+                data=ai_risk_text,
+                file_name=f"ZEUS_Risk_Scenario_Assessment_{datetime.now().strftime('%Y%m%d_%H%M')}.md",
+                mime="text/markdown"
+            )
+
+
+    # ==============================================================================
+    # 11. VIEW: DISTRIBUTOR PERFORMANCE EVALUATOR
+    # ==============================================================================
+
+
+def render_churn_and_partner_performance_view():
+        st.title("Partner Operational & Strategic Performance Scorecard")
+        st.caption("Excel satış kayıtlarındaki gerçek yıllık cihaz/sarf dökümleri, gerçek YoY büyüme oranları ve çeyreklik sipariş düşüş analizi.")
+
+        # --------------------------------------------------------------------------
+        # 1. PARTNER SEÇİMİ (DİSTRİBÜTÖRLER ÖNCELİKLİ)
+        # --------------------------------------------------------------------------
+        # Order: Official distributors first, then international, then local
+        dist_rows = [d for d in active_rows if d.get('account_type') == 'Distributor']
+        intl_rows = [d for d in active_rows if d.get('account_type') == 'International Customer']
+        local_rows = [d for d in active_rows if d.get('account_type') == 'Local Customer']
+        dist_names = [d['name'] for d in dist_rows]
+        intl_names = [d['name'] for d in intl_rows]
+        local_names = [d['name'] for d in local_rows]
+        all_ordered_names = dist_names + intl_names + local_names
+        if not all_ordered_names:
+            all_ordered_names = [d['name'] for d in active_rows]
+    
+        # Default to CMC if present, else first
+        cmc_idx = next((i for i, n in enumerate(all_ordered_names) if "CONSULTANT MEDICAL" in n or "CMC" in n), 0)
+    
+        sel_col1, sel_col2 = st.columns([2, 1])
+        with sel_col1:
+            eval_dist_name = st.selectbox("İncelenecek Partner / Müşteriyi Seçin", all_ordered_names, index=cmc_idx)
+        with sel_col2:
+            eval_d = next((d for d in active_rows if d['name'] == eval_dist_name), active_rows[0])
+            st.markdown(f"""
+            <div style="background:rgba(19,166,181,0.08);border:1px solid #13A6B5;border-radius:8px;padding:8px 12px;font-size:12px;margin-top:20px;">
+                <b>Ülke / Pazar:</b> {eval_d['country_name']} ({eval_d['region']})<br>
+                <b>Sınıf:</b> {eval_d.get('account_type_tr', 'Distribütör')} &nbsp;|&nbsp; <b>LOA:</b> {eval_d.get('loa', 'N/A')}
+            </div>
+            """, unsafe_allow_html=True)
+        
+        if eval_d.get('is_sister') or 'GEN-SA' in eval_d['name']:
+            st.info("🏢 **BİLGİLENDİRME (Kardeş Şirket):** GEN-SA GENEL SAĞLIK A.Ş., ZEUS Bioscience'ın **kardeş şirketidir**. Şirket içi direktif gereği üçüncü taraf distribütör/klinik performans cezalandırmasına, sözleşme kotalarına veya ihtar/churn değerlendirmesine tabi tutulmamaktadır. Aşağıdaki veriler grup içi konsolide satış hareketleri kapsamında salt bilgi amaçlı sunulmaktadır.")
+
+        # --------------------------------------------------------------------------
+        # 2. GERÇEK EXCEL VERİLERİNDEN YILLIK & ÇEYREKLİK ANALİZ
+        # --------------------------------------------------------------------------
+        partner_sales = pd.DataFrame()
+        if raw_sales_df is not None:
+            partner_sales = raw_sales_df[raw_sales_df['Company'] == eval_dist_name].copy()
+            partner_sales = partner_sales.sort_values('Date_dt')
+
+        # Build annual breakdown
+        years_list = [2024, 2025, 2026]
+        y_stats = []
+        for yr in years_list:
+            ydf = partner_sales[partner_sales['Year_int'] == yr] if len(partner_sales) > 0 else pd.DataFrame()
+            tot = float(ydf['Amount (USD)'].sum()) if len(ydf) > 0 else 0.0
+            dev_amt = float(ydf[ydf['Group'] == 'Device']['Amount (USD)'].sum()) if len(ydf) > 0 else 0.0
+            con_amt = float(ydf[ydf['Group'] == 'Consumables']['Amount (USD)'].sum()) if len(ydf) > 0 else 0.0
+            dev_q = int(ydf[ydf['Group'] == 'Device']['Quantity'].sum()) if len(ydf) > 0 else 0
+            con_q = int(ydf[ydf['Group'] == 'Consumables']['Quantity'].sum()) if len(ydf) > 0 else 0
+            invs = int(ydf['Invoice'].nunique()) if len(ydf) > 0 else 0
+        
+            y_stats.append({
+                'Yıl': f"{yr} (YTD)" if yr == 2026 else str(yr),
+                'Toplam Ciro': tot,
+                'Cihaz Geliri': dev_amt,
+                'Cihaz (Adet)': dev_q,
+                'Sarf Geliri': con_amt,
+                'Sarf (Kutu)': con_q,
+                'Sarf Payı (%)': (con_amt / tot * 100.0) if tot > 0 else 0.0,
+                'Fatura': invs
+            })
+
+        y_df = pd.DataFrame(y_stats)
+    
+        # Real YoY Growth
+        v24 = y_df['Toplam Ciro'].iloc[0]
+        v25 = y_df['Toplam Ciro'].iloc[1]
+        v26 = y_df['Toplam Ciro'].iloc[2]
+    
+        yoy_25 = ((v25 - v24) / v24 * 100.0) if v24 > 0 else (100.0 if v25 > 0 else 0.0)
+        yoy_26 = ((v26 - v25) / v25 * 100.0) if v25 > 0 else (100.0 if v26 > 0 else 0.0)
+
+        # Device YoY
+        d24 = y_df['Cihaz Geliri'].iloc[0]
+        d25 = y_df['Cihaz Geliri'].iloc[1]
+        d26 = y_df['Cihaz Geliri'].iloc[2]
+        dev_yoy_25 = ((d25 - d24) / d24 * 100.0) if d24 > 0 else (100.0 if d25 > 0 else 0.0)
+        dev_yoy_26 = ((d26 - d25) / d25 * 100.0) if d25 > 0 else (100.0 if d26 > 0 else 0.0)
+
+        # Consumables YoY
+        c24 = y_df['Sarf Geliri'].iloc[0]
+        c25 = y_df['Sarf Geliri'].iloc[1]
+        c26 = y_df['Sarf Geliri'].iloc[2]
+        con_yoy_25 = ((c25 - c24) / c24 * 100.0) if c24 > 0 else (100.0 if c25 > 0 else 0.0)
+        con_yoy_26 = ((c26 - c25) / c25 * 100.0) if c25 > 0 else (100.0 if c26 > 0 else 0.0)
+
+        tot_all_rev = sum(y_df['Toplam Ciro'])
+        tot_all_dev = sum(y_df['Cihaz (Adet)'])
+        tot_all_con = sum(y_df['Sarf (Kutu)'])
+        last_order_str = eval_d.get('last_order', '—')
+
+        # Quick KPI Cards
+        k1, k2, k3, k4 = st.columns(4)
+        k1.metric("Toplam Faturalanan Ciro", format_curr(tot_all_rev), delta=f"{yoy_26:+.1f}% 2026 YoY" if v25 > 0 else "Yeni Partner")
+        k2.metric("Kurulu Cihaz Sayısı", f"{tot_all_dev} Adet", delta=f"{dev_yoy_26:+.0f}% Cihaz İvmesi" if d25 > 0 else "Stabil")
+        k3.metric("Sarf Sipariş Hacmi", f"{tot_all_con} Kutu", delta=f"{con_yoy_26:+.1f}% Sarf İvmesi" if c25 > 0 else "Stabil")
+        k4.metric("Son Sipariş Tarihi", last_order_str, delta="Aktif Müşteri")
+
+        st.markdown("---")
+
+        # --------------------------------------------------------------------------
+        # 3. YILLIK CİHAZ VE SARF MALZEME GERÇEKLEŞME TABLOSU
+        # --------------------------------------------------------------------------
+        st.subheader("Yıllık Cihaz ve Sarf Malzeme Gerçekleşme Tablosu")
+        st.caption("Firma bazında sermaye ekipmanı satışları ile tekrar eden sarf malzeme tüketiminin yıl bazında resmi dökümü.")
+
+        disp_y_df = y_df.copy()
+        disp_y_df['YoY Net Değişim'] = [
+            "—",
+            f"{yoy_25:+.1f}% (Cihaz: {dev_yoy_25:+.0f}%, Sarf: {con_yoy_25:+.1f}%)",
+            f"{yoy_26:+.1f}% (Cihaz: {dev_yoy_26:+.0f}%, Sarf: {con_yoy_26:+.1f}%)"
+        ]
+        disp_y_df['Toplam Ciro'] = disp_y_df['Toplam Ciro'].apply(format_curr)
+        disp_y_df['Cihaz Geliri'] = disp_y_df['Cihaz Geliri'].apply(format_curr)
+        disp_y_df['Sarf Geliri'] = disp_y_df['Sarf Geliri'].apply(format_curr)
+        disp_y_df['Cihaz (Adet)'] = disp_y_df['Cihaz (Adet)'].apply(lambda x: f"{x} Adet" if x > 0 else "—")
+        disp_y_df['Sarf (Kutu)'] = disp_y_df['Sarf (Kutu)'].apply(lambda x: f"{x} Kutu" if x > 0 else "—")
+        disp_y_df['Sarf Payı (%)'] = disp_y_df['Sarf Payı (%)'].apply(lambda x: f"%{x:.1f}")
+        disp_y_df['Fatura'] = disp_y_df['Fatura'].apply(lambda x: f"{x} İşlem")
+
+        st.dataframe(disp_y_df, use_container_width=True, hide_index=True)
+
+        st.markdown("---")
+
+        # --------------------------------------------------------------------------
+        # 4. ÇEYREKLİK SİPARİŞ TRENDİ VE TESPİT EDİLEN SİPARİŞ DÜŞÜŞLERİ GRAFİĞİ
+        # --------------------------------------------------------------------------
+        st.subheader("Çeyreklik Sipariş Trendi ve Sipariş Düşüşleri (Order Drop Tracking)")
+        st.caption("Zaman çizelgesi üzerinde gerçekleşen siparişler, sermaye ekipmanı ve sarf ayrımı ile tespit edilen kritik hacim düşüşleri.")
+
+        all_quarters = ['2024Q1', '2024Q2', '2024Q3', '2024Q4', '2025Q1', '2025Q2', '2025Q3', '2025Q4', '2026Q1', '2026Q2', '2026Q3', '2026Q4']
+        partner_sales['Quarter'] = partner_sales['Date_dt'].dt.to_period('Q').astype(str) if len(partner_sales) > 0 else pd.Series()
+    
+        q_dict = {}
+        if len(partner_sales) > 0:
+            for q, grp in partner_sales.groupby('Quarter'):
+                q_dict[q] = {
+                    'Quarter': q,
+                    'Amount': float(grp['Amount (USD)'].sum()),
+                    'Device_Amt': float(grp[grp['Group'] == 'Device']['Amount (USD)'].sum()),
+                    'Consumables_Amt': float(grp[grp['Group'] == 'Consumables']['Amount (USD)'].sum()),
+                    'Device_Qty': int(grp[grp['Group'] == 'Device']['Quantity'].sum()),
+                    'Consumables_Qty': int(grp[grp['Group'] == 'Consumables']['Quantity'].sum())
+                }
+
+        active_qs = sorted(list(q_dict.keys())) if len(q_dict) > 0 else ['2026Q1', '2026Q2', '2026Q3']
+        first_q_idx = all_quarters.index(active_qs[0]) if active_qs[0] in all_quarters else 0
+        last_q_idx = all_quarters.index(active_qs[-1]) if active_qs[-1] in all_quarters else len(all_quarters) - 1
+
+        q_series = []
+        prev_amt = None
+        detected_drops = []
+        for q_idx in range(first_q_idx, last_q_idx + 1):
+            q_str = all_quarters[q_idx]
+            data = q_dict.get(q_str, {
+                'Quarter': q_str, 'Amount': 0.0, 'Device_Amt': 0.0, 'Consumables_Amt': 0.0, 'Device_Qty': 0, 'Consumables_Qty': 0
+            })
+        
+            is_drop = False
+            drop_pct = 0.0
+            if prev_amt is not None and prev_amt > 0:
+                if data['Amount'] < prev_amt:
+                    is_drop = True
+                    drop_pct = ((data['Amount'] - prev_amt) / prev_amt) * 100.0
+                    detected_drops.append({
+                        'Quarter': q_str,
+                        'Drop_Pct': drop_pct,
+                        'Current_Amt': data['Amount'],
+                        'Prior_Amt': prev_amt,
+                        'Is_Zero_Gap': data['Amount'] == 0.0
+                    })
+            data['Is_Drop'] = is_drop
+            data['Drop_Pct'] = drop_pct
+            q_series.append(data)
+            prev_amt = data['Amount']
+
+        q_df = pd.DataFrame(q_series)
+
+        # Plotly Stacked Bar + Line with Drop Markers
+        fig_ord = go.Figure()
+
+        # Device bar
+        fig_ord.add_trace(go.Bar(
+            x=q_df['Quarter'], y=q_df['Device_Amt'] * currency_rate,
+            name='Cihaz Geliri (Capital Equipment)',
+            marker_color='#13A6B5'
+        ))
+
+        # Consumables bar
+        fig_ord.add_trace(go.Bar(
+            x=q_df['Quarter'], y=q_df['Consumables_Amt'] * currency_rate,
+            name='Sarf Geliri (Consumables & Solution)',
+            marker_color='#4FD1DE'
+        ))
+
+        # Total line
+        fig_ord.add_trace(go.Scatter(
+            x=q_df['Quarter'], y=q_df['Amount'] * currency_rate,
+            mode='lines+markers',
+            name='Toplam Sipariş Hacmi',
+            line=dict(color='#CCD7E6', width=2),
+            marker=dict(size=6, color='#CCD7E6')
+        ))
+
+        # Drop annotations
+        for drop in detected_drops:
+            fig_ord.add_annotation(
+                x=drop['Quarter'],
+                y=drop['Current_Amt'] * currency_rate,
+                text=f"📉 Düşüş {drop['Drop_Pct']:.0f}%" if not drop['Is_Zero_Gap'] else "⚠️ Sipariş Boşluğu ($0)",
+                showarrow=True,
+                arrowhead=2,
+                arrowcolor='#FF8A96',
+                font=dict(color='#FF8A96', size=11, family='sans-serif'),
+                bgcolor="rgba(229,112,123,0.18)",
+                bordercolor="#FF8A96",
+                borderwidth=1,
+                borderpad=3
+            )
+
+        fig_ord.update_layout(
+            barmode='stack',
+            height=390,
+            paper_bgcolor='rgba(0,0,0,0)',
+            plot_bgcolor='rgba(0,0,0,0)',
+            margin=dict(l=10, r=10, t=45, b=55),
+            legend=dict(
+                orientation="h",
+                yanchor="top",
+                y=-0.20,
+                xanchor="center",
+                x=0.5,
+                font=dict(size=11, color='#CBD5E1')
+            ),
+            yaxis=dict(gridcolor='rgba(255,255,255,0.08)', title=f"Sipariş Tutarı ({currency_symbol})"),
+            xaxis=dict(title="Dönem (Çeyrekler)")
+        )
+        st.plotly_chart(fig_ord, use_container_width=True)
+
+        # Detailed Drop Insights Box
+        c_dr1, c_dr2 = st.columns([1.5, 1])
+        with c_dr1:
+            st.markdown("##### Tespit Edilen Sipariş Düşüşleri ve Kritik Sapmalar")
+            if len(detected_drops) > 0:
+                for drop in detected_drops:
+                    if drop['Is_Zero_Gap']:
+                        st.markdown(f"""
+                        <div style="background:rgba(229,112,123,0.08);border-left:4px solid #FF8A96;padding:10px 14px;border-radius:6px;margin-bottom:8px;font-size:13px;">
+                            <b style="color:#FF8A96;">⚠️ {drop['Quarter']}: Sipariş Kesintisi (Gap Dönemi)</b><br>
+                            <span style="color:#CCD7E6;">Bir önceki çeyrekte {format_curr(drop['Prior_Amt'])} sipariş verilmişken, bu çeyrekte hiç sipariş açılmamıştır (%100 dönemsel düşüş).</span>
+                        </div>
+                        """, unsafe_allow_html=True)
+                    else:
+                        st.markdown(f"""
+                        <div style="background:rgba(240,188,87,0.08);border-left:4px solid #F0BC57;padding:10px 14px;border-radius:6px;margin-bottom:8px;font-size:13px;">
+                            <b style="color:#F0BC57;">📉 {drop['Quarter']}: {drop['Drop_Pct']:.1f}% Sipariş Gerilemesi</b><br>
+                            <span style="color:#CCD7E6;">Önceki çeyrekteki {format_curr(drop['Prior_Amt'])} hacim, {format_curr(drop['Current_Amt'])} seviyesine gerilemiştir.</span>
+                        </div>
+                        """, unsafe_allow_html=True)
+            else:
+                st.success("✅ Bu partner için çeyrekler arası keskin bir sipariş düşüşü tespit edilmemiştir; sipariş hacmi düzenli veya artış trendindedir.")
+
+        with c_dr2:
+            st.markdown("##### Analitik Değerlendirme & Yorum")
+            if tot_all_dev > 0 and y_df['Cihaz (Adet)'].iloc[-1] == 0:
+                st.info(f"ℹ️ **Cihaz vs Sarf Dönüşümü:** {eval_dist_name}, geçmiş yıllarda {tot_all_dev} adet Pulse Stimulator (AOA) cihazı alarak altyapısını kurmuştur. 2026'da cihaz alımının durması normal bir sermaye ekipmanı doyumudur; asıl takip edilmesi gereken metrik kurulu 5 cihazın oosit sarf tüketim sürekliliğidir.")
+            elif tot_all_dev == 0:
+                st.info(f"ℹ️ **Sadece Sarf Alan Müşteri:** Bu partner henüz Pulse Stimulator sermaye cihazı almamış olup yalnızca Electro Dish veya Solüsyon sarfı tüketmektedir.")
+            else:
+                st.success(f"ℹ️ **Aktif Büyüme:** Partner hem yeni cihaz kurulumu yapmakta hem de sarf malzeme hacmini büyütmektedir.")
+
+        st.markdown("---")
+
+        # --------------------------------------------------------------------------
+        # 5. GERÇEK VERİYE VE ÜLKE ŞARTLARINA DAYALI AĞIRLIKLI PERFORMANS SKORU
+        # --------------------------------------------------------------------------
+        st.subheader("Ağırlıklı Performans ve Sağlık Karnesi (Ülke Şartlarına Göre Kalibre Edilmiş)")
+        st.caption("Partnerin performansı; ülkedeki toplam lisanslı IVF klinik sayısı, pazar penetrasyon oranı, cihaz başına sarf tüketim rasyosu, GSYİH satın alma gücü, gümrük bariyerleri ve mevzuat şartlarına göre çok boyutlu olarak ağırlıklandırılmıştır.")
+
+        # Country macroeconomic intelligence
+        eval_country = eval_d.get('country_name', 'Turkey')
+        c_macro = resolve_country_macro(eval_country)
+
+        total_country_clinics = c_macro.get('clinics', 20)
+        c_gdp = c_macro.get('gdp_pc', 12000)
+        c_gdp_tier = c_macro.get('gdp_tier', 'Middle Income')
+        c_customs_days = c_macro.get('customs_clearance_days', 15)
+        c_customs_pct = c_macro.get('customs_tariff_pct', 6.0)
+        c_import_diff = c_macro.get('import_difficulty', 'Orta')
+        c_support = c_macro.get('ivf_support', '%100 Cepten Ödeme')
+
+        pen_rate = (tot_all_dev / total_country_clinics * 100.0) if total_country_clinics > 0 else 0.0
+        boxes_per_dev = (tot_all_con / max(1, tot_all_dev)) if tot_all_dev > 0 else 0.0
+
+        # Country Benchmark Card
+        bench_card_html = f"""<div style="background:rgba(19,166,181,0.06);border:1px solid rgba(19,166,181,0.28);border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:12px;line-height:1.7;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+    <span style="font-weight:700;color:#00F5FF;font-size:13px;">🌍 Değerlendirme Kriteri: {eval_country} Ülke Şartları & IVF Pazar Kıyaslama Rasyoları</span>
+    <span style="background:rgba(19,166,181,0.2);color:#4FD1DE;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600;">{c_gdp_tier}</span>
+    </div>
+    • <b>Toplam Lisanslı IVF Klinik Havuzu:</b> {total_country_clinics} Merkez &nbsp;|&nbsp; <b>Partner Kurulu Cihaz:</b> {tot_all_dev} Adet &nbsp;→&nbsp; <span style="color:#00F5FF;font-weight:700;">%{pen_rate:.1f} Pazar Penetrasyonu</span><br>
+    • <b>Kişi Başı GSYİH & Refah:</b> ${c_gdp:,} USD &nbsp;|&nbsp; <b>Devlet IVF Güvencesi:</b> <span style="color:#00E676;font-weight:600;">{c_support}</span><br>
+    • <b>Gümrük & İthalat Bariyeri:</b> %{c_customs_pct:.1f} Tarife / Ortalama {c_customs_days} Gün Bekleme &nbsp;({c_import_diff})<br>
+    • <b>Cihaz Başına Ortalama Sarf Tüketimi:</b> <span style="color:#FFD700;font-weight:700;">{boxes_per_dev:.1f} Kutu / Cihaz</span> (Toplam {tot_all_con} Kutu Sarf Hacmi)
+    </div>"""
+        st.markdown(bench_card_html, unsafe_allow_html=True)
+
+        # 1. Device base score calibrated by country penetration
+        if pen_rate >= 35.0:
+            s_device = 90 + min(10, (pen_rate - 35.0) * 0.3)
+        elif pen_rate >= 20.0:
+            s_device = 75 + (pen_rate - 20.0) * 1.0
+        elif pen_rate >= 10.0:
+            s_device = 60 + (pen_rate - 10.0) * 1.5
+        elif pen_rate >= 5.0:
+            s_device = 45 + (pen_rate - 5.0) * 3.0
+        elif pen_rate > 0.0:
+            s_device = 25 + pen_rate * 4.0
+        else:
+            s_device = 0
+        if c_customs_days >= 25 and pen_rate >= 20.0:
+            s_device += 2
+        s_device = max(0, min(100, round(s_device)))
+
+        # Detail for Factor 1
+        if tot_all_dev > 0:
+            det_device = f"{tot_all_dev} / {total_country_clinics} Klinik (%{pen_rate:.1f} Pazar Payı)"
+        else:
+            det_device = "0 Cihaz (Salt Sarf Malzeme Müşterisi)"
+
+        # 2. Consumables velocity score calibrated by boxes per device and country economics
+        if tot_all_dev == 0:
+            s_consumable = min(100, round(tot_all_con * 1.5))
+            det_consumable = f"{tot_all_con} Kutu (Salt Sarf Müşterisi)"
+        else:
+            if boxes_per_dev >= 50.0:
+                s_con_base = 95 + min(5, (boxes_per_dev - 50.0) * 0.2)
+            elif boxes_per_dev >= 30.0:
+                s_con_base = 80 + (boxes_per_dev - 30.0) * 0.75
+            elif boxes_per_dev >= 15.0:
+                s_con_base = 65 + (boxes_per_dev - 15.0) * 1.0
+            elif boxes_per_dev >= 5.0:
+                s_con_base = 40 + (boxes_per_dev - 5.0) * 2.5
+            else:
+                s_con_base = max(15, round(boxes_per_dev * 8.0))
+        
+            # Resilience adjustment: low-income self-pay vs high-income state coverage
+            if c_gdp < 10000 and boxes_per_dev >= 15.0:
+                s_con_base += 5  # High continuity under harsh economic conditions
+            elif c_gdp > 30000 and boxes_per_dev < 10.0:
+                s_con_base -= 10 # Wealthy market with idle machines
+            s_consumable = max(0, min(100, round(s_con_base)))
+            det_consumable = f"{tot_all_con} Kutu (Cihaz Başına {boxes_per_dev:.1f} Kutu)"
+
+        # 3. Growth score (evaluates composite device saturation and recurring consumable growth)
+        if pen_rate >= 20.0 and tot_all_dev > 0 and con_yoy_26 > 0:
+            # Recognized transition: Capital saturation with recurring consumables growth
+            s_con_g = 80 if con_yoy_26 > 10.0 else 70
+            s_rev_g = 80 if yoy_26 > 0.0 else (60 if yoy_26 > -30.0 else (45 if yoy_26 > -60.0 else 35))
+            s_growth = round(0.55 * s_con_g + 0.45 * s_rev_g)
+            det_growth = f"Cihaz Doyumu Sonrası Sarf Büyümesi: Sarf {con_yoy_26:+.1f}% / Ciro {yoy_26:+.1f}%"
+        else:
+            if yoy_26 > 15.0:
+                s_growth = 95
+            elif yoy_26 > 0.0:
+                s_growth = 80
+            elif yoy_26 > -30.0:
+                s_growth = 60
+            elif yoy_26 > -60.0:
+                s_growth = 45
+            else:
+                s_growth = 35
+            det_growth = f"{yoy_26:+.1f}% 2026 Net Değişim (Cihaz: {dev_yoy_26:+.0f}%, Sarf: {con_yoy_26:+.1f}%)"
+
+        # 4. Regularity score (calibrated by country customs clearance lead times)
+        num_drops = len([d for d in detected_drops if d['Is_Zero_Gap']])
+        if c_customs_days >= 25:
+            # High lead time countries (Palestine, Iraq) use semi-annual bulk batches
+            s_regularity = max(40, round(95 - (num_drops * 12)))
+            det_regularity = f"{num_drops} Sıfır Çeyrek Boşluğu ({c_customs_days} Gün Gümrük Beklemesi Nedeniyle Yarıyıl Toplu Sevkiyat Modeli)"
+        else:
+            s_regularity = max(30, round(95 - (num_drops * 20)))
+            det_regularity = f"{num_drops} Sıfır Çeyrek Boşluğu (Çeyreklik Takip Modeli)"
+
+        # 5. Compliance score
+        s_comp = 95 if eval_d.get('loa') == 'Valid' else (65 if eval_d.get('loa') == 'In renewal' else 80)
+        det_comp = f"Statü: {eval_d.get('compliance', 'Uyumlu')} & LOA: {eval_d.get('loa', 'N/A')}"
+
+        perf_factors = [
+            {"Factor": "Kurulu Cihaz Tabanı & Ülke Penetrasyonu", "Score": s_device, "Weight": "25%", "Detail": det_device},
+            {"Factor": "Tekrar Eden Sarf Tüketim Hacmi & Cihaz Rasyosu", "Score": s_consumable, "Weight": "25%", "Detail": det_consumable},
+            {"Factor": "Yıllık Satış Büyüme İvmesi & Gelir Karması", "Score": s_growth, "Weight": "20%", "Detail": det_growth},
+            {"Factor": "Sipariş Düzenliliği & Lojistik Düşüş Direnci", "Score": s_regularity, "Weight": "15%", "Detail": det_regularity},
+            {"Factor": "Hukuki Uyum & Sözleşme Sağlığı", "Score": s_comp, "Weight": "15%", "Detail": det_comp}
+        ]
+
+        total_weighted_score = round(
+            s_device * 0.25 + s_consumable * 0.25 + s_growth * 0.20 + s_regularity * 0.15 + s_comp * 0.15
+        )
+
+        if total_weighted_score >= 80:
+            band_title = "Strong Commercial Performer (Tier A)"
+            band_col = "#5FD3AE"
+        elif total_weighted_score >= 65:
+            band_title = "Solid & Stable Partner (Tier B)"
+            band_col = "#4FD1DE"
+        elif total_weighted_score >= 50:
+            band_title = "Mixed Performance – Action Required (Tier C)"
+            band_col = "#F0BC57"
+        else:
+            band_title = "Critical Attention Required (Tier D)"
+            band_col = "#FF8A96"
+
+        ev1, ev2 = st.columns([1, 2])
+        with ev1:
+            st.markdown(f"""
+            <div class="kpi-container" style="text-align:center;padding:24px;">
+                <div class="kpi-header">Genel Partner Sağlık Skoru</div>
+                <div style="font-size:52px;font-weight:800;color:{band_col};">{total_weighted_score}</div>
+                <div style="font-size:14px;color:#CCD7E6;font-weight:600;margin-top:6px;">{band_title}</div>
+                <div style="font-size:11px;color:#7C93BD;margin-top:4px;">Ülke Makro Şartları & Gerçek Satış Verisi</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with ev2:
+            for item in perf_factors:
+                st.write(f"**{item['Factor']}** ({item['Weight']}) — `{item['Detail']}`")
+                st.progress(item['Score'] / 100.0, text=f"{item['Score']} / 100")
+
+        with st.expander("🔍 Skorlama Metodolojisi & Ülke Şartları Kalibrasyon Rehberi"):
+            st.markdown(f"""
+            <div style="font-size:12px;line-height:1.7;color:#C4D1D9;">
+                <b>1. Kurulu Cihaz Tabanı & Penetrasyon (%25):</b> Maktuf cihaz adedi yerine ülkedeki toplam lisanslı IVF klinik sayısına oranlanır. Örneğin 14 klinikli Filistin'de 5 cihaz (%35.7 penetrasyon) pazar liderliği skoru (90+) alırken, 150 klinikli Güney Kore'de 7 cihaz (%4.7 penetrasyon) büyüme aşaması skoru (44) alır.<br>
+                <b>2. Tekrar Eden Sarf Tüketimi & Cihaz Başı Rasyo (%25):</b> Toplam kutu sayısı kurulu cihaz sayısına bölünerek cihaz başına kullanım verimliliği ölçülür. Kişi başı GSYİH ($3,500) ve %100 cepten ödeme rejimine rağmen cihaz başına 23 kutu sarf çekişi yüksek klinik süreklilik olarak değerlendirilir.<br>
+                <b>3. Büyüme & Gelir Karması (%20):</b> Sermaye cihazı doyumuna ulaşmış pazarlarda ciro düşüşü normal kabul edilerek tekrar eden sarf büyümesi (+%12.2) pozitif katkı sağlar.<br>
+                <b>4. Sipariş Düzenliliği (%15):</b> Gümrük ve güvenlik denetimi 30+ gün süren ülkelerde (Filistin, Irak) çeyreklik küçük siparişler yerine lojistik maliyeti optimize eden yarıyıllık toplu sipariş periyotları gözetilir.<br>
+                <b>5. Hukuki Uyum (%15):</b> Distribütörlük sözleşmesi, LOA yetki belgesi ve yerel Sağlık Bakanlığı akreditasyonu esas alınır.
+            </div>
+            """, unsafe_allow_html=True)
+
+        # --------------------------------------------------------------------------
+        # 6. YÖNETİCİ EYLEM REÇETESİ
+        # --------------------------------------------------------------------------
+        st.markdown("#### Yönetici Teşhisi ve Eylem Reçetesi")
+        if "CMC" in eval_dist_name or "CONSULTANT" in eval_dist_name:
+            st.markdown("""
+            <div style="background:rgba(19,166,181,0.08);border:1px solid #13A6B5;border-radius:10px;padding:16px;">
+                <b style="color:#00F5FF;font-size:15px;">📋 CMC (Filistin Pazarı) Özel Yönetici Özeti:</b><br>
+                <div style="color:#CCD7E6;font-size:13px;line-height:1.6;margin-top:6px;">
+                    <b>Teşhis:</b> CMC, 2024 ve 2025 yıllarında toplam <b>5 adet ZEUS Pulse Stimulator (AOA)</b> cihazı alarak Filistin'deki referans klinik altyapısını tamamlamıştır. 2026 yılında yeni cihaz alımı yapılmaması toplam ciroda %71.8 düşüş gibi görünse de, <b>46 kutuluk sarf alımı</b> cihazların tam kapasite çalıştığını teyit etmektedir.<br>
+                    <b>Kritik Risk:</b> Siparişlerin çeyreklik düzenli açılmaması (2025Q2 ve 2026Q2'de sıfır sipariş); kliniklerin sarf stoku tükenene kadar beklediğini göstermektedir.<br>
+                    <b>Eylem Reçetesi:</b> CMC ile 6 aylık toplu sipariş yerine <b>çeyreklik otomatik yenilenen sarf sevkiyat protokolü</b> imzalanmalı; 2027 başında Batı Şeria'daki yeni bir merkez için 6. Piezo cihazı kurumsal filo teklifi sunulmalıdır.
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+        else:
+            st.markdown(f"""
+            <div style="background:rgba(19,166,181,0.08);border:1px solid #13A6B5;border-radius:10px;padding:16px;">
+                <b style="color:#00F5FF;font-size:15px;">📋 {eval_dist_name} Yönetici Aksiyon Notu:</b><br>
+                <div style="color:#CCD7E6;font-size:13px;line-height:1.6;margin-top:6px;">
+                    <b>Stratejik Durum:</b> Toplam {format_curr(tot_all_rev)} ciro, {tot_all_dev} kurulu cihaz ve {tot_all_con} kutu sarf malzemesi kaydı bulunmaktadır.<br>
+                    <b>Öneri:</b> Çeyreklik sipariş dalgalanmalarını gidermek amacıyla yıllık minimum sarf sipariş taahhüdü ve indirim kademeleri devreye alınmalıdır.
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+
+
+    # ==============================================================================
+    # 12. VIEW: STRATEGIC DECISION CENTER
+    # ==============================================================================
+
+
+
+
 ZEUS_HUB_SUBVIEWS = {
-    "🌐 1. Global Yönetim & ERP Kokpiti": [
-        "🌐 3D Dünya Küresi & ERP Satışları",
-        "📊 Cihaz vs Sarf Gelir Trendleri",
-        "📑 Yönetici Raporları & Veri İndirme"
+    "🌍 1. Pazar İstihbaratı & Ülke Analizi (Market Analysis)": [
+        "🌐 Tekil Ülke 360° (Tüm Bilgiler, Mevzuat, İhale & İletişim)",
+        "⚖️ Çoklu Ülke Kıyaslama Masası (Multi-Country Matrix)",
+        "🏛️ Küresel Mevzuat & İhale Rehberi (Global Regulations & Tenders)"
     ],
-    "🌍 2. Pazar İstihbaratı & Ülke 360°": [
-        "🌍 Ülke 360° & Müşteri Radarı",
-        "📑 Gümrük, İthalat & Biyoetik Mevzuatı",
-        "🏛️ Kamu İhaleleri & Şartnameler"
+    "⚔️ 2. Stratejik Karar Merkezi & Uyarılar (Strategy & Alerts)": [
+        "⚔️ Rakip Kıyaslama & RFID Trap Breaker",
+        "🚨 Kritik Atıl Cihaz, Churn & Risk Uyarıları",
+        "📜 İhale Şartname Kilitleri & Sözleşmeler"
     ],
-    "⚖️ 3. Stratejik Karar & Rakip Kıyaslama": [
-        "⚖️ Çok Boyutlu 22-Metrik Kıyaslama",
-        "⚔️ Stratejik Karar Masası (RFID Trap Breaker)",
-        "📜 Sözleşme Hükümleri & Hukuki Şartname"
+    "💰 3. Fiyatlandırma, Klinik ROI & AI Tahminleme (Pricing & AI)": [
+        "💰 Fiyatlandırma, 4-Pool Dish & Klinik ROI",
+        "🔮 AI Satış & Sarf Projeksiyonu (2026 Q4 & 2027)"
     ],
-    "💰 4. Fiyatlandırma, Sarf & Klinik ROI": [
-        "💰 Fiyatlandırma, 4-Pool Dish & Klinik ROI"
+    "📱 4. B2B İletişim, LinkedIn & Sosyal Medya (Outreach & Media)": [
+        "🤝 Doğrulanmış Karar Verici Bulucu (LinkedIn & E-posta)",
+        "📢 MedTech Sosyal Medya & İçerik Stüdyosu"
     ],
-    "🤝 5. Distribütör Ağı & CRM Operasyonları": [
-        "🤝 Yetkili Distribütör Karneleri & CRM",
-        "🚨 Atıl Cihaz, Churn & Re-Aktivasyon",
-        "🔍 Risk & Jeopolitik Senaryolar"
-    ],
-    "🔮 6. Yapay Zeka Stratejik Danışman": [
-        "🤖 Yapay Zeka Stratejik Danışman (AI Copilot)",
-        "📱 MedTech Sosyal Medya & B2B İletişim"
+    "📊 5. Global Satış Kokpiti & Raporlama (ERP & Reports)": [
+        "🌐 3D Dünya Küresi & Canlı ERP Kokpiti",
+        "📈 Cihaz vs Sarf Gelir Trendleri (2020–2026)",
+        "📑 Partner Karneleri, Raporlar & Excel/CSV İndirme"
     ]
 }
 
@@ -15199,26 +16014,26 @@ def render_active_omni_search_hub(query_str):
         if len(matched_cultures) > 0:
             first_c = matched_cultures[0]['country']
             if st.button(f"🌍 Kültür & Sözleşme ({len(matched_cultures)}) ➔", key="btn_jump_cult_hdr", use_container_width=True, type="primary"):
-                st.session_state["main_nav_radio"] = "🌍 2. Pazar İstihbaratı & Ülke 360°"
+                st.session_state["main_nav_radio"] = "🌍 1. Pazar İstihbaratı & Ülke Analizi (Market Analysis)"
                 st.session_state["c360_single_country_select"] = first_c
                 st.session_state["omni_search_input"] = ""
                 st.rerun()
     with jump_cols[1]:
         if len(matched_firms) > 0:
             if st.button(f"🏢 Firmalar & CRM ({len(matched_firms)}) ➔", key="btn_jump_firm_hdr", use_container_width=True):
-                st.session_state["main_nav_radio"] = "🤝 5. Distribütör Ağı & CRM Operasyonları"
+                st.session_state["main_nav_radio"] = "📱 4. B2B İletişim, LinkedIn & Sosyal Medya (Outreach & Media)"
                 st.session_state["omni_search_input"] = ""
                 st.rerun()
     with jump_cols[2]:
         if len(matched_tenders) > 0:
             if st.button(f"🏛️ Kamu İhaleleri ({len(matched_tenders)}) ➔", key="btn_jump_tend_hdr", use_container_width=True):
-                st.session_state["main_nav_radio"] = "🌍 2. Pazar İstihbaratı & Ülke 360°"
+                st.session_state["main_nav_radio"] = "🌍 1. Pazar İstihbaratı & Ülke Analizi (Market Analysis)"
                 st.session_state["omni_search_input"] = ""
                 st.rerun()
     with jump_cols[3]:
         if len(matched_products) > 0:
             if st.button(f"⚡ Cihaz & Mevzuat ({len(matched_products)}) ➔", key="btn_jump_prod_hdr", use_container_width=True):
-                st.session_state["main_nav_radio"] = "🌍 2. Pazar İstihbaratı & Ülke 360°"
+                st.session_state["main_nav_radio"] = "🌍 1. Pazar İstihbaratı & Ülke Analizi (Market Analysis)"
                 st.session_state["omni_search_input"] = ""
                 st.rerun()
 
@@ -15270,7 +16085,7 @@ def render_active_omni_search_hub(query_str):
                         </div>
                         """, unsafe_allow_html=True)
                         if st.button(f"👉 Bu Ülkenin Masasına Git ({c_name} — Pazar Analizi & Ülke 360°)", key=f"btn_go_cult_item_{c_name}_{idx_c}"):
-                            st.session_state["main_nav_radio"] = "🌍 2. Pazar İstihbaratı & Ülke 360°"
+                            st.session_state["main_nav_radio"] = "🌍 1. Pazar İstihbaratı & Ülke Analizi (Market Analysis)"
                             st.session_state["c360_single_country_select"] = c_name
                             st.session_state["omni_search_input"] = ""
                             st.rerun()
@@ -15306,7 +16121,7 @@ def render_active_omni_search_hub(query_str):
                         </div>
                         """, unsafe_allow_html=True)
                         if st.button(f"👉 Bu Kurumun Masasına Git ({f_name})", key=f"btn_go_firm_item_{idx_f}"):
-                            st.session_state["main_nav_radio"] = "🤝 5. Distribütör Ağı & CRM Operasyonları"
+                            st.session_state["main_nav_radio"] = "📱 4. B2B İletişim, LinkedIn & Sosyal Medya (Outreach & Media)"
                             st.session_state["omni_search_input"] = ""
                             st.rerun()
 
@@ -15341,7 +16156,7 @@ def render_active_omni_search_hub(query_str):
                             st.markdown(f'<a href="{p_url}" target="_blank" style="display:inline-block;background:rgba(0,245,255,0.1);color:#00F5FF;border:1px solid rgba(0,245,255,0.3);padding:3px 8px;border-radius:4px;font-size:11px;text-decoration:none;">🔗 {p_name}</a>', unsafe_allow_html=True)
                         st.markdown("</div></div>", unsafe_allow_html=True)
                         if st.button(f"👉 Bu İhalenin Masasına Git ({t_country})", key=f"btn_go_tender_item_{t_country}_{idx_t}"):
-                            st.session_state["main_nav_radio"] = "🌍 2. Pazar İstihbaratı & Ülke 360°"
+                            st.session_state["main_nav_radio"] = "🌍 1. Pazar İstihbaratı & Ülke Analizi (Market Analysis)"
                             st.session_state["omni_search_input"] = ""
                             st.rerun()
 
@@ -15364,7 +16179,7 @@ def render_active_omni_search_hub(query_str):
                         </div>
                         """, unsafe_allow_html=True)
                         if st.button(f"👉 Bu Ürünün Mevzuat Masasına Git ({pr['title']})", key=f"btn_go_prod_item_{idx_p}"):
-                            st.session_state["main_nav_radio"] = "🌍 2. Pazar İstihbaratı & Ülke 360°"
+                            st.session_state["main_nav_radio"] = "🌍 1. Pazar İstihbaratı & Ülke Analizi (Market Analysis)"
                             st.session_state["omni_search_input"] = ""
                             st.rerun()
 
@@ -15451,7 +16266,7 @@ if not active_view:
 if omni_search_q and omni_search_q.strip():
     render_active_omni_search_hub(omni_search_q.strip())
 
-if active_view in ["🌐 3D Dünya Küresi & ERP Satışları", "🌐 Executive Overview & 3D Globe"]:
+if active_view in ["🌐 3D Dünya Küresi & Canlı ERP Kokpiti", "🌐 3D Dünya Küresi & ERP Satışları", "🌐 Executive Overview & 3D Globe"]:
     # Interactive Video Tour & Simulation Expander
     with st.expander("🎬 ZGMI Portalı 60 Saniyelik Canlı Video Simülasyonu & İnteraktif Ürün Turu", expanded=False):
         sim_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "zgmi_video_simulation.html")
@@ -17189,7 +18004,7 @@ if active_view in ["🌐 3D Dünya Küresi & ERP Satışları", "🌐 Executive 
 # ==============================================================================
 
 
-elif active_view in ["🤖 Yapay Zeka Stratejik Danışman (AI Copilot)", "🔮 AI Intelligence & Forecasting"]:
+elif active_view in ["🔮 AI Satış & Sarf Projeksiyonu (2026 Q4 & 2027)", "🤖 Yapay Zeka Stratejik Danışman (AI Copilot)", "🔮 AI Intelligence & Forecasting"]:
     st.title("AI Commercial Intelligence & Predictive Analytics")
     st.caption("Yapay zeka ve makine öğrenmesi destekli kurumsal satış projeksiyonu, anomali tespiti ve pazar optimizasyonu.")
 
@@ -19200,7 +20015,7 @@ ZEUS Bioscience Scientific Affairs""",
 # 5. VIEW: DISTRIBUTORS & CRM
 # ==============================================================================
 
-elif active_view in ["🤝 Yetkili Distribütör Karneleri & CRM", "🤝 Distributors & CRM"]:
+elif active_view in ["🤝 Doğrulanmış Karar Verici Bulucu (LinkedIn & E-posta)", "🤝 Yetkili Distribütör Karneleri & CRM", "🤝 Distributors & CRM"]:
     def format_partner_device_distribution(dev_cnt_by_yr):
         """Formats device count by year like '3 Adet (3x\'25)' or '18 Adet (9x\'24, 5x\'25, 4x\'26)'"""
         tot = dev_cnt_by_yr.get('ALL', 0)
@@ -19523,7 +20338,7 @@ elif active_view in ["🤝 Yetkili Distribütör Karneleri & CRM", "🤝 Distrib
                 st.dataframe(disp_zero_dev, use_container_width=True, hide_index=True)
                 st.caption("ℹ️ Acıbadem, CMC, Halil Ruso, Medipolitan, Seda Erdem ve Bisan'a yapılan $0 bedelli cihaz sevkleri klinik konsinye statüsünde izlenmektedir.")
 
-elif active_view in ["📜 Sözleşme Hükümleri & Hukuki Şartname", "📜 Agreements & Compliance"]:
+elif active_view in ["📜 İhale Şartname Kilitleri & Sözleşmeler", "📜 Sözleşme Hükümleri & Hukuki Şartname", "📜 Agreements & Compliance"]:
     st.title("International Agreements, LOA & Regulatory Compliance")
     st.caption("Distribütörlük sözleşmeleri, LOA yetki belgeleri, yerel (Türkiye) ve uluslararası müşteri tedarik protokolleri yönetimi.")
 
@@ -19780,7 +20595,7 @@ elif active_view in ["📜 Sözleşme Hükümleri & Hukuki Şartname", "📜 Agr
 # ==============================================================================
 # 7. VIEW: SALES & PRODUCT ANALYTICS
 # ==============================================================================
-elif active_view in ["📊 Cihaz vs Sarf Gelir Trendleri", "📊 Sales & Product Analytics"]:
+elif active_view in ["📈 Cihaz vs Sarf Gelir Trendleri (2020–2026)", "📊 Cihaz vs Sarf Gelir Trendleri", "📊 Sales & Product Analytics"]:
     st.title("Multi-Dimensional Sales & Product Analytics")
     st.caption("Excel satış veri tabanındaki (1,280 fatura satırı) doğrulanmış cihaz/sarf dökümleri, ürün bazlı hasılat ve distribütör performans analitiği.")
 
@@ -20628,7 +21443,7 @@ elif active_view in ["📊 Cihaz vs Sarf Gelir Trendleri", "📊 Sales & Product
                 'Durum': 'Aktif' if d.get('status') == 'active' else 'Pasif'
             })
         st.dataframe(pd.DataFrame(all_table), use_container_width=True, hide_index=True)
-elif active_view in ["⚖️ Çok Boyutlu 22-Metrik Kıyaslama", "⚖️ Market Intelligence & Compare"]:
+elif active_view in ["⚖️ Çoklu Ülke Kıyaslama Masası (Multi-Country Matrix)", "⚖️ Çok Boyutlu 22-Metrik Kıyaslama", "⚖️ Market Intelligence & Compare"]:
     st.title("Global IVF Market Intelligence & Country Comparison")
     st.caption("Resmi Dünya Bankası (WDI 2023/2024) ve uluslararası ESHRE/CDC tüp bebek kayıtlarına dayalı çok boyutlu pazar, ekonomik güç ve klinik teknoloji kıyaslama merkezi.")
 
@@ -21531,7 +22346,7 @@ elif active_view in ["⚖️ Çok Boyutlu 22-Metrik Kıyaslama", "⚖️ Market 
                             f'</div>'
                             f'<div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));gap:8px;font-size:12px;">'
                             f'<div><span style="color:#8A99AD;">👤 Yetkili Muhatap:</span> <b style="color:#FFFFFF;">{c_person}</b></div>'
-                            f'<div><span style="color:#8A99AD;">✉️ Resmi E-posta:</span> {("<a href='mailto:" + c_email + "' style='color:#00F5FF;text-decoration:none;font-weight:600;'>" + c_email + "</a> <span style='font-size:10px;color:#00E676;background:rgba(0,230,118,0.15);padding:1px 5px;border-radius:3px;'>✓ Doğrulanmış MX</span>") if (c_email and "@" in c_email and "." in c_email.split("@")[1] and not any(k in c_email for k in ["medtech.com", "clinic.org", "example"])) else "<span style='color:#CBD5E1;'>Doğrudan İletişim Tercih Edilir</span> <span style='font-size:10px;color:#FFB800;background:rgba(255,184,0,0.15);padding:1px 5px;border-radius:3px;'>⚠️ E-Posta Bounced Riski (WhatsApp/LinkedIn Kullanın)</span>"}</div>'
+                            f'<div><span style="color:#8A99AD;">✉️ Resmi E-posta:</span> {("<a href=\'mailto:" + c_email + "' style=\'color:#00F5FF;text-decoration:none;font-weight:600;\'>" + c_email + "</a> <span style=\'font-size:10px;color:#FFB800;background:rgba(255,184,0,0.15);padding:1px 5px;border-radius:3px;\' title=\'Kurumsal Exchange güvenlik duvarı (550 Access Denied) riski nedeniyle LinkedIn butonunu kullanın⚠️\'>⚠️ Genel Kutu (LinkedIn Karar Verici Önerilir)</span>") if (c_email and any(c_email.lower().startswith(p) for p in ["info@", "contact@", "admin@", "office@", "reception@"])) else (("<a href=\'mailto:" + c_email + "' style=\'color:#00F5FF;text-decoration:none;font-weight:600;\'>" + c_email + "</a> <span style=\'font-size:10px;color:#00E676;background:rgba(0,230,118,0.15);padding:1px 5px;border-radius:3px;\'>✓ Doğrulanmış E-posta</span>") if (c_email and "@" in c_email and "." in c_email.split("@")[1] and not any(k in c_email for k in ["medtech.com", "clinic.org", "example"])) else "<span style=\'color:#CBD5E1;\'>Doğrudan İletişim Tercih Edilir</span> <span style=\'font-size:10px;color:#FFB800;background:rgba(255,184,0,0.15);padding:1px 5px;border-radius:3px;\'>⚠️ E-Posta Bounced Riski (LinkedIn/Tel Kullanın)</span>")}</div>'
                             f'<div><span style="color:#8A99AD;">📞 Santral / Tel:</span> <a href="tel:{c_phone}" style="color:#00E676;text-decoration:none;font-weight:700;">{c_phone}</a>{(" &nbsp;|&nbsp; <a href='https://wa.me/" + re.sub(r"[^\d]", "", c_phone) + "' target='_blank' style='color:#25D366;text-decoration:none;font-weight:700;'>💬 WhatsApp</a>") if (re.sub(r"[^\d]", "", c_phone) and len(re.sub(r"[^\d]", "", c_phone))>=8) else ""}</div>'
                             f'<div><span style="color:#8A99AD;">🌐 Web Sitesi:</span> <a href="{c_web}" target="_blank" style="color:#4FD1DE;text-decoration:none;font-weight:600;">{c_web_clean} ↗</a></div>'
                             f'<div style="grid-column: 1 / -1;"><span style="color:#8A99AD;">📍 Merkez Adres:</span> <span style="color:#CCD7E6;">{c_address}</span></div></div></div>'
@@ -24033,7 +24848,7 @@ Cihaz, tüp bebek (IVF/ICSI) laboratuvarlarında Total Döllenme Başarısızlı
 # ==============================================================================
 # VIEW: COUNTRY 360° PERFORMANCE & INTELLIGENCE REPORT
 # ==============================================================================
-elif active_view in ["🌍 Ülke 360° & Müşteri Radarı", "🌍 Country 360° Performance & Report"]:
+elif active_view in ["🌐 Tekil Ülke 360° (Tüm Bilgiler, Mevzuat, İhale & İletişim)", "🌍 Ülke 360° & Müşteri Radarı", "🌍 Country 360° Performance & Report"]:
     st.title("🌍 Country 360° Performance & Intelligence Dossier")
     st.caption("Tek ekranda bütünleşik ülke karnesi: Gerçekleşen satışlar ve filo büyüklüğü, makroekonomi, gümrük GTİP ve ithalat mevzuatı, yeni IVF & PGT biyoetik kuralları, iskonto-tahmin matrisleri, 5 kişilik uzman heyeti görüşleri ve satış stratejisi.")
 
@@ -26165,826 +26980,23 @@ elif active_view in ["💰 Fiyatlandırma, 4-Pool Dish & Klinik ROI", "💰 Pric
 
 # 10. VIEW: RISK & SCENARIO SIMULATOR
 # ==============================================================================
-elif active_view in ["🔍 Risk & Jeopolitik Senaryolar", "⚠️ Risk & Scenario Simulator"]:
-    st.title("Commercial Risk & Financial Scenario Simulator")
-    st.caption("ZEUS Ticari Risk Simülatörü: Satış senaryoları, döviz & talep şokları, teslimat gecikmesi ve sözleşme bazlı tahsilat modellemesi.")
-
-    # --------------------------------------------------------------------------
-    # 1. SATIŞ SENARYOSU GİRİŞLERİ (ÜLKE VE DÖNEM KAPSAMI)
-    # --------------------------------------------------------------------------
-    sc_f1, sc_f2 = st.columns([1.5, 1])
-    with sc_f1:
-        all_sim_countries = sorted(list(set(d['country_name'] for d in dists_with_rev)))
-        sc_country = st.selectbox("Simülasyon Ülke Kapsamı", ["Global (Tüm Ülkeler)"] + all_sim_countries)
-    with sc_f2:
-        sc_period = st.selectbox("Simülasyon Dönemi", ["Son 12 Ay (FY2026 / LTM)", "2026 Yılbaşından Bugüne (YTD)", "Son 6 Ay", "Son 3 Ay", "Tüm Kayıtlar"])
-
-    # Calculate base revenue dynamically from real dataset
-    if raw_sales_df is not None:
-        filtered_df = raw_sales_df.copy()
-        if sc_country != "Global (Tüm Ülkeler)":
-            filtered_df = filtered_df[filtered_df['Country'] == sc_country]
-            
-        if sc_period == "2026 Yılbaşından Bugüne (YTD)":
-            filtered_df = filtered_df[filtered_df['Year_int'] == 2026]
-        elif sc_period == "Son 6 Ay":
-            filtered_df = filtered_df[(filtered_df['Year_int'] == 2026) & (filtered_df['Month_int'] >= 5)]
-        elif sc_period == "Son 3 Ay":
-            filtered_df = filtered_df[(filtered_df['Year_int'] == 2026) & (filtered_df['Month_int'] >= 8)]
-        elif sc_period == "Son 12 Ay (FY2026 / LTM)":
-            filtered_df = filtered_df[(filtered_df['Year_int'] == 2026) | ((filtered_df['Year_int'] == 2025) & (filtered_df['Month_int'] >= 11))]
-            
-        base_sc_rev = float(filtered_df['Amount (USD)'].sum()) if len(filtered_df) > 0 else (total_rev if sc_country == "Global (Tüm Ülkeler)" else 15000.0)
-    else:
-        base_sc_rev = total_rev if sc_country == "Global (Tüm Ülkeler)" else 50000.0
-
-    st.markdown(f"**📌 Seçili Kapsam Baz Satış Cirosu:** `{format_curr(base_sc_rev)}` &nbsp;|&nbsp; Kapsam: `{sc_country}` &nbsp;|&nbsp; Dönem: `{sc_period}`")
-
-    # --------------------------------------------------------------------------
-    # 2. HAZIR SENARYOLAR (PRESETS)
-    # --------------------------------------------------------------------------
-    preset_choice = st.radio(
-        "Hazır Senaryo Modelleri",
-        ["Baz Senaryo (Neutral)", "Olumsuz Senaryo (Downside Stress)", "Olumlu Senaryo (Upside Expansion)", "Özel Parametreler (Custom)"],
-        horizontal=True
-    )
-
-    if preset_choice == "Baz Senaryo (Neutral)":
-        p_fx, p_dem, p_disc, p_delay = 0.0, 0.0, 0.0, 0
-    elif preset_choice == "Olumsuz Senaryo (Downside Stress)":
-        p_fx, p_dem, p_disc, p_delay = 12.0, -15.0, 6.0, 30
-    elif preset_choice == "Olumlu Senaryo (Upside Expansion)":
-        p_fx, p_dem, p_disc, p_delay = -5.0, 12.0, 0.0, 0
-    else:
-        p_fx, p_dem, p_disc, p_delay = 0.0, 0.0, 0.0, 0
-
-    s_c1, s_c2 = st.columns([1.1, 1.4])
-    with s_c1:
-        st.markdown("#### ️ Satış Senaryosu Girişleri")
-        sim_fx = st.slider("USD ve Yerel Para Birimleri Değişimi (%)", -15.0, 15.0, float(p_fx), 1.0, help="Pozitif değer ciroyu azaltacak yönde uygulanır. Örneğin +%10 kur girdisi tek başına ciroyu %4.5 düşürür.")
-        sim_demand = st.slider("Pazar Talebi Değişimi (%)", -30.0, 30.0, float(p_dem), 1.0, help="Satış hacmindeki genel talep artış/azalış değişimi.")
-        sim_disc = st.slider("İndirim ve Rekabet Baskısı (%)", 0.0, 20.0, float(p_disc), 1.0, help="ZEUS satış fiyatına uygulanan senaryo indirimi.")
-        sim_delay = st.slider("Sevkiyat Gecikmesi (Gün)", 0, 90, int(p_delay), 5, help="Teslimatın kaç gün ötelenebileceğini gösterir.")
-
-        # Ürün Maliyeti Girişi (Opsiyonel / Maliyet verisi kuralı)
-        with st.expander("💼 Kârlılık Hesabı İçin Ürün Maliyeti (COGS) Girişi", expanded=False):
-            st.caption("Ürün maliyeti girilene kadar brüt kâr ve marj alanlarında 'Maliyet verisi gerekli' yazacaktır.")
-            user_cogs_pct = st.number_input("Ürün Maliyet Oranı (%)", min_value=0.0, max_value=90.0, value=0.0, step=5.0, help="Maliyet oranı girildiğinde brüt kâr ve marj otomatik hesaplanır.")
-
-    # --------------------------------------------------------------------------
-    # 3. SENARYO HESAPLAMA MOTORU (FORMÜL KILAVUZUNA UYGUN)
-    # --------------------------------------------------------------------------
-    def calculate_scenario_rev(base_r, fx_val, dem_val, disc_val):
-        demand_factor = 1.0 + (dem_val / 100.0)
-        price_factor = 1.0 - (disc_val / 100.0)
-        fx_factor = 1.0 - (fx_val / 100.0) * 0.45  # +%10 kur -> -%4.5 ciro
-        return max(0.0, base_r * demand_factor * price_factor * fx_factor)
-
-    sim_rev = calculate_scenario_rev(base_sc_rev, sim_fx, sim_demand, sim_disc)
-    base_rev_val = calculate_scenario_rev(base_sc_rev, 0.0, 0.0, 0.0)
-    rev_delta = ((sim_rev - base_rev_val) / base_rev_val * 100.0) if base_rev_val > 0 else 0.0
-
-    # Kârlılık değerlendirmesi (Maliyet verisi gerekli kuralı)
-    has_cost = user_cogs_pct > 0.0
-    if has_cost:
-        sim_gp = sim_rev * (1.0 - user_cogs_pct / 100.0)
-        sim_margin = (sim_gp / sim_rev * 100.0) if sim_rev > 0 else 0.0
-        base_gp = base_rev_val * (1.0 - user_cogs_pct / 100.0)
-        gp_delta = ((sim_gp - base_gp) / base_gp * 100.0) if base_gp > 0 else 0.0
-        
-        gp_text = format_curr(sim_gp)
-        margin_text = f"{sim_margin:.1f}%"
-        gp_sub = f"{gp_delta:+.1f}% vs Baz"
-        margin_sub = f"%{user_cogs_pct:.1f} Maliyet Oranı"
-    else:
-        gp_text = "Maliyet verisi gerekli"
-        margin_text = "Maliyet verisi gerekli"
-        gp_sub = "Kârlılık için maliyet oranı giriniz"
-        margin_sub = "Maliyet verisi bekleniyor"
-
-    with s_c2:
-        st.markdown("#### Sonuç Göstergeleri (Finansal Etki)")
-        res1, res2 = st.columns(2)
-        res1.metric("Öngörülen Ciro", format_curr(sim_rev), delta=f"{rev_delta:+.1f}% vs Baz")
-        res2.metric("Teslimat Zamanlaması", f"+{sim_delay} Gün Öteleme" if sim_delay > 0 else "Zamanında (0 Gün)", delta="Baz Teslimat Planına Ek", delta_color="inverse" if sim_delay > 0 else "normal")
-
-        res3, res4 = st.columns(2)
-        res3.metric("Öngörülen Brüt Kâr", gp_text, delta=gp_sub if has_cost else None)
-        res4.metric("Öngörülen Brüt Marj", margin_text, delta=margin_sub if has_cost else None)
-
-        # Senaryo Kıyaslama Grafiği
-        sc_base_rev = calculate_scenario_rev(base_sc_rev, 0.0, 0.0, 0.0)
-        sc_down_rev = calculate_scenario_rev(base_sc_rev, 12.0, -15.0, 6.0)
-        sc_up_rev = calculate_scenario_rev(base_sc_rev, -5.0, 12.0, 0.0)
-
-        chart_data = [
-            {'Senaryo': 'Baz Senaryo', 'Öngörülen Ciro': sc_base_rev},
-            {'Senaryo': 'Olumsuz (Stress)', 'Öngörülen Ciro': sc_down_rev},
-            {'Senaryo': 'Olumlu (Upside)', 'Öngörülen Ciro': sc_up_rev},
-            {'Senaryo': 'Simüle Edilen', 'Öngörülen Ciro': sim_rev}
-        ]
-        
-        if has_cost:
-            for item in chart_data:
-                item['Öngörülen Brüt Kâr'] = item['Öngörülen Ciro'] * (1.0 - user_cogs_pct / 100.0)
-            y_cols = ['Öngörülen Ciro', 'Öngörülen Brüt Kâr']
-            col_map = {'Öngörülen Ciro': '#7C93BD', 'Öngörülen Brüt Kâr': '#13A6B5'}
-        else:
-            y_cols = ['Öngörülen Ciro']
-            col_map = {'Öngörülen Ciro': '#00F5FF'}
-
-        fig_sc = px.bar(
-            pd.DataFrame(chart_data),
-            x='Senaryo', y=y_cols,
-            barmode='group',
-            color_discrete_map=col_map,
-            title="Satış Senaryoları Ciro Kıyaslaması"
-        )
-        fig_sc.update_layout(height=260, margin=dict(l=10, r=10, t=35, b=10))
-        st.plotly_chart(fig_sc, use_container_width=True)
-
-    st.markdown("---")
-
-    # --------------------------------------------------------------------------
-    # 4. ÖDEME VE TAHSİLAT SİMÜLATÖRÜ (WORD KILAVUZUNA UYGUN 4 MODEL)
-    # --------------------------------------------------------------------------
-    st.subheader("Ödeme & Tahsilat Simülatörü (Payment & Cash Flow Collection)")
-    st.caption("Tek bir sipariş, taksitli satış veya kira sözleşmesi için sözleşme koşullarına göre 30, 60 ve 90 günlük nakit girişlerini modeller.")
-
-    pay_model = st.radio(
-        "Ödeme ve Sözleşme Modeli Seçin:",
-        [
-            "Distribütör veya uluslararası müşteri · %100 peşin",
-            "Yerel müşteri · %100 peşin",
-            "Yerel müşteri · taksitli",
-            "Yerel müşteri · kiralama (Leasing)"
-        ],
-        horizontal=True
-    )
-
-    p_in1, p_in2, p_in3 = st.columns([1.2, 1.2, 1.4])
-
-    if pay_model == "Distribütör veya uluslararası müşteri · %100 peşin":
-        with p_in1:
-            order_val = st.number_input("Sipariş Tutarı ($ USD)", value=float(min(sim_rev if sim_rev > 0 else 45000.0, 45000.0)), step=5000.0)
-        with p_in2:
-            wire_delay = st.slider("Banka Transfer Gecikmesi (Gün)", 0, 90, 0, 5)
-        with p_in3:
-            st.info("ℹ️ Sevkiyat öncesi tam tutarın tahsil edilmesi esastır. Gecikme, banka akreditif veya SWIFT teyit süresini temsil eder.")
-
-        cf_30 = order_val if wire_delay <= 30 else 0.0
-        cf_60 = order_val if wire_delay <= 60 else 0.0
-        cf_90 = order_val if wire_delay <= 90 else 0.0
-        rem_balance = max(0.0, order_val - cf_90)
-        plan_desc = "Tam Peşin Ödeme (Sevkiyat Öncesi)"
-
-    elif pay_model == "Yerel müşteri · %100 peşin":
-        with p_in1:
-            order_val = st.number_input("Sipariş Tutarı ($ USD)", value=21000.0, step=1000.0)
-        with p_in2:
-            wire_delay = st.slider("Ödeme Gecikmesi (Gün)", 0, 90, 0, 5)
-        with p_in3:
-            st.info("ℹ️ Yurtiçi klinikler için peşin faturalı sipariş modeli. Gecikme, fatura vadesinden sonraki ötelemedir.")
-
-        cf_30 = order_val if wire_delay <= 30 else 0.0
-        cf_60 = order_val if wire_delay <= 60 else 0.0
-        cf_90 = order_val if wire_delay <= 90 else 0.0
-        rem_balance = max(0.0, order_val - cf_90)
-        plan_desc = "Tam Peşin Ödeme (Yerel Fatura)"
-
-    elif pay_model == "Yerel müşteri · taksitli":
-        with p_in1:
-            order_val = st.number_input("Sipariş Tutarı ($ USD)", value=12000.0, step=1000.0)
-            down_pct = st.slider("Peşinat Oranı (%)", 0.0, 100.0, 25.0, 5.0)
-        with p_in2:
-            n_inst = st.slider("Aylık Taksit Sayısı (Ay)", 1, 120, 6, 1)
-            wire_delay = st.slider("Gecikme (Gün)", 0, 90, 0, 5)
-        
-        down_amt = order_val * (down_pct / 100.0)
-        rem_loan = order_val - down_amt
-        monthly_inst = rem_loan / max(1, n_inst)
-        
-        with p_in3:
-            st.markdown(f"""
-            <div style="background:rgba(19,166,181,0.08);padding:10px;border-radius:8px;border:1px solid #13A6B5;font-size:13px;">
-                <b>Peşinat Tutarı:</b> {format_curr(down_amt)} (%{down_pct:.0f})<br>
-                <b>Kalan Bakiye:</b> {format_curr(rem_loan)}<br>
-                <b>Eşit Aylık Taksit:</b> {format_curr(monthly_inst)} / Ay ({n_inst} Ay)
-            </div>
-            """, unsafe_allow_html=True)
-
-        # 30 günlük ay modeli: Peşinat gün 0'da tahsil edilir. Taksit i, (i*30 + wire_delay) gününde ödenir.
-        inst_30 = sum(monthly_inst for i in range(1, n_inst + 1) if (i * 30 + wire_delay) <= 30)
-        inst_60 = sum(monthly_inst for i in range(1, n_inst + 1) if (i * 30 + wire_delay) <= 60)
-        inst_90 = sum(monthly_inst for i in range(1, n_inst + 1) if (i * 30 + wire_delay) <= 90)
-
-        cf_30 = down_amt + inst_30
-        cf_60 = down_amt + inst_60
-        cf_90 = down_amt + inst_90
-        rem_balance = max(0.0, order_val - cf_90)
-        plan_desc = f"%{down_pct:.0f} Peşinat + {n_inst} Taksit"
-
-    else:  # Yerel müşteri · kiralama
-        with p_in1:
-            monthly_rent = st.number_input("Aylık Kira ($ USD)", value=1200.0, step=100.0)
-        with p_in2:
-            rent_months = st.slider("Sözleşme Süresi (Ay)", 1, 120, 12, 1)
-            wire_delay = st.slider("Kira Tahsilat Gecikmesi (Gün)", 0, 90, 0, 5)
-        
-        total_rent = monthly_rent * rent_months
-        with p_in3:
-            st.markdown(f"""
-            <div style="background:rgba(240,188,87,0.08);padding:10px;border-radius:8px;border:1px solid #F0BC57;font-size:13px;">
-                <b>Aylık Kira Bedeli:</b> {format_curr(monthly_rent)}<br>
-                <b>Planlanan Toplam Kira:</b> {format_curr(total_rent)} ({rent_months} Ay)<br>
-                <span style="color:#F0BC57;font-size:11px;">* Kira tahsilatı satış cirosundan ayrı izlenir.</span>
-            </div>
-            """, unsafe_allow_html=True)
-
-        cf_30 = sum(monthly_rent for i in range(1, rent_months + 1) if (i * 30 + wire_delay) <= 30)
-        cf_60 = sum(monthly_rent for i in range(1, rent_months + 1) if (i * 30 + wire_delay) <= 60)
-        cf_90 = sum(monthly_rent for i in range(1, rent_months + 1) if (i * 30 + wire_delay) <= 90)
-        rem_balance = max(0.0, total_rent - cf_90)
-        plan_desc = f"{rent_months} Aylık Kiralama Sözleşmesi"
-
-    st.markdown("<br>", unsafe_allow_html=True)
-
-    # 4 Nakit Akışı Göstergesi (Word Kılavuzu: 30, 60, 90 Günlük Tahsilat ve Kalan Bakiye)
-    cf_c1, cf_c2, cf_c3, cf_c4 = st.columns(4)
-    cf_c1.metric("30 Günlük Nakit Girişi", format_curr(cf_30), delta="Birikimli Tahsilat")
-    cf_c2.metric("60 Günlük Nakit Girişi", format_curr(cf_60), delta=f"+{format_curr(cf_60 - cf_30)} İkinci Ay")
-    cf_c3.metric("90 Günlük Nakit Girişi", format_curr(cf_90), delta=f"+{format_curr(cf_90 - cf_60)} Üçüncü Ay")
-    cf_c4.metric("Kalan Alacak / Bakiye", format_curr(rem_balance), delta="Sözleşme Kalanı", delta_color="inverse" if rem_balance > 0 else "normal")
-
-    st.markdown("---")
-
-    # --------------------------------------------------------------------------
-    # 5. AI STRATEJİK RİSK & NAKİT AKIŞI RAPORU
-    # --------------------------------------------------------------------------
-    st.markdown("#### Yapay Zeka Finansal Risk & Senaryo Değerlendirmesi")
-    st.caption("Seçili satış şokları, teslimat gecikmesi ve tahsilat modelini ZEUS'un gerçek pazar yapısı ile çapraz sorgulayarak üst yönetime risk değerlendirmesi üretir.")
-
-    if st.button("AI Finansal Risk Değerlendirmesi Oluştur", type="primary"):
-        ai_risk_placeholder = st.empty()
-        with ai_risk_placeholder.container():
-            components.html("""
-                <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 160px; font-family: sans-serif; background: #0b1426; border-radius: 12px; border: 1px solid #13A6B5; box-shadow: 0 0 20px rgba(19, 166, 181, 0.2);">
-                    <div id="risk-orb" style="width: 45px; height: 45px; background: radial-gradient(circle, #00F5FF 0%, #13A6B5 70%, #0B6F85 100%); border-radius: 50%; box-shadow: 0 0 25px #00F5FF; margin-bottom: 15px;"></div>
-                    <div style="color: #4FD1DE; font-weight: bold; font-size: 14px; letter-spacing: 1px; text-transform: uppercase;">
-                        ZEUS AI FİNANSAL RİSK ANALİZİ YAPIYOR...
-                    </div>
-                </div>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-                <script>
-                    gsap.to("#risk-orb", { y: -12, scale: 1.15, duration: 1.0, yoyo: true, repeat: -1, ease: "sine.inOut" });
-                </script>
-            """, height=180)
-
-        ai_risk_text = None
-        api_key = get_gemini_api_key()
-        if api_key:
-            try:
-                from google import genai
-                client = genai.Client(api_key=api_key)
-                risk_prompt = f"""
-                Sen ZEUS Bioscience Baş Finans Direktörüsün (CFO & Commercial Risk Director).
-                Aşağıdaki simülasyon ve tahsilat parametrelerini inceleyerek üst yönetim için bir 'Finansal Risk & Likidite Değerlendirmesi' hazırla:
-                
-                Simülasyon Verileri:
-                - Kapsam: {sc_country} ({sc_period})
-                - Baz Ciro: {base_sc_rev:,.2f} USD -> Öngörülen Ciro: {sim_rev:,.2f} USD (Fark: {rev_delta:+.1f}%)
-                - USD Kur Değişimi: %{sim_fx}, Talep Şoku: %{sim_demand}, İndirim Baskısı: %{sim_disc}
-                - Sevkiyat Gecikmesi: {sim_delay} gün
-                - Tahsilat Modeli: {pay_model} (Açıklama: {plan_desc})
-                - 30 Günlük Nakit Girişi: {cf_30:,.2f} USD, 60 Günlük: {cf_60:,.2f} USD, 90 Günlük: {cf_90:,.2f} USD
-                - 90 Gün Sonrası Kalan Alacak Bakiyesi: {rem_balance:,.2f} USD
-                
-                Raporunu tamamen Türkçe, profesyonel, maddeler halinde ve somut 3 adet risk azaltma aksiyonu ile yaz.
-                """
-                response = client.models.generate_content(
-                    model='gemini-2.5-flash',
-                    contents=risk_prompt,
-                )
-                ai_risk_text = response.text
-            except Exception:
-                ai_risk_text = None
-
-        if not ai_risk_text:
-            ai_risk_text = f"""### 📋 ZEUS FİNANSAL RİSK & LİKİDİTE YÖNETİCİ NOTU
-**Referans Kodu:** `ZGMI-RISK-SIM-2026` | **Tarih:** Kasım 2026  
-**Gizlilik:** `C-LEVEL & FİNANS KURULU İNCELEMESİ (GİZLİ)`  
-**Analiz Kapsamı:** {sc_country} — {sc_period}  
-**Simülasyon Sonucu:** Baz Ciro: **${base_sc_rev:,.2f}** ➔ Öngörülen Ciro: **${sim_rev:,.2f}** (Net Etki: **%{rev_delta:+.1f}**)
-
----
-
-#### 1. 🎯 Senaryo ve Likidite Özeti
-Modellenen senaryoda; **%{sim_fx} kur baskısı**, **%{sim_demand} talep dalgalanması** ve **%{sim_disc} rekabet indirimi** altında satış hacmi **${sim_rev:,.2f}** seviyesine evrilmektedir.
-- **Teslimat Gecikmesi:** {sim_delay} günlük operasyonel/gümrük gecikmesi, sipariş döngüsünü uzatmakta ve nakit akışını ötelemektedir.
-- **Tahsilat Modeli ({pay_model}):**
-  * 30 Gün İçinde Beklenen Birikimli Nakit: **${cf_30:,.2f}**
-  * 60 Gün İçinde Beklenen Birikimli Nakit: **${cf_60:,.2f}**
-  * 90 Gün İçinde Beklenen Birikimli Nakit: **${cf_90:,.2f}**
-  * 90 Gün Sonrası Kalan Sözleşme Alacak Bakiyesi: **${rem_balance:,.2f}**
-- **Kârlılık Durumu:** Ürün maliyeti verisi girilmediğinde brüt kâr ve marj ihtiyatlılık gereği hesaplanmamış ve ekranda *“Maliyet verisi gerekli”* olarak işaretlenmiştir.
-
----
-
-#### 2. 🛡️ 3 Adımlı Risk Azaltma ve Eylem Protokolü
-1. **Döviz Dalgalanması ve Fiyat Koruması:** Kur volatilitesinin yüksek olduğu pazarlarda döviz kuru sözleşmeye bağlanmalı veya %100 peşin ödemede +%3 erken ödeme avantajı sunularak kur riski minimize edilmelidir.
-2. **Sevkiyat ve Gecikme Yönetimi ({sim_delay} Gün):** Gecikmenin 30 günü aştığı durumlarda distribütör emniyet stoku zorunluluğu getirilmelidir.
-3. **Taksitli / Kiralama Sözleşme Teminatı:** Yerel satışlarda peşinat oranının asgari %25 seviyesinde tutulması ve kalan bakiye için senet/teminat mektubu alınması nakit akışı emniyetini sağlar.
-"""
-
-        ai_risk_placeholder.empty()
-        st.markdown(ai_risk_text)
-
-        st.download_button(
-            label="Bu Risk & Senaryo Raporunu İndir (.md)",
-            data=ai_risk_text,
-            file_name=f"ZEUS_Risk_Scenario_Assessment_{datetime.now().strftime('%Y%m%d_%H%M')}.md",
-            mime="text/markdown"
-        )
-
-
-# ==============================================================================
-# 11. VIEW: DISTRIBUTOR PERFORMANCE EVALUATOR
-# ==============================================================================
-elif active_view in ["🚨 Atıl Cihaz, Churn & Re-Aktivasyon", "📈 Performance Evaluator"]:
-    st.title("Partner Operational & Strategic Performance Scorecard")
-    st.caption("Excel satış kayıtlarındaki gerçek yıllık cihaz/sarf dökümleri, gerçek YoY büyüme oranları ve çeyreklik sipariş düşüş analizi.")
-
-    # --------------------------------------------------------------------------
-    # 1. PARTNER SEÇİMİ (DİSTRİBÜTÖRLER ÖNCELİKLİ)
-    # --------------------------------------------------------------------------
-    # Order: Official distributors first, then international, then local
-    dist_rows = [d for d in active_rows if d.get('account_type') == 'Distributor']
-    intl_rows = [d for d in active_rows if d.get('account_type') == 'International Customer']
-    local_rows = [d for d in active_rows if d.get('account_type') == 'Local Customer']
-    dist_names = [d['name'] for d in dist_rows]
-    intl_names = [d['name'] for d in intl_rows]
-    local_names = [d['name'] for d in local_rows]
-    all_ordered_names = dist_names + intl_names + local_names
-    if not all_ordered_names:
-        all_ordered_names = [d['name'] for d in active_rows]
-    
-    # Default to CMC if present, else first
-    cmc_idx = next((i for i, n in enumerate(all_ordered_names) if "CONSULTANT MEDICAL" in n or "CMC" in n), 0)
-    
-    sel_col1, sel_col2 = st.columns([2, 1])
-    with sel_col1:
-        eval_dist_name = st.selectbox("İncelenecek Partner / Müşteriyi Seçin", all_ordered_names, index=cmc_idx)
-    with sel_col2:
-        eval_d = next((d for d in active_rows if d['name'] == eval_dist_name), active_rows[0])
-        st.markdown(f"""
-        <div style="background:rgba(19,166,181,0.08);border:1px solid #13A6B5;border-radius:8px;padding:8px 12px;font-size:12px;margin-top:20px;">
-            <b>Ülke / Pazar:</b> {eval_d['country_name']} ({eval_d['region']})<br>
-            <b>Sınıf:</b> {eval_d.get('account_type_tr', 'Distribütör')} &nbsp;|&nbsp; <b>LOA:</b> {eval_d.get('loa', 'N/A')}
-        </div>
-        """, unsafe_allow_html=True)
-        
-    if eval_d.get('is_sister') or 'GEN-SA' in eval_d['name']:
-        st.info("🏢 **BİLGİLENDİRME (Kardeş Şirket):** GEN-SA GENEL SAĞLIK A.Ş., ZEUS Bioscience'ın **kardeş şirketidir**. Şirket içi direktif gereği üçüncü taraf distribütör/klinik performans cezalandırmasına, sözleşme kotalarına veya ihtar/churn değerlendirmesine tabi tutulmamaktadır. Aşağıdaki veriler grup içi konsolide satış hareketleri kapsamında salt bilgi amaçlı sunulmaktadır.")
-
-    # --------------------------------------------------------------------------
-    # 2. GERÇEK EXCEL VERİLERİNDEN YILLIK & ÇEYREKLİK ANALİZ
-    # --------------------------------------------------------------------------
-    partner_sales = pd.DataFrame()
-    if raw_sales_df is not None:
-        partner_sales = raw_sales_df[raw_sales_df['Company'] == eval_dist_name].copy()
-        partner_sales = partner_sales.sort_values('Date_dt')
-
-    # Build annual breakdown
-    years_list = [2024, 2025, 2026]
-    y_stats = []
-    for yr in years_list:
-        ydf = partner_sales[partner_sales['Year_int'] == yr] if len(partner_sales) > 0 else pd.DataFrame()
-        tot = float(ydf['Amount (USD)'].sum()) if len(ydf) > 0 else 0.0
-        dev_amt = float(ydf[ydf['Group'] == 'Device']['Amount (USD)'].sum()) if len(ydf) > 0 else 0.0
-        con_amt = float(ydf[ydf['Group'] == 'Consumables']['Amount (USD)'].sum()) if len(ydf) > 0 else 0.0
-        dev_q = int(ydf[ydf['Group'] == 'Device']['Quantity'].sum()) if len(ydf) > 0 else 0
-        con_q = int(ydf[ydf['Group'] == 'Consumables']['Quantity'].sum()) if len(ydf) > 0 else 0
-        invs = int(ydf['Invoice'].nunique()) if len(ydf) > 0 else 0
-        
-        y_stats.append({
-            'Yıl': f"{yr} (YTD)" if yr == 2026 else str(yr),
-            'Toplam Ciro': tot,
-            'Cihaz Geliri': dev_amt,
-            'Cihaz (Adet)': dev_q,
-            'Sarf Geliri': con_amt,
-            'Sarf (Kutu)': con_q,
-            'Sarf Payı (%)': (con_amt / tot * 100.0) if tot > 0 else 0.0,
-            'Fatura': invs
-        })
-
-    y_df = pd.DataFrame(y_stats)
-    
-    # Real YoY Growth
-    v24 = y_df['Toplam Ciro'].iloc[0]
-    v25 = y_df['Toplam Ciro'].iloc[1]
-    v26 = y_df['Toplam Ciro'].iloc[2]
-    
-    yoy_25 = ((v25 - v24) / v24 * 100.0) if v24 > 0 else (100.0 if v25 > 0 else 0.0)
-    yoy_26 = ((v26 - v25) / v25 * 100.0) if v25 > 0 else (100.0 if v26 > 0 else 0.0)
-
-    # Device YoY
-    d24 = y_df['Cihaz Geliri'].iloc[0]
-    d25 = y_df['Cihaz Geliri'].iloc[1]
-    d26 = y_df['Cihaz Geliri'].iloc[2]
-    dev_yoy_25 = ((d25 - d24) / d24 * 100.0) if d24 > 0 else (100.0 if d25 > 0 else 0.0)
-    dev_yoy_26 = ((d26 - d25) / d25 * 100.0) if d25 > 0 else (100.0 if d26 > 0 else 0.0)
-
-    # Consumables YoY
-    c24 = y_df['Sarf Geliri'].iloc[0]
-    c25 = y_df['Sarf Geliri'].iloc[1]
-    c26 = y_df['Sarf Geliri'].iloc[2]
-    con_yoy_25 = ((c25 - c24) / c24 * 100.0) if c24 > 0 else (100.0 if c25 > 0 else 0.0)
-    con_yoy_26 = ((c26 - c25) / c25 * 100.0) if c25 > 0 else (100.0 if c26 > 0 else 0.0)
-
-    tot_all_rev = sum(y_df['Toplam Ciro'])
-    tot_all_dev = sum(y_df['Cihaz (Adet)'])
-    tot_all_con = sum(y_df['Sarf (Kutu)'])
-    last_order_str = eval_d.get('last_order', '—')
-
-    # Quick KPI Cards
-    k1, k2, k3, k4 = st.columns(4)
-    k1.metric("Toplam Faturalanan Ciro", format_curr(tot_all_rev), delta=f"{yoy_26:+.1f}% 2026 YoY" if v25 > 0 else "Yeni Partner")
-    k2.metric("Kurulu Cihaz Sayısı", f"{tot_all_dev} Adet", delta=f"{dev_yoy_26:+.0f}% Cihaz İvmesi" if d25 > 0 else "Stabil")
-    k3.metric("Sarf Sipariş Hacmi", f"{tot_all_con} Kutu", delta=f"{con_yoy_26:+.1f}% Sarf İvmesi" if c25 > 0 else "Stabil")
-    k4.metric("Son Sipariş Tarihi", last_order_str, delta="Aktif Müşteri")
-
-    st.markdown("---")
-
-    # --------------------------------------------------------------------------
-    # 3. YILLIK CİHAZ VE SARF MALZEME GERÇEKLEŞME TABLOSU
-    # --------------------------------------------------------------------------
-    st.subheader("Yıllık Cihaz ve Sarf Malzeme Gerçekleşme Tablosu")
-    st.caption("Firma bazında sermaye ekipmanı satışları ile tekrar eden sarf malzeme tüketiminin yıl bazında resmi dökümü.")
-
-    disp_y_df = y_df.copy()
-    disp_y_df['YoY Net Değişim'] = [
-        "—",
-        f"{yoy_25:+.1f}% (Cihaz: {dev_yoy_25:+.0f}%, Sarf: {con_yoy_25:+.1f}%)",
-        f"{yoy_26:+.1f}% (Cihaz: {dev_yoy_26:+.0f}%, Sarf: {con_yoy_26:+.1f}%)"
-    ]
-    disp_y_df['Toplam Ciro'] = disp_y_df['Toplam Ciro'].apply(format_curr)
-    disp_y_df['Cihaz Geliri'] = disp_y_df['Cihaz Geliri'].apply(format_curr)
-    disp_y_df['Sarf Geliri'] = disp_y_df['Sarf Geliri'].apply(format_curr)
-    disp_y_df['Cihaz (Adet)'] = disp_y_df['Cihaz (Adet)'].apply(lambda x: f"{x} Adet" if x > 0 else "—")
-    disp_y_df['Sarf (Kutu)'] = disp_y_df['Sarf (Kutu)'].apply(lambda x: f"{x} Kutu" if x > 0 else "—")
-    disp_y_df['Sarf Payı (%)'] = disp_y_df['Sarf Payı (%)'].apply(lambda x: f"%{x:.1f}")
-    disp_y_df['Fatura'] = disp_y_df['Fatura'].apply(lambda x: f"{x} İşlem")
-
-    st.dataframe(disp_y_df, use_container_width=True, hide_index=True)
-
-    st.markdown("---")
-
-    # --------------------------------------------------------------------------
-    # 4. ÇEYREKLİK SİPARİŞ TRENDİ VE TESPİT EDİLEN SİPARİŞ DÜŞÜŞLERİ GRAFİĞİ
-    # --------------------------------------------------------------------------
-    st.subheader("Çeyreklik Sipariş Trendi ve Sipariş Düşüşleri (Order Drop Tracking)")
-    st.caption("Zaman çizelgesi üzerinde gerçekleşen siparişler, sermaye ekipmanı ve sarf ayrımı ile tespit edilen kritik hacim düşüşleri.")
-
-    all_quarters = ['2024Q1', '2024Q2', '2024Q3', '2024Q4', '2025Q1', '2025Q2', '2025Q3', '2025Q4', '2026Q1', '2026Q2', '2026Q3', '2026Q4']
-    partner_sales['Quarter'] = partner_sales['Date_dt'].dt.to_period('Q').astype(str) if len(partner_sales) > 0 else pd.Series()
-    
-    q_dict = {}
-    if len(partner_sales) > 0:
-        for q, grp in partner_sales.groupby('Quarter'):
-            q_dict[q] = {
-                'Quarter': q,
-                'Amount': float(grp['Amount (USD)'].sum()),
-                'Device_Amt': float(grp[grp['Group'] == 'Device']['Amount (USD)'].sum()),
-                'Consumables_Amt': float(grp[grp['Group'] == 'Consumables']['Amount (USD)'].sum()),
-                'Device_Qty': int(grp[grp['Group'] == 'Device']['Quantity'].sum()),
-                'Consumables_Qty': int(grp[grp['Group'] == 'Consumables']['Quantity'].sum())
-            }
-
-    active_qs = sorted(list(q_dict.keys())) if len(q_dict) > 0 else ['2026Q1', '2026Q2', '2026Q3']
-    first_q_idx = all_quarters.index(active_qs[0]) if active_qs[0] in all_quarters else 0
-    last_q_idx = all_quarters.index(active_qs[-1]) if active_qs[-1] in all_quarters else len(all_quarters) - 1
-
-    q_series = []
-    prev_amt = None
-    detected_drops = []
-    for q_idx in range(first_q_idx, last_q_idx + 1):
-        q_str = all_quarters[q_idx]
-        data = q_dict.get(q_str, {
-            'Quarter': q_str, 'Amount': 0.0, 'Device_Amt': 0.0, 'Consumables_Amt': 0.0, 'Device_Qty': 0, 'Consumables_Qty': 0
-        })
-        
-        is_drop = False
-        drop_pct = 0.0
-        if prev_amt is not None and prev_amt > 0:
-            if data['Amount'] < prev_amt:
-                is_drop = True
-                drop_pct = ((data['Amount'] - prev_amt) / prev_amt) * 100.0
-                detected_drops.append({
-                    'Quarter': q_str,
-                    'Drop_Pct': drop_pct,
-                    'Current_Amt': data['Amount'],
-                    'Prior_Amt': prev_amt,
-                    'Is_Zero_Gap': data['Amount'] == 0.0
-                })
-        data['Is_Drop'] = is_drop
-        data['Drop_Pct'] = drop_pct
-        q_series.append(data)
-        prev_amt = data['Amount']
-
-    q_df = pd.DataFrame(q_series)
-
-    # Plotly Stacked Bar + Line with Drop Markers
-    fig_ord = go.Figure()
-
-    # Device bar
-    fig_ord.add_trace(go.Bar(
-        x=q_df['Quarter'], y=q_df['Device_Amt'] * currency_rate,
-        name='Cihaz Geliri (Capital Equipment)',
-        marker_color='#13A6B5'
-    ))
-
-    # Consumables bar
-    fig_ord.add_trace(go.Bar(
-        x=q_df['Quarter'], y=q_df['Consumables_Amt'] * currency_rate,
-        name='Sarf Geliri (Consumables & Solution)',
-        marker_color='#4FD1DE'
-    ))
-
-    # Total line
-    fig_ord.add_trace(go.Scatter(
-        x=q_df['Quarter'], y=q_df['Amount'] * currency_rate,
-        mode='lines+markers',
-        name='Toplam Sipariş Hacmi',
-        line=dict(color='#CCD7E6', width=2),
-        marker=dict(size=6, color='#CCD7E6')
-    ))
-
-    # Drop annotations
-    for drop in detected_drops:
-        fig_ord.add_annotation(
-            x=drop['Quarter'],
-            y=drop['Current_Amt'] * currency_rate,
-            text=f"📉 Düşüş {drop['Drop_Pct']:.0f}%" if not drop['Is_Zero_Gap'] else "⚠️ Sipariş Boşluğu ($0)",
-            showarrow=True,
-            arrowhead=2,
-            arrowcolor='#FF8A96',
-            font=dict(color='#FF8A96', size=11, family='sans-serif'),
-            bgcolor="rgba(229,112,123,0.18)",
-            bordercolor="#FF8A96",
-            borderwidth=1,
-            borderpad=3
-        )
-
-    fig_ord.update_layout(
-        barmode='stack',
-        height=390,
-        paper_bgcolor='rgba(0,0,0,0)',
-        plot_bgcolor='rgba(0,0,0,0)',
-        margin=dict(l=10, r=10, t=45, b=55),
-        legend=dict(
-            orientation="h",
-            yanchor="top",
-            y=-0.20,
-            xanchor="center",
-            x=0.5,
-            font=dict(size=11, color='#CBD5E1')
-        ),
-        yaxis=dict(gridcolor='rgba(255,255,255,0.08)', title=f"Sipariş Tutarı ({currency_symbol})"),
-        xaxis=dict(title="Dönem (Çeyrekler)")
-    )
-    st.plotly_chart(fig_ord, use_container_width=True)
-
-    # Detailed Drop Insights Box
-    c_dr1, c_dr2 = st.columns([1.5, 1])
-    with c_dr1:
-        st.markdown("##### Tespit Edilen Sipariş Düşüşleri ve Kritik Sapmalar")
-        if len(detected_drops) > 0:
-            for drop in detected_drops:
-                if drop['Is_Zero_Gap']:
-                    st.markdown(f"""
-                    <div style="background:rgba(229,112,123,0.08);border-left:4px solid #FF8A96;padding:10px 14px;border-radius:6px;margin-bottom:8px;font-size:13px;">
-                        <b style="color:#FF8A96;">⚠️ {drop['Quarter']}: Sipariş Kesintisi (Gap Dönemi)</b><br>
-                        <span style="color:#CCD7E6;">Bir önceki çeyrekte {format_curr(drop['Prior_Amt'])} sipariş verilmişken, bu çeyrekte hiç sipariş açılmamıştır (%100 dönemsel düşüş).</span>
-                    </div>
-                    """, unsafe_allow_html=True)
-                else:
-                    st.markdown(f"""
-                    <div style="background:rgba(240,188,87,0.08);border-left:4px solid #F0BC57;padding:10px 14px;border-radius:6px;margin-bottom:8px;font-size:13px;">
-                        <b style="color:#F0BC57;">📉 {drop['Quarter']}: {drop['Drop_Pct']:.1f}% Sipariş Gerilemesi</b><br>
-                        <span style="color:#CCD7E6;">Önceki çeyrekteki {format_curr(drop['Prior_Amt'])} hacim, {format_curr(drop['Current_Amt'])} seviyesine gerilemiştir.</span>
-                    </div>
-                    """, unsafe_allow_html=True)
-        else:
-            st.success("✅ Bu partner için çeyrekler arası keskin bir sipariş düşüşü tespit edilmemiştir; sipariş hacmi düzenli veya artış trendindedir.")
-
-    with c_dr2:
-        st.markdown("##### Analitik Değerlendirme & Yorum")
-        if tot_all_dev > 0 and y_df['Cihaz (Adet)'].iloc[-1] == 0:
-            st.info(f"ℹ️ **Cihaz vs Sarf Dönüşümü:** {eval_dist_name}, geçmiş yıllarda {tot_all_dev} adet Pulse Stimulator (AOA) cihazı alarak altyapısını kurmuştur. 2026'da cihaz alımının durması normal bir sermaye ekipmanı doyumudur; asıl takip edilmesi gereken metrik kurulu 5 cihazın oosit sarf tüketim sürekliliğidir.")
-        elif tot_all_dev == 0:
-            st.info(f"ℹ️ **Sadece Sarf Alan Müşteri:** Bu partner henüz Pulse Stimulator sermaye cihazı almamış olup yalnızca Electro Dish veya Solüsyon sarfı tüketmektedir.")
-        else:
-            st.success(f"ℹ️ **Aktif Büyüme:** Partner hem yeni cihaz kurulumu yapmakta hem de sarf malzeme hacmini büyütmektedir.")
-
-    st.markdown("---")
-
-    # --------------------------------------------------------------------------
-    # 5. GERÇEK VERİYE VE ÜLKE ŞARTLARINA DAYALI AĞIRLIKLI PERFORMANS SKORU
-    # --------------------------------------------------------------------------
-    st.subheader("Ağırlıklı Performans ve Sağlık Karnesi (Ülke Şartlarına Göre Kalibre Edilmiş)")
-    st.caption("Partnerin performansı; ülkedeki toplam lisanslı IVF klinik sayısı, pazar penetrasyon oranı, cihaz başına sarf tüketim rasyosu, GSYİH satın alma gücü, gümrük bariyerleri ve mevzuat şartlarına göre çok boyutlu olarak ağırlıklandırılmıştır.")
-
-    # Country macroeconomic intelligence
-    eval_country = eval_d.get('country_name', 'Turkey')
-    c_macro = resolve_country_macro(eval_country)
-
-    total_country_clinics = c_macro.get('clinics', 20)
-    c_gdp = c_macro.get('gdp_pc', 12000)
-    c_gdp_tier = c_macro.get('gdp_tier', 'Middle Income')
-    c_customs_days = c_macro.get('customs_clearance_days', 15)
-    c_customs_pct = c_macro.get('customs_tariff_pct', 6.0)
-    c_import_diff = c_macro.get('import_difficulty', 'Orta')
-    c_support = c_macro.get('ivf_support', '%100 Cepten Ödeme')
-
-    pen_rate = (tot_all_dev / total_country_clinics * 100.0) if total_country_clinics > 0 else 0.0
-    boxes_per_dev = (tot_all_con / max(1, tot_all_dev)) if tot_all_dev > 0 else 0.0
-
-    # Country Benchmark Card
-    bench_card_html = f"""<div style="background:rgba(19,166,181,0.06);border:1px solid rgba(19,166,181,0.28);border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:12px;line-height:1.7;">
-<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-<span style="font-weight:700;color:#00F5FF;font-size:13px;">🌍 Değerlendirme Kriteri: {eval_country} Ülke Şartları & IVF Pazar Kıyaslama Rasyoları</span>
-<span style="background:rgba(19,166,181,0.2);color:#4FD1DE;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600;">{c_gdp_tier}</span>
-</div>
-• <b>Toplam Lisanslı IVF Klinik Havuzu:</b> {total_country_clinics} Merkez &nbsp;|&nbsp; <b>Partner Kurulu Cihaz:</b> {tot_all_dev} Adet &nbsp;→&nbsp; <span style="color:#00F5FF;font-weight:700;">%{pen_rate:.1f} Pazar Penetrasyonu</span><br>
-• <b>Kişi Başı GSYİH & Refah:</b> ${c_gdp:,} USD &nbsp;|&nbsp; <b>Devlet IVF Güvencesi:</b> <span style="color:#00E676;font-weight:600;">{c_support}</span><br>
-• <b>Gümrük & İthalat Bariyeri:</b> %{c_customs_pct:.1f} Tarife / Ortalama {c_customs_days} Gün Bekleme &nbsp;({c_import_diff})<br>
-• <b>Cihaz Başına Ortalama Sarf Tüketimi:</b> <span style="color:#FFD700;font-weight:700;">{boxes_per_dev:.1f} Kutu / Cihaz</span> (Toplam {tot_all_con} Kutu Sarf Hacmi)
-</div>"""
-    st.markdown(bench_card_html, unsafe_allow_html=True)
-
-    # 1. Device base score calibrated by country penetration
-    if pen_rate >= 35.0:
-        s_device = 90 + min(10, (pen_rate - 35.0) * 0.3)
-    elif pen_rate >= 20.0:
-        s_device = 75 + (pen_rate - 20.0) * 1.0
-    elif pen_rate >= 10.0:
-        s_device = 60 + (pen_rate - 10.0) * 1.5
-    elif pen_rate >= 5.0:
-        s_device = 45 + (pen_rate - 5.0) * 3.0
-    elif pen_rate > 0.0:
-        s_device = 25 + pen_rate * 4.0
-    else:
-        s_device = 0
-    if c_customs_days >= 25 and pen_rate >= 20.0:
-        s_device += 2
-    s_device = max(0, min(100, round(s_device)))
-
-    # Detail for Factor 1
-    if tot_all_dev > 0:
-        det_device = f"{tot_all_dev} / {total_country_clinics} Klinik (%{pen_rate:.1f} Pazar Payı)"
-    else:
-        det_device = "0 Cihaz (Salt Sarf Malzeme Müşterisi)"
-
-    # 2. Consumables velocity score calibrated by boxes per device and country economics
-    if tot_all_dev == 0:
-        s_consumable = min(100, round(tot_all_con * 1.5))
-        det_consumable = f"{tot_all_con} Kutu (Salt Sarf Müşterisi)"
-    else:
-        if boxes_per_dev >= 50.0:
-            s_con_base = 95 + min(5, (boxes_per_dev - 50.0) * 0.2)
-        elif boxes_per_dev >= 30.0:
-            s_con_base = 80 + (boxes_per_dev - 30.0) * 0.75
-        elif boxes_per_dev >= 15.0:
-            s_con_base = 65 + (boxes_per_dev - 15.0) * 1.0
-        elif boxes_per_dev >= 5.0:
-            s_con_base = 40 + (boxes_per_dev - 5.0) * 2.5
-        else:
-            s_con_base = max(15, round(boxes_per_dev * 8.0))
-        
-        # Resilience adjustment: low-income self-pay vs high-income state coverage
-        if c_gdp < 10000 and boxes_per_dev >= 15.0:
-            s_con_base += 5  # High continuity under harsh economic conditions
-        elif c_gdp > 30000 and boxes_per_dev < 10.0:
-            s_con_base -= 10 # Wealthy market with idle machines
-        s_consumable = max(0, min(100, round(s_con_base)))
-        det_consumable = f"{tot_all_con} Kutu (Cihaz Başına {boxes_per_dev:.1f} Kutu)"
-
-    # 3. Growth score (evaluates composite device saturation and recurring consumable growth)
-    if pen_rate >= 20.0 and tot_all_dev > 0 and con_yoy_26 > 0:
-        # Recognized transition: Capital saturation with recurring consumables growth
-        s_con_g = 80 if con_yoy_26 > 10.0 else 70
-        s_rev_g = 80 if yoy_26 > 0.0 else (60 if yoy_26 > -30.0 else (45 if yoy_26 > -60.0 else 35))
-        s_growth = round(0.55 * s_con_g + 0.45 * s_rev_g)
-        det_growth = f"Cihaz Doyumu Sonrası Sarf Büyümesi: Sarf {con_yoy_26:+.1f}% / Ciro {yoy_26:+.1f}%"
-    else:
-        if yoy_26 > 15.0:
-            s_growth = 95
-        elif yoy_26 > 0.0:
-            s_growth = 80
-        elif yoy_26 > -30.0:
-            s_growth = 60
-        elif yoy_26 > -60.0:
-            s_growth = 45
-        else:
-            s_growth = 35
-        det_growth = f"{yoy_26:+.1f}% 2026 Net Değişim (Cihaz: {dev_yoy_26:+.0f}%, Sarf: {con_yoy_26:+.1f}%)"
-
-    # 4. Regularity score (calibrated by country customs clearance lead times)
-    num_drops = len([d for d in detected_drops if d['Is_Zero_Gap']])
-    if c_customs_days >= 25:
-        # High lead time countries (Palestine, Iraq) use semi-annual bulk batches
-        s_regularity = max(40, round(95 - (num_drops * 12)))
-        det_regularity = f"{num_drops} Sıfır Çeyrek Boşluğu ({c_customs_days} Gün Gümrük Beklemesi Nedeniyle Yarıyıl Toplu Sevkiyat Modeli)"
-    else:
-        s_regularity = max(30, round(95 - (num_drops * 20)))
-        det_regularity = f"{num_drops} Sıfır Çeyrek Boşluğu (Çeyreklik Takip Modeli)"
-
-    # 5. Compliance score
-    s_comp = 95 if eval_d.get('loa') == 'Valid' else (65 if eval_d.get('loa') == 'In renewal' else 80)
-    det_comp = f"Statü: {eval_d.get('compliance', 'Uyumlu')} & LOA: {eval_d.get('loa', 'N/A')}"
-
-    perf_factors = [
-        {"Factor": "Kurulu Cihaz Tabanı & Ülke Penetrasyonu", "Score": s_device, "Weight": "25%", "Detail": det_device},
-        {"Factor": "Tekrar Eden Sarf Tüketim Hacmi & Cihaz Rasyosu", "Score": s_consumable, "Weight": "25%", "Detail": det_consumable},
-        {"Factor": "Yıllık Satış Büyüme İvmesi & Gelir Karması", "Score": s_growth, "Weight": "20%", "Detail": det_growth},
-        {"Factor": "Sipariş Düzenliliği & Lojistik Düşüş Direnci", "Score": s_regularity, "Weight": "15%", "Detail": det_regularity},
-        {"Factor": "Hukuki Uyum & Sözleşme Sağlığı", "Score": s_comp, "Weight": "15%", "Detail": det_comp}
-    ]
-
-    total_weighted_score = round(
-        s_device * 0.25 + s_consumable * 0.25 + s_growth * 0.20 + s_regularity * 0.15 + s_comp * 0.15
-    )
-
-    if total_weighted_score >= 80:
-        band_title = "Strong Commercial Performer (Tier A)"
-        band_col = "#5FD3AE"
-    elif total_weighted_score >= 65:
-        band_title = "Solid & Stable Partner (Tier B)"
-        band_col = "#4FD1DE"
-    elif total_weighted_score >= 50:
-        band_title = "Mixed Performance – Action Required (Tier C)"
-        band_col = "#F0BC57"
-    else:
-        band_title = "Critical Attention Required (Tier D)"
-        band_col = "#FF8A96"
-
-    ev1, ev2 = st.columns([1, 2])
-    with ev1:
-        st.markdown(f"""
-        <div class="kpi-container" style="text-align:center;padding:24px;">
-            <div class="kpi-header">Genel Partner Sağlık Skoru</div>
-            <div style="font-size:52px;font-weight:800;color:{band_col};">{total_weighted_score}</div>
-            <div style="font-size:14px;color:#CCD7E6;font-weight:600;margin-top:6px;">{band_title}</div>
-            <div style="font-size:11px;color:#7C93BD;margin-top:4px;">Ülke Makro Şartları & Gerçek Satış Verisi</div>
-        </div>
-        """, unsafe_allow_html=True)
-    with ev2:
-        for item in perf_factors:
-            st.write(f"**{item['Factor']}** ({item['Weight']}) — `{item['Detail']}`")
-            st.progress(item['Score'] / 100.0, text=f"{item['Score']} / 100")
-
-    with st.expander("🔍 Skorlama Metodolojisi & Ülke Şartları Kalibrasyon Rehberi"):
-        st.markdown(f"""
-        <div style="font-size:12px;line-height:1.7;color:#C4D1D9;">
-            <b>1. Kurulu Cihaz Tabanı & Penetrasyon (%25):</b> Maktuf cihaz adedi yerine ülkedeki toplam lisanslı IVF klinik sayısına oranlanır. Örneğin 14 klinikli Filistin'de 5 cihaz (%35.7 penetrasyon) pazar liderliği skoru (90+) alırken, 150 klinikli Güney Kore'de 7 cihaz (%4.7 penetrasyon) büyüme aşaması skoru (44) alır.<br>
-            <b>2. Tekrar Eden Sarf Tüketimi & Cihaz Başı Rasyo (%25):</b> Toplam kutu sayısı kurulu cihaz sayısına bölünerek cihaz başına kullanım verimliliği ölçülür. Kişi başı GSYİH ($3,500) ve %100 cepten ödeme rejimine rağmen cihaz başına 23 kutu sarf çekişi yüksek klinik süreklilik olarak değerlendirilir.<br>
-            <b>3. Büyüme & Gelir Karması (%20):</b> Sermaye cihazı doyumuna ulaşmış pazarlarda ciro düşüşü normal kabul edilerek tekrar eden sarf büyümesi (+%12.2) pozitif katkı sağlar.<br>
-            <b>4. Sipariş Düzenliliği (%15):</b> Gümrük ve güvenlik denetimi 30+ gün süren ülkelerde (Filistin, Irak) çeyreklik küçük siparişler yerine lojistik maliyeti optimize eden yarıyıllık toplu sipariş periyotları gözetilir.<br>
-            <b>5. Hukuki Uyum (%15):</b> Distribütörlük sözleşmesi, LOA yetki belgesi ve yerel Sağlık Bakanlığı akreditasyonu esas alınır.
-        </div>
-        """, unsafe_allow_html=True)
-
-    # --------------------------------------------------------------------------
-    # 6. YÖNETİCİ EYLEM REÇETESİ
-    # --------------------------------------------------------------------------
-    st.markdown("#### Yönetici Teşhisi ve Eylem Reçetesi")
-    if "CMC" in eval_dist_name or "CONSULTANT" in eval_dist_name:
-        st.markdown("""
-        <div style="background:rgba(19,166,181,0.08);border:1px solid #13A6B5;border-radius:10px;padding:16px;">
-            <b style="color:#00F5FF;font-size:15px;">📋 CMC (Filistin Pazarı) Özel Yönetici Özeti:</b><br>
-            <div style="color:#CCD7E6;font-size:13px;line-height:1.6;margin-top:6px;">
-                <b>Teşhis:</b> CMC, 2024 ve 2025 yıllarında toplam <b>5 adet ZEUS Pulse Stimulator (AOA)</b> cihazı alarak Filistin'deki referans klinik altyapısını tamamlamıştır. 2026 yılında yeni cihaz alımı yapılmaması toplam ciroda %71.8 düşüş gibi görünse de, <b>46 kutuluk sarf alımı</b> cihazların tam kapasite çalıştığını teyit etmektedir.<br>
-                <b>Kritik Risk:</b> Siparişlerin çeyreklik düzenli açılmaması (2025Q2 ve 2026Q2'de sıfır sipariş); kliniklerin sarf stoku tükenene kadar beklediğini göstermektedir.<br>
-                <b>Eylem Reçetesi:</b> CMC ile 6 aylık toplu sipariş yerine <b>çeyreklik otomatik yenilenen sarf sevkiyat protokolü</b> imzalanmalı; 2027 başında Batı Şeria'daki yeni bir merkez için 6. Piezo cihazı kurumsal filo teklifi sunulmalıdır.
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-    else:
-        st.markdown(f"""
-        <div style="background:rgba(19,166,181,0.08);border:1px solid #13A6B5;border-radius:10px;padding:16px;">
-            <b style="color:#00F5FF;font-size:15px;">📋 {eval_dist_name} Yönetici Aksiyon Notu:</b><br>
-            <div style="color:#CCD7E6;font-size:13px;line-height:1.6;margin-top:6px;">
-                <b>Stratejik Durum:</b> Toplam {format_curr(tot_all_rev)} ciro, {tot_all_dev} kurulu cihaz ve {tot_all_con} kutu sarf malzemesi kaydı bulunmaktadır.<br>
-                <b>Öneri:</b> Çeyreklik sipariş dalgalanmalarını gidermek amacıyla yıllık minimum sarf sipariş taahhüdü ve indirim kademeleri devreye alınmalıdır.
-            </div>
-        </div>
-        """, unsafe_allow_html=True)
-
-
-# ==============================================================================
-# 12. VIEW: STRATEGIC DECISION CENTER
-# ==============================================================================
-elif active_view in ["⚔️ Stratejik Karar Masası (RFID Trap Breaker)", "⚖️ Strategic Decision Center"]:
+elif active_view in [
+    "🚨 Kritik Atıl Cihaz, Churn & Risk Uyarıları",
+    "🚨 Atıl Cihaz, Churn & Re-Aktivasyon",
+    "🔍 Risk & Jeopolitik Senaryolar",
+    "📈 Performance Evaluator",
+    "⚠️ Risk & Scenario Simulator"
+]:
+    al_tab1, al_tab2 = st.tabs([
+        "🚨 Atıl Cihaz, Churn & Re-Aktivasyon Karnesi",
+        "🔍 Jeopolitik & Ticari Risk Senaryoları"
+    ])
+    with al_tab1:
+        render_churn_and_partner_performance_view()
+    with al_tab2:
+        render_risk_scenario_simulator_view()
+
+elif active_view in ["⚔️ Rakip Kıyaslama & RFID Trap Breaker", "⚔️ Stratejik Karar Masası (RFID Trap Breaker)", "⚖️ Strategic Decision Center"]:
     st.title("Strategic Decision Center & Executive Board Room")
     st.caption("Configurable weighted multi-criteria assessment framework for critical corporate authorizations, competitor displacement and commercial expansion.")
 
@@ -27899,7 +27911,7 @@ Web: www.zeusbioscience.com | Email: clinical@zeusbioscience.com"""
 # ==============================================================================
 # 13. VIEW: EXECUTIVE REPORTS & EXPORT
 # ==============================================================================
-elif active_view in ["📑 Yönetici Raporları & Veri İndirme", "📄 Executive Reports & Export"]:
+elif active_view in ["📑 Partner Karneleri, Raporlar & Excel/CSV İndirme", "📑 Yönetici Raporları & Veri İndirme", "📄 Executive Reports & Export"]:
     st.title("Executive Governance Reports & Export Center")
     st.caption("Generate formal distribution audit briefings and export certified commercial datasets.")
 
@@ -28101,14 +28113,24 @@ elif active_view in ["📑 Yönetici Raporları & Veri İndirme", "📄 Executiv
 # ==============================================================================
 # 14. VIEW: GLOBAL SOCIAL MEDIA & B2B MARKETING
 # ==============================================================================
-elif active_view in ["📱 MedTech Sosyal Medya & B2B İletişim", "📱 Global Social Media & B2B Marketing"]:
+elif active_view in ["📢 MedTech Sosyal Medya & İçerik Stüdyosu", "📱 MedTech Sosyal Medya & B2B İletişim", "📱 Global Social Media & B2B Marketing"]:
     render_social_media_hub()
 
-elif active_view in ["🏛️ Kamu İhaleleri & Şartnameler", "🏛️ Küresel & Kamu İhaleleri Masası (Tenders Hub)"]:
-    render_tenders_hub()
-
-elif active_view in ["📑 Gümrük, İthalat & Biyoetik Mevzuatı", "📑 Gümrük, GTİP & Sağlık Bakanlığı Mevzuatı"]:
-    render_regulations_hub()
+elif active_view in [
+    "🏛️ Küresel Mevzuat & İhale Rehberi (Global Regulations & Tenders)",
+    "🏛️ Kamu İhaleleri & Şartnameler",
+    "🏛️ Küresel & Kamu İhaleleri Masası (Tenders Hub)",
+    "📑 Gümrük, İthalat & Biyoetik Mevzuatı",
+    "📑 Gümrük, GTİP & Sağlık Bakanlığı Mevzuatı"
+]:
+    t_tab1, t_tab2 = st.tabs([
+        "🏛️ Küresel & Kamu İhaleleri Portföyü (14 İhale, $3.85M Bütçe)",
+        "📑 48 Hedef Ülke Gümrük, GTİP & Sağlık Bakanlığı Tescil Rehberi"
+    ])
+    with t_tab1:
+        render_tenders_hub()
+    with t_tab2:
+        render_regulations_hub()
 
 # Universal Bottom 'Back to Top' Button (Every Page)
 render_back_to_top_button()
