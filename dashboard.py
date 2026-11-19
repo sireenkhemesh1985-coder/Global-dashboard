@@ -4702,7 +4702,7 @@ def build_fallback_sales_extensions(country_name, macro=None):
                 'terms': 'Pulse Stimulator talep etmeyen distribütörler için 3 farklı cihaz alım zorunluluğu.'
             },
             'bundle_3': {
-                'name': f'{country_name} Bölgesel Filo Genişleme Modeli (5 Cihaz Stratejik Paket)',
+                'name': f'{country_name} Bölgesel Filo Genişleme Modeli (Stratejik Filo Paketi)',
                 'contents': '3x ZEUS Pulse Stimulator (1 Direct Sale w/ Hediye Sarf + 2 Reagent-Based w/ 120 Dish + 40 Solution-Powder) + 1x BioPSafe + 1x Mismatch Blocker',
                 'discount': f'Cihazda %{rec_dev_disc+3:.0f} Filo İskontosu | Sarfta %{rec_sarf_disc+3:.0f} İskonto + Ücretsiz Kargo + 2 Yıllık Münhasırlık',
                 'terms': '50K+ siklüslü mega pazarlar veya çok merkezli gruplar için; çeyreklik düzenli çekiş şartı.'
@@ -5030,7 +5030,7 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
             dev_inline_bg = "rgba(0,230,118,0.12)"
             dev_inline_border = "#00E676"
         elif 4 <= dev_qty <= 5:
-            dev_inline_msg = f"<span style='color:#FFB800;font-weight:800;'>🚀 5 Cihaz Bölgesel Filo Modeli:</span> {target_country} mega pazarlar için önerilen çok merkezli yayılım paketi. %10 - %12 Filo İskontosu + 2 Yıllık Münhasırlık."
+            dev_inline_msg = f"<span style='color:#FFB800;font-weight:800;'>🚀 Bölgesel Filo Genişleme Modeli (5+ Cihaz):</span> {target_country} mega pazarlar için önerilen çok merkezli yayılım paketi. %10 - %12 Filo İskontosu + 2 Yıllık Münhasırlık."
             dev_inline_bg = "rgba(255,184,0,0.12)"
             dev_inline_border = "#F59E0B"
         elif 6 <= dev_qty <= 9:
@@ -5846,10 +5846,12 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
 
 def render_distributor_3device_policy_card(country_name, macro=None, c_deep=None):
     """
-    Renders the executive Distributor Mandatory 3-Device Minimum Commitment Commercial Policy Card
-    and Strategic 3 vs 5 Device Evaluation Matrix.
+    Renders the executive Country-Tailored Distributor Policy Card.
+    Diagnoses whether the mandatory baseline of 3 devices is sufficient for the target country's structure,
+    and dynamically recommends the optimal device quantity and portfolio breakdown (Pulse Stimulator,
+    BioPSafe, Mismatch Blocker, Smart Cryotools) based on actual IVF clinics, cycles, and regional hubs.
     """
-    c_str = str(country_name).strip() if country_name else ""
+    c_str = str(country_name).strip() if country_name else "Global"
     if macro is None:
         try:
             macro = resolve_country_macro(c_str)
@@ -5867,42 +5869,179 @@ def render_distributor_3device_policy_card(country_name, macro=None, c_deep=None
     cycles = stat.get('cycles', macro.get('total_annual_cycles', 6000))
     gdp_pc = stat.get('gdp_pc', macro.get('gdp_pc', 20000))
     
-    is_mega = (clinics >= 40 or cycles >= 25000)
-    is_compact = (clinics <= 15)
+    # 1. Market capacity & coverage calculation
+    cov_pct = (3.0 / clinics * 100.0) if clinics > 0 else 20.0
     
-    if is_mega:
-        rec_badge = "🚀 5 CİHAZ BÖLGESEL FİLO MODELİ ŞİDDETLE TAVSİYE EDİLİR (MEGA PAZAR)"
-        rec_color = "#FFB800"
-        rec_border = "rgba(255,184,0,0.5)"
-        rec_bg = "rgba(255,184,0,0.12)"
-        rec_text = (
-            f"<b>{c_str} Pazarı Ölçek Analizi:</b> {clinics} aktif IVF kliniği ve yıllık {cycles:,} tedavi siklüsü ile büyük ölçekli bir mega pazardır. "
-            f"Distribütörümüz için <b>asgari 3 cihaz satın alma şartı tavizsiz uygulanır</b>. "
-            f"Ancak {c_str} gibi çok merkezli metropol pazarlarda tek distribütörün pazarı rakiplere (Vitrolife, Gynetics, CooperSurgical) kaptırmaması "
-            f"ve ana şehirleri (örn. 3 farklı metropol/bölge) aynı anda domine edebilmesi için <b>5 Cihazlık Bölgesel Filo Modeli</b> stratejik olarak önerilmektedir. "
-            f"5 cihaz taahhüdünde distribütöre 2 yıllık tam bölge münhasırlığı (Sole Exclusivity), %12 filo iskontosu ve uluslararası kargo avantajı sağlanır."
+    # 2. Dynamic Country Evaluation Archetypes
+    if clinics <= 15:
+        # Boutique / Compact Market (e.g. Oman, Bahrain, Qatar, Kuwait, Cyprus, Croatia)
+        is_sufficient = "TAM YETERLİ"
+        badge_text = f"🟢 3 CİHAZ {c_str.upper()} İÇİN TAM YETERLİ & İDEAL (%{cov_pct:.1f} KAPSAMA)"
+        badge_color = "#00E676"
+        badge_bg = "rgba(0,230,118,0.12)"
+        badge_border = "#00E676"
+        
+        rec_qty = 3
+        rec_label = "Tam Yeterli & Dengeli Giriş"
+        pulse_cnt = 2
+        biop_cnt = 1
+        mismatch_cnt = 0
+        cryo_cnt = 0
+        
+        diagnosis_text = (
+            f"<b>Teşhis: 3 Cihaz {c_str} İçin %100 YETERLİDİR.</b><br>"
+            f"• <b>Ülke Yapısı:</b> {c_str} pazarında toplam <b>{clinics} lisanslı klinik</b> ve yıllık <b>{cycles:,} siklüs</b> bulunmaktadır. "
+            f"Asgari 3 cihaz taahhüdümüz, ülkedeki tüm merkezlerin doğrudan <b>%{cov_pct:.1f}'ini</b> tek hamlede kapsar.<br>"
+            f"• <b>Neden 3'ten Fazla Cihaz Dayatılmamalı?:</b> Butik pazarlarda 3 cihazdan fazlasını talep etmek klinik kapasitesini aşar; "
+            f"cihazların sahada atıl (dormant) kalmasına ve distribütörün sermayesini kilitlemesine neden olur. {c_str} için 3 cihaz tam doyum eşiğidir.<br>"
+            f"• <b>Stratejik Odak:</b> İlave donanım yerine kurulu 3 cihazın sürekli <b>Dish</b> ve <b>Solution-Powder</b> tüketimini canlı tutmaktır."
         )
-    elif is_compact:
-        rec_badge = "✅ ASGARİ 3 CİHAZ ZORUNLU GİRİŞ MODELİ TAM UYUMLU (KOMPAKT/ODAK PAZAR)"
-        rec_color = "#00E676"
-        rec_border = "rgba(0,230,118,0.5)"
-        rec_bg = "rgba(0,230,118,0.1)"
-        rec_text = (
-            f"<b>{c_str} Pazarı Ölçek Analizi:</b> {clinics} lisanslı klinik ve yıllık {cycles:,} siklüslük butik/odak pazar yapısına sahiptir. "
-            f"Distribütör için şart koştuğumuz <b>Asgari 3 Cihaz Kuralı</b>, ülkedeki amiral gemisi merkezleri ve ana IVF hastanelerini kapsamak için "
-            f"kusursuz bir pazar doygunluğu (%25 - %35 penetrasyon) sağlar. Distribütörün sermayesini kilitlemeden hızlı ROI ve "
-            f"düzenli Dish ve Solution-Powder sarf nakit akışı oluşturur."
+        
+        portfolio_rec_text = (
+            f"<b>{c_str} İçin Önerilen Donanım Dağılımı (Toplam 3 Cihaz):</b><br>"
+            f"• <b>2x Pulse Stimulator (ZPS 26):</b> 1 adedi Direct Sale (1 kutu Dish + 1 kutu Solution-Powder ücretsiz promosyonlu) "
+            f"ve 1 adedi Reagent-Based yerleştirme (yıllık 60 kutu Dish + 20 kutu Solution-Powder bağlayıcı taahhütlü).<br>"
+            f"• <b>1x BioPSafe (ZBS26):</b> Ülkenin ana referans merkezi / genetik laboratuvarı için kapalı sistem formalinli biyopsi kabini."
         )
+        
+        action_plan = (
+            f"Distribütöre: <i>'Biz standart olarak 3 cihaz şartı koyuyoruz; {c_str} pazarının yapısı için bu 3 cihaz tam yeterlidir. "
+            f"Bu 3 cihazla size 2 yıllık tam bölge münhasırlığı (Sole Exclusivity) veriyoruz.'</i> denilmelidir."
+        )
+
+    elif 16 <= clinics <= 35:
+        # Emerging / Medium Market (e.g. Jordan, UAE, Algeria, Iraq, Austria)
+        is_sufficient = "BAŞLANGIÇTA YETERLİ, GENİŞLEME ŞART"
+        badge_text = f"🟡 3 CİHAZ BAŞLANGIÇ İÇİN YETERLİ, ORTA VADEDE KISMİ YETERSİZ (%{cov_pct:.1f} KAPSAMA)"
+        badge_color = "#FFB800"
+        badge_bg = "rgba(255,184,0,0.12)"
+        badge_border = "#FFB800"
+        
+        rec_qty = 4
+        rec_label = "2 Fazlı Metropol Yayılım Modeli"
+        pulse_cnt = 2
+        biop_cnt = 1
+        mismatch_cnt = 1
+        cryo_cnt = 0
+        
+        diagnosis_text = (
+            f"<b>Teşhis: 3 Cihaz Giriş İçin Yeterli, Ancak Ülke Geneline Yayılmak İçin 4 Cihaz Gereklidir.</b><br>"
+            f"• <b>Ülke Yapısı:</b> {c_str} genelinde <b>{clinics} klinik</b> ve yıllık <b>{cycles:,} siklüs</b> yer almaktadır. "
+            f"3 cihaz pazarın <b>%{cov_pct:.1f}'ini</b> kapsar. Başkentteki amiral gemisi klinikler bağlanır ancak 2. büyük şehirlerdeki merkezler açıkta kalır.<br>"
+            f"• <b>Neden 4 Cihaz Öneriliyor?:</b> Rakiplerin başkent dışındaki eyalet/bölge hastanelerine girmesini engellemek için distribütör "
+            f"ilk 6 ayda 3 cihazla başlamalı, 1. yılın sonunda 4. cihazı (ikinci bölge merkezi için) filoya katmalıdır."
+        )
+        
+        portfolio_rec_text = (
+            f"<b>{c_str} İçin Önerilen Donanım Dağılımı (Toplam 4 Cihaz):</b><br>"
+            f"• <b>2x Pulse Stimulator (ZPS 26):</b> 1 Direct Sale + 1 Reagent-Based Placement (60 Dish + 20 Solution-Powder).<br>"
+            f"• <b>1x BioPSafe (ZBS26):</b> PGT-A ve trofektoderm biyopsi merkezleri için.<br>"
+            f"• <b>1x Mismatch Blocker (ZMB-7T):</b> Yüksek hasta hacimli özel hastanede RFID gamet witnessing hasta güvenliği için."
+        )
+        
+        action_plan = (
+            f"Distribütöre: <i>'Sözleşme başlangıcı için asgari 3 cihaz şartımızı uyguluyoruz; ancak {c_str} pazarının hakkını vermek "
+            f"ve münhasırlığınızı korumak için 12 ay içinde 4. cihazı devreye alma şartı koyuyoruz.'</i> denilmelidir."
+        )
+
+    elif 36 <= clinics <= 70:
+        # Large Regional Market (e.g. Saudi Arabia, Uzbekistan, Morocco, Poland)
+        is_sufficient = "YETERSİZ (FİLO GEREKLİ)"
+        badge_text = f"🟠 3 CİHAZ {c_str.upper()} İÇİN YETERSİZ (Pazarın Yalnızca %{cov_pct:.1f}'i)"
+        badge_color = "#FF9100"
+        badge_bg = "rgba(255,145,0,0.12)"
+        badge_border = "#FF9100"
+        
+        rec_qty = 5
+        rec_label = "3 Büyük Bölge Bölgesel Filo Modeli"
+        pulse_cnt = 3
+        biop_cnt = 1
+        mismatch_cnt = 1
+        cryo_cnt = 0
+        
+        diagnosis_text = (
+            f"<b>Teşhis: 3 Cihaz {c_str} Yapısı İçin YETERSİZDİR & PAZAR KAYBI YARATIR.</b><br>"
+            f"• <b>Ülke Yapısı:</b> {c_str} pazarında <b>{clinics} klinik</b> ve <b>{cycles:,} siklüs</b> bulunmaktadır. "
+            f"3 cihaz pazarın yalnızca <b>%{cov_pct:.1f}'ini</b> temsil eder. Bu durum yalnızca tek bir şehri (örn. başkenti) kapsayabilir; "
+            f"ülkenin diğer büyük ekonomik ve medikal merkezleri tamamen korumasız kalır.<br>"
+            f"• <b>Neden 5 Cihaz Öneriliyor?:</b> Çok merkezli coğrafi yapıda en az 3 Pulse Stimulator (farklı metropollerde 1'er amiral gemisi kurulum) "
+            f"ve 2 kalite/güvenlik cihazı gereklidir. Rakipler boşlukları doldurmadan pazar domine edilmelidir."
+        )
+        
+        portfolio_rec_text = (
+            f"<b>{c_str} İçin Önerilen Donanım Dağılımı (Toplam 5 Cihaz):</b><br>"
+            f"• <b>3x Pulse Stimulator (ZPS 26):</b> 1 Direct Sale + 2 Reagent-Based (Toplam 120 kutu Dish + 40 kutu Solution-Powder taahhüt).<br>"
+            f"• <b>1x BioPSafe (ZBS26):</b> Akredite referans genetik laboratuvarı.<br>"
+            f"• <b>1x Mismatch Blocker (ZMB-7T):</b> Özel tüp bebek hastanesinde RFID hasta eşleştirme güvenliği."
+        )
+        
+        action_plan = (
+            f"Distribütöre: <i>'Biz standart olarak 3 cihaz şartı koyuyoruz; ancak {c_str} ölçeğinde 3 cihazla tek yetkili olamazsınız. "
+            f"Tüm ülkenin tek temsilcisi olabilmeniz için sözleşmeye 5 cihazlık kademeli filo alımı şartı koyuyoruz.'</i> denilmelidir."
+        )
+
     else:
-        rec_badge = "🟡 3 CİHAZ ZORUNLU EŞİK (2. FAZDA 5 CİHAZ GENİŞLEME OPSİYONU)"
-        rec_color = "#00F5FF"
-        rec_border = "rgba(0,245,255,0.4)"
-        rec_bg = "rgba(0,245,255,0.1)"
-        rec_text = (
-            f"<b>{c_str} Pazarı Ölçek Analizi:</b> {clinics} klinik ve yıllık {cycles:,} siklüs ile gelişen orta ölçekli bir pazardır. "
-            f"Distribütörlük akreditasyonu için <b>asgari 3 cihaz satın alması şarttır</b>. "
-            f"Pazara girişte 3 cihaz paketi ile başlanması, 6 ay içinde klinik penetrasyon %20'yi aştığında 5 cihaza genişleme opsiyonunun devreye alınması tavsiye edilir."
+        # Mega IVF Market (e.g. Egypt, Turkey, Germany, Spain, Italy, India, France)
+        is_sufficient = "KESİNLİKLE YETERSİZ (STRATEJİK FİLO ŞART)"
+        badge_text = f"🔴 3 CİHAZ {c_str.upper()} İÇİN KESİNLİKLE YETERSİZ (Pazarın Yalnızca %{cov_pct:.1f}'i)"
+        badge_color = "#FF4D4D"
+        badge_bg = "rgba(255,77,77,0.15)"
+        badge_border = "#FF4D4D"
+        
+        rec_qty = 7 if clinics < 120 else 9
+        rec_label = f"Ulusal Çok Merkezli Filo Stratejisi ({rec_qty} Cihaz)"
+        pulse_cnt = 4 if clinics < 120 else 5
+        biop_cnt = 2
+        mismatch_cnt = 1 if clinics < 120 else 2
+        cryo_cnt = 0
+        
+        diagnosis_text = (
+            f"<b>Teşhis: 3 Cihaz {c_str} İçin KESİNLİKLE YETERSİZDİR & MÜNHASIRLIK İÇİN GEÇERSİZDİR.</b><br>"
+            f"• <b>Ülke Yapısı:</b> {c_str} <b>{clinics} klinik</b> ve yıllık <b>{cycles:,} siklüslük</b> devasa hacmiyle küresel bir mega pazardır! "
+            f"3 cihaz bu pazarda devede kulak kalır; pazarın yalnızca <b>%{cov_pct:.1f}'ine</b> ulaşabilir.<br>"
+            f"• <b>Neden {rec_qty} Cihaz Öneriliyor?:</b> {c_str} pazarında tek bir distribütöre 3 cihaz verip münhasırlık tanımak ticari intihardır; "
+            f"distribütör pazarı kilitler ve Vitrolife/Gynetics gibi rakipler diğer 60+ kliniği ele geçirir. Ülke en az 3-4 farklı metropol bölgesine "
+            f"(örn. çoklu şehir hub'larına) bölünmeli ve her bölgeye Pulse Stimulator + sarf deposu kurulmalıdır.<br>"
+            f"• <b>Stratejik Kural:</b> Distribütör ya <b>{rec_qty} cihazlık filo</b> taahhüt etmeli ya da ülke bölge bayiliklerine bölünmelidir."
         )
+        
+        portfolio_rec_text = (
+            f"<b>{c_str} İçin Önerilen Donanım Dağılımı (Toplam {rec_qty} Cihaz):</b><br>"
+            f"• <b>{pulse_cnt}x Pulse Stimulator (ZPS 26):</b> 2 Direct Sale + {pulse_cnt-2} Reagent-Based Placement "
+            f"(En az {(pulse_cnt-2)*60} Kutu Dish + {(pulse_cnt-2)*20} Kutu Solution-Powder bağlayıcı taahhüt).<br>"
+            f"• <b>{biop_cnt}x BioPSafe (ZBS26):</b> Farklı metropollerdeki referans PGT-A ve trofektoderm biyopsi merkezleri.<br>"
+            f"• <b>{mismatch_cnt}x Mismatch Blocker (ZMB-7T):</b> Akredite tüp bebek zincirlerinde RFID gamet witnessing altyapısı."
+        )
+        
+        action_plan = (
+            f"Distribütöre: <i>'Biz her distribütör için asgari 3 cihaz şartı koyuyoruz. Ancak {c_str} gibi devasa bir pazarda 3 cihazla "
+            f"pazarın %95'ini boş bırakamazsınız. Tam münhasırlık için 12 aylık sözleşmede {rec_qty} cihazlık kademeli filo hedefi şarttır; "
+            f"aksi halde bölge bölge Non-Exclusive çalışırız.'</i> denilmelidir."
+        )
+
+    # Dynamic portfolio summary text
+    portfolio_parts = [f"{pulse_cnt}x Pulse Stimulator (ZPS 26)"]
+    if biop_cnt > 0:
+        portfolio_parts.append(f"{biop_cnt}x BioPSafe (ZBS26)")
+    if mismatch_cnt > 0:
+        portfolio_parts.append(f"{mismatch_cnt}x Mismatch Blocker (ZMB-7T)")
+    if cryo_cnt > 0:
+        portfolio_parts.append(f"{cryo_cnt}x Smart Cryotools (ZSC-9)")
+    portfolio_summary = " + ".join(portfolio_parts)
+    
+    # Consumables calculation for recommended fleet
+    if rec_qty == 3:
+        rec_sarf_text = "60 Kutu Dish + 20 Kutu Solution-Powder (+1 Dish & +1 Sol-Powder Hediye)"
+    elif rec_qty == 4:
+        rec_sarf_text = "90 Kutu Dish + 30 Kutu Solution-Powder (+1 Dish & +1 Sol-Powder Hediye)"
+    elif rec_qty == 5:
+        rec_sarf_text = "120 Kutu Dish + 40 Kutu Solution-Powder (+1 Dish & +1 Sol-Powder Hediye)"
+    elif rec_qty <= 7:
+        rec_sarf_text = "180 Kutu Dish + 60 Kutu Solution-Powder (+2 Dish & +2 Sol-Powder Hediye)"
+    else:
+        rec_sarf_text = f"{(pulse_cnt-2)*60} Kutu Dish + {(pulse_cnt-2)*20} Kutu Solution-Powder (+2 Dish & +2 Sol-Powder Hediye)"
+
+    rec_cov_pct = min(100.0, (rec_qty / clinics * 100.0)) if clinics > 0 else 30.0
 
     html = f"""
     <div style="background:linear-gradient(135deg, rgba(15,23,42,0.98) 0%, rgba(30,41,59,0.95) 100%);border:2px solid #00F5FF;border-radius:12px;padding:20px;margin:18px 0;box-shadow:0 8px 28px rgba(0,0,0,0.45);">
@@ -5913,156 +6052,172 @@ def render_distributor_3device_policy_card(country_name, macro=None, c_deep=None
                 <span style="background:rgba(0,245,255,0.15);border:1.5px solid #00F5FF;color:#00F5FF;font-size:22px;padding:8px 12px;border-radius:10px;">🏢</span>
                 <div>
                     <h3 style="margin:0;color:#FFFFFF;font-size:16.5px;font-weight:800;letter-spacing:0.3px;">
-                        {c_str} Distribütör Asgari 3 Cihaz Satın Alma Şartı & Ticari Taahhüt Politikası
+                        {c_str} Distribütör Asgari 3 Cihaz Şartı & Ülke Yapısına Göre Cihaz Önerisi
                     </h3>
                     <div style="color:#00F5FF;font-size:12px;font-weight:700;margin-top:3px;">
-                        Mandatory 3-Device Minimum Commitment & Commercial Portfolio Policy
+                        Country-Tailored Commercial Portfolio & Device Sufficiency Diagnostic
                     </div>
                 </div>
             </div>
             <div>
-                <span style="background:rgba(255,75,75,0.18);color:#FF6B6B;border:1.5px solid #FF6B6B;padding:5px 12px;border-radius:8px;font-size:11.5px;font-weight:800;letter-spacing:0.5px;">
-                    🚨 ZORUNLU KURAL: ASGARİ 3 CİHAZ
+                <span style="background:{badge_bg};color:{badge_color};border:1.5px solid {badge_border};padding:5px 12px;border-radius:8px;font-size:11.5px;font-weight:800;letter-spacing:0.5px;">
+                    {badge_text}
                 </span>
             </div>
         </div>
 
-        <!-- POLICY DIRECTIVE BANNER -->
+        <!-- POLICY DIRECTIVE & CORE COMMERCIAL PRINCIPLE -->
         <div style="background:rgba(0,245,255,0.06);border-left:4px solid #00F5FF;padding:12px 16px;border-radius:0 8px 8px 0;margin-bottom:16px;font-size:12.2px;line-height:1.7;color:#E2E8F0;">
-            <b style="color:#00F5FF;font-size:13px;">📜 ZEUS Bioscience Global Distribütörlük Kuralı:</b><br>
-            Tüm ülkelerde yetkili distribütörlük, bölge bayiliği veya münhasır temsilcilik verilebilmesi için ilgili distribütörün 
-            <b>ülke bazında istisnasız asgari 3 cihaz satın alması şarttır</b>. Tek veya 2 cihazlık distribütörlük başvuruları kabul edilmez. 
-            Distribütör aşağıdaki iki resmi paket modelinden birini seçmek zorundadır:
+            <b style="color:#00F5FF;font-size:13px;">📜 ZEUS Standart Distribütörlük Kuralı:</b> 
+            Biz istisnasız her distribütör için <b>asgari 3 cihaz satın alması gerektiğini söylüyoruz</b>. Bu kural resmi sözleşme başlangıç barajıdır. 
+            Ancak <b>ülkelerin klinik sayısı, siklüs kapasitesi ve coğrafi yapısı birbirinden farklıdır</b>. 
+            Bu nedenle sistemimiz aşağıda <i>"3 Cihaz {c_str} İçin Yeterli mi?"</i> sorusunu teşhis etmekte ve ülke yapısına en uygun cihaz sayısı ile portföy dağılımını önermektedir:
         </div>
 
-        <!-- TWO PACKAGE OPTIONS GRID -->
+        <!-- DYNAMIC COUNTRY DIAGNOSTIC: 3 CIHAZ YETERLİ Mİ? & PORTFÖY ÖNERİSİ (2 COLUMN CALLOUT) -->
         <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:14px;margin-bottom:18px;">
             
-            <!-- OPTION 1: WITH PULSE STIMULATOR -->
-            <div style="background:#0B132B;border:1.8px solid #00E676;border-radius:10px;padding:16px;box-shadow:0 4px 16px rgba(0,230,118,0.15);display:flex;flex-direction:column;justify-content:space-between;">
+            <!-- CARD 1: 3 CİHAZ YETERLİ Mİ? -->
+            <div style="background:#0B132B;border:1.8px solid {badge_border};border-radius:10px;padding:16px;box-shadow:0 4px 16px rgba(0,0,0,0.3);display:flex;flex-direction:column;justify-content:space-between;">
                 <div>
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;border-bottom:1px solid rgba(0,230,118,0.3);padding-bottom:8px;">
-                        <span style="font-weight:800;color:#00E676;font-size:14px;">⚡ PAKET A: Pulse Stimulator Dahil Model</span>
-                        <span style="background:rgba(0,230,118,0.18);color:#00E676;font-size:10.5px;font-weight:800;padding:2px 8px;border-radius:4px;border:1px solid #00E676;">En Çok Tercih Edilen</span>
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:8px;">
+                        <span style="font-weight:800;color:{badge_color};font-size:13.5px;">🔍 1. {c_str} İçin 3 Cihaz Yeterli mi?</span>
+                        <span style="background:{badge_bg};color:{badge_color};font-size:10.5px;font-weight:800;padding:2px 8px;border-radius:4px;border:1px solid {badge_border};">
+                            {is_sufficient}
+                        </span>
                     </div>
-                    <div style="font-size:11.8px;color:#94A3B8;margin-bottom:10px;">
-                        Pulse Stimulator tercih edildiğinde <b>en az 2 cihaz Pulse Stimulator olmak zorundadır</b>:
-                    </div>
-                    
-                    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,230,118,0.25);border-radius:6px;padding:10px;margin-bottom:8px;font-size:11.5px;line-height:1.65;">
-                        <b style="color:#00E676;">1. Cihaz: Pulse Stimulator (Direct Sale / CAPEX)</b><br>
-                        <span style="color:#CBD5E1;">• Doğrudan satın alma modeli.</span><br>
-                        <span style="color:#FFD700;font-weight:700;">🎁 ÜCRETSİZ HEDİYE:</span> Cihaz ile birlikte <b style="color:#FFFFFF;">1 kutu Dish (4-Pool)</b> ve <b style="color:#FFFFFF;">1 kutu Solution-Powder</b> klinikte anında vaka başlangıcı için hediye/ücretsiz verilir.
-                    </div>
-
-                    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,245,255,0.25);border-radius:6px;padding:10px;margin-bottom:8px;font-size:11.5px;line-height:1.65;">
-                        <b style="color:#00F5FF;">2. Cihaz: Pulse Stimulator (Reagent-Based Placement)</b><br>
-                        <span style="color:#CBD5E1;">• Reaktif ve sarf taahhütlü yerleştirme modeli.</span><br>
-                        <span style="color:#38BDF8;font-weight:700;">🔒 BAĞLAYICI SARF SÖZLEŞMESİ:</span> Distribütör/Klinik bu 2. cihaz için yıllık asgari <b style="color:#FFFFFF;">60 kutu Dish</b> ve <b style="color:#FFFFFF;">20 kutu Solution-Powder</b> satın alma taahhüdü imzalar.
-                    </div>
-
-                    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,215,0,0.25);border-radius:6px;padding:10px;font-size:11.5px;line-height:1.65;">
-                        <b style="color:#FFD700;">3. Cihaz: Distribütörün Seçimi (Portföy Esnekliği)</b><br>
-                        <span style="color:#CBD5E1;">Distribütör ZEUS portföyünden dilediği 1 cihazı seçer:</span><br>
-                        • <b>BioPSafe (ZBS26):</b> Otomatik formalinli biyopsi numune koruma istasyonu VEYA<br>
-                        • <b>Mismatch Blocker (ZMB-7T):</b> Çift doğrulama gamet & hasta eşleştirme sistemi VEYA<br>
-                        • <b>Smart Cryotools (ZSC-9):</b> Vitrifikasyon ve kriyoprezervasyon mikro-araç seti.
+                    <div style="font-size:12px;color:#CBD5E1;line-height:1.7;">
+                        {diagnosis_text}
                     </div>
                 </div>
-                <div style="margin-top:10px;padding-top:8px;border-top:1px dashed rgba(255,255,255,0.1);font-size:11px;color:#A0AEC0;">
-                    <b>Toplam Donanım:</b> 2x Pulse Stimulator + 1x Portföy Cihazı | <b>Zorunlu Sarf:</b> 60 Kutu Dish + 20 Kutu Solution-Powder (+1 Dish & +1 Sol-Powder Hediye)
+                <div style="margin-top:12px;background:rgba(255,255,255,0.04);padding:8px 12px;border-radius:6px;font-size:11.2px;color:#A0AEC0;border-left:3px solid {badge_color};">
+                    <b>Pazar Kapsama Oranı:</b> 3 cihaz ile %{cov_pct:.1f} ({clinics} klinikten 3'ü doğrudan bağlı).
                 </div>
             </div>
 
-            <!-- OPTION 2: WITHOUT PULSE STIMULATOR -->
-            <div style="background:#0B132B;border:1.8px solid #C084FC;border-radius:10px;padding:16px;box-shadow:0 4px 16px rgba(192,132,252,0.15);display:flex;flex-direction:column;justify-content:space-between;">
+            <!-- CARD 2: ÜLKE YAPISINA GÖRE CİHAZ VE PORTFÖY ÖNERİSİ -->
+            <div style="background:#0B132B;border:1.8px solid #00F5FF;border-radius:10px;padding:16px;box-shadow:0 4px 16px rgba(0,245,255,0.15);display:flex;flex-direction:column;justify-content:space-between;">
                 <div>
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;border-bottom:1px solid rgba(192,132,252,0.3);padding-bottom:8px;">
-                        <span style="font-weight:800;color:#C084FC;font-size:14px;">🧬 PAKET B: Pulse Stimulatorsız Model (3 Farklı Cihaz)</span>
-                        <span style="background:rgba(192,132,252,0.18);color:#C084FC;font-size:10.5px;font-weight:800;padding:2px 8px;border-radius:4px;border:1px solid #C084FC;">Alternatif Yol</span>
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;border-bottom:1px solid rgba(0,245,255,0.3);padding-bottom:8px;">
+                        <span style="font-weight:800;color:#00F5FF;font-size:13.5px;">💡 2. {c_str} Yapısına Özel Cihaz Önerimiz</span>
+                        <span style="background:rgba(0,245,255,0.18);color:#00F5FF;font-size:11px;font-weight:800;padding:2px 10px;border-radius:4px;border:1px solid #00F5FF;">
+                            Öneri: {rec_qty} Cihaz
+                        </span>
                     </div>
-                    <div style="font-size:11.8px;color:#94A3B8;margin-bottom:10px;">
-                        Distribütör Pulse Stimulator almak istemiyorsa, portföyümüzdeki <b>3 farklı cihazı</b> satın almak zorundadır:
-                    </div>
-
-                    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(192,132,252,0.25);border-radius:6px;padding:10px;margin-bottom:8px;font-size:11.5px;line-height:1.65;">
-                        <b style="color:#C084FC;">1. Cihaz: ZEUS BioPSafe (ZBS26)</b><br>
-                        <span style="color:#CBD5E1;">• Kapalı sistem otomatik formalin biyopsi koruma cihazı. PGT-A ve trofektoderm biyopsilerinde sıfır formaldehit maruziyeti ve %100 DNA bütünlüğü sağlar.</span>
-                    </div>
-
-                    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,107,107,0.25);border-radius:6px;padding:10px;margin-bottom:8px;font-size:11.5px;line-height:1.65;">
-                        <b style="color:#FF6B6B;">2. Cihaz: ZEUS Mismatch Blocker (ZMB-7T)</b><br>
-                        <span style="color:#CBD5E1;">• RFID ve optik barkodlu çift doğrulama hasta, sperm, oosit ve embriyo eşleştirme istasyonu. Karışma riskini ve malpraktis tehdidini ortadan kaldırır.</span>
-                    </div>
-
-                    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(56,189,248,0.25);border-radius:6px;padding:10px;font-size:11.5px;line-height:1.65;">
-                        <b style="color:#38BDF8;">3. Cihaz: ZEUS Smart Cryotools (ZSC-9)</b><br>
-                        <span style="color:#CBD5E1;">• Akıllı kriyoprezervasyon ve vitrifikasyon yönetim mikro-araç seti. Azot tanklarında 4 kat kapasite optimizasyonu ve ultra hızlı soğutma sağlar.</span>
+                    <div style="font-size:12px;color:#CBD5E1;line-height:1.7;margin-bottom:8px;">
+                        {portfolio_rec_text}
                     </div>
                 </div>
-                <div style="margin-top:10px;padding-top:8px;border-top:1px dashed rgba(255,255,255,0.1);font-size:11px;color:#A0AEC0;">
-                    <b>Toplam Donanım:</b> 3 Farklı Cihaz (1 BioPSafe + 1 Mismatch Blocker + 1 Smart Cryotools) | <b>Konsept:</b> Tüp Bebek Laboratuvarı Tam Kalite & Güvenlik Kalkanı
+                <div style="margin-top:10px;background:rgba(0,245,255,0.06);padding:8px 12px;border-radius:6px;font-size:11.2px;color:#E2E8F0;border-left:3px solid #00F5FF;">
+                    <b style="color:#00F5FF;">🎯 Müzakere Taktığı:</b> {action_plan}
                 </div>
             </div>
 
         </div>
 
-        <!-- EVALUATION & 3 VS 5 DEVICE COMPARATIVE MATRIX -->
-        <div style="background:rgba(0,0,0,0.3);border:1.5px solid {rec_border};border-radius:10px;padding:16px;margin-bottom:14px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px;">
-                <div style="display:flex;align-items:center;gap:8px;">
-                    <span style="font-size:18px;">📊</span>
-                    <b style="color:#FFFFFF;font-size:13.5px;">Ülke Ölçeği Değerlendirmesi: Asgari 3 Cihaz Şartı vs 5 Cihaz Filo Farkı</b>
+        <!-- DISTRIBUTOR MINIMUM 3-DEVICE ENTRY PATHWAYS (PAKET A & PAKET B) -->
+        <div style="margin-bottom:18px;">
+            <div style="font-size:13.5px;font-weight:800;color:#FFFFFF;margin-bottom:8px;display:flex;align-items:center;gap:8px;">
+                <span>📦</span>
+                <span>Distribütör Giriş Modelleri (Tüm Pazarlarda Asgari 3 Cihaz Kuralı):</span>
+            </div>
+            
+            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(300px, 1fr));gap:12px;">
+                
+                <!-- PAKET A -->
+                <div style="background:#0F192E;border:1.2px solid rgba(0,230,118,0.4);border-radius:8px;padding:12px;font-size:11.5px;line-height:1.65;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                        <b style="color:#00E676;font-size:12.5px;">⚡ PAKET A: Pulse Stimulator Dahil (En Az 2 Pulse Stimulator)</b>
+                        <span style="background:rgba(0,230,118,0.15);color:#00E676;font-size:10px;padding:2px 6px;border-radius:4px;">Asgari Şart</span>
+                    </div>
+                    <div style="color:#CBD5E1;">
+                        • <b>1. Cihaz (Direct Sale):</b> 1x Pulse Stimulator + <span style="color:#FFD700;font-weight:700;">1 kutu Dish ve 1 kutu Solution-Powder ÜCRETSİZ HEDİYE</span>.<br>
+                        • <b>2. Cihaz (Reagent-Based):</b> 1x Pulse Stimulator yerleştirilir; <span style="color:#38BDF8;font-weight:700;">60 kutu Dish + 20 kutu Solution-Powder</span> bağlayıcı alım şartı konur.<br>
+                        • <b>3. Cihaz (Distribütör Tercihi):</b> BioPSafe, Mismatch Blocker veya Smart Cryotools arasından dilediği 1 cihaz.
+                    </div>
                 </div>
-                <span style="background:{rec_bg};color:{rec_color};border:1px solid {rec_border};padding:3px 10px;border-radius:6px;font-size:11px;font-weight:800;">
-                    {rec_badge}
+
+                <!-- PAKET B -->
+                <div style="background:#0F192E;border:1.2px solid rgba(192,132,252,0.4);border-radius:8px;padding:12px;font-size:11.5px;line-height:1.65;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+                        <b style="color:#C084FC;font-size:12.5px;">🧬 PAKET B: Pulse Stimulatorsız (3 Farklı Cihaz Zorunlu)</b>
+                        <span style="background:rgba(192,132,252,0.15);color:#C084FC;font-size:10px;padding:2px 6px;border-radius:4px;">Alternatif</span>
+                    </div>
+                    <div style="color:#CBD5E1;">
+                        Distribütör Pulse Stimulator almak istemiyorsa portföyümüzdeki <b>3 farklı cihazı</b> almak zorundadır:<br>
+                        • <b>1x BioPSafe (ZBS26):</b> Otomatik kapalı formalinli biyopsi numune koruma istasyonu.<br>
+                        • <b>1x Mismatch Blocker (ZMB-7T):</b> RFID/Barkodlu çift doğrulama gamet witnessing sistemi.<br>
+                        • <b>1x Smart Cryotools (ZSC-9):</b> Ultra hızlı vitrifikasyon mikro-araç seti.
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- DYNAMIC COMPARISON TABLE: STANDART 3 CİHAZ vs ÜLKE YAPISINA GÖRE ÖNERİLEN CİHAZ SAYISI -->
+        <div style="background:rgba(0,0,0,0.3);border:1.5px solid rgba(255,255,255,0.12);border-radius:10px;padding:14px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:8px;">
+                <b style="color:#FFFFFF;font-size:13px;">📊 Karşılaştırmalı Analiz: Bizim Standart 3 Cihaz Kuralımız vs {c_str} İçin AI Sistem Önerisi</b>
+                <span style="background:rgba(0,245,255,0.1);color:#00F5FF;border:1px solid rgba(0,245,255,0.3);padding:2px 8px;border-radius:4px;font-size:10.5px;">
+                    Klinik: {clinics} | Yıllık Siklüs: {cycles:,}
                 </span>
             </div>
-            <div style="font-size:12px;color:#CBD5E1;line-height:1.7;margin-bottom:14px;">
-                {rec_text}
-            </div>
 
-            <!-- COMPARISON TABLE -->
+            <!-- TABLE -->
             <div style="overflow-x:auto;">
                 <table style="width:100%;border-collapse:collapse;font-size:11.5px;line-height:1.6;color:#E2E8F0;text-align:left;">
                     <thead>
                         <tr style="background:rgba(255,255,255,0.06);border-bottom:1.5px solid rgba(255,255,255,0.15);">
-                            <th style="padding:8px 10px;color:#00F5FF;">Değerlendirme Parametresi</th>
-                            <th style="padding:8px 10px;color:#00E676;">Asgari 3 Cihaz Taahhüdü (Tüm Distribütörler İçin Şart)</th>
-                            <th style="padding:8px 10px;color:#FFB800;">5 Cihaz Bölgesel Filo Modeli (Mega Pazarlar İçin Öneri)</th>
-                            <th style="padding:8px 10px;color:#38BDF8;">Stratejik Fark & Avantaj</th>
+                            <th style="padding:8px 10px;color:#00F5FF;width:20%;">Değerlendirme Parametresi</th>
+                            <th style="padding:8px 10px;color:#00E676;width:26%;">ZEUS Standart Sözleşme Kuralı (Asgari 3 Cihaz)</th>
+                            <th style="padding:8px 10px;color:#FFB800;width:27%;">{c_str} Yapısına Göre ZEUS AI Önerisi ({rec_qty} Cihaz)</th>
+                            <th style="padding:8px 10px;color:#38BDF8;width:27%;">Ülke Yapısı Teşhisi: 3 Cihaz Yeterli mi?</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
                             <td style="padding:8px 10px;font-weight:700;color:#FFFFFF;">Donanım Kombinasyonu</td>
                             <td style="padding:8px 10px;">2x Pulse Stimulator + 1x Portföy Cihazı (veya 3 Farklı Cihaz)</td>
-                            <td style="padding:8px 10px;color:#FFD700;">3x Pulse Stimulator + 1x BioPSafe + 1x Mismatch Blocker</td>
-                            <td style="padding:8px 10px;">5 cihaz hem amiral gemisi AOA hem kalite/güvenlik donanımını eksiksiz kapsar.</td>
+                            <td style="padding:8px 10px;color:#FFD700;font-weight:700;">{portfolio_summary}</td>
+                            <td style="padding:8px 10px;">
+                                {f"3 cihaz bu pazar için tam yeterlidir; daha fazlası donanım atıllığı riski doğurur." if rec_qty == 3 else f"{clinics} klinik ve {cycles:,} siklüslü çok merkezli yapıda tek bir şehirde kalmamak için {rec_qty} cihaz gereklidir."}
+                            </td>
                         </tr>
                         <tr style="border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);">
-                            <td style="padding:8px 10px;font-weight:700;color:#FFFFFF;">Bağlayıcı Sarf Taahhüdü</td>
+                            <td style="padding:8px 10px;font-weight:700;color:#FFFFFF;">Zorunlu Sarf Taahhüdü</td>
                             <td style="padding:8px 10px;">60 Kutu Dish + 20 Kutu Solution-Powder (+1 Dish & +1 Sol-Powder Hediye)</td>
-                            <td style="padding:8px 10px;color:#00E676;">120 Kutu Dish + 40 Kutu Solution-Powder (+1 Dish & +1 Sol-Powder Hediye)</td>
-                            <td style="padding:8px 10px;">Sarf hacmi 2 katına çıkar; fabrikadan düzenli konteyner/hava kargo avantajı doğar.</td>
+                            <td style="padding:8px 10px;color:#00E676;font-weight:700;">{rec_sarf_text}</td>
+                            <td style="padding:8px 10px;">
+                                {f"Umman gibi butik pazarlarda 60 Dish + 20 Sol-Powder pazarın yıllık tüketimini karşılar." if rec_qty == 3 else f"Yıllık {cycles:,} siklüslü pazarda {rec_sarf_text} ile kesintisiz sarf kilitlenmesi sağlanır."}
+                            </td>
                         </tr>
                         <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
-                            <td style="padding:8px 10px;font-weight:700;color:#FFFFFF;">{c_str} Pazar Penetrasyonu</td>
-                            <td style="padding:8px 10px;">%15 – %25 (Tek metropol / başkent referans hastaneleri)</td>
-                            <td style="padding:8px 10px;color:#38BDF8;">%50 – %65 (3 farklı şehir/bölgeye çok merkezli yayılım)</td>
-                            <td style="padding:8px 10px;">Rakiplerin pazara girmesini engelleyen tam bölgesel kalkan oluşturulur.</td>
+                            <td style="padding:8px 10px;font-weight:700;color:#FFFFFF;">{c_str} Pazar Kapsama Oranı</td>
+                            <td style="padding:8px 10px;">%{cov_pct:.1f} Ulusal Kapsama ({clinics} klinikten 3'ü)</td>
+                            <td style="padding:8px 10px;color:#38BDF8;font-weight:700;">%{rec_cov_pct:.1f} Hedeflenen Kapsama ({rec_qty} Cihaz)</td>
+                            <td style="padding:8px 10px;">
+                                <span style="color:{badge_color};font-weight:700;">{is_sufficient}:</span> {f"3 cihazla pazarın %{cov_pct:.1f}'i kontrol altına alınır (Mükemmel oran)." if rec_qty == 3 else f"3 cihaz pazarın yalnızca %{cov_pct:.1f}'inde kalır, geri kalan %{100-cov_pct:.1f} rakiplere kaptırılır!"}
+                            </td>
                         </tr>
                         <tr style="border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);">
                             <td style="padding:8px 10px;font-weight:700;color:#FFFFFF;">Distribütörlük İmtiyazı</td>
-                            <td style="padding:8px 10px;">Bölge Temsilciliği / Şartlı Akreditasyon (Çeyreklik denetim)</td>
-                            <td style="padding:8px 10px;color:#FF6B6B;">2 Yıl Tam Münhasır Tek Yetkili Distribütörlük (Sole Exclusivity)</td>
-                            <td style="padding:8px 10px;">Distribütörün pazar yatırımı sözleşmeyle mutlak güvence altına alınır.</td>
+                            <td style="padding:8px 10px;">Temel Bayilik / Şartlı Akreditasyon</td>
+                            <td style="padding:8px 10px;color:#FF6B6B;font-weight:700;">
+                                {f"3 Cihaz Alımı ile Tam 2 Yıllık Münhasır Tek Yetkililik" if rec_qty == 3 else f"1. Yılda {rec_qty} Cihaza Ulaşma Şartıyla Tam Münhasırlık (Sole Exclusivity)"}
+                            </td>
+                            <td style="padding:8px 10px;">
+                                {f"Kompakt pazarda 3 cihaz alan distribütör tam koruma hak eder." if rec_qty == 3 else f"Büyük pazarda sadece 3 cihaz alan distribütöre tam münhasırlık verilemez; {rec_qty} cihaz taahhüdü şarttır."}
+                            </td>
                         </tr>
                         <tr>
-                            <td style="padding:8px 10px;font-weight:700;color:#FFFFFF;">Fiyatlandırma & İskonto</td>
-                            <td style="padding:8px 10px;">Standart B2B Giriş Baremi (%6 - %8 İskonto)</td>
-                            <td style="padding:8px 10px;color:#00F5FF;">Üst Segment Filo İskontosu (%10 - %12) + Kargo İndirimi</td>
-                            <td style="padding:8px 10px;">Distribütör kâr marjı %42+ seviyesine yükselerek sahada agresif satış gücü verir.</td>
+                            <td style="padding:8px 10px;font-weight:700;color:#FFFFFF;">Distribütöre Söylemimiz</td>
+                            <td style="padding:8px 10px;">"Biz her distribütör için asgari 3 cihaz şartı koyuyoruz."</td>
+                            <td style="padding:8px 10px;color:#00F5FF;font-weight:700;">
+                                {f'"3 Cihaz {c_str} için tam yeterlidir; bu 3 cihazla başlıyoruz."' if rec_qty == 3 else f'"Sözleşme alt tabanımız 3 cihazdır; ancak {c_str} yapısı gereği 3 cihaz yetersizdir, 12 ayda {rec_qty} cihaza ulaşmalısınız."'}
+                            </td>
+                            <td style="padding:8px 10px;">
+                                Distribütörün pazar kapasitesini kavrayarak teslim olmasını sağlayan stratejik müzakere argümanı.
+                            </td>
                         </tr>
                     </tbody>
                 </table>
