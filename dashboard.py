@@ -3087,7 +3087,7 @@ GLOBAL_TENDER_PROCUREMENT_INTEL = {
         "technical_specifications": {
             "device_title": "Advanced Micro-pulse Electrical Oocyte Stimulator (ZPS 26) for ICSI & Oocyte Activation",
             "core_specs": [
-                "Cihaz mikro-enjeksiyon esnasında oosit zarını mekanik yırtılmadan koruyan piezoelektrik frekans üretmelidir.",
+                "Cihaz Total Döllenme Başarısızlığı (TFF) vakalarında oositte fizyolojik kalsiyum salınımı ($Ca^{2+}$) başlatan kontrollü DC elektriksel mikro-darbe üretmelidir.",
                 "Sub-%1 oosit lizis oranı ve %80+ fertilizasyon başarısı klinik raporla kanıtlanmalıdır.",
                 "CE Sertifikalı (Class IIa) ve ISO 13485 sertifikalı olmalıdır."
             ],
@@ -3110,7 +3110,7 @@ GLOBAL_TENDER_PROCUREMENT_INTEL = {
         "key_tender_parameters": {
             "tender_type_dist": "KIMADIA İhalesi (%75), KRG Bölgesel Alımları (%25)",
             "bid_bond_rate": "%5.0 Banka Teminat Mektubu",
-            "lock_in_strength": "%90 (KIMADIA teknik şartnamesine piezo kilitlendiğinde)",
+            "lock_in_strength": "%95 (KIMADIA şartnamesine AOA Pulse Stimulator kilitlendiğinde)",
             "payment_term_days": "Bakanlık Tahakkuk: 90-120 Gün",
             "recommended_strategy": "Sirius Pharm Üzerinden KIMADIA Yıllık Teklifi + Yeşil Hat"
         }
@@ -3132,7 +3132,7 @@ GLOBAL_TENDER_PROCUREMENT_INTEL = {
         "typical_budget_range": "10.000.000 – 30.000.000 DZD (~$75.000 – $225.000 USD)",
         "procurement_schedule": "Yıllık PCH İhaleleri (Q2 İlan / Q4 Teslimat)",
         "technical_specifications": {
-            "device_title": "Système de Stimulation Piézoélectrique pour l'Activation Oocytaire",
+            "device_title": "Système de Stimulation par Impulsions Électriques pour l'Activation Oocytaire (AOA)",
             "core_specs": [
                 "Stimulateur piézoélectrique d'activation ovocytaire sans utilisation d'ionophores chimiques.",
                 "Taux de lyse ovocytaire inférieur à 1% cliniquement prouvé.",
@@ -5843,7 +5843,8 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
     landed_factor = 1.0 + (customs_val / 100.0) + 0.04 # Gümrük + Navlun
     landed_dev_cost = net_dev_unit * landed_factor
     rec_clinic_retail = landed_dev_cost * 1.50 # Distribütör %35-%50 marj koyarak kliniğe satar
-    eppendorf_bench = 18500.0 if gdp_val < 15000 else 22000.0
+    ruo_bench = 24500.0  # Genel araştırma tipi elektroporatörler (RUO / CE Onaysız)
+    savings_pct = max(0, int(((ruo_bench - rec_clinic_retail) / ruo_bench) * 100))
     
     # Evaluate device suitability
     if dev_price <= 0:
@@ -5856,7 +5857,8 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
         dev_suit_text = (
             f"<b>$8,500 USD Bandı ({target_country} Dağıtıcı Alışı):</b> Gümrük (%{customs_val:.1f}) ve navlunla dağıtıcıya <b>${landed_dev_cost:,.0f} USD</b>'ye mal olur. "
             f"Dağıtıcı yerel özel tüp bebek merkezlerine <b>${rec_clinic_retail:,.0f} USD</b> seviyesinde (%35-%45 marjla) rahatça satabilir. "
-            f"Rakip Eppendorf'a (${eppendorf_bench:,.0f} USD) kıyasla <b>%54 daha ekonomiktir</b>. "
+            f"Genel araştırma tipi elektroporatörlere (${ruo_bench:,.0f} USD - RUO/CE onaysız) kıyasla <b>%{savings_pct} daha ekonomiktir</b>. "
+            f"(Not: Eppendorf / Piezo-ICSI bir AOA aktivatörü değildir; ZEUS ise CE Class IIa sertifikalı tescilli bir Pulse Stimulatordur). "
             f"Bir klinik bu cihaz bedelini yalnızca <b>1-8 hasta tedavisinde</b> tamamen amorti eder."
         )
     elif dev_price < 7000.0:
@@ -7180,7 +7182,7 @@ def build_device_consumable_audit(df_sales):
             status = f"🔴 Kritik Düşüş & Churn Alarmı (2026 Sarf: Yalnızca ${cons_2026_amt:,.0f} / {cons_2026_qty} Kutu, -%{((cons_2025_amt - cons_2026_amt)/cons_2025_amt*100) if cons_2025_amt > 0 else 0:.0f} Düşüş)"
             code = 'critical_churn_risk'
             risk_badge = 'KRİTİK CHURN & DÜŞÜŞ ALARMI'
-            action_rec = f"{country}'da kurulu {dev_qty} Piezo cihazına rağmen 2026'da sarf alımı sembolik düzeye gerilemiştir (Yalnızca ${cons_2026_amt:,.0f} / {cons_2026_qty} kutu). Personel değişimi veya protokol terk riski mevcuttur; acil yerinde klinik çalıştay ve re-aktivasyon konsinye kiti önerilir."
+            action_rec = f"{country}'da kurulu {dev_qty} Pulse Stimulator (AOA) cihazına rağmen 2026'da sarf alımı sembolik düzeye gerilemiştir (Yalnızca ${cons_2026_amt:,.0f} / {cons_2026_qty} kutu). Personel değişimi veya protokol terk riski mevcuttur; acil yerinde klinik çalıştay ve re-aktivasyon konsinye kiti önerilir."
         elif dev_qty > 0 and (cons_2026_qty < 15 or cons_2026_amt < 1000):
             status = f"🟠 Düşük Sarf Çekişi (2026: {cons_2026_qty} Kutu / ${cons_2026_amt:,.0f})"
             code = 'low_consumable'
@@ -8514,7 +8516,7 @@ def render_social_media_hub():
                 <b style="color: #34D399; font-size: 14px;">💎 LinkedIn'de En Çok Tutan 4 İçerik Formatı</b>
                 <div style="font-size: 12px; color: #CBD5E1; margin-top: 10px; line-height: 1.6;">
                     • <b>Format 1: 6-8 Slaytlık PDF Carousel (Kaydırmalı Döküman):</b> Sağa kaydırıldıkça dwell-time tavan yapar. <i>Şablon:</i> 1. Kanca -> 2. Klinik Problem -> 3. Kimyasal İyonofor Çıkmazı -> 4. ZEUS Pulse Stimulator Çözümü -> 5. PubMed Verisi -> 6. Protokol CTA.<br>
-                    • <b>Format 2: Mikroskop Altı 45-60 sn Video (Satisfying Science):</b> Küt uçlu piezo pipetin zarı yırtmadan mikrosaniyede esnettiği an.<br>
+                    • <b>Format 2: Mikroskop Altı 45-60 sn Video (Satisfying Science):</b> Z-Dish elektrot havuzunda kontrollü DC elektriksel darbe ile kalsiyum dalgasının (The Spark of Life) yayıldığı an.<br>
                     • <b>Format 3: Sosyal Kanıt & Vaka Başarısı (Case of the Month):</b> Hastane teslimatları (Jordan Hospital gibi) ve hekim referansları.<br>
                     • <b>Format 4: Hukuki & Güvenlik Düşünce Liderliği (Thought Leadership):</b> Malpraktis davaları ve 7 istasyonlu RFID şahitlik güvencesi.
                 </div>
@@ -8755,9 +8757,9 @@ def render_social_media_hub():
 
         elif "Senaryo 1" in script_sel:
             sc1_table = [
-                {"Zaman": "00:00 - 00:06", "Görsel & Mikroskop Açısı": "Bölünmüş Ekran (Split Screen): Solda standart sivri ICSI iğnesi oosite batıyor. Oosit tamamen içe çöküyor ve aniden patlayarak sitoplazma dışarı sızıyor (Oosit lizisi!). Sağ taraf ise kararık, merak uyandırıyor.", "Seslendirme (Voiceover - VO)": "Her 10 oositten biri, yumurtanın kalitesizliğinden değil... yanlış iğne travması yüzünden kaybediliyor. Peki ya bu hücre zarı hiç yırtılmasaydı?", "Ekran Yazısı & Grafik": "⚠️ %8.5 Oosit Dejenerasyonu Riski (Geleneksel Delme Travması)"},
-                {"Zaman": "00:06 - 00:22", "Görsel & Mikroskop Açısı": "Ekranın sağı aydınlanır. ZEUS ZPS 26'ya bağlı küt uçlu (flat-tip) piezo mikropipet kadraja girer. Pipet oosit zarına değer. Tek bir ultra-ince mikro-elektriksel-titreşim (dalga efekti) oluşur. Zar delinmez, mikrosaniyede esneyip açılır.", "Seslendirme (Voiceover - VO)": "ZEUS Pulse Stimulator (ZPS 26) Stimülatör ile sivri iğneyle delmeyi unutun. Patentli mikro-elektriksel puls osilasyonu, oosit zarına tek bir mikropuls göndererek zarı esnetir ve spermi doğrudan ooplazmaya zararsız bırakır.", "Ekran Yazısı & Grafik": "⚡ ZEUS ZPS 26: Saniyede 1 Mikro-Puls ile Sıfır Membran Yırtılması"},
-                {"Zaman": "00:22 - 00:40", "Görsel & Mikroskop Açısı": "Yüksek çözünürlüklü 4K mikroskop görüntüsü: Sperm bırakıldıktan 1 saniye sonra piezo pipet geri çekilir. Oosit zarı anında eski mükemmel yuvarlak formuna geri döner. Hücre zarı bütünlüğü %100 korunmuştur.", "Seslendirme (Voiceover - VO)": "Geleneksel ICSI'deki oosit lizis oranı yüzde 8.5 iken, ZEUS Pulse Stimulator teknolojisiyle bu oran yüzde 0.8'in altına iner. Özellikle ileri anne yaşı ve kırılgan oositlerde döllenme şansı korunur.", "Ekran Yazısı & Grafik": "📊 Klinik Kanıt: Oosit Lizis <%0.8 | 2PN Başarısı %82.3"},
+                {"Zaman": "00:00 - 00:06", "Görsel & Mikroskop Açısı": "Bölünmüş Ekran (Split Screen): Solda standart ICSI yapılmış ancak 18 saat sonra döllenme gerçekleşmemiş (0 PN) dejenere olan oosit (TFF vakası). Sağ taraf ise kararık, merak uyandırıyor.", "Seslendirme (Voiceover - VO)": "Her 10 döllenme başarısızlığından biri, yumurtanın kalitesizliğinden değil... oosit aktivasyon defektinden kaynaklanıyor. Peki ya fertilizasyonu başlatan kıvılcım yeniden ateşlenseydi?", "Ekran Yazısı & Grafik": "⚠️ Total Döllenme Başarısızlığı (TFF): Standart ICSI Yetersizliği"},
+                {"Zaman": "00:06 - 00:22", "Görsel & Mikroskop Açısı": "Ekranın sağı aydınlanır. ZEUS ZPS 26 Pulse Stimulator konsolu ve Z-Dish mikro-elektrot havuzu kadraja girer. Havuzdaki oositler, patentli mikro-akım DC elektrik darbesiyle (The Spark of Life) uyarılır. Biyofiziksel kalsiyum dalgası hücre içinde yayılır.", "Seslendirme (Voiceover - VO)": "ZEUS Pulse Stimulator (ZPS 26) ile tanışın. Toksik kimyasal iyonoforları unutun. CE Class IIa sertifikalı elektriksel oosit aktivasyon protokolü, fizyolojik kalsiyum dalgası başlatarak döllenmeyi tetikler.", "Ekran Yazısı & Grafik": "⚡ ZEUS ZPS 26: Biyokontrollü DC Mikro-Puls ile Güvenli AOA"},
+                {"Zaman": "00:22 - 00:40", "Görsel & Mikroskop Açısı": "Yüksek çözünürlüklü 4K mikroskop görüntüsü: Elektriksel puls uygulamasından sonra oosit 2. kutup cisimciğini atar ve iki belirgin pronükleus (2PN) oluşur. Hücre zarı bütünlüğü %100 korunmuştur.", "Seslendirme (Voiceover - VO)": "Kimyasal ajanların sitotoksik riskini sıfırlayan ZEUS Pulse Stimulator, oosit lizis oranını yüzde 1'in altına indirir ve blastosist gelişimini 2.2 kat artırır.", "Ekran Yazısı & Grafik": "📊 Klinik Kanıt: Oosit Lizis <%1.0 | 2PN Başarısı %82.3"},
                 {"Zaman": "00:40 - 00:52", "Görsel & Mikroskop Açısı": "Kamera laboratuvardaki baş embriyoloğa döner. Embriyolog monitördeki 2PN döllenmiş zigotları inceler ve başını onaylarcasına sallar. Masada ZPS 26 kontrol konsolu şık mavi LED ışığıyla görünür.", "Seslendirme (Voiceover - VO)": "Total Döllenme Başarısızlığı (TFF) geçmişi olan zorlu vakalarda klinik 2PN oranlarını yüzde 24'ten yüzde 82'ye yükselten altın standart.", "Ekran Yazısı & Grafik": "🏆 TFF Vakalarında Kanıtlanmış AOA Protokolü | CE Device Certified (Class IIa)"},
                 {"Zaman": "00:52 - 01:00", "Görsel & Mikroskop Açısı": "ZEUS Bioscience animasyonlu logosu, CE Class IIa ibaresi. Altta web sitesi ve QR kod: 'Kliniğinizde Yerinde Vaka Çalıştayı Talep Edin'.", "Seslendirme (Voiceover - VO)": "Kliniğinizin başarı oranlarını bir üst seviyeye taşıyın. Yerinde aplikasyon çalıştayı ve konsinye değerlendirme protokolü için profildeki linke tıklayın.", "Ekran Yazısı & Grafik": "👉 zeusbio.com/zps26 | Yerinde Vaka Çalıştayı & Aplikasyon Eğitimi"}
             ]
@@ -8873,12 +8875,12 @@ def render_social_media_hub():
             ("2. Oosit Membran Kırılganlığı & Mekanik İğne Travmasına Bağlı Lizis",
              "İleri anne yaşı ve dismorfik oositlerde sivri iğnenin zarı yırtması embriyoloğun elinde suçluluk yaratır.",
              "ZEUS ZPS 26 Küt Uçlu Elektrotlu Mikro-Havuz Adaptörü",
-             "Split-screen: Sivri iğne zar patlaması vs Küt piezo pipetin zarı esnetmesi.",
+             "Split-screen: Kimyasal toksik iyonofor dejenere oosit vs ZEUS Pulse Stimulator ile güvenli elektriksel AOA.",
              "Fertility and Sterility: Elektriksel AOA reduces oocyte degeneration from 8.8% to 0.7%."),
             ("3. Kalsiyum İyonofor (A23187) vs Elektriksel AOA: Toksisite ve Regülasyon",
              "Kimyasal aktivatörlerin FDA/EMA tarafından medikal cihaz sayılmaması ve potansiyel epigenetik riskler.",
              "ZEUS ZPS 26 (CE Device Certified Class IIa) + Z-Dish Array",
-             "Kıyaslama Carousel'i: Kimyasal İlaç Tipi Çözelti vs CE Sertifikalı Onaylı Piezo Medikal Cihazı.",
+             "Kıyaslama Carousel'i: Kimyasal İlaç Tipi Çözelti vs CE Sertifikalı Onaylı Pulse Stimulator (AOA) Medikal Cihazı.",
              "Reproductive BioMedicine Online: Electrical AOA shows zero epigenetic methylation anomalies and superior blastocyst formation."),
             ("4. PGT-A Blastosist Biyopsisinde Lazer Termal Hasarı ve Sahte Mozaisizm",
              "Genetik merkezleri ile IVF klinikleri arasındaki kavga: Aşırı lazer atımlarının yarattığı mitokondri hasarı.",
@@ -8937,7 +8939,7 @@ def render_social_media_hub():
             "Kopyalamak İstediğiniz Gönderi Şablonunu Seçin:",
             [
                 "Post 1: LinkedIn Bilimsel Carousel (TFF Vakalarında Elektriksel AOA Üstünlüğü - İngilizce & Türkçe)",
-                "Post 2: Instagram Reels / Shorts Video Metni & Hashtagler (Membran Rüptürü vs Piezo Osilasyonu)",
+                "Post 2: Instagram Reels / Shorts Video Metni & Hashtagler (Kimyasal Toksisite vs Elektriksel AOA Pulse Stimulator)",
                 "Post 3: LinkedIn B2B Karar Verici Postu (Mismatch Blocker & Elektronik Şahitlik Hukuki Güvencesi)",
                 "Post 4: YouTube Masterclass Video Başlığı, Açıklaması & Timecodes (BioPSafe Biyopsi)"
             ],
@@ -8965,10 +8967,10 @@ By utilizing the ZEUS Pulse Stimulator (ZPS 26)electric Pulse Stimulator in comb
 
 Swipe through the carousel to review the retrospective PubMed clinical data and oocyte survival curves. 👉
 
-📥 Want our complete 6-page "Clinical Protocol for Piezoelectric Assisted Oocyte Activation"?
+📥 Want our complete 6-page "Clinical Protocol for Electrical Oocyte Activation (AOA) with Pulse Stimulator"?
 Drop "PROTOCOL" in the comments below or send us a DM, and our clinical embryology team will share the validation dossier directly.
 
-#Embryology #IVF #Infertility #AssistedReproduction #PiezoICSI #OocyteActivation #FertilityClinic #MedTech #ClinicalEvidence #ZEUSBioscience"""
+#Embryology #IVF #Infertility #AssistedReproduction #PulseStimulator #ElectricalAOA #OocyteActivation #FertilityClinic #MedTech #ClinicalEvidence #ZEUSBioscience"""
             else:
                 code_text = """Tüp bebek tedavisinde tekrarlayan döllenme başarısızlığı (TFF) kader olmak zorunda mı? 🔬
 
@@ -8990,7 +8992,7 @@ Klinik verileri, sağkalım eğrilerini ve mikroskop parametrelerini incelemek i
 📥 "Elektriksel Destekli Oosit Aktivasyonu (AOA) Laboratuvar Protokol Kılavuzu" dosyasını edinmek için:
 Yoruma "PROTOKOL" yazmanız veya bize özel mesaj (DM) göndermeniz yeterlidir. Uzman klinik heyetimiz dosyayı doğrudan iletecektir.
 
-#TüpBebek #Embriyoloji #IVF #Laboratuvar #PiezoICSI #OositAktivasyonu #KlinikEmbriyoloji #MedikalCihaz #ZEUSBioscience"""
+#TüpBebek #Embriyoloji #IVF #Laboratuvar #PulseStimulator #ElectricalAOA #OositAktivasyonu #KlinikEmbriyoloji #MedikalCihaz #ZEUSBioscience"""
 
             st.code(code_text, language="markdown")
 
@@ -9003,7 +9005,7 @@ In traditional ICSI, sharp bevel needles push the elastic oolemma inward until i
 Lysis rate? Up to 8.8% in patients with advanced maternal age or delicate membranes.
 
 Now watch the right side:
-Flat-tip piezoelectric micro-oscillation with the ZEUS ZPS 26.
+Controlled microsecond DC electrical activation pulse with the ZEUS ZPS 26 Pulse Stimulator.
 No bevel. No tearing. One sub-millisecond mechanical frequency pulse relaxes the membrane, depositing the sperm cleanly into the ooplasm.
 Membrane recovery? Instantaneous.
 Lysis rate? Reduced to <0.8%.
@@ -9012,7 +9014,7 @@ Transform your lab’s ICSI survival rates.
 Request a hands-on clinical workshop and consignment protocol for your embryology team:
 👉 Link in bio or visit zeusbio.com/zps26
 
-#Embryology #Microscopy #SatisfyingScience #IVF #ICSI #PiezoICSI #Biotechnology #LabLife #ReproductiveMedicine #ZEUSBioscience"""
+#Embryology #Microscopy #SatisfyingScience #IVF #ICSI #PulseStimulator #ElectricalAOA #Biotechnology #LabLife #ReproductiveMedicine #ZEUSBioscience"""
             else:
                 code_text = """Oosit az önce kendi kendine mi çöktü... yoksa standart iğne delme travması mı zarı patlattı? ⚠️
 
@@ -9021,7 +9023,7 @@ Geleneksel sivri uçlu ICSI iğnesi, elastik oosit zarını aşırı gererek yı
 Sonuç? İleri yaş ve kırılgan oositlerde %8.8'e varan oosit dejenerasyonu (lizis)!
 
 Şimdi sağ taraftaki ZEUS ZPS 26 teknolojisine bakın:
-Küt uçlu (flat-tip) mikro-elektriksel-salınım.
+Biyokontrollü mikro-elektriksel aktivasyon pulsu (The Spark of Life).
 Sivri uç yok. Yırtılma yok. Saniyede tek bir mikropuls frekansı ile zar esneyerek açılır ve sperm ooplazmaya zararsızca aktarılır.
 Zarın toparlanma süresi? Anında!
 Lizis oranı? %0.8'in altına iner.
@@ -9030,7 +9032,7 @@ Kliniğinizde oosit sağkalım oranlarını bir üst seviyeye taşıyın.
 Embriyoloji ekibiniz için yerinde vaka çalıştayı ve konsinye değerlendirme protokolü talep edin:
 👉 Profildeki linkten veya zeusbio.com/zps26 adresinden ulaşabilirsiniz.
 
-#Embriyoloji #TüpBebek #Mikroskop #PiezoICSI #Laboratuvar #Oosit #HücreBiyolojisi #MedTech #Biyoteknoloji #ZEUSBioscience"""
+#Embriyoloji #TüpBebek #Mikroskop #PulseStimulator #ElectricalAOA #Laboratuvar #Oosit #HücreBiyolojisi #MedTech #Biyoteknoloji #ZEUSBioscience"""
 
             st.code(code_text, language="markdown")
 
@@ -9092,7 +9094,7 @@ Download our free 8-page "Trophectoderm Biopsy & PCR Tubing Standard Operating P
 ## 2. Multi-Channel Content Matrix
 - LinkedIn: Peer-reviewed PubMed summaries, CE Sertifikalı (Class IIa) compliance dossiers, B2B distributor partnerships, PDF Carousels.
 - YouTube: 4K micromanipulator application masterclasses, 30-second trophectoderm biopsy with BioPSafe, calibration tutorials.
-- Instagram & Reels: High-retention micro-moments (oolemma piezo pulse without snapping), behind-the-scenes cleanroom footage.
+- Instagram & Reels: High-retention micro-moments (controlled DC electrical activation pulse - The Spark of Life), behind-the-scenes cleanroom footage.
 - X (Twitter): Live ESHRE/ASRM congress live-tweeting, DOI threads, clinical polls.
 
 ## 3. High-Engagement Clinical Drivers
@@ -11743,7 +11745,7 @@ GLOBAL_PROSPECT_RADAR = {
             "product_match": "🛡️ ZEUS Mismatch Blocker (7 Terminal) + 🧬 BioPSafe (ZBS26) Biyopsi İstasyonu",
             "est_revenue": "$120,000 USD / Yıl",
             "why_target": "İleri anne yaşı ve oosit aktivasyon yetmezliği vakalarında Elektriksel AOA ile fertilizasyon oranlarını %18 artırma arayışı; Avrupa'nın en yüksek hasta akışı.",
-            "pitch_template": "Sayın Bilimsel Direktör ve Laboratuvar Heyeti,\n\nIVI-RMA'nın oosit aktivasyonu ve mikroenjeksiyon teknolojilerindeki dünya lideri klinik araştırmalarını yakından takip ediyoruz. ZEUS Bioscience tarafından geliştirilen ZEUS Pulse Stimulator (AOA) sistemimiz, patentli mikrosaniye piezoelektrik darbe modülasyonu ile oosit lizis oranlarını %1.2'nin altına düşürürken, fertilizasyon oranlarında %15-20 klinik artış sağlamaktadır. Ghent Üniversitesi'nde valide edilen klinik verilerimizi merkezinizde klinik protokol incelemesi kapsamında değerlendirmeniz için bir sunum planlamayı arzu ederiz."
+            "pitch_template": "Sayın Bilimsel Direktör ve Laboratuvar Heyeti,\n\nIVI-RMA'nın oosit aktivasyonu ve mikroenjeksiyon teknolojilerindeki dünya lideri klinik araştırmalarını yakından takip ediyoruz. ZEUS Bioscience tarafından geliştirilen ZEUS Pulse Stimulator (AOA) sistemimiz, patentli mikrosaniye biyokontrollü DC elektriksel darbe modülasyonu (AOA Pulse Stimulator) ile oosit lizis oranlarını %1.0'in altına düşürürken, fertilizasyon oranlarında %15-20 klinik artış sağlamaktadır. Ghent Üniversitesi'nde valide edilen klinik verilerimizi merkezinizde klinik protokol incelemesi kapsamında değerlendirmeniz için bir sunum planlamayı arzu ederiz."
         },
         {
             "name": "Instituto Bernabeu (Alicante, Madrid, Mallorca)",
@@ -11871,7 +11873,7 @@ GLOBAL_PROSPECT_RADAR = {
             "product_match": "DACH Bölge Distribütörlük Paketi",
             "est_revenue": "$160,000 USD / Yıl",
             "why_target": "Almanya'da tüp bebek laboratuvarlarının %85'ine düzenli sarf ve cihaz tedarik eden köklü kanal.",
-            "pitch_template": "Sehr geehrte Geschäftsführung,\n\nMit Ihrer führenden Marktpräsenz in DACH-Fertilitätszentren möchten wir ZEUS Bioscience als innovativen Partner für Piezo-Oozyten-Stimulatoren und zertifizierte Verbrauchsmaterialien vorschlagen."
+            "pitch_template": "Sehr geehrte Geschäftsführung,\n\nMit Ihrer führenden Marktpräsenz in DACH-Fertilitätszentren möchten wir ZEUS Bioscience als innovativen Partner für CE-zertifizierte elektrische Oozyten-Aktivierungssysteme (AOA Pulse Stimulator ZPS 26) und Verbrauchsmaterialien vorschlagen."
         }
     ],
     "United States": [
@@ -11909,7 +11911,7 @@ GLOBAL_PROSPECT_RADAR = {
             "product_match": "🧬 ZEUS BioPSafe (ZBS26 Biyopsi İstasyonu) + ❄️ Smart Cryo-Tools Kriyobanka Paketi",
             "est_revenue": "$180,000 USD / Yıl",
             "why_target": "ABD'nin en köklü ve klinik araştırma odaklı tüp bebek ağı; SART kayıtlarında lider.",
-            "pitch_template": "Dear Scientific Director,\n\nFollowing SART and ASRM quality guidelines, ZEUS Bioscience provides precision-controlled piezoelectric pulse stimulation for advanced IVF labs, proven to support rescue ICSI and oocyte activation protocols."
+            "pitch_template": "Dear Scientific Director,\n\nFollowing SART and ASRM quality guidelines, ZEUS Bioscience provides precision-controlled Electrical Oocyte Activation (AOA) pulse stimulation for advanced IVF labs, proven to support rescue ICSI and oocyte activation protocols."
         },
         {
             "name": "Hamilton Thorne / CooperSurgical US Channel",
@@ -11927,7 +11929,7 @@ GLOBAL_PROSPECT_RADAR = {
             "product_match": "OEM / White-Label Dağıtım Lisansı",
             "est_revenue": "$280,000 USD / Yıl",
             "why_target": "FDA 510(k) pazara giriş bariyerini aşmak ve tüm ABD eyaletlerine ulaşmak için en stratejik Kuzey Amerika ortağı.",
-            "pitch_template": "Dear VP of Business Development,\n\nZEUS Bioscience invites strategic exploration of our Piezoelectric Pulse Stimulation hardware platform under a co-distribution or OEM partnership for the US reproductive healthcare market."
+            "pitch_template": "Dear VP of Business Development,\n\nZEUS Bioscience invites strategic exploration of our Electrical Oocyte Activation (AOA) Pulse Stimulation hardware platform (ZPS 26) under a co-distribution or OEM partnership for the US reproductive healthcare market."
         }
     ],
     "Japan": [
@@ -12041,7 +12043,7 @@ GLOBAL_PROSPECT_RADAR = {
             "product_match": "BAE & Körfez Genişleme Distribütörlüğü",
             "est_revenue": "$90,000 USD / Yıl",
             "why_target": "BAE'de Sellco doğrudan müşteri olduğundan, ülke çapında 28 kliniği kapsayacak en güçlü yetkili distribütör adayı.",
-            "pitch_template": "Sayın Satış Direktörü,\n\nBAE ve Körfez genelindeki medikal dağıtım gücünüz ile ZEUS Bioscience'ın bölgede kurulu 18 Piezo cihazı ve hazır sarf talebini devralacak yeni dönem distribütörlük fırsatını değerlendirmek isteriz."
+            "pitch_template": "Sayın Satış Direktörü,\n\nBAE ve Körfez genelindeki medikal dağıtım gücünüz ile ZEUS Bioscience'ın bölgede kurulu 18 Pulse Stimulator (AOA) cihazı ve hazır sarf talebini devralacak yeni dönem distribütörlük fırsatını değerlendirmek isteriz."
         }
     ],
     "Saudi Arabia": [
@@ -12229,7 +12231,7 @@ GLOBAL_PROSPECT_RADAR = {
             "product_match": "Brezilya ve MERCOSUR Dağıtım Sözleşmesi",
             "est_revenue": "$110,000 USD / Yıl",
             "why_target": "ANVISA medikal cihaz ithalat ve ruhsatlandırma süreçlerinde uzmanlaşmış lider distribütör.",
-            "pitch_template": "Prezado Diretor Comercial,\n\nA ZEUS Bioscience busca um distribuidor estratégico no Brasil para seus sistemas de estimulação piezoelétrica. Convidamos sua empresa a avaliar nossa proposta comercial com margens atrativas e suporte técnico."
+            "pitch_template": "Prezado Diretor Comercial,\n\nA ZEUS Bioscience busca um distribuidor estratégico no Brasil para seus sistemas de estimulação elétrica de oócitos (AOA Pulse Stimulator - ZPS 26). Convidamos sua empresa a avaliar nossa proposta comercial com margens atrativas e suporte técnico."
         }
     ],
     "United Kingdom": [
@@ -12267,7 +12269,7 @@ GLOBAL_PROSPECT_RADAR = {
             "product_match": "UK & İrlanda Distribütörlük Paketi",
             "est_revenue": "$135,000 USD / Yıl",
             "why_target": "Mikromanipülatör ve IVF laboratuvar donanımında Birleşik Krallık'ın lider tedarikçisi.",
-            "pitch_template": "Dear Commercial Directorate,\n\nZEUS Bioscience invites partnership exploration to distribute our Piezoelectric pulse stimulation systems alongside your premier micropipette and micromanipulation product lines across NHS and private UK clinics."
+            "pitch_template": "Dear Commercial Directorate,\n\nZEUS Bioscience invites partnership exploration to distribute our CE Class IIa certified Electrical Oocyte Activation (AOA) Pulse Stimulator systems alongside your premier micropipette and micromanipulation product lines across NHS and private UK clinics."
         }
     ],
     "France": [
@@ -12635,15 +12637,15 @@ def get_country_device_suitability(c_row):
     ref_match = [r for r in ZEUS_GLOBAL_REFERENCE_NETWORK_2026['international_centers'] if r['country'] == c_name]
     
     # 1. ZPS 26 (ZEUS Pulse Stimulator (ZPS 26))
-    has_piezo_ref = c_code in ['IQ', 'JO', 'TR', 'KR', 'JP', 'DE', 'KW', 'QA', 'SA', 'EG', 'SY', 'AZ']
-    zps_boost = 15 if dist_match and 'ZEUS Pulse Stimulator' in str(dist_match.get('focus_products', [])) else (10 if has_piezo_ref else 0)
+    has_zps_ref = c_code in ['IQ', 'JO', 'TR', 'KR', 'JP', 'DE', 'KW', 'QA', 'SA', 'EG', 'SY', 'AZ']
+    zps_boost = 15 if dist_match and 'ZEUS Pulse Stimulator' in str(dist_match.get('focus_products', [])) else (10 if has_zps_ref else 0)
     zps_score = min(99, int(60 + (icsi_pct - 60) * 0.7 + (10 if gdp_pc > 15000 else 0) + zps_boost))
     zps_tier = "Tier 1: Öncelikli Standart" if zps_score >= 85 else ("Tier 2: Tamamlayıcı" if zps_score >= 75 else "Tier 3: Niş")
     
     if dist_match and c_name == 'Kuwait':
         zps_rationale = "Kuveyt pazarında resmi bayimiz ATC Kuwait 2025'te 3 adet Pulse Stimulator kurmuştur. Kamu ve özel tüp bebek merkezlerinde sarf tüketimi (Electro Dish) ve yeni ünite satışı önceliklidir."
     elif dist_match and c_name in ['Jordan', 'Iraq']:
-        zps_rationale = "Sirius Pharm Company ve Farah/Sadeen/Amal referanslarıyla kurulu 18 piezo cihazlık tabanda Electro Dish (ZPS13-002) ve Electroliquid düzenli sarf çekişi garanti altındadır."
+        zps_rationale = "Sirius Pharm Company ve Farah/Sadeen/Amal referanslarıyla kurulu 18 Pulse Stimulator cihazlık tabanda Electro Dish (ZPS13-002) ve Electroliquid düzenli sarf çekişi garanti altındadır."
     elif dist_match and c_name == 'South Korea':
         zps_rationale = "SJNU INC ve Suji/Dongtan Maria Hospital referanslarıyla Elektriksel AOA ve Tanaka ROSI protokolü pazar standardı durumundadır; ESHRE add-on uyumlu en yüksek penetrasyon pazarımızdır."
     else:
@@ -13182,8 +13184,8 @@ def evaluate_decision_note(note):
 def get_default_competitor_row_notes():
     return {
         "eppendorf": {
-            "ai_strategy": "🔬 Baltacı et al. hakemli yayın kalkanı. sub-%1.2 lizis vs %6 mekanik hasar. 4-Pool Tek Z-Dish (Distribütör: $100, Klinik: $150 USD; 4 hasta paylaşımlı $37.50/vaka) ile 4 kat hızlı ROI.",
-            "manager_note": "Sahada Eppendorf Piezo kurulu merkezlerde ücretsiz demo kesinlikle verilmeyecek; yalnızca 100+ kutu Z-Dish bağlayıcı sarf taahhüdüyle veya 14 günlük ücretli çalıştay ile girilecek.",
+            "ai_strategy": "🔬 Bilimsel & Fonksiyonel Ayrım: Eppendorf / Piezo-ICSI yalnızca sperm enjeksiyonunda mekanik delme aparatıdır; oosit aktivasyonu (AOA) yapamaz. Baltacı et al. hakemli yayınları ve CE Class IIa sertifikamız ile TFF vakalarında ZEUS Pulse Stimulator'ın kalsiyum salınım ve döllenme başarısını vurgulayın.",
+            "manager_note": "Sahada 'Bizde zaten Eppendorf Piezo var' diyen merkezlere; piezo-ICSI'nin AOA yapmadığı, ZEUS'un ise fertilizasyon yetmezliğinde oositi aktive eden safkan bir Pulse Stimulator olduğu net biçimde anlatılmalıdır. 60+ kutu Dish bağlayıcı sarf taahhüdüyle vaka çalıştayı sunulmalıdır.",
             "updated_by": "CSO & Baş Embriyolog Heyeti",
             "updated_at": "2026-11-18 10:00"
         },
@@ -13285,26 +13287,26 @@ ZEUS_COMPETITIVE_INTELLIGENCE_2026 = {
         "id": "eppendorf",
         "name": "Eppendorf SE (Almanya) & Prime Tech Ltd. (Japonya)",
         "logo_text": "🇩🇪 🇯🇵 Eppendorf / Prime Tech",
-        "category": "Elektriksel AOA & Hücre Mikroenjeksiyonu",
-        "market_share": "Küresel Piezo Pazarının ~%62'si (Yerleşik İki Dev)",
+        "category": "Mekanik Piezo-ICSI Mikroenjeksiyonu (AOA Aktivasyon Cihazı Değildir)",
+        "market_share": "Küresel Piezo-ICSI Delme Pazarının Liderleri (AOA Yapmaz)",
         "what_they_sell": [
-            "Eppendorf PiezoXpert ($38,000 - $48,000 USD)",
+            "Eppendorf PiezoXpert ($38,000 - $48,000 USD - Yalnızca Mekanik Delici)",
             "Prime Tech PMM-150FU / PMM-180FU ($42,000 - $55,000 USD)",
             "TransferMan 4r Mikromanipülatör ($28,000 USD)",
             "CellTram 4r Air / Oil Mikroenjektör ($9,500 USD)",
-            "Piezo Delme İğneleri & Rutin Sarflar ($35 - $60 USD/adet)"
+            "Piezo Delme İğneleri ($35 - $60 USD/adet)"
         ],
-        "hardware_price_range": "$38,000 – $55,000 USD (Sadece Donanım)",
-        "consumable_price_range": "$35 – $60 USD / İğne veya Sarf",
-        "matched_zeus_device": "ZEUS Pulse Stimulator (ZPS 26) + ZEUS Electro Dish",
-        "proximity_pct": 82,
-        "proximity_label": "%82 Benzerlik (Elektriksel Puls Jeneratörü Eşdeğer, Protokol Farklı)",
+        "hardware_price_range": "$38,000 – $55,000 USD (Mekanik Delme Aparatı)",
+        "consumable_price_range": "$35 – $60 USD / Delme İğnesi",
+        "matched_zeus_device": "ZEUS Pulse Stimulator (ZPS 26) [Klinik AOA Oosit Aktivasyon Sistemi]",
+        "proximity_pct": 20,
+        "proximity_label": "%20 Fonksiyonel Benzerlik (Eppendorf Mekanik Delicidir; ZEUS ise Elektriksel AOA Pulse Stimulatordur)",
         "technical_gap_analysis": [
-            "• Regülasyon Farkı: Eppendorf birçok ülkede 'RUO' (Yalnızca Araştırma Amaçlı) kalmaktadır; ZEUS ZPS 26 ise CE Sertifikası (Class IIa) tam klinik tescillidir.",
-            "• Hücresel Bütünlük & Lizis: Eppendorf sert mekanik rezonans uygular (%4-8 oosit lizis riski); ZEUS patentli çok kademeli mikrosaniye elektrik darbe modülasyonu ile lizisi <%1.2'ye düşürür.",
-            "• Eşzamanlı Kapasite: Prime Tech ve Eppendorf her oositi tek tek manuel iğneyle deler (1 saat sürer); ZEUS Z-Dish Array ile tek seansta 16 oosit eşzamanlı aktive edilir (12 dakika).",
-            "• Klinik Kanıt: Rakipler yalnızca broşür ve teknik tork sunar; ZEUS Baltacı et al. (RBM Online) ve Tanaka ROSI hakemli makaleleriyle Toplam Döllenme Başarısızlığı (TFF) vakalarında 2PN oranını %24.6'dan %82.3'e çıkarır.",
-            "• Fiyatlandırma Uçurumu: Eppendorf/Prime Tech donanımı $45K+ iken, ZEUS standart distribütör $8,500 USD taban fiyatıyla 4 kat daha hızlı ROI sunar."
+            "• Temel Fonksiyonel Ayrım: Eppendorf PiezoXpert ve Prime Tech birer oosit aktivasyon (AOA) cihazı DEĞİLDİR. Yalnızca sperm enjeksiyonu anında mikropipete titreşim vererek zona pellucidaya mekanik delme uygular. ZEUS ZPS 26 ise fertilizasyon yetmezliğinde oositte kalsiyum salınımı başlatan safkan bir Pulse Stimulatordur.",
+            "• Regülasyon ve Klinik Hedef: Eppendorf birçok ülkede yalnızca mekanik ICSI yardımcısı olarak konumlanır; ZEUS ZPS 26 ise Total Döllenme Başarısızlığı (TFF) vakalarında döllenme başlatan CE Sertifikalı (Class IIa) resmi tıbbi cihazdır.",
+            "• Hücresel Bütünlük ve Lizis: Mekanik piezo delme iğnesi elastik zarda yırtılma ve oosit lizis riski doğururken; ZEUS ZPS 26 mikro-elektrotlu Z-Dish havuzunda DC pulslar ile lizisi <%1.0'e indirir.",
+            "• Toplu Kapasite: Eppendorf tek tek her oosite mekanik müdahale gerektirir; ZEUS Z-Dish Array ile tek seansta 16 oosit eşzamanlı aktive edilir (12 dakika).",
+            "• Fiyatlandırma Avantajı: Yalnızca mekanik delme yapan bir ünite için $45K+ istenirken, ZEUS tam medikal AOA Pulse Stimulator çözümünü $8,500 USD distribütör fiyatıyla sunar."
         ],
         "winning_sales_strategy": [
             "1. 'Bilimsel Kanıt Masası': Baş embriyolog ve laboratuvar direktörünün önüne Baltacı et al. (p<0.001) ve Ebner et al. literatürünü koyarak, donanım değil 'gebelik garantileyen klinik protokol' sattığımızı kanıtlayın.",
@@ -15130,7 +15132,7 @@ def get_default_regional_expert_assessments():
             'opportunity_val': 65000,
             'color': '#F0BC57',
             'stats': '279 Klinik | 168,000 Siklus | Mevcut Ciro: $363.8K (Katar, Ürdün-Irak, BAE)',
-            'ai_weakness': "Kurulu 18 Piezo'da sarf çekiş düşüklüğü, Sellco BAE'de 1 kurulu ünitenin sarf durması ve resmi distribütör boşluğu.",
+            'ai_weakness': "Kurulu 18 Pulse Stimulator'da sarf çekiş düşüklüğü, Sellco BAE'de 1 kurulu ünitenin sarf durması ve resmi distribütör boşluğu.",
             'ai_action': "Sellco 1 kurulu cihazı için liyofilize toz sarf paketi; BAE geneline BioPSafe & Mismatch Blocker yetkili bayisi atanması.",
             'recommended_devices': ['🛡️ Mismatch Blocker (ZMB-7T)', '🧬 Black-Box BioPSafe (ZBB25-001)', '❄️ Smart Cryo-Tools (ZCT25)', '⚡ ZEUS Pulse Stimulator (ZPS 26)'],
             'device_rationale': "BAE ve Körfez'deki lüks klinik zincirlerinde (Fakih IVF Dubai, KFMC Riyad) RI Witness RFID maliyetini (%75) kırmak için coin tabanlı Mismatch Blocker; PGT-A biyopsi güvenliği için 13 IR sensörlü BioPSafe; dondurma tanklarında 4X optimizasyon için Smart Cryo-Tools; 1 yıl raf ömürlü liyofilize solüsyonlu ZPS 26.",
@@ -21302,12 +21304,12 @@ Immediate Resolution: ZEUS Bioscience is actively incorporating this high-level 
                 case_id="sellco_uae",
                 title_html='<strong style="color:#FF8A96;font-size:15px;">🔴 SELLCO TRADING INTL — Birleşik Arap Emirlikleri (Spot Müşteri / 1 Kurulu Cihaz & Liyofilize Refill)</strong>',
                 badge_html='<span class="chip chip-wn">SÖZLEŞMESİZ TİCARİ MÜŞTERİ (1 KURULU CİHAZ)</span>',
-                fact_html='<b>Excel Fatura & İade Denetimi:</b> 2024: $0.00 | 2025: $23,180.00 (Faturada 2 Piezo kesilmiş, LIR2025000000001 iade irsaliyesi ile net 1 Kurulu Cihaz = $19,000; 36 Electro Dish = $3,740; 12 Liquid = $440) | <b>2026 YTD: $0.00 (-%100.0)</b><br><b>Aktif Kurulu Donanım:</b> 1 Ünite (BAE) | <b>Liyofilize Toz Formülü:</b> 1 Yıl Raf Ömrü (SKT Bariyeri Kalktı) | <b>Hukuki Statü:</b> Sözleşmesiz Spot Kurumsal Alıcı (Münhasırlığı Yoktur)',
+                fact_html='<b>Excel Fatura & İade Denetimi:</b> 2024: $0.00 | 2025: $23,180.00 (Faturada 2 Pulse Stimulator kesilmiş, LIR2025000000001 iade irsaliyesi ile net 1 Kurulu Cihaz = $19,000; 36 Electro Dish = $3,740; 12 Liquid = $440) | <b>2026 YTD: $0.00 (-%100.0)</b><br><b>Aktif Kurulu Donanım:</b> 1 Ünite (BAE) | <b>Liyofilize Toz Formülü:</b> 1 Yıl Raf Ömrü (SKT Bariyeri Kalktı) | <b>Hukuki Statü:</b> Sözleşmesiz Spot Kurumsal Alıcı (Münhasırlığı Yoktur)',
                 diag_text="Sellco, BAE pazarında 2025 yılında doğrudan 1 Pulse Stimulator cihazı ($19,000 fatura kaydı, LIR2025000000001 iade düzenlemesiyle net 1 aktif ünite) ve $4,180 sarf malzemesi satın almış doğrudan ticari bir müşteridir (yetkili distribütör değildir). 2026 yılında ise yeni bir sarf siparişi verilmemiştir. Geçmişte sıvı solüsyonların 2 aylık kısa raf ömrü ve soğuk zincir bozulma korkusu sipariş çekişini frenlemekteydi. Mart 2026 itibarıyla kullanıma sunulan YENİ 1 YIL RAF ÖMÜRLÜ LİYOFİLİZE TOZ (POWDER) FORMÜLÜ bu engeli tamamen ortadan kaldırmıştır. Sellco'nun herhangi bir sözleşmesi veya münhasırlığı bulunmadığından ZEUS, BAE'deki 28 lisanslı kliniğe doğrudan satış yapmakta ve BioPSafe, Mismatch Blocker ile resmi distribütör atamakta serbesttir.",
                 ai_action_steps=[
-                    "<b>Liyofilize 1 Yıl Raf Ömürlü Refill Sarf Paketi Teklifi:</b> Sellco'ya elindeki 1 Piezo cihazını aktif tutabilmesi için yeni 1 yıl raf ömürlü liyofilize toz formülüyle avantajlı 'Consumable Refill Pack' (25 Kutu Electro Dish + Liyofilize Solüsyon) teklif edilmeli (2 ayda bozulma riski tamamen kalkmıştır).",
+                    "<b>Liyofilize 1 Yıl Raf Ömürlü Refill Sarf Paketi Teklifi:</b> Sellco'ya elindeki 1 Pulse Stimulator cihazını aktif tutabilmesi için yeni 1 yıl raf ömürlü liyofilize toz formülüyle avantajlı 'Consumable Refill Pack' (25 Kutu Electro Dish + Liyofilize Solüsyon) teklif edilmeli (2 ayda bozulma riski tamamen kalkmıştır).",
                     "<b>BAE Pazarında Üst Düzey Cihaz Konumlandırması (BioPSafe, Mismatch Blocker & Cryo-Tools):</b> BAE kliniklerinde yüksek PGT-A biyopsi oranı için 13 IR sensörlü Black-Box BioPSafe (ZBB25-001); pahalı RI Witness RFID çiplerini sıfırlayan dijital QR coin sistemli Mismatch Blocker (ZMB-7T); dondurma tanklarında 4X optimizasyon için Smart Cryo-Tools (ZCT25) sunulmalı.",
-                    "<b>Klinik ve Cihaz Durum Tespiti:</b> Sellco'nun 2025'te satın aldığı 1 Piezo cihazının kurulu olduğu Dubai/Abu Dabi kliniği tespit edilerek, laboratuvar protokol ihtiyaçları doğrudan takip edilmeli.",
+                    "<b>Klinik ve Cihaz Durum Tespiti:</b> Sellco'nun 2025'te satın aldığı 1 Pulse Stimulator cihazının kurulu olduğu Dubai/Abu Dabi kliniği tespit edilerek, laboratuvar protokol ihtiyaçları doğrudan takip edilmeli.",
                     "<b>Resmi BAE Distribütör Ataması (Açık Beyaz Boşluk):</b> BAE pazarında herhangi bir sözleşme veya distribütör engeli bulunmadığından, ülkedeki 28 lisanslı klinik ve 16,000 siklusun tamamını kapsayacak yetkili bir distribütör (Leader Healthcare / Al Zahrawi) atanmalıdır."
                 ],
                 letter_title="Sellco UAE — Liyofilize Sarf Paketi & İleri IVF Cihaz Portföyü Teklifi",
@@ -21454,7 +21456,7 @@ Our clinical usage audit demonstrates that while recurring consumable revenue gr
 Clinical studies prove that using the proprietary ZEUS Liquid Solution alongside Electro Dishes improves blastocyst formation rates by 18.4% and ensures repeatable voltage stimulation.
 
 To optimize lab outcomes and support Sirius's recurring revenue:
-1. We are introducing the "Piezo Complete Stimulation Bundle": 10 boxes of Electro Dish (1x2) bundled with 2 bottles of ZEUS Liquid Solution at a 40% subsidized media rate.
+1. We are introducing the "Pulse Stimulator Complete AOA Bundle": 10 boxes of Electro Dish (1x2) bundled with 2 bottles of ZEUS Liquid Solution at a 40% subsidized media rate.
 2. Orders confirmed before December 15, 2026, will lock in guaranteed 2026 pricing across all of FY2027.
 
 We appreciate our valued partnership and look forward to finalizing the Q4 replenishment.
@@ -26604,7 +26606,7 @@ Merkezinizin mikromanipülasyon ve embriyoloji alanındaki yüksek klinik titizl
 ZEUS Bioscience olarak, önceki sikluslarında döllenme başarısızlığı veya zayıf fertilizasyon görülen vakalarda uygulanan ZEUS Pulse Stimulator (AOA) AOA (Yardımla Oosit Aktivasyonu) sistemimize ait yayınlanmış çok merkezli klinik verilerimizi paylaşmak isteriz:
 
 1. CE Device Certified & Biyouyumluluk: Mouse Embryo Assay (MEA >%80) ve Endotoksin LAL (<0.05 EU/ml) testleri ile uluslararası standartlarda sertifikalandırılmıştır.
-2. Hakemli Literatür Verisi: Standart ICSI sikluslarında %24.6 olan 2PN döllenme oranının, Piezo elektriksel aktivasyon ile %82.3 seviyesine yükseldiği (p < 0.001) ve Day-5 blastosist utilizasyonunun 2.2 kat arttığı gösterilmiştir.{table_snip_tr}
+2. Hakemli Literatür Verisi: Standart ICSI sikluslarında %24.6 olan 2PN döllenme oranının, Pulse Stimulator elektriksel AOA protokolü ile %82.3 seviyesine yükseldiği (p < 0.001) ve Day-5 blastosist utilizasyonunun 2.2 kat arttığı gösterilmiştir.{table_snip_tr}
 3. Klinik Protokol & Eğitim: Akredite merkezlerimize özel klinik aplikasyon protokolü ve uzman embriyolog eşliğinde vakaya özel parametre desteği sunulmaktadır.
 
 Klinik Whitepaper özetimiz ve CE teknik dosyamız ekte bilginize sunulmuştur.
@@ -27098,7 +27100,7 @@ I would welcome the opportunity to coordinate a brief 10-minute scientific brief
                 # Bilimsel Kaynaklar ve Hakemli Literatür Künyesi
                 with st.expander("📚 Bilimsel Referanslar & Hakemli Literatür Dayanağı (Peer-Reviewed References & Source Data)", expanded=True):
                     st.markdown("""
-                    Bu Whitepaper'da özetlenen parametrik klinik veriler, **Yardımla Oosit Aktivasyonu (AOA)** ve **Elektriksel Piezo Stimülasyonu** alanında uluslararası indeksli dergilerde (ESHRE / ASRM standartlarında) yayımlanmış çok merkezli kohort ve klinik benchmark çalışmalarından derlenmiştir:
+                    Bu Whitepaper'da özetlenen parametrik klinik veriler, **Yardımla Oosit Aktivasyonu (AOA)** ve **Elektriksel Oosit Aktivasyon (AOA) Pulse Stimülasyonu** alanında uluslararası indeksli dergilerde (ESHRE / ASRM standartlarında) yayımlanmış çok merkezli kohort ve klinik benchmark çalışmalarından derlenmiştir:
 
                     1. **Baltaci et al. (2010):** *"Assisted oocyte activation with electrical stimulation in patients with total fertilization failure after ICSI."* **Reproductive BioMedicine Online / Human Reproduction.**
                        - *Bulgu:* Önceki siklusta Total Döllenme Başarısızlığı (TFF - %0-%24 döllenme) yaşayan çiftlerde, mikro-elektrik puls uygulamasıyla 2PN döllenme oranının **%82.3 bandına** çıktığı gösterilmiştir ($p < 0.001$).
@@ -27651,7 +27653,7 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
                         <div style="font-weight:800;color:#00E676;font-size:14px;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
                             <span>📋 {cmp_kb_country} Resmi Teknik Şartname Kılavuzu (ZPS 26)</span>
                         </div>
-                        <div style="font-size:12px;font-weight:700;color:#FFFFFF;margin-bottom:6px;">Başlık: <span style="color:#00F5FF;">{t_specs.get('device_title', 'Piezoelektrik Oosit Aktivasyon Sistemi')}</span></div>
+                        <div style="font-size:12px;font-weight:700;color:#FFFFFF;margin-bottom:6px;">Başlık: <span style="color:#00F5FF;">{t_specs.get('device_title', 'ZEUS Pulse Stimulator (AOA) ve Reaktif Sarf Sistemi')}</span></div>
                         
                         <div style="font-size:11.8px;color:#CBD5E1;line-height:1.7;margin-bottom:10px;">
                             <b style="color:#00E676;">⚡ Cihaz Fonksiyonel & Teknik Kriterleri:</b><br>
@@ -27672,7 +27674,7 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
 
                 # Downloadable Complete Tender Specification (.txt)
                 sample_spec_text = f"""T.C. SAĞLIK BAKANLIĞI / {cmp_kb_country.upper()} RESMİ TÜP BEBEK LABORATUVARI
-TEKNİK ŞARTNAMESİ: PİEZOELEKTRİK MİKRO-PULS OOSİT AKTİVASYON VE MİKROENJEKSİYON SİSTEMİ
+TEKNİK ŞARTNAMESİ: CE SERTİFİKALI ELEKTRİKSEL OOSİT AKTİVASYON (AOA) PULSE STIMULATOR VE REAKTİF SARF SİSTEMİ
 
 1. CİHAZIN AMACI VE GENEL TANIMI:
 Cihaz, tüp bebek (IVF/ICSI) laboratuvarlarında Total Döllenme Başarısızlığı (TFF), şiddetli erkek faktörü ve ileri anne yaşında oosit membran elastikiyetini koruyarak, kimyasal kalsiyum iyonofor (A23187/İyonomisin) gerektirmeksizin fiziksel mikro-puls elektriksel stimülasyon ile oosit aktivasyonunu gerçekleştirmek üzere tasarlanmış olmalıdır.
@@ -28745,8 +28747,8 @@ elif active_view in ["🌐 Tekil Ülke 360° (Tüm Bilgiler, Mevzuat & İletişi
             # Realistic single unit distributor pricing evaluation ($8,500 USD band)
             landed_cost = net_dev_unit * landed_factor
             rec_clinic_retail = landed_cost * 1.55 # distributor puts %35-%55 markup
-            eppendorf_bench = 18500.0 if gdp_val < 15000 else 22000.0
-            savings_pct = max(0, int(((eppendorf_bench - rec_clinic_retail) / eppendorf_bench) * 100))
+            ruo_bench = 24500.0  # Genel araştırma tipi elektroporatörler (RUO / CE Onaysız)
+            savings_pct = max(0, int(((ruo_bench - rec_clinic_retail) / ruo_bench) * 100))
             zeus_margin = ((net_dev_unit - (net_dev_unit * 0.38)) / net_dev_unit * 100.0) if net_dev_unit > 0 else 60.0
 
             suitability_html = f"""
@@ -28778,14 +28780,15 @@ elif active_view in ["🌐 Tekil Ülke 360° (Tüm Bilgiler, Mevzuat & İletişi
                         <span style="font-size:10.5px;color:#94A3B8;">Distribütör Marjı: %35 – %45</span>
                     </div>
                     <div style="background:rgba(255,255,255,0.03);padding:10px 12px;border-radius:8px;border-left:3px solid #A855F7;">
-                        <span style="color:#8FA3C0;font-size:10.5px;">Rakibe Göre Avantaj (Eppendorf)</span><br>
-                        <b style="color:#A855F7;font-size:15px;">%{savings_pct} Daha Ekonomik</b><br>
-                        <span style="font-size:10.5px;color:#94A3B8;">Eppendorf: ${eppendorf_bench:,.0f} USD</span>
+                        <span style="color:#8FA3C0;font-size:10.5px;">Pazar Kıyaslaması (Araştırma Cihazları)</span><br>
+                        <b style="color:#A855F7;font-size:15px;">%{savings_pct} Daha Ekonomik & CE Onaylı</b><br>
+                        <span style="font-size:10.5px;color:#94A3B8;">RUO Elektroporatör: $24,500 USD (CE Yok)</span>
                     </div>
                 </div>
 
                 <div style="font-size:12px;color:#CBD5E1;line-height:1.7;background:rgba(0,0,0,0.25);padding:12px 14px;border-radius:8px;">
                     <b>💡 Neden {sel_country} İçin $8,500 USD En Doğru Fiyat?</b><br>
+                    • <b>Teknoloji ve Pazar Ayrımı (Pulse Stimulator vs Piezo-ICSI):</b> Eppendorf / Prime Tech Piezo-ICSI cihazları yalnızca mikroenjeksiyonda mekanik delme aparatıdır; oosit aktivasyonu (AOA) yapamaz. ZEUS ZPS 26 ise Total Döllenme Başarısızlığı (TFF) vakalarında oositi yaşama döndüren (The Spark of Life) tıbbi CE Class IIa sertifikalı bir <b>Pulse Stimulatordur</b>. Pazardaki CE onaysız araştırma elektroporatörlerine ($24,500 USD) kıyasla hem %48 daha ekonomik hem de patentli tek kullanımlık 4-Pool dish protokolüyle insan IVF kliniklerine özel tek klinik standarttır.<br>
                     • <b>Distribütör Motivasyonu:</b> $8,500 USD fiyatla alan yerel dağıtıcı (Mısır'da TechnoPharm, Ürdün'de Sirius Pharm vb.), cihazı yerel özel tüp bebek merkezlerine <b>$13,500 – $15,500 USD</b> bandında rahatça satabilir. Bu dağıtıcıya %35-%45 net kâr bırakarak klinikleri ziyaret etmesini ve sahada cihazı kurmasını sağlar.<br>
                     • <b>Klinik Amortismanı:</b> {sel_country} pazarındaki ortalama IVF tedavi ücreti (~$1,200 - $1,800 USD) dikkate alındığında, bir tüp bebek kliniği bu cihazın bedelini <b>yalnızca 8 ila 10 vakada</b> tamamen amorti eder.<br>
                     • <b>Sarf Kilitleme Gücü (Reagent-Based Placement & Sarf Modeli):</b> Cihazı $8,500 USD gibi ulaşılabilir bir transfer fiyatıyla kliniğe soktuğumuzda, klinik her yıl asgari 200–300 kutu Dish ve Solution-Powder aktivasyon sarfı tüketmekte ve ZEUS'a yıllık <b>$15,000 – $22,000 USD</b> sürekli yüksek marjlı (%65+) sarf cirosu kazandırmaktadır.
@@ -28812,7 +28815,7 @@ elif active_view in ["🌐 Tekil Ülke 360° (Tüm Bilgiler, Mevzuat & İletişi
                 <div style="font-size:12px;color:#CBD5E1;line-height:1.75;background:rgba(0,0,0,0.25);padding:14px;border-radius:8px;">
                     <div style="margin-bottom:8px;">
                         <b style="color:#FF6B6B;">1. Tek Bir ZPS 26 Cihazı Olarak Değerlendirilirse:</b><br>
-                        Tek bir Elektriksel oosit aktivasyon (AOA - The Spark of Life) sistemi için $85,000 USD fiyat {sel_country} ve küresel tüp bebek pazarında <b>fahiş kalır</b>. Küresel pazarda en üst seviye piezo cihazı tavan fiyatı $22,000 USD bandındadır. Tek cihaz için bu fiyat verilirse distribütör ve klinik teklifi doğrudan reddeder.
+                        Tek bir Elektriksel oosit aktivasyon (AOA - The Spark of Life) sistemi için $85,000 USD fiyat {sel_country} ve küresel tüp bebek pazarında <b>fahiş kalır</b>. Küresel pazarda araştırma tipi genel elektroporatörlerin tavan fiyatı $24,500 USD bandındadır (üstelik CE Class IIa tıbbi cihaz onayı ve steril tek kullanımlık hasta dishi olmadan). Tek cihaz için bu fiyat verilirse distribütör ve klinik teklifi doğrudan reddeder.
                     </div>
                     <div style="border-top:1px dashed rgba(255,255,255,0.1);padding-top:8px;">
                         <b style="color:#00E676;">2. Anahtar Teslim Kurumsal Filo / Kamu İhale Paketi Olarak Değerlendirilirse ($85,000 USD):</b><br>
