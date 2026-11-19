@@ -4885,6 +4885,225 @@ def build_country_360_charts(country_name, c_macro, c_sales, target_rev_2027=500
     return fig1, fig2, fig3
 
 
+
+def calculate_cycle_based_package_recommendation(target_cycles, country_name="Oman", base_dev_price=8500.0, base_sarf_price=150.0):
+    """
+    Computes required hardware and consumable quantities and volume discounts based on treatment cycle capacity.
+    Standard throughput: 1 Pulse Stimulator = ~400-500 cycles/year (2 cases/day * 250 work days).
+    Baseline commercial rule: Minimum 3 devices required for all distributors!
+    """
+    import math
+    cycles = max(50, int(target_cycles))
+    
+    if cycles <= 1000:
+        total_devices = 3  # Asgari 3 cihaz tabanı
+        pulse_units = 2
+        biop_units = 1
+        mismatch_units = 0
+        fleet_tier = "Standart Giriş & Butik Kapasite"
+        ai_dev_disc = 8.0
+        ai_con_disc = 8.0
+        bonus_perk = "1 Set Ücretsiz Sarf Başlangıç Kiti (1 Dish + 1 Sol-Powder)"
+    elif 1001 <= cycles <= 2000:
+        total_devices = 4
+        pulse_units = 2
+        biop_units = 1
+        mismatch_units = 1
+        fleet_tier = "Orta Ölçekli Bölgesel Yayılım"
+        ai_dev_disc = 10.0
+        ai_con_disc = 10.0
+        bonus_perk = "1 Set Ücretsiz Sarf Kiti + %50 Navlun İndirimi"
+    elif 2001 <= cycles <= 3500:
+        total_devices = 5
+        pulse_units = 3
+        biop_units = 1
+        mismatch_units = 1
+        fleet_tier = "Genişletilmiş Bölgesel Filo"
+        ai_dev_disc = 11.0
+        ai_con_disc = 11.0
+        bonus_perk = "Ücretsiz Uluslararası Hava Kargo + 1 Yıl Bölge Münhasırlığı"
+    else:
+        total_devices = max(6, math.ceil(cycles / 500) + 2)
+        pulse_units = max(4, math.ceil(cycles / 500))
+        biop_units = 2
+        mismatch_units = max(0, total_devices - pulse_units - biop_units)
+        fleet_tier = "Mega Konsorsiyum / Ulusal Filo"
+        ai_dev_disc = 12.0
+        ai_con_disc = 12.5
+        bonus_perk = "Ücretsiz Hava Kargo + 2 Yıl Tam Münhasırlık (Sole Exclusivity)"
+    
+    needed_dishes = cycles
+    needed_solutions = max(20, math.ceil(cycles / 3))
+    
+    gross_dev_total = total_devices * base_dev_price
+    gross_con_total = needed_dishes * base_sarf_price
+    gross_total = gross_dev_total + gross_con_total
+    
+    net_dev_unit = base_dev_price * (1.0 - (ai_dev_disc / 100.0))
+    net_dev_total = net_dev_unit * total_devices
+    dev_savings = gross_dev_total - net_dev_total
+    
+    net_con_unit = base_sarf_price * (1.0 - (ai_con_disc / 100.0))
+    net_con_total = net_con_unit * needed_dishes
+    con_savings = gross_con_total - net_con_total
+    
+    net_grand_total = net_dev_total + net_con_total
+    total_savings = dev_savings + con_savings
+    blended_disc_pct = (total_savings / gross_total * 100.0) if gross_total > 0 else 0.0
+    cost_per_cycle_consumable = net_con_unit
+    cost_per_cycle_all_in = net_grand_total / cycles
+    
+    p_parts = [f"{pulse_units}x Pulse Stimulator (ZPS 26)"]
+    if biop_units > 0:
+        p_parts.append(f"{biop_units}x BioPSafe (ZBS26)")
+    if mismatch_units > 0:
+        p_parts.append(f"{mismatch_units}x Mismatch Blocker (ZMB-7T)")
+    portfolio_str = " + ".join(p_parts)
+    
+    return {
+        "cycles": cycles,
+        "total_devices": total_devices,
+        "pulse_units": pulse_units,
+        "biop_units": biop_units,
+        "mismatch_units": mismatch_units,
+        "portfolio_str": portfolio_str,
+        "needed_dishes": needed_dishes,
+        "needed_solutions": needed_solutions,
+        "fleet_tier": fleet_tier,
+        "ai_dev_disc": ai_dev_disc,
+        "ai_con_disc": ai_con_disc,
+        "blended_disc_pct": blended_disc_pct,
+        "gross_total": gross_total,
+        "net_grand_total": net_grand_total,
+        "total_savings": total_savings,
+        "cost_per_cycle_consumable": cost_per_cycle_consumable,
+        "cost_per_cycle_all_in": cost_per_cycle_all_in,
+        "bonus_perk": bonus_perk
+    }
+
+def render_cycle_capacity_optimizer_ui(country_name, prefix, dev_price=8500.0, sarf_price=150.0, country_cycles=25000):
+    """
+    Renders the interactive AI Treatment Cycle Requirement & Bulk Discount Optimizer.
+    """
+    import streamlit as st
+    c_str = str(country_name).strip() if country_name else "Global"
+    cycle_key = f"{prefix}_target_cycles_{c_str}"
+    
+    def_cycles = 800 if country_cycles < 2000 else (1200 if country_cycles < 10000 else 2500)
+    if cycle_key not in st.session_state:
+        st.session_state[cycle_key] = def_cycles
+        
+    st.markdown(f"""
+    <div style="background:linear-gradient(135deg, rgba(15,23,42,0.98) 0%, rgba(30,41,59,0.95) 100%);border:1.5px solid #00F5FF;border-radius:12px;padding:14px 18px;margin-top:12px;margin-bottom:12px;box-shadow:0 6px 20px rgba(0,0,0,0.35);">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px;border-bottom:1px solid rgba(0,245,255,0.25);padding-bottom:8px;">
+            <div style="display:flex;align-items:center;gap:10px;">
+                <span style="background:rgba(0,245,255,0.18);border:1px solid #00F5FF;color:#00F5FF;font-size:18px;padding:4px 8px;border-radius:8px;">🤖</span>
+                <div>
+                    <b style="color:#FFFFFF;font-size:14px;">ZEUS AI Siklüs Kapasitesi, Cihaz & Sarf İhtiyacı ve Toplu İskonto Optimizatörü</b>
+                    <div style="color:#00F5FF;font-size:11px;font-weight:700;">Hedef tedavi siklüsü sayısını girin; sistem gereken cihaz/sarf adetlerini ve hak edilen toplu alım iskontosunu anında hesaplasın.</div>
+                </div>
+            </div>
+            <span style="background:rgba(0,230,118,0.18);color:#00E676;border:1px solid #00E676;padding:3px 10px;border-radius:6px;font-size:10.5px;font-weight:700;">
+                ⚡ Canlı AI Kapasite & İskonto Motoru
+            </span>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    pb_col1, pb_col2, pb_col3, pb_col4 = st.columns(4)
+    with pb_col1:
+        if st.button("🏥 Butik Klinik (350 Siklüs)", key=f"btn_cyc_350_{prefix}_{c_str}", use_container_width=True):
+            st.session_state[cycle_key] = 350
+            st.rerun()
+    with pb_col2:
+        if st.button("🏥 Büyük Merkez (800 Siklüs)", key=f"btn_cyc_800_{prefix}_{c_str}", use_container_width=True):
+            st.session_state[cycle_key] = 800
+            st.rerun()
+    with pb_col3:
+        if st.button("🏢 Zincir Hastane (1,800 Siklüs)", key=f"btn_cyc_1800_{prefix}_{c_str}", use_container_width=True):
+            st.session_state[cycle_key] = 1800
+            st.rerun()
+    with pb_col4:
+        nat_cyc_label = f"🌍 {c_str} Ulusal (~{country_cycles:,})"
+        if st.button(nat_cyc_label, key=f"btn_cyc_nat_{prefix}_{c_str}", use_container_width=True):
+            st.session_state[cycle_key] = country_cycles
+            st.rerun()
+
+    cur_c_val = int(st.session_state.get(cycle_key, def_cycles))
+    target_c = st.number_input(
+        f"🎯 Yıllık Hedef Tedavi Siklüsü Adedi ({c_str}):",
+        min_value=50,
+        max_value=500000,
+        value=cur_c_val,
+        step=50,
+        key=f"num_cyc_input_{prefix}_{c_str}",
+        help="Laboratuvarda veya ülkede yıllık uygulanacak hedef tüp bebek tedavi siklüsü sayısını giriniz."
+    )
+    
+    if target_c != cur_c_val:
+        st.session_state[cycle_key] = target_c
+        target_c_val = target_c
+    else:
+        target_c_val = cur_c_val
+
+    res = calculate_cycle_based_package_recommendation(target_c_val, c_str, dev_price, sarf_price)
+
+    st.markdown(f"""
+    <div style="background:#0F192E;border:1.5px solid #00E676;border-radius:10px;padding:14px;margin-bottom:12px;box-shadow:0 4px 16px rgba(0,230,118,0.12);">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px;border-bottom:1px solid rgba(0,230,118,0.25);padding-bottom:8px;">
+            <div>
+                <span style="font-weight:800;color:#00E676;font-size:13.5px;">📋 {res['cycles']:,} Tedavi Siklüsü İçin AI İhtiyaç & Toplu Paket Analizi</span>
+                <span style="color:#94A3B8;font-size:11px;margin-left:8px;">(Ölçek Seviyesi: {res['fleet_tier']})</span>
+            </div>
+            <span style="background:rgba(0,245,255,0.12);color:#00F5FF;border:1px solid #00F5FF;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:700;">
+                🎁 {res['bonus_perk']}
+            </span>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));gap:10px;margin-bottom:10px;">
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,245,255,0.3);border-radius:6px;padding:10px;">
+                <b style="color:#00F5FF;font-size:11px;">🔬 ÖNERİLEN DONANIM</b><br>
+                <span style="color:#FFFFFF;font-weight:800;font-size:15px;">{res['total_devices']} Cihaz</span><br>
+                <span style="color:#CBD5E1;font-size:10.5px;">{res['portfolio_str']}</span>
+            </div>
+
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,184,0,0.3);border-radius:6px;padding:10px;">
+                <b style="color:#FFB800;font-size:11px;">🧪 GEREKEN SARF MALZEME</b><br>
+                <span style="color:#FFFFFF;font-weight:800;font-size:15px;">{res['needed_dishes']:,} Kutu Dish</span><br>
+                <span style="color:#CBD5E1;font-size:10.5px;">+ {res['needed_solutions']:,} Kutu Solution-Powder (3:1 Oran)</span>
+            </div>
+
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,230,118,0.3);border-radius:6px;padding:10px;">
+                <b style="color:#00E676;font-size:11px;">🏷️ HAK EDİLEN TOPLU İSKONTO</b><br>
+                <span style="color:#00E676;font-weight:800;font-size:15px;">Cihaz: %{res['ai_dev_disc']:.1f} | Sarf: %{res['ai_con_disc']:.1f}</span><br>
+                <span style="color:#CBD5E1;font-size:10.5px;">Blended Ortalama: %{res['blended_disc_pct']:.1f} İndirim</span>
+            </div>
+
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(192,132,252,0.3);border-radius:6px;padding:10px;">
+                <b style="color:#C084FC;font-size:11px;">💰 TOPLU PAKET BÜTÇESİ</b><br>
+                <span style="color:#FFFFFF;font-weight:800;font-size:15px;">${res['net_grand_total']:,.2f} USD</span><br>
+                <span style="color:#FFB800;font-size:10.5px;">Tasarruf: -${res['total_savings']:,.2f} USD (${res['cost_per_cycle_consumable']:,.2f}/Siklüs)</span>
+            </div>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)
+
+    apply_btn_label = f"📥 Bu AI Önerisini ({res['total_devices']} Cihaz + {res['needed_dishes']:,} Kutu Sarf & İskonto) Aşağıdaki Hesaplayıcıya Uygula"
+    if st.button(apply_btn_label, key=f"btn_apply_ai_pkg_{prefix}_{c_str}", use_container_width=True):
+        if prefix == "c360":
+            st.session_state[f"c360_dev_qty_{c_str}"] = res['total_devices']
+            st.session_state[f"c360_dev_disc_{c_str}"] = float(res['ai_dev_disc'])
+            st.session_state[f"c360_con_qty_{c_str}"] = res['needed_dishes']
+            st.session_state[f"c360_con_disc_{c_str}"] = float(res['ai_con_disc'])
+        else:
+            st.session_state[f"{prefix}_dev_qty_{c_str}"] = res['total_devices']
+            st.session_state[f"{prefix}_dev_disc_slider_{c_str}"] = float(res['ai_dev_disc'])
+            st.session_state[f"{prefix}_sarf_qty_{c_str}"] = res['needed_dishes']
+            st.session_state[f"{prefix}_sarf_disc_slider_{c_str}"] = float(res['ai_con_disc'])
+        st.success(f"✅ AI Paket Önerisi Başarıyla Uygulandı: {res['total_devices']} Cihaz (%{res['ai_dev_disc']:.1f}) ve {res['needed_dishes']:,} Kutu Sarf (%{res['ai_con_disc']:.1f}) formlara aktarıldı!")
+        st.rerun()
+
+
 def render_country_discount_calculator_widget(target_country, pricing_fc, key_prefix="calc"):
     is_high_income = False
     is_mid_income = False
@@ -4971,6 +5190,9 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
         st.session_state[dev_k] = 8500.0
     if sarf_k not in st.session_state:
         st.session_state[sarf_k] = 100.0
+
+    # AI Treatment Cycle Capacity & Bulk Package Optimizer
+    render_cycle_capacity_optimizer_ui(target_country, key_prefix, dev_price=float(st.session_state.get(dev_k, 8500.0)), sarf_price=float(st.session_state.get(sarf_k, 100.0)), country_cycles=country_cycles)
     
     with col_c1:
         st.markdown("""
@@ -5014,8 +5236,8 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
         dev_qty = st.number_input(
             "Sipariş Cihaz Adedi:",
             min_value=1,
-            max_value=100,
-            value=int(pricing_fc.get('target_devices_2027', 2)),
+            max_value=200,
+            value=int(st.session_state.get(f"{key_prefix}_dev_qty_{target_country}", pricing_fc.get('target_devices_2027', 2))),
             step=1,
             key=f"{key_prefix}_dev_qty_{target_country}"
         )
@@ -28077,6 +28299,9 @@ elif active_view in ["🌐 Tekil Ülke 360° (Tüm Bilgiler, Mevzuat & İletişi
         if preset_price_key not in st.session_state:
             st.session_state[preset_price_key] = 8500.0
 
+        # AI Treatment Cycle Capacity & Bulk Package Optimizer
+        render_cycle_capacity_optimizer_ui(sel_country, "c360", dev_price=float(st.session_state.get(preset_price_key, 8500.0)), sarf_price=150.0, country_cycles=est_total_cycles)
+
         calc_col1, calc_col2 = st.columns(2)
         with calc_col1:
             st.markdown("""
@@ -28109,7 +28334,7 @@ elif active_view in ["🌐 Tekil Ülke 360° (Tüm Bilgiler, Mevzuat & İletişi
             )
             rec_dev_max = float(pricing_fc.get('rec_device_discount', 8.0))
             dev_disc_pct = st.slider(f"Cihaz İskonto Oranı (%) — [Önerilen Tavan: %{rec_dev_max:.1f}]:", min_value=0.0, max_value=30.0, value=rec_dev_max, step=0.5, key=f"c360_dev_disc_{sel_country}")
-            dev_qty = st.number_input("Sipariş Cihaz Adedi:", min_value=1, max_value=50, value=1, step=1, key=f"c360_dev_qty_{sel_country}")
+            dev_qty = st.number_input("Sipariş Cihaz Adedi:", min_value=1, max_value=200, value=int(st.session_state.get(f"c360_dev_qty_{sel_country}", 1)), step=1, key=f"c360_dev_qty_{sel_country}")
 
             # Dynamic Hardware Volume Tier Advice Inline
             if dev_qty == 1:
@@ -28207,7 +28432,7 @@ elif active_view in ["🌐 Tekil Ülke 360° (Tüm Bilgiler, Mevzuat & İletişi
             rec_sarf_max = float(pricing_fc.get('rec_sarf_discount', 10.0))
             con_disc_pct = st.slider(f"Sarf İskonto Oranı (%) — [Önerilen Tavan: %{rec_sarf_max:.1f}]:", min_value=0.0, max_value=35.0, value=rec_sarf_max, step=0.5, key=f"c360_con_disc_{sel_country}")
             def_con_qty = int(pricing_fc.get('target_consumables_2027', 250))
-            con_qty = st.number_input("Yıllık Taahhüt Edilen Sarf Miktarı (Kutu/Yıl):", min_value=10, max_value=5000, value=def_con_qty, step=25, key=f"c360_con_qty_{sel_country}")
+            con_qty = st.number_input("Yıllık Taahhüt Edilen Sarf Miktarı (Kutu/Yıl):", min_value=10, max_value=200000, value=int(st.session_state.get(f"c360_con_qty_{sel_country}", def_con_qty)), step=25, key=f"c360_con_qty_{sel_country}")
 
             # Dynamic Consumable Volume Threshold Advice & Cycle Equivalent
             if con_qty < 150:
