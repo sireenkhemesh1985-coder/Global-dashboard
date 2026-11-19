@@ -891,6 +891,42 @@ def get_gemini_api_key():
     return api_key
 
 COUNTRY_MACRO_IVF = {
+    'Oman': {
+        'gdp_pc': 23300,
+        'gdp_tier': 'High Income (GCC)',
+        'living_standard': 'Yüksek (HDI: 0.816)',
+        'living_standard_code': 'High',
+        'clinics': 11,
+        'pop_m': 4.65,
+        'customs_tariff_pct': 5.0,
+        'customs_clearance_days': 9,
+        'import_difficulty': 'Orta (MoH Umman DGPA&DC İthal İzni)',
+        'ivf_support': 'Kamu Hastanelerinde Vatandaşlara Kısmi/Tam Destek',
+        'ivf_support_code': 'Public Coverage (Citizens) / Self-Pay',
+        'ivf_support_desc': 'Umman Sultanlığı vatandaşlarına Royal Hospital ve kamu merkezlerinde ücretsiz/sübvansiyonlu; yabancı nüfus ve özel merkezler için %100 cepten ödeme (self-pay).',
+        'price_sensitivity': 'Orta-Düşük (Klinik Güvenilirlik & CE/FDA Onayı Öncelikli)',
+        'macro_discount_allowance': 0.5,
+        'ivf_discount_allowance': 0.5,
+        'total_annual_cycles': 4800
+    },
+    'Bahrain': {
+        'gdp_pc': 28700,
+        'gdp_tier': 'High Income (GCC)',
+        'living_standard': 'Çok Yüksek (HDI: 0.875)',
+        'living_standard_code': 'Very High',
+        'clinics': 8,
+        'pop_m': 1.55,
+        'customs_tariff_pct': 5.0,
+        'customs_clearance_days': 6,
+        'import_difficulty': 'Orta (NHRA Medikal Ruhsatı)',
+        'ivf_support': 'Kamu Merkezlerinde Vatandaşlara Devlet Desteği',
+        'ivf_support_code': 'Public Support (Citizens)',
+        'ivf_support_desc': 'Bahreyn vatandaşlarına BDF ve Salmaniya kamu merkezlerinde ücretsiz; özel sektör cepten ödeme.',
+        'price_sensitivity': 'Düşük (Kalite ve Teknoloji Odaklı)',
+        'macro_discount_allowance': 0.0,
+        'ivf_discount_allowance': 0.5,
+        'total_annual_cycles': 3200
+    },
     'Turkey': {
         'gdp_pc': 13500,
         'gdp_tier': 'Upper-Middle Income',
@@ -1339,6 +1375,8 @@ def resolve_country_macro(c_name):
         'Irak': 'Iraq', 'IQ': 'Iraq', 'Iraq': 'Iraq',
         'Ürdün-Irak': 'Jordan-Iraq', 'Jordan-Iraq': 'Jordan-Iraq', 'Jordan & Iraq': 'Jordan-Iraq', 'JI': 'Jordan-Iraq',
         'Cezayir': 'Algeria', 'DZ': 'Algeria', 'Algeria': 'Algeria',
+        'Oman': 'Oman', 'OM': 'Oman', 'Umman': 'Oman',
+        'Bahrain': 'Bahrain', 'BH': 'Bahrain', 'Bahreyn': 'Bahrain',
         'Fas': 'Morocco', 'MA': 'Morocco', 'Morocco': 'Morocco',
         'Güney Kore': 'South Korea', 'KR': 'South Korea', 'Korea': 'South Korea', 'South Korea': 'South Korea',
         'İngiltere': 'United Kingdom', 'UK': 'United Kingdom', 'GB': 'United Kingdom', 'United Kingdom': 'United Kingdom'
@@ -1373,6 +1411,8 @@ def get_market_customs_intelligence(c_code, c_name):
     name = str(c_name).strip()
 
     CUSTOMS_BARRIER_DB = {
+        'OM': {'tariff': 5.0, 'days': 9, 'doc_score': 4.5, 'doc_label': 'Orta / MoH Umman DGPA&DC', 'cond': 'Umman Sağlık Bakanlığı (MoH) DGPA&DC İthal İzni, CE/ISO 13485 Sertifikası, Maskat Kargo & Sohar Hızlı Gümrükleme'},
+        'BH': {'tariff': 5.0, 'days': 6, 'doc_score': 4.0, 'doc_label': 'Orta / NHRA Ruhsatı', 'cond': 'Bahreyn NHRA Tıbbi Cihaz Tescili, CE Sertifikası, FSC & Khalifa Bin Salman Limanı Hızlı Hat'},
         'ES': {'tariff': 0.0, 'days': 3, 'doc_score': 2.0, 'doc_label': 'Düşük / CE Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (CE Belgesi Yeterli; 0% Gümrük)'},
         'DE': {'tariff': 0.0, 'days': 2, 'doc_score': 2.0, 'doc_label': 'Düşük / CE Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (BfArM Ulusal Medikal Kaydı & 0% Gümrük)'},
         'FR': {'tariff': 0.0, 'days': 3, 'doc_score': 2.2, 'doc_label': 'Düşük / CE Uyumlu', 'cond': 'AB İçi Serbest Dolaşım (ANSM Medikal Bildirimi & 0% Gümrük)'},
@@ -1560,6 +1600,98 @@ def generate_ai_pricing_bundle_recommendation(calc_d, macro, strategic_goal):
 # GLOBAL IVF & COMMERCIAL MARKET KNOWLEDGE BASE & DUAL DECISION ENGINE
 # ==============================================================================
 MARKET_KNOWLEDGE_BASE = {
+    'Oman': {
+        'authority_name': 'Umman Sultanlığı Sağlık Bakanlığı — İlaç ve Tıbbi Cihaz Kontrol Genel Müdürlüğü (MoH - DGPA&DC)',
+        'specialist_name': 'MoH Umman Tıbbi Cihaz Tescil ve Özel Sağlık Kuruluşları Heyeti (DGPHE)',
+        'expert_stance': 'Konservatif Onay (Yüksek Kalite Standartları & Yerel Acente Modeli)',
+        'expert_max_discount': 5.0,
+        'expert_rec_sarf_disc': 6.0,
+        'clinical_dynamics': 'Maskat ve çevre vilayetlerde 11 aktif tüp bebek merkezi (Royal Hospital National Genetic Centre, Fakih IVF Muscat, Oman Fertility Centre - Oman International Hospital, Al-Bushra Medical Specialty Complex, Muscat Fertility Center). Akraba evliliği ve ileri yaş kaynaklı infertilite vakalarında ICSI (%92) ve PGT-A standart klinik rutindir. Hekimler ve embriyologlar CE sertifikası ve sıfır embriyotoksisite garantisi talep eder.',
+        'regulatory_watch': 'MoH DGPA&DC medikal cihaz ithalat izni, EU CE Mark (Class IIa), ISO 13485 sertifikası ve Free Sales Certificate (FSC) zorunludur. Tüm ithalat yerel lisanslı Omani medikal distribütör üzerinden yapılmalıdır.',
+        'competitor_threat': 'CooperSurgical ve Vitrolife kamu ve özel kliniklerde yaygın distribütör ağına sahiptir; Esco Medical mikromanipülatörlerde etkindir.',
+        'commercial_guardrails': 'Cihaz iskontosunu azami %5.0 ile sınırlayın; Maskat teslimatlarında soğuk zincir (+2°C/+8°C) data-logger doğrulaması şarttır. 50+ kutu sarf taahhüdüne eğitim aplikasyon desteği tanımlayın.',
+        'ministry_decrees': [
+            {
+                'decree_no': 'OM-MOH-DGPHE-2024/02',
+                'title': 'Tüp Bebek ve Genetik Tanı Merkezleri Cihaz Tescil ve Kalite Standartları Kararı',
+                'date': '2024-03-12',
+                'status': '🟢 Yürürlükte / Zorunlu',
+                'impact': 'Tüm IVF kliniklerinde kullanılacak sarf malzemeler ve mikro-stimülasyon donanımları için parti bazlı biyo-uyumluluk ve endotoksin sertifikası aranır.'
+            },
+            {
+                'decree_no': 'OM-MOH-ART-2023/11',
+                'title': 'Yardımcı Üreme Tekniklerinde Embriyo Dondurma ve Biyoetik Güvenlik Direktifi',
+                'date': '2023-11-20',
+                'status': '🟢 Yürürlükte',
+                'impact': 'Sadece resmi nikahlı eşlerin gamet ve embriyoları kullanılabilir; donör gamet ve taşıyıcı annelik kesinlikle yasaktır.'
+            }
+        ],
+        'market_metrics': {
+            'reimbursement_type': 'Vatandaşlara Royal Hospital Bünyesinde Devlet Desteği / Özel Sektörde Cepten Ödeme (%100 Self-Pay)',
+            'insurance_coverage': '%50 (Vatandaşlara Kamu Kapsamı; Özelde Cepten)',
+            'private_cycle_cost_usd': '$4,200 - $6,500 USD',
+            'clinic_growth_cagr': '%8.2 (Yıllık Büyüme)',
+            'donor_gamete_status': 'Yasak (İslami Kurallar & Umman Biyoetik Yasası Uyarınca Sadece Resmi Nikahlı Çiftler)',
+            'surrogacy_status': 'Yasak (Yasal Olarak İzin Verilmez)',
+            'pgt_m_status': 'Yasal & Teşvik Edilen (Talasemi ve Orak Hücreli Anemi İçin Yaygın)'
+        },
+        'key_opinion_leaders': [
+            {'name': 'Dr. Asila Al-Zaabi', 'title': 'Klinik Embriyoloji & Genetik Danışmanı', 'institution': 'Royal Hospital National Genetic Centre (Muscat)'},
+            {'name': 'Dr. Mazen Al-Khabouri', 'title': 'Özel Sağlık Kuruluşları Genel Müdürü', 'institution': 'Ministry of Health Oman (MoH)'},
+            {'name': 'Dr. Michael Fakih / Klinik Direktörlüğü', 'title': 'Medikal Direktör', 'institution': 'Fakih IVF Fertility Center Oman'}
+        ],
+        'recommended_distributor': 'Muscat Pharmacy & Stores LLC / Waleed Pharmacy & Medical Services / Al-Hashar Pharmacy Medical Div.',
+        'knowledge_profile': {
+            'clinic_type': 'Maskat Merkezli Kamu Referans Hastaneleri ve Yüksek Segment Özel IVF Merkezleri.',
+            'customs_code': 'GTIP 9018.90 (AOA Cihazı %5 Gümrük) / GTIP 3822.00 (4-Pool Dish & Reaktifler).',
+            'cold_chain': '+2°C ile +8°C aralığında data-logger eşliğinde Muscat International Airport soğuk hava antreposu.',
+            'payment_norms': 'MoH ve Kamu İhalelerinde 60–90 Gün Resmi Ödeme; Özel Kliniklerde Peşin TT veya Akreditif.',
+            'dos': 'Klinik hekimlerine ve embriyologlarına CE Class IIa sertifikalı klinik yayınları sunun.',
+            'donts': 'Arapça ve İngilizce dokümantasyon olmadan sevkiyat planlamayın; yerel distribütörü atlamayın.'
+        }
+    },
+    'Bahrain': {
+        'authority_name': 'Bahreyn Ulusal Sağlık Düzenleme Otoritesi (NHRA - National Health Regulatory Authority)',
+        'specialist_name': 'NHRA Medikal Cihaz Ruhsatlandırma ve Klinik Denetim Kurulu',
+        'expert_stance': 'Dengeli Onay (Fast-Track CE Harmonizasyonu)',
+        'expert_max_discount': 5.0,
+        'expert_rec_sarf_disc': 6.0,
+        'clinical_dynamics': 'Manama merkezli 8 aktif merkez (BDF Royal Medical Services IVF Center, Salmaniya Medical Complex, Bahrain Specialist Hospital). Yüksek kişi başı gelir ($28.700) ve Körfez sağlık turizmi akışı mevcuttur.',
+        'regulatory_watch': 'NHRA tıbbi cihaz kayıt sertifikası, ISO 13485 ve FSC zorunludur.',
+        'competitor_threat': 'Vitrolife ve Esco Medical yerleşik distribütörlerle temsil edilmektedir.',
+        'commercial_guardrails': 'Cihaz iskontosunu %5 ile sınırlandırın; BDF ihalelerinde yerel sponsor acente şarttır.',
+        'ministry_decrees': [
+            {
+                'decree_no': 'NHRA-MDR-2023/08',
+                'title': 'Yardımcı Üreme Teknolojileri Tıbbi Donanım Ruhsatlandırma Kararı',
+                'date': '2023-08-14',
+                'status': '🟢 Yürürlükte',
+                'impact': 'Tüm IVF ve ICSI laboratuvar cihazlarının NHRA veri tabanında tekil tescili zorunludur.'
+            }
+        ],
+        'market_metrics': {
+            'reimbursement_type': 'Bahreyn Vatandaşlarına BDF ve Salmaniya Hastanelerinde Tam/Kısmi Devlet Desteği',
+            'insurance_coverage': '%55 (Kamu Hastaneleri)',
+            'private_cycle_cost_usd': '$4,500 - $7,000 USD',
+            'clinic_growth_cagr': '%7.5',
+            'donor_gamete_status': 'Yasak',
+            'surrogacy_status': 'Yasak',
+            'pgt_m_status': 'Yasal & Aktif'
+        },
+        'key_opinion_leaders': [
+            {'name': 'Dr. Nawal Dayoub', 'title': 'Tüp Bebek & Üreme Tıbbı Danışmanı', 'institution': 'Bahrain Specialist Hospital'},
+            {'name': 'Dr. Bahaa Fakher', 'title': 'Embriyoloji Direktörü', 'institution': 'Royal Bahrain Hospital'}
+        ],
+        'recommended_distributor': 'Y.K. Almoayyed & Sons Medical / Gulf Pharmacy & General Store',
+        'knowledge_profile': {
+            'clinic_type': 'Askeri (BDF), Kamu ve Butik Özel Tüp Bebek Merkezleri.',
+            'customs_code': 'GTIP 9018.90 (%5 GCC Gümrük).',
+            'cold_chain': '+2°C / +8°C kontrollü sıcaklık kargo.',
+            'payment_norms': 'Akreditif (L/C) veya Sevkiyat Öncesi TT.',
+            'dos': 'NHRA onaylı distribütör kanalıyla hızlı ruhsat alın.',
+            'donts': 'Belgesiz cihaz sevk etmeyin.'
+        }
+    },
     'Turkey': {
         'authority_name': 'T.C. Sağlık Bakanlığı — Türkiye İlaç ve Tıbbi Cihaz Kurumu (TİTCK)',
         'specialist_name': 'TİTCK & Ulusal IVF Klinik Regülasyon Kurulu',
@@ -2672,6 +2804,8 @@ def resolve_device_registration_info(country_name):
         'Saudi Arabia': 'Saudi Arabia', 'SA': 'Saudi Arabia', 'KSA': 'Saudi Arabia', 'Suudi Arabistan': 'Saudi Arabia',
         'UAE': 'UAE', 'United Arab Emirates': 'UAE', 'AE': 'UAE', 'BAE': 'UAE', 'Birleşik Arap Emirlikleri': 'UAE',
         'Qatar': 'Qatar', 'QA': 'Qatar', 'Katar': 'Qatar',
+        'Oman': 'Oman', 'OM': 'Oman', 'Umman': 'Oman',
+        'Bahrain': 'Bahrain', 'BH': 'Bahrain', 'Bahreyn': 'Bahrain',
         'Kuwait': 'Kuwait', 'KW': 'Kuwait', 'Kuveyt': 'Kuwait',
         'Jordan': 'Jordan', 'JO': 'Jordan', 'Ürdün': 'Jordan', 'Jordan-Iraq': 'Jordan', 'Jordan & Iraq': 'Jordan',
         'Iraq': 'Iraq', 'IQ': 'Iraq', 'Irak': 'Iraq',
@@ -2719,6 +2853,65 @@ def resolve_device_registration_info(country_name):
 # (Public Tenders, Technical Specifications, Action Plan & Procurement Parameters)
 # ==============================================================================
 GLOBAL_TENDER_PROCUREMENT_INTEL = {
+    "Oman": {
+        "country_tr": "Umman (Sultanate of Oman)",
+        "flag": "🇴🇲",
+        "tender_authority": "Sultanate of Oman Ministry of Health (MoH) Directorate General of Medical Supplies & GHC",
+        "procurement_portals": [
+            "Oman Tender Board Platform (etendering.tenderboard.gov.om)",
+            "MoH Directorate General of Medical Supplies Procurement Portal",
+            "Gulf Health Council (GHC) Joint Procurement Program (Körfez Ortak İhale Masası)"
+        ],
+        "active_tender_types": [
+            "MoH Sultanate of Oman Açık İhale: Royal Hospital Kadın Hastalıkları ve Üreme Tıbbı Donanım İhalesi",
+            "GHC Körfez Sağlık Konseyi Ortak Medikal İhalesi: Tüp Bebek Sarfları ve Mikro-stimülatör Tedariki",
+            "Sultan Qaboos University Hospital (SQUH) Doğrudan Temin Cihaz Alım İhalesi"
+        ],
+        "typical_budget_range": "15.000 – 65.000 OMR (~$39.000 – $170.000 USD)",
+        "procurement_schedule": "Yıllık MoH Bütçe İhaleleri (Q1-Q2) & GHC Körfez Konsolide Alımları",
+        "technical_specifications": {
+            "device_title": "Automated Electrical Oocyte Activation (AOA) Stimulator & Multi-Well Culture Station",
+            "core_specs": [
+                "Kontrollü elektriksel mikro-darbeli oosit aktivasyonu, kimyasal içermeyen iyonofor alternatifi.",
+                "Sub-%1 hücre parçalanma (lysis) oranı, parti bazlı biyo-uyumluluk ve endotoksin test sertifikasyonu.",
+                "4-Pool tekil hazne mimarisi, çapraz kontaminasyon önleyici koruma kalkanı."
+            ],
+            "mandatory_certifications": ["EU CE Mark (Class IIa)", "ISO 13485:2016", "MoH Umman DGPA&DC Tescil Belgesi", "Free Sales Certificate (FSC) Tasdikli"]
+        },
+        "tender_links": [
+            {"title": "Oman Tender Board E-Procurement Portal", "url": "https://etendering.tenderboard.gov.om"},
+            {"title": "Oman Ministry of Health Official Tenders", "url": "https://www.moh.gov.om"},
+            {"title": "Gulf Health Council (GHC) Joint Medical Tenders", "url": "https://ghc.sa"}
+        ]
+    },
+    "Bahrain": {
+        "country_tr": "Bahreyn (Kingdom of Bahrain)",
+        "flag": "🇧🇭",
+        "tender_authority": "Kingdom of Bahrain Tender Board & National Health Regulatory Authority (NHRA)",
+        "procurement_portals": [
+            "Bahrain Tender Board Portal (tenderboard.gov.bh)",
+            "BDF Royal Medical Services Procurement Portal",
+            "Gulf Health Council (GHC) Joint Procurement Program"
+        ],
+        "active_tender_types": [
+            "Bahrain Tender Board: Salmaniya & BDF Tüp Bebek Merkezi Tıbbi Cihaz İhalesi",
+            "GHC Konsolide Körfez Sağlık İhalesi: Hücre Kültürü ve Oosit Aktivasyon Kiti Alımı"
+        ],
+        "typical_budget_range": "18.000 – 50.000 BHD (~$48.000 – $132.000 USD)",
+        "procurement_schedule": "Yıllık Merkezi İhaleler (Q2) & GHC Ortak Satın Alımları",
+        "technical_specifications": {
+            "device_title": "Electrical Oocyte Activation (AOA) & Micro-pulse Stimulator",
+            "core_specs": [
+                "Mikro-darbeli elektriksel aktivasyon, sub-%1 oosit lizisi.",
+                "CE Sertifikası (Class IIa) ve ISO 13485:2016 uyumluluğu."
+            ],
+            "mandatory_certifications": ["CE Sertifikası (Class IIa)", "ISO 13485:2016", "NHRA Tescil Belgesi"]
+        },
+        "tender_links": [
+            {"title": "Bahrain Tender Board Portal", "url": "https://www.tenderboard.gov.bh"},
+            {"title": "Gulf Health Council (GHC)", "url": "https://ghc.sa"}
+        ]
+    },
     "Türkiye": {
         "country_tr": "Türkiye",
         "flag": "🇹🇷",
@@ -3140,6 +3333,88 @@ def resolve_country_tender_intel(country_name):
     }
 
 COUNTRY_DEEP_INTELLIGENCE = {
+    'Oman': {
+        'customs_regulatory': {
+            'tariff_rate': '%5.0 Standart GCC Gümrük Vergisi (Maskat Uluslararası Havalimanı & Sohar Limanı)',
+            'vat_rate': '%0.0 Sıfır Oranlı / Muaf (Umman KDV Kanunu Kapsamında Temel Tıbbi Cihaz ve Sarflar)',
+            'gtip_device': 'GTIP 9018.90 (Elektriksel Oosit Aktivasyon & Mikro-stimülasyon Sistemleri)',
+            'gtip_consumable': 'GTIP 3822.00 (In Vitro Diagnostik & 4-Pool Kültür Dish Sarfları)',
+            'clearance_days': '8–12 Gün Liman/Gümrük Geçişi (MoH DGPA&DC Medikal Muayene Dahil)',
+            'required_docs': 'Umman Konsolosluğu veya Ticaret Odası Tasdikli Menşe Şahadetnamesi (COO), Free Sales Certificate (FSC), CE Class IIa Uygunluk Beyanı, ISO 13485:2016 Sertifikası, İngilizce/Arapça Kullanım Kılavuzu',
+            'cold_chain_rules': 'Maskat Havalimanı Kargo soğuk hava ambalajı (+2°C / +8°C) aktif USB/BLE sıcaklık veri kaydedici (data-logger); cihaz nakliyesinde titreşim ve nem korumalı sandıklama.',
+            'authority_full': 'Umman Sultanlığı Sağlık Bakanlığı (MoH Oman - Directorate General of Pharmaceutical Affairs and Drug Control)',
+            'registration_path': 'MoH DGPA&DC Hızlı Tescil Masası (EU CE Mark ve FSC ile Fast-Track Tıbbi Cihaz İthal İzni)'
+        },
+        'ivf_pgt_regulatory': {
+            'transfer_rules': 'Umman MoH DGPHE klinik kılavuzları gereği, 35 yaş altı kadınlarda ilk iki denemede tek embriyo transferi (eSET) zorunludur; çoğul gebelik riskini önlemek için azami 2 embriyo transfer edilebilir.',
+            'cycle_funding': 'Umman vatandaşları için Royal Hospital ve devlet hastanelerinde yıllık belirli kotalarla ücretsiz tedavi; yabancı ikamet sahipleri ve özel klinik hastaları için tamamen cepten ödeme (self-pay) veya üst düzey özel sağlık sigortası.',
+            'pgt_legal_status': 'Bölgesel genetik hastalıklar (Talasemi, Sickle Cell Orak Hücreli Anemi) taraması için PGT-M ve tekrarlayan kayıplarda PGT-A tıbbi endikasyonla tam yasaldır.',
+            'sex_selection_rule': 'Umman ulusal biyoetik yasaları ve İslam hukuku çerçevesinde yalnızca tıbbi X/Y kromozomuna bağlı genetik hastalıkların önlenmesi amacıyla cinsiyet seçimine izin verilir; sosyal cinsiyet seçimi kesinlikle yasaktır.',
+            'donor_gametes_surrogacy': 'Donör sperm, donör yumurta ve taşıyıcı annelik (surrogacy) Umman mevzuatı ve dini kuralları gereğince mutlak surette yasaktır; sadece resmi nikahlı eşlerin kendi üreme hücreleri kullanılabilir.'
+        },
+        'pricing_forecasts': {
+            'device_list_usd': 32000.0,
+            'target_device_net_usd': 30400.0,
+            'sarf_box_list_usd': 100.0,
+            'target_sarf_net_usd': 94.0,
+            'rec_dist_margin_pct': 30.0,
+            'currency_pegging': 'OMR (Umman Riyali) Amerikan Dolarına Sabitlenmiştir: 1 OMR = 2.60 USD. Kur riski sıfıra yakındır.',
+            'forecast_2026_q4': '$48.000 USD (1-2 Cihaz & 180 Kutu 4-Pool Dish)',
+            'forecast_2027_full': '$142.000 USD (3 Cihaz & 620 Kutu Sarf)'
+        },
+        'expert_opinions': {
+            'opinion_summary': 'Umman, istikrarlı para birimi (OMR/USD sabiti), yüksek kişi başı geliri ($23.300) ve sıfır kur riski ile Körfez bölgesinin en güvenilir MedTech ödeme pazarlarındandır. Doğrudan klinik satışlarından ziyade Maskat merkezli köklü bir medikal distribütör üzerinden yürünmelidir.',
+            'dos': ['Maskat merkezli Royal Hospital ve Fakih IVF gibi amiral gemisi kliniklere yerinde aplikasyon ve demo cihazı sağlayın.', 'Körfez Sağlık Konseyi (GHC) ihale şartnamelerine uyumlu teknik dosya hazırlayın.', 'CE Class IIa ve ISO 13485 sertifikalarını eksiksiz sunun.'],
+            'donts': ['Distribütörün Omani acentelik belgesi olmadan yerel pazara teklif vermeyin.', 'Dini ve biyoetik normlara (donör yasağı) aykırı tanıtım materyali kullanmayın.', 'Liste fiyatında %5.0\'ten fazla taviz vermeyin; OMR alım gücü yüksektir.']
+        },
+        'sales_strategy': {
+            'primary_channel': 'Maskat Yetkili Medikal Distribütör Ataması + Royal Hospital & Özel Zincir Konsinye Modeli',
+            'target_institutions': ['Royal Hospital National Genetic & IVF Centre (Maskat)', 'Fakih IVF Fertility Center Oman (Maskat)', 'Oman International Hospital - Oman Fertility Centre (Al Ghubra, Maskat)', 'Al-Bushra Medical Specialty Complex (Azaiba, Maskat)', 'Muscat Fertility Center (Al Khuwair)'],
+            'payment_terms': 'Akreditif (L/C) veya Sevkiyat Öncesi %50 Avans + %50 Konşimento Karşılığı TT Transferi',
+            'warranty_terms': '2 Yıl Tam Parça ve Elektronik Kart Garantisi + Yıllık Önleyici Kalibrasyon Bakımı'
+        }
+    },
+    'Bahrain': {
+        'customs_regulatory': {
+            'tariff_rate': '%5.0 Standart GCC Gümrük Vergisi (Bahreyn Uluslararası Havalimanı & Khalifa Limanı)',
+            'vat_rate': '%0.0 Sıfır Oranlı / Muaf (Sağlık ve Medikal Cihazlar)',
+            'gtip_device': 'GTIP 9018.90 (Tıbbi Teşhis ve Elektriksel Stimülatör Cihazları)',
+            'gtip_consumable': 'GTIP 3822.00 (In Vitro Diagnostik & Kültür Kitleri)',
+            'clearance_days': '5–7 Gün Hızlı Gümrükleme (NHRA Hızlı Hat)',
+            'required_docs': 'Menşe Şahadetnamesi (COO), Free Sales Certificate (FSC), CE Class IIa Deklarasyonu, ISO 13485',
+            'cold_chain_rules': '+2°C / +8°C aktif veri kaydedicili soğuk kargo ambalajı.',
+            'authority_full': 'Bahreyn Ulusal Sağlık Düzenleme Otoritesi (NHRA - National Health Regulatory Authority)',
+            'registration_path': 'NHRA Medikal Cihaz Hızlı Tescil Protokolü (CE ve ISO Uyumlu)'
+        },
+        'ivf_pgt_regulatory': {
+            'transfer_rules': '35 yaş altı kadınlarda ilk siklusta eSET tek embriyo; ileri anne yaşında en fazla 2 embriyo transferi.',
+            'cycle_funding': 'Bahreyn vatandaşlarına BDF ve Salmaniya kamu merkezlerinde tam/kısmi devlet desteği; özel kliniklerde cepten ödeme.',
+            'pgt_legal_status': 'Tıbbi endikasyonla PGT-M ve PGT-A tamamen yasaldır.',
+            'sex_selection_rule': 'Yalnızca cinsiyete bağlı genetik anomalilerin önlenmesinde yasal; sosyal amaçlı cinsiyet tayini yasaktır.',
+            'donor_gametes_surrogacy': 'Donör gamet ve taşıyıcı annelik yasal olarak kesinlikle yasaktır.'
+        },
+        'pricing_forecasts': {
+            'device_list_usd': 32000.0,
+            'target_device_net_usd': 30400.0,
+            'sarf_box_list_usd': 100.0,
+            'target_sarf_net_usd': 94.0,
+            'rec_dist_margin_pct': 30.0,
+            'currency_pegging': 'BHD (Bahreyn Dinarı) Amerikan Dolarına Sabitlenmiştir: 1 BHD = 2.65 USD.',
+            'forecast_2026_q4': '$36.000 USD (1 Cihaz & 140 Kutu Sarf)',
+            'forecast_2027_full': '$98.000 USD (2 Cihaz & 450 Kutu Sarf)'
+        },
+        'expert_opinions': {
+            'opinion_summary': 'Bahreyn, yüksek alım gücü ve kompakt pazarı ile Körfez\'in hızlı karar alan elit merkezlerindendir.',
+            'dos': ['NHRA tescilli distribütörlerle masaya oturun.', 'BDF Royal Medical Services ihalesine hazırlanın.'],
+            'donts': ['Resmi FSC olmadan teklif vermeyin.']
+        },
+        'sales_strategy': {
+            'primary_channel': 'Yetkili Distribütör Satışı & BDF Askeri Hastane İhalesi',
+            'target_institutions': ['BDF Royal Medical Services IVF Center', 'Salmaniya Medical Complex', 'Bahrain Specialist Hospital'],
+            'payment_terms': 'Akreditif (L/C) veya Peşin TT',
+            'warranty_terms': '2 Yıl Garanti'
+        }
+    },
     'Egypt': {
         'customs_regulatory': {
             'tariff_rate': '%5.0 Gümrük Vergisi (Kahire Kargo Havalimanı)',
@@ -5775,6 +6050,10 @@ def resolve_deep_country_intelligence(country_name, macro=None):
         c = 'Jordan-Iraq'
     elif c in ['Qatar', 'QA', 'Katar']:
         c = 'Qatar'
+    elif c in ['Oman', 'OM', 'Umman']:
+        c = 'Oman'
+    elif c in ['Bahrain', 'BH', 'Bahreyn']:
+        c = 'Bahrain'
     elif c in ['Saudi Arabia', 'SA', 'KSA', 'Suudi Arabistan']:
         c = 'Saudi Arabia'
     elif c in ['Algeria', 'DZ', 'Cezayir']:
@@ -6008,6 +6287,8 @@ COUNTRIES_RAW = [
     ('EG','Egypt',9,4,'MENA','EGY'),
     ('SA','Saudi Arabia',10,4,'MENA','SAU'),
     ('AE','UAE',11,4,'MENA','ARE'),
+    ('OM','Oman',12,4,'MENA','OMN'),
+    ('BH','Bahrain',11,4,'MENA','BHR'),
     ('NG','Nigeria',7,5,'Africa','NGA'),
     ('KE','Kenya',9,5,'Africa','KEN'),
     ('ZA','South Africa',8,6,'Africa','ZAF'),
@@ -6345,6 +6626,8 @@ MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec
 
 # Real World Bank (WDI 2023/2024) and ESHRE/CDC/WHO IVF Registries
 REAL_WORLD_BANK_IVF_DATA = {
+    'OM': {'pop': 4.65, 'gdp': 108.3, 'gdp_pc': 23300, 'clinics': 11, 'cycles': 4800, 'health_pct': 4.8, 'icsi_pct': 92, 'pgt_pct': 26, 'cryo_pct': 72, 'risk': 'Low', 'reg': 'Strict', 'imp': 'Licensing required'},
+    'BH': {'pop': 1.55, 'gdp': 44.5, 'gdp_pc': 28700, 'clinics': 8, 'cycles': 3200, 'health_pct': 5.2, 'icsi_pct': 90, 'pgt_pct': 24, 'cryo_pct': 70, 'risk': 'Low', 'reg': 'Strict', 'imp': 'Licensing required'},
     'US': {'pop': 335.0, 'gdp': 27360, 'gdp_pc': 81600, 'clinics': 460, 'cycles': 390000, 'health_pct': 16.6, 'icsi_pct': 75, 'pgt_pct': 38, 'cryo_pct': 78, 'risk': 'Low', 'reg': 'Moderate', 'imp': 'Licensing required'},
     'CA': {'pop': 40.1, 'gdp': 2140, 'gdp_pc': 53400, 'clinics': 42, 'cycles': 38000, 'health_pct': 11.2, 'icsi_pct': 72, 'pgt_pct': 28, 'cryo_pct': 70, 'risk': 'Low', 'reg': 'Strict', 'imp': 'Licensing required'},
     'MX': {'pop': 128.5, 'gdp': 1790, 'gdp_pc': 13900, 'clinics': 85, 'cycles': 35000, 'health_pct': 5.5, 'icsi_pct': 82, 'pgt_pct': 24, 'cryo_pct': 65, 'risk': 'Medium', 'reg': 'Moderate', 'imp': 'Licensing required'},
@@ -6412,6 +6695,8 @@ print("Total countries defined:", len(REAL_WORLD_BANK_IVF_DATA))
 def get_country_intelligence():
     # Specific IVF & PGT Health Expenditure and State Reimbursement Benchmark Database
     SPECIFIC_IVF_REIMBURSEMENT = {
+        'OM': {'ivf_gdp_pct': 0.06, 'state_support_pct': 50.0, 'reimbursement': 'Kraliyet & Kamu Hastanelerinde (Royal Hospital) Umman Vatandaşlarına Ücretsiz (1-2 Siklus); Özelde Cepten'},
+        'BH': {'ivf_gdp_pct': 0.07, 'state_support_pct': 55.0, 'reimbursement': 'BDF Kraliyet & Salmaniya Kamu Hastanelerinde Vatandaşlara Ücretsiz; Özelde Cepten'},
         'TR': {'ivf_gdp_pct': 0.07, 'state_support_pct': 40.0, 'reimbursement': 'SGK Kısmi Desteği (3 Siklus Katkı Paylı İlaç/İşlem + Tıbbi PGT)'},
         'ES': {'ivf_gdp_pct': 0.14, 'state_support_pct': 60.0, 'reimbursement': 'Karma Model (Kamu Hastanelerinde 3 Siklus Ücretsiz + Özelde Cepten)'},
         'DE': {'ivf_gdp_pct': 0.10, 'state_support_pct': 50.0, 'reimbursement': 'GKV Kamu Sandığı %50 Geri Ödeme (3 Siklus; PGT Tıbbi İzinli)'},
@@ -6523,6 +6808,7 @@ def get_country_intelligence():
     return pd.DataFrame(records)
 
 country_to_region = {
+    'Oman': 'MENA', 'Umman': 'MENA', 'Bahrain': 'MENA', 'Bahreyn': 'MENA',
     'Turkey': 'Europe', 'Belgium': 'Europe', 'Albania-Slovakia': 'Europe',
     'Bulgaria': 'Europe', 'Azerbaijan': 'Europe', 'United Kingdom': 'Europe',
     'Jordan & Iraq': 'MENA', 'Jordan & Iraq (Ürdün & Irak)': 'MENA', 'Jordan-Iraq': 'MENA',
@@ -9293,6 +9579,20 @@ def format_executive_directive_block(custom_note, eff_lang, strat_mode="clinical
 # GLOBAL B2B BUYING BEHAVIOR & CULTURAL NEGOTIATION PLAYBOOK
 # ==============================================================================
 GLOBAL_COUNTRY_BUYING_BEHAVIOR = {
+    "Oman": {
+        "culture_title": "Sakin, Saygın & Protokol Odaklı (High-Context / Omani Majlis Kültürü)",
+        "decision_hierarchy": "Merkez Direktörü / Baş Embriyolog & MoH Komisyonu Konsensüsü",
+        "decision_speed": "Orta (Körfez ortalamasında; Omani hekimler teknik referanslara derin saygı duyar)",
+        "trust_building": "Saygı, Nezaket ve Güvenilirlik — Umman kültüründe aceleci ve baskıcı satış taktikleri ters teper. Yüz yüze ziyaret, Maskat'ta prestijli klinik sunumu ve yerel meclis adabı esastır.",
+        "bargaining_culture": "Dengeli & Profesyonel (%5 - %8 İskonto Beklentisi)",
+        "bargaining_advice": "Umman Riyali (OMR) yüksek değerli ve dolara sabit olduğu için aşırı indirim yerine uzun vadeli garanti, eğitim desteği ve aplikasyon desteği daha caziptir.",
+        "primary_proof_point": "Avrupa CE Class IIa Onayı, Yayınlanmış Hakemli Klinik Çalışmalar & Royal Hospital Standartlarına Uyum",
+        "preferred_deal_model": "MoH Tescilli Yerel Distribütör Üzerinden CAPEX Cihaz Satışı + Yıllık Sarf Tedarik Protokolü",
+        "communication_channels": "Resmi İngilizce/Arapça Yazışma + WhatsApp Yönetici Hattı + Yerinde Klinik Ziyareti",
+        "cultural_taboos": "Baskıcı/agresif satış dili; dini-kültürel normları göz ardı etmek (donör ima etmek); yerel distribütörü devreden çıkarmaya çalışmak.",
+        "dining_hospitality_protocol": "Umman Kahvesi (Kahwa) & Hurma Karşılama Adabı: Maskat'ta toplantılar geleneksel kakuleli Umman kahvesi ve taze hurma ikramıyla başlar. İkramı kabul etmemek nezaketsizliktir. Fiyat görüşmesi kahve sonrası sakin bir tonda ele alınır.",
+        "dining_contract_rule": "🟢 Karşılıklı Saygı ve Güven Esaslı (Nezaketle Yürütülen Müzakere)"
+    },
     "Saudi Arabia": {
         "culture_title": "İlişki & Prestij Odaklı (KOL-Centric / High-Context)",
         "decision_hierarchy": "Merkez Direktörü / KOL Hekim Mutlak Karar Vericidir",
@@ -10712,7 +11012,81 @@ def get_country_gtm_directory(c_name, c_row=None):
 
 
 GLOBAL_PROSPECT_RADAR = {
-    "Spain": [
+"Oman": [
+        {
+            "name": "Royal Hospital National Genetic Centre & IVF Unit",
+            "category": "🏥 Devlet & Üniversite Araştırma Hastaneleri",
+            "tier": "⭐ Tier 1 (Öncelikli Kamu & Araştırma Merkezi)",
+            "city": "Muscat (Maskat)",
+            "contact_person": "Dr. Asila Al-Zaabi (Klinik Genetik & Embriyoloji Direktörü)",
+            "email": "royalhospital.ivf@moh.gov.om",
+            "phone": "+968 2459 9000",
+            "address": "Royal Hospital, Al Ghubra South, Muscat, Sultanate of Oman",
+            "website": "https://www.moh.gov.om",
+            "website_clean": "moh.gov.om",
+            "volume": "1,500+ Siklus / Yıl (Umman'ın En Büyük Kamu Genetik ve IVF Referans Merkezi)",
+            "decision_maker": "Baş Embriyolog & Tıbbi Cihaz İhale Komisyonu",
+            "product_match": "⚡ ZEUS Pulse Stimulator (AOA) + 4-Pool Single Dish Sarf Kiti",
+            "est_revenue": "$45,000 USD / Yıl",
+            "why_target": "Total Fertilizasyon Yetmezliği (TFF) ve akraba evliliği kaynaklı oosit aktivasyon defektlerinde mikro-elektriksel AOA protokolü ile başarı oranını %20 artırma potansiyeli.",
+            "pitch_template": "Sayın Royal Hospital Embriyoloji ve Üreme Tıbbı Heyeti,\n\nUmman Sultanlığı'nda öncülük ettiğiniz yardımcı üreme teknikleri ve genetik tanı çalışmalarını takdirle izliyoruz. ZEUS Pulse Stimulator (AOA) sistemimiz ve tek kullanımlık 4-Pool Dish kiti ile oosit lizis oranını sıfırlayan klinik çalışmalarımızı paylaşmak isteriz."
+        },
+        {
+            "name": "Fakih IVF Fertility Center Oman",
+            "category": "🏥 Öncü Özel IVF Klinik Zincirleri",
+            "tier": "⭐ Tier 1 (Öncelikli Özel Sektör Lideri)",
+            "city": "Muscat (Shatti Al Qurum)",
+            "contact_person": "Dr. Michael Fakih / Baş Embriyolog ve Klinik Direktörlüğü",
+            "email": "info.oman@fakihivf.com",
+            "phone": "+968 2469 9880",
+            "address": "Way 3042, Building 3363, Shatti Al Qurum, Muscat, Sultanate of Oman",
+            "website": "https://www.fakihivfoman.com",
+            "website_clean": "fakihivfoman.com",
+            "volume": "1,200+ Siklus / Yıl (Körfez'in En Prestijli Özel Tüp Bebek Zinciri)",
+            "decision_maker": "Klinik Direktörü & Laboratuvar Yöneticisi",
+            "product_match": "⚡ ZEUS Pulse Stimulator (AOA) + 4-Pool Single Dish",
+            "est_revenue": "$38,000 USD / Yıl",
+            "why_target": "Zorlu hasta gruplarında (ileri anne yaşı, düşük over rezervi, tekrarlayan başarısızlıklar) en yüksek gebelik oranını hedefleyen yenilikçi AOA ve tek kullanımlık 4-Pool dish protokolü.",
+            "pitch_template": "Sayın Fakih IVF Laboratuvar ve Medikal Direktörlüğü,\n\nFakih IVF'in Körfez genelindeki üstün klinik başarılarını yakından takip ediyoruz. ZEUS Bioscience patentli Elektriksel Oosit Aktivasyon (AOA) teknolojisi ile fertilizasyon başarısını artırmayı hedefleyen protokolümüzü sunmaktan memnuniyet duyarız."
+        },
+        {
+            "name": "Oman Fertility Centre (Oman International Hospital)",
+            "category": "🏥 Özel Referans Hastaneleri",
+            "tier": "⭐ Tier 1 (Modern Medikal Kompleks)",
+            "city": "Al Ghubra, Muscat",
+            "contact_person": "Dr. Francisco Rodriguez / Baş Embriyolog Ekibi",
+            "email": "fertility@omaninternationalhospital.com",
+            "phone": "+968 2490 3000",
+            "address": "Al Ghubra, Muscat, Sultanate of Oman",
+            "website": "https://www.omaninternationalhospital.com",
+            "website_clean": "omaninternationalhospital.com",
+            "volume": "800+ Siklus / Yıl",
+            "decision_maker": "Laboratuvar Direktörü & Medikal Direktör",
+            "product_match": "⚡ ZEUS Pulse Stimulator & Mismatch Blocker Kiti",
+            "est_revenue": "$28,000 USD / Yıl",
+            "why_target": "Muscat'ın en lüks uluslararası hastanesi bünyesinde Avrupa standartlarında IVF teknolojisi.",
+            "pitch_template": "Sayın Oman International Hospital Yetkilileri,\n\nAvrupa CE standartlarında üretilen ZEUS Pulse Stimulator ve 4-Pool Dish sistemlerimizin demonstrasyonu için randevu talep ediyoruz."
+        },
+        {
+            "name": "Al-Bushra Medical Specialty Complex (Fertility & IVF)",
+            "category": "🏥 Uzmanlaşmış Tüp Bebek Merkezi",
+            "tier": "⭐ Tier 2 (Köklü Özel Merkez)",
+            "city": "Azaiba, Muscat",
+            "contact_person": "Klinik Direktörlüğü & Embriyoloji Laboratuvarı",
+            "email": "info@sfc-oman.com",
+            "phone": "+968 2449 0590",
+            "address": "18th November St, Azaiba, Muscat, Sultanate of Oman",
+            "website": "https://www.sfc-oman.com",
+            "website_clean": "sfc-oman.com",
+            "volume": "650+ Siklus / Yıl",
+            "decision_maker": "Klinik Direktörü & Embriyolog",
+            "product_match": "⚡ ZEUS Pulse Stimulator",
+            "est_revenue": "$22,000 USD / Yıl",
+            "why_target": "Maskat'ın köklü bağımsız IVF merkezi.",
+            "pitch_template": "Sayın Al-Bushra IVF Heyeti,\n\nKlinik embriyoloji laboratuvarınız için ZEUS Pulse AOA sistemimizi takdim etmek isteriz."
+        }
+    ],
+        "Spain": [
         {
             "name": "IVI-RMA Global (Valencia, Madrid, Barcelona)",
             "category": "🏥 Öncü IVF Klinik Zincirleri & Hastaneler",
@@ -14046,6 +14420,7 @@ def get_default_regional_expert_assessments():
 
 
 COUNTRY_FLAG_MAP = {
+    'OM': '🇴🇲', 'BH': '🇧🇭',
     'IQ': '🇮🇶', 'JO': '🇯🇴', 'TR': '🇹🇷', 'AE': '🇦🇪', 'SA': '🇸🇦', 'QA': '🇶🇦',
     'KW': '🇰🇼', 'EG': '🇪🇬', 'KR': '🇰🇷', 'DE': '🇩🇪', 'ES': '🇪🇸', 'US': '🇺🇸',
     'JP': '🇯🇵', 'BR': '🇧🇷', 'BE': '🇧🇪', 'FR': '🇫🇷', 'GB': '🇬🇧', 'IN': '🇮🇳',
@@ -15666,7 +16041,7 @@ def render_tenders_hub():
 
     # Country Selector for Tenders (All 59 Global Markets)
     t_countries = [
-        "Egypt", "Jordan", "Iraq", "Saudi Arabia", "Turkey", "United Arab Emirates", "Qatar", "Kuwait", 
+        "Egypt", "Jordan", "Iraq", "Saudi Arabia", "Turkey", "United Arab Emirates", "Qatar", "Kuwait", "Oman", "Bahrain", 
         "Algeria", "Morocco", "Palestine", "Syria", "Germany", "Spain", "Italy", "France", 
         "United Kingdom", "Belgium", "Netherlands", "Sweden", "Norway", "Denmark", "Finland", 
         "Switzerland", "Austria", "Greece", "Poland", "Portugal", "Ireland", "Czechia", "Romania", 
@@ -15954,7 +16329,7 @@ def render_regulations_hub():
 
     # Master Country List for Regulations (All 59 Global Markets)
     ALL_GLOBAL_MASTER_COUNTRIES = [
-        "Jordan", "Iraq", "Turkey", "Saudi Arabia", "United Arab Emirates", "Qatar", "Kuwait", 
+        "Jordan", "Iraq", "Turkey", "Saudi Arabia", "United Arab Emirates", "Qatar", "Kuwait", "Oman", "Bahrain", 
         "Egypt", "Algeria", "Morocco", "Palestine", "Syria", "Germany", "Spain", "Italy", "France", 
         "United Kingdom", "Belgium", "Netherlands", "Sweden", "Norway", "Denmark", "Finland", 
         "Switzerland", "Austria", "Greece", "Poland", "Portugal", "Ireland", "Czechia", "Romania", 
@@ -23674,6 +24049,7 @@ elif active_view in ["⚖️ Çoklu Ülke Kıyaslama Masası (Multi-Country Matr
                     )
 
                     country_flags = {
+                        'Oman': '🇴🇲', 'Bahrain': '🇧🇭',
                         'Spain': '🇪🇸', 'Germany': '🇩🇪', 'Türkiye': '🇹🇷', 'Egypt': '🇪🇬', 'UAE': '🇦🇪', 'India': '🇮🇳',
                         'United States': '🇺🇸', 'United Kingdom': '🇬🇧', 'France': '🇫🇷', 'Italy': '🇮🇹', 'Japan': '🇯🇵',
                         'Australia': '🇦🇺', 'Canada': '🇨🇦', 'Jordan': '🇯🇴', 'Iraq': '🇮🇶', 'Saudi Arabia': '🇸🇦',
@@ -26112,7 +26488,7 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
 
             # Country selection: Prioritize currently selected comparison countries, followed by other key markets
             comp_priorities = [c for c in selected_compare]
-            additional_prio = ["Egypt", "Jordan-Iraq", "Qatar", "Saudi Arabia", "Algeria", "Turkey", "Italy", "Germany", "Spain", "United Arab Emirates", "Kuwait", "Azerbaijan", "United Kingdom", "Jordan", "Iraq", "Palestine", "Belgium", "Bulgaria", "South Korea", "India"]
+            additional_prio = ["Egypt", "Jordan-Iraq", "Qatar", "Saudi Arabia", "Oman", "Bahrain", "Algeria", "Turkey", "Italy", "Germany", "Spain", "United Arab Emirates", "Kuwait", "Azerbaijan", "United Kingdom", "Jordan", "Iraq", "Palestine", "Belgium", "Bulgaria", "South Korea", "India"]
             all_avail_keys = list(MARKET_KNOWLEDGE_BASE.keys())
             
             kb_options = []
@@ -26688,9 +27064,14 @@ elif active_view in ["🌐 Tekil Ülke 360° (Tüm Bilgiler, Mevzuat & İletişi
     st.title("🌍 Country 360° Performance & Intelligence Dossier")
     st.caption("Tek ekranda bütünleşik ülke karnesi: Gerçekleşen satışlar ve filo büyüklüğü, makroekonomi, gümrük GTİP ve ithalat mevzuatı, yeni IVF & PGT biyoetik kuralları, iskonto-tahmin matrisleri, 5 kişilik uzman heyeti görüşleri ve satış stratejisi.")
 
-    # Prioritized Country Ordering
-    prio_countries = ["Egypt", "Jordan-Iraq", "Qatar", "Saudi Arabia", "Algeria", "Turkey", "Italy", "Germany", "Spain", "United Arab Emirates", "Kuwait", "Azerbaijan", "United Kingdom", "Jordan", "Iraq", "Palestine", "Belgium", "Bulgaria", "South Korea", "India"]
-    all_avail_keys = list(MARKET_KNOWLEDGE_BASE.keys())
+    # Prioritized Country Ordering (Oman & Full GCC Included)
+    prio_countries = ["Egypt", "Saudi Arabia", "United Arab Emirates", "Oman", "Qatar", "Kuwait", "Bahrain", "Jordan-Iraq", "Jordan", "Iraq", "Algeria", "Turkey", "Italy", "Germany", "Spain", "Azerbaijan", "United Kingdom", "Palestine", "Belgium", "Bulgaria", "South Korea", "India"]
+    master_c_list = []
+    if 'country_df' in locals() and country_df is not None and hasattr(country_df, 'get') and 'name' in country_df:
+        master_c_list = [c for c in country_df['name'].dropna().unique().tolist() if c]
+    elif 'ALL_GLOBAL_MASTER_COUNTRIES' in locals():
+        master_c_list = ALL_GLOBAL_MASTER_COUNTRIES
+    all_avail_keys = list(set(list(MARKET_KNOWLEDGE_BASE.keys()) + master_c_list))
     c360_options = []
     for p in prio_countries:
         if p not in c360_options:
@@ -28524,7 +28905,7 @@ elif active_view in ["💰 Fiyatlandırma, 4-Pool Dish & Klinik ROI", "💰 Pric
         # Prioritize key active & target markets in selection dropdown (All 59 Global Markets)
         prio_order = [
             "Egypt", "Jordan-Iraq", "Jordan", "Iraq", "Turkey", "Saudi Arabia", "United Arab Emirates", 
-            "Qatar", "Kuwait", "Algeria", "Morocco", "Palestine", "Syria", "Germany", "Spain", "Italy", 
+            "Qatar", "Kuwait", "Oman", "Bahrain", "Algeria", "Morocco", "Palestine", "Syria", "Germany", "Spain", "Italy", 
             "France", "United Kingdom", "Belgium", "Netherlands", "Sweden", "Norway", "Denmark", 
             "Finland", "Switzerland", "Austria", "Greece", "Poland", "Portugal", "Ireland", "Czechia", 
             "Romania", "Bulgaria", "Azerbaijan", "Albania-Slovakia", "United States", "Canada", "Mexico", 
