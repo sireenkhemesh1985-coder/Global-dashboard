@@ -4932,11 +4932,16 @@ def calculate_cycle_based_package_recommendation(target_cycles, country_name="Om
         ai_con_disc = 12.5
         bonus_perk = "Ücretsiz Hava Kargo + 2 Yıl Tam Münhasırlık (Sole Exclusivity)"
     
-    needed_dishes = cycles
-    needed_solutions = max(20, math.ceil(cycles / 3))
+    needed_dish_units = cycles
+    needed_dish_boxes = math.ceil(cycles / 2)  # 1 Kutu = 2 Dish, her dish azami 20 oosit kapasiteli (1 kutu = 2 hasta siklüsü / azami 40 oosit)
+    needed_solution_boxes = max(1, math.ceil(cycles / 6))  # 1 Kutu = 2 ml reaktif (6 Dish / 3 Kutu Dish için yeterli)
+    needed_solution_ml = needed_solution_boxes * 2
+    
+    needed_dishes = needed_dish_boxes  # Kutu bazlı sarf adedi
+    needed_solutions = needed_solution_boxes
     
     gross_dev_total = total_devices * base_dev_price
-    gross_con_total = needed_dishes * base_sarf_price
+    gross_con_total = needed_dish_boxes * base_sarf_price
     gross_total = gross_dev_total + gross_con_total
     
     net_dev_unit = base_dev_price * (1.0 - (ai_dev_disc / 100.0))
@@ -4944,13 +4949,13 @@ def calculate_cycle_based_package_recommendation(target_cycles, country_name="Om
     dev_savings = gross_dev_total - net_dev_total
     
     net_con_unit = base_sarf_price * (1.0 - (ai_con_disc / 100.0))
-    net_con_total = net_con_unit * needed_dishes
+    net_con_total = net_con_unit * needed_dish_boxes
     con_savings = gross_con_total - net_con_total
     
     net_grand_total = net_dev_total + net_con_total
     total_savings = dev_savings + con_savings
     blended_disc_pct = (total_savings / gross_total * 100.0) if gross_total > 0 else 0.0
-    cost_per_cycle_consumable = net_con_unit
+    cost_per_cycle_consumable = net_con_total / cycles
     cost_per_cycle_all_in = net_grand_total / cycles
     
     p_parts = [f"{pulse_units}x Pulse Stimulator (ZPS 26)"]
@@ -4967,8 +4972,12 @@ def calculate_cycle_based_package_recommendation(target_cycles, country_name="Om
         "biop_units": biop_units,
         "mismatch_units": mismatch_units,
         "portfolio_str": portfolio_str,
-        "needed_dishes": needed_dishes,
-        "needed_solutions": needed_solutions,
+        "needed_dish_units": needed_dish_units,
+        "needed_dish_boxes": needed_dish_boxes,
+        "needed_dishes": needed_dish_boxes,
+        "needed_solution_boxes": needed_solution_boxes,
+        "needed_solution_ml": needed_solution_ml,
+        "needed_solutions": needed_solution_boxes,
         "fleet_tier": fleet_tier,
         "ai_dev_disc": ai_dev_disc,
         "ai_con_disc": ai_con_disc,
@@ -5068,9 +5077,9 @@ def render_cycle_capacity_optimizer_ui(country_name, prefix, dev_price=8500.0, s
             </div>
 
             <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,184,0,0.3);border-radius:6px;padding:10px;">
-                <b style="color:#FFB800;font-size:11px;">🧪 GEREKEN SARF MALZEME</b><br>
-                <span style="color:#FFFFFF;font-weight:800;font-size:15px;">{res['needed_dishes']:,} Kutu Dish</span><br>
-                <span style="color:#CBD5E1;font-size:10.5px;">+ {res['needed_solutions']:,} Kutu Solution-Powder (3:1 Oran)</span>
+                <b style="color:#FFB800;font-size:11px;">🧪 GEREKEN SARF MALZEME ({res['cycles']:,} Siklüs)</b><br>
+                <span style="color:#FFFFFF;font-weight:800;font-size:15px;">{res['needed_dish_boxes']:,} Kutu Dish</span><br>
+                <span style="color:#CBD5E1;font-size:10.5px;">Toplam <b>{res['needed_dish_units']:,} Adet Dish</b> (1 Kutu = 2 Dish, Max 20 Oosit/Dish)<br>+ <b>{res['needed_solution_boxes']:,} Kutu Solution-Powder</b> ({res['needed_solution_ml']} ml | 1 Kutu = 2 ml)</span>
             </div>
 
             <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,230,118,0.3);border-radius:6px;padding:10px;">
@@ -6353,8 +6362,8 @@ def render_distributor_3device_policy_card(country_name, macro=None, c_deep=None
                         <span style="background:rgba(0,230,118,0.15);color:#00E676;font-size:10px;padding:2px 6px;border-radius:4px;">Asgari Şart</span>
                     </div>
                     <div style="color:#CBD5E1;">
-                        • <b>1. Cihaz (Direct Sale):</b> 1x Pulse Stimulator + <span style="color:#FFD700;font-weight:700;">1 kutu Dish ve 1 kutu Solution-Powder ÜCRETSİZ HEDİYE</span>.<br>
-                        • <b>2. Cihaz (Reagent-Based):</b> 1x Pulse Stimulator yerleştirilir; <span style="color:#38BDF8;font-weight:700;">60 kutu Dish + 20 kutu Solution-Powder</span> bağlayıcı alım şartı konur.<br>
+                        • <b>1. Cihaz (Direct Sale):</b> 1x Pulse Stimulator + <span style="color:#FFD700;font-weight:700;">1 kutu Dish (2 Dish, 20 oosit/dish) ve 1 kutu Solution-Powder (2 ml) ÜCRETSİZ HEDİYE</span>.<br>
+                        • <b>2. Cihaz (Reagent-Based):</b> 1x Pulse Stimulator yerleştirilir; <span style="color:#38BDF8;font-weight:700;">60 kutu Dish (120 Adet Dish, her kutu 2 dish, max 20 oosit/dish) + 20 kutu Solution-Powder (40 ml, 1 kutu 2 ml)</span> bağlayıcı alım şartı konur.<br>
                         • <b>3. Cihaz (Distribütör Tercihi):</b> BioPSafe, Mismatch Blocker veya Smart Cryotools arasından dilediği 1 cihaz.
                     </div>
                 </div>
@@ -6407,7 +6416,7 @@ def render_distributor_3device_policy_card(country_name, macro=None, c_deep=None
                         </tr>
                         <tr style="border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);">
                             <td style="padding:8px 10px;font-weight:700;color:#FFFFFF;">Zorunlu Sarf Taahhüdü</td>
-                            <td style="padding:8px 10px;">60 Kutu Dish + 20 Kutu Solution-Powder (+1 Dish & +1 Sol-Powder Hediye)</td>
+                            <td style="padding:8px 10px;">60 Kutu Dish (120 Dish, 20 oosit/dish) + 20 Kutu Solution-Powder (40 ml) (+1 Dish & +1 Sol-Powder Hediye)</td>
                             <td style="padding:8px 10px;color:#00E676;font-weight:700;">{rec_sarf_text}</td>
                             <td style="padding:8px 10px;">
                                 {f"Umman gibi butik pazarlarda 60 Dish + 20 Sol-Powder pazarın yıllık tüketimini karşılar." if rec_qty == 3 else f"Yıllık {cycles:,} siklüslü pazarda {rec_sarf_text} ile kesintisiz sarf kilitlenmesi sağlanır."}
@@ -14546,6 +14555,173 @@ def render_universal_csv_importer_hub():
                 )
 
 
+
+def calc_prospect_device_consumable_rec(p, country_row=None, country_name=""):
+    """
+    Klinik, hastane ve distribütör karar verici kartları için siklüs hacmine dayalı donanım ve sarf malzeme reçetesi:
+    - 1 Kutu Dish = 2 Adet Dish (Her dish azami 20 oosit kapasiteli; 1 kutu = 2 hasta siklüsü / azami 40 oosit)
+    - 1 Kutu Solution-Powder = 2 ml (6 Dish / 3 Kutu Dish tüketimi için yeterli)
+    - Distribütörler için: Asgari 3 cihaz zorunlu giriş şartı (Paket A veya Paket B) + 60 Kutu Dish (120 Dish) & 20 Kutu Solution-Powder (40 ml)
+    - Klinik/Hastaneler için: Siklüs hacmine göre 1 ila 5 cihaz + ceil(siklüs/2) Kutu Dish + ceil(siklüs/6) Kutu Solution-Powder
+    """
+    import math, re
+    cat = str(p.get('category', '')).lower()
+    is_dist = any(k in cat for k in ['distribütör', 'distributor', 'dağıtıcı', 'dağıtım', 'bayi', 'partner'])
+    vol_str = str(p.get('volume', ''))
+    c_name = country_name or (country_row.get('name', 'Pazar') if country_row is not None and isinstance(country_row, dict) else 'Pazar')
+    
+    if is_dist:
+        c_clinics = int(country_row.get('clinics', 75)) if country_row is not None and 'clinics' in country_row else 75
+        c_cycles = int(country_row.get('cycles', 52000)) if country_row is not None and 'cycles' in country_row else 52000
+        cov_pct = (3.0 / max(1, c_clinics) * 100.0)
+        
+        if c_clinics <= 15:
+            rec_devices = 3
+            suff_verdict = f"🟢 Asgari 3 Cihaz {c_name} İçin Tam Yeterli (%{cov_pct:.1f} Kapsama)"
+            suff_detail = f"{c_name} butik pazarında (%{cov_pct:.1f} pazar penetrasyonu) ilk faz için 3 cihaz amiral gemisi klinikleri tam doyurur; fazlası atıl kapasite yaratır."
+        elif c_clinics <= 45:
+            rec_devices = 5
+            suff_verdict = f"🟡 3 Cihaz Giriş İçin Yeterli | AI Önerisi: 4-5 Cihaz Bölgesel Filo (%{cov_pct:.1f} Kapsama)"
+            suff_detail = f"{c_name} ölçeğinde 3 cihaz başlangıçtır; ancak metropol dışı merkezler için 4-5 cihazlık filo önerilir."
+        else:
+            rec_devices = max(7, min(10, math.ceil(c_clinics * 0.10)))
+            suff_verdict = f"🔴 3 Cihaz Asgari Zorunlu Giriş Şartı | AI Pazar Önerisi: {rec_devices} Cihaz Filo (%{cov_pct:.1f} Kapsama)"
+            suff_detail = f"{c_name} {c_clinics} lisanslı klinik barındıran dev bir pazardır. Standart olarak 3 cihaz şartı koyuyoruz, ancak tam münhasırlık için {rec_devices} cihazlık bölgesel filo hedeflenmelidir."
+            
+        dish_boxes = 60
+        dish_units = 120
+        sol_boxes = 20
+        sol_ml = 40
+        
+        return {
+            'is_dist': True,
+            'cycles': c_cycles,
+            'rec_devices_str': '3 Cihaz Zorunlu Taahhüt (Tüm Distribütörler İçin Standart Giriş Kuralı)',
+            'rec_packages': '• Paket A: 2x Pulse Stimulator (1 Direct Sale + 1 Reagent-Based) + 1x Portföy (BioPSafe, Mismatch Blocker veya Smart Cryotools)\n• Paket B: 3 Farklı Cihaz (1x BioPSafe + 1x Mismatch Blocker + 1x Smart Cryotools)',
+            'country_scale_verdict': suff_verdict,
+            'country_scale_detail': suff_detail,
+            'dish_boxes': dish_boxes,
+            'dish_units': dish_units,
+            'sol_boxes': sol_boxes,
+            'sol_ml': sol_ml,
+            'starter_perk': 'Direct Sale Pulse Stimulator ile birlikte 1 Kutu Dish + 1 Kutu Solution-Powder Ücretsiz Promosyon Kiti',
+            'discount_str': 'Distribütör Baremi: Cihazda %8 - %10 | Sarfta %10 - %12 İskonto (%40+ Distribütör Marjı)'
+        }
+    else:
+        m = re.search(r'([\d\.,]+)\+?\s*(?:siklus|cycle)', vol_str, re.I)
+        if m:
+            c_val = int(m.group(1).replace('.', '').replace(',', ''))
+        else:
+            c_clinics = int(country_row.get('clinics', 75)) if country_row is not None and 'clinics' in country_row else 75
+            c_cycles = int(country_row.get('cycles', 52000)) if country_row is not None and 'cycles' in country_row else 52000
+            c_val = int((c_cycles / max(1, c_clinics)) * 1.5)
+            
+        if c_val <= 450:
+            dev_title = "1x ZEUS Pulse Stimulator (ZPS 26)"
+            dev_badge = "1 Cihaz (Butik Kapasite)"
+            dev_desc = "Günde 1-2 vaka için ideal AOA oosit aktivasyon kurulumu"
+            tot_dev = 1
+        elif c_val <= 900:
+            dev_title = "2 Cihaz: 1x ZEUS Pulse Stimulator (ZPS 26) + 1x BioPSafe (ZBS 26)"
+            dev_badge = "2 Cihaz (Standart Merkez)"
+            dev_desc = "AOA fertilizasyon aktivasyonu + PGT trofektoderm biyopsi istasyonu"
+            tot_dev = 2
+        elif c_val <= 1800:
+            dev_title = "3 Cihaz: 2x ZEUS Pulse Stimulator (ZPS 26) + 1x BioPSafe (ZBS 26)"
+            dev_badge = "3 Cihaz (Referans Merkezi)"
+            dev_desc = "Yüksek vaka hacminde kesintisiz 2x AOA laboratuvar yedekliliği + PGT biyopsi kabini"
+            tot_dev = 3
+        else:
+            dev_title = "5 Cihaz Bölgesel Filo: 3x ZEUS Pulse Stimulator (ZPS 26) + 1x BioPSafe (ZBS 26) + 1x Mismatch Blocker (ZMB-7T)"
+            dev_badge = "5 Cihaz (Kurumsal Filo)"
+            dev_desc = "Çok merkezli tüp bebek zinciri & hastane komple teknoloji filosu"
+            tot_dev = 5
+            
+        dish_units = c_val
+        dish_boxes = math.ceil(c_val / 2) # 1 kutu = 2 dish, her dish max 20 oosit
+        sol_boxes = max(1, math.ceil(c_val / 6)) # 1 kutu = 2 ml, 6 dish / 3 kutu dish için yeterli
+        sol_ml = sol_boxes * 2
+        
+        disc_text = "Cihazda %10 | Sarfta %12 İskonto (Yıllık ~$12,500 - $18,000 USD Tasarruf)" if c_val >= 1000 else "Cihazda %8 | Sarfta %8 İskonto (Yıllık ~$4,500 - $7,500 USD Tasarruf)"
+        
+        return {
+            'is_dist': False,
+            'cycles': c_val,
+            'tot_dev': tot_dev,
+            'dev_str': dev_title,
+            'dev_badge': dev_badge,
+            'dev_desc': dev_desc,
+            'dish_boxes': dish_boxes,
+            'dish_units': dish_units,
+            'sol_boxes': sol_boxes,
+            'sol_ml': sol_ml,
+            'starter_perk': 'İlk Cihaz Kurulumunda 1 Kutu Dish + 1 Kutu Solution-Powder Ücretsiz Başlangıç Kiti',
+            'discount_str': disc_text
+        }
+
+def render_prospect_rec_html(p, country_row=None, country_name=""):
+    """
+    Renders the cycle-based device and consumable recommendation card HTML block.
+    """
+    rec = calc_prospect_device_consumable_rec(p, country_row, country_name)
+    if rec['is_dist']:
+        html = f"""
+        <div style="margin-top:10px;background:rgba(15,25,46,0.85);border:1.5px solid rgba(0,245,255,0.35);border-radius:6px;padding:10px 12px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;border-bottom:1px solid rgba(0,245,255,0.2);padding-bottom:5px;flex-wrap:wrap;gap:6px;">
+                <span style="color:#00F5FF;font-weight:700;font-size:12px;">🤖 AI Distribütör Cihaz & Sarf Giriş Paketi (Asgari 3 Cihaz Kuralı)</span>
+                <span style="font-size:10px;color:#5FD3AE;background:rgba(95,211,174,0.15);border:1px solid rgba(95,211,174,0.3);padding:2px 6px;border-radius:3px;">💼 Distribütörlük Taahhüt Modeli</span>
+            </div>
+            <div style="font-size:11.5px;color:#CCD7E6;line-height:1.5;">
+                <div>⚡ <b>Asgari Zorunlu Donanım:</b> <b style="color:#00F5FF;">3 Cihaz Satın Alma Şartı</b> <span style="color:#8A99AD;font-size:10.5px;">(Tüm distribütörlerimiz için evrensel kural)</span></div>
+                <div style="font-size:11px;color:#94A3B8;margin-left:14px;margin-top:2px;">
+                    • <b>Paket A (Pulse Odaklı):</b> 2x Pulse Stimulator (1. Cihaz Direct Sale + 1 Kutu Dish & 1 Kutu Solution-Powder Ücretsiz Promosyonu; 2. Cihaz Reagent-Based) + 1x Tercihli Portföy (BioPSafe, Mismatch Blocker veya Smart Cryotools)<br>
+                    • <b>Paket B (Çeşitlendirilmiş Portföy):</b> Pulse Stimulator tercih edilmezse 3 Farklı Cihaz (1x BioPSafe + 1x Mismatch Blocker + 1x Smart Cryotools)
+                </div>
+                <div style="margin-top:4px;background:rgba(255,255,255,0.03);padding:4px 8px;border-radius:4px;">
+                    <span style="font-size:11px;font-weight:700;">{rec['country_scale_verdict']}</span> — <span style="font-size:10.5px;color:#94A3B8;">{rec['country_scale_detail']}</span>
+                </div>
+                <div style="margin-top:6px;">
+                    🧪 <b>Bağlayıcı Yıllık Sarf Baremi:</b> <b style="color:#00E676;">{rec['dish_boxes']:,} Kutu Dish</b> <span style="color:#94A3B8;font-size:10.5px;">(Toplam {rec['dish_units']:,} Adet Dish | 1 Kutu = 2 Dish, Her Dish 20 Oosite Kadar Kapasiteli)</span> + <b style="color:#FFB800;">{rec['sol_boxes']:,} Kutu Solution-Powder</b> <span style="color:#94A3B8;font-size:10.5px;">(Toplam {rec['sol_ml']} ml | 1 Kutu = 2 ml, 3 Kutu Dish Başına 1 Kutu Solüsyon / 6 Dishe Yeterli)</span>
+                </div>
+                <div style="margin-top:4px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;">
+                    <span style="color:#5FD3AE;font-size:10.5px;">🎁 <i>Direct Sale Cihazda +1 Kutu Dish & +1 Kutu Solution-Powder Ücretsiz Başlangıç Kiti</i></span>
+                    <span style="color:#00E676;font-size:11px;font-weight:600;">💰 {rec['discount_str']}</span>
+                </div>
+            </div>
+        </div>
+        """
+        return html
+    else:
+        html = f"""
+        <div style="margin-top:10px;background:rgba(15,25,46,0.85);border:1.5px solid rgba(0,245,255,0.35);border-radius:6px;padding:10px 12px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;border-bottom:1px solid rgba(0,245,255,0.2);padding-bottom:5px;flex-wrap:wrap;gap:6px;">
+                <span style="color:#00F5FF;font-weight:700;font-size:12px;">🤖 Yapay Zeka Cihaz & Sarf Malzeme Reçetesi ({rec['cycles']:,} Tedavi Siklüsü / Yıl)</span>
+                <span style="font-size:10px;color:#5FD3AE;background:rgba(95,211,174,0.15);border:1px solid rgba(95,211,174,0.3);padding:2px 6px;border-radius:3px;">📦 Siklüs Bazlı Reçete</span>
+            </div>
+            <div style="font-size:11.5px;color:#CCD7E6;line-height:1.5;">
+                <div>⚡ <b>Önerilen Cihaz:</b> <b style="color:#00F5FF;">{rec['dev_str']}</b> <span style="background:rgba(0,245,255,0.15);color:#00F5FF;padding:1px 5px;border-radius:3px;font-size:10px;font-weight:600;">{rec['dev_badge']}</span></div>
+                <div style="font-size:11px;color:#94A3B8;margin-left:14px;margin-top:1px;">• {rec['dev_desc']}</div>
+                
+                <div style="margin-top:6px;display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:6px;">
+                    <div style="background:rgba(0,230,118,0.06);border:1px solid rgba(0,230,118,0.25);border-radius:4px;padding:5px 8px;">
+                        🧪 <b>Gereken Kutu Dish:</b> <b style="color:#00E676;font-size:12px;">{rec['dish_boxes']:,} Kutu Dish</b><br>
+                        <span style="color:#94A3B8;font-size:10.5px;">Toplam <b>{rec['dish_units']:,} Adet Dish</b> (1 Kutu = 2 Dish | Her Dish Azami 20 Oosit Kapasiteli)</span>
+                    </div>
+                    <div style="background:rgba(255,184,0,0.06);border:1px solid rgba(255,184,0,0.25);border-radius:4px;padding:5px 8px;">
+                        💧 <b>Gereken Solution-Powder:</b> <b style="color:#FFB800;font-size:12px;">{rec['sol_boxes']:,} Kutu Solution-Powder</b><br>
+                        <span style="color:#94A3B8;font-size:10.5px;">Toplam <b>{rec['sol_ml']:,} ml Reaktif</b> (1 Kutu = 2 ml | 6 Dish / 3 Kutu Dish İçin Yeterli)</span>
+                    </div>
+                </div>
+                
+                <div style="margin-top:5px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;border-top:1px dashed rgba(255,255,255,0.08);padding-top:4px;">
+                    <span style="color:#5FD3AE;font-size:10.5px;">🎁 <i>İlk cihaz kurulumunda 1 Kutu Dish + 1 Kutu Solution-Powder başlangıç kiti hediye</i></span>
+                    <span style="color:#00E676;font-size:11px;font-weight:600;">🏷️ Toplu İskonto: {rec['discount_str']}</span>
+                </div>
+            </div>
+        </div>
+        """
+        return html
+
 def get_country_prospects(c_name, c_row=None):
     prospects = []
     seen_names = set()
@@ -18263,6 +18439,7 @@ def render_decision_maker_finder_hub(country_df):
                         <b>🎯 Eşleşen ZEUS Çözümü:</b> <span style="color:#00E676;">{pr.get('product_match', 'ZEUS Pulse Stimulator (ZPS 26) + Z-Dish')}</span><br>
                         <b>💡 Stratejik Gerekçe:</b> {pr.get('strategy_rationale', 'Yüksek siklus hacmi ve AOA ihtiyacı')}
                     </div>
+                    {render_prospect_rec_html(pr, c_row, sel_c)}
                     """, unsafe_allow_html=True)
                 with pc2:
                     st.markdown(f"""
@@ -25168,6 +25345,7 @@ elif active_view in ["⚖️ Çoklu Ülke Kıyaslama Masası (Multi-Country Matr
                             f'<div><span style="color:#8A99AD;">Hacim / Siklus:</span> <b style="color:#CCD7E6;">{p["volume"]}</b></div>'
                             f'<div><span style="color:#8A99AD;">Karar Verici Persona:</span> <b style="color:#CCD7E6;">{p["decision_maker"]}</b></div>'
                             f'<div><span style="color:#8A99AD;">Uyumlu ZEUS Çözümü:</span> <b style="color:#00F5FF;">{p["product_match"]}</b></div></div>'
+                            f'{render_prospect_rec_html(p, target_country_row, radar_country)}'
                             f'<div style="margin-top:10px;background:rgba(19,166,181,0.08);border:1px solid rgba(19,166,181,0.25);border-radius:6px;padding:10px 12px;">'
                             f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;border-bottom:1px solid rgba(19,166,181,0.15);padding-bottom:6px;flex-wrap:wrap;gap:6px;">'
                             f'<div><span style="color:#00F5FF;font-weight:700;font-size:12px;">📞 Kurumsal İletişim & Doğrulanmış Arama Ağı</span>'
@@ -25613,7 +25791,11 @@ BODY:
                         'Hacim / Siklus': p['volume'],
                         'Uyumlu Ürün': p['product_match'],
                         'Tahmini Yıllık Potansiyel': p['est_revenue'],
-                        'Stratejik Gerekçe': p['why_target']
+                        'Stratejik Gerekçe': p['why_target'],
+                        'AI Önerilen Donanım': calc_prospect_device_consumable_rec(p, target_country_row, radar_country).get('dev_str', calc_prospect_device_consumable_rec(p, target_country_row, radar_country).get('rec_devices_str', '')),
+                        'AI Önerilen Kutu Dish (2 Dish/Kutu)': calc_prospect_device_consumable_rec(p, target_country_row, radar_country).get('dish_boxes', 0),
+                        'AI Önerilen Kutu Solution-Powder (2ml/Kutu)': calc_prospect_device_consumable_rec(p, target_country_row, radar_country).get('sol_boxes', 0),
+                        'AI Barem & İskonto': calc_prospect_device_consumable_rec(p, target_country_row, radar_country).get('discount_str', '')
                     })
                 df_export = pd.DataFrame(prospect_rows)
                 csv_p = df_export.to_csv(index=False).encode('utf-8')
