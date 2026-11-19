@@ -3446,7 +3446,7 @@ COUNTRY_DEEP_INTELLIGENCE = {
             'cagr_growth_pct': 16.2
         },
         'expert_opinions': {
-            'ceo': 'Stratejik Vizyon: Mısır 75 klinik ve 52,000 siklus ile Kuzey Afrika\'nın en büyük IVF pazarıdır. Dolarizasyon ve devalüasyon riskini distribütör üzerinden bertaraf ederek anahtar klinikleri piezo teknolojimizle donatmalıyız.',
+            'ceo': 'Stratejik Vizyon: Mısır 75 klinik ve 52,000 siklus ile Kuzey Afrika\'nın en büyük IVF pazarıdır. Dolarizasyon ve devalüasyon riskini distribütör üzerinden bertaraf ederek anahtar klinikleri Pulse Stimulator (Elektriksel AOA) teknolojimizle donatmalıyız.',
             'sales': 'Ticari Dağıtım: Kahire ve İskenderiye\'deki lider hekim-patronlara doğrudan temas kurmalı; Vitrolife ve Cook\'un yüksek fiyat bariyerine karşı maliyet-etkin bundle paketleri sunmalıyız.',
             'embryo': 'Klinik & Laboratuvar: Mısır\'da şiddetli erkek faktörü (TESE/azospermi) ve oosit aktivasyon yetersizliği prevalansı çok yüksektir. Kimyasal kalsiyum iyonoforların toksisite endişesine karşı ZEUS Pulse Stimulatorelektrik mikro-puls darbesinin sıfır kimyasal risk ve %82.3 döllenme oranı klinik sunumu yapılmalıdır.',
             'cfo': 'Finans & Hazine: Ödemeler mutlaka konvertibl USD bazında ve gayrikabili rücu Teyitli Akreditif (Confirmed Irrevocable LC) ile güvenceye alınmalıdır. Mısır Poundu (EGP) üzerinden açık hesap kesinlikle verilmemelidir.',
@@ -3604,7 +3604,7 @@ COUNTRY_DEEP_INTELLIGENCE = {
             'cycle_funding': 'Ürdün bölgesel tüp bebek turizminde özel cepten ödeme (%90); Irak\'ta Kamal Al-Samarrai kamu tüp bebek hastanesinde devlet desteği, özel kliniklerde cepten ödeme.',
             'pgt_legal_status': 'PGT-A ve PGT-M her iki ülkede de tıbbi endikasyonla (ileri anne yaşı, tekrarlayan düşükler, akraba evliliği genetik hastalıkları) tamamen yasaldır.',
             'sex_selection_rule': 'Sosyal amaçlı cinsiyet seçimi: Ürdün\'de yalnızca sınırlı etik heyet denetiminde; Irak Sağlık Bakanlığı kuralları gereğince tıbbi zorunluluk (X\'e bağlı ölümcül kalıtsal hastalıklar) haricinde yasaktır.',
-            'biopsy_standards': 'Gün 5 Trofektoderm mikromanipülasyon biyopsisi (BioPSafe istasyonlu) tercih edilmektedir; yüksek male factor vakalarında Piezo pulse ile membran hasarı minimize edilir.',
+            'biopsy_standards': 'Gün 5 Trofektoderm mikromanipülasyon biyopsisi (BioPSafe istasyonlu) tercih edilmektedir; yüksek male factor vakalarında elektriksel AOA pulse stimülasyonu ile membran hasarı minimize edilir.',
             'genetic_lab_req': 'JFDA ve Irak MOH lisanslı sitogenetik ve moleküler genetik laboratuvar akreditasyonu.'
         },
         'pricing_forecasts': {
@@ -3620,7 +3620,7 @@ COUNTRY_DEEP_INTELLIGENCE = {
         'expert_opinions': {
             'ceo': 'Stratejik Vizyon: 18 aktif kurulu cihazla Levant bölgesindeki en güçlü pazar payımıza sahibiz. Sirius Pharm ile ortaklığımızı 2027 sonuna kadar uzatan LOA ile sarf bağımlılığını tahkim etmeliyiz.',
             'sales': 'Ticari Dağıtım: Amman özel klinikleri ve Bağdat kamu ihale teslimatlarını aksatmadan 45 günlük bölgesel tampon stok bulundurulmalıdır.',
-            'embryo': 'Klinik & Laboratuvar: Bölgedeki yüksek akraba evliliği kaynaklı sperm başı anomalileri ve globozoospermi vakalarında Piezo elektriksel AOA tek güvenilir döllenme çözümüdür.',
+            'embryo': 'Klinik & Laboratuvar: Bölgedeki yüksek akraba evliliği kaynaklı sperm başı anomalileri ve globozoospermi vakalarında ZEUS Pulse Stimulator (Elektriksel AOA) tek güvenilir döllenme çözümüdür.',
             'cfo': 'Finans & Hazine: Brüt marjı %54 üzerinde tutmalı; teslimatlar gayrikabili rücu akreditif (LC) veya nakit TT ile faturalandırılmalıdır.',
             'qara': 'Kalite & Mevzuat: ZEUS-LOA-SIRIUS-2026 sözleşmesi gereği tüm ürünler CE Device Certified Class IIa ve parti MEA >%80 belgeli sevk edilmektedir.'
         },
@@ -3776,7 +3776,7 @@ COUNTRY_DEEP_INTELLIGENCE = {
             'cycle_funding': 'Katar vatandaşları için Hamad Medical Corporation bünyesinde devlet tam sübvansiyonu; yabancı uyruklular için özel tüp bebek merkezlerinde cepten ödeme veya özel sigorta.',
             'pgt_legal_status': 'PGT-A ve PGT-M MoPH onaylı genetik laboratuvarlarında (Sidra Medicine, HMC) akredite standartlarda tamamen serbesttir.',
             'sex_selection_rule': 'Katar biyoetik yasaları gereğince, X\'e bağlı kalıtsal hastalıkların engellenmesi haricinde sırf sosyal amaçlı cinsiyet seçimi yasaktır.',
-            'biopsy_standards': 'Gün 5 Trofektoderm mikromanipülasyon biyopsisi (BioPSafe istasyonlu); oosit lizis oranını <%1 seviyesinde tutan ultra hassas piezo protokolleri.',
+            'biopsy_standards': 'Gün 5 Trofektoderm mikromanipülasyon biyopsisi (BioPSafe istasyonlu); oosit lizis oranını <%1 seviyesinde tutan ultra hassas elektriksel AOA pulse stimülasyon protokolleri.',
             'genetic_lab_req': 'CAP (College of American Pathologists) veya ISO 15189 akreditasyonlu genetik tanı laboratuvarı.'
         },
         'pricing_forecasts': {
@@ -4316,7 +4316,7 @@ COUNTRY_DEEP_INTELLIGENCE = {
             'target_segments': 'Özel IVF Hastane Zincirleri (%65 pazar payı), Üniversite ve Kamu Eğitim Araştırma Hastaneleri (%35).',
             'channel_model': 'Doğrudan anahtar teslim fabrika satışı + büyük zincirlerle konsinye cihaz & yıllık sarf sözleşmesi.',
             'clinical_pitch': 'Sub-%1 lizis garantisi, %82.3 döllenme oranı, sıfır kimyasal sitotoksisite ve 24 saatte teknik servis müdahalesi.',
-            'objection_handling': '"Kimyasal iyonofor daha ucuz" itirazına: İyonoforun değişken sitotoksisite riskini, dar marjını ve Piezo\'nun 2.2 kat blastokist artışıyla siklus maliyetini nasıl düşürdüğünü klinik verilerle kanıtlayın.',
+            'objection_handling': '"Kimyasal iyonofor daha ucuz" itirazına: İyonoforun değişken sitotoksisite riskini, dar marjını ve ZEUS Pulse Stimulator\'ın 2.2 kat blastokist artışıyla siklus maliyetini nasıl düşürdüğünü klinik verilerle kanıtlayın.',
             'device_strategies': {
                 'zps_26': {
                     'name': 'ZEUS Pulse Stimulator (ZPS 26)',
@@ -4480,7 +4480,7 @@ COUNTRY_DEEP_INTELLIGENCE = {
         'expert_opinions': {
             'ceo': 'Stratejik Vizyon: İtalya 360 aktif merkezle Avrupa\'nın en büyük 3. pazarıdır. Soğuk e-posta yerine yerel MedTech distribütörleri (Bio-Optica, Gynemed Italia) ve SIERR kongresi üzerinden girmeliyiz.',
             'sales': 'Ticari Dağıtım: Milano, Roma ve Napoli merkezli özel tüp bebek klinikleri ve kamu ihaleleri için İtalyanca teknik şartname dosyası sunulmalıdır.',
-            'embryo': 'Klinik & Laboratuvar: İtalyan embriyologları ESHRE kılavuzlarına ve oosit zedelenme oranlarına aşırı duyarlıdır. Piezo darbesinin sub-%1 lizis oranı ve CE Device Certified Class IIa güvencesi sunulmalıdır.',
+            'embryo': 'Klinik & Laboratuvar: İtalyan embriyologları ESHRE kılavuzlarına ve oosit zedelenme oranlarına aşırı duyarlıdır. ZEUS elektriksel pulse uyarımının sub-%1 lizis oranı ve CE Device Certified Class IIa güvencesi sunulmalıdır.',
             'cfo': 'Finans & Hazine: İtalya kamu ihalelerinde ödeme vadeleri 90-120 günü bulabilir; bu nedenle özel kliniklere 30 gün açık hesap, kamuya ise distribütör factoring modeli uygulanmalıdır.',
             'qara': 'Kalite & Mevzuat: Ministero della Salute RDM numarası ve CE Sertifikamız (Class IIa) satışın ön şartıdır.'
         },
@@ -8787,7 +8787,7 @@ def render_social_media_hub():
         elif "Senaryo 4" in script_sel:
             sc4_table = [
                 {"Zaman": "00:00 - 00:08", "Görsel & Mikroskop Açısı": "Kalsiyum İyonofor (A23187) kimyasal şişesi yakın çekim.", "Seslendirme (Voiceover - VO)": "Yıllardır Total Döllenme Başarısızlığı vakalarında kimyasal kalsiyum iyonoforlara mahkum kaldık. Peki bu kimyasalların embriyo epigenetiği üzerindeki risklerini biliyor musunuz?", "Ekran Yazısı & Grafik": "⚠️ Kimyasal İyonofor (A23187): Epigenetik Toksisite Soru İşareti"},
-                {"Zaman": "00:08 - 00:28", "Görsel & Mikroskop Açısı": "Z-Dish Array'in mikrokuyucuklarına dizilmiş 12 oosit. Solüsyonda kalsiyum yoktur (Calcium-Free AOA). ZPS 26 piezo uyarımı verilir verilmez hücre içinde endojen kalsiyum salınımı başlar.", "Seslendirme (Voiceover - VO)": "ZEUS Z-Dish Array ve Kalsiyumsuz AOA Protokolü ile kimyasal toksisiteye son veriyoruz. Mikrosaniyelik piezo uyarım oositin kendi doğal kalsiyum rezervlerini serbest bırakır.", "Ekran Yazısı & Grafik": "🛡️ %0 Kimyasal Toksisite | Doğal Endojen Kalsiyum Salınımı"},
+                {"Zaman": "00:08 - 00:28", "Görsel & Mikroskop Açısı": "Z-Dish Array'in mikrokuyucuklarına dizilmiş 12 oosit. Solüsyonda kalsiyum yoktur (Calcium-Free AOA). ZPS 26 elektriksel pulse uyarımı verilir verilmez hücre içinde endojen kalsiyum salınımı başlar.", "Seslendirme (Voiceover - VO)": "ZEUS Z-Dish Array ve Kalsiyumsuz AOA Protokolü ile kimyasal toksisiteye son veriyoruz. Mikrosaniyelik elektriksel AOA pulse uyarımı oositin kendi doğal kalsiyum rezervlerini serbest bırakır.", "Ekran Yazısı & Grafik": "🛡️ %0 Kimyasal Toksisite | Doğal Endojen Kalsiyum Salınımı"},
                 {"Zaman": "00:28 - 01:00", "Görsel & Mikroskop Açısı": "Z-Dish kuyucuklarında yan yana duran kusursuz 2PN pronükleuslar.", "Seslendirme (Voiceover - VO)": "Sonuç: Sıfır kimyasal kalıntı, yüzde 54.2 blastosist oluşumu ve CE Sertifikalı uyumlu en yüksek güvenlik standardı.", "Ekran Yazısı & Grafik": "👉 zeusbio.com/zdish | Protokol & Validasyon Dosyasını İndir"}
             ]
             render_responsive_script_table(sc4_table, font_size_str=script_font_size, view_mode=script_view_mode)
@@ -8925,7 +8925,7 @@ def render_social_media_hub():
         st.markdown("### 📅 30 Günlük Editoryal İçerik Takvimi & Kopyalanabilir Post Metinleri")
         
         cal_df = pd.DataFrame([
-            {"Hafta": "Hafta 1", "Pazartesi (Bilimsel Kanıt)": "LinkedIn Carousel: TFF Vakalarında Elektriksel AOA vs Kimyasal İyonofor (PubMed Verileri)", "Çarşamba (Video / Reel)": "Reels & Shorts: Sivri İğne Delmesi vs Piezo Salınımı (Split Screen)", "Cuma (Vaka & Tartışma)": "LinkedIn & X: 'Bu oositi siz olsanız nasıl enjekte ederdiniz?' Vaka Tartışması"},
+            {"Hafta": "Hafta 1", "Pazartesi (Bilimsel Kanıt)": "LinkedIn Carousel: TFF Vakalarında Elektriksel AOA vs Kimyasal İyonofor (PubMed Verileri)", "Çarşamba (Video / Reel)": "Reels & Shorts: Sivri İğne Delmesi & İyonofor Toksisitesi vs ZEUS Elektriksel AOA Pulse (Split Screen)", "Cuma (Vaka & Tartışma)": "LinkedIn & X: 'Bu oositi siz olsanız nasıl enjekte ederdiniz?' Vaka Tartışması"},
             {"Hafta": "Hafta 2", "Pazartesi (Bilimsel Kanıt)": "LinkedIn Post: PGT-A Biyopsisinde Lazer Termal Hasarı & Mozaisizm Raporu", "Çarşamba (Video / Reel)": "YouTube & LinkedIn Video: BioPSafe ile 30 Saniyede Trofektoderm Biyopsisi", "Cuma (Vaka & Tartışma)": "X Poll (Anket): 'Kliniğinizde trofektoderm biyopsisinde kaç lazer atımı kullanıyorsunuz?'"},
             {"Hafta": "Hafta 3", "Pazartesi (Bilimsel Kanıt)": "LinkedIn Carousel: Tüp Bebekte Elektronik Şahitlik (Witnessing) & 7 RFID İstasyonu", "Çarşamba (Video / Reel)": "Reels & Shorts: Mismatch Blocker ile Hatalı Tüp Yaklaştığında Otomatik Kilitleme", "Cuma (Vaka & Tartışma)": "LinkedIn B2B Post: Malpraktis Davalarında CE Sertifikalı (Class IIa) Uyumlu Dijital Denetim İzi"},
             {"Hafta": "Hafta 4", "Pazartesi (Bilimsel Kanıt)": "LinkedIn Post: Kalsiyumsuz AOA Medyası & Z-Dish Array Mikrokuyucuk Avantajı", "Çarşamba (Video / Reel)": "YouTube Masterclass: Narishige / RI Mikromanipülatörüne ZPS 26 Montaj Kılavuzu", "Cuma (Vaka & Tartışma)": "Webinar Duyurusu: 'Total Döllenme Başarısızlığında Altın Standartlar' Canlı Panel Kaydı"}
@@ -15594,7 +15594,7 @@ def get_country_geopolitical_intelligence(c_code, c_df=None):
                 'date': 'Kasım 2026',
                 'tag': 'Klinik Talep & Pazar Büyümesi',
                 'risk_impact': 'Yüksek Fırsat — Siklus hacmi yıllık %8.4 büyüme kaydediyor',
-                'summary': f"Devlet teşvikleri ve özel merkezlerin yatırımlarıyla {name} genelinde oosit aktivasyonu ve piezo mikromanipülasyon talebi artış trendinde."
+                'summary': f"Devlet teşvikleri ve özel merkezlerin yatırımlarıyla {name} genelinde oosit aktivasyonu ve pulse stimülasyon sistemlerineülasyon talebi artış trendinde."
             }
         ]
         
@@ -18392,7 +18392,7 @@ def render_decision_maker_finder_hub(country_df):
             Sayın {inst_disp} Direktörlüğü ve Laboratuvar Heyeti,<br><br>
             ZEUS Bioscience olarak, Toplam Döllenme Başarısızlığı (TFF) ve suboptimal oosit maturasyon vakalarında döllenme oranını %24'ten %82.3'e çıkaran CE Sertifikalı (Class IIa) <b>ZEUS Pulse Stimulator (ZPS 26)</b> teknolojimizi bilgilerinize sunmaktan onur duyarız.<br><br>
             <b>Temel Klinik & Ticari Avantajlarımız:</b><br>
-            • <b>Hücresel Güvenlik:</b> Mekanik piezo hasarına ve lazere karşı sub-%1.2 lizis garantisi (Prof. Dr. Volkan Baltacı et al. RBM Online).<br>
+            • <b>Hücresel Güvenlik:</b> Mekanik hasara ve kimyasal toksisiteye karşı sub-%1.2 lizis garantisi (Prof. Dr. Volkan Baltacı et al. RBM Online).<br>
             • <b>4-Pool Tek Dish Protokolü:</b> Tek bir Electro Dish ile 4 havuz x 5 oosit = 20 oosit eşzamanlı aktive edilir; vaka başı sarf maliyeti yalnızca <b>$6.60 USD</b>'dir.<br>
             • <b>Klinik Destek:</b> Kurumunuza 14 günlük yerinde klinik vaka çalıştayı ve aplikatör desteği sağlamaktan memnuniyet duyarız.<br><br>
             Bilimsel makale ve teknik şartname dosyamızı ekte takdim eder, iyi çalışmalar dileriz.<br>
@@ -25608,12 +25608,12 @@ KRİTİK KURALLAR:
 4. TEKNOLOJİ DOĞRULUĞU: ZEUS Pulse Stimulator Piezo-ICSI DEĞİLDİR! Elektriksel oosit aktivasyon (AOA - The Spark of Life) sistemidir.
 5. CE BELGELENDİRME: Asla "MDR" yazma! Yalnızca "CE Sertifikalı" / "CE Certified" olarak belirt.
 6. ÜLKE B2B SATIN ALMA KÜLTÜRÜ & MÜZAKERE TONU ({radar_country}):
-- Satın Alma & Müzakere Modeli: {resolve_country_buying_behavior(radar_country)['culture_title']}
-- İletişim Tonu: {resolve_country_buying_behavior(radar_country)['email_tone_guidance']}
-- En Etkili İkna Noktası: {resolve_country_buying_behavior(radar_country)['primary_proof_point']}
-- Pazarlık/İskonto Yaklaşımı: {resolve_country_buying_behavior(radar_country)['bargaining_advice']}
+- Satın Alma & Müzakere Modeli: {resolve_country_buying_behavior(radar_country).get('culture_title', 'Bölgesel B2B Satın Alma Modeli')}
+- İletişim Tonu: {resolve_country_buying_behavior(radar_country).get('email_tone_guidance', 'Klinik başarı odaklı resmi kurumsal dil')}
+- En Etkili İkna Noktası: {resolve_country_buying_behavior(radar_country).get('primary_proof_point', 'Klinik başarı, Whitepaper ve CE Class IIa')}
+- Pazarlık/İskonto Yaklaşımı: {resolve_country_buying_behavior(radar_country).get('bargaining_advice', 'Standart filo/peşin iskonto')}
 - İş Yemeği & Ağırlama Protokolü: {resolve_country_buying_behavior(radar_country).get('dining_hospitality_protocol', '')}
-- Kaçınılması Gereken Kırmızı Çizgi (Tabu): {resolve_country_buying_behavior(radar_country)['cultural_taboos']}
+- Kaçınılması Gereken Kırmızı Çizgi (Tabu): {resolve_country_buying_behavior(radar_country).get('cultural_taboos', 'Teknik servis güvencesi olmadan satış')}
 Mektubun tonunu ve teklif kurgusunu bu kültürel B2B satın alma davranışına tam olarak uyarla!
 
 Çıktıyı tam olarak şu formatta ver:
