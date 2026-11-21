@@ -1,0 +1,219 @@
+Kurum Adı,Sipariş Tarihi,Electro Dish [Kutu],ElectroLiquid Solüsyon [Kutu],Cihaz [Set],Toplam Tutar (TL),Toplam Tutar (USD),Notlar,
+İskenderun Palmiye IVF,2025-01-06,0,0.5,0,1061.08,30,"Ocak Ayında  
+ 2.020.426,64  TL
+ 56.742,00  USD
+Tutarında Fatura Kesilmiştir.",
+Umman Maternal Fetal Care Center,2025-01-06,0,5,0,10581.3,300,,
+Consultant Medical Company(LES Mikrogen),2025-01-07,11,1,1,395239.04,11200,,çıkışı 17.03.2025
+Özel Medical Park İzmir,2025-01-08,1,1,0,6349.75,180,,
+İstanbul Üniversitesi Çapa Tıp Fakültesi,2025-01-09,2,2,0,6781.03,192,,
+Özel Medical Park İzmir,2025-01-10,1,1,0,4235.1,120,,
+Adana Turan Çetin IVF,2025-01-15,1,1,0,6377.26,180,,
+İstanbul Üniversitesi Çapa Tıp Fakültesi,2025-01-16,3,0,0,10171.56,288,,
+Cihangir Çakıcı IVF,2025-01-20,4,4,0,39094.74,1104,,
+İstanbul Medical Park Göztepe IVF,2025-01-20,4,2,0,21247.14,600,,
+Özel Medical Park İzmir,2025-01-20,2,0,0,8498.86,240,,
+İzmir Tavmergen IVF,2025-01-21,5,1,0,18753.66,528,,
+Özel Medical Park İzmir,2025-01-23,2,1,0,10674.46,300,,
+İstanbul Liv Hospital Ulus,2025-01-27,3,1,0,27767.52,780,,
+Bioram Diagnostik Medikal,2025-01-29,1,1,1,385536.24,10800,,
+Bioram Diagnostik Medikal,2025-01-31,5,5,0,32148.9,900,,
+Assisted Medical solution EST(Mikrogen),2025-01-31,25,8,1,282195.9,7900,,çıkışı 10.02.2024
+Assisted Medical solution EST(Mikrogen),2025-01-31,35,12,2,753713.1,21100,,23.05.2025 de 17.00 USD alındı. cihazlar ve ücretsiz 8 kutu solüsyon elden alındı
+Özel Medical Park İzmir,2025-02-03,3,1,0,15020.46,420,"Şubat Ayında  
+277.023,68 TL
+7.688,00 USD
+Tutarında Fatura Kesilmiştir.",
+İskenderun Palmiye IVF,2025-02-03,2,0.5,0,9656.02,270,,
+İzmir Tavmergen IVF,2025-02-03,5,1,0,18753.66,528,,
+Denizli Özel Sağlık IVF,2025-02-03,5,1,0,23603.58,660,,
+Bioram Diagnostik Medikal,2025-02-05,0,1,0,2154.98,60,,
+RSM Bakü,2025-02-05,0,1,0,1795.82,50,,
+Özel Medical Park İzmir,2025-02-13,2,0,0,8646.55,240,,
+Sirius,2025-02-15,5,8,0,28884.8,800,,
+Özel Medical Park İzmir,2025-02-17,3,1,0,15164.52,420,,
+Arnavutluk Stem Gene Art Clinic,2025-02-21,10,4,0,55095.74,1520,,
+Özel Medical Park İzmir,2025-02-24,3,1,0,15248.52,420,,
+İstanbul Memorial Şişli,2025-02-25,0,4,0,8725.51,240,,
+İstanbul Medical Park Pendik,2025-02-27,0,1,0,2182.31,60,,
+Sirius(Mikrogen),2025-02-28,15,3,0,72091.21,1980,,çıkışı 02.04.2025
+Adana Turan Çetin IVF,2025-03-03,1,1,0,6548.62,180,"Mart Ayında  
+577.677,40 TL
+15.740,00 USD
+Tutarında Fatura Kesilmiştir.",
+Özel Medical Park İzmir,2025-03-03,3,0,0,13097.23,360,,
+İstanbul Üniversitesi Çapa Tıp Fakültesi,2025-03-03,2,0,0,6985.19,192,,
+İzmir Tavmergen IVF,2025-03-03,5,1,0,19209.28,528,,
+İskenderun Palmiye IVF,2025-03-03,0,0.5,0,1095.9,30,,
+Sirius(Mikrogen),2025-03-06,1,1,1,272761.5,7500,,çıkışı 02.04.2025
+Cihangir Çakıcı IVF,2025-03-06,2,2,0,20075.24,552,,
+RSM Bakü,2025-03-10,0,1,0,1815.77,50,,
+Özel Medical Park İzmir,2025-03-12,3,1,0,15333.7,420,,
+İzmir Tavmergen IVF,2025-03-17,10,0,0,35073.6,960,,
+İstanbul Üniversitesi Çapa Tıp Fakültesi,2025-03-19,20,7,0,65865.96,1800,,
+İstanbul Liv Hospital Ulus,2025-03-20,6,2,0,59254.88,1560,,
+Özel Medical Park İzmir,2025-03-21,3,1,0,15924.3,420,,
+ITL (LES Mikrogen),2025-03-22,0,2,0,0,0,,çıkışı 22.03.2025
+Cihangir Çakıcı IVF,2025-03-24,3,0,0,20439.11,540,,
+İzmir Tavmergen IVF,2025-03-25,0,1,0,1817.28,48,,
+Özel Medical Park İzmir,2025-03-27,3,0,0,13654.33,360,,
+İstanbul Memorial Şişli,2025-03-28,0,4,0,8725.51,240,,
+İstanbul Medical Park Göztepe IVF,2025-04-02,2,2,0,13595.62,360,"Nisan Ayında  
+3.079.098,88 TL
+ $81.290,00  USD
+Tutarında Fatura Kesilmiştir.",
+İskenderun Palmiye IVF,2025-04-07,0,0.5,0,1139.15,30,,
+İstanbul Medical Park Göztepe IVF,2025-04-07,1,1,1,455182.8,12000,,
+İstanbul Medical Park Göztepe IVF,2025-04-09,3,0,0,13197.6,360,,
+Özel Medical Park İzmir,2025-04-11,3,0,0,13631.26,360,,
+LES Mikrogen,2025-04-11,116,42,8,2469983.59,65232,,
+İstanbul Liv Hospital Ulus,2025-04-17,3,1,0,29676.82,780,,
+Özel Medical Park İzmir,2025-04-21,2,1,0,11400.96,300,,
+Bioram Diagnostik Medikal,2025-04-21,0,2,0,0,0,,"4 kutu bedelsiz kesilecekti, 2 kutu bugün kesildi"
+İzmir Tavmergen IVF,2025-04-24,5,1,0,20133.38,528,,
+Sirius Pharm ,2025-04-24,5,8,0,30505.12,800,,
+Özel Medical Park İzmir,2025-04-26,2,0,0,9178.92,240,,
+Adana Turan Çetin IVF,2025-04-28,2,1,0,11473.66,300,,
+RSM Bakü,2025-05-02,0,2,0,3836.84,100,"Mayıs Ayında  
+603.106,57 TL
+ 15.554,00 USD
+Tutarında Fatura Kesilmiştir.",
+Özel Medical Park İzmir,2025-05-05,3,1,0,16115.2,420,,
+İzmir Tavmergen IVF,2025-05-06,5,1,0,20333.54,528,,
+İskenderun Palmiye IVF,2025-05-07,2,0.5,0,10436.36,270,,
+Medical Park Göztepe,2025-05-07,0,1,0,2311.56,60,,
+Sirius Pharm ,2025-05-13,4,4,0,24752.7,640,,
+ITL(Mikrogen),2025-05-14,60,8,0,241951.87,6250,,150 USD iskonto
+Özel Medical Park İzmir,2025-05-14,2,0,0,9290.95,240,,
+Fakih(Mikrogen),2025-05-20,2,4,0,4245.38,110,,330 USD iskonto
+İstanbul Liv Hospital Ulus,2025-05-20,3,1,0,30103.63,780,,
+Özel Medical Park İzmir,2025-05-20,3,1,0,16209.65,420,,
+İzmir Tavmergen IVF,2025-05-26,10,1,0,39127.94,1008,,
+Cihangir Çakıcı IVF,2025-05-27,3,3,0,32201.51,828,,
+Özel Medical Park İzmir,2025-05-27,2,1,0,11667.22,300,,
+Adana Turan Çetin IVF,2025-05-27,4,2,0,23334.42,600,,
+Sirius(Mikrogen),2025-05-31,30,0,0,117187.8,3000,,"DHL ile gidecek (3.000 USD-117.187,80 TL)"
+İskenderun Palmiye IVF,2025-06-02,0,0.1,0,1175.75,30,"Haziran Ayında  
+  187.606,05 TL
+ 4.766,00 USD
+Tutarında Fatura Kesilmiştir.",
+İstanbul Medical Park Göztepe IVF,2025-06-02,0,1,0,2343.76,60,,
+Özel Medical Park İzmir,2025-06-02,2,0,0,9375.02,240,,
+Sirius Pharm ,2025-06-02,5,15,0,54687.64,1400,,Elden teslim alacak
+Özel Medical Park İzmir,2025-06-11,2,1,0,11741.56,300,,
+Özel Medical Park İzmir,2025-06-17,2,0,0,9437.04,240,,
+İstanbul Liv Hospital Ulus,2025-06-17,3,1,0,30670.38,780,,
+İstanbul Medical Park Göztepe IVF,2025-06-25,1,0,0,4746.02,120,,
+Cihangir Çakıcı IVF,2025-06-28,3,3,0,32906.71,828,,
+Özel Medical Park İzmir,2025-06-30,2,0,0,9538.18,240,,
+İzmir Tavmergen IVF,2025-06-30,5,1,0,20983.99,528,,
+Denizli Özel Sağlık IVF,2025-07-01,5,1,0,26228.93,660,"Temmuz Ayında  
+ 969.297,65 TL
+ 24.078,00 USD
+Tutarında Fatura Kesilmiştir.",
+İstanbul Medical Park Göztepe IVF,2025-07-03,1,1,0,7151.26,180,,
+RSM Bakü,2025-07-03,0,2,0,3972.92,100,,
+Özel Medical Park İzmir,2025-07-07,3,1,0,16665.26,420,,
+Suriye F&D Biotech,2025-07-08,2,2,1,366044.2,9140,,ödeme eshre de teslim alındı.
+İskenderun Palmiye IVF,2025-07-16,0,0.5,0,1202.65,30,,
+Özel Medical Park İzmir,2025-07-17,2,0,0,9639.34,240,,
+İstanbul Liv Hospital Ulus,2025-07-21,3,1,0,31378,780,,
+Tavmergen Özel Tüp Bebek Merkezi ,2025-07-21,5,1,0,21240.49,528,,
+İstanbul Memorial Şişli,2025-07-22,0,4,0,9674.59,240,,
+Suriye F&D Biotech,2025-07-22,3,2,0,19349.19,480,,
+İstanbul Medical Park Göztepe IVF,2025-07-29,1,1,0,7284.91,180,,
+Consultant Medical Company(LES Mikrogen),2025-07-29,0,5,0,12141.51,300,,
+Antalya IVF,2025-07-30,0,0,1,437324.4,10800,,
+Özel Medical Park İzmir,2025-08-01,2,0,0,9723.07,240,"Ağustos Ayında  
+ 265.203,54 TL
+ 6.500,00 USD
+Tutarında Fatura Kesilmiştir.",
+Özel Medical Park İzmir,2025-08-04,0,1,0,2431.14,60,,
+Antalya IVF,2025-08-04,1,1,0,0,0,,
+Tavmergen Özel Tüp Bebek Merkezi ,2025-08-06,5,1,0,21438.17,528,,
+Tavmergen Özel Tüp Bebek Merkezi ,2025-08-08,0,0,0,0,0,,
+Özel Medical Park İzmir,2025-08-14,0.5,0,0,2439.44,60,,
+ITL ,2025-08-19,0,8,0,16323.36,400,,
+Antalya IVF,2025-08-20,2,1,0,12243.6,300,,
+Özel Medical Park İzmir,2025-08-20,2,0,0,9794.88,240,,
+İstanbul Liv Hospital Ulus,2025-08-20,3,1,0,31833.36,780,,
+İstanbul Memorial Şişli,2025-08-20,0,4,0,9794.88,240,,
+Sirius Pharm ,2025-08-20,10,9,0,57953.04,1420,,
+İstanbul Medical Park Göztepe IVF,2025-08-21,1,1,0,7351.38,180,,
+Cihangir Çakıcı IVF,2025-08-23,4,4,0,45099.17,1104,,
+İzmir Tavmergen IVF,2025-08-25,5,1,0,21569.17,528,,
+Bioram Diagnostik Medikal,2025-08-27,0,2,0,-,-,,
+Özel Medical Park İzmir,2025-08-29,3,1,0,17208.88,420,,
+Sirius,2025-09-01,1,1,1,307081.57,7500.02,"Eylül Ayında  
+  689.647,87 TL
+  16.768,03  USD
+Tutarında Fatura Kesilmiştir.",
+İskenderun Palmiye IVF,2025-09-04,0,0.5,0,1232.56,30,,
+Özel Medical Park İzmir,2025-09-09,3,1,0,17296.27,420,,
+ÇOMÜ TÜP BEBEK MERKEZİ,2025-09-10,1,1,1,-,-,,DENEME İÇİN 1 AYLIĞINA GÖNDERİLDİ
+Sirius Pharm ,2025-09-11,9,7,0,41201.3,1000,,
+İstanbul Medical Park Göztepe IVF,2025-09-12,2,2,0,14836.1,360,,
+Adana Turan Çetin IVF,2025-09-15,0,1,0,-,-,,
+İzmir Tavmergen IVF,2025-09-16,5,1,0,21782.64,528,,
+Arnavutluk Stem Gene Art Clinic,2025-09-16,0,4,0,13201.6,320,,
+Arnavutluk Stem Gene Art Clinic,2025-09-16,7,0,0,34654.2,840,,
+Ovogene Ifg,2025-09-16,8,4,0,52806.4,1280,,
+RSM Bakü,2025-09-16,0,1,0,2062.75,50,,
+İskenderun Palmiye IVF,2025-09-17,2,0,0,9895.08,240,,
+Denizli Özel Sağlık IVF,2025-09-18,5,1,0,27202.63,660,,
+Özel Medical Park İzmir,2025-09-18,2.5,0,0,9892.36,240.01,,
+İstanbul Medical Park Pendik,2025-09-22,0,1,0,2474.06,60,,
+Sirius Pharm ,2025-09-22,5,0,1,-,-,,
+İstanbul Liv Hospital Ulus,2025-09-23,3,1,0,32212.67,780,,
+Consultant Medical Company(LES Mikrogen),2025-09-24,5,5,0,37203.75,900,,
+Tavmergen Özel Tüp Bebek Merkezi ,2025-09-29,10,1,0,41749.25,1008,,
+Cihangir Çakıcı IVF,2025-09-29,2,2,0,22862.68,552,,
+İskenderun Palmiye IVF,2025-10-01,0,0.5,0,1249.32,30,"Ekim Ayında  
+1.377.416,14 TL
+33.060,00 USD
+Tutarında Fatura Kesilmiştir.",
+İstanbul Üniversitesi Çapa Tıp Fakültesi,2025-10-02,5,1,0,,,,
+İskenderun Palmiye IVF,2025-10-03,3,0,0,14950.19,360,,
+Özel Medical Park İzmir,2025-10-07,1,1,0,7492.06,180,,
+SJNU KORE ,2025-10-10,60,0,3,1165978.8,28000,,
+İstanbul Medical Park Göztepe IVF,2025-10-13,1,1,0,7494.98,180,,
+ITL,2025-10-13,0,5,0,10409.7,250,,
+SJNU KORE ,2025-10-15,3,3,0,-,-,,
+İstanbul Liv Hospital Ulus,2025-10-20,3,1,0,32592.7,780,,
+Özel Medical Park İzmir,2025-10-20,2,1,0,12535.66,300,,
+İzmir Tavmergen IVF,2025-10-20,5,1,0,22062.74,528,,
+Cihangir Çakıcı IVF,2025-10-25,2,2,0,23097.17,552,,
+Sirius Pharm ,2025-10-28,10,10,0,66991.84,1600,,
+Özel Medical Park İzmir,2025-10-30,2,1,0,12560.98,300,,
+Adana Turan Çetin IVF,2025-11-03,1,1,0,7540.6,180,"Kasım Ayında  
+416.820,40 TL
+9.876,00 USD
+Tutarında Fatura Kesilmiştir.",
+İzmir Tavmergen IVF,2025-11-06,5,1,0,22195.12,528,,
+İskenderun Palmiye IVF,2025-11-10,0,0.5,0,1261.48,30,,
+Medical Park Göztepe,2025-11-10,1,1,0,7568.82,180,,
+Sirius Pharm ,2025-11-17,21,6,1,160231.18,3800,,
+Consultant Medical Company,2025-11-17,10,4,0,60719.18,1440,,
+Özel Medical Park İzmir ,2025-11-18,2,0,0,10140.6,240,,
+SJNU KORE ,2025-11-18,0,5,0,0,0,,
+İzmir Tavmergen IVF,2025-11-19,10,1,0,42602.21,1008,,
+İstanbul Liv Hospital Ulus,2025-11-19,3,1,0,32965.99,780,,
+İstanbul medipol üniversitesi,2025-11-20,1,1,1,-,-,,25.11.2025 tarihinde alınacak deneme için gönderildi
+Cihangir Çakıcı IVF,2025-11-25,3,0,0,22878.46,540,"Aralık Ayında  
+1.714.849,08 TL
+40.274,00 USD
+Tutarında Fatura Kesilmiştir.",
+ITL,2025-11-28,10,3,0,48716.76,1150,,
+Assisted Medical solution EST,2025-12-03,0,2,0,-,-,,
+Medical Park Göztepe,2025-12-08,1,1,0,7624.91,180,,
+İzmir Tavmergen IVF,2025-12-08,1,5,0,22366.39,528,,
+Özel Medical Park İzmir,2025-12-11,2,1,0,12755.38,300,,
+Adana Turan Çetin IVF,2025-12-15,1,1,0,7656.19,180,,
+İstanbul Üniversitesi Çapa Tıp Fakültesi,2025-12-15,4,1,0,-,-,,
+Kuveyt Advanced Technology Company,2025-12-15,6,3,3,967657.6,22750,,
+ITL,2025-12-22,50,20,0,255206.4,6000,,
+Cihangir Çakıcı IVF,2025-12-22,3,3,0,35316.85,828,,
+İstanbul Liv Hospital Ulus,2025-12-22,3,1,0,33269.5,780,,
+İstanbul Memorial Şişli,2025-12-23,0,2,0,5128.08,120,,
+Sirius Pharm ,2025-12-23,36,0,1,324778.4,7600,,
+İzmir Tavmergen IVF,2025-12-24,10,1,0,43089.38,1008,,

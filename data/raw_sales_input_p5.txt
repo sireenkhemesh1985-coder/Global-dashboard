@@ -1,0 +1,198 @@
+Kurum Adı,Sipariş Tarihi,Fatura Numarası ,"Electro Dish
+ [Kutu]","ElectroLiquid
+ Powder [Kutu]","ElectroLiquid
+ Solüsyon [Kutu]",Cihaz [Set],"Cihaz Tamir 
+Ücreti [$]","Straw Flexible
+ Tip [Kutu]","Octogonal
+ Goblet [Kutu]",Cane [Adet],"Grabber
+ Pencil [Adet]","Nitrogen 
+Box [Adet]",Zeus Pulse Tester,Cane sleeve,"Aluminum 
+Block[Adet]",Toplam Tutar (TL),Toplam Tutar (USD),Notlar,Gelir
+Fertılıty Phılıppınes IVF ,2026-01-03,ZAF2026000000001,0,0,0,0,0,10,5,16,1,1,0,0,0,42598.42,847,,"Ocak Ayında  
+224.768,46  TL
+4.579,00 USD
+Tutarında Fatura Kesilmiştir."
+Medical Park Göztepe,2026-01-05,ZEF2026000000001,1,0,1,0,0,0,0,0,0,0,0,0,0,7718.58,180,,
+RSM Bakü,2026-01-05,ZAF2026000000002,0,0,2,0,0,0,0,0,0,0,0,0,0,4288.1,100,,
+İskenderun Palmiye IVF,2026-01-05,ZEF2026000000002,3,0,0,0,0,0,0,0,0,0,0,0,0,15437.16,360,,
+Özel Medical Park İzmir,2026-01-05,ZEF2026000000003,2,0,1,0,0,0,0,0,0,0,0,0,0,12864.3,300,,
+Sirius Pharm,2026-01-06,ZAF2026000000003,0,0,10,0,0,0,0,0,0,0,0,0,0,25778.88,600,,
+Bioram Diagnostik Medikal,2026-01-07,ZEF2026000000004,1,0,1,0,0,0,0,0,0,0,0,0,0,7733.94,180,,
+İzmir Tavmergen IVF,2026-01-12,ZEF2026000000005,2,0,5,0,0,0,0,0,0,0,0,0,0,18570.08,432,,
+İnfotek Elektronik,2026-01-15,ZEF2026000000006,-,-,-,-,0,-,-,-,-,-,0,0,-,6600,İADE,,
+İstanbul Liv Hospital Ulus,2026-01-19,ZEF2026000000007,3,0,1,0,0,0,0,0,0,0,0,0,0,33608.87,780,,
+Denizli Özel Sağlık IVF,2026-01-19,ZEF2026000000008,5,0,0,0,0,0,0,0,0,0,0,0,0,25852.98,600,,
+Int-el international elektronik,2026-01-26,ZEF2026000000009,-,-,-,-,0,-,-,-,-,-,0,0,-,11220,İADE,bnc to krokodil ,
+Mustafa Duru,2026-01-26,ZEF20260000000010,-,-,-,-,0,-,-,-,-,-,0,0,-,989.06,İADE,maxgo 2101 4 port usb hub çoklayıcı,
+Bayram Tunç,2026-01-26,ZEF20260000000011,-,-,-,-,0,-,-,-,-,-,0,0,-,1168.2,İADE,usb dişi dişi ara bağlantı/ 90 derece usb veri kablosu ,
+Sirius Pharm,2026-01-31,ZAF2026000000005,0,0,0,0,0,0.5,1,2,0,0,0,0,1,10339.89,200,,
+Sirius Pharm,2026-02-02,ZAF2026000000006,0,15,0,0,0,0,0,0,0,0,0,0,0,39007.26,900,Powder Seri No: 5-20 ( 1-5 Arası elden teslim edildi),"Şubat Ayında  
+2.042.298,09  TL
+46.668,01 USD
+Tutarında Fatura Kesilmiştir."
+Cihangir Çakıcı IVF,2026-02-02,ZEF2026000000012,4,0,2,0,0,0,0,0,0,0,0,0,0,39527.35,912,,
+Adana Turan Çetin IVF,2026-02-02,ZEF2026000000013,1,0,1,0,0,0,0,0,0,0,0,0,0,7801.45,180,,
+Medical Park Göztepe,2026-02-02,ZEF2026000000014,0,0,1,0,0,0,0,0,0,0,0,0,0,2600.48,60,,
+İzmir Tavmergen IVF,2026-02-03,ZEF2026000000015,10,0,1,0,0,0,0,0,0,0,0,0,0,43764.13,1008,,
+İstanbul Üniversitesi Çapa Tıp Fakültesi,2026-02-03,ZAF2026000000008,2,0,1,0,0,0,0,0,0,0,0,0,0,8336.54,192.01,1 Kutu solüsyon bedelsiz gönderildi.,
+Selma Uzunok,2026-02-05,ZEF2026000000016,-,-,-,-,0,-,-,-,-,-,0,0,-,2990.04,İADE,12v adaptör,
+Consultant Medical Company,2026-02-09,ZAF2026000000009,5,10,0,0,0,0,0,0,0,0,0,0,0,52145.04,1200,Powder Seri No: 21-30,
+Özel Medical Park İzmir,2026-02-11,ZEF2026000000018,2,0,1,0,0,0,0,0,0,0,0,0,0,13063.5,300,,
+Selma Uzunok,2026-02-11,ZEF2026000000020,-,-,-,-,0,-,-,-,-,-,0,0,-,2990.04,iade,10 adet 12v adaptör,
+ITL ,2026-02-12,ZAF2026000000010,50,20,0,0,0,0,0,0,0,0,0,0,0,261379.8,6000,Powder Seri No: 36-55,
+Arnavutluk Stem Gene Art Clinic,2026-02-12,ZAF2026000000011,10,4,0,0,0,0,0,0,0,0,0,0,0,66216.22,1520,Powder Seri No: 31-34,
+Cihangir Çakıcı IVF,2026-02-12,ZEF2026000000021,1,1,0,1,0,0,0,0,0,0,0,0,0,418207.68,9600,Powder Seri No: 35,
+İzmir Tavmergen IVF,2026-02-19,ZEF2026000000022,1,0,1,0,0,0,0,0,0,0,0,0,0,6289.16,144,,
+İstanbul Üniversitesi Çapa Tıp Fakültesi,2026-02-23,ZAF2026000000012,2,0,0,0,0,0,0,0,0,0,0,0,0,8388.16,192,1 Kutu dish bedelsiz gönderildi.,
+İzmir Tavmergen IVF,2026-02-23,ZEF2026000000023,4,0,0,0,0,0,0,0,0,0,0,0,0,16776.31,384,,
+Cihangir Çakıcı IVF,2026-02-23,ZEF2026000000024,6,6,0,0,0,0,0,0,0,0,0,0,0,72347.82,1656,Powder Seri No: 66-71,
+Sirius Pharm,2026-02-23,ZAF2026000000013,50,0,0,1,0,0,0,0,0,0,0,0,0,502415.45,11500,,
+İstanbul Medipol,2026-02-25,ZEF2026000000025,3,0,3,1,0,0,0,0,0,0,0,0,0,472797,10800,,
+Şişli Memorial,2026-02-26,ZEF2026000000026,0,0,2,0,0,0,0,0,0,0,0,0,0,5254.66,120,,
+İstanbul Liv Hospital Ulus,2026-03-05,ZEF2026000000027,3,0,1,0,0,0,0,0,0,0,0,0,0,34236.7,780,,"Mayıs Ayında  
+688.588,84  TL
+15.300,0 USD
+Tutarında Fatura Kesilmiştir."
+Özel Medical Park İzmir,2026-03-06,ZEF2026000000028,2,0,0,0,0,0,0,0,0,0,0,0,0,10539.24,240,,
+İzmir Tavmergen IVF,2026-03-09,ZEF2026000000029,10,0,2,0,0,0,0,0,0,0,0,0,0,46364.21,1056,,
+Medical Park Göztepe,2026-03-09,ZEF2026000000030,1,0,1,0,0,0,0,0,0,0,0,0,0,7903,180,,
+Birtane Telekomünikasyon,2026-03-13,ZEF2026000000030,-,-,-,-,0,-,-,-,-,-,0,0,-,12165,İADE,2 adet samsung galaxy tab,
+Özel Medical Park İzmir,2026-03-16,ZEF2026000000032,4,0,1,0,0,0,0,0,0,0,0,0,0,23771.34,540,,
+İstanbul Liv Hospital Ulus,2026-03-23,ZEF2026000000033,3,0,1,0,0,0,0,0,0,0,0,0,0,34423.36,780,,
+Sis Medikal(Gen Sa Üzerinden),2026-03-24,ZEF202600000035,2,2,0,1,0,0,0,0,0,0,0,0,0,484630.97,10944,Powder Seri No: 72-73,
+Sirius Pharm,2026-03-26,ZAF202600000014,0,10,0,0,0,0,0,0,0,0,0,0,0,26564.22,600,POWDER SERİ NO: (74-83) SİRİUS,
+D-Market Elektronik,2026-03-27,ZEF202600000034,-,-,-,-,0,-,-,-,-,-,0,0,-,272.22,İADE,hub iadesi 1 adet,
+Medical Park Göztepe,2026-03-30,ZEF202600000036,1,0,1,0,0,0,0,0,0,0,0,0,0,7718.58,180,,
+Medipol Üniversitesi Hastanesi,2026-03-30,ZEF202600000037,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,,
+Denizli Özel Sağlık IVF,2026-04-01,ZEF202600000038,5,1,0,0,0,0,0,0,0,0,0,0,0,29301.43,660,powder seri no: 84,"Nisan Ayında  
+1.673.316,74  TL
+36.474,00 USD
+Tutarında Fatura
+ Kesilmiştir."
+İzmir Tavmergen IVF,2026-04-02,ZEF202600000039,10,1,0,0,0,0,0,0,0,0,0,0,0,44748.95,1008,powder seri no: 85,
+Acıbadem İzmir,2026-04-04,ZEF202600000040,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,powder seri no:86 volkan hoca cihazla beraber yanında götürdü izmir medicalpark,
+SJNU KORE,2026-04-04,ZAF202600000015,26,15,0,0,0,0,0,0,0,0,0,0,0,33322.95,750,powder seri no: 94-108,
+İstanbul Üniversitesi Çapa Tıp Fakültesi,2026-04-06,ZAF202600000016,2,1,0,0,0,0,0,0,0,0,0,0,0,8530.68,192,powder seri no:87,
+RSM Bakü,2026-04-07,ZAF202600000017,2,0,0,0,0,0,0,0,0,0,0,0,0,8901.7,200,,
+Teknik Barkod,2026-04-08,ZEF202600000041,-,-,-,-,0,-,-,-,-,-,0,0,-,43053.28,İADE,50x10mm değişken baskılı etiket ve 30x15mm black mark etiket,
+Fertılıty Phılıppınes IVF ,2026-04-14,ZAF202600000018,0,0,0,0,0,0,0,0,0,0,0,10,1,0,0,iş bu fatura bedelsizdir gümrük için düzenlendi,
+SJNU KORE,2026-04-16,ZAF202600000019,63,23,0,3,0,0,0,0,0,0,1,0,0,1094368.45,24500,,
+Birol Aydın stem art gene clinic,2026-04-20,ZAF202600000020,0,0,0,1,0,0,0,0,0,0,0,0,0,0.05,0,demo cihazıdır,
+İzmir Tavmergen IVF,2026-04-20,ZEF202600000042,10,1,0,0,0,0,0,0,0,0,0,,0,45056.5,1008,powder seri no: 88,
+İstanbul Liv Hospital Ulus,2026-04-20,ZEF202600000043,3,1,0,0,0,,0,0,0,0,0,,0,34865.15,780,powder seri no:89,
+Sirius Pharm,2026-04-25,ZAF202600000021,0,20,0,0,0,,0,0,0,0,0,0,0,53824.92,1200,powder seri no: 142-161,
+Cihangir Çakıcı IVF,2026-04-27,ZEF202600000045,6,6,0,0,0,0,0,0,0,,0,,0,74278.39,1656,powder seri no: 132-137,
+Şişli Memorial,2026-04-27,ZEF202600000046,0,4,0,0,0,0,0,0,0,0,0,,0,10764.98,240,powder seri no:138-141,
+GenSa ,2026-04-27,ZEF2026000000047,5,0,0,0,0,0,0,0,0,0,0,0,0,21529.97,480,,
+Birol Aydın stem art gene clinic,2026-04-28,ZAF202600000022,10,5,0,0,0,0,0,0,0,0,0,0,0,71902.88,1600,Powder Seri No: 162-166,
+Birol Aydın Ferticent s.r.o ,2026-04-28,ZAF202600000023,15,5,0,0,0,0,0,0,0,0,0,0,0,98866.46,2200,Powder Seri No:,
+İzmir Tavmergen ,2026-05-05,ZEF2026000000048,5,1,0,0,0,0,0,0,0,0,0,0,0,23814.91,528,POWDER SERİ NO 172,"Mayıs Ayında  
+576.131,53  TL
+12.704,00 USD
+Tutarında Fatura
+ Kesilmiştir."
+Medical Park Göztepe,2026-05-05,ZEF2026000000049,1,1,0,0,0,0,0,0,0,0,0,0,0,8118.72,180,powder seri no 173,
+Özel Medical Park İzmir,2026-05-08,ZEF2026000000050,0,1,0,1,800,0,0,0,0,0,0,0,0,46059.73,1020,"Powder seri no: 175 
+Cihaz Tamir Ücreti : $800",
+Assisted Medical Solution,2026-05-08,ZEF2026000000024,0,4,0,0,0,0,0,0,0,0,0,0,0,9031.32,200,Powder Seri No: 217-220,
+Adana Turan Çetin IVF,2026-05-11,ZEF2026000000051,1,1,0,0,0,0,0,0,0,0,0,0,0,8134.2,180,powder seri no: 174,
+"Pendik Yüzyıl Hastanesi İstanbul
+(Garanti Bankası)",2026-05-12,AAA2026000000001,1,1,0,1,0,0,0,0,0,0,0,0,0,408390.3,9000,"Powder Seri No: 176 - Cihaz set halinde alındığı için 1 kutu dish 1 kutu powder ücretsiz verilmiştir.
+ Cihaz teşvik ile Garanti Finansal Kiralama A.Ş. üzerinden satın alınmıştır.",
+İstanbul Üniversitesi Çapa Tıp Fakültesi,2026-05-20,ZAF2026000000025,2,1,0,0,0,0,0,0,0,0,0,0,0,10907.45,240,Powder Seri No: 177,
+İzmir Tavmergen IVF,2026-05-20,ZEF2026000000053,5,2,0,0,0,0,0,0,0,0,0,0,0,26177.88,576,Powder Seri No: 178-179,
+İstanbul Liv Hospital Ulus,2026-05-21,ZEF2026000000054,3,1,0,0,0,0,0,0,0,0,0,0,0,35497.02,780,Powder Seri No: 180,
+Sis Medikal(Gen Sa Üzerinden),2026-06-01,GEN2026000000013,0,2,0,0,0,0,0,0,"""",0,0,0,0,5309.22,120,Powder Seri No: 183-184,"Haziran Ayında  
+1.348.336,69  TL
+29.327,0 USD
+Tutarında Fatura
+ Kesilmiştir."
+GenSa ,2026-06-01,ZEF20260000000055,0,2,0,0,0,0,0,0,0,0,0,0,0,4380.6,96,Powder Seri No: 181-182,
+Özel Medical Park İzmir,2026-06-03,ZEF2026000000056,0,0,0,1,0,0,0,0,0,0,0,0,0,0.06,0.001,Konsinye Cihaz Seri No: 24SAVE470019,
+Özel Medical Park İzmir,2026-06-04,ZEF2026000000057,0,1,0,0,0,0,0,0,0,0,0,0,0,2752.18,60,Powder Seri No: 186,
+RSM Bakü,2026-06-08,ZAF2026000000026,0,2,0,0,0,0,0,0,0,0,0,0,0,4590.84,100,Powder Seri No:,
+ITL ,2026-06-08,ZAF2026000000027,63,28,0,0,0,0,0,0,0,0,0,0,0,346608.42,7550,Powder Seri No: 189-216,
+İzmir Acıbadem Hastanesi,2026-06-09,ZEF2026000000058,1,1,0,1,0,0,0,0,0,0,0,0,0,496955.52,10800,Powder Seri No: 188,
+İzmir Acıbadem Hastanesi,2026-06-09,ZEF2026000000059,6,1,0,0,0,0,0,0,0,0,0,0,0,34096.67,741,Powder Seri No:,
+Sirius Pharm,2026-06-15,ZAF2026000000028,50,0,0,0,0,0,0,0,0,0,0,0,0,230428.5,5000,,
+"Pendik Yüzyıl Hastanesi İstanbul
+",2026-06-22,ZEF2026000000060,2,0,0,0,0,0,0,0,0,0,0,0,0,11105.38,240,,
+İstanbul Liv Hospital Ulus,2026-06-23,ZEF2026000000061,3,1,0,0,0,0,0,0,0,0,0,0,0,36173.12,780,Powder Seri No: 221,
+İzmir Tavmergen IVF,2026-06-25,ZEF2026000000062,10,2,0,0,0,0,0,0,0,0,0,0,0,49008.85,1056,Powder Seri No: 226-227,
+Özel Medical Park İzmir,2026-06-29,ZEF2026000000063,2,1,0,0,0,0,0,0,0,0,0,0,0,13934.46,300,Powder Seri No: 228,
+GenSa ,2026-06-30,ZEF2026000000064,10,3,0,0,0,0,0,0,0,0,0,0,0,51936.83,1104,Powder Seri No: 229-231,
+Sis Medikal(Gen Sa Üzerinden),2026-06-30,GEN2026000000016,10,3,0,0,0,0,0,0,0,0,0,0,0,61056.04,1380,Powder Seri No: 229-231,
+İstanbul Çapa Tıp Fakültesi,2026-07-01,ZAF2026000000029,2,0,0,0,0,0,0,0,0,0,0,0,0,8942.34,192,,"Temmuz Ayında  
+2.206.753,24  TL
+46.852,01 USD
+Tutarında Fatura
+ Kesilmiştir."
+Consultant Medical Company,2026-07-03,ZAF2026000000030,10,6,0,0,0,0,0,0,0,0,0,0,0,72708.48,1560,Powder Seri No: 232-237,
+Medical Park Göztepe,2026-07-03,ZEF2026000000065,1,1,0,0,0,0,0,0,0,0,0,0,0,8389.44,180,Powder Seri No:238,
+Adana Turan Çetin IVF,2026-07-08,ZEF2026000000066,1,1,0,0,0,0,0,0,0,0,0,0,0,8415.46,180,Powder Seri No: 239,
+Bioram Diagnostik Medikal,2026-07-08,ZEF2026000000067,2,2,0,0,0,0,0,0,0,0,0,0,0,16830.9,360,Powder Seri No:240-241,
+Cihangir Çakıcı IVF,2026-07-10,IRS2026000000005,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,,
+Cihangir Çakıcı IVF,2026-07-11,IRS2026000000005,0,3,0,0,0,0,0,0,0,0,0,0,0,0,0,Powder Seri No: 242-244,
+ITL ,2026-07-10,IHR2026000000001,1,1,0,1,0,0,0,0,0,0,0,0,0,397675.9,8500,Powder Seri No: 245,
+Sirius Pharm,2026-07-16,IHR2026000000003,1,1,0,1,0,0,0,0,0,0,0,0,0,351939.75,7500,Powder Seri No:248,
+İstanbul Liv Hospital Ulus,2026-07-20,ZEF2026000000068,3,1,0,0,0,0,0,0,0,0,0,0,0,36648.92,780,Powder Seri No: 250,
+İstanbul Medipol Mega,2026-07-23,ZEF2026000000069,0,0,1,0,0,0,0,0,0,0,0,0,0,0.47,0.01,,
+Sirius Pharm,2026-07-29,IHR2026000000004,0,0,10,0,0,0,0,0,0,0,0,0,0,28373.94,600,,
+GenSa ,2026-07-29,ZEF20260000000071,3,3,0,3,0,0,0,0,0,0,0,0,0,1276827.64,27000,,
+İstanbul Medipol Mega,2026-08-03,ZEF2026000000072,1,0,1,0,0,0,0,0,0,0,0,0,0,4545.71,96.01,,"Ağustos Ayında  
+791.753,01  TL
+16.568,01 USD
+Tutarında Fatura
+ Kesilmiştir."
+Medical Park Göztepe,2026-08-03,ZEF2026000000073,1,0,1,0,0,0,0,0,0,0,0,0,0,8522.14,180,,
+İzmir Tavmergen,2026-08-10,ZEF2026000000078,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,Bedelsiz Düzenlenen Fatura,
+Sirius Pharm,2026-08-10,IHR2026000000007,0,0,10,0,0,0,0,0,0,0,0,0,0,28565.1,600,,
+İstanbul Pendik Yüzyıl Hastanesi ,2026-08-10,ZEF2026000000077,0,0,1,0,0,0,0,0,0,0,0,0,0,0,0,Bedelsiz Düzenlenen Fatura,
+İzmir Tavmergen,2026-08-11,ZEF2026000000079,5,0,0,0,0,0,0,0,0,0,0,0,0,22860.48,480,,
+Şişli Memorial,2026-08-17,ZEF2026000000082,0,0,3,0,0,0,0,0,0,0,0,0,0,8589.71,180,,
+Viva Fertility Nijerya,2026-08-17,IHR2026000000008,1.5,1,1,1,0,0,0,0,0,0,0,0,0,238603,5000,,
+İstanbul Üniversitesi Çapa Tıp Fakültesi,2026-08-18,ZAF2026000000032,2,0,0,0,0,0,0,0,0,0,0,0,0,9179.69,192,,
+Denizli Özel Sağlık IVF,2026-08-18,ZEF2026000000083,5,0,1,0,0,0,0,0,0,0,0,0,0,31555.2,660,,
+İstanbul Liv Hospital Ulus,2026-08-20,ZEF2026000000084,3,0,1,0,0,0,0,0,0,0,0,0,0,37320.43,780,,
+ Maternal Fetal Care Center Umman,2026-08-20,ZAF2026000000033,0,0,2,0,0,0,0,0,0,0,0,0,0,6889.92,144,,
+ITL ,2026-08-20,IHR2026000000009,50,34,0,0,0,0,0,0,0,0,0,0,0,315788.22,6600,Powder Seri No:1-68,
+İstanbul Pendik Yüzyıl Hastanesi,2026-08-22,ZEF2026000000085,1,0,0,0,0,0,0,0,0,0,0,0,0,5745.59,120,,
+CMC,2026-08-24,ZAF2026000000034,5,10,0,0,0,0,0,0,0,0,0,0,0,57455.88,1200,Powder Seri No: 87-106,
+Cihangir Çakıcı IVF,2026-08-25,IRS2026000000013,8,4,0,0,0,0,0,0,0,0,0,0,0,-,-,Powder Seri No:69-76 (İrsaliye Düzenlendi Açık Hesap),
+Vedat Benzincioğlu Azim Ekspress Kargo,2026-08-26,IRS2026000000014,5,5,0,0,0,0,0,0,0,0,0,0,0,-,-,Powder Seri No:77-86,
+İzmir Tavmergen IVF ,2026-08-26,ZEF2026000000087,3,0,1,0,0,0,0,0,0,0,0,0,0,16131.94,336,,
+Medical Park Göztepe,2026-09-02,ZEF2026000000088,1,1,0,0,0,0,0,0,0,0,0,0,0,8674.04,180,Powder Seri No: 107-108,"Eylül Ayında  
+1.064.135,65  TL
+19.848,00 USD
+Tutarında Fatura
+ Kesilmiştir."
+Özel Medical Park İzmir,2026-09-04,ZEF2026000000089,0,0,1,0,0,0,0,0,0,0,0,0,0,2893.43,60,,
+İzmir Acıbadem Hastanesi,2026-09-04,ZEF2026000000090,0,0,1,0,0,0,0,0,0,0,0,0,0,2748.76,57,faturaya zps26-003 olarak girilmiş ama zps19-003 gönderildi,
+Meyona OOD,2026-09-10,IRS2026000000011,10,1,0,0,0,0,0,0,0,0,0,0,0,76482.9,1580,Powder Seri No: 131-132,
+Belçika Ghent Üniversitesi,2026-09-17,IRS2026000000012,1,2,0,1,0,0,0,0,0,0,0,0,0,787201.64,14041,Powder Seri No:133-136       Füzyon Cihazı Satıldı,
+İzmir Tavmergen IVF ,2026-09-17,ZEF2026000000091,3,0,1,0,0,0,0,0,0,0,0,0,0,16322.18,336,,
+Sis Medikal(Gen Sa Üzerinden),2026-09-18,GEN2026000000022,6,8,0,0,0,0,0,0,0,0,0,0,0,53092.2,1200,powder seri no:109-124,
+İstanbul Liv Hospital Ulus,2026-09-21,ZEF2026000000092,3,1,0,0,0,0,0,0,0,0,0,0,0,37917.05,780,Powder Seri No:125-126,
+Özel Medical Park İzmir,2026-09-23,ZEF2026000000093,2,0,0,0,0,0,0,0,0,0,0,0,0,11695.75,240,,
+Özel Medical Park İzmir,2026-09-24,ZEF2026000000094,3,0,0,0,0,0,0,0,0,0,0,0,0,-,-,,
+Denizli Özel Sağlık IVF,2026-09-24,ZEF2026000000095,5,1,0,0,0,0,0,0,0,0,0,0,0,32201.47,660,Powder Seri No:127-128,
+İstanbul Çapa Tıp Fakültesi,2026-09-28,ZAF2026000000035,1,1,0,0,0,0,0,0,0,0,0,0,0,7025.77,144,Powder Seri No:129-130,
+Cihangir Çakıcı IVF,2026-09-29,IRS2026000000016,6,0,0,0,0,0,0,0,0,0,0,0,0,-,-,(İrsaliye Düzenlendi Açık Hesap),
+İzmir Acıbadem Hastanesi,2026-09-30,ZEF2026000000096,5,0,0,0,0,0,0,0,0,0,0,0,0,27880.46,570,,
+İzmir Tavmergen IVF ,2026-10-05,ZEF2026000000097,3,0,1,0,0,0,0,0,0,0,0,0,0,16453.9,336,,"Ekim Ayında  
+134.520,56  TL
+2.733,00 USD
+Tutarında Fatura
+ Kesilmiştir."
+Sirius Pharm,2026-10-07,IHR2026000000013,0,4,20,0,0,0,0,0,0,0,0,0,0,58930.02,1200,Powder Seri No:139-146,
+İzmir Acıbadem Hastanesi,2026-10-08,ZEF2026000000098,0,1,0,0,0,0,0,0,0,0,0,0,0,2799.22,57,"POWDER SERİ NO:137-138(Powder Yerine Liquid Gönderdik,Powder Gülayda)",
+Özel Medical Park İzmir,2026-10-13,ZEF2026000000099,1,0,1,0,0,0,0,0,0,0,0,0,0,8864.48,180,,
+İstanbul Pendik Yüzyıl Hastanesi,2026-10-13,ZEF2026000000100,1,0,0,0,0,0,0,0,0,0,0,0,0,5909.65,120,,
+İstanbul Liv Hospital Ulus,2026-10-20,ZEF2026000000101,3,1,0,0,0,0,0,0,0,0,0,0,0,38581.3,780,POWDER SERİ NO:147-148,
+Cihangir Çakıcı IVF,2026-10-21,IRS2026000000022,0,6,0,0,0,0,0,0,0,0,0,0,0,-,-,(İrsaliye Düzenlendi Açık Hesap),
+,,,,,,,,,,,,,,,,,,,
+İstanbul Üniversitesi Çapa Tıp Fakültesi,2026-11-02,ZAF2026000000036,3,0,0,0,0,0,0,0,0,0,0,0,0,14335.12,288,,
+Medical Park Göztepe,2026-11-04,ZEF2026000000103,1,1,0,0,0,0,0,0,0,0,0,0,0,8983.69,180,Powder Seri No: 161-162,
+Özel Medical Park İzmir,2026-11-04,ZEF2026000000104,2,0,0,0,0,0,0,0,0,0,0,0,0,11978.26,240,,
+İzmir Tavmergen IVF,2026-11-12,IHR2026000000024,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,Cihaz Seri No: 26SAVE470002 Powder Seri No: 167-168 (Cihaz Değişimi Olucak),
+,,ZEF2026000000105,2,0,1,0,0,0,0,0,0,0,0,0,0,15057.78,300,,
