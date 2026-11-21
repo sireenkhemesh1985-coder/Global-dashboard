@@ -11293,10 +11293,22 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, active_s
                     <b>Sözleşme Metni:</b> <i>"Kliniğin acil vaka ihtiyacı için klinik deposuna yerleştirilen 25-50 kutuluk güvenlik stoğu (buffer consignment), distribütör/hastane tarafından verilecek banka teminat mektubu mukabilinde teslim edilir. Her bir kutunun steril güvenlik mührü açıldığı an faturalandırılır ve 30 gün içinde nakden ödenir."</i>
                 </div>
             </div>
-            <div style="background:#0F192E;border:1px solid rgba(168,85,247,0.25);border-radius:8px;padding:14px;grid-column: 1 / -1;">
+            <div style="background:#0F192E;border:1px solid rgba(168,85,247,0.25);border-radius:8px;padding:14px;">
                 <div style="font-size:13px;font-weight:700;color:#C084FC;margin-bottom:6px;">5. Regülasyon ve Tescil Belgelerinin Münhasırlığı (Regulatory Armor)</div>
                 <div style="font-size:11.5px;color:#CBD5E1;line-height:1.6;">
-                    <b>Sözleşme Metni:</b> <i>"ZEUS Bioscience tarafından distribütöre tescil amacıyla sağlanan CE Sertifikası (Class IIa), ISO 13485 ve Free Sales Certificate (FSC) belgeleri sadece ZEUS tescilli ürünleri için kullanılabilir. Bu belgelerin rakip ürünlerin ithalatında veya izinsiz yan ürün kaydında kullanılması durumunda $100,000 USD cezai şart uygulanır ve LOA derhal feshedilir."</i>
+                    <b>Sözleşme Metni:</b> <i>"ZEUS Bioscience tarafından distribütöre tescil amacıyla sağlanan CE Sertifikası (Class IIa), ISO 13485 ve Free Sales Certificate (FSC) belgeleri sadece ZEUS tescilli ürünleri için kullanılabilir. Bu belgelerin izinsiz yan ürün kaydında kullanılması halinde $100,000 USD cezai şart uygulanır ve LOA derhal feshedilir."</i>
+                </div>
+            </div>
+            <div style="background:#0F192E;border:1px solid rgba(234,179,8,0.3);border-radius:8px;padding:14px;">
+                <div style="font-size:13px;font-weight:700;color:#FACC15;margin-bottom:6px;">6. İhale / Kamu Alımı Şartlı Distribütörlük (Tender-Specific LOA)</div>
+                <div style="font-size:11.5px;color:#CBD5E1;line-height:1.6;">
+                    <b>Sözleşme Metni:</b> <i>"Aday firmaya belirli bir kamu veya üniversite ihalesi için verilen Şartlı Yetki Belgesi (Tender-Only LOA), münhasıran ilgili ihalenin şartnamesi ve takvimiyle sınırlıdır. İhalenin kazanılması durumunda distribütör asgari 3 adet anahtar teslim cihaz ve ilk parti sarf siparişini açarak 1. Yıl Resmi Distribütörlük Sözleşmesine hak kazanır. İhalenin kaybedilmesi durumunda bu yetki belgesi kendiliğinden hükümsüz kalır (Sunset Clause); ZEUS pazarda serbest kalır."</i>
+                </div>
+            </div>
+            <div style="background:#0F192E;border:1px solid rgba(56,189,248,0.3);border-radius:8px;padding:14px;grid-column: 1 / -1;">
+                <div style="font-size:13px;font-weight:700;color:#38BDF8;margin-bottom:6px;">7. 90 Günlük Pazar Doğrulama LOI'si & Deal Registration (Aday Çakışma & Emeği Koruma Şartı)</div>
+                <div style="font-size:11.5px;color:#CBD5E1;line-height:1.6;">
+                    <b>Sözleşme Metni:</b> <i>"Aday firmaya pazar analizi için 90 günlük bağlayıcı olmayan ön hazırlık süresi tanınır (30. gün klinik haritası, 60. gün 5 A-klinik hekim tutanağı teslimi zorunludur). Bu 90 günlük süreçte peşin 3 cihaz alımıyla gelen ikinci bir distribütör adayı çıkarsa, ilk adaya 10 iş günü 'İlk Satın Alma Önceliği' (Right of First Refusal) tanınır. Pazar ikinci bir firmaya devredilse dahi; ilk adayın ZEUS portalına kaydettiği (Deal Registration) kliniklere yapılacak ilk 12 aylık satışlardan ilk adaya %5 - %8 'Müşteri Geliştirme Komisyonu' (Finder's Fee) ödenir. Hiçbir adayın sahadaki emeği karşılıksız kalmaz."</i>
                 </div>
             </div>
         </div>
@@ -11307,7 +11319,92 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, active_s
     # --------------------------------------------------------------------------
     with c_desk_tab4:
         st.markdown("#### ✍️ Yönetici Karar Not Defteri & Stratejik Karar Masası")
-        st.caption("Pazar ve rakip bazında yönetim kurulu kararlarını, sahada verilecek özel iskonto ve tavizleri, sözleşmeye eklenecek özel hükümleri buraya kaydedebilirsiniz. Kaydedilen kararlar doğrudan Strategic Decision Center'a yansır.")
+        st.caption("Pazar ve aday bazında distribütörlük modelini seçin, şartlı yetkilendirme veya pazar analizi protokollerini belirleyin, yönetim kurulu kararlarını sisteme kaydedin.")
+
+        # ======================================================================
+        # İNTERAKTİF DİSTRİBÜTÖRLÜK & YETKİLENDİRME MODELİ SEÇİM REHBERİ
+        # ======================================================================
+        st.markdown('''
+        <div style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(0, 245, 255, 0.35); border-left: 4.5px solid #00F5FF; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+                <b style="color:#00F5FF; font-size:14px;">🎯 Nasıl İlerlemek İstiyorsunuz? — Distribütörlük & Yetkilendirme Strateji Seçimi</b>
+                <span style="background:rgba(0,245,255,0.15); color:#00F5FF; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:700;">Yönetici Masası Karar Kılavuzu</span>
+            </div>
+            <div style="color:#94A3B8; font-size:11.5px; margin-top:4px;">Aşağıdaki seçeneklerden hedef pazar ve aday firmanın durumuna en uygun olan modeli seçiniz; sistem otomatik şartnameyi ve koruma protokolünü üretecektir.</div>
+        </div>
+        ''', unsafe_allow_html=True)
+
+        sel_decision_model = st.selectbox(
+            "📌 Uygulanacak Distribütörlük & Yetkilendirme Modeli (Karar Türü Seçin):",
+            [
+                "🟢 1. Standart Tam Yetkili Distribütörlük (3+ Cihaz Peşin Alım / Kesin Yıllık Kota)",
+                "🟡 2. İhale / Kamu Alımı Şartlı Distribütörlük (Tender-Only LOA — İhale Kazanılırsa 3+ Cihaz)",
+                "🔵 3. 90 Günlük Pazar Doğrulama & LOI İnkubasyonu (Fizibilite / 30 & 60. Gün Milestone)",
+                "🛡️ 4. Deal Registration & Klinik Hesap Koruma (Aday Çakışma Koruma / %5-%8 Finder's Fee)",
+                "🤝 5. Finansör + Aplikatör Hibrit Konsorsiyumu (İthalatçı Sermaye B + Saha Klinik Ağı A)"
+            ],
+            index=1,
+            key="sel_dist_decision_strategy_guide"
+        )
+
+        # Dynamic Strategy Explanation Card
+        if "1. Standart Tam" in sel_decision_model:
+            st.markdown('''
+            <div style="background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 10px; padding: 14px 18px; margin-bottom: 18px;">
+                <div style="font-weight:700; color:#10B981; font-size:13.5px; margin-bottom:6px;">🟢 Model 1: Standart Tam Yetkili Distribütörlük Sözleşmesi</div>
+                <div style="font-size:12px; color:#CBD5E1; line-height:1.65;">
+                    • <b>Mali Yükümlülük:</b> Asgari 3 adet anahtar teslim ZPS 26 cihazı ($25,500) ve ilk parti sarf siparişi peşin veya teyitli akreditifle açılır.<br>
+                    • <b>Yetki Kapsamı:</b> İlgili ülkede 1 yıllık tam münhasırlık (Exclusive Distribution) tanınır.<br>
+                    • <b>Koruma Şartı:</b> İlk 6 ayda asgari 2 cihaz ve 150 kutu sarf çekişi gerçekleşmezse münhasırlık tek taraflı iptal edilir.
+                </div>
+            </div>
+            ''', unsafe_allow_html=True)
+        elif "2. İhale / Kamu" in sel_decision_model:
+            st.markdown('''
+            <div style="background: rgba(234, 179, 8, 0.08); border: 1px solid rgba(234, 179, 8, 0.3); border-radius: 10px; padding: 14px 18px; margin-bottom: 18px;">
+                <div style="font-weight:700; color:#FACC15; font-size:13.5px; margin-bottom:6px;">🟡 Model 2: İhale / Kamu Alımı Şartlı Distribütörlük (Tender-Only LOA)</div>
+                <div style="font-size:12px; color:#CBD5E1; line-height:1.65;">
+                    • <b>Mali Yükümlülük:</b> Peşin 3 cihaz alma şartı <u>aranmaz</u>. Ancak ihale kazanıldığı takdirde ihale miktarındaki cihazları (asgari 3 cihaz) çekme taahhüdü alınır.<br>
+                    • <b>Yetki Kapsamı:</b> Ülke geneli distribütörlük verilmez; yalnızca ilgili kamu/üniversite ihalesinin adı ve kayıt numarasıyla sınırlı 'Geçici Proje Yetki Mektubu' verilir.<br>
+                    • <b>İhale İçi Koruma:</b> ZEUS, ihale süresince o ülkede başka hiçbir firmaya aynı ihale için yetki mektubu vermez.<br>
+                    • <b>Fesih (Sunset Clause):</b> İhale kazanılırsa resmi 1. yıl tam distribütörlüğüne geçilir; kaybedilirse LOA kendiliğinden hükümsüz kalır, ZEUS serbesttir.
+                </div>
+            </div>
+            ''', unsafe_allow_html=True)
+        elif "3. 90 Günlük" in sel_decision_model:
+            st.markdown('''
+            <div style="background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 10px; padding: 14px 18px; margin-bottom: 18px;">
+                <div style="font-weight:700; color:#38BDF8; font-size:13.5px; margin-bottom:6px;">🔵 Model 3: 90 Günlük Pazar Doğrulama LOI'si (İnkubasyon & Fizibilite Dönemi)</div>
+                <div style="font-size:12px; color:#CBD5E1; line-height:1.65;">
+                    • <b>Mali Yükümlülük:</b> 3 cihazlık satın alma şartı 90 gün sonrasına ertelenir. Adaya bağlayıcı olmayan bir 'LOI / İyi Niyet Protokolü' verilir.<br>
+                    • <b>30. Gün Kilometre Taşı (Milestone 1):</b> Ülkedeki IVF kliniklerinin hekim/embriyolog iletişim haritası ve yerel sağlık bakanlığı tescil gereksinim raporu teslim edilir.<br>
+                    • <b>60. Gün Kilometre Taşı (Milestone 2):</b> En az 5 A-Segment tüp bebek kliniğiyle yapılmış yüz yüze hekim/embriyolog görüşme tutanakları ZEUS'a iletilir.<br>
+                    • <b>90. Gün Kapanış:</b> Aday 3 cihazlık ilk siparişi açar ve tam sözleşmeye geçer. Taahhüt yerine gelmezse süre uzatılmaz, pazar açılır.
+                </div>
+            </div>
+            ''', unsafe_allow_html=True)
+        elif "4. Deal Registration" in sel_decision_model:
+            st.markdown('''
+            <div style="background: rgba(168, 85, 247, 0.08); border: 1px solid rgba(168, 85, 247, 0.3); border-radius: 10px; padding: 14px 18px; margin-bottom: 18px;">
+                <div style="font-weight:700; color:#C084FC; font-size:13.5px; margin-bottom:6px;">🛡️ Model 4: Deal Registration & Aday Çakışma Koruma Protokolü</div>
+                <div style="font-size:12px; color:#CBD5E1; line-height:1.65;">
+                    • <b>Adayın Korkusu:</b> "Ben sahada 60 gün gezip hekimleri heveslendirirken, başka bir firma çıkıp 3 cihazı peşin alırsa benim emeklerim boşa mı gidecek?"<br>
+                    • <b>10 Günlük İlk Alım Önceliği (Right of First Refusal):</b> 90 günlük süre bitmeden peşin 3 cihaz almak isteyen 2. bir aday çıkarsa, ZEUS hemen ona imza atmaz. İlk adaya 10 iş günü öncelik süresi tanınır; siparişi öne çekerse öncelik onundur.<br>
+                    • <b>Hesap Koruma & Finder's Fee:</b> İlk adayın ziyaret ettiği ve sisteme kaydettiği kliniklere, pazar başka distribütöre verilse bile önümüzdeki 12 ay içinde satılacak her cihaz ve sarftan ilk adaya <b>%5 - %8 Müşteri Geliştirme Komisyonu (Finder's Fee)</b> ödenir. Adayın emeği %100 garanti altındadır.
+                </div>
+            </div>
+            ''', unsafe_allow_html=True)
+        else:
+            st.markdown('''
+            <div style="background: rgba(236, 72, 153, 0.08); border: 1px solid rgba(236, 72, 153, 0.3); border-radius: 10px; padding: 14px 18px; margin-bottom: 18px;">
+                <div style="font-weight:700; color:#F472B6; font-size:13.5px; margin-bottom:6px;">🤝 Model 5: Finansör + Aplikatör Hibrit Konsorsiyum Modeli</div>
+                <div style="font-size:12px; color:#CBD5E1; line-height:1.65;">
+                    • <b>Yapı:</b> Aday A hekim ve klinik ağı çok güçlü bir embriyoloji/biyomedikal ekibidir ancak sermayesi azdır. Aday B ise sermayesi güçlü ancak IVF hekimlerini tanımayan bir ecza/cihaz deposudur.<br>
+                    • <b>Konsorsiyum Protokolü:</b> ZEUS iki adayı birleştirir: Aday B ana ithalatçı ve 3 cihazın finansörü olur; Aday A ise sahadaki münhasır IVF klinik aplikatörü ve sarf satış temsilcisi olur.<br>
+                    • <b>Kazan-Kazan:</b> ZEUS 3 cihazını peşin satar, pazar çatışması çözülür ve sahada çift motorlu güçlü bir yapı kurulur.
+                </div>
+            </div>
+            ''', unsafe_allow_html=True)
 
         note_col1, note_col2 = st.columns([1.6, 1.4])
         with note_col1:
@@ -11333,21 +11430,36 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, active_s
                         "$85,000 USD Turnkey Filo Paketi"
                     ], key="f_note_zeus_prod")
 
+                f_dist_model = st.selectbox("🤝 Kararlaştırılan Distribütörlük Modeli:", [
+                    "🟢 Standart Tam Yetkili Distribütörlük (3+ Cihaz Peşin / Kesin Kota)",
+                    "🟡 İhale / Kamu Alımı Şartlı Distribütörlük (Tender-Only LOA — Kazanılırsa 3+ Cihaz)",
+                    "🔵 90 Günlük Pazar Doğrulama LOI'si (Fizibilite / 30 & 60. Gün Milestone)",
+                    "🛡️ Deal Registration & Klinik Hesap Koruma (%5-%8 Finder's Fee & 10 Gün Öncelik)",
+                    "🤝 Finansör + Aplikatör Hibrit Konsorsiyumu (İthalatçı B + Klinik Ağı A)"
+                ], index=1, key="f_note_dist_model")
+
                 f_strategy = st.selectbox("🎯 Uygulanacak Satış & Kazanma Stratejisi:", [
                     "🔬 Klinik Kanıt & Hakemli Yayın Kalkanı (Baltacı / Ebner sub-%1.2 lizis)",
                     "💼 OPEX Kurtarma Stratejisi (RFID Siklus Başı $30 vs ZEUS $7.5 - %75 Tasarruf)",
                     "🚀 $85,000 USD Turnkey Filo Paketi & Ezici ROI (8.2 Ay Amortisman)",
                     "⛔ Kesinlikle Demo Yok - 14 Günlük Yerinde Ücretli Vaka Çalıştayı",
-                    "🤝 Yerel Distribütöre %45+ Brüt Marj & Münhasır Bölge Teşviği"
+                    "🤝 Yerel Distribütöre %45+ Brüt Marj & Münhasır Bölge Teşviği",
+                    "📋 İhale Şartnamesi Kilitleme & Tek Yetkili Teklif Stratejisi",
+                    "⏳ 90 Günlük Pazar İnkubasyonu & Deal Registration Koruma Protokolü"
                 ], key="f_note_strategy")
 
                 f_clauses = st.multiselect("📜 Sözleşmeye Eklenecek Bağlayıcı Hükümler:", [
                     "Asgari Yıllık Sarf Satın Alma Taahhüdü (60-75 Kutu)",
                     "Münhasırlık ve Performans İhlali Şartı (6 Ayda Asgari Kota)",
                     "Fiyat Koruma & Kur Riski Tamponu ($ USD Endeksli)",
+                    "İhale Bazlı Şartlı Yetki Belgesi (Tender-Only LOA & Sunset Fesih)",
+                    "90 Günlük Pazar Doğrulama LOI'si (30 & 60. Gün Milestone)",
+                    "Aday Koruma: 10 İş Günü İlk Alım Önceliği (Right of First Refusal)",
+                    "Klinik Hesap Koruma (Deal Registration & %6 Finder's Fee)",
+                    "Finansör-Aplikatör Konsorsiyum Protokolü",
                     "60-Günlük Tesis İçi Konsinye Depolama & Banka Teminatı",
                     "Regülasyon ve Tescil Belgelerinin Münhasırlığı ($100K Cezai Şart)"
-                ], default=["Asgari Yıllık Sarf Satın Alma Taahhüdü (60-75 Kutu)", "Fiyat Koruma & Kur Riski Tamponu ($ USD Endeksli)"])
+                ], default=["İhale Bazlı Şartlı Yetki Belgesi (Tender-Only LOA & Sunset Fesih)", "Fiyat Koruma & Kur Riski Tamponu ($ USD Endeksli)"])
 
                 f_memo = st.text_area(
                     "✍️ Yönetici Karar Tutanağı & Müzakere Notu:",
@@ -11373,6 +11485,7 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, active_s
                             "clinic_or_dist": f_clinic.strip() if f_clinic.strip() else f"{f_country} Referans Kurumu",
                             "target_competitor": f_comp,
                             "our_product": f_zeus_prod,
+                            "distributor_model": f_dist_model,
                             "selected_strategy": f_strategy,
                             "contract_clauses": f_clauses,
                             "decision_note": f_memo.strip(),
@@ -11398,6 +11511,7 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, active_s
                         <div style="font-size:11.5px;color:#CCD7E6;line-height:1.5;">
                             <b>⚔️ Rakip Firma:</b> <span style="color:#FFB800;">{n_item['target_competitor']}</span><br>
                             <b>🛡️ ZEUS Çözümü:</b> <span style="color:#00F5FF;">{n_item['our_product']}</span><br>
+                            <b>🤝 Distribütörlük Modeli:</b> <span style="color:#38BDF8; font-weight:700;">{n_item.get('distributor_model', 'Standart Distribütörlük')}</span><br>
                             <b>🎯 Uygulanacak Strateji:</b> <span style="color:#00E676;">{n_item['selected_strategy']}</span><br>
                             <b>📜 Bağlayıcı Sözleşme Şartları:</b><br>
                             <span style="color:#CBD5E1;">{' • '.join(n_item['contract_clauses']) if n_item['contract_clauses'] else 'Standart Hükümler'}</span>
