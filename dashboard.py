@@ -254,50 +254,42 @@ def get_system_datetime_display():
     months_tr = ['', 'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık']
     return f"{now_dt.day} {months_tr[now_dt.month]} {now_dt.year} • {now_dt.strftime('%H:%M:%S')}"
 
-# Custom Styling (ZGMI Enterprise Design System — Linear / Bloomberg / Vercel Inspired)
+# Custom Styling (ZGMI Strategic Intelligence Design System — Linear / Palantir / Carbon / Vercel / Bloomberg)
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Geist+Mono:wght@400;500;600&family=Inter:wght@400;500;600&display=swap');
 
     :root {
-        --zg-font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        --zg-font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        --zg-font-sans: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        --zg-font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
-        /* Core Enterprise Surface Hierarchy */
-        --zg-canvas: #09090B;
-        --zg-sidebar: #0B0F17;
-        --zg-surface: #111622;
-        --zg-surface-elevated: #161D2E;
-        --zg-surface-hover: #1B2336;
+        /* Strategic Intelligence Palette */
+        --zg-canvas: #0B111C;
+        --zg-sidebar: #090E17;
+        --zg-panel: #121C2B;
+        --zg-panel-elevated: #162235;
+        --zg-border: #263347;
+        --zg-border-hover: #364966;
 
-        /* Hairline Borders */
-        --zg-border: 1px solid rgba(226, 232, 240, 0.09);
-        --zg-border-hover: 1px solid rgba(226, 232, 240, 0.20);
-        --zg-border-active: 1px solid rgba(56, 189, 248, 0.55);
-
-        /* Disciplined Accent Palette (Cyan reserved strictly for active states & primary actions) */
-        --zg-active-cyan: #38BDF8;
-        --zg-primary: #0C5CAB;
-        --zg-accent-emerald: #10B981;
-        --zg-accent-amber: #F59E0B;
-        --zg-accent-rose: #EF4444;
-
-        /* Text Hierarchy */
+        --zg-accent: #7DA8DF;
+        --zg-silver: #CBD5E1;
         --zg-text-primary: #F8FAFC;
-        --zg-text-secondary: #CBD5E1;
         --zg-text-muted: #94A3B8;
         --zg-text-dim: #64748B;
+
+        --zg-success: #10B981;
+        --zg-warning: #F59E0B;
+        --zg-danger: #EF4444;
 
         --zg-radius-sm: 4px;
         --zg-radius-md: 6px;
         --zg-radius-lg: 8px;
         --zg-radius-full: 9999px;
 
-        --zg-secondary: #0A4A8A;
         --zg-space-sm: 8px;
         --zg-space-md: 16px;
         --zg-space-lg: 24px;
-        --zg-transition: all 160ms cubic-bezier(0.16, 1, 0.3, 1);
+        --zg-transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -309,15 +301,13 @@ st.markdown("""
         }
     }
 
-    html {
-        scroll-behavior: smooth !important;
-    }
+    html { scroll-behavior: smooth !important; }
 
     html, body, [class*="css"], .stApp {
         font-family: var(--zg-font-sans) !important;
         background-color: var(--zg-canvas) !important;
         background-image: none !important;
-        color: var(--zg-text-secondary) !important;
+        color: var(--zg-silver) !important;
         letter-spacing: -0.01em;
     }
 
@@ -330,7 +320,7 @@ st.markdown("""
         font-style: normal !important;
     }
 
-    /* Restrained Enterprise Typography (No excessive bold or gradient fills) */
+    /* Compact Enterprise Typography */
     h1, h2, h3, h4, h5, h6 {
         font-family: var(--zg-font-sans) !important;
         text-wrap: balance !important;
@@ -339,21 +329,19 @@ st.markdown("""
         font-weight: 600 !important;
     }
     h1 {
-        font-size: 1.65rem !important;
-        background: none !important;
-        -webkit-text-fill-color: var(--zg-text-primary) !important;
-        text-shadow: none !important;
+        font-size: 1.35rem !important;
+        line-height: 1.25 !important;
         margin-bottom: 0.25rem !important;
     }
-    h2 { font-size: 1.3rem !important; }
-    h3 { font-size: 1.1rem !important; }
-    h4 { font-size: 0.98rem !important; }
+    h2 { font-size: 1.15rem !important; }
+    h3 { font-size: 1.02rem !important; }
+    h4 { font-size: 0.94rem !important; }
 
     p, [data-testid="stMarkdownContainer"] p {
         font-family: var(--zg-font-sans) !important;
         text-wrap: pretty !important;
-        line-height: 1.55 !important;
-        font-size: 0.9rem !important;
+        line-height: 1.5 !important;
+        font-size: 0.875rem !important;
         font-weight: 400 !important;
     }
 
@@ -365,80 +353,86 @@ st.markdown("""
     /* Minimal Back-To-Top Button */
     #btn-back-to-top {
         position: fixed;
-        bottom: 24px;
-        right: 24px;
+        bottom: 20px;
+        right: 20px;
         z-index: 999999;
-        background: var(--zg-surface-elevated);
-        color: var(--zg-text-muted) !important;
+        background: var(--zg-panel);
+        color: var(--zg-silver) !important;
         border-radius: var(--zg-radius-full);
-        width: 38px;
-        height: 38px;
+        width: 36px;
+        height: 36px;
         display: flex;
         align-items: center;
         justify-content: center;
         text-decoration: none !important;
-        border: var(--zg-border);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        border: 1px solid var(--zg-border);
         cursor: pointer;
         transition: var(--zg-transition);
     }
     #btn-back-to-top:hover {
-        color: var(--zg-active-cyan) !important;
-        border-color: rgba(56, 189, 248, 0.45);
-        background: var(--zg-surface-hover);
+        color: var(--zg-accent) !important;
+        border-color: var(--zg-accent);
+        background: var(--zg-panel-elevated);
     }
 
     .main .block-container,
     [data-testid="stMainBlockContainer"] {
         padding-top: 0.75rem !important;
-        padding-bottom: 3rem !important;
-        padding-left: 2rem !important;
-        padding-right: 2rem !important;
+        padding-bottom: 2.5rem !important;
+        padding-left: 1.75rem !important;
+        padding-right: 1.75rem !important;
         max-width: 100% !important;
     }
 
+    @media (max-width: 768px) {
+        .main .block-container,
+        [data-testid="stMainBlockContainer"] {
+            padding-left: 1rem !important;
+            padding-right: 1rem !important;
+        }
+    }
+
     /* ====================================================================== */
-    /* SIDEBAR (Linear / Vercel Hairline Surface)                             */
+    /* SIDEBAR (Linear Simplicity — Clean #090E17 + #263347 + #7DA8DF)        */
     /* ====================================================================== */
     [data-testid="stSidebar"] {
         background-color: var(--zg-sidebar) !important;
         background-image: none !important;
-        border-right: var(--zg-border) !important;
+        border-right: 1px solid var(--zg-border) !important;
         box-shadow: none !important;
     }
     [data-testid="stSidebar"] hr {
-        border-color: rgba(226, 232, 240, 0.08) !important;
-        margin: 14px 0 !important;
+        border-color: var(--zg-border) !important;
+        margin: 12px 0 !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] > label[data-testid="stWidgetLabel"] {
         display: none !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] {
-        gap: 8px !important;
+        gap: 4px !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label {
-        background: rgba(15, 23, 42, 0.72) !important;
-        border: 1px solid rgba(0, 240, 255, 0.28) !important;
-        border-radius: 8px !important;
-        padding: 10px 12px !important;
+        background: transparent !important;
+        border: 1px solid transparent !important;
+        border-radius: var(--zg-radius-md) !important;
+        padding: 8px 10px !important;
         margin: 0 !important;
         transition: var(--zg-transition) !important;
         cursor: pointer !important;
         display: flex !important;
         align-items: center !important;
-        box-shadow: 0 0 12px rgba(0, 240, 255, 0.08), inset 0 1px 0 rgba(0, 240, 255, 0.12) !important;
+        box-shadow: none !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label:hover {
-        background: rgba(12, 92, 171, 0.28) !important;
-        border: 1px solid rgba(0, 240, 255, 0.78) !important;
-        box-shadow: 0 0 18px rgba(0, 240, 255, 0.30), inset 0 0 10px rgba(0, 240, 255, 0.12) !important;
-        transform: translateX(2px) !important;
+        background: var(--zg-panel) !important;
+        border: 1px solid var(--zg-border) !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"],
     [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label:has(input:checked) {
-        background: linear-gradient(135deg, rgba(0, 240, 255, 0.22) 0%, rgba(12, 92, 171, 0.52) 100%) !important;
-        border: 1px solid #00F0FF !important;
-        box-shadow: 0 0 22px rgba(0, 240, 255, 0.42), inset 3px 0 0 #00F0FF, inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
+        background: var(--zg-panel) !important;
+        border: 1px solid var(--zg-border) !important;
+        border-left: 2px solid var(--zg-accent) !important;
+        box-shadow: none !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label p,
     [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label span,
@@ -448,19 +442,19 @@ st.markdown("""
         opacity: 1 !important;
         font-size: 12.5px !important;
         font-weight: 500 !important;
-        color: #CBD5E1 !important;
+        color: var(--zg-text-muted) !important;
         letter-spacing: -0.01em !important;
         line-height: 1.35 !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label:hover p,
     [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label:hover span {
-        color: #FFFFFF !important;
+        color: var(--zg-silver) !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label:has(input:checked) p,
     [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label:has(input:checked) span {
-        color: #FFFFFF !important;
+        color: var(--zg-text-primary) !important;
         font-weight: 600 !important;
-        text-shadow: 0 0 10px rgba(0, 240, 255, 0.55) !important;
+        text-shadow: none !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] input[type="radio"],
     [data-testid="stSidebar"] [data-testid="stRadio"] div[data-baseweb="radio"] > div:first-child:not([data-testid="stMarkdownContainer"]) {
@@ -472,55 +466,41 @@ st.markdown("""
     }
 
     /* ====================================================================== */
-    /* ENTERPRISE KPI & METRIC CARDS                                          */
+    /* COMPACT EXECUTIVE KPI & PANEL CARDS (#121C2B + #263347)                */
     /* ====================================================================== */
     .kpi-container,
     .glass-metric-card {
-        background: var(--zg-surface) !important;
-        border: var(--zg-border) !important;
-        border-radius: var(--zg-radius-lg) !important;
-        padding: 14px 16px !important;
+        background: var(--zg-panel) !important;
+        border: 1px solid var(--zg-border) !important;
+        border-radius: var(--zg-radius-md) !important;
+        padding: 12px 14px !important;
         transition: var(--zg-transition) !important;
         box-shadow: none !important;
         min-width: 0 !important;
         overflow: hidden !important;
         position: relative !important;
-        min-height: 112px !important;
+        min-height: 102px !important;
         display: flex !important;
         flex-direction: column !important;
         justify-content: space-between !important;
     }
-    .kpi-container::after,
-    .glass-metric-card::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(280px circle at 50% 0%, rgba(12, 92, 171, 0.14), transparent 70%);
-        opacity: 0;
-        transition: opacity 200ms ease;
-        pointer-events: none;
-    }
     .kpi-container:hover,
     .glass-metric-card:hover {
-        background: var(--zg-surface-elevated) !important;
-        border: 1px solid rgba(12, 92, 171, 0.45) !important;
-    }
-    .kpi-container:hover::after,
-    .glass-metric-card:hover::after {
-        opacity: 1;
+        background: var(--zg-panel-elevated) !important;
+        border-color: var(--zg-border-hover) !important;
     }
     .kpi-header {
-        font-size: 11px !important;
+        font-size: 10.5px !important;
         font-weight: 500 !important;
         color: var(--zg-text-muted) !important;
         text-transform: uppercase !important;
         letter-spacing: 0.05em !important;
         margin-bottom: 4px !important;
         display: block !important;
-        line-height: 1.3 !important;
+        line-height: 1.25 !important;
     }
     .kpi-val {
-        font-size: 21px !important;
+        font-size: 20px !important;
         font-weight: 600 !important;
         font-family: var(--zg-font-mono) !important;
         color: var(--zg-text-primary) !important;
@@ -532,18 +512,19 @@ st.markdown("""
     .kpi-sub {
         font-size: 11px !important;
         font-weight: 400 !important;
+        color: var(--zg-text-muted) !important;
         display: block !important;
     }
-    .kpi-pos { color: var(--zg-accent-emerald) !important; }
-    .kpi-neg { color: var(--zg-accent-rose) !important; }
-    .kpi-neu { color: var(--zg-accent-amber) !important; }
+    .kpi-pos { color: var(--zg-success) !important; }
+    .kpi-neg { color: var(--zg-danger) !important; }
+    .kpi-neu { color: var(--zg-warning) !important; }
 
     .glass-icon-box {
-        width: 30px;
-        height: 30px;
+        width: 28px;
+        height: 28px;
         border-radius: var(--zg-radius-sm);
-        background: var(--zg-surface-elevated);
-        border: var(--zg-border);
+        background: var(--zg-canvas);
+        border: 1px solid var(--zg-border);
         display: inline-flex;
         align-items: center;
         justify-content: center;
@@ -551,38 +532,38 @@ st.markdown("""
     }
 
     [data-testid="stMetric"] {
-        background: var(--zg-surface) !important;
-        border: var(--zg-border) !important;
-        border-radius: var(--zg-radius-lg) !important;
-        padding: 12px 16px !important;
+        background: var(--zg-panel) !important;
+        border: 1px solid var(--zg-border) !important;
+        border-radius: var(--zg-radius-md) !important;
+        padding: 12px 14px !important;
         box-shadow: none !important;
         transition: var(--zg-transition) !important;
     }
     [data-testid="stMetric"]:hover {
-        border: var(--zg-border-hover) !important;
+        border-color: var(--zg-border-hover) !important;
     }
     [data-testid="stMetricLabel"] {
-        font-size: 11px !important;
+        font-size: 10.5px !important;
         font-weight: 500 !important;
         text-transform: uppercase !important;
         letter-spacing: 0.05em !important;
         color: var(--zg-text-muted) !important;
     }
     [data-testid="stMetricValue"] {
-        font-size: 21px !important;
+        font-size: 20px !important;
         font-weight: 600 !important;
         color: var(--zg-text-primary) !important;
     }
 
     /* ====================================================================== */
-    /* BUTTONS, EXPANDERS, TABS, INPUTS & TABLES                              */
+    /* NATIVE STREAMLIT WIDGETS (IBM Carbon / Vercel Minimalism)              */
     /* ====================================================================== */
     .stButton > button,
     .stDownloadButton > button,
     .stLinkButton > a {
-        background: var(--zg-surface) !important;
-        color: var(--zg-text-secondary) !important;
-        border: var(--zg-border) !important;
+        background: var(--zg-panel) !important;
+        color: var(--zg-silver) !important;
+        border: 1px solid var(--zg-border) !important;
         border-radius: var(--zg-radius-md) !important;
         font-weight: 500 !important;
         font-size: 12.5px !important;
@@ -593,79 +574,80 @@ st.markdown("""
     .stButton > button:hover,
     .stDownloadButton > button:hover,
     .stLinkButton > a:hover {
-        background: var(--zg-surface-elevated) !important;
-        border: var(--zg-border-hover) !important;
+        background: var(--zg-panel-elevated) !important;
+        border-color: var(--zg-accent) !important;
         color: var(--zg-text-primary) !important;
     }
     .stButton > button[kind="primary"] {
-        background: var(--zg-primary) !important;
-        border: 1px solid rgba(56, 189, 248, 0.45) !important;
-        color: #FFFFFF !important;
+        background: var(--zg-accent) !important;
+        border: 1px solid var(--zg-accent) !important;
+        color: #090E17 !important;
+        font-weight: 600 !important;
     }
     .stButton > button[kind="primary"]:hover {
-        background: #116AC4 !important;
-        border-color: var(--zg-active-cyan) !important;
+        background: #92B8E8 !important;
+        border-color: #92B8E8 !important;
     }
 
     [data-testid="stExpander"] {
-        background: var(--zg-surface) !important;
-        border: var(--zg-border) !important;
-        border-radius: var(--zg-radius-lg) !important;
+        background: var(--zg-panel) !important;
+        border: 1px solid var(--zg-border) !important;
+        border-radius: var(--zg-radius-md) !important;
         box-shadow: none !important;
         overflow: hidden !important;
-        margin-bottom: 10px !important;
+        margin-bottom: 8px !important;
         transition: var(--zg-transition) !important;
     }
     [data-testid="stExpander"]:hover {
-        border: var(--zg-border-hover) !important;
+        border-color: var(--zg-border-hover) !important;
     }
     [data-testid="stExpander"] summary {
         font-weight: 500 !important;
-        font-size: 13px !important;
-        color: var(--zg-text-primary) !important;
-        padding: 10px 14px !important;
+        font-size: 12.5px !important;
+        color: var(--zg-silver) !important;
+        padding: 9px 14px !important;
     }
 
     [data-testid="stPlotlyChart"],
     [data-testid="stDataFrame"],
     [data-testid="stForm"] {
-        background: var(--zg-surface) !important;
-        border: var(--zg-border) !important;
-        border-radius: var(--zg-radius-lg) !important;
+        background: var(--zg-panel) !important;
+        border: 1px solid var(--zg-border) !important;
+        border-radius: var(--zg-radius-md) !important;
         box-shadow: none !important;
     }
-    [data-testid="stPlotlyChart"] { padding: 10px !important; }
-    [data-testid="stForm"] { padding: 18px !important; }
+    [data-testid="stPlotlyChart"] { padding: 8px !important; }
+    [data-testid="stForm"] { padding: 16px !important; }
 
     div[data-baseweb="select"] > div,
     div[data-baseweb="input"] > div {
-        background: var(--zg-surface) !important;
-        border: var(--zg-border) !important;
-        border-radius: var(--zg-radius-md) !important;
-        color: var(--zg-text-primary) !important;
+        background: var(--zg-canvas) !important;
+        border: 1px solid var(--zg-border) !important;
+        border-radius: var(--zg-radius-sm) !important;
+        color: var(--zg-silver) !important;
         box-shadow: none !important;
         transition: var(--zg-transition) !important;
     }
     div[data-baseweb="select"] > div:hover,
     div[data-baseweb="input"] > div:hover {
-        border: var(--zg-border-hover) !important;
+        border-color: var(--zg-border-hover) !important;
     }
     div[data-baseweb="select"] > div:focus-within,
     div[data-baseweb="input"] > div:focus-within {
-        border-color: var(--zg-active-cyan) !important;
+        border-color: var(--zg-accent) !important;
     }
 
     .stTabs [data-baseweb="tab-list"] {
         gap: 4px !important;
         background: var(--zg-sidebar) !important;
         padding: 4px !important;
-        border-radius: var(--zg-radius-lg) !important;
-        border: var(--zg-border) !important;
+        border-radius: var(--zg-radius-md) !important;
+        border: 1px solid var(--zg-border) !important;
         box-shadow: none !important;
     }
     .stTabs [data-baseweb="tab"] {
         border-radius: var(--zg-radius-sm) !important;
-        padding: 6px 12px !important;
+        padding: 5px 12px !important;
         color: var(--zg-text-muted) !important;
         font-size: 12.5px !important;
         font-weight: 500 !important;
@@ -674,13 +656,13 @@ st.markdown("""
         transition: var(--zg-transition) !important;
     }
     .stTabs [data-baseweb="tab"]:hover {
-        color: var(--zg-text-primary) !important;
-        background: var(--zg-surface) !important;
+        color: var(--zg-silver) !important;
+        background: var(--zg-panel) !important;
     }
     .stTabs [aria-selected="true"] {
-        background: var(--zg-surface-elevated) !important;
+        background: var(--zg-panel) !important;
         color: var(--zg-text-primary) !important;
-        border: var(--zg-border-active) !important;
+        border: 1px solid var(--zg-accent) !important;
         font-weight: 600 !important;
         box-shadow: none !important;
     }
@@ -690,12 +672,12 @@ st.markdown("""
     }
 
     .section-header-glass {
-        background: var(--zg-surface) !important;
-        border: var(--zg-border) !important;
-        border-left: 2px solid var(--zg-active-cyan) !important;
+        background: var(--zg-panel) !important;
+        border: 1px solid var(--zg-border) !important;
+        border-left: 2px solid var(--zg-accent) !important;
         border-radius: var(--zg-radius-md) !important;
-        padding: 12px 16px !important;
-        margin: 14px 0 !important;
+        padding: 10px 14px !important;
+        margin: 12px 0 !important;
         box-shadow: none !important;
     }
 
@@ -704,28 +686,28 @@ st.markdown("""
         border: 1px solid rgba(239, 68, 68, 0.25) !important;
         border-left: 2px solid #EF4444 !important;
         border-radius: var(--zg-radius-md) !important;
-        padding: 12px 16px !important;
-        margin-bottom: 10px !important;
+        padding: 10px 14px !important;
+        margin-bottom: 8px !important;
     }
     .alert-card-warn {
         background: rgba(245, 158, 11, 0.06) !important;
         border: 1px solid rgba(245, 158, 11, 0.25) !important;
         border-left: 2px solid #F59E0B !important;
         border-radius: var(--zg-radius-md) !important;
-        padding: 12px 16px !important;
-        margin-bottom: 10px !important;
+        padding: 10px 14px !important;
+        margin-bottom: 8px !important;
     }
     .alert-card-info {
-        background: rgba(56, 189, 248, 0.06) !important;
-        border: 1px solid rgba(56, 189, 248, 0.22) !important;
-        border-left: 2px solid #38BDF8 !important;
+        background: rgba(125, 168, 223, 0.06) !important;
+        border: 1px solid rgba(125, 168, 223, 0.28) !important;
+        border-left: 2px solid var(--zg-accent) !important;
         border-radius: var(--zg-radius-md) !important;
-        padding: 12px 16px !important;
-        margin-bottom: 10px !important;
+        padding: 10px 14px !important;
+        margin-bottom: 8px !important;
     }
 
     .badge-enterprise-gold {
-        background: rgba(245, 158, 11, 0.10);
+        background: rgba(245, 158, 11, 0.08);
         color: #FBBF24;
         border: 1px solid rgba(245, 158, 11, 0.28);
         border-radius: 4px;
@@ -735,9 +717,9 @@ st.markdown("""
         font-family: var(--zg-font-mono);
     }
     .badge-enterprise-blue {
-        background: rgba(56, 189, 248, 0.10);
-        color: #38BDF8;
-        border: 1px solid rgba(56, 189, 248, 0.28);
+        background: rgba(125, 168, 223, 0.10);
+        color: #7DA8DF;
+        border: 1px solid rgba(125, 168, 223, 0.30);
         border-radius: 4px;
         padding: 2px 7px;
         font-size: 10.5px;
@@ -745,7 +727,7 @@ st.markdown("""
         font-family: var(--zg-font-mono);
     }
     .badge-enterprise-emerald {
-        background: rgba(16, 185, 129, 0.10);
+        background: rgba(16, 185, 129, 0.08);
         color: #34D399;
         border: 1px solid rgba(16, 185, 129, 0.28);
         border-radius: 4px;
@@ -765,8 +747,8 @@ st.markdown("""
 
     ::-webkit-scrollbar { width: 6px; height: 6px; }
     ::-webkit-scrollbar-track { background: var(--zg-canvas); }
-    ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.22); border-radius: 99px; }
-    ::-webkit-scrollbar-thumb:hover { background: rgba(148, 163, 184, 0.42); }
+    ::-webkit-scrollbar-thumb { background: var(--zg-border); border-radius: 99px; }
+    ::-webkit-scrollbar-thumb:hover { background: var(--zg-border-hover); }
 </style>
 """, unsafe_allow_html=True)
 
@@ -4682,13 +4664,13 @@ def build_country_360_charts(country_name, c_macro, c_sales, target_rev_2027=500
         labels=ch1_labels,
         values=ch1_vals,
         hole=0.55,
-        marker=dict(colors=['#00F5FF', '#00E676', '#FFB800', '#A855F7'], line=dict(color='#0B1426', width=2)),
+        marker=dict(colors=['#7DA8DF', '#10B981', '#FFB800', '#A855F7'], line=dict(color='#0B1426', width=2)),
         textinfo='percent',
         hoverinfo='label+value',
         textfont=dict(color='#FFFFFF', size=11)
     )])
     fig1.update_layout(
-        title=dict(text=f"🔬 {country_name} Klinik IVF Tedavi Dağılımı (~{est_total_cycles:,.0f} Siklus)", font=dict(color='#00F5FF', size=12)),
+        title=dict(text=f"🔬 {country_name} Klinik IVF Tedavi Dağılımı (~{est_total_cycles:,.0f} Siklus)", font=dict(color='#7DA8DF', size=12)),
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
         showlegend=True,
@@ -4717,7 +4699,7 @@ def build_country_360_charts(country_name, c_macro, c_sales, target_rev_2027=500
         textfont=dict(color='#FFFFFF', size=11)
     )])
     fig2.update_layout(
-        title=dict(text=f"🏛️ {country_name} Siklus Finansman Dağılımı", font=dict(color='#00E676', size=12)),
+        title=dict(text=f"🏛️ {country_name} Siklus Finansman Dağılımı", font=dict(color='#10B981', size=12)),
         paper_bgcolor='rgba(0,0,0,0)',
         plot_bgcolor='rgba(0,0,0,0)',
         showlegend=True,
@@ -4743,7 +4725,7 @@ def build_country_360_charts(country_name, c_macro, c_sales, target_rev_2027=500
         x=years,
         y=rev_vals,
         name='Satış Cirosu ($USD)',
-        marker_color='#00F5FF',
+        marker_color='#7DA8DF',
         yaxis='y'
     ))
     fig3.add_trace(go.Scatter(
@@ -4761,8 +4743,8 @@ def build_country_360_charts(country_name, c_macro, c_sales, target_rev_2027=500
         showlegend=True,
         legend=dict(font=dict(color='#CBD5E1', size=9), orientation='h', y=-0.2),
         yaxis=dict(
-            title=dict(text='Ciro ($USD)', font=dict(color='#00F5FF', size=10)),
-            tickfont=dict(color='#00F5FF', size=9),
+            title=dict(text='Ciro ($USD)', font=dict(color='#7DA8DF', size=10)),
+            tickfont=dict(color='#7DA8DF', size=9),
             gridcolor='rgba(255,255,255,0.05)'
         ),
         yaxis2=dict(
@@ -4897,16 +4879,16 @@ def render_cycle_capacity_optimizer_ui(country_name, prefix, dev_price=8500.0, s
         st.session_state[cycle_key] = def_cycles
         
     st.markdown(f"""
-    <div style="background:linear-gradient(135deg, rgba(15,23,42,0.98) 0%, rgba(30,41,59,0.95) 100%);border:1.5px solid #00F5FF;border-radius:12px;padding:14px 18px;margin-top:12px;margin-bottom:12px;box-shadow:0 6px 20px rgba(0,0,0,0.35);">
-        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px;border-bottom:1px solid rgba(0,245,255,0.25);padding-bottom:8px;">
+    <div style="background:linear-gradient(135deg, rgba(15,23,42,0.98) 0%, rgba(30,41,59,0.95) 100%);border:1.5px solid #7DA8DF;border-radius:12px;padding:14px 18px;margin-top:12px;margin-bottom:12px;box-shadow:0 6px 20px rgba(0,0,0,0.35);">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px;border-bottom:1px solid rgba(125,168,223,0.25);padding-bottom:8px;">
             <div style="display:flex;align-items:center;gap:10px;">
-                <span style="background:rgba(0,245,255,0.18);border:1px solid #00F5FF;color:#00F5FF;font-size:18px;padding:4px 8px;border-radius:8px;">🤖</span>
+                <span style="background:rgba(125,168,223,0.18);border:1px solid #7DA8DF;color:#7DA8DF;font-size:18px;padding:4px 8px;border-radius:8px;">🤖</span>
                 <div>
                     <b style="color:#FFFFFF;font-size:14px;">ZEUS AI Siklüs Kapasitesi, Cihaz & Sarf İhtiyacı ve Toplu İskonto Optimizatörü</b>
-                    <div style="color:#00F5FF;font-size:11px;font-weight:700;">Hedef tedavi siklüsü sayısını girin; sistem gereken cihaz/sarf adetlerini ve hak edilen toplu alım iskontosunu anında hesaplasın.</div>
+                    <div style="color:#7DA8DF;font-size:11px;font-weight:700;">Hedef tedavi siklüsü sayısını girin; sistem gereken cihaz/sarf adetlerini ve hak edilen toplu alım iskontosunu anında hesaplasın.</div>
                 </div>
             </div>
-            <span style="background:rgba(0,230,118,0.18);color:#00E676;border:1px solid #00E676;padding:3px 10px;border-radius:6px;font-size:10.5px;font-weight:700;">
+            <span style="background:rgba(0,230,118,0.18);color:#10B981;border:1px solid #10B981;padding:3px 10px;border-radius:6px;font-size:10.5px;font-weight:700;">
                 ⚡ Canlı AI Kapasite & İskonto Motoru
             </span>
         </div>
@@ -4952,20 +4934,20 @@ def render_cycle_capacity_optimizer_ui(country_name, prefix, dev_price=8500.0, s
     res = calculate_cycle_based_package_recommendation(target_c_val, c_str, dev_price, sarf_price)
 
     st.markdown(f"""
-    <div style="background:#0F192E;border:1.5px solid #00E676;border-radius:10px;padding:14px;margin-bottom:12px;box-shadow:0 4px 16px rgba(0,230,118,0.12);">
+    <div style="background:#0F192E;border:1.5px solid #10B981;border-radius:10px;padding:14px;margin-bottom:12px;box-shadow:0 4px 16px rgba(0,230,118,0.12);">
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px;border-bottom:1px solid rgba(0,230,118,0.25);padding-bottom:8px;">
             <div>
-                <span style="font-weight:800;color:#00E676;font-size:13.5px;">📋 {res['cycles']:,} Tedavi Siklüsü İçin AI İhtiyaç & Toplu Paket Analizi</span>
+                <span style="font-weight:800;color:#10B981;font-size:13.5px;">📋 {res['cycles']:,} Tedavi Siklüsü İçin AI İhtiyaç & Toplu Paket Analizi</span>
                 <span style="color:#94A3B8;font-size:11px;margin-left:8px;">(Ölçek Seviyesi: {res['fleet_tier']})</span>
             </div>
-            <span style="background:rgba(0,245,255,0.12);color:#00F5FF;border:1px solid #00F5FF;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:700;">
+            <span style="background:rgba(125,168,223,0.12);color:#7DA8DF;border:1px solid #7DA8DF;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:700;">
                 🎁 {res['bonus_perk']}
             </span>
         </div>
 
         <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));gap:10px;margin-bottom:10px;">
-            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,245,255,0.3);border-radius:6px;padding:10px;">
-                <b style="color:#00F5FF;font-size:11px;">🔬 ÖNERİLEN DONANIM</b><br>
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(125,168,223,0.3);border-radius:6px;padding:10px;">
+                <b style="color:#7DA8DF;font-size:11px;">🔬 ÖNERİLEN DONANIM</b><br>
                 <span style="color:#FFFFFF;font-weight:800;font-size:15px;">{res['total_devices']} Cihaz</span><br>
                 <span style="color:#CBD5E1;font-size:10.5px;">{res['portfolio_str']}</span>
             </div>
@@ -4977,8 +4959,8 @@ def render_cycle_capacity_optimizer_ui(country_name, prefix, dev_price=8500.0, s
             </div>
 
             <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,230,118,0.3);border-radius:6px;padding:10px;">
-                <b style="color:#00E676;font-size:11px;">🏷️ HAK EDİLEN TOPLU İSKONTO</b><br>
-                <span style="color:#00E676;font-weight:800;font-size:15px;">Cihaz: %{res['ai_dev_disc']:.1f} | Sarf: %{res['ai_con_disc']:.1f}</span><br>
+                <b style="color:#10B981;font-size:11px;">🏷️ HAK EDİLEN TOPLU İSKONTO</b><br>
+                <span style="color:#10B981;font-weight:800;font-size:15px;">Cihaz: %{res['ai_dev_disc']:.1f} | Sarf: %{res['ai_con_disc']:.1f}</span><br>
                 <span style="color:#CBD5E1;font-size:10.5px;">Blended Ortalama: %{res['blended_disc_pct']:.1f} İndirim</span>
             </div>
 
@@ -5012,15 +4994,15 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
     is_mid_income = False
     is_low_income = False
     st.markdown(f"""
-    <div style="background:rgba(0,245,255,0.05);border:1.5px solid #13A6B5;border-radius:12px;padding:16px 20px;margin-top:16px;margin-bottom:14px;">
+    <div style="background:rgba(125,168,223,0.05);border:1.5px solid #13A6B5;border-radius:12px;padding:16px 20px;margin-top:16px;margin-bottom:14px;">
         <div style="display:flex;justify-content:space-between;align-items:center;">
             <div>
-                <span style="font-weight:800;color:#00F5FF;font-size:15.5px;">🧮 {target_country} Canlı Cihaz & Sarf İskonto ve Kârlılık Hesaplayıcısı</span>
+                <span style="font-weight:800;color:#7DA8DF;font-size:15.5px;">🧮 {target_country} Canlı Cihaz & Sarf İskonto ve Kârlılık Hesaplayıcısı</span>
                 <div style="color:#94A3B8;font-size:12px;margin-top:3px;">
                     Cihaz ve sarf fiyatlarını elle giriniz; sistem {target_country} için önerilen indirim tavanlarıyla tek tek ve toplam indirimi hesaplar.
                 </div>
             </div>
-            <span style="background:rgba(0,245,255,0.18);color:#00F5FF;font-weight:800;font-size:11px;padding:5px 12px;border-radius:20px;border:1px solid rgba(0,245,255,0.4);">
+            <span style="background:rgba(125,168,223,0.18);color:#7DA8DF;font-weight:800;font-size:11px;padding:5px 12px;border-radius:20px;border:1px solid rgba(125,168,223,0.4);">
                 Canlı Hesaplama Motoru
             </span>
         </div>
@@ -5029,9 +5011,9 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
     
     cult_b = resolve_country_buying_behavior(target_country)
     st.markdown(f"""
-    <div style="background:rgba(15,23,42,0.85);border:1.5px solid {cult_b.get('badge_color', '#00F5FF')};border-radius:8px;padding:8px 12px;margin-bottom:12px;font-size:11.5px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+    <div style="background:rgba(15,23,42,0.85);border:1.5px solid {cult_b.get('badge_color', '#7DA8DF')};border-radius:8px;padding:8px 12px;margin-bottom:12px;font-size:11.5px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
         <div>
-            <b style="color:#00F5FF;">🤝 {target_country} Müzakere Davranışı:</b> <span style="color:#FFFFFF;font-weight:700;">{cult_b.get('bargaining_culture')}</span>
+            <b style="color:#7DA8DF;">🤝 {target_country} Müzakere Davranışı:</b> <span style="color:#FFFFFF;font-weight:700;">{cult_b.get('bargaining_culture')}</span>
             <span style="color:#94A3B8;margin-left:6px;">— {cult_b.get('bargaining_advice')}</span>
         </div>
         <span style="background:rgba(255,255,255,0.06);color:#CBD5E1;padding:2px 8px;border-radius:4px;font-size:10px;">⏱️ Karar: {cult_b.get('decision_speed')}</span>
@@ -5099,8 +5081,8 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
     
     with col_c1:
         st.markdown("""
-        <div style="background:rgba(0,245,255,0.03);border:1px solid rgba(0,245,255,0.25);border-radius:8px;padding:8px 12px;margin-bottom:10px;">
-            <b style="color:#00F5FF;font-size:12.5px;">⚡ 1. Cihaz (Hardware) İskonto Hesaplama</b>
+        <div style="background:rgba(125,168,223,0.03);border:1px solid rgba(125,168,223,0.25);border-radius:8px;padding:8px 12px;margin-bottom:10px;">
+            <b style="color:#7DA8DF;font-size:12.5px;">⚡ 1. Cihaz (Hardware) İskonto Hesaplama</b>
         </div>
         """, unsafe_allow_html=True)
         
@@ -5151,17 +5133,17 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
             dev_inline_bg = "rgba(239,68,68,0.15)"
             dev_inline_border = "#EF4444"
         elif dev_qty == 3:
-            dev_inline_msg = f"<span style='color:#00E676;font-weight:800;'>✅ Asgari 3 Cihaz Distribütörlük Şartı Sağlandı:</span> (Paket A: 2x Pulse Stimulator + 1x Portföy Cihazı veya Paket B: 3 Farklı Cihaz). %6 - %8 İskonto önerilir."
+            dev_inline_msg = f"<span style='color:#10B981;font-weight:800;'>✅ Asgari 3 Cihaz Distribütörlük Şartı Sağlandı:</span> (Paket A: 2x Pulse Stimulator + 1x Portföy Cihazı veya Paket B: 3 Farklı Cihaz). %6 - %8 İskonto önerilir."
             dev_inline_bg = "rgba(0,230,118,0.12)"
-            dev_inline_border = "#00E676"
+            dev_inline_border = "#10B981"
         elif 4 <= dev_qty <= 5:
             dev_inline_msg = f"<span style='color:#FFB800;font-weight:800;'>🚀 Bölgesel Filo Genişleme Modeli (5+ Cihaz):</span> {target_country} mega pazarlar için önerilen çok merkezli yayılım paketi. %10 - %12 Filo İskontosu + 2 Yıllık Münhasırlık."
             dev_inline_bg = "rgba(255,184,0,0.12)"
             dev_inline_border = "#F59E0B"
         elif 6 <= dev_qty <= 9:
-            dev_inline_msg = "<span style='color:#00F5FF;font-weight:700;'>🏢 Büyük Filo (6-9):</span> %8 - %10 İskonto önerilir ($7,650 - $7,820 USD)."
-            dev_inline_bg = "rgba(0,245,255,0.12)"
-            dev_inline_border = "#00F5FF"
+            dev_inline_msg = "<span style='color:#7DA8DF;font-weight:700;'>🏢 Büyük Filo (6-9):</span> %8 - %10 İskonto önerilir ($7,650 - $7,820 USD)."
+            dev_inline_bg = "rgba(125,168,223,0.12)"
+            dev_inline_border = "#7DA8DF"
         else:
             dev_inline_msg = "<span style='color:#C084FC;font-weight:700;'>🏆 İhale Tavanı (10+):</span> Azami %10 - %12 İskonto ($7,480 - $7,650 USD). Cihaz marjı >%50 kalmalıdır."
             dev_inline_bg = "rgba(168,85,247,0.12)"
@@ -5198,7 +5180,7 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
         <div style="background:#0F192E;border:1px solid {'#FF6B6B' if dev_over_ceiling else '#13A6B5'};border-radius:10px;padding:12px 16px;margin-top:10px;font-size:12px;">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
                 <span style="color:#FFFFFF;font-weight:700;">Net İskontolu Birim Cihaz:</span>
-                <span style="color:#00F5FF;font-weight:800;font-size:15px;">${net_dev_unit:,.2f} USD</span>
+                <span style="color:#7DA8DF;font-weight:800;font-size:15px;">${net_dev_unit:,.2f} USD</span>
             </div>
             <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
                 <span style="color:#94A3B8;">Cihaz Başı İndirim:</span>
@@ -5210,10 +5192,10 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
             </div>
             <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
                 <span style="color:#94A3B8;">Tahmini Brüt Kâr (Marj):</span>
-                <span style="color:#00E676;font-weight:700;">${dev_margin_usd:,.2f} USD (%{dev_margin_pct:.1f})</span>
+                <span style="color:#10B981;font-weight:700;">${dev_margin_usd:,.2f} USD (%{dev_margin_pct:.1f})</span>
             </div>
             <div style="background:rgba(255,255,255,0.05);padding:6px 10px;border-radius:6px;font-size:11px;">
-                {'<span style="color:#FF6B6B;font-weight:700;">⚠️ TAVAN AŞIMI:</span> İskonto ülke tavanı (%' + f'{rec_dev_max:.1f}) üzerindedir!' if dev_over_ceiling else '<span style="color:#00E676;font-weight:700;">✅ GÜVENLİ MARJ:</span> İskonto ülke tavanı (%' + f'{rec_dev_max:.1f}) sınırları içerisindedir.'}
+                {'<span style="color:#FF6B6B;font-weight:700;">⚠️ TAVAN AŞIMI:</span> İskonto ülke tavanı (%' + f'{rec_dev_max:.1f}) üzerindedir!' if dev_over_ceiling else '<span style="color:#10B981;font-weight:700;">✅ GÜVENLİ MARJ:</span> İskonto ülke tavanı (%' + f'{rec_dev_max:.1f}) sınırları içerisindedir.'}
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -5287,9 +5269,9 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
             sarf_inline_bg = "rgba(255,184,0,0.12)"
             sarf_inline_border = "#F59E0B"
         elif 300 <= sarf_qty < 500:
-            sarf_inline_msg = "<span style='color:#00E676;font-weight:700;'>✅ Yüksek Hacim (300-499):</span> %6 - %8 İskonto uygulanabilir ($92 - $94 USD/kutu)."
+            sarf_inline_msg = "<span style='color:#10B981;font-weight:700;'>✅ Yüksek Hacim (300-499):</span> %6 - %8 İskonto uygulanabilir ($92 - $94 USD/kutu)."
             sarf_inline_bg = "rgba(0,230,118,0.12)"
-            sarf_inline_border = "#00E676"
+            sarf_inline_border = "#10B981"
         else:
             sarf_inline_msg = "<span style='color:#C084FC;font-weight:700;'>💎 Dev Zincir / İhale (500+):</span> Azami %10 - %12 İskonto ($88 - $90 USD). Sarf marjı >%60 kalmalıdır."
             sarf_inline_bg = "rgba(168,85,247,0.12)"
@@ -5313,21 +5295,21 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
         <div style="background:{sarf_inline_bg};border:1.5px solid {sarf_inline_border};border-radius:8px;padding:10px 14px;margin-top:6px;margin-bottom:10px;font-size:12px;color:#E2E8F0;box-shadow:0 3px 10px rgba(0,0,0,0.25);">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:6px;">
                 <div>{sarf_inline_msg}</div>
-                <span style="background:rgba(0,245,255,0.15);color:#00F5FF;border:1px solid #00F5FF;padding:2px 8px;border-radius:4px;font-weight:700;font-size:10.5px;">
+                <span style="background:rgba(125,168,223,0.15);color:#7DA8DF;border:1px solid #7DA8DF;padding:2px 8px;border-radius:4px;font-weight:700;font-size:10.5px;">
                     ⚡ 4 Pool Tek Dish (Max 20 Oosit/Dish)
                 </span>
             </div>
-            <div style="font-size:12.5px;color:#00F5FF;margin-top:6px;font-weight:800;border-top:1px solid rgba(255,255,255,0.08);padding-top:6px;">
+            <div style="font-size:12.5px;color:#7DA8DF;margin-top:6px;font-weight:800;border-top:1px solid rgba(255,255,255,0.08);padding-top:6px;">
                 🧪 <b>Siklüs & Oosit Kapasitesi:</b> {sarf_qty:,} Kutu = {total_dishes_val:,} Dish (4-Pool) = ~{patient_cycles_val:,} Hasta Tedavi Siklüsü
             </div>
             <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(170px, 1fr));gap:8px;margin-top:6px;font-size:11px;">
-                <div style="background:rgba(0,0,0,0.35);padding:6px 10px;border-radius:6px;border-left:2.5px solid #00F5FF;">
+                <div style="background:rgba(0,0,0,0.35);padding:6px 10px;border-radius:6px;border-left:2.5px solid #7DA8DF;">
                     <span style="color:#94A3B8;">Toplam Mikro-Havuz (Pool):</span><br>
                     <b style="color:#FFFFFF;font-size:13px;">{total_pools_val:,} Pool</b> (Her Dish 4 Pool)
                 </div>
-                <div style="background:rgba(0,0,0,0.35);padding:6px 10px;border-radius:6px;border-left:2.5px solid #00E676;">
+                <div style="background:rgba(0,0,0,0.35);padding:6px 10px;border-radius:6px;border-left:2.5px solid #10B981;">
                     <span style="color:#94A3B8;">Azami Oosit Kapasitesi:</span><br>
-                    <b style="color:#00E676;font-size:13px;">{max_oocytes_val:,} Oosit</b> (Max 20/Dish)
+                    <b style="color:#10B981;font-size:13px;">{max_oocytes_val:,} Oosit</b> (Max 20/Dish)
                 </div>
                 <div style="background:rgba(0,0,0,0.35);padding:6px 10px;border-radius:6px;border-left:2.5px solid #FFD700;">
                     <span style="color:#94A3B8;">Vaka Başı / Pool Başı:</span><br>
@@ -5356,10 +5338,10 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
             </div>
             <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
                 <span style="color:#94A3B8;">Tahmini Brüt Kâr (Marj):</span>
-                <span style="color:#00E676;font-weight:700;">${sarf_margin_usd:,.2f} USD (%{sarf_margin_pct:.1f})</span>
+                <span style="color:#10B981;font-weight:700;">${sarf_margin_usd:,.2f} USD (%{sarf_margin_pct:.1f})</span>
             </div>
             <div style="background:rgba(255,255,255,0.05);padding:6px 10px;border-radius:6px;font-size:11px;">
-                {'<span style="color:#FF6B6B;font-weight:700;">⚠️ TAVAN AŞIMI:</span> İskonto ülke tavanı (%' + f'{rec_sarf_max:.1f}) üzerindedir!' if sarf_over_ceiling else '<span style="color:#00E676;font-weight:700;">✅ GÜVENLİ MARJ:</span> Sarf iskontosu tavanı (%' + f'{rec_sarf_max:.1f}) ve yüksek marj koruması dahilindedir.'}
+                {'<span style="color:#FF6B6B;font-weight:700;">⚠️ TAVAN AŞIMI:</span> İskonto ülke tavanı (%' + f'{rec_sarf_max:.1f}) üzerindedir!' if sarf_over_ceiling else '<span style="color:#10B981;font-weight:700;">✅ GÜVENLİ MARJ:</span> Sarf iskontosu tavanı (%' + f'{rec_sarf_max:.1f}) ve yüksek marj koruması dahilindedir.'}
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -5375,9 +5357,9 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
     
     st.markdown(f"""
     <div style="display:grid;grid-template-columns:repeat(4, 1fr);gap:12px;margin-top:14px;margin-bottom:12px;">
-        <div style="background:rgba(19,166,181,0.08);border:1px solid rgba(0,245,255,0.3);border-radius:10px;padding:12px 14px;text-align:center;">
+        <div style="background:rgba(19,166,181,0.08);border:1px solid rgba(125,168,223,0.3);border-radius:10px;padding:12px 14px;text-align:center;">
             <div style="font-size:11px;font-weight:700;color:#8FA3C0;text-transform:uppercase;">Toplam Anlaşma Değeri</div>
-            <div style="font-size:20px;font-weight:800;color:#00F5FF;margin-top:2px;">${tot_net:,.2f} USD</div>
+            <div style="font-size:20px;font-weight:800;color:#7DA8DF;margin-top:2px;">${tot_net:,.2f} USD</div>
             <div style="font-size:10px;color:#94A3B8;">Liste: ${tot_gross:,.2f} USD</div>
         </div>
         <div style="background:rgba(255,184,0,0.08);border:1px solid rgba(255,184,0,0.3);border-radius:10px;padding:12px 14px;text-align:center;">
@@ -5387,8 +5369,8 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
         </div>
         <div style="background:rgba(0,230,118,0.08);border:1px solid rgba(0,230,118,0.3);border-radius:10px;padding:12px 14px;text-align:center;">
             <div style="font-size:11px;font-weight:700;color:#8FA3C0;text-transform:uppercase;">Kümülatif Brüt Kâr</div>
-            <div style="font-size:20px;font-weight:800;color:#00E676;margin-top:2px;">${tot_profit:,.2f} USD</div>
-            <div style="font-size:10px;color:#00E676;">Brüt Marj: %{tot_margin_pct:.1f}</div>
+            <div style="font-size:20px;font-weight:800;color:#10B981;margin-top:2px;">${tot_profit:,.2f} USD</div>
+            <div style="font-size:10px;color:#10B981;">Brüt Marj: %{tot_margin_pct:.1f}</div>
         </div>
         <div style="background:rgba(186,104,200,0.08);border:1px solid rgba(186,104,200,0.3);border-radius:10px;padding:12px 14px;text-align:center;">
             <div style="font-size:11px;font-weight:700;color:#8FA3C0;text-transform:uppercase;">Sarf Gelir Ağırlığı</div>
@@ -5405,7 +5387,7 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
     
     st.markdown("""
     <div style="margin-top:16px;margin-bottom:6px;">
-        <span style="font-size:14.5px;font-weight:800;color:#00E676;letter-spacing:0.5px;">
+        <span style="font-size:14.5px;font-weight:800;color:#10B981;letter-spacing:0.5px;">
             🏥 KLİNİK YATIRIM GERİ DÖNÜŞÜ & ROI ANALİZİ (CLINICAL ROI & PAYBACK SIMULATOR)
         </span>
         <div style="font-size:11.5px;color:#94A3B8;margin-top:2px;">
@@ -5429,10 +5411,10 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
         )
     with roi_sel_col2:
         st.markdown(f'''
-        <div style="background:rgba(0,245,255,0.06);border:1px solid rgba(0,245,255,0.25);border-radius:8px;padding:8px 12px;font-size:11.5px;margin-top:4px;">
-            <b style="color:#00F5FF;">💰 Resmi Fiyatlandırma Standardı:</b><br>
+        <div style="background:rgba(125,168,223,0.06);border:1px solid rgba(125,168,223,0.25);border-radius:8px;padding:8px 12px;font-size:11.5px;margin-top:4px;">
+            <b style="color:#7DA8DF;">💰 Resmi Fiyatlandırma Standardı:</b><br>
             • <b>Distribütör Alış:</b> <span style="color:#FFFFFF;font-weight:700;">$100.00 USD / Dish</span><br>
-            • <b>Kliniğe Satış:</b> <span style="color:#00E676;font-weight:700;">$150.00 USD / Dish</span><br>
+            • <b>Kliniğe Satış:</b> <span style="color:#10B981;font-weight:700;">$150.00 USD / Dish</span><br>
             • <b>Distribütör Kârı:</b> <span style="color:#FFD700;font-weight:700;">+$50.00 USD / Dish (%33.3 Marj)</span>
         </div>
         ''', unsafe_allow_html=True)
@@ -5493,10 +5475,10 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
 
     # Zero-mismatch safeguard display banner
     mismatch_warning_html = '''
-    <div style="background:rgba(0,245,255,0.06);border:1.5px solid #00F5FF;border-radius:8px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;gap:12px;">
+    <div style="background:rgba(125,168,223,0.06);border:1.5px solid #7DA8DF;border-radius:8px;padding:10px 14px;margin-bottom:12px;display:flex;align-items:center;gap:12px;">
         <span style="font-size:20px;">🛡️</span>
         <div style="font-size:12px;color:#E2E8F0;line-height:1.5;">
-            <b style="color:#00F5FF;">SIFIR MİSMATCH (KARIŞMA) GÜVENCESİ & HASTA GÜVENLİK PROTOKOLÜ:</b><br>
+            <b style="color:#7DA8DF;">SIFIR MİSMATCH (KARIŞMA) GÜVENCESİ & HASTA GÜVENLİK PROTOKOLÜ:</b><br>
             Çoklu hasta modunda 1 dish 4 ayrı hastaya (havuz başı max 5 oosit) tahsis edilirken numunelerin karışmaması hayati önem taşır. 
             <b>ZEUS Mismatch Blocker (ZMB-7T)</b> 2D barkodlu elektronik şahitlik sistemi, her havuzu bağımsız hasta kimlik koduyla eşleştirir; 
             fiziksel mikro-duvarlar ve bağımsız mikro-elektrot kanalları sayesinde <b>%100 SIFIR KARIŞMA (Zero Mismatch)</b> garantisi sağlar.
@@ -5505,14 +5487,14 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
     '''
 
     st.markdown(f"""
-    <div style="background:linear-gradient(135deg, rgba(15,23,42,0.98) 0%, rgba(0,230,118,0.06) 50%, rgba(0,245,255,0.08) 100%);border:1.5px solid #00E676;border-radius:12px;padding:16px 18px;margin-bottom:14px;box-shadow:0 6px 20px rgba(0,230,118,0.12);">
+    <div style="background:linear-gradient(135deg, rgba(15,23,42,0.98) 0%, rgba(0,230,118,0.06) 50%, rgba(125,168,223,0.08) 100%);border:1.5px solid #10B981;border-radius:12px;padding:16px 18px;margin-bottom:14px;box-shadow:0 6px 20px rgba(0,230,118,0.12);">
         {mismatch_warning_html if patients_per_dish > 1 else ""}
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:8px;">
             <div style="display:flex;align-items:center;gap:8px;">
                 <span style="font-size:18px;">💎</span>
                 <span style="color:#FFFFFF;font-weight:800;font-size:14px;">Klinik Kârlılık & Amortisman Karnesi — {c_mode_label}</span>
             </div>
-            <span style="background:rgba(0,230,118,0.18);color:#00E676;border:1px solid #00E676;padding:3px 10px;border-radius:6px;font-weight:800;font-size:11px;">
+            <span style="background:rgba(0,230,118,0.18);color:#10B981;border:1px solid #10B981;padding:3px 10px;border-radius:6px;font-weight:800;font-size:11px;">
                 🚀 KLİNİK NET BRÜT MARJI: %{c_margin_pct:.1f}
             </span>
         </div>
@@ -5520,12 +5502,12 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
         <div style="display:grid;grid-template-columns:repeat(4, 1fr);gap:10px;margin-bottom:12px;">
             <div style="background:rgba(0,230,118,0.08);border:1px solid rgba(0,230,118,0.3);border-radius:8px;padding:10px 12px;text-align:center;">
                 <div style="font-size:10.5px;color:#94A3B8;font-weight:700;text-transform:uppercase;">Vaka Başı Klinik Kârı</div>
-                <div style="font-size:18px;font-weight:900;color:#00E676;margin-top:2px;">+${c_margin_per_case:,.2f} USD</div>
+                <div style="font-size:18px;font-weight:900;color:#10B981;margin-top:2px;">+${c_margin_per_case:,.2f} USD</div>
                 <div style="font-size:10px;color:#CBD5E1;">Hasta: ${clinic_aoa_fee:,.0f} | Sarf: -${c_unit_sarf_per_case:,.2f}</div>
             </div>
-            <div style="background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.3);border-radius:8px;padding:10px 12px;text-align:center;">
+            <div style="background:rgba(125,168,223,0.08);border:1px solid rgba(125,168,223,0.3);border-radius:8px;padding:10px 12px;text-align:center;">
                 <div style="font-size:10.5px;color:#94A3B8;font-weight:700;text-transform:uppercase;">Cihaz Amortisman Eşiği</div>
-                <div style="font-size:18px;font-weight:900;color:#00F5FF;margin-top:2px;">{c_breakeven_cases} Vaka</div>
+                <div style="font-size:18px;font-weight:900;color:#7DA8DF;margin-top:2px;">{c_breakeven_cases} Vaka</div>
                 <div style="font-size:10px;color:#CBD5E1;">${c_unit_dev:,.0f} USD Donanım Çıkar</div>
             </div>
             <div style="background:rgba(255,215,0,0.08);border:1px solid rgba(255,215,0,0.3);border-radius:8px;padding:10px 12px;text-align:center;">
@@ -5541,14 +5523,14 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
         </div>
 
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;font-size:11.8px;line-height:1.65;">
-            <div style="background:rgba(0,0,0,0.25);border:1px solid rgba(0,245,255,0.2);border-radius:8px;padding:10px 12px;">
-                <b style="color:#00F5FF;">💡 4 Pool Tek Dish Mimari Üstünlüğü:</b><br>
+            <div style="background:rgba(0,0,0,0.25);border:1px solid rgba(125,168,223,0.2);border-radius:8px;padding:10px 12px;">
+                <b style="color:#7DA8DF;">💡 4 Pool Tek Dish Mimari Üstünlüğü:</b><br>
                 • <b>4 Mikro-Pool:</b> 1 Dish 4 ayrı elektrotlu hazneden oluşur (Pool başı sarf maliyeti yalnızca <b>${c_pool_maliyet:,.2f} USD</b>, oosit başı <b>${c_oosit_maliyet:,.2f} USD</b>).<br>
                 • <b>Eksiksiz 1 Vaka Kapasitesi:</b> 1 hastanın 8–15 oositlik tüm rezervi tek bir dishte aynı anda aktive edilir. Klinik başına ek sarf faturası çıkmaz.<br>
                 • <b>Sıfır RFID & Çip Dayatması:</b> Rakipler gibi yıllık $8,000 yazılım lisansı veya $25-30 çipli kap dayatması yoktur; maliyet tamamen şeffaftır.
             </div>
             <div style="background:rgba(0,0,0,0.25);border:1px solid rgba(0,230,118,0.2);border-radius:8px;padding:10px 12px;">
-                <b style="color:#00E676;">📈 Klinik & Gebelik Kurtarma Değeri (Clinical ROI):</b><br>
+                <b style="color:#10B981;">📈 Klinik & Gebelik Kurtarma Değeri (Clinical ROI):</b><br>
                 • <b>%82.3 Döllenme Başarısı:</b> TFF vakalarında döllenme oranını <%10'dan %82.3'e çıkararak iptal edilmekten kurtarılan her IVF siklüsü kliniğe <b>$4,000 - $6,000 USD</b> değer kazandırır.<br>
                 • <b>3 Yıllık Net Kazanç:</b> Cihaz ilk aylarda kendini amorti ettikten sonra kliniğe 3 yılda net <b>+${c_3yr_net:,.0f} USD</b> saf nakit bırakır.<br>
                 • <b>Toksik Kimyasal Riski Sıfır:</b> Kalsiyum İyonofor (A23187) gibi embriyotoksik kimyasallar yerine CE Class IIa belgeli güvenli elektriksel uyarım sağlar.
@@ -5630,7 +5612,7 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
         rec_dev_disc_calc = 2.0 if not is_high_income else 0.0
     elif 3 <= dev_qty <= 5:
         dev_qty_action = "✅ Küçük Filo İndirimi Önerilir (%5 - %8)"
-        dev_qty_badge = "background:rgba(0,230,118,0.15);color:#00E676;border:1px solid #00E676;"
+        dev_qty_badge = "background:rgba(0,230,118,0.15);color:#10B981;border:1px solid #10B981;"
         dev_qty_advice = (
             f"<b>{dev_qty} Cihazlık Sipariş:</b> Bölgesel 2-3 kliniğe yayılım veya özel klinik zinciri kurulumudur. "
             f"Distribütörü sahaya yayılmaya teşvik etmek için birim fiyatta <b>%5 - %8 iskonto (${dev_price * 0.92:,.0f} - ${dev_price * 0.95:,.0f} USD)</b> uygulanabilir. "
@@ -5639,7 +5621,7 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
         rec_dev_disc_calc = 6.0 if not is_high_income else 3.5
     elif 6 <= dev_qty <= 9:
         dev_qty_action = "🏢 Büyük Filo / Zincir Hastane İndirimi (%8 - %10)"
-        dev_qty_badge = "background:rgba(0,245,255,0.15);color:#00F5FF;border:1px solid #00F5FF;"
+        dev_qty_badge = "background:rgba(125,168,223,0.15);color:#7DA8DF;border:1px solid #7DA8DF;"
         dev_qty_advice = (
             f"<b>{dev_qty} Cihazlık Hacim:</b> Önemli bir pazar payı kazanımı ve büyük zincir hastane penetrasyonudur. "
             f"Birim fiyat <b>${dev_price * 0.90:,.0f} - ${dev_price * 0.92:,.0f} USD (%8 - %10)</b> seviyesine inebilir. "
@@ -5677,7 +5659,7 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
         rec_sarf_disc_calc = 4.0 if not is_high_income else 0.0
     elif 300 <= sarf_qty < 500:
         sarf_qty_action = "✅ Yüksek Hacimli Merkez (300 - 499 Kutu): %6 - %8 İndirim"
-        sarf_qty_badge = "background:rgba(0,230,118,0.15);color:#00E676;border:1px solid #00E676;"
+        sarf_qty_badge = "background:rgba(0,230,118,0.15);color:#10B981;border:1px solid #10B981;"
         sarf_qty_advice = (
             f"<b>{sarf_qty} Kutu Yıllık Taahhüt:</b> ZEUS'a düzenli ve yüksek öngörülebilirlikte tekrarlayan nakit akışı sağlar. "
             f"Kutu başı <b>${sarf_price * 0.92:,.2f} - ${sarf_price * 0.94:,.2f} USD (%6 - %8)</b> seviyesine inilebilir. "
@@ -5725,7 +5707,7 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
             f"Tek bir distribütörün tüm ülke pazarının neredeyse tamamını tek başına yönetmesi operasyonel olarak güçtür; kademeli sipariş planı önerilir."
         )
     else:
-        cycle_status_badge = "background:rgba(0,230,118,0.15);color:#00E676;border:1px solid #00E676;"
+        cycle_status_badge = "background:rgba(0,230,118,0.15);color:#10B981;border:1px solid #10B981;"
         cycle_status_text = (
             f"✅ <b>KLİNİK SİKLÜS KAPASİTESİYLE TAM UYUMLU:</b> "
             f"{dev_qty} adet ZPS 26 cihazı için taahhüt edilen {sarf_qty:,} kutu sarf ({patient_cycles:,} tedavi siklüsü), "
@@ -5747,7 +5729,7 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
         dev_suit_text = f"{target_country} pazarı için birim liste fiyatı giriniz (Örn: $8,500 USD standart distribütör transfer fiyatı)."
     elif 7000.0 <= dev_price <= 10500.0:
         dev_suit_status = f"✅ {target_country} İÇİN MÜKEMMEL DAĞITICI TRANSFER FİYATI"
-        dev_suit_badge = "background:rgba(0,230,118,0.18);color:#00E676;border:1px solid #00E676;"
+        dev_suit_badge = "background:rgba(0,230,118,0.18);color:#10B981;border:1px solid #10B981;"
         dev_suit_text = (
             f"<b>$8,500 USD Bandı ({target_country} Dağıtıcı Alışı):</b> Gümrük (%{customs_val:.1f}) ve navlunla dağıtıcıya <b>${landed_dev_cost:,.0f} USD</b>'ye mal olur. "
             f"Dağıtıcı yerel özel tüp bebek merkezlerine <b>${rec_clinic_retail:,.0f} USD</b> seviyesinde (%35-%45 marjla) rahatça satabilir. "
@@ -5764,7 +5746,7 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
         )
     else:
         dev_suit_status = f"🏢 KURUMSAL FİLO / DOĞRUDAN KLİNİK FİYATI"
-        dev_suit_badge = "background:rgba(0,245,255,0.18);color:#00F5FF;border:1px solid #00F5FF;"
+        dev_suit_badge = "background:rgba(125,168,223,0.18);color:#7DA8DF;border:1px solid #7DA8DF;"
         dev_suit_text = (
             f"<b>${dev_price:,.0f} USD:</b> Doğrudan hastane satışları veya anahtar teslim kurumsal paketler için uygundur; "
             f"yerel distribütöre veriliyorsa distribütör marj ekleyebilmek için transfer fiyatının $8,500 USD seviyesine çekilmesini talep edecektir."
@@ -5780,7 +5762,7 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
         pool_basi_sarf = vaka_basi_sarf / 4.0 # Her Dish'te 4 Mikro-Pool
         oosit_basi_sarf = vaka_basi_sarf / 20.0 # 4 Pool x 5 = Max 20 Oosit
         sarf_suit_status = f"✅ {target_country} İÇİN OPTİMUM SARF FİYATI"
-        sarf_suit_badge = "background:rgba(0,230,118,0.18);color:#00E676;border:1px solid #00E676;"
+        sarf_suit_badge = "background:rgba(0,230,118,0.18);color:#10B981;border:1px solid #10B981;"
         sarf_suit_text = (
             f"<b>${net_sarf_unit:,.2f} USD/Dish (${vaka_basi_sarf:,.2f} USD/Vaka | ${pool_basi_sarf:,.2f} USD/Pool | ${oosit_basi_sarf:,.2f} USD/Oosit):</b> "
             f"4 Pool Tek Dish mimarisi (1 Dish = 4 Pool × 5 = Max 20 Oosit) ile vaka başı sarf maliyeti yalnızca <b>${vaka_basi_sarf:,.2f} USD</b> olmaktadır. "
@@ -5800,13 +5782,13 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
 
     # Render Comprehensive Decision & Intelligence Card
     st.markdown(f"""
-    <div style="background:linear-gradient(135deg, rgba(15,23,42,0.98) 0%, rgba(19,166,181,0.08) 100%);border:1.5px solid #00F5FF;border-radius:12px;padding:18px 20px;margin-top:16px;box-shadow:0 8px 25px rgba(0,0,0,0.4);">
+    <div style="background:linear-gradient(135deg, rgba(15,23,42,0.98) 0%, rgba(19,166,181,0.08) 100%);border:1.5px solid #7DA8DF;border-radius:12px;padding:18px 20px;margin-top:16px;box-shadow:0 8px 25px rgba(0,0,0,0.4);">
         
         <!-- ÜST PANEL: Ülke İskonto Karar Motoru (İndirim Gerekli mi / Gereksiz mi?) -->
         <div style="border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:12px;margin-bottom:14px;">
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
                 <div>
-                    <span style="font-size:15px;font-weight:800;color:#00F5FF;">🎯 {target_country} İskonto Karar Motoru: İndirim Gerekli mi?</span>
+                    <span style="font-size:15px;font-weight:800;color:#7DA8DF;">🎯 {target_country} İskonto Karar Motoru: İndirim Gerekli mi?</span>
                     <div style="font-size:11.5px;color:#94A3B8;margin-top:2px;">Ülke alım gücü (GSYİH: ${gdp_val:,} USD), klinik döngü ücretleri ve ithalat rejimine dayalı yönetici kararı.</div>
                 </div>
                 <span style="{country_disc_badge}padding:5px 14px;border-radius:8px;font-weight:800;font-size:12px;">
@@ -5824,9 +5806,9 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
         <!-- ORTA PANEL 1: Cihaz ve Sarf Hacim Kademeleri (2 Sütun) -->
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
             <!-- Cihaz Kademesi -->
-            <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:12px 14px;font-size:12px;line-height:1.7;">
+            <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(125,168,223,0.25);border-radius:10px;padding:12px 14px;font-size:12px;line-height:1.7;">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                    <b style="color:#00F5FF;font-size:13px;">⚡ Cihaz Sipariş Hacim Kuralı:</b>
+                    <b style="color:#7DA8DF;font-size:13px;">⚡ Cihaz Sipariş Hacim Kuralı:</b>
                     <span style="{dev_qty_badge}font-size:10.5px;padding:2px 8px;border-radius:6px;font-weight:700;">{dev_qty} Cihaz</span>
                 </div>
                 <div style="color:#CBD5E1;margin-bottom:6px;"><b>Öneri:</b> {dev_qty_advice}</div>
@@ -5848,9 +5830,9 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
         </div>
 
         <!-- ORTA PANEL 2: Klinik Siklüs & Oosit Doğrulaması Analizi -->
-        <div style="background:rgba(0,0,0,0.35);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:12px 16px;margin-bottom:14px;">
+        <div style="background:rgba(0,0,0,0.35);border:1px solid rgba(125,168,223,0.25);border-radius:10px;padding:12px 16px;margin-bottom:14px;">
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:6px;">
-                <span style="font-weight:800;color:#00F5FF;font-size:13.5px;">🧪 Klinik Siklüs & Oosit Doğrulaması (1 Dish = 4 Pool × 5 = Max 20 Oosit)</span>
+                <span style="font-weight:800;color:#7DA8DF;font-size:13.5px;">🧪 Klinik Siklüs & Oosit Doğrulaması (1 Dish = 4 Pool × 5 = Max 20 Oosit)</span>
                 <span style="{cycle_status_badge}font-size:10.5px;padding:2px 8px;border-radius:6px;font-weight:700;">{patient_cycles:,} Siklüs | {max_oocytes:,} Oosit Kapasitesi</span>
             </div>
             <div style="font-size:12px;color:#CBD5E1;line-height:1.7;margin-bottom:8px;">
@@ -5868,13 +5850,13 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
         <div style="background:rgba(0,0,0,0.4);border:1px solid rgba(0,230,118,0.3);border-radius:10px;padding:12px 16px;margin-bottom:14px;">
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
                 <div>
-                    <span style="font-weight:800;color:#00E676;font-size:13.5px;">💡 {target_country} İçin Sistemin Tavsiye Ettiği Optimum İskonto</span>
+                    <span style="font-weight:800;color:#10B981;font-size:13.5px;">💡 {target_country} İçin Sistemin Tavsiye Ettiği Optimum İskonto</span>
                     <div style="font-size:11px;color:#94A3B8;">{dev_qty} Adet Cihaz ve {sarf_qty} Kutu Sarf Hacmi & Ülke Alım Gücü Göz Önüne Alınarak Hesaplanmıştır.</div>
                 </div>
                 <div style="display:flex;gap:12px;font-size:12px;">
-                    <div style="background:rgba(0,245,255,0.12);padding:6px 12px;border-radius:8px;border:1px solid #00F5FF;">
+                    <div style="background:rgba(125,168,223,0.12);padding:6px 12px;border-radius:8px;border:1px solid #7DA8DF;">
                         <span style="color:#8FA3C0;font-size:10px;">ÖNERİLEN CİHAZ İSKONTOSU:</span><br>
-                        <b style="color:#00F5FF;font-size:15px;">%{rec_dev_disc_calc:.1f}</b> <span style="color:#94A3B8;font-size:10px;">(Taban: $8,500 USD)</span>
+                        <b style="color:#7DA8DF;font-size:15px;">%{rec_dev_disc_calc:.1f}</b> <span style="color:#94A3B8;font-size:10px;">(Taban: $8,500 USD)</span>
                     </div>
                     <div style="background:rgba(255,184,0,0.12);padding:6px 12px;border-radius:8px;border:1px solid #FFD700;">
                         <span style="color:#8FA3C0;font-size:10px;">ÖNERİLEN SARF İSKONTOSU:</span><br>
@@ -5887,10 +5869,10 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
         <!-- ALT PANEL: RAKİP İSTİHBARATI & TEKNİK YAKINLIK ANALİZİ -->
         <div style="border-top:1px solid rgba(255,255,255,0.1);padding-top:12px;">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:8px;">
-                <div style="font-size:14px;font-weight:800;color:#00F5FF;">
+                <div style="font-size:14px;font-weight:800;color:#7DA8DF;">
                     🔍 {target_country} Rakip İstihbaratı: Ne Satıyorlar & ZEUS Cihazlarıyla Ne Kadar Yakınlar?
                 </div>
-                <span style="font-size:11px;color:#8FA3C0;background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.25);padding:2px 8px;border-radius:4px;">
+                <span style="font-size:11px;color:#8FA3C0;background:rgba(125,168,223,0.08);border:1px solid rgba(125,168,223,0.25);padding:2px 8px;border-radius:4px;">
                     Strategic Decision Center Entegre
                 </span>
             </div>
@@ -5924,10 +5906,10 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
 
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px;">
                 <!-- RAKİP 3: RI WITNESS RFID -->
-                <div style="background:#0B132B;border:1px solid rgba(0,245,255,0.35);border-radius:8px;padding:10px 12px;font-size:11.5px;line-height:1.6;">
+                <div style="background:#0B132B;border:1px solid rgba(125,168,223,0.35);border-radius:8px;padding:10px 12px;font-size:11.5px;line-height:1.6;">
                     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-                        <b style="color:#00F5FF;font-size:12px;">🇬🇧 CooperSurgical / RI — RI Witness RFID Şahitlik</b>
-                        <span style="background:rgba(0,245,255,0.15);color:#00F5FF;font-size:9.5px;padding:1px 6px;border-radius:4px;font-weight:700;">%90 YAKINLIK (ZMB BLOCKER RAKİBİ)</span>
+                        <b style="color:#7DA8DF;font-size:12px;">🇬🇧 CooperSurgical / RI — RI Witness RFID Şahitlik</b>
+                        <span style="background:rgba(125,168,223,0.15);color:#7DA8DF;font-size:9.5px;padding:1px 6px;border-radius:4px;font-weight:700;">%90 YAKINLIK (ZMB BLOCKER RAKİBİ)</span>
                     </div>
                     • <b>Ne Satıyor?:</b> RFID Elektronik Numune Şahitlik Altyapısı ($50,000 – $70,000 USD donanım + $8,000/yıl lisans + siklus başı $25-$30 çipli kap).<br>
                     • <b>Kritik Zayıflıklar:</b> Her yıl $20K-$50K çipli kap sarf kanaması yaratır. Yalnızca kabın temasını algılar; embriyolog yine 2PN ve blastosist skorlarını kağıtlara elle yazar. Sıvı azot tankı içine giremez.<br>
@@ -5947,8 +5929,8 @@ def render_country_discount_calculator_widget(target_country, pricing_fc, key_pr
             </div>
 
             <!-- STRATEJİK SÖZLEŞME VE SATIŞ REHBERİ -->
-            <div style="background:rgba(15,23,42,0.85);border:1px solid rgba(0,245,255,0.25);border-radius:8px;padding:12px 14px;margin-bottom:12px;font-size:11.5px;line-height:1.65;">
-                <b style="color:#00F5FF;font-size:12.5px;">🤝 Rakiplere Karşı Nasıl Satmalı & Sözleşmede Neleri Güvenceye Almalıyız?</b><br>
+            <div style="background:rgba(15,23,42,0.85);border:1px solid rgba(125,168,223,0.25);border-radius:8px;padding:12px 14px;margin-bottom:12px;font-size:11.5px;line-height:1.65;">
+                <b style="color:#7DA8DF;font-size:12.5px;">🤝 Rakiplere Karşı Nasıl Satmalı & Sözleşmede Neleri Güvenceye Almalıyız?</b><br>
                 • <b>Satış Stratejisi:</b> Asla genel özellikleri yarıştırmayın. ZEUS Pulse Stimulator için <b>"Non-toksik AOA ile %79.4 TFF başarı garantisi"</b>, Mismatch Blocker için <b>"RFID çip kanamasına son veren %75 tasarruflu döngü başı kontör modeli"</b> üzerinden doğrudan klinik direktörü ve satın alma kuruluna sunum yapın.<br>
                 • <b>Sözleşme Koruması:</b> Sözleşmeye asgari yıllık sarf taahhüdü (yıllık en az 150–200 kutu Z-Dish veya 500 döngü kontörü) ekleyin. Cihazı $8,500 USD'den verirken 60 günlük konsinye güvenlik stoğu karşılığında banka teminat mektubu talep edin. Fiyatları $ USD endeksli sabitleyerek kur devalüasyon riskini distribütöre devredin.
             </div>
@@ -6004,9 +5986,9 @@ def render_distributor_3device_policy_card(country_name, macro=None, c_deep=None
         # Boutique / Compact Market (e.g. Oman, Bahrain, Qatar, Kuwait, Cyprus, Croatia)
         is_sufficient = "TAM YETERLİ"
         badge_text = f"🟢 3 CİHAZ {c_str.upper()} İÇİN TAM YETERLİ & İDEAL (%{cov_pct:.1f} KAPSAMA)"
-        badge_color = "#00E676"
+        badge_color = "#10B981"
         badge_bg = "rgba(0,230,118,0.12)"
-        badge_border = "#00E676"
+        badge_border = "#10B981"
         
         rec_qty = 3
         rec_label = "Tam Yeterli & Dengeli Giriş"
@@ -6171,17 +6153,17 @@ def render_distributor_3device_policy_card(country_name, macro=None, c_deep=None
     rec_cov_pct = min(100.0, (rec_qty / clinics * 100.0)) if clinics > 0 else 30.0
 
     html = f"""
-    <div style="background:linear-gradient(135deg, rgba(15,23,42,0.98) 0%, rgba(30,41,59,0.95) 100%);border:2px solid #00F5FF;border-radius:12px;padding:20px;margin:18px 0;box-shadow:0 8px 28px rgba(0,0,0,0.45);">
+    <div style="background:linear-gradient(135deg, rgba(15,23,42,0.98) 0%, rgba(30,41,59,0.95) 100%);border:2px solid #7DA8DF;border-radius:12px;padding:20px;margin:18px 0;box-shadow:0 8px 28px rgba(0,0,0,0.45);">
         
         <!-- HEADER -->
-        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;border-bottom:1.5px solid rgba(0,245,255,0.3);padding-bottom:12px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;border-bottom:1.5px solid rgba(125,168,223,0.3);padding-bottom:12px;">
             <div style="display:flex;align-items:center;gap:12px;">
-                <span style="background:rgba(0,245,255,0.15);border:1.5px solid #00F5FF;color:#00F5FF;font-size:22px;padding:8px 12px;border-radius:10px;">🏢</span>
+                <span style="background:rgba(125,168,223,0.15);border:1.5px solid #7DA8DF;color:#7DA8DF;font-size:22px;padding:8px 12px;border-radius:10px;">🏢</span>
                 <div>
                     <h3 style="margin:0;color:#FFFFFF;font-size:16.5px;font-weight:800;letter-spacing:0.3px;">
                         {c_str} Distribütör Asgari 3 Cihaz Şartı & Ülke Yapısına Göre Cihaz Önerisi
                     </h3>
-                    <div style="color:#00F5FF;font-size:12px;font-weight:700;margin-top:3px;">
+                    <div style="color:#7DA8DF;font-size:12px;font-weight:700;margin-top:3px;">
                         Country-Tailored Commercial Portfolio & Device Sufficiency Diagnostic
                     </div>
                 </div>
@@ -6194,8 +6176,8 @@ def render_distributor_3device_policy_card(country_name, macro=None, c_deep=None
         </div>
 
         <!-- POLICY DIRECTIVE & CORE COMMERCIAL PRINCIPLE -->
-        <div style="background:rgba(0,245,255,0.06);border-left:4px solid #00F5FF;padding:12px 16px;border-radius:0 8px 8px 0;margin-bottom:16px;font-size:12.2px;line-height:1.7;color:#E2E8F0;">
-            <b style="color:#00F5FF;font-size:13px;">📜 ZEUS Standart Distribütörlük Kuralı:</b> 
+        <div style="background:rgba(125,168,223,0.06);border-left:4px solid #7DA8DF;padding:12px 16px;border-radius:0 8px 8px 0;margin-bottom:16px;font-size:12.2px;line-height:1.7;color:#E2E8F0;">
+            <b style="color:#7DA8DF;font-size:13px;">📜 ZEUS Standart Distribütörlük Kuralı:</b> 
             Biz istisnasız her distribütör için <b>asgari 3 cihaz satın alması gerektiğini söylüyoruz</b>. Bu kural resmi sözleşme başlangıç barajıdır. 
             Ancak <b>ülkelerin klinik sayısı, siklüs kapasitesi ve coğrafi yapısı birbirinden farklıdır</b>. 
             Bu nedenle sistemimiz aşağıda <i>"3 Cihaz {c_str} İçin Yeterli mi?"</i> sorusunu teşhis etmekte ve ülke yapısına en uygun cihaz sayısı ile portföy dağılımını önermektedir:
@@ -6223,11 +6205,11 @@ def render_distributor_3device_policy_card(country_name, macro=None, c_deep=None
             </div>
 
             <!-- CARD 2: ÜLKE YAPISINA GÖRE CİHAZ VE PORTFÖY ÖNERİSİ -->
-            <div style="background:#0B132B;border:1.8px solid #00F5FF;border-radius:10px;padding:16px;box-shadow:0 4px 16px rgba(0,245,255,0.15);display:flex;flex-direction:column;justify-content:space-between;">
+            <div style="background:#0B132B;border:1.8px solid #7DA8DF;border-radius:10px;padding:16px;box-shadow:0 4px 16px rgba(125,168,223,0.15);display:flex;flex-direction:column;justify-content:space-between;">
                 <div>
-                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;border-bottom:1px solid rgba(0,245,255,0.3);padding-bottom:8px;">
-                        <span style="font-weight:800;color:#00F5FF;font-size:13.5px;">💡 2. {c_str} Yapısına Özel Cihaz Önerimiz</span>
-                        <span style="background:rgba(0,245,255,0.18);color:#00F5FF;font-size:11px;font-weight:800;padding:2px 10px;border-radius:4px;border:1px solid #00F5FF;">
+                    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;border-bottom:1px solid rgba(125,168,223,0.3);padding-bottom:8px;">
+                        <span style="font-weight:800;color:#7DA8DF;font-size:13.5px;">💡 2. {c_str} Yapısına Özel Cihaz Önerimiz</span>
+                        <span style="background:rgba(125,168,223,0.18);color:#7DA8DF;font-size:11px;font-weight:800;padding:2px 10px;border-radius:4px;border:1px solid #7DA8DF;">
                             Öneri: {rec_qty} Cihaz
                         </span>
                     </div>
@@ -6235,8 +6217,8 @@ def render_distributor_3device_policy_card(country_name, macro=None, c_deep=None
                         {portfolio_rec_text}
                     </div>
                 </div>
-                <div style="margin-top:10px;background:rgba(0,245,255,0.06);padding:8px 12px;border-radius:6px;font-size:11.2px;color:#E2E8F0;border-left:3px solid #00F5FF;">
-                    <b style="color:#00F5FF;">🎯 Müzakere Taktığı:</b> {action_plan}
+                <div style="margin-top:10px;background:rgba(125,168,223,0.06);padding:8px 12px;border-radius:6px;font-size:11.2px;color:#E2E8F0;border-left:3px solid #7DA8DF;">
+                    <b style="color:#7DA8DF;">🎯 Müzakere Taktığı:</b> {action_plan}
                 </div>
             </div>
 
@@ -6254,12 +6236,12 @@ def render_distributor_3device_policy_card(country_name, macro=None, c_deep=None
                 <!-- PAKET A -->
                 <div style="background:#0F192E;border:1.2px solid rgba(0,230,118,0.4);border-radius:8px;padding:12px;font-size:11.5px;line-height:1.65;">
                     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                        <b style="color:#00E676;font-size:12.5px;">⚡ PAKET A: Pulse Stimulator Dahil (En Az 2 Pulse Stimulator)</b>
-                        <span style="background:rgba(0,230,118,0.15);color:#00E676;font-size:10px;padding:2px 6px;border-radius:4px;">Asgari Şart</span>
+                        <b style="color:#10B981;font-size:12.5px;">⚡ PAKET A: Pulse Stimulator Dahil (En Az 2 Pulse Stimulator)</b>
+                        <span style="background:rgba(0,230,118,0.15);color:#10B981;font-size:10px;padding:2px 6px;border-radius:4px;">Asgari Şart</span>
                     </div>
                     <div style="color:#CBD5E1;">
                         • <b>1. Cihaz (Direct Sale):</b> 1x Pulse Stimulator + <span style="color:#FFD700;font-weight:700;">1 kutu Dish (2 Dish, 20 oosit/dish) ve 1 kutu Solution-Powder (2 ml) ÜCRETSİZ HEDİYE</span>.<br>
-                        • <b>2. Cihaz (Reagent-Based):</b> 1x Pulse Stimulator yerleştirilir; <span style="color:#38BDF8;font-weight:700;">60 kutu Dish (120 Adet Dish, her kutu 2 dish, max 20 oosit/dish) + 20 kutu Solution-Powder (40 ml, 1 kutu 2 ml)</span> bağlayıcı alım şartı konur.<br>
+                        • <b>2. Cihaz (Reagent-Based):</b> 1x Pulse Stimulator yerleştirilir; <span style="color:#7DA8DF;font-weight:700;">60 kutu Dish (120 Adet Dish, her kutu 2 dish, max 20 oosit/dish) + 20 kutu Solution-Powder (40 ml, 1 kutu 2 ml)</span> bağlayıcı alım şartı konur.<br>
                         • <b>3. Cihaz (Distribütör Tercihi):</b> BioPSafe, Mismatch Blocker veya Smart Cryotools arasından dilediği 1 cihaz.
                     </div>
                 </div>
@@ -6285,7 +6267,7 @@ def render_distributor_3device_policy_card(country_name, macro=None, c_deep=None
         <div style="background:rgba(0,0,0,0.3);border:1.5px solid rgba(255,255,255,0.12);border-radius:10px;padding:14px;">
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;margin-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:8px;">
                 <b style="color:#FFFFFF;font-size:13px;">📊 Karşılaştırmalı Analiz: Bizim Standart 3 Cihaz Kuralımız vs {c_str} İçin AI Sistem Önerisi</b>
-                <span style="background:rgba(0,245,255,0.1);color:#00F5FF;border:1px solid rgba(0,245,255,0.3);padding:2px 8px;border-radius:4px;font-size:10.5px;">
+                <span style="background:rgba(125,168,223,0.1);color:#7DA8DF;border:1px solid rgba(125,168,223,0.3);padding:2px 8px;border-radius:4px;font-size:10.5px;">
                     Klinik: {clinics} | Yıllık Siklüs: {cycles:,}
                 </span>
             </div>
@@ -6295,10 +6277,10 @@ def render_distributor_3device_policy_card(country_name, macro=None, c_deep=None
                 <table style="width:100%;border-collapse:collapse;font-size:11.5px;line-height:1.6;color:#E2E8F0;text-align:left;">
                     <thead>
                         <tr style="background:rgba(255,255,255,0.06);border-bottom:1.5px solid rgba(255,255,255,0.15);">
-                            <th style="padding:8px 10px;color:#00F5FF;width:20%;">Değerlendirme Parametresi</th>
-                            <th style="padding:8px 10px;color:#00E676;width:26%;">ZEUS Standart Sözleşme Kuralı (Asgari 3 Cihaz)</th>
+                            <th style="padding:8px 10px;color:#7DA8DF;width:20%;">Değerlendirme Parametresi</th>
+                            <th style="padding:8px 10px;color:#10B981;width:26%;">ZEUS Standart Sözleşme Kuralı (Asgari 3 Cihaz)</th>
                             <th style="padding:8px 10px;color:#FFB800;width:27%;">{c_str} Yapısına Göre ZEUS AI Önerisi ({rec_qty} Cihaz)</th>
-                            <th style="padding:8px 10px;color:#38BDF8;width:27%;">Ülke Yapısı Teşhisi: 3 Cihaz Yeterli mi?</th>
+                            <th style="padding:8px 10px;color:#7DA8DF;width:27%;">Ülke Yapısı Teşhisi: 3 Cihaz Yeterli mi?</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -6313,7 +6295,7 @@ def render_distributor_3device_policy_card(country_name, macro=None, c_deep=None
                         <tr style="border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);">
                             <td style="padding:8px 10px;font-weight:700;color:#FFFFFF;">Zorunlu Sarf Taahhüdü</td>
                             <td style="padding:8px 10px;">60 Kutu Dish (120 Dish, 20 oosit/dish) + 20 Kutu Solution-Powder (40 ml) (+1 Dish & +1 Sol-Powder Hediye)</td>
-                            <td style="padding:8px 10px;color:#00E676;font-weight:700;">{rec_sarf_text}</td>
+                            <td style="padding:8px 10px;color:#10B981;font-weight:700;">{rec_sarf_text}</td>
                             <td style="padding:8px 10px;">
                                 {f"Umman gibi butik pazarlarda 60 Dish + 20 Sol-Powder pazarın yıllık tüketimini karşılar." if rec_qty == 3 else f"Yıllık {cycles:,} siklüslü pazarda {rec_sarf_text} ile kesintisiz sarf kilitlenmesi sağlanır."}
                             </td>
@@ -6321,7 +6303,7 @@ def render_distributor_3device_policy_card(country_name, macro=None, c_deep=None
                         <tr style="border-bottom:1px solid rgba(255,255,255,0.06);">
                             <td style="padding:8px 10px;font-weight:700;color:#FFFFFF;">{c_str} Pazar Kapsama Oranı</td>
                             <td style="padding:8px 10px;">%{cov_pct:.1f} Ulusal Kapsama ({clinics} klinikten 3'ü)</td>
-                            <td style="padding:8px 10px;color:#38BDF8;font-weight:700;">%{rec_cov_pct:.1f} Hedeflenen Kapsama ({rec_qty} Cihaz)</td>
+                            <td style="padding:8px 10px;color:#7DA8DF;font-weight:700;">%{rec_cov_pct:.1f} Hedeflenen Kapsama ({rec_qty} Cihaz)</td>
                             <td style="padding:8px 10px;">
                                 <span style="color:{badge_color};font-weight:700;">{is_sufficient}:</span> {f"3 cihazla pazarın %{cov_pct:.1f}'i kontrol altına alınır (Mükemmel oran)." if rec_qty == 3 else f"3 cihaz pazarın yalnızca %{cov_pct:.1f}'inde kalır, geri kalan %{100-cov_pct:.1f} rakiplere kaptırılır!"}
                             </td>
@@ -6339,7 +6321,7 @@ def render_distributor_3device_policy_card(country_name, macro=None, c_deep=None
                         <tr>
                             <td style="padding:8px 10px;font-weight:700;color:#FFFFFF;">Distribütöre Söylemimiz</td>
                             <td style="padding:8px 10px;">"Biz her distribütör için asgari 3 cihaz şartı koyuyoruz."</td>
-                            <td style="padding:8px 10px;color:#00F5FF;font-weight:700;">
+                            <td style="padding:8px 10px;color:#7DA8DF;font-weight:700;">
                                 {f'"3 Cihaz {c_str} için tam yeterlidir; bu 3 cihazla başlıyoruz."' if rec_qty == 3 else f'"Sözleşme alt tabanımız 3 cihazdır; ancak {c_str} yapısı gereği 3 cihaz yetersizdir, 12 ayda {rec_qty} cihaza ulaşmalısınız."'}
                             </td>
                             <td style="padding:8px 10px;">
@@ -6386,20 +6368,20 @@ def render_deep_sales_strategy_ui(country_name, deep_intel=None, p_fc=None):
     # SECTION 1: OVERVIEW CARDS
     st.markdown(f"""
     <div style="margin-bottom:14px;">
-        <div style="font-size:14px;font-weight:800;color:#00F5FF;letter-spacing:0.5px;margin-bottom:8px;">
+        <div style="font-size:14px;font-weight:800;color:#7DA8DF;letter-spacing:0.5px;margin-bottom:8px;">
             📌 1. {country_name} Pazara Giriş (GTM) Temel Dinamikleri & Yönetici Özeti
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
-            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
-                <div style="font-weight:700;color:#00F5FF;font-size:13px;margin-bottom:6px;">🎯 Hedef Müşteri & Karar Verici Segmentleri</div>
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(125,168,223,0.25);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
+                <div style="font-weight:700;color:#7DA8DF;font-size:13px;margin-bottom:6px;">🎯 Hedef Müşteri & Karar Verici Segmentleri</div>
                 <div style="color:#E1E7EC;">{sales_strat.get('target_segments', 'Özel IVF zincirleri ve hekim-patron klinikleri.')}</div>
             </div>
-            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
-                <div style="font-weight:700;color:#00F5FF;font-size:13px;margin-bottom:6px;">🤝 Satış & Dağıtım Kanalı Modeli</div>
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(125,168,223,0.25);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
+                <div style="font-weight:700;color:#7DA8DF;font-size:13px;margin-bottom:6px;">🤝 Satış & Dağıtım Kanalı Modeli</div>
                 <div style="color:#E1E7EC;">{sales_strat.get('channel_model', 'Münhasır distribütörlük ve yerinde aplikasyon eğitimi desteği.')}</div>
             </div>
             <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,230,118,0.25);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
-                <div style="font-weight:700;color:#00E676;font-size:13px;margin-bottom:6px;">⚡ Klinik Değer Önerisi & Elektriksel Oosit Aktivasyon (AOA) Üstünlüğü</div>
+                <div style="font-weight:700;color:#10B981;font-size:13px;margin-bottom:6px;">⚡ Klinik Değer Önerisi & Elektriksel Oosit Aktivasyon (AOA) Üstünlüğü</div>
                 <div style="color:#E1E7EC;">{sales_strat.get('clinical_pitch', 'TFF vakalarında %82.3 döllenme oranı ve sub-%1 oosit hasarı.')}</div>
             </div>
             <div style="background:rgba(255,184,0,0.12);border:1px solid rgba(255,184,0,0.3);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
@@ -6414,7 +6396,7 @@ def render_deep_sales_strategy_ui(country_name, deep_intel=None, p_fc=None):
     if dev_strats:
         st.markdown(f"""
         <div style="margin-top:18px;margin-bottom:14px;">
-            <div style="font-size:14px;font-weight:800;color:#00E676;letter-spacing:0.5px;margin-bottom:8px;">
+            <div style="font-size:14px;font-weight:800;color:#10B981;letter-spacing:0.5px;margin-bottom:8px;">
                 🔬 2. {country_name} İçin Model Bazlı Cihaz Satış Stratejileri
             </div>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;">
@@ -6422,8 +6404,8 @@ def render_deep_sales_strategy_ui(country_name, deep_intel=None, p_fc=None):
 
         for dev_key, dev in dev_strats.items():
             icon = "⚡" if "Pulse" in dev.get("name", "") else ("🧬" if "BioP" in dev.get("name", "") else ("🛡️" if "Mismatch" in dev.get("name", "") else "❄️"))
-            border_c = "rgba(0,245,255,0.25)" if "Pulse" in dev.get("name", "") else ("rgba(0,230,118,0.25)" if "BioP" in dev.get("name", "") else ("rgba(255,107,107,0.25)" if "Mismatch" in dev.get("name", "") else "rgba(168,85,247,0.25)"))
-            tag_c = "#00F5FF" if "Pulse" in dev.get("name", "") else ("#00E676" if "BioP" in dev.get("name", "") else ("#FF6B6B" if "Mismatch" in dev.get("name", "") else "#C084FC"))
+            border_c = "rgba(125,168,223,0.25)" if "Pulse" in dev.get("name", "") else ("rgba(0,230,118,0.25)" if "BioP" in dev.get("name", "") else ("rgba(255,107,107,0.25)" if "Mismatch" in dev.get("name", "") else "rgba(168,85,247,0.25)"))
+            tag_c = "#7DA8DF" if "Pulse" in dev.get("name", "") else ("#10B981" if "BioP" in dev.get("name", "") else ("#FF6B6B" if "Mismatch" in dev.get("name", "") else "#C084FC"))
             st.markdown(f"""
             <div style="background:#0F192E;border:1px solid {border_c};border-radius:10px;padding:14px;font-size:12px;line-height:1.65;box-shadow:0 4px 12px rgba(0,0,0,0.2);">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
@@ -6433,7 +6415,7 @@ def render_deep_sales_strategy_ui(country_name, deep_intel=None, p_fc=None):
                 <div style="color:#CBD5E1;margin-bottom:6px;"><b style="color:{tag_c};">🎯 Hedef Klinik Segmenti:</b> {dev.get('target', '')}</div>
                 <div style="color:#CBD5E1;margin-bottom:6px;"><b style="color:#FFD700;">💼 Satış & Klinik Argümanı:</b> {dev.get('strategy', '')}</div>
                 <div style="background:rgba(0,0,0,0.25);padding:6px 10px;border-radius:6px;color:#A0AEC0;font-size:11px;">
-                    <b style="color:#00F5FF;">🏷️ Ticari & Fiyatlandırma Notu:</b> {dev.get('pricing_note', '')}
+                    <b style="color:#7DA8DF;">🏷️ Ticari & Fiyatlandırma Notu:</b> {dev.get('pricing_note', '')}
                 </div>
             </div>
             """, unsafe_allow_html=True)
@@ -6457,8 +6439,8 @@ def render_deep_sales_strategy_ui(country_name, deep_intel=None, p_fc=None):
             <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,184,0,0.25);border-radius:10px;padding:12px 14px;font-size:11.5px;line-height:1.65;">
                 <div style="font-weight:800;color:#FFB800;font-size:12.5px;margin-bottom:4px;">📦 {con.get('name', 'Sarf Kiti')}</div>
                 <div style="color:#CBD5E1;margin-bottom:4px;"><b>Teknik Özellik & Standart:</b> {con.get('specs', '')}</div>
-                <div style="color:#CBD5E1;margin-bottom:4px;"><b style="color:#00F5FF;">Tüketim Modeli:</b> {con.get('model', '')}</div>
-                <div style="color:#00E676;background:rgba(0,230,118,0.08);padding:4px 8px;border-radius:4px;border:1px solid rgba(0,230,118,0.2);">
+                <div style="color:#CBD5E1;margin-bottom:4px;"><b style="color:#7DA8DF;">Tüketim Modeli:</b> {con.get('model', '')}</div>
+                <div style="color:#10B981;background:rgba(0,230,118,0.08);padding:4px 8px;border-radius:4px;border:1px solid rgba(0,230,118,0.2);">
                     <b>Çekiş & Lojistik Kuralı:</b> {con.get('pull_through', '')}
                 </div>
             </div>
@@ -6468,7 +6450,7 @@ def render_deep_sales_strategy_ui(country_name, deep_intel=None, p_fc=None):
 
         pt_model = con_strats.get('pull_through_model', 'Donanım kurulumu kliniği captive hale getirir; sarfta %60+ kâr marjı ile nakit akışı süreklilik kazanır.')
         st.markdown(f"""
-        <div style="background:linear-gradient(90deg, rgba(255,184,0,0.12), rgba(0,245,255,0.08));border:1px solid rgba(255,184,0,0.35);border-radius:10px;padding:12px 16px;font-size:12px;line-height:1.7;color:#E2E8F0;">
+        <div style="background:linear-gradient(90deg, rgba(255,184,0,0.12), rgba(125,168,223,0.08));border:1px solid rgba(255,184,0,0.35);border-radius:10px;padding:12px 16px;font-size:12px;line-height:1.7;color:#E2E8F0;">
             <b style="color:#FFB800;">⚙️ Cihaz & Sarf Entegre Modeli (Dish & Solution-Powder Nakit Akışı):</b> {pt_model}
         </div>
         </div>
@@ -6480,7 +6462,7 @@ def render_deep_sales_strategy_ui(country_name, deep_intel=None, p_fc=None):
     if bundles:
         st.markdown(f"""
         <div style="margin-top:18px;margin-bottom:14px;">
-            <div style="font-size:14px;font-weight:800;color:#00F5FF;letter-spacing:0.5px;margin-bottom:8px;">
+            <div style="font-size:14px;font-weight:800;color:#7DA8DF;letter-spacing:0.5px;margin-bottom:8px;">
                 💰 4. {country_name} Ticari İndirim Paketleri (Bundles) & Barem Baremleri
             </div>
             <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:10px;">
@@ -6489,7 +6471,7 @@ def render_deep_sales_strategy_ui(country_name, deep_intel=None, p_fc=None):
         b_items = [k for k in ['bundle_1', 'bundle_2', 'bundle_3'] if k in bundles]
         for b_key in b_items:
             b = bundles[b_key]
-            b_color = "#00F5FF" if b_key == 'bundle_1' else ("#00E676" if b_key == 'bundle_2' else "#FFB800")
+            b_color = "#7DA8DF" if b_key == 'bundle_1' else ("#10B981" if b_key == 'bundle_2' else "#FFB800")
             st.markdown(f"""
             <div style="background:#0F192E;border:1.5px solid {b_color};border-radius:10px;padding:14px;font-size:11.5px;line-height:1.65;box-shadow:0 4px 12px rgba(0,0,0,0.25);">
                 <div style="font-weight:800;color:{b_color};font-size:13px;margin-bottom:6px;">📦 {b.get('name', 'Paket')}</div>
@@ -6505,8 +6487,8 @@ def render_deep_sales_strategy_ui(country_name, deep_intel=None, p_fc=None):
 
         cash_rules = bundles.get('cash_volume_rules', 'Peşin ödemede ilave %2.5-%3 nakit iskontosu. Asgari brüt marj: Donanımda %35, Sarfta %50.')
         st.markdown(f"""
-        <div style="background:rgba(0,245,255,0.05);border:1px solid rgba(0,245,255,0.25);border-radius:8px;padding:10px 14px;font-size:11.5px;line-height:1.65;color:#CBD5E1;">
-            <b style="color:#00F5FF;">💵 Ödeme Şekli & Hacim Baremleri:</b> {cash_rules}
+        <div style="background:rgba(125,168,223,0.05);border:1px solid rgba(125,168,223,0.25);border-radius:8px;padding:10px 14px;font-size:11.5px;line-height:1.65;color:#CBD5E1;">
+            <b style="color:#7DA8DF;">💵 Ödeme Şekli & Hacim Baremleri:</b> {cash_rules}
         </div>
         </div>
         """, unsafe_allow_html=True)
@@ -6535,11 +6517,11 @@ def render_deep_sales_strategy_ui(country_name, deep_intel=None, p_fc=None):
                     </div>
                 </div>
                 <div style="color:#CBD5E1;font-size:11.5px;line-height:1.65;margin-bottom:6px;">
-                    <b style="color:#00F5FF;">📜 Hukuki Kural / Madde Metni:</b> {sg.get('legal_rule', '')}
+                    <b style="color:#7DA8DF;">📜 Hukuki Kural / Madde Metni:</b> {sg.get('legal_rule', '')}
                 </div>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:11px;background:rgba(0,0,0,0.25);padding:8px 10px;border-radius:6px;line-height:1.6;">
                     <div><b style="color:#FFB800;">💼 Ticari Rasyonel:</b> <span style="color:#E2E8F0;">{sg.get('commercial_impact', '')}</span></div>
-                    <div><b style="color:#00E676;">🛡️ Sözleşmeye Eklenecek Hüküm:</b> <span style="color:#E2E8F0;">{sg.get('action_required', '')}</span></div>
+                    <div><b style="color:#10B981;">🛡️ Sözleşmeye Eklenecek Hüküm:</b> <span style="color:#E2E8F0;">{sg.get('action_required', '')}</span></div>
                 </div>
             </div>
             """, unsafe_allow_html=True)
@@ -6712,7 +6694,7 @@ def generate_dual_consensus_decision(ai_rec, expert, partner_data):
     
     if abs(diff) <= 1.0:
         consensus_status = "✅ TAM MUTABAKAT (AI & Uzman Uyumlu)"
-        badge_color = "#00E676"
+        badge_color = "#10B981"
         final_discount = round((ai_disc + expert_max) / 2.0, 1)
         rationale = f"AI analitiği (%{ai_disc:.1f}) ile Uzman saha görüşü (%{expert_max:.1f}) tam mutabakat halindedir. Pazar alım gücü ve şirket kârlılık hedefleriyle dengeli, düşük riskli onay."
         conditions = "Standart sözleşme taahhütleri, 30 günlük sipariş avansı ve olağan lojistik planlaması yeterlidir."
@@ -6724,7 +6706,7 @@ def generate_dual_consensus_decision(ai_rec, expert, partner_data):
         conditions = f"Zorunlu Koruma Şartı: {expert['commercial_guardrails']} Ayrıca yıllık minimum sarf çekiş kuralı sözleşmeye eklenmelidir."
     else:
         consensus_status = "🛡️ STRATEJİK İSTİSNA (Pazar Penetrasyonu Önceliği)"
-        badge_color = "#00F5FF"
+        badge_color = "#7DA8DF"
         final_discount = round(expert_max, 1)
         rationale = f"Uzman, rakip baskısını kırmak ve kritik klinikleri bağlamak için stratejik esneklik (%{expert_max:.1f}) tavsiye etmiştir."
         conditions = f"Bağlayıcı Şart: {expert['commercial_guardrails']}"
@@ -7763,8 +7745,8 @@ def render_responsive_script_table(data_list, font_size_str="14px (Standart)", v
             min_w = m.get("min_w", "100px")
             al = m.get("align", "left")
             th_cells.append(
-                f'<th style="padding:12px 14px; width:{w}; min-width:{min_w}; color:#00F5FF; '
-                f'font-weight:700; font-size:{base_px}px; border-bottom:2px solid #00F5FF; '
+                f'<th style="padding:12px 14px; width:{w}; min-width:{min_w}; color:#7DA8DF; '
+                f'font-weight:700; font-size:{base_px}px; border-bottom:2px solid #7DA8DF; '
                 f'text-align:{al}; letter-spacing:0.3px; background:#111E38; white-space:normal;">{k}</th>'
             )
         header_tr = f'<tr style="background:#111E38;">{"".join(th_cells)}</tr>'
@@ -7790,14 +7772,14 @@ def render_responsive_script_table(data_list, font_size_str="14px (Standart)", v
                 elif ctype == "day":
                     td = (
                         f'<td style="padding:14px 12px; vertical-align:top; border-bottom:1px solid rgba(255,255,255,0.08); min-width:{min_w};">'
-                        f'<span style="background:rgba(0,245,255,0.12); color:#00F5FF; border:1px solid rgba(0,245,255,0.25); '
+                        f'<span style="background:rgba(125,168,223,0.12); color:#7DA8DF; border:1px solid rgba(125,168,223,0.25); '
                         f'padding:4px 8px; border-radius:4px; font-weight:700; font-size:{base_px-1}px;">📅 {val}</span></td>'
                     )
                 elif ctype == "vo":
                     td = (
                         f'<td style="padding:14px 16px; vertical-align:top; border-bottom:1px solid rgba(255,255,255,0.08); '
                         f'min-width:{min_w}; white-space:normal !important; word-wrap:break-word; word-break:normal; overflow-wrap:break-word;">'
-                        f'<div style="border-left:3px solid #00F5FF; padding:4px 10px 4px 12px; background:rgba(0,245,255,0.04); '
+                        f'<div style="border-left:3px solid #7DA8DF; padding:4px 10px 4px 12px; background:rgba(125,168,223,0.04); '
                         f'border-radius:0 6px 6px 0; color:#FFFFFF; font-size:{base_px}px; line-height:{line_h}; font-weight:500;">'
                         f'"{val}"'
                         f'</div></td>'
@@ -7820,12 +7802,12 @@ def render_responsive_script_table(data_list, font_size_str="14px (Standart)", v
                     v_low = val.lower()
                     if "0.8%" in val or "lysis" in v_low:
                         bg_grad = "linear-gradient(135deg, #091a2e 0%, #172554 100%)"
-                        border_col = "#00F5FF"
+                        border_col = "#7DA8DF"
                         accent_badge = "CLINICAL DATA"
                         main_txt = "0.8% LYSIS vs 8.5%?"
                         sub_txt = "⚡ ELEKTRİKSEL AOA (ZPS 26) & SIFIR LİZİS"
                         dur = "14:20"
-                        tag_color = "#38BDF8"
+                        tag_color = "#7DA8DF"
                     elif "laser" in v_low or "biopsafe" in v_low:
                         bg_grad = "linear-gradient(135deg, #2b1104 0%, #451a03 100%)"
                         border_col = "#F59E0B"
@@ -7884,7 +7866,7 @@ def render_responsive_script_table(data_list, font_size_str="14px (Standart)", v
                 else:
                     td = (
                         f'<td style="padding:14px 14px; vertical-align:top; border-bottom:1px solid rgba(255,255,255,0.08); '
-                        f'min-width:{min_w}; color:#38BDF8; font-size:{meta_px}px; line-height:1.5; '
+                        f'min-width:{min_w}; color:#7DA8DF; font-size:{meta_px}px; line-height:1.5; '
                         f'white-space:normal !important; word-wrap:break-word; overflow-wrap:break-word;">'
                         f'<div style="background:rgba(56,189,248,0.1); border:1px solid rgba(56,189,248,0.25); '
                         f'padding:8px 10px; border-radius:6px; font-weight:500;">'
@@ -7897,10 +7879,10 @@ def render_responsive_script_table(data_list, font_size_str="14px (Standart)", v
         table_html = f"""
         <style>
         .zeus-script-row:hover {{
-            background: rgba(0, 245, 255, 0.08) !important;
+            background: rgba(125, 168, 223, 0.08) !important;
         }}
         </style>
-        <div style="width:100%; overflow-x:auto; margin:12px 0 20px 0; border:1px solid rgba(0,245,255,0.25); border-radius:10px; box-shadow:0 6px 20px rgba(0,0,0,0.45); background:#0F192E;">
+        <div style="width:100%; overflow-x:auto; margin:12px 0 20px 0; border:1px solid rgba(125,168,223,0.25); border-radius:10px; box-shadow:0 6px 20px rgba(0,0,0,0.45); background:#0F192E;">
           <table style="width:100%; border-collapse:collapse; min-width:720px; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
             <thead>
               {header_tr}
@@ -7916,10 +7898,10 @@ def render_responsive_script_table(data_list, font_size_str="14px (Standart)", v
     # 2. RENDER TELEPROMPTER / VO RAW VIEW IF VO COLUMN EXISTS
     if has_vo and ("Teleprompter" in view_mode or "Çift" in view_mode):
         st.markdown(f"""
-        <div style="background:rgba(15,23,42,0.95); border:1px solid rgba(0,245,255,0.3); border-radius:10px; padding:18px 22px; margin-top:14px; margin-bottom:20px;">
+        <div style="background:rgba(15,23,42,0.95); border:1px solid rgba(125,168,223,0.3); border-radius:10px; padding:18px 22px; margin-top:14px; margin-bottom:20px;">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:10px;">
-                <span style="color:#00F5FF; font-weight:700; font-size:{base_px + 2}px;">🎙️ Teleprompter & Canlı Seslendirme Akışı</span>
-                <span style="background:rgba(0,230,118,0.15); color:#00E676; border:1px solid rgba(0,230,118,0.3); padding:3px 10px; border-radius:4px; font-size:11px; font-weight:700;">{len(data_list)} Sahne Hazır</span>
+                <span style="color:#7DA8DF; font-weight:700; font-size:{base_px + 2}px;">🎙️ Teleprompter & Canlı Seslendirme Akışı</span>
+                <span style="background:rgba(0,230,118,0.15); color:#10B981; border:1px solid rgba(0,230,118,0.3); padding:3px 10px; border-radius:4px; font-size:11px; font-weight:700;">{len(data_list)} Sahne Hazır</span>
             </div>
         """, unsafe_allow_html=True)
 
@@ -7968,7 +7950,7 @@ def render_social_media_hub():
         st.markdown('''
         <div class="glass-metric-card">
             <div class="glass-icon-box">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7DA8DF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="8.5" cy="7" r="4"></circle><line x1="20" y1="8" x2="20" y2="14"></line><line x1="23" y1="11" x2="17" y2="11"></line></svg>
             </div>
             <div class="glass-metric-header">Aylık B2B Hedef Erişim</div>
             <div class="glass-metric-val">150,000+</div>
@@ -8040,13 +8022,13 @@ def render_social_media_hub():
     # =========================================================================
     with tab1:
         st.markdown("""
-        <div style="background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(0, 245, 255, 0.3); border-radius: 12px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(125, 168, 223, 0.3); border-radius: 12px; padding: 18px 22px; margin-bottom: 20px;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
                 <div>
-                    <h4 style="margin: 0; color: #00F5FF; font-size: 16px;">🔄 YouTube & LinkedIn Canlı Sayfa Denetimi ve İlerleme Takip Merkezi</h4>
+                    <h4 style="margin: 0; color: #7DA8DF; font-size: 16px;">🔄 YouTube & LinkedIn Canlı Sayfa Denetimi ve İlerleme Takip Merkezi</h4>
                     <div style="color: #94A3B8; font-size: 12px; margin-top: 4px;">Kanal ve sayfanızı tek tıkla canlı tarayın; yapılan iyileştirmeleri not alın, eksik kalan kritik optimizasyonları anında raporlayın.</div>
                 </div>
-                <span style="font-size: 11px; background: rgba(0, 245, 255, 0.15); color: #00F5FF; padding: 4px 12px; border-radius: 12px; font-weight: 700;">Live Web Rescan Engine</span>
+                <span style="font-size: 11px; background: rgba(125, 168, 223, 0.15); color: #7DA8DF; padding: 4px 12px; border-radius: 12px; font-weight: 700;">Live Web Rescan Engine</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -8089,8 +8071,8 @@ def render_social_media_hub():
                 st.markdown(f"""
                 <div style="background: rgba(14, 165, 233, 0.08); border: 1px solid rgba(14, 165, 233, 0.25); border-radius: 10px; padding: 14px 18px; font-size: 12px;">
                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-                        <b style="color: #38BDF8; font-size: 13px;">💼 LinkedIn (zeusbioscience) Canlı Durum</b>
-                        <span style="background: rgba(14, 165, 233, 0.2); color: #38BDF8; padding: 2px 8px; border-radius: 6px; font-weight: 700; font-size: 10px;">{li_info.get('status', 'Online')}</span>
+                        <b style="color: #7DA8DF; font-size: 13px;">💼 LinkedIn (zeusbioscience) Canlı Durum</b>
+                        <span style="background: rgba(14, 165, 233, 0.2); color: #7DA8DF; padding: 2px 8px; border-radius: 6px; font-weight: 700; font-size: 10px;">{li_info.get('status', 'Online')}</span>
                     </div>
                     • <b>Takipçi Sayısı:</b> {li_info.get('followers', '374')} Takipçi<br>
                     • <b>Biyografi Tekrar Hatası:</b> { '🔴 ' + 'Biyografide çift "ZEUS Bioscience" tekrarı mevcut!' if li_info.get('has_bio_duplicate', True) else '🟢 ' + 'Düzeltildi!' }
@@ -8170,8 +8152,8 @@ def render_social_media_hub():
                     st.markdown(f"""
                     <div style="background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 8px; padding: 10px 14px; margin-bottom: 8px; font-size: 11.5px; line-height: 1.5;">
                         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px;">
-                            <b style="color: #00F5FF;">👤 {c.get('author', 'Yetkili')}</b>
-                            <span style="color: #64748B; font-size: 10px;">🕒 {c.get('date', '')} | <span style="color: #38BDF8;">{c.get('platform', '')}</span></span>
+                            <b style="color: #7DA8DF;">👤 {c.get('author', 'Yetkili')}</b>
+                            <span style="color: #64748B; font-size: 10px;">🕒 {c.get('date', '')} | <span style="color: #7DA8DF;">{c.get('platform', '')}</span></span>
                         </div>
                         <div style="color: #CBD5E1;">{c.get('note', '')}</div>
                     </div>
@@ -8241,10 +8223,10 @@ def render_social_media_hub():
         
         # VISUAL YOUTUBE THUMBNAIL SHOWCASE GALLERY
         st.markdown("""
-        <div style="background:linear-gradient(135deg, rgba(15,23,42,0.85) 0%, rgba(10,25,47,0.95) 100%); border:1px solid rgba(0,245,255,0.3); border-radius:12px; padding:18px; margin-bottom:20px; box-shadow:0 8px 24px rgba(0,0,0,0.35);">
+        <div style="background:linear-gradient(135deg, rgba(15,23,42,0.85) 0%, rgba(10,25,47,0.95) 100%); border:1px solid rgba(125,168,223,0.3); border-radius:12px; padding:18px; margin-bottom:20px; box-shadow:0 8px 24px rgba(0,0,0,0.35);">
             <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; flex-wrap:wrap; gap:8px;">
                 <div>
-                    <b style="color:#00F5FF; font-size:15px;">🎬 Canlı YouTube Küçük Resim (Thumbnail) Tasarım Stüdyosu</b>
+                    <b style="color:#7DA8DF; font-size:15px;">🎬 Canlı YouTube Küçük Resim (Thumbnail) Tasarım Stüdyosu</b>
                     <div style="color:#94A3B8; font-size:12px; margin-top:2px;">Kanalın Tıklama Oranını (CTR) patlatacak 16:9 yüksek kontrastlı görsel kapak kartları</div>
                 </div>
                 <span style="background:rgba(239,68,68,0.2); color:#EF4444; border:1px solid rgba(239,68,68,0.4); padding:3px 12px; border-radius:14px; font-weight:800; font-size:11.5px;">▶ 4 KANAL VİDEOSU AKTİF TASARIM</span>
@@ -8252,10 +8234,10 @@ def render_social_media_hub():
 
             <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:14px;">
                 <!-- Video 1 Thumbnail -->
-                <div style="background:linear-gradient(135deg, #091a2e 0%, #172554 100%); border:1.5px solid #00F5FF; border-radius:10px; padding:12px; box-shadow:0 4px 16px rgba(0,245,255,0.2); position:relative; overflow:hidden;">
+                <div style="background:linear-gradient(135deg, #091a2e 0%, #172554 100%); border:1.5px solid #7DA8DF; border-radius:10px; padding:12px; box-shadow:0 4px 16px rgba(125,168,223,0.2); position:relative; overflow:hidden;">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
                         <span style="background:#EF4444; color:#fff; font-size:8.5px; font-weight:900; padding:2px 6px; border-radius:3px;">▶ YOUTUBE</span>
-                        <span style="background:rgba(0,0,0,0.6); color:#38BDF8; font-size:8px; font-weight:800; padding:1px 6px; border-radius:3px; border:1px solid #00F5FF;">CLINICAL EVIDENCE</span>
+                        <span style="background:rgba(0,0,0,0.6); color:#7DA8DF; font-size:8px; font-weight:800; padding:1px 6px; border-radius:3px; border:1px solid #7DA8DF;">CLINICAL EVIDENCE</span>
                     </div>
                     <div style="font-size:14px; font-weight:900; color:#FDE047; text-transform:uppercase; line-height:1.2; text-shadow:0 2px 8px rgba(0,0,0,0.9); margin-bottom:4px;">
                         0.8% LYSIS vs 8.5%?
@@ -8358,8 +8340,8 @@ def render_social_media_hub():
         st.markdown("""
         <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(14, 165, 233, 0.3); border-radius: 12px; padding: 18px 22px; margin-bottom: 20px;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h4 style="margin: 0; color: #38BDF8; font-size: 16px;">💼 LinkedIn Şirket Sayfası (ID: 66880793) B2B Büyüme & Lead Dönüşüm Stratejisi</h4>
-                <span style="font-size: 11px; background: rgba(14, 165, 233, 0.15); color: #38BDF8; padding: 3px 10px; border-radius: 12px; font-weight: 700;">374 Takipçi | B2B Karar Verici Kanalı</span>
+                <h4 style="margin: 0; color: #7DA8DF; font-size: 16px;">💼 LinkedIn Şirket Sayfası (ID: 66880793) B2B Büyüme & Lead Dönüşüm Stratejisi</h4>
+                <span style="font-size: 11px; background: rgba(14, 165, 233, 0.15); color: #7DA8DF; padding: 3px 10px; border-radius: 12px; font-weight: 700;">374 Takipçi | B2B Karar Verici Kanalı</span>
             </div>
             <p style="margin: 8px 0 0 0; color: #94A3B8; font-size: 12.5px; line-height: 1.6;">
                 Tüp bebek kliniği direktörleri, baş embriyologlar ve uluslararası distribütör CEO'larının en aktif olduğu platform LinkedIn'dir. Doğru format ve algoritma kurallarıyla sayfanızı doğrudan sıcak satış üreten bir merkeze dönüştürebilirsiniz.
@@ -8371,7 +8353,7 @@ def render_social_media_hub():
         with col_li1:
             st.markdown("""
             <div style="background: rgba(10, 25, 47, 0.75); border: 1px solid rgba(14, 165, 233, 0.3); border-radius: 12px; padding: 16px 20px; height: 100%;">
-                <b style="color: #38BDF8; font-size: 14px;">🔧 Mevcut Profil Röntgeni & Acil Düzeltmeler (Quick Fixes)</b>
+                <b style="color: #7DA8DF; font-size: 14px;">🔧 Mevcut Profil Röntgeni & Acil Düzeltmeler (Quick Fixes)</b>
                 <div style="font-size: 12px; color: #CBD5E1; margin-top: 10px; line-height: 1.6;">
                     <b style="color: #F8FAFC;">1. Biyografideki Çift İsim Tekrarını Temizleyin:</b><br>
                     Mevcut: <i>"ZEUS Bioscience, founded in 2020 in Türkiye, ZEUS Bioscience develops..."</i><br>
@@ -8447,10 +8429,10 @@ def render_social_media_hub():
     # =========================================================================
     with tab4:
         st.markdown("""
-        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(0, 245, 255, 0.25); border-radius: 12px; padding: 18px 22px; margin-bottom: 20px;">
+        <div style="background: rgba(15, 23, 42, 0.7); border: 1px solid rgba(125, 168, 223, 0.25); border-radius: 12px; padding: 18px 22px; margin-bottom: 20px;">
             <div style="display: flex; justify-content: space-between; align-items: center;">
-                <h4 style="margin: 0; color: #00F5FF; font-size: 16px;">🎬 MedTech Video Senaryoları & T.C. Sağlık Bakanlığı Mevzuat Kılavuzu</h4>
-                <span style="font-size: 11px; background: rgba(0, 245, 255, 0.15); color: #00F5FF; padding: 3px 10px; border-radius: 12px; font-weight: 700;">7 Production-Ready Scripts</span>
+                <h4 style="margin: 0; color: #7DA8DF; font-size: 16px;">🎬 MedTech Video Senaryoları & T.C. Sağlık Bakanlığı Mevzuat Kılavuzu</h4>
+                <span style="font-size: 11px; background: rgba(125, 168, 223, 0.15); color: #7DA8DF; padding: 3px 10px; border-radius: 12px; font-weight: 700;">7 Production-Ready Scripts</span>
             </div>
             <p style="margin: 8px 0 0 0; color: #94A3B8; font-size: 12.5px; line-height: 1.6;">
                 Aşağıdaki senaryolar; T.C. Sağlık Bakanlığı ve TİTCK mevzuatına tam uyumlu (bilimsel, hekim/embriyolog hedefli, reklam unsuru içermeyen) ve küresel B2B pazarlara yönelik prodüksiyon planlarıyla hazırlanmıştır.
@@ -8500,8 +8482,8 @@ def render_social_media_hub():
                 </div>
             </div>
 
-            <div style="background: rgba(15, 23, 42, 0.85); border-left: 4px solid #00F5FF; padding: 12px 16px; border-radius: 6px; font-size: 11.5px; color: #94A3B8;">
-                <b style="color: #00F5FF;">💡 ZEUS Sosyal Medya İçerik Kuralı:</b> Türkiye pazarında yayımlanacak tüm YouTube, LinkedIn ve Instagram içerikleri; tüketiciye yönelik ticari satış veya gebelik vaadi içermez. Yalnızca <b>sağlık meslek mensuplarına yönelik bilimsel metodoloji</b> veya <b>toplum sağlığına yönelik hücre biyolojisi eğitimi</b> formatında yayınlanır.
+            <div style="background: rgba(15, 23, 42, 0.85); border-left: 4px solid #7DA8DF; padding: 12px 16px; border-radius: 6px; font-size: 11.5px; color: #94A3B8;">
+                <b style="color: #7DA8DF;">💡 ZEUS Sosyal Medya İçerik Kuralı:</b> Türkiye pazarında yayımlanacak tüm YouTube, LinkedIn ve Instagram içerikleri; tüketiciye yönelik ticari satış veya gebelik vaadi içermez. Yalnızca <b>sağlık meslek mensuplarına yönelik bilimsel metodoloji</b> veya <b>toplum sağlığına yönelik hücre biyolojisi eğitimi</b> formatında yayınlanır.
             </div>
             """, unsafe_allow_html=True)
 
@@ -8712,8 +8694,8 @@ def render_social_media_hub():
             col_m1, col_m2 = st.columns(2)
             with col_m1:
                 st.markdown("""
-                <div style="background: rgba(10, 25, 47, 0.7); border: 1px solid rgba(0, 245, 255, 0.25); border-radius: 10px; padding: 14px 18px; font-size: 12px; line-height: 1.6;">
-                    <b style="color: #00F5FF; font-size: 13px;">📐 Dikey 9:16 Safe Zone (Güvenli Alan) Kuralları</b><br><br>
+                <div style="background: rgba(10, 25, 47, 0.7); border: 1px solid rgba(125, 168, 223, 0.25); border-radius: 10px; padding: 14px 18px; font-size: 12px; line-height: 1.6;">
+                    <b style="color: #7DA8DF; font-size: 13px;">📐 Dikey 9:16 Safe Zone (Güvenli Alan) Kuralları</b><br><br>
                     • <b>Üst %15 (150px) Boşluk:</b> Platformun arama çubuğu ve ses simgesiyle çakışmaması için metinsiz bırakılır.<br>
                     • <b>Alt %20 (240px) Boşluk:</b> Profil ismi, video açıklaması ve müzik şeridi yazıları kapatmasın diye boş bırakılır.<br>
                     • <b>Sağ %15 (120px) Boşluk:</b> Beğeni, yorum, kaydet ve paylaş butonlarının altında kalmayacak şekilde merkezlenir.<br>
@@ -8736,8 +8718,8 @@ def render_social_media_hub():
             col_v1, col_v2 = st.columns(2)
             with col_v1:
                 st.markdown("""
-                <div style="background: rgba(10, 25, 47, 0.7); border: 1px solid rgba(0, 245, 255, 0.25); border-radius: 10px; padding: 14px 18px; font-size: 12px; line-height: 1.6;">
-                    <b style="color: #00F5FF; font-size: 13px;">🔥 Algoritma & Yüksek Tutma (Retention) Taktikleri</b><br><br>
+                <div style="background: rgba(10, 25, 47, 0.7); border: 1px solid rgba(125, 168, 223, 0.25); border-radius: 10px; padding: 14px 18px; font-size: 12px; line-height: 1.6;">
+                    <b style="color: #7DA8DF; font-size: 13px;">🔥 Algoritma & Yüksek Tutma (Retention) Taktikleri</b><br><br>
                     • <b>İlk 3 Saniye Mikroskop Kancası (The Visual Shock):</b> Girişte asla şirket logosu veya konuşmacı yüzü koymayın. Doğrudan sivri iğneyle patlayan hücre zarı ile başlayın. Embriyologlar bu görüntüyü gördüğü an kaydırmayı durdurur (%92 retention).<br>
                     • <b>Klinik İkilem / Tartışma Tetikleyici (Debate):</b> Açıklamaya <i>"Kliniğinizde TFF vakalarında kimyasal iyonofor mu yoksa elektriksel aktivasyon mu tercih ediyorsunuz?"</i> sorusunu sabitleyin.<br>
                     • <b>LinkedIn Golden Hour Kuralı:</b> Paylaşımın ilk 60 dakikasında şirket ve bayi ekibinin hekim gözüyle profesyonel yorum yazması içeriği feed'in zirvesine taşır.
@@ -9021,16 +9003,16 @@ def render_back_to_top_button():
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            background: linear-gradient(135deg, rgba(0, 245, 255, 0.12) 0%, rgba(19, 166, 181, 0.2) 100%);
-            color: #00F5FF;
-            border: 1px solid rgba(0, 245, 255, 0.4);
+            background: linear-gradient(135deg, rgba(125, 168, 223, 0.12) 0%, rgba(19, 166, 181, 0.2) 100%);
+            color: #7DA8DF;
+            border: 1px solid rgba(125, 168, 223, 0.4);
             padding: 10px 28px;
             border-radius: 30px;
             font-size: 12.5px;
             font-weight: 700;
             text-decoration: none;
             letter-spacing: 0.04em;
-            box-shadow: 0 4px 16px rgba(0, 245, 255, 0.18);
+            box-shadow: 0 4px 16px rgba(125, 168, 223, 0.18);
             transition: all 0.25s ease;
         ">
             ''' + lucide_icon("arrow-up", size=16, stroke_width=1.75, color=ICON_MUTED) + '''
@@ -9053,7 +9035,7 @@ def render_login_gate():
         with col_m:
             st.markdown("""
             <div style="text-align: center; margin-top: 36px; margin-bottom: 16px;">
-                <div style="display: inline-block; padding: 6px 16px; background: #0F172A; border: 1px solid rgba(12, 92, 171, 0.35); border-radius: 9999px; margin-bottom: 16px; box-shadow: 0 4px 14px rgba(0,0,0,0.3);">
+                <div style="display: inline-block; padding: 6px 16px; background: #121C2B; border: 1px solid rgba(12, 92, 171, 0.35); border-radius: 9999px; margin-bottom: 16px; box-shadow: 0 4px 14px rgba(0,0,0,0.3);">
                     <span style="display:inline-flex;align-items:center;gap:6px;font-size: 11px; font-weight: 600; color: #F8FAFC; letter-spacing: 0.08em; text-transform: uppercase;">ZEUS BIOSCIENCE SECURE GATEWAY</span>
                 </div>
             </div>
@@ -9096,17 +9078,17 @@ def render_login_gate():
             sys_dt_login = get_system_datetime_display()
             st.markdown(f"""
             <div style="text-align: center; margin-top: 16px; margin-bottom: 8px;">
-                <span style="display: inline-flex; align-items: center; gap: 8px; background: #0F172A; border: 1px solid rgba(12, 92, 171, 0.35); padding: 6px 16px; border-radius: 9999px; font-size: 12px; color: #E2E8F0; font-family: 'IBM Plex Mono', monospace;">
+                <span style="display: inline-flex; align-items: center; gap: 8px; background: #121C2B; border: 1px solid rgba(12, 92, 171, 0.35); padding: 6px 16px; border-radius: 9999px; font-size: 12px; color: #E2E8F0; font-family: 'Geist Mono', monospace;">
                     {lucide_icon("clock", size=16, stroke_width=1.5, color=ICON_MUTED)}<span style="color: #94A3B8;">Sistem Zamanı:</span>
                     <b style="color: #FAFAFA;">{sys_dt_login}</b>
                 </span>
             </div>
             <div style="text-align: center; margin-top: 8px; font-size: 12px; color: #64748B;">
-                <span style="display: inline-flex; align-items: center; gap: 6px; background: #0F172A; border: 1px solid rgba(226, 232, 240, 0.08); padding: 6px 16px; border-radius: 9999px;">
+                <span style="display: inline-flex; align-items: center; gap: 6px; background: #121C2B; border: 1px solid #263347; padding: 6px 16px; border-radius: 9999px;">
                     {lucide_icon("shield-check", size=16, stroke_width=1.65, color=ICON_MUTED)} 256-Bit SSL Uçtan Uca Şifreli Kurumsal Yetkili Oturum
                 </span>
             </div>
-            <div style="text-align: center; margin-top: 24px; padding-top: 18px; border-top: 1px solid rgba(226, 232, 240, 0.08); font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;">
+            <div style="text-align: center; margin-top: 24px; padding-top: 18px; border-top: 1px solid #263347; font-family: 'Inter', system-ui, -apple-system, sans-serif;">
                 <div style="font-size: 13px; font-weight: 600; color: #94A3B8; letter-spacing: 0.03em; margin-bottom: 4px;">
                     Conceived & Directed by <span style="color: #FAFAFA; font-weight: 700; border-bottom: 1px solid #0C5CAB; padding-bottom: 2px;">Sireen Khemesh</span>
                 </div>
@@ -9130,9 +9112,9 @@ with st.sidebar:
     # Official ZEUS Bioscience Logo
     st.image("assets/zeus_logo_white.png")
     st.markdown('''
-    <div style="margin-top: -4px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid rgba(226, 232, 240, 0.08); text-align: center;">
+    <div style="margin-top: -4px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid #263347; text-align: center;">
         <div style="font-size: 9.5px; font-weight: 600; color: #94A3B8; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 3px;">GLOBAL MARKET INTELLIGENCE</div>
-        <div style="font-size: 12.5px; font-weight: 600; color: #F8FAFC; letter-spacing: 0.01em;">Sireen Khemesh <span style="font-size:10px;color:#38BDF8;font-family:'IBM Plex Mono',monospace;font-weight:500;background:rgba(56,189,248,0.10);border:1px solid rgba(56,189,248,0.28);padding:1px 6px;border-radius:4px;margin-left:4px;">TIER-1</span></div>
+        <div style="font-size: 12.5px; font-weight: 600; color: #F8FAFC; letter-spacing: 0.01em;">Sireen Khemesh <span style="font-size:10px;color:#7DA8DF;font-family:'Geist Mono',monospace;font-weight:500;background:rgba(56,189,248,0.10);border:1px solid rgba(56,189,248,0.28);padding:1px 6px;border-radius:4px;margin-left:4px;">TIER-1</span></div>
     </div>
     ''', unsafe_allow_html=True)
 
@@ -9142,10 +9124,10 @@ with st.sidebar:
     sys_dt_side = get_system_datetime_display()
 
     st.markdown(f'''
-    <div style="background: #111622; border: 1px solid rgba(226, 232, 240, 0.09); border-radius: 6px; padding: 12px 14px; margin-top: -4px; margin-bottom: 12px;">
+    <div style="background: #121C2B; border: 1px solid #263347; border-radius: 6px; padding: 12px 14px; margin-top: -4px; margin-bottom: 12px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
             <span style="color: #64748B; font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;">AKTİF OTURUM</span>
-            <span style="display:inline-flex;align-items:center;gap:5px;background: rgba(16, 185, 129, 0.10); color: #34D399; font-size: 10px; font-weight: 500; padding: 2px 7px; border-radius: 4px; border: 1px solid rgba(16, 185, 129, 0.25); font-family: 'IBM Plex Mono', monospace;">
+            <span style="display:inline-flex;align-items:center;gap:5px;background: rgba(16, 185, 129, 0.10); color: #34D399; font-size: 10px; font-weight: 500; padding: 2px 7px; border-radius: 4px; border: 1px solid rgba(16, 185, 129, 0.25); font-family: 'Geist Mono', monospace;">
                 <span class="status-dot-live"></span>{auth_user_badge}
             </span>
         </div>
@@ -9159,7 +9141,7 @@ with st.sidebar:
                 {lucide_icon("clock", size=16, stroke_width=1.5, color=ICON_MUTED)}
                 <span>SİSTEM SAATİ (TRT)</span>
             </div>
-            <div style="color: #CBD5E1; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 500;">{sys_dt_side}</div>
+            <div style="color: #CBD5E1; font-family: 'Geist Mono', monospace; font-size: 11px; font-weight: 500;">{sys_dt_side}</div>
         </div>
     </div>
     ''', unsafe_allow_html=True)
@@ -9209,7 +9191,7 @@ with st.sidebar:
         "02 / Stratejik Karar Masası & Risk": {
             "title": "Strateji & Erken Uyarı Kokpiti",
             "badge": "REKABET · RİSK",
-            "color": "#00F0FF",
+            "color": "#7DA8DF",
             "params": [
                 "ZEUS vs Eppendorf, RI Witness, Vitrolife",
                 "RFID OPEX Kilidi Kırma ($15,000 Yıllık Tasarruf)",
@@ -9248,7 +9230,7 @@ with st.sidebar:
         "05 / Global Satış & ERP Kokpiti": {
             "title": "Global ERP Satış & Raporlama",
             "badge": "ERP · $936.5K",
-            "color": "#38BDF8",
+            "color": "#7DA8DF",
             "params": [
                 "3D İnteraktif Dünya Küresi & Küresel Satışlar",
                 "1,280 Doğrulanmış Fatura ($936,546 USD / 31.97M TL)",
@@ -9262,10 +9244,10 @@ with st.sidebar:
     if cur_nav_info:
         params_html = "".join([f"<li style='margin-bottom:4px;'>{p}</li>" for p in cur_nav_info.get("params", [])])
         st.markdown(f"""
-        <div style="background:#111622;border:1px solid rgba(226,232,240,0.09);border-radius:6px;padding:12px 14px;margin-top:8px;margin-bottom:12px;">
+        <div style="background:#121C2B;border:1px solid #263347;border-radius:6px;padding:12px 14px;margin-top:8px;margin-bottom:12px;">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:6px;">
                 <span style="color:#F8FAFC;font-size:12px;font-weight:600;letter-spacing:-0.01em;">{cur_nav_info.get('title')}</span>
-                <span style="background:rgba(56,189,248,0.10);color:#38BDF8;font-size:9.5px;padding:2px 6px;border-radius:4px;font-weight:500;border:1px solid rgba(56,189,248,0.25);font-family:'IBM Plex Mono',monospace;white-space:nowrap;">{cur_nav_info.get('badge')}</span>
+                <span style="background:rgba(56,189,248,0.10);color:#7DA8DF;font-size:9.5px;padding:2px 6px;border-radius:4px;font-weight:500;border:1px solid rgba(56,189,248,0.25);font-family:'Geist Mono',monospace;white-space:nowrap;">{cur_nav_info.get('badge')}</span>
             </div>
             <div style="color:#64748B;font-size:10px;margin-bottom:6px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;">AKTİF MODÜL PARAMETRELERİ</div>
             <ul style="color:#94A3B8;padding-left:15px;margin:0;font-size:11.5px;line-height:1.55;">
@@ -9307,7 +9289,7 @@ with st.sidebar:
     st.markdown('''
     <div style="margin-top: 26px; padding-top: 14px; border-top: 1px solid rgba(255, 255, 255, 0.08); text-align: center;">
         <div style="font-size: 11px; font-weight: 600; color: #94A3B8; letter-spacing: 0.03em;">Conceived & Directed by</div>
-        <div style="font-size: 12.5px; font-weight: 700; color: #00F5FF; letter-spacing: 0.04em; margin-top: 2px; margin-bottom: 5px;">Sireen Khemesh</div>
+        <div style="font-size: 12.5px; font-weight: 700; color: #7DA8DF; letter-spacing: 0.04em; margin-top: 2px; margin-bottom: 5px;">Sireen Khemesh</div>
         <div style="font-size: 10px; color: #64748B; letter-spacing: 0.02em;">© 2026 ZEUS Bioscience. All rights reserved</div>
     </div>
     ''', unsafe_allow_html=True)
@@ -9694,18 +9676,18 @@ def render_zeus_ai_chat_interface(key_suffix=""):
         if has_api_key
         else "● ÇEKİRDEK: ZEUS MedTech Biyoistihbarat & Karar Matrisi v2.9"
     )
-    engine_color = "#38BDF8"
+    engine_color = "#7DA8DF"
 
     st.markdown(f"""
-    <div style="background: rgba(15, 23, 42, 0.70); backdrop-filter: blur(16px); border: 1px solid rgba(226, 232, 240, 0.12); box-shadow: 0 4px 20px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08); border-radius: 8px; padding: 12px 18px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+    <div style="background: rgba(15, 23, 42, 0.70); border: 1px solid rgba(226, 232, 240, 0.12); box-shadow: 0 4px 20px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08); border-radius: 8px; padding: 12px 18px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
         <div style="display: flex; align-items: center; gap: 12px;">
-            <span style="font-size: 20px; color: #38BDF8;">◈</span>
+            <span style="font-size: 20px; color: #7DA8DF;">◈</span>
             <div>
                 <b style="font-size: 14.5px; color: #FAFAFA; letter-spacing: 0.02em;">ZEUS Stratejik İstihbarat & Danışman Masası</b>
                 <div style="font-size: 11.5px; color: #94A3B8; margin-top: 1px;">Kurumsal Karar Matrisi · Uluslararası İhale & Klinik Pazar İstişaresi</div>
             </div>
         </div>
-        <span style="background: rgba(12, 92, 171, 0.20); color: {engine_color}; border: 1px solid rgba(56, 189, 248, 0.35); padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; font-family: 'IBM Plex Mono', monospace;">{engine_badge}</span>
+        <span style="background: rgba(12, 92, 171, 0.20); color: {engine_color}; border: 1px solid rgba(56, 189, 248, 0.35); padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; font-family: 'Geist Mono', monospace;">{engine_badge}</span>
     </div>
     """, unsafe_allow_html=True)
 
@@ -10475,7 +10457,7 @@ GLOBAL_COUNTRY_BUYING_BEHAVIOR = {
         "dining_contract_rule": "🟢 Karşılıklı Saygı ve Güven Esaslı (Nezaketle Yürütülen Müzakere)",
         "contract_closing_strategy": "Umman'da sözleşme kapatma süreci güven ve saygı zemininde ilerler. Maskat'ta klinik yöneticisi ve baş embriyolog ile yüz yüze kahve sohbeti eşliğinde CE Class IIa dosyamız ve hakemli klinik veriler sunulur. Distribütörümüz için şart koştuğumuz asgari 3 cihaz taahhüdü ve teknik servis garantisi teyit edilerek sözleşme nezaketle imzalanır.",
         "email_tone_guidance": "Yüksek saygı ve nezaket içeren, doğrudan klinik kanıt ve kalite odaklı, acele ettirmeyen profesyonel kurumsal dil.",
-        "badge_color": "#00F5FF"
+        "badge_color": "#7DA8DF"
     },
     "Bahrain": {
         "culture_title": "Finansal Titizlik & Körfez İşbirliği (High-Context / NHRA Standartları)",
@@ -10492,7 +10474,7 @@ GLOBAL_COUNTRY_BUYING_BEHAVIOR = {
         "dining_contract_rule": "🟢 Profesyonel Güven ve Yasal Şartname Esaslı",
         "contract_closing_strategy": "Bahreyn'de sözleşmeler NHRA tıbbi cihaz uygunluğu ve yerel yetkili distribütör güvencesiyle hızla bağlanır. Asgari 3 cihaz taahhüdü ve Manama merkezli kliniklere 24 saatte teknik servis garantisi verilerek sözleşme tamamlanır.",
         "email_tone_guidance": "Kısa, saygılı, net, yasal mevzuata ve klinik sonuçlara dayalı resmi dil.",
-        "badge_color": "#00F5FF"
+        "badge_color": "#7DA8DF"
     },
     "Saudi Arabia": {
         "culture_title": "İlişki & Prestij Odaklı (KOL-Centric / High-Context)",
@@ -10509,7 +10491,7 @@ GLOBAL_COUNTRY_BUYING_BEHAVIOR = {
         "dining_contract_rule": "🔴 İlişki & Yemek Ön Koşullu (Yemeksiz Sözleşme İmzalanmaz)",
         "contract_closing_strategy": "Suudi Arabistan ve Körfez'de sözleşme imzalamak için iş yemeği / ağırlama mutlak ön koşuldur. Yemeksiz, sadece e-posta ve resmi evrak üzerinden sözleşme dayatmak 'tüccar soğukluğu' olarak algılanır ve süreci kilitler. Satış Kapatma Stratejisi: 1) İlk temas ESHRE veya Suudi Arabistan'da düzenlenecek yeni MEFS kongresinde hürmetle yapılır. 2) Saygın bir akşam yemeğinde veya kahve meclisinde hekimin klinik vizyonu dinlenir. 3) Sözleşme şartları ve filo iskontosu yemeğin başında değil, tatlı ve Arap kahvesi ikramında gayriresmi mutabakatla bağlanır. 4) Resmi sözleşme ertesi gün bu şahsi güven zemininde imzalanır.",
         "email_tone_guidance": "Yüksek saygı unvanları ('Distinguished Medical Director & Esteemed Leadership'), bölgesel öncülük vurgusu, Suudi Vizyon 2030 sağlık vizyonu uyumu ve VIP demo daveti.",
-        "badge_color": "#00F5FF"
+        "badge_color": "#7DA8DF"
     },
     "Egypt": {
         "culture_title": "Akademik Otorite & Fiyat Hassas (Prof. Dr. Odaklı)",
@@ -10543,7 +10525,7 @@ GLOBAL_COUNTRY_BUYING_BEHAVIOR = {
         "dining_contract_rule": "🟢 Şartname & Görev Odaklı (Yemeksiz Doğrudan Sözleşme Esastır)",
         "contract_closing_strategy": "Almanya'da sözleşme imzalamak için ASLA yemek önceliği aranmaz; aksine erken aşamada yemek teklif etmek 'profesyonellikten uzak' veya 'hastane uyum (compliance) ihlali' olarak değerlendirilir. Satış Kapatma Stratejisi: 1) Doğrudan CE Class IIa sertifikası, ISO 13485 ve hakemli klinik yayınlar (Baltaci, Ebner, Tanaka) Einkauf ve biyomedikal komitesine iletilir. 2) Net şartname üzerinden dijital/resmi sözleşme imzalanır. 3) Yemek sadece sözleşme bittikten sonra veya kongrede ölçülü bir tebrik öğle yemeği ('Geschäftsessen') olarak planlanabilir.",
         "email_tone_guidance": "Kısa, net, objektif, pazarlama süslemelerinden tamamen arındırılmış, doğrudan klinik kanıt ve yasal standart odaklı resmi dil.",
-        "badge_color": "#00E676"
+        "badge_color": "#10B981"
     },
     "Turkey": {
         "culture_title": "Pragmatik & Hekim-Yönetici Hibriti (İlişki + Hızlı ROI)",
@@ -10577,7 +10559,7 @@ GLOBAL_COUNTRY_BUYING_BEHAVIOR = {
         "dining_contract_rule": "🔴 İlişki & Yemek Ön Koşullu (Yemeksiz Sözleşme Güvensizlik Sayılır)",
         "contract_closing_strategy": "Irak pazarında sofra paylaşımı sadakatin temelidir. Yemeksiz sözleşme teklif etmek ilişkiyi sadece paraya dayalı gösterir ve reddedilme riskini artırır. Satış Kapatma Stratejisi: 1) Distribütörümüz Sirius Pharm güvencesiyle Bağdat veya Erbil'de hekimle akşam yemeğinde buluşulur. 2) Hekimin ziyafet daveti varsa asla geri çevrilmez. 3) Masada karşılıklı güven tesis edildikten sonra cihaz ve sarf taahhüdü dostluk protokolüyle imzalanır.",
         "email_tone_guidance": "Kardeşlik ve saygı çerçevesinde, Bağdat/Erbil kliniklerine özel teknik destek taahhüdü içeren hürmetkar ton.",
-        "badge_color": "#38BDF8"
+        "badge_color": "#7DA8DF"
     },
     "United Arab Emirates": {
         "culture_title": "Global MedTech Yatırımcısı & İleri Teknoloji Odaklı",
@@ -10691,7 +10673,7 @@ def resolve_country_buying_behavior(country_name):
         "dining_contract_rule": "🟡 Pazarın Yapısına Göre Hibrit Strateji",
         "contract_closing_strategy": "Kuzey Avrupa ve Anglo-Sakson pazarlarda yemeksiz doğrudan veri ve şartname üzerinden sözleşme tercih edilirken; Akdeniz, Orta Doğu ve Doğu Avrupa'da sözleşme öncesi yüz yüze ağırlama ve iş yemeği mutlak güven ön koşuludur.",
         "email_tone_guidance": "Klinik başarı, hasta güvenliği ve yatırım geri dönüşü odaklı resmi kurumsal dil.",
-        "badge_color": "#00F5FF"
+        "badge_color": "#7DA8DF"
     }
 
 
@@ -10701,13 +10683,13 @@ def render_country_buying_behavior_card_html(country_name):
     Harden with .get() to prevent any KeyError across global country lookups.
     """
     b = resolve_country_buying_behavior(country_name)
-    color = b.get("badge_color", "#00F5FF")
+    color = b.get("badge_color", "#7DA8DF")
     
     html = f"""
     <div style="background:linear-gradient(135deg, rgba(15,23,42,0.95) 0%, rgba(30,41,59,0.92) 100%);border:1.5px solid {color};border-radius:12px;padding:18px 20px;margin:16px 0;box-shadow:0 6px 20px rgba(0,0,0,0.35);">
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:10px;">
             <div style="display:flex;align-items:center;gap:10px;">
-                <span style="background:rgba(0,245,255,0.12);border:1px solid {color};color:{color};font-size:18px;padding:6px 10px;border-radius:8px;">🤝</span>
+                <span style="background:rgba(125,168,223,0.12);border:1px solid {color};color:{color};font-size:18px;padding:6px 10px;border-radius:8px;">🤝</span>
                 <div>
                     <h4 style="margin:0;color:#FFFFFF;font-size:16px;font-weight:800;">{country_name} B2B Satın Alma Kültürü, Karar Hiyerarşisi & Müzakere Modeli</h4>
                     <div style="color:{color};font-size:12px;font-weight:700;margin-top:2px;">{b.get('culture_title', 'Bölgesel B2B Satın Alma Modeli')}</div>
@@ -10721,10 +10703,10 @@ def render_country_buying_behavior_card_html(country_name):
         </div>
 
         <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(230px, 1fr));gap:12px;margin-bottom:12px;">
-            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,245,255,0.2);border-radius:8px;padding:12px;font-size:11.8px;line-height:1.65;">
-                <b style="color:#00F5FF;font-size:12.5px;">🏛️ 1. Karar Alma Hiyerarşisi:</b><br>
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(125,168,223,0.2);border-radius:8px;padding:12px;font-size:11.8px;line-height:1.65;">
+                <b style="color:#7DA8DF;font-size:12.5px;">🏛️ 1. Karar Alma Hiyerarşisi:</b><br>
                 <span style="color:#E2E8F0;">{b.get('decision_hierarchy', 'Merkez Direktörü & Klinik Komitesi Ortak Konsensüsü')}</span><br><br>
-                <b style="color:#38BDF8;font-size:12px;">🤝 İletişim & Güven Modeli:</b><br>
+                <b style="color:#7DA8DF;font-size:12px;">🤝 İletişim & Güven Modeli:</b><br>
                 <span style="color:#94A3B8;">{b.get('trust_building', 'CE Class IIa sertifikasyonu ve hakemli klinik veriler.')}</span>
             </div>
 
@@ -10735,7 +10717,7 @@ def render_country_buying_behavior_card_html(country_name):
             </div>
 
             <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,230,118,0.25);border-radius:8px;padding:12px;font-size:11.8px;line-height:1.65;">
-                <b style="color:#00E676;font-size:12.5px;">🎯 3. En Etkili İkna Unsuru:</b><br>
+                <b style="color:#10B981;font-size:12.5px;">🎯 3. En Etkili İkna Unsuru:</b><br>
                 <span style="color:#E2E8F0;">{b.get('primary_proof_point', 'Klinik Whitepaper, Hakemli Yayınlar ve CE Belgesi')}</span><br><br>
                 <b style="color:#10B981;font-size:12px;">📦 Tercih Edilen Ticari Model:</b><br>
                 <span style="color:#94A3B8;">{b.get('preferred_deal_model', 'CAPEX Cihaz Satışı + Yıllık Sarf Tedarik Protokolü (Dish ve Solution-Powder)')}</span>
@@ -10771,7 +10753,7 @@ def render_country_buying_behavior_card_html(country_name):
                 <span style="color:#CBD5E1;">{b.get('cultural_taboos', 'Yasal CE ve teknik servis güvencesi olmadan satış yapmaya çalışmak.')}</span>
             </div>
             <div style="border-top:1px dashed rgba(255,255,255,0.08);padding-top:6px;">
-                <b style="color:#00F5FF;">✉️ E-Posta & İletişim Tonu Rehberi:</b> 
+                <b style="color:#7DA8DF;">✉️ E-Posta & İletişim Tonu Rehberi:</b> 
                 <span style="color:#CBD5E1;">{b.get('email_tone_guidance', 'Klinik başarı ve hasta güvenliği odaklı resmi profesyonel dil.')}</span>
             </div>
         </div>
@@ -13423,7 +13405,7 @@ def evaluate_decision_note(note):
     
     if score >= 85:
         risk = "Düşük Risk (Yüksek Finansal Getiri)"
-        color = "#00E676"
+        color = "#10B981"
         auto_verdict = "Onaylandı & İcrada"
     elif score >= 65:
         risk = "Kontrollü Risk (Şartlı Takip)"
@@ -13705,9 +13687,9 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
     ck1, ck2, ck3, ck4 = st.columns(4)
     with ck1:
         st.markdown("""
-        <div style="background:#0F192E;border:1px solid rgba(0,245,255,0.3);border-radius:8px;padding:12px;text-align:center;">
+        <div style="background:#0F192E;border:1px solid rgba(125,168,223,0.3);border-radius:8px;padding:12px;text-align:center;">
             <div style="font-size:11px;color:#8FA3C0;font-weight:600;">🎯 İNCELENEN RAKİPLER</div>
-            <div style="font-size:20px;font-weight:700;color:#00F5FF;margin:4px 0;">5 MedTech Devi</div>
+            <div style="font-size:20px;font-weight:700;color:#7DA8DF;margin:4px 0;">5 MedTech Devi</div>
             <div style="font-size:10.5px;color:#5FD3AE;">Eppendorf, RI, HT, Vitrolife, CBS</div>
         </div>
         """, unsafe_allow_html=True)
@@ -13715,7 +13697,7 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
         st.markdown("""
         <div style="background:#0F192E;border:1px solid rgba(0,230,118,0.3);border-radius:8px;padding:12px;text-align:center;">
             <div style="font-size:11px;color:#8FA3C0;font-weight:600;">💰 ZEUS MALİYET AVANTAJI</div>
-            <div style="font-size:20px;font-weight:700;color:#00E676;margin:4px 0;">%65 - %75 Tasarruf</div>
+            <div style="font-size:20px;font-weight:700;color:#10B981;margin:4px 0;">%65 - %75 Tasarruf</div>
             <div style="font-size:10.5px;color:#5FD3AE;">Düşük CAPEX & $7.5 OPEX / Siklus</div>
         </div>
         """, unsafe_allow_html=True)
@@ -13756,18 +13738,18 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
         # STRATEGIC POLICY & GOVERNANCE NOTE BANNER (BINDING DECISION CRITERIA)
         # --------------------------------------------------------------------------
         st.markdown("""
-        <div style="background:rgba(0,245,255,0.06);border:1.5px solid #00F5FF;border-left:5px solid #00F5FF;border-radius:10px;padding:14px 18px;margin-bottom:16px;">
+        <div style="background:rgba(125,168,223,0.06);border:1.5px solid #7DA8DF;border-left:5px solid #7DA8DF;border-radius:10px;padding:14px 18px;margin-bottom:16px;">
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:10px;">
-                <span style="font-size:13.5px;font-weight:700;color:#00F5FF;letter-spacing:0.5px;">📌 STRATEJİK YÖNETİCİ NOTU & KARAR MERKEZİ DEĞERLENDİRME ESASLARI:</span>
-                <span style="background:rgba(0,230,118,0.15);color:#00E676;font-size:11px;font-weight:700;padding:3px 10px;border-radius:6px;border:1px solid rgba(0,230,118,0.3);">✓ Karar Merkezine Bağlayıcı Kural Olarak Tanımlandı</span>
+                <span style="font-size:13.5px;font-weight:700;color:#7DA8DF;letter-spacing:0.5px;">📌 STRATEJİK YÖNETİCİ NOTU & KARAR MERKEZİ DEĞERLENDİRME ESASLARI:</span>
+                <span style="background:rgba(0,230,118,0.15);color:#10B981;font-size:11px;font-weight:700;padding:3px 10px;border-radius:6px;border:1px solid rgba(0,230,118,0.3);">✓ Karar Merkezine Bağlayıcı Kural Olarak Tanımlandı</span>
             </div>
             <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:12px;font-size:12px;color:#CCD7E6;line-height:1.55;">
-                <div style="background:rgba(15,23,42,0.7);border-left:3px solid #00F5FF;padding:10px 12px;border-radius:6px;">
-                    <b style="color:#00F5FF;">1. Z-Dish Protokolü & Klinik ROI:</b><br>
+                <div style="background:rgba(15,23,42,0.7);border-left:3px solid #7DA8DF;padding:10px 12px;border-radius:6px;">
+                    <b style="color:#7DA8DF;">1. Z-Dish Protokolü & Klinik ROI:</b><br>
                     1 ZEUS Electro Dish = <b>4 bağımsız mikro-havuz (pool) × 5 oosit = Azami 20 oosit</b> kapasitesi.<br>• <b>Fiyatlandırma:</b> Distribütör Fiyatı: <b>$100 USD/Dish</b> | Kliniğe Satış Fiyatı: <b>$150 USD/Dish</b> (Distribütör Brüt Kârı: <b>$50 USD</b>, %33.3 marj).<br>• <b>Klinik Kullanım & ROI:</b> Tek hasta siklüsünde <b>$150 USD/vaka</b>; çoklu hasta havuz paylaşımında (4 hasta × 5 oosit, <b>ZEUS Mismatch Blocker ile sıfır karışma garantili</b>) vaka başı maliyet yalnızca <b>$37.50 USD</b>! Kliniğe 4 kat hızlı ROI ve %92.5 marj sağlar.
                 </div>
-                <div style="background:rgba(15,23,42,0.7);border-left:3px solid #00E676;padding:10px 12px;border-radius:6px;">
-                    <b style="color:#00E676;">2. Teknoloji Ayrımı (Elektriksel AOA):</b><br>
+                <div style="background:rgba(15,23,42,0.7);border-left:3px solid #10B981;padding:10px 12px;border-radius:6px;">
+                    <b style="color:#10B981;">2. Teknoloji Ayrımı (Elektriksel AOA):</b><br>
                     ZPS 26 mekanik piezo delme veya termal lazer değildir; patentli mikro-akım <b>Elektriksel Oosit Aktivasyonudur (AOA)</b>. Sıfır termal/mekanik hasar ve sub-%1.2 lizis garantilidir (Eppendorf'un %4-8 mekanik hasarına karşı).
                 </div>
                 <div style="background:rgba(15,23,42,0.7);border-left:3px solid #FFB800;padding:10px 12px;border-radius:6px;">
@@ -13789,7 +13771,7 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
         <div style="overflow-x:auto;margin-bottom:16px;">
         <table style="width:100%;border-collapse:collapse;font-size:12px;color:#CCD7E6;background:#0F192E;border-radius:8px;overflow:hidden;border:1px solid rgba(255,255,255,0.08);">
             <thead>
-                <tr style="background:#16243E;color:#00F5FF;border-bottom:2px solid rgba(0,245,255,0.3);text-align:left;">
+                <tr style="background:#16243E;color:#7DA8DF;border-bottom:2px solid rgba(125,168,223,0.3);text-align:left;">
                     <th style="padding:10px 12px;">Rakip Üretici & Menşei</th>
                     <th style="padding:10px 12px;">Ne Satıyor? (Ürün & Fiyat)</th>
                     <th style="padding:10px 12px;">Eşleşen ZEUS Çözümü</th>
@@ -13803,17 +13785,17 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
                 <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
                     <td style="padding:10px 12px;"><b style="color:#FFFFFF;">🇩🇪 Eppendorf & 🇯🇵 Prime Tech</b><br><span style="color:#8FA3C0;font-size:11px;">Almanya & Japonya</span></td>
                     <td style="padding:10px 12px;"><b style="color:#FFB800;">PiezoXpert & PMM-150FU</b><br><span style="color:#94A3B8;">$38,000 - $55,000 USD</span></td>
-                    <td style="padding:10px 12px;"><b style="color:#00F5FF;">ZEUS Pulse Stimulator (ZPS 26)</b><br><span style="color:#5FD3AE;">$8,500 USD Taban</span></td>
-                    <td style="padding:10px 12px;"><span style="background:rgba(0,245,255,0.12);color:#00F5FF;padding:2px 8px;border-radius:4px;font-weight:700;">%82 Yakınlık</span></td>
-                    <td style="padding:10px 12px;"><b style="color:#00E676;">CE Sertifikalı (Class IIa) tescili</b>, sub-%1.2 lizis (vs %6 mekanik hasar), <b>4 Havuzlu Tek Z-Dish (4 Pool × 5 Oosit = 20 Oosit Kapasite; Distribütör: $100 USD, Klinik: $150 USD; Tek hasta: $150/vaka, 4 Hasta paylaşımlı sıfır-mismatch korumalı: $37.50/vaka)</b>.</td>
+                    <td style="padding:10px 12px;"><b style="color:#7DA8DF;">ZEUS Pulse Stimulator (ZPS 26)</b><br><span style="color:#5FD3AE;">$8,500 USD Taban</span></td>
+                    <td style="padding:10px 12px;"><span style="background:rgba(125,168,223,0.12);color:#7DA8DF;padding:2px 8px;border-radius:4px;font-weight:700;">%82 Yakınlık</span></td>
+                    <td style="padding:10px 12px;"><b style="color:#10B981;">CE Sertifikalı (Class IIa) tescili</b>, sub-%1.2 lizis (vs %6 mekanik hasar), <b>4 Havuzlu Tek Z-Dish (4 Pool × 5 Oosit = 20 Oosit Kapasite; Distribütör: $100 USD, Klinik: $150 USD; Tek hasta: $150/vaka, 4 Hasta paylaşımlı sıfır-mismatch korumalı: $37.50/vaka)</b>.</td>
                     <td style="padding:10px 12px;color:#CCD7E6;">TFF vakalarında %24'ten %82.3'e döllenme artışı ve 4 kat daha hızlı yatırım geri dönüşü (ROI).</td>
                     <td style="padding:10px 12px;font-size:11px;">
-                        <div style="background:rgba(0,245,255,0.07);border-left:3px solid #00F5FF;padding:5px 8px;border-radius:4px;margin-bottom:6px;">
-                            <span style="font-weight:700;color:#00F5FF;font-size:10px;">🤖 ZEUS Yapay Zeka (AI) Stratejisi:</span><br>
+                        <div style="background:rgba(125,168,223,0.07);border-left:3px solid #7DA8DF;padding:5px 8px;border-radius:4px;margin-bottom:6px;">
+                            <span style="font-weight:700;color:#7DA8DF;font-size:10px;">🤖 ZEUS Yapay Zeka (AI) Stratejisi:</span><br>
                             <span style="color:#CCD7E6;">{c_notes['eppendorf']['ai_strategy']}</span>
                         </div>
-                        <div style="background:rgba(0,230,118,0.07);border-left:3px solid #00E676;padding:5px 8px;border-radius:4px;">
-                            <span style="font-weight:700;color:#00E676;font-size:10px;">✍️ Yönetici / Saha Notu:</span><br>
+                        <div style="background:rgba(0,230,118,0.07);border-left:3px solid #10B981;padding:5px 8px;border-radius:4px;">
+                            <span style="font-weight:700;color:#10B981;font-size:10px;">✍️ Yönetici / Saha Notu:</span><br>
                             <span style="color:#FFFFFF;font-weight:500;">{c_notes['eppendorf']['manager_note']}</span>
                             <div style="font-size:9.5px;color:#8FA3C0;margin-top:2px;">👤 {c_notes['eppendorf'].get('updated_by', 'Yönetici')} · {c_notes['eppendorf'].get('updated_at', '')}</div>
                         </div>
@@ -13822,17 +13804,17 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
                 <tr style="border-bottom:1px solid rgba(255,255,255,0.05);background:rgba(255,255,255,0.015);">
                     <td style="padding:10px 12px;"><b style="color:#FFFFFF;">🇺🇸 CooperSurgical / RI</b><br><span style="color:#8FA3C0;font-size:11px;">ABD & İngiltere</span></td>
                     <td style="padding:10px 12px;"><b style="color:#FFB800;">RI Witness (RFID Şahitlik)</b><br><span style="color:#94A3B8;">$75K-$140K + $30/Siklus Çip</span></td>
-                    <td style="padding:10px 12px;"><b style="color:#00F5FF;">ZEUS Mismatch Blocker (ZMB-7T)</b><br><span style="color:#5FD3AE;">7 Terminal Şahitlik</span></td>
-                    <td style="padding:10px 12px;"><span style="background:rgba(0,230,118,0.12);color:#00E676;padding:2px 8px;border-radius:4px;font-weight:700;">%88 Yakınlık</span></td>
-                    <td style="padding:10px 12px;"><b style="color:#00E676;">Sıfır EMF Radyasyonu</b>, sınırsız ücretsiz 2D barkod, döngü başı mikro-kontörle %75 OPEX tasarrufu.</td>
+                    <td style="padding:10px 12px;"><b style="color:#7DA8DF;">ZEUS Mismatch Blocker (ZMB-7T)</b><br><span style="color:#5FD3AE;">7 Terminal Şahitlik</span></td>
+                    <td style="padding:10px 12px;"><span style="background:rgba(0,230,118,0.12);color:#10B981;padding:2px 8px;border-radius:4px;font-weight:700;">%88 Yakınlık</span></td>
+                    <td style="padding:10px 12px;"><b style="color:#10B981;">Sıfır EMF Radyasyonu</b>, sınırsız ücretsiz 2D barkod, döngü başı mikro-kontörle %75 OPEX tasarrufu.</td>
                     <td style="padding:10px 12px;color:#CCD7E6;">1,000 siklusta her yıl $22,500 USD doğrudan OPEX tasarrufu ve gametlerin altında radyasyonsuz güvenlik.</td>
                     <td style="padding:10px 12px;font-size:11px;">
-                        <div style="background:rgba(0,245,255,0.07);border-left:3px solid #00F5FF;padding:5px 8px;border-radius:4px;margin-bottom:6px;">
-                            <span style="font-weight:700;color:#00F5FF;font-size:10px;">🤖 ZEUS Yapay Zeka (AI) Stratejisi:</span><br>
+                        <div style="background:rgba(125,168,223,0.07);border-left:3px solid #7DA8DF;padding:5px 8px;border-radius:4px;margin-bottom:6px;">
+                            <span style="font-weight:700;color:#7DA8DF;font-size:10px;">🤖 ZEUS Yapay Zeka (AI) Stratejisi:</span><br>
                             <span style="color:#CCD7E6;">{c_notes['coopersurgical_ri']['ai_strategy']}</span>
                         </div>
-                        <div style="background:rgba(0,230,118,0.07);border-left:3px solid #00E676;padding:5px 8px;border-radius:4px;">
-                            <span style="font-weight:700;color:#00E676;font-size:10px;">✍️ Yönetici / Saha Notu:</span><br>
+                        <div style="background:rgba(0,230,118,0.07);border-left:3px solid #10B981;padding:5px 8px;border-radius:4px;">
+                            <span style="font-weight:700;color:#10B981;font-size:10px;">✍️ Yönetici / Saha Notu:</span><br>
                             <span style="color:#FFFFFF;font-weight:500;">{c_notes['coopersurgical_ri']['manager_note']}</span>
                             <div style="font-size:9.5px;color:#8FA3C0;margin-top:2px;">👤 {c_notes['coopersurgical_ri'].get('updated_by', 'Yönetici')} · {c_notes['coopersurgical_ri'].get('updated_at', '')}</div>
                         </div>
@@ -13841,17 +13823,17 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
                 <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
                     <td style="padding:10px 12px;"><b style="color:#FFFFFF;">🇺🇸 Hamilton Thorne & 🇸🇪 Vitrolife</b><br><span style="color:#8FA3C0;font-size:11px;">ABD & İsveç</span></td>
                     <td style="padding:10px 12px;"><b style="color:#FFB800;">Lykos Lazer & EmbryoScope</b><br><span style="color:#94A3B8;">$55K-$85K Lazer / $140K+ TL</span></td>
-                    <td style="padding:10px 12px;"><b style="color:#00F5FF;">ZEUS BioPSafe (ZBS26 / ZBB25)</b><br><span style="color:#5FD3AE;">Black-Box Biyopsi</span></td>
+                    <td style="padding:10px 12px;"><b style="color:#7DA8DF;">ZEUS BioPSafe (ZBS26 / ZBB25)</b><br><span style="color:#5FD3AE;">Black-Box Biyopsi</span></td>
                     <td style="padding:10px 12px;"><span style="background:rgba(255,184,0,0.12);color:#FFB800;padding:2px 8px;border-radius:4px;font-weight:700;">%78 Yakınlık</span></td>
-                    <td style="padding:10px 12px;"><b style="color:#00E676;">13 Kızılötesi Optik Sensör</b>, çift tabletli denetim izi, PCR tüpü şerit atlama hatasını sıfırlayan akıllı tepsi.</td>
+                    <td style="padding:10px 12px;"><b style="color:#10B981;">13 Kızılötesi Optik Sensör</b>, çift tabletli denetim izi, PCR tüpü şerit atlama hatasını sıfırlayan akıllı tepsi.</td>
                     <td style="padding:10px 12px;color:#CCD7E6;">PGT-A/M genetik biyopsilerinde numune karıştırma riskini donanımsal kilitler, lazerle tam uyumlu çalışır.</td>
                     <td style="padding:10px 12px;font-size:11px;">
-                        <div style="background:rgba(0,245,255,0.07);border-left:3px solid #00F5FF;padding:5px 8px;border-radius:4px;margin-bottom:6px;">
-                            <span style="font-weight:700;color:#00F5FF;font-size:10px;">🤖 ZEUS Yapay Zeka (AI) Stratejisi:</span><br>
+                        <div style="background:rgba(125,168,223,0.07);border-left:3px solid #7DA8DF;padding:5px 8px;border-radius:4px;margin-bottom:6px;">
+                            <span style="font-weight:700;color:#7DA8DF;font-size:10px;">🤖 ZEUS Yapay Zeka (AI) Stratejisi:</span><br>
                             <span style="color:#CCD7E6;">{c_notes['hamilton_vitrolife']['ai_strategy']}</span>
                         </div>
-                        <div style="background:rgba(0,230,118,0.07);border-left:3px solid #00E676;padding:5px 8px;border-radius:4px;">
-                            <span style="font-weight:700;color:#00E676;font-size:10px;">✍️ Yönetici / Saha Notu:</span><br>
+                        <div style="background:rgba(0,230,118,0.07);border-left:3px solid #10B981;padding:5px 8px;border-radius:4px;">
+                            <span style="font-weight:700;color:#10B981;font-size:10px;">✍️ Yönetici / Saha Notu:</span><br>
                             <span style="color:#FFFFFF;font-weight:500;">{c_notes['hamilton_vitrolife']['manager_note']}</span>
                             <div style="font-size:9.5px;color:#8FA3C0;margin-top:2px;">👤 {c_notes['hamilton_vitrolife'].get('updated_by', 'Yönetici')} · {c_notes['hamilton_vitrolife'].get('updated_at', '')}</div>
                         </div>
@@ -13860,17 +13842,17 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
                 <tr>
                     <td style="padding:10px 12px;"><b style="color:#FFFFFF;">🇫🇷 Cryo Bio System & 🇯🇵 Kitazato</b><br><span style="color:#8FA3C0;font-size:11px;">Fransa & Japonya</span></td>
                     <td style="padding:10px 12px;"><b style="color:#FFB800;">MVE Tanklar & Cryotop Payet</b><br><span style="color:#94A3B8;">$35,000+ Tank / $60 Payet</span></td>
-                    <td style="padding:10px 12px;"><b style="color:#00F5FF;">ZEUS Smart Cryo-Tools (ZCT25)</b><br><span style="color:#5FD3AE;">4X Tank Dönüşüm Kiti</span></td>
+                    <td style="padding:10px 12px;"><b style="color:#7DA8DF;">ZEUS Smart Cryo-Tools (ZCT25)</b><br><span style="color:#5FD3AE;">4X Tank Dönüşüm Kiti</span></td>
                     <td style="padding:10px 12px;"><span style="background:rgba(168,85,247,0.12);color:#C084FC;padding:2px 8px;border-radius:4px;font-weight:700;">%85 Yakınlık</span></td>
-                    <td style="padding:10px 12px;"><b style="color:#00E676;">Cane başına 40 payet</b> (vs standart 10 payet), sekizgen LN2 rezervuarlı goblet, >%95 çözme canlılığı.</td>
+                    <td style="padding:10px 12px;"><b style="color:#10B981;">Cane başına 40 payet</b> (vs standart 10 payet), sekizgen LN2 rezervuarlı goblet, >%95 çözme canlılığı.</td>
                     <td style="padding:10px 12px;color:#CCD7E6;">Kliniğin $50,000 yeni azot tankı almasını ve laboratuvar zeminini genişletmesini engeller.</td>
                     <td style="padding:10px 12px;font-size:11px;">
-                        <div style="background:rgba(0,245,255,0.07);border-left:3px solid #00F5FF;padding:5px 8px;border-radius:4px;margin-bottom:6px;">
-                            <span style="font-weight:700;color:#00F5FF;font-size:10px;">🤖 ZEUS Yapay Zeka (AI) Stratejisi:</span><br>
+                        <div style="background:rgba(125,168,223,0.07);border-left:3px solid #7DA8DF;padding:5px 8px;border-radius:4px;margin-bottom:6px;">
+                            <span style="font-weight:700;color:#7DA8DF;font-size:10px;">🤖 ZEUS Yapay Zeka (AI) Stratejisi:</span><br>
                             <span style="color:#CCD7E6;">{c_notes['cryobio_kitazato']['ai_strategy']}</span>
                         </div>
-                        <div style="background:rgba(0,230,118,0.07);border-left:3px solid #00E676;padding:5px 8px;border-radius:4px;">
-                            <span style="font-weight:700;color:#00E676;font-size:10px;">✍️ Yönetici / Saha Notu:</span><br>
+                        <div style="background:rgba(0,230,118,0.07);border-left:3px solid #10B981;padding:5px 8px;border-radius:4px;">
+                            <span style="font-weight:700;color:#10B981;font-size:10px;">✍️ Yönetici / Saha Notu:</span><br>
                             <span style="color:#FFFFFF;font-weight:500;">{c_notes['cryobio_kitazato']['manager_note']}</span>
                             <div style="font-size:9.5px;color:#8FA3C0;margin-top:2px;">👤 {c_notes['cryobio_kitazato'].get('updated_by', 'Yönetici')} · {c_notes['cryobio_kitazato'].get('updated_at', '')}</div>
                         </div>
@@ -13899,8 +13881,8 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
             
             cur_c_note = c_notes[comp_select_edit]
             st.markdown(f"""
-            <div style="background:rgba(0,245,255,0.06);border:1px solid rgba(0,245,255,0.25);border-radius:6px;padding:8px 12px;margin-bottom:10px;">
-                <b style="color:#00F5FF;font-size:11px;">🤖 ZEUS Yapay Zeka (AI) Stratejisi (Sabit Sistem Önerisi):</b><br>
+            <div style="background:rgba(125,168,223,0.06);border:1px solid rgba(125,168,223,0.25);border-radius:6px;padding:8px 12px;margin-bottom:10px;">
+                <b style="color:#7DA8DF;font-size:11px;">🤖 ZEUS Yapay Zeka (AI) Stratejisi (Sabit Sistem Önerisi):</b><br>
                 <span style="font-size:11.5px;color:#CCD7E6;">{cur_c_note['ai_strategy']}</span>
             </div>
             """, unsafe_allow_html=True)
@@ -13941,14 +13923,14 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
         cc1, cc2 = st.columns([1.2, 1.8])
         with cc1:
             st.markdown(f"""
-            <div style="background:rgba(15,23,42,0.8);border:1.5px solid #00F5FF;border-radius:10px;padding:16px;">
+            <div style="background:rgba(15,23,42,0.8);border:1.5px solid #7DA8DF;border-radius:10px;padding:16px;">
                 <div style="font-size:14px;font-weight:700;color:#FFFFFF;margin-bottom:6px;">{c_data['logo_text']}</div>
                 <div style="font-size:11px;color:#8FA3C0;margin-bottom:10px;">🏷️ {c_data['category']}</div>
                 <div style="font-size:12px;color:#CCD7E6;margin-bottom:6px;"><b>📊 Pazar Hâkimiyeti:</b> {c_data['market_share']}</div>
                 <div style="font-size:12px;color:#CCD7E6;margin-bottom:6px;"><b>💰 Donanım Fiyatı:</b> <span style="color:#FFB800;font-weight:700;">{c_data['hardware_price_range']}</span></div>
                 <div style="font-size:12px;color:#CCD7E6;margin-bottom:12px;"><b>📦 Sarf Fiyatı:</b> <span style="color:#FFB800;">{c_data['consumable_price_range']}</span></div>
-                <div style="background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.25);border-radius:6px;padding:8px 10px;font-size:11.5px;">
-                    <b style="color:#00F5FF;">🎯 Eşleşen ZEUS Çözümü:</b><br>
+                <div style="background:rgba(125,168,223,0.08);border:1px solid rgba(125,168,223,0.25);border-radius:6px;padding:8px 10px;font-size:11.5px;">
+                    <b style="color:#7DA8DF;">🎯 Eşleşen ZEUS Çözümü:</b><br>
                     <span style="color:#FFFFFF;font-weight:600;">{c_data['matched_zeus_device']}</span><br>
                     <span style="color:#5FD3AE;font-weight:700;">{c_data['proximity_label']}</span>
                 </div>
@@ -13958,7 +13940,7 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
         with cc2:
             st.markdown(f"""
             <div style="background:rgba(15,23,42,0.8);border:1px solid rgba(255,255,255,0.08);border-radius:10px;padding:16px;">
-                <div style="font-size:13px;font-weight:700;color:#00E676;margin-bottom:8px;">⚔️ Donanımsal & Klinik Boşluk Analizi (ZEUS Neden Daha Üstün?)</div>
+                <div style="font-size:13px;font-weight:700;color:#10B981;margin-bottom:8px;">⚔️ Donanımsal & Klinik Boşluk Analizi (ZEUS Neden Daha Üstün?)</div>
                 <div style="font-size:12px;color:#CBD5E1;line-height:1.7;">
                     {'<br>'.join(c_data['technical_gap_analysis'])}
                 </div>
@@ -14063,11 +14045,11 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
                         st.markdown(f"""
                         <div style="font-size:11.5px;color:#CCD7E6;line-height:1.5;">
                             <b>⚔️ Hedef Rakip:</b> <span style="color:#FFB800;">{n_item['target_competitor']}</span><br>
-                            <b>🛡️ ZEUS Çözümü:</b> <span style="color:#00F5FF;">{n_item['our_product']}</span><br>
-                            <b>🎯 Uygulanacak Strateji:</b> <span style="color:#00E676;">{n_item['selected_strategy']}</span><br>
+                            <b>🛡️ ZEUS Çözümü:</b> <span style="color:#7DA8DF;">{n_item['our_product']}</span><br>
+                            <b>🎯 Uygulanacak Strateji:</b> <span style="color:#10B981;">{n_item['selected_strategy']}</span><br>
                             <b>📜 Sözleşme Hükümleri:</b> <span style="color:#CBD5E1;">{' • '.join(n_item['contract_clauses'])}</span>
                         </div>
-                        <div style="background:rgba(0,0,0,0.3);border-left:3px solid #00F5FF;padding:8px 10px;border-radius:4px;margin:8px 0;font-size:12px;color:#FFFFFF;">
+                        <div style="background:rgba(0,0,0,0.3);border-left:3px solid #7DA8DF;padding:8px 10px;border-radius:4px;margin:8px 0;font-size:12px;color:#FFFFFF;">
                             <b>✍️ Yönetici Karar Tutanağı:</b><br>{n_item['decision_note']}
                         </div>
                         <div style="font-size:11px;color:#8FA3C0;display:flex;justify-content:space-between;">
@@ -14080,7 +14062,7 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
                         <div style="background:rgba(15,23,42,0.7);border:1px solid {eval_res['badge_color']};border-radius:8px;padding:12px;">
                             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
                                 <span style="font-size:12px;font-weight:700;color:{eval_res['badge_color']};">🧠 Karar Merkezi Değerlendirmesi</span>
-                                <span style="background:rgba(0,245,255,0.12);color:#00F5FF;font-weight:700;font-size:11px;padding:2px 8px;border-radius:4px;">%{eval_res['score']}/100</span>
+                                <span style="background:rgba(125,168,223,0.12);color:#7DA8DF;font-weight:700;font-size:11px;padding:2px 8px;border-radius:4px;">%{eval_res['score']}/100</span>
                             </div>
                             <div style="font-size:11px;color:#CBD5E1;margin-bottom:6px;"><b>Risk Düzeyi:</b> <span style="color:{eval_res['badge_color']};font-weight:600;">{eval_res['risk_level']}</span></div>
                             <div style="font-size:11px;color:#CCD7E6;line-height:1.45;margin-bottom:8px;">
@@ -14119,8 +14101,8 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
         strat_c1, strat_c2 = st.columns(2)
         with strat_c1:
             st.markdown("""
-            <div style="background:#0F192E;border:1px solid rgba(0,245,255,0.3);border-left:4px solid #00F5FF;border-radius:8px;padding:14px;margin-bottom:12px;">
-                <h5 style="color:#00F5FF;margin:0 0 6px 0;">1. Klinik Kanıt & Hakemli Yayın Kalkanı (The Scientific Wedge)</h5>
+            <div style="background:#0F192E;border:1px solid rgba(125,168,223,0.3);border-left:4px solid #7DA8DF;border-radius:8px;padding:14px;margin-bottom:12px;">
+                <h5 style="color:#7DA8DF;margin:0 0 6px 0;">1. Klinik Kanıt & Hakemli Yayın Kalkanı (The Scientific Wedge)</h5>
                 <div style="font-size:12px;color:#CCD7E6;line-height:1.6;">
                     • <b>Taktik:</b> Hekim-patron ve baş embriyoloğun karşısına teknik donanım broşürüyle değil, <b>Prof. Dr. Volkan Baltacı et al. (RBM Online)</b> ve <b>Ebner et al. (Human Reproduction)</b> hakemli makaleleriyle çıkın.<br>
                     • <b>Vurucu Cümle:</b> <i>"Eppendorf size bir mikromanipülatör satar; ZEUS ise Toplam Döllenme Başarısızlığı (TFF) vakalarında 2PN döllenme oranını %24'ten %82.3'e çıkaran, sub-%1.2 lizis garantili klinik protokolü satar."</i>
@@ -14129,8 +14111,8 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
             """, unsafe_allow_html=True)
 
             st.markdown("""
-            <div style="background:#0F192E;border:1px solid rgba(0,230,118,0.3);border-left:4px solid #00E676;border-radius:8px;padding:14px;margin-bottom:12px;">
-                <h5 style="color:#00E676;margin:0 0 6px 0;">2. OPEX Kurtarma Stratejisi (The RFID Trap Breaker)</h5>
+            <div style="background:#0F192E;border:1px solid rgba(0,230,118,0.3);border-left:4px solid #10B981;border-radius:8px;padding:14px;margin-bottom:12px;">
+                <h5 style="color:#10B981;margin:0 0 6px 0;">2. OPEX Kurtarma Stratejisi (The RFID Trap Breaker)</h5>
                 <div style="font-size:12px;color:#CCD7E6;line-height:1.6;">
                     • <b>Taktik:</b> CooperSurgical RI Witness kullanan veya teklif alan kliniklerin CFO'suna 3 yıllık Toplam Sahip Olma Maliyeti (TCO) çıkarın.<br>
                     • <b>Vurucu Cümle:</b> <i>"Yılda 1.000 siklus yapan kliniğiniz RI Witness çiplerine her yıl $35,000 - $40,000 USD ödüyor. ZEUS Mismatch Blocker'da 2D barkodlar tamamen ücretsizdir (Free of Charge Barcodes) ve döngü başına yalnızca $25 USD ödersiniz (1.000 siklus = $25,000 USD). Kalan $10,000 - $15,000 her yıl doğrudan kâr hanenize yazılır; 3 yılda $45,000 net nakit tasarruf edersiniz."</i>
@@ -14168,14 +14150,14 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
 
         st.markdown("""
         <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(320px, 1fr));gap:14px;margin-bottom:16px;">
-            <div style="background:#0F192E;border:1px solid rgba(0,245,255,0.25);border-radius:8px;padding:14px;">
-                <div style="font-size:13px;font-weight:700;color:#00F5FF;margin-bottom:6px;">1. Asgari Yıllık Sarf Satın Alma Taahhüdü (MOQ)</div>
+            <div style="background:#0F192E;border:1px solid rgba(125,168,223,0.25);border-radius:8px;padding:14px;">
+                <div style="font-size:13px;font-weight:700;color:#7DA8DF;margin-bottom:6px;">1. Asgari Yıllık Sarf Satın Alma Taahhüdü (MOQ)</div>
                 <div style="font-size:11.5px;color:#CBD5E1;line-height:1.6;">
                     <b>Sözleşme Metni:</b> <i>"Distribütör/Klinik, sahada kurulu her bir ZEUS Pulse Stimulator (ZPS 26) başına yıllık asgari 60 kutu (çeyrek dönem başına en az 15 kutu) Electro Dish / Z-Dish sarf malzemesi çekmeyi gayrikabili rücu taahhüt eder. Asgari kotanın yerine getirilmemesi halinde, cihazın ücretsiz üretici garanti kapsamı, yazılım lisansı ve yıllık kalibrasyon sertifikalandırması kendiliğinden askıya alınır."</i>
                 </div>
             </div>
             <div style="background:#0F192E;border:1px solid rgba(0,230,118,0.25);border-radius:8px;padding:14px;">
-                <div style="font-size:13px;font-weight:700;color:#00E676;margin-bottom:6px;">2. Münhasırlık ve Performans İhlali Şartı (Clawback)</div>
+                <div style="font-size:13px;font-weight:700;color:#10B981;margin-bottom:6px;">2. Münhasırlık ve Performans İhlali Şartı (Clawback)</div>
                 <div style="font-size:11.5px;color:#CBD5E1;line-height:1.6;">
                     <b>Sözleşme Metni:</b> <i>"Distribütöre tanınan ülke/bölge münhasırlığı (tek yetkili satıcılık), ilk 6 ay içerisinde asgari 2 adet anahtar teslim cihaz ve 150 kutu sarf malzemesi fiili çekişi şartına bağlıdır. Bu performans hedefine ulaşılamaması durumunda, ZEUS tek taraflı bildirimle münhasırlığı iptal ederek genel acentelik statüsüne geçirme ve bölgedeki hastanelere doğrudan satış yapma hakkını saklı tutar."</i>
                 </div>
@@ -14205,7 +14187,7 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
                 </div>
             </div>
             <div style="background:#0F192E;border:1px solid rgba(56,189,248,0.3);border-radius:8px;padding:14px;grid-column: 1 / -1;">
-                <div style="font-size:13px;font-weight:700;color:#38BDF8;margin-bottom:6px;">7. 90 Günlük Pazar Doğrulama LOI'si & Deal Registration (Aday Çakışma & Emeği Koruma Şartı)</div>
+                <div style="font-size:13px;font-weight:700;color:#7DA8DF;margin-bottom:6px;">7. 90 Günlük Pazar Doğrulama LOI'si & Deal Registration (Aday Çakışma & Emeği Koruma Şartı)</div>
                 <div style="font-size:11.5px;color:#CBD5E1;line-height:1.6;">
                     <b>Sözleşme Metni:</b> <i>"Aday firmaya pazar analizi için 90 günlük bağlayıcı olmayan ön hazırlık süresi tanınır (30. gün klinik haritası, 60. gün 5 A-klinik hekim tutanağı teslimi zorunludur). Bu 90 günlük süreçte peşin 3 cihaz alımıyla gelen ikinci bir distribütör adayı çıkarsa, ilk adaya 10 iş günü 'İlk Satın Alma Önceliği' (Right of First Refusal) tanınır. Pazar ikinci bir firmaya devredilse dahi; ilk adayın ZEUS portalına kaydettiği (Deal Registration) kliniklere yapılacak ilk 12 aylık satışlardan ilk adaya %5 - %8 'Müşteri Geliştirme Komisyonu' (Finder's Fee) ödenir. Hiçbir adayın sahadaki emeği karşılıksız kalmaz."</i>
                 </div>
@@ -14230,10 +14212,10 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
         # İNTERAKTİF DİSTRİBÜTÖRLÜK & YETKİLENDİRME MODELİ SEÇİM REHBERİ
         # ======================================================================
         st.markdown('''
-        <div style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(0, 245, 255, 0.35); border-left: 4.5px solid #00F5FF; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px;">
+        <div style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(125, 168, 223, 0.35); border-left: 4.5px solid #7DA8DF; border-radius: 10px; padding: 14px 18px; margin-bottom: 16px;">
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
-                <b style="color:#00F5FF; font-size:14px;">🎯 Nasıl İlerlemek İstiyorsunuz? — Distribütörlük & Yetkilendirme Strateji Seçimi</b>
-                <span style="background:rgba(0,245,255,0.15); color:#00F5FF; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:700;">Yönetici Masası Karar Kılavuzu</span>
+                <b style="color:#7DA8DF; font-size:14px;">🎯 Nasıl İlerlemek İstiyorsunuz? — Distribütörlük & Yetkilendirme Strateji Seçimi</b>
+                <span style="background:rgba(125,168,223,0.15); color:#7DA8DF; padding:3px 10px; border-radius:12px; font-size:11px; font-weight:700;">Yönetici Masası Karar Kılavuzu</span>
             </div>
             <div style="color:#94A3B8; font-size:11.5px; margin-top:4px;">Aşağıdaki seçeneklerden hedef pazar ve aday firmanın durumuna en uygun olan modeli seçiniz; sistem otomatik şartnameyi ve koruma protokolünü üretecektir.</div>
         </div>
@@ -14279,7 +14261,7 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
         elif "3. 90 Günlük" in sel_decision_model:
             st.markdown('''
             <div style="background: rgba(56, 189, 248, 0.08); border: 1px solid rgba(56, 189, 248, 0.3); border-radius: 10px; padding: 14px 18px; margin-bottom: 18px;">
-                <div style="font-weight:700; color:#38BDF8; font-size:13.5px; margin-bottom:6px;">🔵 Model 3: 90 Günlük Pazar Doğrulama LOI'si (İnkubasyon & Fizibilite Dönemi)</div>
+                <div style="font-weight:700; color:#7DA8DF; font-size:13.5px; margin-bottom:6px;">🔵 Model 3: 90 Günlük Pazar Doğrulama LOI'si (İnkubasyon & Fizibilite Dönemi)</div>
                 <div style="font-size:12px; color:#CBD5E1; line-height:1.65;">
                     • <b>Mali Yükümlülük:</b> 3 cihazlık satın alma şartı 90 gün sonrasına ertelenir. Adaya bağlayıcı olmayan bir 'LOI / İyi Niyet Protokolü' verilir.<br>
                     • <b>30. Gün Kilometre Taşı (Milestone 1):</b> Ülkedeki IVF kliniklerinin hekim/embriyolog iletişim haritası ve yerel sağlık bakanlığı tescil gereksinim raporu teslim edilir.<br>
@@ -14416,13 +14398,13 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
                         st.markdown(f"""
                         <div style="font-size:11.5px;color:#CCD7E6;line-height:1.5;">
                             <b>⚔️ Rakip Firma:</b> <span style="color:#FFB800;">{n_item['target_competitor']}</span><br>
-                            <b>🛡️ ZEUS Çözümü:</b> <span style="color:#00F5FF;">{n_item['our_product']}</span><br>
-                            <b>🤝 Distribütörlük Modeli:</b> <span style="color:#38BDF8; font-weight:700;">{n_item.get('distributor_model', 'Standart Distribütörlük')}</span><br>
-                            <b>🎯 Uygulanacak Strateji:</b> <span style="color:#00E676;">{n_item['selected_strategy']}</span><br>
+                            <b>🛡️ ZEUS Çözümü:</b> <span style="color:#7DA8DF;">{n_item['our_product']}</span><br>
+                            <b>🤝 Distribütörlük Modeli:</b> <span style="color:#7DA8DF; font-weight:700;">{n_item.get('distributor_model', 'Standart Distribütörlük')}</span><br>
+                            <b>🎯 Uygulanacak Strateji:</b> <span style="color:#10B981;">{n_item['selected_strategy']}</span><br>
                             <b>📜 Bağlayıcı Sözleşme Şartları:</b><br>
                             <span style="color:#CBD5E1;">{' • '.join(n_item['contract_clauses']) if n_item['contract_clauses'] else 'Standart Hükümler'}</span>
                         </div>
-                        <div style="background:rgba(0,0,0,0.3);border-left:3px solid #00F5FF;padding:8px 10px;border-radius:4px;margin:8px 0;font-size:12px;color:#FFFFFF;">
+                        <div style="background:rgba(0,0,0,0.3);border-left:3px solid #7DA8DF;padding:8px 10px;border-radius:4px;margin:8px 0;font-size:12px;color:#FFFFFF;">
                             <b>✍️ Karar Notu:</b><br>{n_item['decision_note']}
                         </div>
                         <div style="background:rgba(15,23,42,0.7);border:1px solid {ev_info['badge_color']};border-radius:6px;padding:8px 10px;margin-bottom:8px;font-size:11.5px;">
@@ -14731,7 +14713,7 @@ def render_quick_b2b_csv_uploader():
 
     st.markdown("""
     <div style="background:rgba(0,119,181,0.08);border:1px dashed #0077B5;border-radius:10px;padding:12px 16px;margin-bottom:12px;">
-        <b style="color:#38BDF8;font-size:12.5px;">📥 Sellbird CSV Hızlı İçe Aktarma Dropzone:</b><br>
+        <b style="color:#7DA8DF;font-size:12.5px;">📥 Sellbird CSV Hızlı İçe Aktarma Dropzone:</b><br>
         <span style="font-size:11.5px;color:#CBD5E1;">Sellbird tarafından üretilen <code>prospects.csv</code> veya <code>company-register.csv</code> dosyanızı buraya yükleyin. Kişiler otomatik olarak ayrıştırılır ve arama radarına dahil edilir.</span>
     </div>
     """, unsafe_allow_html=True)
@@ -14779,15 +14761,15 @@ def render_universal_csv_importer_hub():
     3. Management & Clearing of Imported Datasets
     """
     st.markdown("""
-    <div style="background:linear-gradient(135deg, rgba(16,24,39,0.9) 0%, rgba(15,23,42,0.95) 100%);border:1.5px solid #00F5FF;border-radius:12px;padding:18px 22px;margin:20px 0 16px 0;box-shadow:0 8px 24px rgba(0,0,0,0.35);">
+    <div style="background:linear-gradient(135deg, rgba(16,24,39,0.9) 0%, rgba(15,23,42,0.95) 100%);border:1.5px solid #7DA8DF;border-radius:12px;padding:18px 22px;margin:20px 0 16px 0;box-shadow:0 8px 24px rgba(0,0,0,0.35);">
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
             <div>
-                <span style="background:rgba(0,245,255,0.15);color:#00F5FF;font-size:11px;font-weight:800;padding:3px 10px;border-radius:6px;border:1px solid rgba(0,245,255,0.3);">SELLBIRD ARCHITECTURE INTEGRATION</span>
+                <span style="background:rgba(125,168,223,0.15);color:#7DA8DF;font-size:11px;font-weight:800;padding:3px 10px;border-radius:6px;border:1px solid rgba(125,168,223,0.3);">SELLBIRD ARCHITECTURE INTEGRATION</span>
                 <h3 style="margin:6px 0 2px 0;color:#FFFFFF;font-size:20px;font-weight:800;">📥 Evrensel CSV / Veri İçe Aktarma Merkezi (Data Ingestion Hub)</h3>
                 <div style="color:#CBD5E1;font-size:12.5px;">Sellbird'ün cold-email/lead export şemasıyla tam uyumlu; harici B2B karar verici listelerini veya güncel ERP satış fatura kütüklerini sisteme aktarın.</div>
             </div>
             <div>
-                <span style="background:rgba(0,230,118,0.12);color:#00E676;border:1px solid #00E676;padding:4px 12px;border-radius:16px;font-size:11.5px;font-weight:700;">● Otomatik Karakter & Delimiter Tespiti</span>
+                <span style="background:rgba(0,230,118,0.12);color:#10B981;border:1px solid #10B981;padding:4px 12px;border-radius:16px;font-size:11.5px;font-weight:700;">● Otomatik Karakter & Delimiter Tespiti</span>
             </div>
         </div>
     </div>
@@ -15044,13 +15026,13 @@ def render_prospect_rec_html(p, country_row=None, country_name=""):
     rec = calc_prospect_device_consumable_rec(p, country_row, country_name)
     if rec['is_dist']:
         html = f"""
-        <div style="margin-top:10px;background:rgba(15,25,46,0.85);border:1.5px solid rgba(0,245,255,0.35);border-radius:6px;padding:10px 12px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;border-bottom:1px solid rgba(0,245,255,0.2);padding-bottom:5px;flex-wrap:wrap;gap:6px;">
-                <span style="color:#00F5FF;font-weight:700;font-size:12px;">🤖 AI Distribütör Cihaz & Sarf Giriş Paketi (Asgari 3 Cihaz Kuralı)</span>
+        <div style="margin-top:10px;background:rgba(15,25,46,0.85);border:1.5px solid rgba(125,168,223,0.35);border-radius:6px;padding:10px 12px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;border-bottom:1px solid rgba(125,168,223,0.2);padding-bottom:5px;flex-wrap:wrap;gap:6px;">
+                <span style="color:#7DA8DF;font-weight:700;font-size:12px;">🤖 AI Distribütör Cihaz & Sarf Giriş Paketi (Asgari 3 Cihaz Kuralı)</span>
                 <span style="font-size:10px;color:#5FD3AE;background:rgba(95,211,174,0.15);border:1px solid rgba(95,211,174,0.3);padding:2px 6px;border-radius:3px;">💼 Distribütörlük Taahhüt Modeli</span>
             </div>
             <div style="font-size:11.5px;color:#CCD7E6;line-height:1.5;">
-                <div>⚡ <b>Asgari Zorunlu Donanım:</b> <b style="color:#00F5FF;">3 Cihaz Satın Alma Şartı</b> <span style="color:#8A99AD;font-size:10.5px;">(Tüm distribütörlerimiz için evrensel kural)</span></div>
+                <div>⚡ <b>Asgari Zorunlu Donanım:</b> <b style="color:#7DA8DF;">3 Cihaz Satın Alma Şartı</b> <span style="color:#8A99AD;font-size:10.5px;">(Tüm distribütörlerimiz için evrensel kural)</span></div>
                 <div style="font-size:11px;color:#94A3B8;margin-left:14px;margin-top:2px;">
                     • <b>Paket A (Pulse Odaklı):</b> 2x Pulse Stimulator (1. Cihaz Direct Sale + 1 Kutu Dish & 1 Kutu Solution-Powder Ücretsiz Promosyonu; 2. Cihaz Reagent-Based) + 1x Tercihli Portföy (BioPSafe, Mismatch Blocker veya Smart Cryotools)<br>
                     • <b>Paket B (Çeşitlendirilmiş Portföy):</b> Pulse Stimulator tercih edilmezse 3 Farklı Cihaz (1x BioPSafe + 1x Mismatch Blocker + 1x Smart Cryotools)
@@ -15059,11 +15041,11 @@ def render_prospect_rec_html(p, country_row=None, country_name=""):
                     <span style="font-size:11px;font-weight:700;">{rec['country_scale_verdict']}</span> — <span style="font-size:10.5px;color:#94A3B8;">{rec['country_scale_detail']}</span>
                 </div>
                 <div style="margin-top:6px;">
-                    🧪 <b>Bağlayıcı Yıllık Sarf Baremi:</b> <b style="color:#00E676;">{rec['dish_boxes']:,} Kutu Dish</b> <span style="color:#94A3B8;font-size:10.5px;">(Toplam {rec['dish_units']:,} Adet Dish | 1 Kutu = 2 Dish, Her Dish 20 Oosite Kadar Kapasiteli)</span> + <b style="color:#FFB800;">{rec['sol_boxes']:,} Kutu Solution-Powder</b> <span style="color:#94A3B8;font-size:10.5px;">(Toplam {rec['sol_ml']} ml | 1 Kutu = 2 ml, 3 Kutu Dish Başına 1 Kutu Solüsyon / 6 Dishe Yeterli)</span>
+                    🧪 <b>Bağlayıcı Yıllık Sarf Baremi:</b> <b style="color:#10B981;">{rec['dish_boxes']:,} Kutu Dish</b> <span style="color:#94A3B8;font-size:10.5px;">(Toplam {rec['dish_units']:,} Adet Dish | 1 Kutu = 2 Dish, Her Dish 20 Oosite Kadar Kapasiteli)</span> + <b style="color:#FFB800;">{rec['sol_boxes']:,} Kutu Solution-Powder</b> <span style="color:#94A3B8;font-size:10.5px;">(Toplam {rec['sol_ml']} ml | 1 Kutu = 2 ml, 3 Kutu Dish Başına 1 Kutu Solüsyon / 6 Dishe Yeterli)</span>
                 </div>
                 <div style="margin-top:4px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;">
                     <span style="color:#5FD3AE;font-size:10.5px;">🎁 <i>Direct Sale Cihazda +1 Kutu Dish & +1 Kutu Solution-Powder Ücretsiz Başlangıç Kiti</i></span>
-                    <span style="color:#00E676;font-size:11px;font-weight:600;">💰 {rec['discount_str']}</span>
+                    <span style="color:#10B981;font-size:11px;font-weight:600;">💰 {rec['discount_str']}</span>
                 </div>
             </div>
         </div>
@@ -15071,18 +15053,18 @@ def render_prospect_rec_html(p, country_row=None, country_name=""):
         return html
     else:
         html = f"""
-        <div style="margin-top:10px;background:rgba(15,25,46,0.85);border:1.5px solid rgba(0,245,255,0.35);border-radius:6px;padding:10px 12px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;border-bottom:1px solid rgba(0,245,255,0.2);padding-bottom:5px;flex-wrap:wrap;gap:6px;">
-                <span style="color:#00F5FF;font-weight:700;font-size:12px;">🤖 Yapay Zeka Cihaz & Sarf Malzeme Reçetesi ({rec['cycles']:,} Tedavi Siklüsü / Yıl)</span>
+        <div style="margin-top:10px;background:rgba(15,25,46,0.85);border:1.5px solid rgba(125,168,223,0.35);border-radius:6px;padding:10px 12px;">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;border-bottom:1px solid rgba(125,168,223,0.2);padding-bottom:5px;flex-wrap:wrap;gap:6px;">
+                <span style="color:#7DA8DF;font-weight:700;font-size:12px;">🤖 Yapay Zeka Cihaz & Sarf Malzeme Reçetesi ({rec['cycles']:,} Tedavi Siklüsü / Yıl)</span>
                 <span style="font-size:10px;color:#5FD3AE;background:rgba(95,211,174,0.15);border:1px solid rgba(95,211,174,0.3);padding:2px 6px;border-radius:3px;">📦 Siklüs Bazlı Reçete</span>
             </div>
             <div style="font-size:11.5px;color:#CCD7E6;line-height:1.5;">
-                <div>⚡ <b>Önerilen Cihaz:</b> <b style="color:#00F5FF;">{rec['dev_str']}</b> <span style="background:rgba(0,245,255,0.15);color:#00F5FF;padding:1px 5px;border-radius:3px;font-size:10px;font-weight:600;">{rec['dev_badge']}</span></div>
+                <div>⚡ <b>Önerilen Cihaz:</b> <b style="color:#7DA8DF;">{rec['dev_str']}</b> <span style="background:rgba(125,168,223,0.15);color:#7DA8DF;padding:1px 5px;border-radius:3px;font-size:10px;font-weight:600;">{rec['dev_badge']}</span></div>
                 <div style="font-size:11px;color:#94A3B8;margin-left:14px;margin-top:1px;">• {rec['dev_desc']}</div>
                 
                 <div style="margin-top:6px;display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:6px;">
                     <div style="background:rgba(0,230,118,0.06);border:1px solid rgba(0,230,118,0.25);border-radius:4px;padding:5px 8px;">
-                        🧪 <b>Gereken Kutu Dish:</b> <b style="color:#00E676;font-size:12px;">{rec['dish_boxes']:,} Kutu Dish</b><br>
+                        🧪 <b>Gereken Kutu Dish:</b> <b style="color:#10B981;font-size:12px;">{rec['dish_boxes']:,} Kutu Dish</b><br>
                         <span style="color:#94A3B8;font-size:10.5px;">Toplam <b>{rec['dish_units']:,} Adet Dish</b> (1 Kutu = 2 Dish | Her Dish Azami 20 Oosit Kapasiteli)</span>
                     </div>
                     <div style="background:rgba(255,184,0,0.06);border:1px solid rgba(255,184,0,0.25);border-radius:4px;padding:5px 8px;">
@@ -15093,7 +15075,7 @@ def render_prospect_rec_html(p, country_row=None, country_name=""):
                 
                 <div style="margin-top:5px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:6px;border-top:1px dashed rgba(255,255,255,0.08);padding-top:4px;">
                     <span style="color:#5FD3AE;font-size:10.5px;">🎁 <i>İlk cihaz kurulumunda 1 Kutu Dish + 1 Kutu Solution-Powder başlangıç kiti hediye</i></span>
-                    <span style="color:#00E676;font-size:11px;font-weight:600;">🏷️ Toplu İskonto: {rec['discount_str']}</span>
+                    <span style="color:#10B981;font-size:11px;font-weight:600;">🏷️ Toplu İskonto: {rec['discount_str']}</span>
                 </div>
             </div>
         </div>
@@ -15463,7 +15445,7 @@ def get_default_strategic_plans():
             'alert_id': 'dish_liquid_ratio',
             'title': 'Kritik Ürün Rasyosu & Liyofilize Çözüm Fırsatı: Electro Dish vs Liquid (2.1:1)',
             'badge': 'EK GELİR FIRSATI',
-            'badge_color': '#00F5FF',
+            'badge_color': '#7DA8DF',
             'evidence': "Fatura veri tabanında 2,097 kutu Electro Dish satılmasına karşın yalnızca 997 kutu Liquid Solution satılmıştır. Geçmişte sıvı (liquid) solüsyonun raf ömrü yalnızca 2 ay olduğundan (+2°C / +8°C soğuk zincir riski), klinikler ve distribütörler bozulma korkusuyla Dish başına daha az solüsyon sipariş etmiş ve tüketim farkı oluşmuştur.",
             'ai_recommendation': "Mart 2026 itibarıyla kullanıma sunulan YENİ LİYOFİLİZE TOZ (POWDER) FORMÜLÜ çözülmediği sürece 1 YIL (12 AY) RAF ÖMRÜNE sahiptir. Bu teknolojik devrim sayesinde klinikler artık bozulma riski olmadan Dish ile 1:1 oranında yıllık/yarı-yıllık liyofilize solüsyon stoğu çekebilir. 10 Kutu Dish Alana 2 Kutu Liyofilize Solüsyon %50 İndirimli resmi bundle promosyonu ile sarf nakit akışı kısa vadede doğrudan +$18,500 USD artırılmalıdır.",
             'user_comment': "Laboratuvarların dish başına solüsyon tüketim rasyosu incelendi. Yeni 1 yıl raf ömürlü liyofilize toz formülü duyurulduktan sonra bozulma korkusu bitmiştir; 1:1 sipariş rasyosu için bundle avantajı devreye alınmıştır.",
@@ -15705,7 +15687,7 @@ def get_country_geopolitical_intelligence(c_code, c_df=None):
                     'ministry': '🇹🇷 T.C. Ticaret Bakanlığı (Gümrükler & İhracat Gn. Md.)',
                     'subject': 'Habur Sınır Kapısı Öncelikli Medikal Geçiş ve TIREPD Elektronik Bildirim Tebliği',
                     'badge': 'RESMİ TEBLİĞ',
-                    'color': '#00F5FF',
+                    'color': '#7DA8DF',
                     'text': 'Irak\'a yönelik medikal cihaz ve soğuk zincir IVF sarf ihracatlarında Habur / İbrahim Halil gümrük kapısında öncelikli yeşil hat tahsis edilmiştir. TIREPD elektronik ön beyanı zorunlu olup, T.C. Ticaret Bakanlığı Hava Kargo Navlun Destek Programı (%50 iade) Erbil ve Bağdat uçuşlarında geçerlidir.'
                 },
                 {
@@ -15719,7 +15701,7 @@ def get_country_geopolitical_intelligence(c_code, c_df=None):
                     'ministry': '🇮🇶 Irak Sağlık Bakanlığı (MOH) & KIMADIA',
                     'subject': 'KIMADIA-TECH-SPEC Tüp Bebek Laboratuvar Cihaz ve Sarf İthalat Genelgesi',
                     'badge': 'IRAK SAĞLIK & KIMADIA',
-                    'color': '#38BDF8',
+                    'color': '#7DA8DF',
                     'text': 'Irak genelindeki lisanslı 45 tüp bebek merkezinin kesintisiz çalışması amacıyla, CE sertifikalı elektriksel oosit aktivasyonu ve embriyoloji sarf malzemelerine gümrük kontrollerinde hızlı test ve acil yeşil hat ithalat izni uygulanmaktadır.'
                 },
                 {
@@ -15746,7 +15728,7 @@ def get_country_geopolitical_intelligence(c_code, c_df=None):
             'gdp_pc': gdp_pc,
             'status': 'Onaylandı & Yürürlükte',
             'alert_level': 'DEFCON 4 / Normal Güzergâh (Stabil Sınır)',
-            'alert_badge_color': '#00F5FF',
+            'alert_badge_color': '#7DA8DF',
             'payment_risk_title': '$0.00 USD (Tam Finansal İstikrar) — Doğrudan Amman SWIFT',
             'payment_guarantor': 'Central Bank of Jordan & Arab Bank (Amman) Doğrudan Kurumsal Hesap',
             'payment_assurance_pct': '%100 Doğrudan Tahsilat',
@@ -15770,10 +15752,10 @@ def get_country_geopolitical_intelligence(c_code, c_df=None):
                 {'source': 'Google News / Bloomberg Levant', 'title': 'Central Bank of Jordan Döviz Rezervlerinde Güçlü Duruşunu Koruyor', 'date': 'Kasım 2026', 'tag': 'Finans', 'risk_impact': 'Yüksek Güvenilirlik — 0 Kur Riski', 'summary': 'JOD/USD sabit çıpası sayesinde dış ticaret transferlerinde döviz riski veya transfer sınırlaması bulunmuyor.'}
             ],
             'ministry_statements': [
-                {'ministry': '🇯🇴 Ürdün Gıda ve İlaç Kurumu (JFDA)', 'subject': 'JFDA-LAW-32/2023 Tıbbi Cihaz Tescil ve Hızlı Geçiş Direktifi', 'badge': 'JFDA DİREKTİFİ', 'color': '#00F5FF', 'text': 'Amman merkezli tüp bebek hastanelerine cihaz ve sarf teslimatında JFDA tescil belgesi ve Free Sales Certificate (FSC) aranır. ZEUS CE belgesi JFDA hızlı kayıt masası tarafından doğrudan akredite edilmiştir.'},
+                {'ministry': '🇯🇴 Ürdün Gıda ve İlaç Kurumu (JFDA)', 'subject': 'JFDA-LAW-32/2023 Tıbbi Cihaz Tescil ve Hızlı Geçiş Direktifi', 'badge': 'JFDA DİREKTİFİ', 'color': '#7DA8DF', 'text': 'Amman merkezli tüp bebek hastanelerine cihaz ve sarf teslimatında JFDA tescil belgesi ve Free Sales Certificate (FSC) aranır. ZEUS CE belgesi JFDA hızlı kayıt masası tarafından doğrudan akredite edilmiştir.'},
                 {'ministry': '🇯🇴 Ürdün Sanayi, Ticaret ve Tedarik Bakanlığı (MIT)', 'subject': 'Transit Ticaret ve Amman Serbest Bölge Güvenlik Protokolü', 'badge': 'ÜRDÜN MIT', 'color': '#10B981', 'text': 'Amman Queen Alia Havalimanı Serbest Bölgesi ve Akabe koridorlarında transit yük taşıyan tıbbi filolara 24 saat kesintisiz gümrük ve emniyet desteği sağlanmaktadır.'},
                 {'ministry': '🇹🇷 T.C. Ticaret Bakanlığı & Amman Ticaret Müşavirliği', 'subject': 'Türkiye-Ürdün Serbest Ticaret ve Lojistik Ortaklığı', 'badge': 'T.C. TİCARET', 'color': '#FF9800', 'text': 'Ürdün varışlı medikal ihracatlarda %50 navlun teşviki ve doğrudan hava kargo kolaylıkları yürürlüktedir. Amman merkezli ticari partnerlerin uluslararası SWIFT operasyonlarında aksama yaşanmamaktadır.'},
-                {'ministry': '🇯🇴 Ürdün Sağlık Bakanlığı', 'subject': 'Ulusal Üreme Sağlığı ve IVF Sarf Standartları Tebliği', 'badge': 'SAĞLIK BAKANLIĞI', 'color': '#38BDF8', 'text': 'Lisanslı 22 tüp bebek merkezinin sarf kalitesini güvenceye almak adına CE Class IIa ürünlere öncelik tanınmaktadır.'}
+                {'ministry': '🇯🇴 Ürdün Sağlık Bakanlığı', 'subject': 'Ulusal Üreme Sağlığı ve IVF Sarf Standartları Tebliği', 'badge': 'SAĞLIK BAKANLIĞI', 'color': '#7DA8DF', 'text': 'Lisanslı 22 tüp bebek merkezinin sarf kalitesini güvenceye almak adına CE Class IIa ürünlere öncelik tanınmaktadır.'}
             ],
             'action_mandate': 'Amman Serbest Bölgesi Merkez Depo ve Royal Jordanian / Turkish Cargo tarifeli seferleri aktivasyonu',
             'freight_contingency_cost': '+$4,200 / Uçuş (THY/RJ Direkt Kargo)'
@@ -15791,7 +15773,7 @@ def get_country_geopolitical_intelligence(c_code, c_df=None):
             'gdp_pc': gdp_pc,
             'status': 'Onaylandı & Yürürlükte',
             'alert_level': 'DEFCON 4 / Normal Ticari Koridor (Hürmüz Boğazı İzlemede)',
-            'alert_badge_color': '#00F5FF',
+            'alert_badge_color': '#7DA8DF',
             'payment_risk_title': '$0.00 USD (A+ Likidite) — Dubai & Abu Dabi Serbest Döviz Rejimi',
             'payment_guarantor': 'Emirates NBD & Dubai Islamic Bank SWIFT Transferi',
             'payment_assurance_pct': '%100 Kurumsal Teminat',
@@ -15815,8 +15797,8 @@ def get_country_geopolitical_intelligence(c_code, c_df=None):
             ],
             'ministry_statements': [
                 {'ministry': '🇦🇪 BAE Sağlık ve Önleme Bakanlığı (MOHAP)', 'subject': 'Tıbbi İkmal Güvenliği ve Uluslararası Havalimanı Acil İthalat Prosedürü', 'badge': 'BAE MOHAP', 'color': '#F0BC57', 'text': 'Dubai (DXB/DWC) ve Abu Dabi (AUH) kargo terminallerinde soğuk zincir sarflar için 6 saatlik ekspres onay prosedürü uygulanmaktadır.'},
-                {'ministry': '🇦🇪 Dubai Sağlık Otoritesi (DHA)', 'subject': 'Klinik IVF Laboratuvarları Kalite Standartları Genelgesi', 'badge': 'DHA DUBAI', 'color': '#00E676', 'text': 'Lisanslı merkezlerde oosit aktivasyonu sağlayan cihazların uluslararası klinik validasyonu zorunlu tutulmuştur.'},
-                {'ministry': '🇹🇷 T.C. Ticaret Bakanlığı', 'subject': 'BAE Pazarı Hedef Ülke İhracat ve Tanıtım Desteği', 'badge': 'T.C. TİCARET', 'color': '#00F5FF', 'text': 'Dubai merkezli tıbbi cihaz fuarları ve B2B distribütör heyetleri %70 devlet desteği kapsamındadır.'},
+                {'ministry': '🇦🇪 Dubai Sağlık Otoritesi (DHA)', 'subject': 'Klinik IVF Laboratuvarları Kalite Standartları Genelgesi', 'badge': 'DHA DUBAI', 'color': '#10B981', 'text': 'Lisanslı merkezlerde oosit aktivasyonu sağlayan cihazların uluslararası klinik validasyonu zorunlu tutulmuştur.'},
+                {'ministry': '🇹🇷 T.C. Ticaret Bakanlığı', 'subject': 'BAE Pazarı Hedef Ülke İhracat ve Tanıtım Desteği', 'badge': 'T.C. TİCARET', 'color': '#7DA8DF', 'text': 'Dubai merkezli tıbbi cihaz fuarları ve B2B distribütör heyetleri %70 devlet desteği kapsamındadır.'},
                 {'ministry': '🇹🇷 T.C. Dubai Ticaret Ataşeliği', 'subject': 'BAE Medikal Distribütörlük Pazar İstihbaratı', 'badge': 'TİCARET ATAŞELİĞİ', 'color': '#FF9800', 'text': 'Sellco sözleşmesiz müşteri statüsünde olup Leader Healthcare ve Al Zahrawi ile distribütörlük şartnamesi hazırlanmıştır.'}
             ],
             'action_mandate': 'Dubai DWC Serbest Bölge konsinye sarf deposu ve THY Kargo direkt seferleri',
@@ -15835,7 +15817,7 @@ def get_country_geopolitical_intelligence(c_code, c_df=None):
             'gdp_pc': gdp_pc,
             'status': 'Onaylandı & Yürürlükte',
             'alert_level': 'DEFCON 5 / Sıfır Sınır Riski & Üretim Üssü',
-            'alert_badge_color': '#00E676',
+            'alert_badge_color': '#10B981',
             'payment_risk_title': 'Finansal Tahsilat Riski Sıfır | Yerel Bankacılık & Leasing Garantisi',
             'payment_guarantor': 'Garanti BBVA, İş Bankası, Vakıfbank & Garanti Finansal Kiralama',
             'payment_assurance_pct': '%100 Yerli Pazar Güvencesi',
@@ -15858,10 +15840,10 @@ def get_country_geopolitical_intelligence(c_code, c_df=None):
                 {'source': 'Google News / Medikal Dergi', 'title': 'Türkiye Tüp Bebek Merkezlerinde Elektriksel Oosit Aktivasyonu (AOA) Başarı Oranları Yükseliyor', 'date': 'Kasım 2026', 'tag': 'Klinik Sonuçlar', 'risk_impact': 'Artan Sarf Çekişi', 'summary': 'Tavmergen ve Eurofertil verilerine göre elektro dish ve mikroenjeksiyon protokolü fertilizasyonu %18 artırdı.'}
             ],
             'ministry_statements': [
-                {'ministry': '🇹🇷 T.C. Sağlık Bakanlığı (Sağlık Hizmetleri Gn. Md.)', 'subject': 'Üremeye Yardımcı Tedavi Merkezleri Denetim Tebliği', 'badge': 'SAĞLIK BAKANLIĞI', 'color': '#00E676', 'text': 'Lisanslı tüp bebek merkezlerinin cihaz kalibrasyonları ve sarf lot analizleri ÜTS üzerinden kesintisiz izlenmektedir.'},
-                {'ministry': '🇹🇷 T.C. Sanayi ve Teknoloji Bakanlığı', 'subject': 'Teknokent ve Biyomedikal Ar-Ge Teşvikleri', 'badge': 'SANAYİ BAKANLIĞI', 'color': '#00F5FF', 'text': 'ZEUS Pulse Stimulator ve Electro Fusion cihazlarının yerli üretim tescili ve Ar-Ge vergi muafiyetleri onaylanmıştır.'},
+                {'ministry': '🇹🇷 T.C. Sağlık Bakanlığı (Sağlık Hizmetleri Gn. Md.)', 'subject': 'Üremeye Yardımcı Tedavi Merkezleri Denetim Tebliği', 'badge': 'SAĞLIK BAKANLIĞI', 'color': '#10B981', 'text': 'Lisanslı tüp bebek merkezlerinin cihaz kalibrasyonları ve sarf lot analizleri ÜTS üzerinden kesintisiz izlenmektedir.'},
+                {'ministry': '🇹🇷 T.C. Sanayi ve Teknoloji Bakanlığı', 'subject': 'Teknokent ve Biyomedikal Ar-Ge Teşvikleri', 'badge': 'SANAYİ BAKANLIĞI', 'color': '#7DA8DF', 'text': 'ZEUS Pulse Stimulator ve Electro Fusion cihazlarının yerli üretim tescili ve Ar-Ge vergi muafiyetleri onaylanmıştır.'},
                 {'ministry': '🇹🇷 T.C. Ticaret Bakanlığı', 'subject': 'Sağlık Turizmi ve Tıbbi Cihaz İhracatı Teşvik Paketi', 'badge': 'T.C. TİCARET', 'color': '#FF9800', 'text': 'Yabancı hasta ağırlayan Türk IVF kliniklerine sarf desteği ve yurt dışı açılımlarda %60 navlun teşviki yürürlüktedir.'},
-                {'ministry': '🇹🇷 Türkiye İlaç ve Tıbbi Cihaz Kurumu (TİTCK)', 'subject': 'Ürün Takip Sistemi (ÜTS) Tekil Bildirim Talimatı', 'badge': 'TİTCK', 'color': '#38BDF8', 'text': 'ZEUS Electro Dish ve Liquid Solution serilerinin tekil karekod takibiyle klinik bazlı tüketim güvenceye alınmıştır.'}
+                {'ministry': '🇹🇷 Türkiye İlaç ve Tıbbi Cihaz Kurumu (TİTCK)', 'subject': 'Ürün Takip Sistemi (ÜTS) Tekil Bildirim Talimatı', 'badge': 'TİTCK', 'color': '#7DA8DF', 'text': 'ZEUS Electro Dish ve Liquid Solution serilerinin tekil karekod takibiyle klinik bazlı tüketim güvenceye alınmıştır.'}
             ],
             'action_mandate': 'Ankara üretim tesisinde 6 aylık kritik parça ve reaktif güvenlik stoğu bulundurulması',
             'freight_contingency_cost': '$0 / Yerel Dağıtım (Kargo İçi)'
@@ -15879,7 +15861,7 @@ def get_country_geopolitical_intelligence(c_code, c_df=None):
             'gdp_pc': gdp_pc,
             'status': 'Onaylandı & Yürürlükte',
             'alert_level': 'DEFCON 5 / Sıfır Savaş Riski & Yüksek İstikrar',
-            'alert_badge_color': '#00E676',
+            'alert_badge_color': '#10B981',
             'payment_risk_title': '$0.00 USD (AAA Kredi Derecelendirmesi) — SEPA EUR Bankacılığı',
             'payment_guarantor': 'Deutsche Bank & Commerzbank SEPA EUR Transferi',
             'payment_assurance_pct': '%100 AB Regülasyon Koruması',
@@ -15901,10 +15883,10 @@ def get_country_geopolitical_intelligence(c_code, c_df=None):
                 {'source': 'Google News / Deutsche Bank Research', 'title': 'Alman Sağlık Sektöründe Finansal Güvenilirlik En Üst Seviyede', 'date': 'Kasım 2026', 'tag': 'Finans', 'risk_impact': 'AAA Kredi Karnesi', 'summary': 'Kliniklerin ve distribütörlerin dış ticaret ödeme disiplini kusursuz olup temerrüt olasılığı sıfıra yakındır.'}
             ],
             'ministry_statements': [
-                {'ministry': '🇩🇪 Almanya Federal Sağlık Bakanlığı (BMG)', 'subject': 'CE Uyum ve Tıbbi Laboratuvar Güvenliği Tebliği', 'badge': 'ALMANYA BMG', 'color': '#00E676', 'text': 'Almanya genelinde ART kliniklerinde kullanılan tüm sarfların AB CE direktif ve tıbbi cihaz standartlarına tam uyumu şarttır.'},
-                {'ministry': '🇩🇪 Almanya Federal İlaç ve Tıbbi Cihaz Enstitüsü (BfArM)', 'subject': 'ZEUS Pulse Stimulator (ZPS 26) Cihazları Ruhsat Uygunluğu', 'badge': 'BfArM', 'color': '#00F5FF', 'text': 'ZEUS Pulse Stimulator ve electro dish serisi Avrupa CE normlarında güvenli cihaz listesinde onaylanmıştır.'},
+                {'ministry': '🇩🇪 Almanya Federal Sağlık Bakanlığı (BMG)', 'subject': 'CE Uyum ve Tıbbi Laboratuvar Güvenliği Tebliği', 'badge': 'ALMANYA BMG', 'color': '#10B981', 'text': 'Almanya genelinde ART kliniklerinde kullanılan tüm sarfların AB CE direktif ve tıbbi cihaz standartlarına tam uyumu şarttır.'},
+                {'ministry': '🇩🇪 Almanya Federal İlaç ve Tıbbi Cihaz Enstitüsü (BfArM)', 'subject': 'ZEUS Pulse Stimulator (ZPS 26) Cihazları Ruhsat Uygunluğu', 'badge': 'BfArM', 'color': '#7DA8DF', 'text': 'ZEUS Pulse Stimulator ve electro dish serisi Avrupa CE normlarında güvenli cihaz listesinde onaylanmıştır.'},
                 {'ministry': '🇹🇷 T.C. Berlin Ticaret Müşavirliği', 'subject': 'DACH Bölgesi Distribütörlük Raporu (Gynemed)', 'badge': 'TİCARET MÜŞAVİRLİĞİ', 'color': '#FF9800', 'text': 'Gynemed medikal distribütörlük ağının finansal gücü teyit edilmiş olup yıllık asgari $120K kota imzalanabilir.'},
-                {'ministry': '🇹🇷 T.C. Ticaret Bakanlığı', 'subject': 'Avrupa Birliği İhracat Teşvik ve Navlun Desteği', 'badge': 'T.C. TİCARET', 'color': '#38BDF8', 'text': 'Almanya ve AB ülkelerine yapılan medikal biyoteknoloji ihracatında navlun ve yurt dışı depo kira desteği mevcuttur.'}
+                {'ministry': '🇹🇷 T.C. Ticaret Bakanlığı', 'subject': 'Avrupa Birliği İhracat Teşvik ve Navlun Desteği', 'badge': 'T.C. TİCARET', 'color': '#7DA8DF', 'text': 'Almanya ve AB ülkelerine yapılan medikal biyoteknoloji ihracatında navlun ve yurt dışı depo kira desteği mevcuttur.'}
             ],
             'action_mandate': 'Frankfurt havalimanı gümrüklü antreposu ve karayolu ekspres van taşımacılığı',
             'freight_contingency_cost': '+$3,800 / Sevkiyat'
@@ -15913,7 +15895,7 @@ def get_country_geopolitical_intelligence(c_code, c_df=None):
     # 6. DİĞER TÜM ÜLKELER İÇİN DİNAMİK VE DOĞRU JENERATÖR
     else:
         alert_lvl = 'DEFCON 3 / Bölgesel Jeopolitik Teyakkuz' if risk == 'High' or region == 'MENA' else ('DEFCON 5 / Kararlı & Güvenli Ticaret' if risk == 'Low' else 'DEFCON 4 / Normal Güzergâh (Gümrük Takipte)')
-        alert_badge_col = '#FF5252' if 'DEFCON 2' in alert_lvl else ('#FF9800' if 'DEFCON 3' in alert_lvl else ('#00E676' if 'DEFCON 5' in alert_lvl else '#00F5FF'))
+        alert_badge_col = '#FF5252' if 'DEFCON 2' in alert_lvl else ('#FF9800' if 'DEFCON 3' in alert_lvl else ('#10B981' if 'DEFCON 5' in alert_lvl else '#7DA8DF'))
         
         pay_risk_title = (
             f"$0.00 USD (SEPA EUR Güvencesi) — AB Bankacılık Standartları" if region == 'Europe'
@@ -15979,7 +15961,7 @@ def get_country_geopolitical_intelligence(c_code, c_df=None):
                 'ministry': '🇹🇷 T.C. Ticaret Bakanlığı (İhracat Genel Müdürlüğü)',
                 'subject': f'{name} Pazarına Tıbbi Cihaz İhracatı ve Hava Kargo Navlun Teşvik Tebliği',
                 'badge': 'T.C. TİCARET',
-                'color': '#00F5FF',
+                'color': '#7DA8DF',
                 'text': f"{name} pazarına yapılan medikal biyoteknoloji ihracatlarında T.C. Ticaret Bakanlığı %50 Hava Kargo Navlun Desteği ve hedef pazar tanıtım teşvikleri uygulanmaktadır."
             },
             {
@@ -16000,7 +15982,7 @@ def get_country_geopolitical_intelligence(c_code, c_df=None):
                 'ministry': f'{flag} {name} Gümrük ve Dış Ticaret İdaresi',
                 'subject': f'Uluslararası Havalimanı Tıbbi Soğuk Zincir Ekspres Gümrükleme Tebliği',
                 'badge': 'GÜMRÜK & LOJİSTİK',
-                'color': '#38BDF8',
+                'color': '#7DA8DF',
                 'text': f"Isıya duyarlı in-vitro fertilizasyon medyumları ve biyoteknolojik kitler için havalimanı kargo terminallerinde öncelikli gümrük teftişi ve serbest bölge transit izni tanınmaktadır."
             }
         ]
@@ -16050,7 +16032,7 @@ GLOBAL_COUNTRY_TENDER_PORTALS = {
             "desc": "Mısır Merkezi Kamu & Üniversite Hastaneleri Tıbbi Tedarik ve İhale Otoritesi",
             "search_query": "site:upa.gov.eg medical device OR IVF OR ICSI OR lab equipment",
             "status": "Resmi Kamu İhale Otoritesi",
-            "status_color": "#00E676"
+            "status_color": "#10B981"
         },
         {
             "name": "Bawaba Al-Monaqasat (Mısır Ulusal e-İhale & Tedarik Portalı)",
@@ -16059,7 +16041,7 @@ GLOBAL_COUNTRY_TENDER_PORTALS = {
             "desc": "Mısır Maliye Bakanlığı Resmi Devlet Kamu İhaleleri Sistemi",
             "search_query": "site:etenders.gov.eg medical equipment OR IVF",
             "status": "Devlet e-İhale Sistemi",
-            "status_color": "#00F5FF"
+            "status_color": "#7DA8DF"
         },
         {
             "name": "Kahire Üniversitesi (Kasr Al-Ainy) & Ayn Şems Tıp Fakültesi Satın Alma Masası",
@@ -16088,7 +16070,7 @@ GLOBAL_COUNTRY_TENDER_PORTALS = {
             "desc": "Suudi Arabistan Ulusal Merkezi Tıbbi Cihaz ve Sarf Tedarik Şirketi",
             "search_query": "site:nupco.com medical equipment tenders OR embryology",
             "status": "Merkezi Kamu İhale Otoritesi",
-            "status_color": "#00E676"
+            "status_color": "#10B981"
         },
         {
             "name": "Etimad Platformu (Suudi Arabistan Hükümeti Ulusal İhale Sistemi)",
@@ -16097,7 +16079,7 @@ GLOBAL_COUNTRY_TENDER_PORTALS = {
             "desc": "Maliye Bakanlığı Resmi Kamu İhaleleri, Şartnameler ve Teklif Verme Portalı",
             "search_query": "site:monafasat.etimad.sa medical OR hospital",
             "status": "Devlet e-İhale Sistemi",
-            "status_color": "#00F5FF"
+            "status_color": "#7DA8DF"
         },
         {
             "name": "KFSHRC Tenders & Vendors (King Faisal Specialist Hospital & Research Centre)",
@@ -16126,7 +16108,7 @@ GLOBAL_COUNTRY_TENDER_PORTALS = {
             "desc": "T.C. Kamu İhale Kurumu Resmi e-İhale ve Doğrudan Temin Portalı",
             "search_query": "site:ekap.kik.gov.tr tüp bebek OR piezo OR mikroenjeksiyon OR aktivasyon",
             "status": "Resmi Kamu İhale Platformu",
-            "status_color": "#00E676"
+            "status_color": "#10B981"
         },
         {
             "name": "DMO Sağlık Market (Devlet Malzeme Ofisi Tıbbi Cihaz Kataloğu)",
@@ -16135,7 +16117,7 @@ GLOBAL_COUNTRY_TENDER_PORTALS = {
             "desc": "Sağlık Bakanlığı Kamu Hastaneleri Doğrudan Çerçeve Tedarik Kataloğu",
             "search_query": "site:dmo.gov.tr Sağlık Market tıbbi cihaz",
             "status": "Doğrudan Çerçeve Alım",
-            "status_color": "#00F5FF"
+            "status_color": "#7DA8DF"
         },
         {
             "name": "TİTCK ÜTS (Ürün Takip Sistemi - Tıbbi Cihaz Sorgulama)",
@@ -16155,7 +16137,7 @@ GLOBAL_COUNTRY_TENDER_PORTALS = {
             "desc": "Irak Sağlık Bakanlığı Ulusal İlaç ve Tıbbi Ekipman İhale Şirketi",
             "search_query": "site:kimadia.iq tenders medical appliances",
             "status": "Irak Resmi İhale Otoritesi",
-            "status_color": "#00E676"
+            "status_color": "#10B981"
         },
         {
             "name": "Irak Sağlık Bakanlığı İhale Portalı (MOH Iraq)",
@@ -16164,7 +16146,7 @@ GLOBAL_COUNTRY_TENDER_PORTALS = {
             "desc": "Federal Kamu Hastaneleri ve İhtisas Merkezleri Tedarik İlanları",
             "search_query": "site:moh.gov.iq tenders medical",
             "status": "Sağlık Bakanlığı İhaleleri",
-            "status_color": "#00F5FF"
+            "status_color": "#7DA8DF"
         },
         {
             "name": "KRG Ministry of Health e-Procurement (Erbil & Süleymaniye)",
@@ -16184,7 +16166,7 @@ GLOBAL_COUNTRY_TENDER_PORTALS = {
             "desc": "DHA (Dubai Health Authority) ve Kamu Hastaneleri Ortak İhale Portalı",
             "search_query": "site:e-supply.dubai.gov.eg medical tenders",
             "status": "Dubai Hükümeti İhale Sistemi",
-            "status_color": "#00E676"
+            "status_color": "#10B981"
         },
         {
             "name": "EHS Emirates Health Services Tenders (Federal Sağlık İhaleleri)",
@@ -16193,7 +16175,7 @@ GLOBAL_COUNTRY_TENDER_PORTALS = {
             "desc": "Sharjah, Ajman, RAK ve Kuzey Emirlikleri Federal Hastane Alımları",
             "search_query": "site:ehs.gov.ae tenders medical devices",
             "status": "BAE Federal İhale Portalı",
-            "status_color": "#00F5FF"
+            "status_color": "#7DA8DF"
         },
         {
             "name": "PureHealth & SEHA Procurement (Abu Dhabi Kamu Sağlık Ağı)",
@@ -16213,7 +16195,7 @@ GLOBAL_COUNTRY_TENDER_PORTALS = {
             "desc": "Katar Ulusal Sağlık Sistemi (HMC) Merkezi Tıbbi Ekipman İhaleleri",
             "search_query": "site:hamad.qa suppliers tenders medical equipment",
             "status": "Katar Ulusal Sağlık Ağı",
-            "status_color": "#00E676"
+            "status_color": "#10B981"
         },
         {
             "name": "Sidra Medicine Tenders & Vendor Registration",
@@ -16222,7 +16204,7 @@ GLOBAL_COUNTRY_TENDER_PORTALS = {
             "desc": "Katar Kadın ve Çocuk Sağlığı İhtisas Hastanesi Doğrudan İhale Masası",
             "search_query": "site:sidra.org tenders embryology OR lab equipment",
             "status": "Kadın Doğum İhtisas Hastanesi",
-            "status_color": "#00F5FF"
+            "status_color": "#7DA8DF"
         }
     ],
     "Jordan": [
@@ -16233,7 +16215,7 @@ GLOBAL_COUNTRY_TENDER_PORTALS = {
             "desc": "Ürdün Kamu Hastaneleri ve Üniversiteleri Ortak Medikal İhale Sistemi",
             "search_query": "site:jpd.gov.jo tenders medical equipment",
             "status": "Merkezi Kamu İhale Otoritesi",
-            "status_color": "#00E676"
+            "status_color": "#10B981"
         },
         {
             "name": "Royal Medical Services (RMS / Ürdün Askeri Tıp Hizmetleri)",
@@ -16242,7 +16224,7 @@ GLOBAL_COUNTRY_TENDER_PORTALS = {
             "desc": "Kral Hüseyin Tıp Merkezi & Askeri Hastaneler İhale Masası",
             "search_query": "Jordan Royal Medical Services tenders",
             "status": "Askeri Tıp Alımları",
-            "status_color": "#00F5FF"
+            "status_color": "#7DA8DF"
         }
     ],
     "Algeria": [
@@ -16253,7 +16235,7 @@ GLOBAL_COUNTRY_TENDER_PORTALS = {
             "desc": "Cezayir Ulusal Kamu Hastaneleri İlaç ve Tıbbi Sarf İhale Otoritesi",
             "search_query": "site:pch.dz appel d'offres medical",
             "status": "Ulusal İhale Otoritesi",
-            "status_color": "#00E676"
+            "status_color": "#10B981"
         },
         {
             "name": "Portail des Marchés Publics Algérie (Ulusal Kamu İhaleleri)",
@@ -16262,7 +16244,7 @@ GLOBAL_COUNTRY_TENDER_PORTALS = {
             "desc": "Cezayir Resmi Kamu İhaleleri ve Bakanlık Tedarik Platformu",
             "search_query": "site:marchespublics.gov.dz matériel médical",
             "status": "Resmi Kamu İhale Portalı",
-            "status_color": "#00F5FF"
+            "status_color": "#7DA8DF"
         }
     ],
     "Germany": [
@@ -16273,7 +16255,7 @@ GLOBAL_COUNTRY_TENDER_PORTALS = {
             "desc": "Avrupa Birliği (Almanya, İspanya, İtalya, Fransa) Resmi Kamu İhaleleri Gazetesi",
             "search_query": "site:ted.europa.eu IVF OR ICSI OR embryology OR \"oocyte activation\"",
             "status": "Avrupa Birliği Resmi İhale Portalı",
-            "status_color": "#00E676"
+            "status_color": "#10B981"
         },
         {
             "name": "Vergabemarktplatz Deutschland (Almanya Federal Kamu İhaleleri)",
@@ -16282,7 +16264,7 @@ GLOBAL_COUNTRY_TENDER_PORTALS = {
             "desc": "Alman Üniversite Hastaneleri (Charité, Heidelberg vb.) Medikal Tedarik Masası",
             "search_query": "site:evergabe.de Medizintechnik Laborausstattung",
             "status": "Almanya Federal İhale Portalı",
-            "status_color": "#00F5FF"
+            "status_color": "#7DA8DF"
         }
     ],
     "Spain": [
@@ -16293,7 +16275,7 @@ GLOBAL_COUNTRY_TENDER_PORTALS = {
             "desc": "İspanya Krallığı ve Özerk Bölgeleri (SERMAS, SAS, CatSalut) Resmi İhale Portalı",
             "search_query": "site:contrataciondelestado.es material sanitario fecundacion in vitro",
             "status": "İspanya Ulusal İhale Portalı",
-            "status_color": "#00E676"
+            "status_color": "#10B981"
         },
         {
             "name": "TED (Tenders Electronic Daily - España)",
@@ -16302,7 +16284,7 @@ GLOBAL_COUNTRY_TENDER_PORTALS = {
             "desc": "İspanya Kamu Hastaneleri AB Geneli İhale İlanları",
             "search_query": "site:ted.europa.eu España reproducción asistida OR embriología",
             "status": "AB İhale Gazetesi",
-            "status_color": "#00F5FF"
+            "status_color": "#7DA8DF"
         }
     ],
     "Italy": [
@@ -16313,7 +16295,7 @@ GLOBAL_COUNTRY_TENDER_PORTALS = {
             "desc": "İtalya Sağlık Bakanlığı ve Bölgesel Sağlık Ajansları (ASL) İhale Sistemi",
             "search_query": "site:acquistinretepa.it dispositivi medici PMA",
             "status": "İtalya Merkezi İhale Sistemi",
-            "status_color": "#00E676"
+            "status_color": "#10B981"
         },
         {
             "name": "TED (Tenders Electronic Daily - Italia)",
@@ -16322,7 +16304,7 @@ GLOBAL_COUNTRY_TENDER_PORTALS = {
             "desc": "İtalyan Üniversite ve Bölge Hastaneleri Kamu İhaleleri",
             "search_query": "site:ted.europa.eu Italia procreazione medicalmente assistita",
             "status": "AB İhale Gazetesi",
-            "status_color": "#00F5FF"
+            "status_color": "#7DA8DF"
         }
     ],
     "United Kingdom": [
@@ -16333,7 +16315,7 @@ GLOBAL_COUNTRY_TENDER_PORTALS = {
             "desc": "İngiltere Kamu Sektörü ve NHS İhale Arama Portalı",
             "search_query": "site:contractsfinder.service.gov.uk NHS IVF lab equipment",
             "status": "UK Hükümeti İhale Portalı",
-            "status_color": "#00E676"
+            "status_color": "#10B981"
         },
         {
             "name": "Find a Tender (FTS - Yüksek Değerli UK İhaleleri)",
@@ -16342,7 +16324,7 @@ GLOBAL_COUNTRY_TENDER_PORTALS = {
             "desc": "NHS Trust ve Kamu Hastaneleri Büyük Çerçeve Tedarik Anlaşmaları",
             "search_query": "site:find-tender.service.gov.uk medical equipment IVF",
             "status": "Yüksek Bütçeli NHS İhaleleri",
-            "status_color": "#00F5FF"
+            "status_color": "#7DA8DF"
         }
     ]
 }
@@ -16380,7 +16362,7 @@ def render_country_tender_portals_html(country_name, raw_portals=None):
                 "desc": f"{clean_c} Sağlık Bakanlığı ve Üniversite Hastaneleri Merkezi Tedarik Masası",
                 "search_query": f"{clean_c} medical equipment tenders IVF embryology",
                 "status": "Resmi Kamu Portalı",
-                "status_color": "#00E676"
+                "status_color": "#10B981"
             },
             {
                 "name": "TED (Tenders Electronic Daily - Uluslararası İhaleler)",
@@ -16389,7 +16371,7 @@ def render_country_tender_portals_html(country_name, raw_portals=None):
                 "desc": "Uluslararası Tıbbi Cihaz ve Biyomedikal İhale İlanları",
                 "search_query": f"site:ted.europa.eu {clean_c} medical OR IVF",
                 "status": "Uluslararası Açık İhale",
-                "status_color": "#00F5FF"
+                "status_color": "#7DA8DF"
             },
             {
                 "name": "UNGM (United Nations Global Marketplace)",
@@ -16410,7 +16392,7 @@ def render_country_tender_portals_html(country_name, raw_portals=None):
             p_domain = "portal.gov"
             p_desc = f"{target_c} Resmi Satın Alma & İhale Platformu"
             p_status = "Resmi Otorite"
-            p_color = "#00F5FF"
+            p_color = "#7DA8DF"
             sq = f"{target_c} {p} tenders"
         else:
             p_name = p.get("name", "İhale Portalı")
@@ -16418,19 +16400,19 @@ def render_country_tender_portals_html(country_name, raw_portals=None):
             p_domain = p.get("domain", "gov")
             p_desc = p.get("desc", "Sağlık İhaleleri Portalı")
             p_status = p.get("status", "Resmi Otorite")
-            p_color = p.get("status_color", "#00F5FF")
+            p_color = p.get("status_color", "#7DA8DF")
             sq = p.get("search_query", f"{p_name} tenders")
             
         sq_enc = urllib.parse.quote(sq)
         search_link = f"https://www.google.com/search?q={sq_enc}"
 
         card = f"""
-        <div style="background:rgba(15,23,42,0.85); border:1px solid rgba(0,245,255,0.2); border-left:3px solid {p_color}; border-radius:8px; padding:10px 12px; margin-bottom:10px; box-shadow:0 2px 8px rgba(0,0,0,0.25);">
+        <div style="background:rgba(15,23,42,0.85); border:1px solid rgba(125,168,223,0.2); border-left:3px solid {p_color}; border-radius:8px; padding:10px 12px; margin-bottom:10px; box-shadow:0 2px 8px rgba(0,0,0,0.25);">
             <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:4px; flex-wrap:wrap; gap:6px;">
                 <a href="{p_url}" target="_blank" style="color:#FFFFFF; font-weight:700; font-size:12.5px; text-decoration:none; display:inline-flex; align-items:center; gap:5px;" title="Resmi Portala Canlı Git">
                     <span>🌐</span> <span style="border-bottom:1px dotted rgba(255,255,255,0.4);">{p_name}</span>
                 </a>
-                <span style="background:rgba(0,245,255,0.1); color:{p_color}; border:1px solid rgba(0,245,255,0.25); padding:2px 7px; border-radius:4px; font-size:10px; font-weight:700;">{p_status}</span>
+                <span style="background:rgba(125,168,223,0.1); color:{p_color}; border:1px solid rgba(125,168,223,0.25); padding:2px 7px; border-radius:4px; font-size:10px; font-weight:700;">{p_status}</span>
             </div>
             <div style="color:#94A3B8; font-size:11px; margin-bottom:8px; line-height:1.4;">{p_desc}</div>
             <div style="display:flex; gap:6px; align-items:center; flex-wrap:wrap;">
@@ -16474,7 +16456,7 @@ GLOBAL_COUNTRY_TENDER_SCHEDULES = {
                 "delivery_window": "Temmuz 2026 (LC Açılışından İtibaren 45 Gün)",
                 "days_left": "22 Gün Kaldı",
                 "status_badge": "🟢 Teklif Hazırlığı Açık",
-                "status_color": "#00E676",
+                "status_color": "#10B981",
                 "target_scope": "5 Adet ZEUS Pulse Stimulator (ZPS 26) (ZPS 26) + 750 Kutu Z-Dish Array",
                 "portal_url": "https://www.upa.gov.eg",
                 "portal_name": "UPA e-Procurement"
@@ -16493,7 +16475,7 @@ GLOBAL_COUNTRY_TENDER_SCHEDULES = {
                 "delivery_window": "Haziran 2026",
                 "days_left": "44 Gün Kaldı",
                 "status_badge": "🟢 Açık Teklif Süreci",
-                "status_color": "#00F5FF",
+                "status_color": "#7DA8DF",
                 "target_scope": "2 Adet ZPS 26 Cihazı + Yerinde Klinik Embriyoloji Eğitimi",
                 "portal_url": "https://etenders.gov.eg",
                 "portal_name": "Bawaba Al-Monaqasat"
@@ -16525,7 +16507,7 @@ GLOBAL_COUNTRY_TENDER_SCHEDULES = {
                 "delivery_window": "Ağustos 2026 (LC Açılışından 45 Gün Sonra)",
                 "days_left": "32 Gün Kaldı",
                 "status_badge": "🟢 Teklif Hazırlığı Açık",
-                "status_color": "#00E676",
+                "status_color": "#10B981",
                 "target_scope": "8 Adet Oosit Aktivasyon Sistemi (ZPS 26) + 1.200 Kutu Z-Dish Array",
                 "portal_url": "https://nupco.com",
                 "portal_name": "NUPCO e-Tender Portal"
@@ -16544,7 +16526,7 @@ GLOBAL_COUNTRY_TENDER_SCHEDULES = {
                 "delivery_window": "Temmuz 2026",
                 "days_left": "56 Gün Kaldı",
                 "status_badge": "🟢 Yeni İlan Edildi",
-                "status_color": "#00F5FF",
+                "status_color": "#7DA8DF",
                 "target_scope": "3 Adet Pulse Stimulator + 500 Kutu Sarf + Klinik Entegrasyon",
                 "portal_url": "https://etenders.gov.sa",
                 "portal_name": "Etimad Platformu"
@@ -16576,7 +16558,7 @@ GLOBAL_COUNTRY_TENDER_SCHEDULES = {
                 "delivery_window": "Temmuz 2026 (60 Gün)",
                 "days_left": "21 Gün Kaldı",
                 "status_badge": "🟢 EKAP Teklif Verme Açık",
-                "status_color": "#00E676",
+                "status_color": "#10B981",
                 "target_scope": "8 Adet Donanım + 1.200 Kutu MEA Onaylı Sarf Seti",
                 "portal_url": "https://ekap.kik.gov.tr",
                 "portal_name": "EKAP e-İhale"
@@ -16627,7 +16609,7 @@ GLOBAL_COUNTRY_TENDER_SCHEDULES = {
                 "delivery_window": "Ağustos 2026 (90 Gün)",
                 "days_left": "39 Gün Kaldı",
                 "status_badge": "🟢 Sirius Pharm ile Teklif Masasında",
-                "status_color": "#00E676",
+                "status_color": "#10B981",
                 "target_scope": "6 Adet Elektriksel AOA (ZPS 26)ı + 800 Kutu Sarf + Bağdat Eğitimi",
                 "portal_url": "https://kimadia.iq",
                 "portal_name": "KIMADIA Resmi Portalı"
@@ -16659,7 +16641,7 @@ GLOBAL_COUNTRY_TENDER_SCHEDULES = {
                 "delivery_window": "Eylül 2026 (120 Gün)",
                 "days_left": "48 Gün Kaldı",
                 "status_badge": "🟢 Açık Uluslararası İhale",
-                "status_color": "#00E676",
+                "status_color": "#10B981",
                 "target_scope": "Système de Stimulation Piézoélectrique + Consommables Z-Dish",
                 "portal_url": "https://www.pch.dz",
                 "portal_name": "PCH Appel d'Offres"
@@ -16691,7 +16673,7 @@ GLOBAL_COUNTRY_TENDER_SCHEDULES = {
                 "delivery_window": "Temmuz 2026 (60 Gün)",
                 "days_left": "42 Gün Kaldı",
                 "status_badge": "🟢 Açık İhale",
-                "status_color": "#00E676",
+                "status_color": "#10B981",
                 "target_scope": "3 Adet Oosit Aktivasyon Sistemi + Sarf Kiti",
                 "portal_url": "https://www.jpd.gov.jo",
                 "portal_name": "JPD e-Tendering"
@@ -16723,7 +16705,7 @@ GLOBAL_COUNTRY_TENDER_SCHEDULES = {
                 "delivery_window": "Haziran 2026 (45 Gün)",
                 "days_left": "29 Gün Kaldı",
                 "status_badge": "🟢 Açık İhale",
-                "status_color": "#00E676",
+                "status_color": "#10B981",
                 "target_scope": "4 Adet ZEUS Pulse Stimulator (ZPS 26)ü (ZPS 26) + Sarf Setleri",
                 "portal_url": "https://www.ehs.gov.ae",
                 "portal_name": "EHS Tedarik Portalı"
@@ -16755,7 +16737,7 @@ GLOBAL_COUNTRY_TENDER_SCHEDULES = {
                 "delivery_window": "Ağustos 2026",
                 "days_left": "50 Gün Kaldı",
                 "status_badge": "🟢 Açık İhale",
-                "status_color": "#00E676",
+                "status_color": "#10B981",
                 "target_scope": "3 Adet ZPS 26 Cihazı + Yıllık Sarf Taahhüdü",
                 "portal_url": "https://www.hmc.org.qa",
                 "portal_name": "HMC Tedarik Portalı"
@@ -16787,7 +16769,7 @@ GLOBAL_COUNTRY_TENDER_SCHEDULES = {
                 "delivery_window": "Temmuz 2026 (60 Gün)",
                 "days_left": "43 Gün Kaldı",
                 "status_badge": "🟢 Açık İhale",
-                "status_color": "#00E676",
+                "status_color": "#10B981",
                 "target_scope": "2 Adet Pulse Stimulator + 400 Kutu Sarf",
                 "portal_url": "https://capt.gov.kw",
                 "portal_name": "CAPT e-Tenders"
@@ -16819,7 +16801,7 @@ GLOBAL_COUNTRY_TENDER_SCHEDULES = {
                 "delivery_window": "Juli 2026 (60 Tage)",
                 "days_left": "38 Gün Kaldı",
                 "status_badge": "🟢 TED AB Açık İhalesi",
-                "status_color": "#00E676",
+                "status_color": "#10B981",
                 "target_scope": "3 Systeme ZEUS ZPS 26 + Sterile Aktivierungs-Dishes (CPV 33100000-0)",
                 "portal_url": "https://ted.europa.eu",
                 "portal_name": "TED (Tenders Electronic Daily)"
@@ -16874,7 +16856,7 @@ def render_country_tender_schedule_and_dates_html(country_name, t_intel=None):
                     "delivery_window": "Ağustos 2026 (60 Gün)",
                     "days_left": "39 Gün Kaldı",
                     "status_badge": "🟢 Açık Teklif Süreci",
-                    "status_color": "#00E676",
+                    "status_color": "#10B981",
                     "target_scope": "ZEUS Pulse Stimulator (ZPS 26) + Sarf Kiti",
                     "portal_url": f"https://www.google.com/search?q={urllib.parse.quote(clean_c + ' health ministry tenders')}",
                     "portal_name": f"{clean_c} Resmi İhale Masası"
@@ -16885,10 +16867,10 @@ def render_country_tender_schedule_and_dates_html(country_name, t_intel=None):
     milestones_html = []
     for m in sched.get("milestones", []):
         is_hl = m.get("highlight", False)
-        bg = "rgba(0,245,255,0.12)" if is_hl else "rgba(255,255,255,0.03)"
-        bd = "1.5px solid #00F5FF" if is_hl else "1px solid rgba(255,255,255,0.08)"
-        c_title = "#00F5FF" if is_hl else "#CBD5E1"
-        badge = '<span style="background:#00F5FF;color:#0F172A;font-size:9.5px;font-weight:800;padding:2px 6px;border-radius:4px;margin-left:4px;">KRİTİK SON GÜN</span>' if is_hl else ''
+        bg = "rgba(125,168,223,0.12)" if is_hl else "rgba(255,255,255,0.03)"
+        bd = "1.5px solid #7DA8DF" if is_hl else "1px solid rgba(255,255,255,0.08)"
+        c_title = "#7DA8DF" if is_hl else "#CBD5E1"
+        badge = '<span style="background:#7DA8DF;color:#121C2B;font-size:9.5px;font-weight:800;padding:2px 6px;border-radius:4px;margin-left:4px;">KRİTİK SON GÜN</span>' if is_hl else ''
         
         m_box = f"""
         <div style="background:{bg};border:{bd};border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;justify-content:space-between;min-height:92px;box-shadow:0 2px 6px rgba(0,0,0,0.25);">
@@ -16917,7 +16899,7 @@ def render_country_tender_schedule_and_dates_html(country_name, t_intel=None):
         t_del = t.get("delivery_window", "-")
         t_days = t.get("days_left", "Devam Ediyor")
         t_badge = t.get("status_badge", "🟢 Açık")
-        t_col = t.get("status_color", "#00E676")
+        t_col = t.get("status_color", "#10B981")
         t_scope = t.get("target_scope", "ZPS 26 Donanım & Sarf")
         t_url = t.get("portal_url", "https://google.com")
         t_pname = t.get("portal_name", "Resmi Portal")
@@ -16925,7 +16907,7 @@ def render_country_tender_schedule_and_dates_html(country_name, t_intel=None):
         search_link = f"https://www.google.com/search?q={sq_enc}"
 
         t_card = f"""
-        <div style="background:rgba(15,23,42,0.92);border:1.5px solid rgba(0,245,255,0.25);border-left:4px solid {t_col};border-radius:12px;padding:16px 18px;margin-bottom:14px;box-shadow:0 4px 14px rgba(0,0,0,0.35);">
+        <div style="background:rgba(15,23,42,0.92);border:1.5px solid rgba(125,168,223,0.25);border-left:4px solid {t_col};border-radius:12px;padding:16px 18px;margin-bottom:14px;box-shadow:0 4px 14px rgba(0,0,0,0.35);">
             <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;margin-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:10px;">
                 <div>
                     <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
@@ -16942,19 +16924,19 @@ def render_country_tender_schedule_and_dates_html(country_name, t_intel=None):
             </div>
 
             <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:12px;margin-bottom:12px;">
-                <div style="background:rgba(0,245,255,0.04);border:1px solid rgba(0,245,255,0.15);border-radius:8px;padding:10px 12px;font-size:11.5px;line-height:1.65;">
-                    <div style="color:#00F5FF;font-weight:800;font-size:12px;margin-bottom:4px;border-bottom:1px solid rgba(0,245,255,0.15);padding-bottom:3px;">📅 İhale Tarihleri & Takvim</div>
+                <div style="background:rgba(125,168,223,0.04);border:1px solid rgba(125,168,223,0.15);border-radius:8px;padding:10px 12px;font-size:11.5px;line-height:1.65;">
+                    <div style="color:#7DA8DF;font-weight:800;font-size:12px;margin-bottom:4px;border-bottom:1px solid rgba(125,168,223,0.15);padding-bottom:3px;">📅 İhale Tarihleri & Takvim</div>
                     • <b>İlan Tarihi:</b> <span style="color:#E2E8F0;">{t_pub}</span><br>
                     • <b>Şartname Soru-Cevap:</b> <span style="color:#E2E8F0;">{t_clar}</span><br>
-                    • <b style="color:#00F5FF;">Son Teklif Verme (Deadline):</b> <span style="color:#FFD700;font-weight:800;background:rgba(255,215,0,0.15);padding:1px 5px;border-radius:4px;">{t_sub}</span><br>
+                    • <b style="color:#7DA8DF;">Son Teklif Verme (Deadline):</b> <span style="color:#FFD700;font-weight:800;background:rgba(255,215,0,0.15);padding:1px 5px;border-radius:4px;">{t_sub}</span><br>
                     • <b>Numune & Teknik Değerlendirme:</b> <span style="color:#E2E8F0;">{t_eval}</span><br>
                     • <b>Karar & Sözleşme:</b> <span style="color:#E2E8F0;">{t_awd}</span><br>
-                    • <b>Teslimat Takvimi:</b> <span style="color:#00E676;font-weight:700;">{t_del}</span>
+                    • <b>Teslimat Takvimi:</b> <span style="color:#10B981;font-weight:700;">{t_del}</span>
                 </div>
 
                 <div style="background:rgba(0,230,118,0.04);border:1px solid rgba(0,230,118,0.15);border-radius:8px;padding:10px 12px;font-size:11.5px;line-height:1.65;">
-                    <div style="color:#00E676;font-weight:800;font-size:12px;margin-bottom:4px;border-bottom:1px solid rgba(0,230,118,0.15);padding-bottom:3px;">💰 Bütçe & Ticari Şartlar</div>
-                    • <b>Tahmini İhale Bütçesi:</b> <span style="color:#00E676;font-weight:800;font-size:13px;">{t_bud}</span><br>
+                    <div style="color:#10B981;font-weight:800;font-size:12px;margin-bottom:4px;border-bottom:1px solid rgba(0,230,118,0.15);padding-bottom:3px;">💰 Bütçe & Ticari Şartlar</div>
+                    • <b>Tahmini İhale Bütçesi:</b> <span style="color:#10B981;font-weight:800;font-size:13px;">{t_bud}</span><br>
                     • <b>Teminat Şartı:</b> %2.0 – %5.0 Banka Teminat Mektubu<br>
                     • <b>Ödeme Modeli:</b> Gayrikabili Rücu Teyitli LC / 60 Gün<br>
                     • <b>Distribütör Marjı:</b> >%35 Brüt Marj Koruması<br>
@@ -16974,7 +16956,7 @@ def render_country_tender_schedule_and_dates_html(country_name, t_intel=None):
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;background:rgba(0,0,0,0.25);padding:8px 12px;border-radius:6px;">
                 <div style="display:flex;align-items:center;gap:6px;font-size:11px;color:#94A3B8;">
                     <span>🏛️ Resmi İhale Kanalı:</span>
-                    <a href="{t_url}" target="_blank" style="color:#00F5FF;font-weight:700;text-decoration:none;">{t_pname} ↗</a>
+                    <a href="{t_url}" target="_blank" style="color:#7DA8DF;font-weight:700;text-decoration:none;">{t_pname} ↗</a>
                 </div>
                 <div style="display:flex;gap:8px;">
                     <a href="{t_url}" target="_blank" style="background:#0284C7;color:#FFFFFF;padding:5px 12px;border-radius:5px;font-size:11px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:4px;">
@@ -16992,10 +16974,10 @@ def render_country_tender_schedule_and_dates_html(country_name, t_intel=None):
     cycle_desc = sched.get("quarterly_cycle", "Yıllık İhale & Çeyreklik Alımlar")
 
     full_markup = f"""
-    <div style="background:linear-gradient(135deg, rgba(15,23,42,0.95) 0%, rgba(30,41,59,0.92) 100%);border:1.5px solid rgba(0,245,255,0.35);border-radius:14px;padding:18px 20px;margin-top:16px;margin-bottom:16px;box-shadow:0 8px 24px rgba(0,0,0,0.4);">
-        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;border-bottom:1px solid rgba(0,245,255,0.2);padding-bottom:12px;">
+    <div style="background:linear-gradient(135deg, rgba(15,23,42,0.95) 0%, rgba(30,41,59,0.92) 100%);border:1.5px solid rgba(125,168,223,0.35);border-radius:14px;padding:18px 20px;margin-top:16px;margin-bottom:16px;box-shadow:0 8px 24px rgba(0,0,0,0.4);">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;border-bottom:1px solid rgba(125,168,223,0.2);padding-bottom:12px;">
             <div style="display:flex;align-items:center;gap:10px;">
-                <span style="background:rgba(0,245,255,0.15);border:1px solid #00F5FF;color:#00F5FF;font-size:18px;padding:6px 10px;border-radius:8px;">📅</span>
+                <span style="background:rgba(125,168,223,0.15);border:1px solid #7DA8DF;color:#7DA8DF;font-size:18px;padding:6px 10px;border-radius:8px;">📅</span>
                 <div>
                     <h3 style="margin:0;color:#FFFFFF;font-size:16.5px;font-weight:800;">{clean_c} 2026 Resmi Kamu İhaleleri Takvimi & Kritik Tarihler</h3>
                     <div style="color:#94A3B8;font-size:12px;">Resmi ihale ilan tarihleri, şartname soru-cevap süreleri, son teklif teslim saati (deadline), komisyon değerlendirmesi ve teslimat takvimi.</div>
@@ -17011,7 +16993,7 @@ def render_country_tender_schedule_and_dates_html(country_name, t_intel=None):
         </div>
 
         <div style="margin-bottom:16px;">
-            <div style="color:#00F5FF;font-weight:800;font-size:12.5px;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+            <div style="color:#7DA8DF;font-weight:800;font-size:12.5px;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
                 <span>⏱️</span> <span>Süreç & Faz Takvimi (6 Aşamalı İhale Yol Haritası):</span>
             </div>
             <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));gap:8px;">
@@ -17020,7 +17002,7 @@ def render_country_tender_schedule_and_dates_html(country_name, t_intel=None):
         </div>
 
         <div>
-            <div style="color:#00E676;font-weight:800;font-size:12.5px;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+            <div style="color:#10B981;font-weight:800;font-size:12.5px;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
                 <span>📋</span> <span>Aktif & Yaklaşan Kamu İhaleleri Detaylı Tarih Tablosu ({clean_c}):</span>
             </div>
             {''.join(tenders_html)}
@@ -17031,32 +17013,32 @@ def render_country_tender_schedule_and_dates_html(country_name, t_intel=None):
 
 def render_tenders_quick_summary_table():
     st.markdown("""
-    <div style="background:linear-gradient(135deg, rgba(15,23,42,0.95) 0%, rgba(30,41,59,0.92) 100%);border:1.5px solid rgba(0,245,255,0.35);border-radius:14px;padding:18px 20px;margin-bottom:18px;box-shadow:0 8px 24px rgba(0,0,0,0.4);">
-        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;border-bottom:1px solid rgba(0,245,255,0.2);padding-bottom:10px;">
+    <div style="background:linear-gradient(135deg, rgba(15,23,42,0.95) 0%, rgba(30,41,59,0.92) 100%);border:1.5px solid rgba(125,168,223,0.35);border-radius:14px;padding:18px 20px;margin-bottom:18px;box-shadow:0 8px 24px rgba(0,0,0,0.4);">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:14px;border-bottom:1px solid rgba(125,168,223,0.2);padding-bottom:10px;">
             <div style="display:flex;align-items:center;gap:10px;">
-                <span style="background:rgba(0,245,255,0.15);border:1px solid #00F5FF;color:#00F5FF;font-size:18px;padding:6px 10px;border-radius:8px;">📋</span>
+                <span style="background:rgba(125,168,223,0.15);border:1px solid #7DA8DF;color:#7DA8DF;font-size:18px;padding:6px 10px;border-radius:8px;">📋</span>
                 <div>
                     <h3 style="margin:0;color:#FFFFFF;font-size:16.5px;font-weight:800;">2026 Küresel Kamu İhaleleri ve Kritik Tarihler Karşılaştırma Matrisi</h3>
                     <div style="color:#94A3B8;font-size:12px;">Hedef ülkelerin tüm açık ve planlanan ihaleleri, son teklif teslim tarihleri (deadlines), bütçeleri ve resmi ihale portalları tek ekranda.</div>
                 </div>
             </div>
             <div>
-                <span style="background:rgba(0,230,118,0.15);border:1px solid #00E676;color:#00E676;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;">● 10 ÜLKE PORTFÖYÜ</span>
+                <span style="background:rgba(0,230,118,0.15);border:1px solid #10B981;color:#10B981;padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;">● 10 ÜLKE PORTFÖYÜ</span>
             </div>
         </div>
 
         <div style="overflow-x:auto;">
             <table style="width:100%;border-collapse:collapse;font-size:11.5px;color:#CBD5E1;min-width:1000px;">
                 <thead>
-                    <tr style="background:rgba(0,245,255,0.08);border-bottom:2px solid rgba(0,245,255,0.3);text-align:left;">
-                        <th style="padding:10px 8px;color:#00F5FF;font-weight:700;">🌍 Ülke</th>
-                        <th style="padding:10px 8px;color:#00F5FF;font-weight:700;">🏛️ Yetkili İhale Otoritesi</th>
-                        <th style="padding:10px 8px;color:#00F5FF;font-weight:700;">🏷️ Aktif İhale No & Başlık</th>
-                        <th style="padding:10px 8px;color:#00F5FF;font-weight:700;">📢 İlan Tarihi</th>
+                    <tr style="background:rgba(125,168,223,0.08);border-bottom:2px solid rgba(125,168,223,0.3);text-align:left;">
+                        <th style="padding:10px 8px;color:#7DA8DF;font-weight:700;">🌍 Ülke</th>
+                        <th style="padding:10px 8px;color:#7DA8DF;font-weight:700;">🏛️ Yetkili İhale Otoritesi</th>
+                        <th style="padding:10px 8px;color:#7DA8DF;font-weight:700;">🏷️ Aktif İhale No & Başlık</th>
+                        <th style="padding:10px 8px;color:#7DA8DF;font-weight:700;">📢 İlan Tarihi</th>
                         <th style="padding:10px 8px;color:#FFD700;font-weight:800;">⏳ Son Teklif (DEADLINE)</th>
-                        <th style="padding:10px 8px;color:#00E676;font-weight:700;">💰 Tahmini Bütçe</th>
+                        <th style="padding:10px 8px;color:#10B981;font-weight:700;">💰 Tahmini Bütçe</th>
                         <th style="padding:10px 8px;color:#C084FC;font-weight:700;">🎯 Durum / Sayaç</th>
-                        <th style="padding:10px 8px;color:#38BDF8;font-weight:700;">🔗 İhale Portalı</th>
+                        <th style="padding:10px 8px;color:#7DA8DF;font-weight:700;">🔗 İhale Portalı</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -17066,9 +17048,9 @@ def render_tenders_quick_summary_table():
                         <td style="padding:10px 8px;"><b style="color:#C084FC;">EGY-UPA-2026-IVF-09</b><br><span style="font-size:10.5px;color:#94A3B8;">Merkezi IVF Laboratuvarı Donanım & Sarf</span></td>
                         <td style="padding:10px 8px;">15 Ocak 2026</td>
                         <td style="padding:10px 8px;"><b style="color:#FFD700;background:rgba(255,215,0,0.12);padding:2px 6px;border-radius:4px;">08 Nisan 2026, 14:00</b></td>
-                        <td style="padding:10px 8px;color:#00E676;font-weight:700;">8.5M EGP (~$175K USD)</td>
-                        <td style="padding:10px 8px;"><span style="color:#00E676;font-weight:700;">🟢 Açık</span> (22 Gün)</td>
-                        <td style="padding:10px 8px;"><a href="https://www.upa.gov.eg" target="_blank" style="color:#00F5FF;text-decoration:none;font-weight:700;">upa.gov.eg ↗</a></td>
+                        <td style="padding:10px 8px;color:#10B981;font-weight:700;">8.5M EGP (~$175K USD)</td>
+                        <td style="padding:10px 8px;"><span style="color:#10B981;font-weight:700;">🟢 Açık</span> (22 Gün)</td>
+                        <td style="padding:10px 8px;"><a href="https://www.upa.gov.eg" target="_blank" style="color:#7DA8DF;text-decoration:none;font-weight:700;">upa.gov.eg ↗</a></td>
                     </tr>
                     <tr style="border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(15,23,42,0.6);">
                         <td style="padding:10px 8px;"><b style="color:#FFFFFF;">🇸🇦 Suudi Arabistan</b></td>
@@ -17076,9 +17058,9 @@ def render_tenders_quick_summary_table():
                         <td style="padding:10px 8px;"><b style="color:#C084FC;">KSA-NUPCO-2026/04-IVF</b><br><span style="font-size:10.5px;color:#94A3B8;">Ulusal Tüp Bebek Donanım Çerçeve Alımı</span></td>
                         <td style="padding:10px 8px;">08 Şubat 2026</td>
                         <td style="padding:10px 8px;"><b style="color:#FFD700;background:rgba(255,215,0,0.12);padding:2px 6px;border-radius:4px;">18 Nisan 2026, 16:00</b></td>
-                        <td style="padding:10px 8px;color:#00E676;font-weight:700;">1.85M SAR (~$493K USD)</td>
-                        <td style="padding:10px 8px;"><span style="color:#00E676;font-weight:700;">🟢 Açık</span> (32 Gün)</td>
-                        <td style="padding:10px 8px;"><a href="https://nupco.com" target="_blank" style="color:#00F5FF;text-decoration:none;font-weight:700;">nupco.com ↗</a></td>
+                        <td style="padding:10px 8px;color:#10B981;font-weight:700;">1.85M SAR (~$493K USD)</td>
+                        <td style="padding:10px 8px;"><span style="color:#10B981;font-weight:700;">🟢 Açık</span> (32 Gün)</td>
+                        <td style="padding:10px 8px;"><a href="https://nupco.com" target="_blank" style="color:#7DA8DF;text-decoration:none;font-weight:700;">nupco.com ↗</a></td>
                     </tr>
                     <tr style="border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(15,23,42,0.4);">
                         <td style="padding:10px 8px;"><b style="color:#FFFFFF;">🇹🇷 Türkiye</b></td>
@@ -17086,9 +17068,9 @@ def render_tenders_quick_summary_table():
                         <td style="padding:10px 8px;"><b style="color:#C084FC;">TR-KHGM-2026-TUP-118</b><br><span style="font-size:10.5px;color:#94A3B8;">8 Şehir Hastanesi Oosit Aktivasyon Alımı</span></td>
                         <td style="padding:10px 8px;">24 Ocak 2026</td>
                         <td style="padding:10px 8px;"><b style="color:#FFD700;background:rgba(255,215,0,0.12);padding:2px 6px;border-radius:4px;">07 Nisan 2026, 10:30</b></td>
-                        <td style="padding:10px 8px;color:#00E676;font-weight:700;">₺4.2M TRY (~$122K USD)</td>
-                        <td style="padding:10px 8px;"><span style="color:#00E676;font-weight:700;">🟢 EKAP Açık</span> (21 Gün)</td>
-                        <td style="padding:10px 8px;"><a href="https://ekap.kik.gov.tr" target="_blank" style="color:#00F5FF;text-decoration:none;font-weight:700;">ekap.kik.gov.tr ↗</a></td>
+                        <td style="padding:10px 8px;color:#10B981;font-weight:700;">₺4.2M TRY (~$122K USD)</td>
+                        <td style="padding:10px 8px;"><span style="color:#10B981;font-weight:700;">🟢 EKAP Açık</span> (21 Gün)</td>
+                        <td style="padding:10px 8px;"><a href="https://ekap.kik.gov.tr" target="_blank" style="color:#7DA8DF;text-decoration:none;font-weight:700;">ekap.kik.gov.tr ↗</a></td>
                     </tr>
                     <tr style="border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(15,23,42,0.6);">
                         <td style="padding:10px 8px;"><b style="color:#FFFFFF;">🇮🇶 Irak (Iraq)</b></td>
@@ -17096,9 +17078,9 @@ def render_tenders_quick_summary_table():
                         <td style="padding:10px 8px;"><b style="color:#C084FC;">IRQ-KIMADIA-2026-MED-99</b><br><span style="font-size:10.5px;color:#94A3B8;">Kamal Al-Samarai & Ulusal İnfertilite Alımı</span></td>
                         <td style="padding:10px 8px;">12 Ocak 2026</td>
                         <td style="padding:10px 8px;"><b style="color:#FFD700;background:rgba(255,215,0,0.12);padding:2px 6px;border-radius:4px;">25 Nisan 2026, 13:00</b></td>
-                        <td style="padding:10px 8px;color:#00E676;font-weight:700;">$340.000 USD</td>
-                        <td style="padding:10px 8px;"><span style="color:#00E676;font-weight:700;">🟢 Açık</span> (39 Gün)</td>
-                        <td style="padding:10px 8px;"><a href="https://kimadia.iq" target="_blank" style="color:#00F5FF;text-decoration:none;font-weight:700;">kimadia.iq ↗</a></td>
+                        <td style="padding:10px 8px;color:#10B981;font-weight:700;">$340.000 USD</td>
+                        <td style="padding:10px 8px;"><span style="color:#10B981;font-weight:700;">🟢 Açık</span> (39 Gün)</td>
+                        <td style="padding:10px 8px;"><a href="https://kimadia.iq" target="_blank" style="color:#7DA8DF;text-decoration:none;font-weight:700;">kimadia.iq ↗</a></td>
                     </tr>
                     <tr style="border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(15,23,42,0.4);">
                         <td style="padding:10px 8px;"><b style="color:#FFFFFF;">🇩🇿 Cezayir (Algeria)</b></td>
@@ -17106,9 +17088,9 @@ def render_tenders_quick_summary_table():
                         <td style="padding:10px 8px;"><b style="color:#C084FC;">DZ-PCH-2026-AO-04</b><br><span style="font-size:10.5px;color:#94A3B8;">Appel d'Offres Équipements de FIV</span></td>
                         <td style="padding:10px 8px;">14 Şubat 2026</td>
                         <td style="padding:10px 8px;"><b style="color:#FFD700;background:rgba(255,215,0,0.12);padding:2px 6px;border-radius:4px;">04 Mayıs 2026, 12:00</b></td>
-                        <td style="padding:10px 8px;color:#00E676;font-weight:700;">25M DZD (~$185K USD)</td>
-                        <td style="padding:10px 8px;"><span style="color:#00E676;font-weight:700;">🟢 Açık</span> (48 Gün)</td>
-                        <td style="padding:10px 8px;"><a href="https://www.pch.dz" target="_blank" style="color:#00F5FF;text-decoration:none;font-weight:700;">pch.dz ↗</a></td>
+                        <td style="padding:10px 8px;color:#10B981;font-weight:700;">25M DZD (~$185K USD)</td>
+                        <td style="padding:10px 8px;"><span style="color:#10B981;font-weight:700;">🟢 Açık</span> (48 Gün)</td>
+                        <td style="padding:10px 8px;"><a href="https://www.pch.dz" target="_blank" style="color:#7DA8DF;text-decoration:none;font-weight:700;">pch.dz ↗</a></td>
                     </tr>
                     <tr style="border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(15,23,42,0.6);">
                         <td style="padding:10px 8px;"><b style="color:#FFFFFF;">🇯🇴 Ürdün (Jordan)</b></td>
@@ -17116,9 +17098,9 @@ def render_tenders_quick_summary_table():
                         <td style="padding:10px 8px;"><b style="color:#C084FC;">JO-JPD-2026-MED-15</b><br><span style="font-size:10.5px;color:#94A3B8;">RMS Askeri Sağlık IVF Cihaz Alımı</span></td>
                         <td style="padding:10px 8px;">20 Şubat 2026</td>
                         <td style="padding:10px 8px;"><b style="color:#FFD700;background:rgba(255,215,0,0.12);padding:2px 6px;border-radius:4px;">28 Nisan 2026, 13:00</b></td>
-                        <td style="padding:10px 8px;color:#00E676;font-weight:700;">120K JOD (~$169K USD)</td>
-                        <td style="padding:10px 8px;"><span style="color:#00E676;font-weight:700;">🟢 Açık</span> (42 Gün)</td>
-                        <td style="padding:10px 8px;"><a href="https://www.jpd.gov.jo" target="_blank" style="color:#00F5FF;text-decoration:none;font-weight:700;">jpd.gov.jo ↗</a></td>
+                        <td style="padding:10px 8px;color:#10B981;font-weight:700;">120K JOD (~$169K USD)</td>
+                        <td style="padding:10px 8px;"><span style="color:#10B981;font-weight:700;">🟢 Açık</span> (42 Gün)</td>
+                        <td style="padding:10px 8px;"><a href="https://www.jpd.gov.jo" target="_blank" style="color:#7DA8DF;text-decoration:none;font-weight:700;">jpd.gov.jo ↗</a></td>
                     </tr>
                     <tr style="border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(15,23,42,0.4);">
                         <td style="padding:10px 8px;"><b style="color:#FFFFFF;">🇦🇪 BAE (UAE)</b></td>
@@ -17126,9 +17108,9 @@ def render_tenders_quick_summary_table():
                         <td style="padding:10px 8px;"><b style="color:#C084FC;">UAE-EHS-2026-IVF-03</b><br><span style="font-size:10.5px;color:#94A3B8;">Kamu Kadın Doğum Embriyoloji Donanımı</span></td>
                         <td style="padding:10px 8px;">18 Şubat 2026</td>
                         <td style="padding:10px 8px;"><b style="color:#FFD700;background:rgba(255,215,0,0.12);padding:2px 6px;border-radius:4px;">15 Nisan 2026, 14:00</b></td>
-                        <td style="padding:10px 8px;color:#00E676;font-weight:700;">850K AED (~$231K USD)</td>
-                        <td style="padding:10px 8px;"><span style="color:#00E676;font-weight:700;">🟢 Açık</span> (29 Gün)</td>
-                        <td style="padding:10px 8px;"><a href="https://www.ehs.gov.ae" target="_blank" style="color:#00F5FF;text-decoration:none;font-weight:700;">ehs.gov.ae ↗</a></td>
+                        <td style="padding:10px 8px;color:#10B981;font-weight:700;">850K AED (~$231K USD)</td>
+                        <td style="padding:10px 8px;"><span style="color:#10B981;font-weight:700;">🟢 Açık</span> (29 Gün)</td>
+                        <td style="padding:10px 8px;"><a href="https://www.ehs.gov.ae" target="_blank" style="color:#7DA8DF;text-decoration:none;font-weight:700;">ehs.gov.ae ↗</a></td>
                     </tr>
                     <tr style="border-bottom:1px solid rgba(255,255,255,0.06);background:rgba(15,23,42,0.6);">
                         <td style="padding:10px 8px;"><b style="color:#FFFFFF;">🇩🇪 Almanya (DE/TED)</b></td>
@@ -17136,9 +17118,9 @@ def render_tenders_quick_summary_table():
                         <td style="padding:10px 8px;"><b style="color:#C084FC;">EU-TED-2026-IVF-091</b><br><span style="font-size:10.5px;color:#94A3B8;">Oozyten-Aktivierungs-Systeme TED Ausschreibung</span></td>
                         <td style="padding:10px 8px;">05 Şubat 2026</td>
                         <td style="padding:10px 8px;"><b style="color:#FFD700;background:rgba(255,215,0,0.12);padding:2px 6px;border-radius:4px;">24 Nisan 2026, 12:00</b></td>
-                        <td style="padding:10px 8px;color:#00E676;font-weight:700;">€240K EUR (~$260K USD)</td>
-                        <td style="padding:10px 8px;"><span style="color:#00E676;font-weight:700;">🟢 TED Açık</span> (38 Gün)</td>
-                        <td style="padding:10px 8px;"><a href="https://ted.europa.eu" target="_blank" style="color:#00F5FF;text-decoration:none;font-weight:700;">ted.europa.eu ↗</a></td>
+                        <td style="padding:10px 8px;color:#10B981;font-weight:700;">€240K EUR (~$260K USD)</td>
+                        <td style="padding:10px 8px;"><span style="color:#10B981;font-weight:700;">🟢 TED Açık</span> (38 Gün)</td>
+                        <td style="padding:10px 8px;"><a href="https://ted.europa.eu" target="_blank" style="color:#7DA8DF;text-decoration:none;font-weight:700;">ted.europa.eu ↗</a></td>
                     </tr>
                 </tbody>
             </table>
@@ -17157,7 +17139,7 @@ def render_tenders_hub():
                 <div style="color:#CBD5E1;font-size:13px;">Uluslararası kamu hastaneleri, üniversite tüp bebek merkezleri ve ulusal satın alma ofisleri (UPA, NUPCO, KIMADIA, KHGM) ihale takip, teknik şartname ve teklif hazırlama merkezi.</div>
             </div>
             <div style="text-align:right;">
-                <span style="background:rgba(0,230,118,0.15);color:#00E676;border:1px solid #00E676;padding:5px 12px;border-radius:20px;font-weight:700;font-size:12px;">● İHALE MOTORU AKTİF</span>
+                <span style="background:rgba(0,230,118,0.15);color:#10B981;border:1px solid #10B981;padding:5px 12px;border-radius:20px;font-weight:700;font-size:12px;">● İHALE MOTORU AKTİF</span>
                 <div style="color:#94A3B8;font-size:11px;margin-top:4px;">48 Ülke Portföyü Taranıyor</div>
             </div>
         </div>
@@ -17180,22 +17162,22 @@ def render_tenders_hub():
     with m_col2:
         st.markdown('''
         <div class="glass-metric-card">
-            <div class="glass-icon-box" style="border-color:#00E676;color:#00E676;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00E676" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            <div class="glass-icon-box" style="border-color:#10B981;color:#10B981;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
             </div>
             <div class="glass-metric-header">İhale Bütçe Havuzu</div>
-            <div class="glass-metric-val" style="color:#00E676;">$3.85M USD</div>
+            <div class="glass-metric-val" style="color:#10B981;">$3.85M USD</div>
             <div class="glass-metric-sub">~165M EGP / 14.5M SAR</div>
         </div>
         ''', unsafe_allow_html=True)
     with m_col3:
         st.markdown('''
         <div class="glass-metric-card">
-            <div class="glass-icon-box" style="border-color:#00F5FF;color:#00F5FF;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            <div class="glass-icon-box" style="border-color:#7DA8DF;color:#7DA8DF;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7DA8DF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
             </div>
             <div class="glass-metric-header">Pazar Kilitleme Gücü</div>
-            <div class="glass-metric-val" style="color:#00F5FF;">%84</div>
+            <div class="glass-metric-val" style="color:#7DA8DF;">%84</div>
             <div class="glass-metric-sub">Elektriksel AOA Şartname Şartıyla</div>
         </div>
         ''', unsafe_allow_html=True)
@@ -17213,11 +17195,11 @@ def render_tenders_hub():
     with m_col5:
         st.markdown('''
         <div class="glass-metric-card">
-            <div class="glass-icon-box" style="border-color:#38BDF8;color:#38BDF8;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <div class="glass-icon-box" style="border-color:#7DA8DF;color:#7DA8DF;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7DA8DF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
             </div>
             <div class="glass-metric-header">Ortalama Ödeme Vadesi</div>
-            <div class="glass-metric-val" style="color:#38BDF8;">60-90 Gün</div>
+            <div class="glass-metric-val" style="color:#7DA8DF;">60-90 Gün</div>
             <div class="glass-metric-sub">Gayrikabili Rücu LC Şartı</div>
         </div>
         ''', unsafe_allow_html=True)
@@ -17283,10 +17265,10 @@ def render_tenders_hub():
         col_tp1, col_tp2 = st.columns([1.25, 1])
         with col_tp1:
             st.markdown(f"""
-            <div style="background:rgba(15,23,42,0.85);border:1px solid rgba(0,245,255,0.3);border-radius:12px;padding:16px;font-size:12px;margin-bottom:12px;box-shadow:0 6px 18px rgba(0,0,0,0.35);">
-                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;border-bottom:1px solid rgba(0,245,255,0.25);padding-bottom:8px;">
-                    <span style="color:#00F5FF;font-weight:700;font-size:13.5px;">🌐 {sel_t_country} Resmi İhale Portalları & Canlı Doğrulanmış Linkler:</span>
-                    <span style="background:rgba(0,230,118,0.15);color:#00E676;border:1px solid rgba(0,230,118,0.35);padding:3px 8px;border-radius:4px;font-size:10.5px;font-weight:700;">✓ Canlı Doğrulanmış</span>
+            <div style="background:rgba(15,23,42,0.85);border:1px solid rgba(125,168,223,0.3);border-radius:12px;padding:16px;font-size:12px;margin-bottom:12px;box-shadow:0 6px 18px rgba(0,0,0,0.35);">
+                <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;border-bottom:1px solid rgba(125,168,223,0.25);padding-bottom:8px;">
+                    <span style="color:#7DA8DF;font-weight:700;font-size:13.5px;">🌐 {sel_t_country} Resmi İhale Portalları & Canlı Doğrulanmış Linkler:</span>
+                    <span style="background:rgba(0,230,118,0.15);color:#10B981;border:1px solid rgba(0,230,118,0.35);padding:3px 8px;border-radius:4px;font-size:10.5px;font-weight:700;">✓ Canlı Doğrulanmış</span>
                 </div>
                 {portal_cards_markup}
                 <div style="margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.08);background:rgba(0,0,0,0.25);padding:10px;border-radius:6px;">
@@ -17299,7 +17281,7 @@ def render_tenders_hub():
             st.markdown(f"""
             <div style="background:rgba(15,23,42,0.85);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:16px;font-size:12px;margin-bottom:12px;box-shadow:0 6px 18px rgba(0,0,0,0.35);">
                 <div style="margin-bottom:12px;">
-                    <b style="color:#00E676;font-size:13px;">🎯 Açılan Tipik İhale Türleri ({sel_t_country}):</b><br>
+                    <b style="color:#10B981;font-size:13px;">🎯 Açılan Tipik İhale Türleri ({sel_t_country}):</b><br>
                     <div style="margin-top:6px;line-height:1.7;color:#E2E8F0;">
                     {"<br>".join(["• " + t for t in t_intel.get("active_tender_types", [])])}
                     </div>
@@ -17310,12 +17292,12 @@ def render_tenders_hub():
                     • <b>Ödeme Vadesi:</b> {t_params.get("payment_term_days", "60 Gün Teyitli Akreditif")}</span>
                 </div>
                 <div style="padding-top:10px;border-top:1px solid rgba(255,255,255,0.08);">
-                    <b style="color:#38BDF8;font-size:12.5px;">🏷️ Medikal İhale Sınıflandırma Kodları (CPV):</b><br>
+                    <b style="color:#7DA8DF;font-size:12.5px;">🏷️ Medikal İhale Sınıflandırma Kodları (CPV):</b><br>
                     <div style="margin-top:8px;display:grid;grid-template-columns:1fr 1fr;gap:6px;font-size:11px;">
-                        <div style="background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.25);padding:6px 8px;border-radius:4px;"><b style="color:#00F5FF;">CPV 33100000-0:</b><br>Tıbbi Ekipmanlar</div>
-                        <div style="background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.25);padding:6px 8px;border-radius:4px;"><b style="color:#00F5FF;">CPV 33140000-3:</b><br>Tıbbi Sarflar & Dish</div>
-                        <div style="background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.25);padding:6px 8px;border-radius:4px;"><b style="color:#00F5FF;">CPV 38434540-3:</b><br>Biyomedikal Hücre</div>
-                        <div style="background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.25);padding:6px 8px;border-radius:4px;"><b style="color:#00F5FF;">UNSPSC 41103000:</b><br>IVF Laboratuvarı</div>
+                        <div style="background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.25);padding:6px 8px;border-radius:4px;"><b style="color:#7DA8DF;">CPV 33100000-0:</b><br>Tıbbi Ekipmanlar</div>
+                        <div style="background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.25);padding:6px 8px;border-radius:4px;"><b style="color:#7DA8DF;">CPV 33140000-3:</b><br>Tıbbi Sarflar & Dish</div>
+                        <div style="background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.25);padding:6px 8px;border-radius:4px;"><b style="color:#7DA8DF;">CPV 38434540-3:</b><br>Biyomedikal Hücre</div>
+                        <div style="background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.25);padding:6px 8px;border-radius:4px;"><b style="color:#7DA8DF;">UNSPSC 41103000:</b><br>IVF Laboratuvarı</div>
                     </div>
                 </div>
             </div>
@@ -17326,8 +17308,8 @@ def render_tenders_hub():
         st.markdown(tender_dates_html, unsafe_allow_html=True)
 
         st.markdown(f"""
-        <div style="background:rgba(0,230,118,0.08);border:1px solid rgba(0,230,118,0.3);border-left:4px solid #00E676;border-radius:8px;padding:12px 16px;margin-top:14px;font-size:12px;color:#E2E8F0;">
-            <b style="color:#00E676;">🏆 ZEUS İhale Kazanma Stratejisi ({sel_t_country}):</b><br>
+        <div style="background:rgba(0,230,118,0.08);border:1px solid rgba(0,230,118,0.3);border-left:4px solid #10B981;border-radius:8px;padding:12px 16px;margin-top:14px;font-size:12px;color:#E2E8F0;">
+            <b style="color:#10B981;">🏆 ZEUS İhale Kazanma Stratejisi ({sel_t_country}):</b><br>
             {t_params.get("recommended_strategy", "Teknik şartnameye elektriksel oosit mikro-puls aktivasyon şartı yazdırılarak tek kaynak (single-source) avantajı elde edilmeli ve konsinye sarf modeli sunulmalıdır.")}
         </div>
         """, unsafe_allow_html=True)
@@ -17356,10 +17338,10 @@ def render_tenders_hub():
         col_sp1, col_sp2 = st.columns(2)
         with col_sp1:
             st.markdown(f"""
-            <div style="background:rgba(0,245,255,0.04);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:14px;font-size:12px;line-height:1.75;">
-                <b style="color:#00F5FF;font-size:13px;">⚡ 1. Donanım (ZPS 26) Teknik Kriterleri:</b><br>
+            <div style="background:rgba(125,168,223,0.04);border:1px solid rgba(125,168,223,0.25);border-radius:10px;padding:14px;font-size:12px;line-height:1.75;">
+                <b style="color:#7DA8DF;font-size:13px;">⚡ 1. Donanım (ZPS 26) Teknik Kriterleri:</b><br>
                 {"<br>".join(["• " + s for s in c_dev_specs])}<br><br>
-                <b style="color:#00E676;font-size:13px;">🧬 2. Sarf (Z-Dish Array) Kriterleri:</b><br>
+                <b style="color:#10B981;font-size:13px;">🧬 2. Sarf (Z-Dish Array) Kriterleri:</b><br>
                 {"<br>".join(["• " + s for s in c_sarf_specs])}
             </div>
             """, unsafe_allow_html=True)
@@ -17396,8 +17378,8 @@ def render_tenders_hub():
         col_tp_box1, col_tp_box2 = st.columns(2)
         with col_tp_box1:
             st.markdown("""
-            <div style="background:linear-gradient(135deg, rgba(0,245,255,0.08) 0%, rgba(15,23,42,0.85) 100%);border:1.5px solid #00F5FF;border-radius:12px;padding:16px;font-size:12px;line-height:1.7;">
-                <b style="color:#00F5FF;font-size:14px;">📦 Standart $85,000 USD Turnkey İhale Paket İçeriği:</b><br>
+            <div style="background:linear-gradient(135deg, rgba(125,168,223,0.08) 0%, rgba(15,23,42,0.85) 100%);border:1.5px solid #7DA8DF;border-radius:12px;padding:16px;font-size:12px;line-height:1.7;">
+                <b style="color:#7DA8DF;font-size:14px;">📦 Standart $85,000 USD Turnkey İhale Paket İçeriği:</b><br>
                 • <b>6 Adet</b> ZEUS Pulse Stimulator (ZPS 26) Elektriksel Oosit Aktivasyon (AOA) Cihazı<br>
                 • <b>2 Adet</b> BioPSafe (ZBS26) Embriyo Biyopsi & PCR Tubing İstasyonu<br>
                 • <b>1.000 Kutu</b> Z-Dish Array & Kalsiyumsuz AOA Sarf Malzemesi<br>
@@ -17407,10 +17389,10 @@ def render_tenders_hub():
             """, unsafe_allow_html=True)
         with col_tp_box2:
             st.markdown("""
-            <div style="background:linear-gradient(135deg, rgba(0,230,118,0.08) 0%, rgba(15,23,42,0.85) 100%);border:1.5px solid #00E676;border-radius:12px;padding:16px;font-size:12px;line-height:1.7;">
-                <b style="color:#00E676;font-size:14px;">📊 Finansal Kırılım & Kârlılık Özeti:</b><br>
+            <div style="background:linear-gradient(135deg, rgba(0,230,118,0.08) 0%, rgba(15,23,42,0.85) 100%);border:1.5px solid #10B981;border-radius:12px;padding:16px;font-size:12px;line-height:1.7;">
+                <b style="color:#10B981;font-size:14px;">📊 Finansal Kırılım & Kârlılık Özeti:</b><br>
                 • <b>ZEUS Fabrika Üretim Maliyeti (COGS):</b> ~$34,500 USD<br>
-                • <b>ZEUS Brüt Kârı:</b> <b style="color:#00E676;font-size:14px;">$50,500 USD (%59.4 Brüt Marj)</b><br>
+                • <b>ZEUS Brüt Kârı:</b> <b style="color:#10B981;font-size:14px;">$50,500 USD (%59.4 Brüt Marj)</b><br>
                 • <b>Distribütör İhale Satış Fiyatı:</b> $115,000 – $130,000 USD (Marj: %26–%35)<br>
                 • <b>Klinik Vaka Başı Maliyeti:</b> 1,200 siklus/yıl yapan merkez için <b>yalnızca ~$70 USD/vaka!</b><br>
                 • <b>CFO Kararı:</b> Kamu bütçe limitlerine tam oturur ve şirket kârlılığını maksimize eder.
@@ -17445,7 +17427,7 @@ def render_regulations_hub():
                 <div style="color:#CBD5E1;font-size:13px;">48 Hedef Ülke İçin Resmi Sağlık Bakanlığı (MOH) Tescil Süreçleri, Gümrük GTİP Kodları (9018.90 / 3822.00), Sertifikasyon Harçları ve IVF/PGT Biyoetik Kuralları.</div>
             </div>
             <div style="text-align:right;">
-                <span style="background:rgba(0,230,118,0.15);color:#00E676;border:1px solid #00E676;padding:5px 12px;border-radius:20px;font-weight:700;font-size:12px;">● CE Sertifikalı CLASS IIa UYUMLU</span>
+                <span style="background:rgba(0,230,118,0.15);color:#10B981;border:1px solid #10B981;padding:5px 12px;border-radius:20px;font-weight:700;font-size:12px;">● CE Sertifikalı CLASS IIa UYUMLU</span>
                 <div style="color:#94A3B8;font-size:11px;margin-top:4px;">ISO 13485:2016 Akreditasyonu</div>
             </div>
         </div>
@@ -17468,33 +17450,33 @@ def render_regulations_hub():
     with r_col2:
         st.markdown('''
         <div class="glass-metric-card">
-            <div class="glass-icon-box" style="border-color:#00F5FF;color:#00F5FF;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+            <div class="glass-icon-box" style="border-color:#7DA8DF;color:#7DA8DF;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7DA8DF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
             </div>
             <div class="glass-metric-header">Cihaz GTİP Kodu</div>
-            <div class="glass-metric-val" style="color:#00F5FF;font-size:17px;">9018.90</div>
+            <div class="glass-metric-val" style="color:#7DA8DF;font-size:17px;">9018.90</div>
             <div class="glass-metric-sub">Tıbbi Cihaz Donanımı</div>
         </div>
         ''', unsafe_allow_html=True)
     with r_col3:
         st.markdown('''
         <div class="glass-metric-card">
-            <div class="glass-icon-box" style="border-color:#00E676;color:#00E676;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00E676" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
+            <div class="glass-icon-box" style="border-color:#10B981;color:#10B981;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path></svg>
             </div>
             <div class="glass-metric-header">Sarf GTİP Kodu</div>
-            <div class="glass-metric-val" style="color:#00E676;font-size:17px;">3822.00</div>
+            <div class="glass-metric-val" style="color:#10B981;font-size:17px;">3822.00</div>
             <div class="glass-metric-sub">Hücre Kültür Medyası & Dish</div>
         </div>
         ''', unsafe_allow_html=True)
     with r_col4:
         st.markdown('''
         <div class="glass-metric-card">
-            <div class="glass-icon-box" style="border-color:#38BDF8;color:#38BDF8;">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <div class="glass-icon-box" style="border-color:#7DA8DF;color:#7DA8DF;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7DA8DF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
             </div>
             <div class="glass-metric-header">Ort. Gümrük Vergisi</div>
-            <div class="glass-metric-val" style="color:#38BDF8;">%0 - %8.0</div>
+            <div class="glass-metric-val" style="color:#7DA8DF;">%0 - %8.0</div>
             <div class="glass-metric-sub">AB %0 | Körfez %5</div>
         </div>
         ''', unsafe_allow_html=True)
@@ -17555,16 +17537,16 @@ def render_regulations_hub():
     with reg_tab1:
         st.markdown(f"""
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
-            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:16px;font-size:12px;line-height:1.75;">
-                <b style="color:#00F5FF;font-size:14px;">📦 Gümrük Vergisi, KDV & GTİP Kodları:</b><br>
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(125,168,223,0.25);border-radius:10px;padding:16px;font-size:12px;line-height:1.75;">
+                <b style="color:#7DA8DF;font-size:14px;">📦 Gümrük Vergisi, KDV & GTİP Kodları:</b><br>
                 • <b>Gümrük Tarife Oranı:</b> <span style="color:#FFD700;font-weight:700;">{cust_reg.get("tariff_rate", "Standart %5.0")}</span><br>
                 • <b>KDV / Vergi Rejimi:</b> <span style="color:#FFFFFF;">{cust_reg.get("vat_rate", "%15.0 Standart KDV")}</span><br>
-                • <b>Cihaz GTİP Kodu:</b> <code style="color:#00F5FF;">{cust_reg.get("gtip_device", "GTIP 9018.90")}</code> (Tıbbi Teşhis ve Tedavi Donanımları)<br>
-                • <b>Sarf / Kit GTİP Kodu:</b> <code style="color:#00E676;">{cust_reg.get("gtip_consumable", "GTIP 3822.00")}</code> (Hücre Kültür Dishleri & Solüsyonlar)<br>
-                • <b>Liman / Gümrük Bekleme Süresi:</b> <span style="color:#00E676;font-weight:600;">{cust_reg.get("clearance_days", "10-18 Gün")}</span>
+                • <b>Cihaz GTİP Kodu:</b> <code style="color:#7DA8DF;">{cust_reg.get("gtip_device", "GTIP 9018.90")}</code> (Tıbbi Teşhis ve Tedavi Donanımları)<br>
+                • <b>Sarf / Kit GTİP Kodu:</b> <code style="color:#10B981;">{cust_reg.get("gtip_consumable", "GTIP 3822.00")}</code> (Hücre Kültür Dishleri & Solüsyonlar)<br>
+                • <b>Liman / Gümrük Bekleme Süresi:</b> <span style="color:#10B981;font-weight:600;">{cust_reg.get("clearance_days", "10-18 Gün")}</span>
             </div>
-            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:16px;font-size:12px;line-height:1.75;">
-                <b style="color:#00E676;font-size:14px;">❄️ Soğuk Zincir & Medikal Lojistik Standartları:</b><br>
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(125,168,223,0.25);border-radius:10px;padding:16px;font-size:12px;line-height:1.75;">
+                <b style="color:#10B981;font-size:14px;">❄️ Soğuk Zincir & Medikal Lojistik Standartları:</b><br>
                 • <b>Sıcaklık Aralığı:</b> +2°C ile +8°C kontrollü sıcaklık rejimi.<br>
                 • <b>Data-Logger Zorunluluğu:</b> Her kolide teslim anına kadar kesintisiz sıcaklık kaydedici bulunmalıdır.<br>
                 • <b>Havalimanı Kargo Şartı:</b> Havayolu medikal kargo terminali (Medical Pharma Hub) transferi.<br>
@@ -17611,10 +17593,10 @@ def render_regulations_hub():
         col_rf1, col_rf2 = st.columns([1.2, 1])
         with col_rf1:
             st.markdown(f"""
-            <div style="background:rgba(15,23,42,0.7);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:16px;font-size:12.5px;line-height:1.8;">
-                <b style="color:#00F5FF;font-size:14px;">📋 Tescil & Kayıt Masrafları Özeti:</b><br>
+            <div style="background:rgba(15,23,42,0.7);border:1px solid rgba(125,168,223,0.25);border-radius:10px;padding:16px;font-size:12.5px;line-height:1.8;">
+                <b style="color:#7DA8DF;font-size:14px;">📋 Tescil & Kayıt Masrafları Özeti:</b><br>
                 • <b>Başvuru Yapılacak Merci:</b> <span style="color:#FFFFFF;font-weight:700;">{c_cost_info['authority']}</span><br>
-                • <b>Resmi Dosya & Harç Masrafı:</b> <span style="color:#00E676;font-weight:800;font-size:14px;">{c_cost_info['fee']}</span><br>
+                • <b>Resmi Dosya & Harç Masrafı:</b> <span style="color:#10B981;font-weight:800;font-size:14px;">{c_cost_info['fee']}</span><br>
                 • <b>Tahmini Ruhsatlandırma Süresi:</b> <span style="color:#FFD700;font-weight:600;">{c_cost_info['duration']}</span><br>
                 • <b>Tescil Zorluk Seviyesi:</b> {cust_reg.get("import_difficulty", "Orta / Standart CE Sertifikalı Yolu")}
             </div>
@@ -17638,11 +17620,11 @@ def render_regulations_hub():
             <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(168,85,247,0.3);border-radius:10px;padding:16px;font-size:12px;line-height:1.75;">
                 <b style="color:#C084FC;font-size:13.5px;">⚖️ Embriyo Transferi Kısıtı (eSET):</b><br>
                 <div style="color:#E1E7EC;margin-top:4px;">{ivf_pgt.get("eset_rule") or ivf_pgt.get("transfer_rules") or f"{sel_reg_country} tüp bebek mevzuatı uyarınca çoğul gebelikleri kısıtlamak amacıyla tek embriyo transferi (eSET) teşvik edilir."}</div><br>
-                <b style="color:#00F5FF;font-size:13.5px;">🏥 Devlet Desteği & Geri Ödeme:</b><br>
+                <b style="color:#7DA8DF;font-size:13.5px;">🏥 Devlet Desteği & Geri Ödeme:</b><br>
                 <div style="color:#E1E7EC;margin-top:4px;">{ivf_pgt.get("reimbursement") or ivf_pgt.get("cycle_funding") or f"{sel_reg_country} pazarında tüp bebek tedavileri ağırlıklı olarak özel kliniklerde cepten ödeme (Out-of-Pocket) veya karma sigorta modeliyle yürütülür."}</div>
             </div>
             <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(168,85,247,0.3);border-radius:10px;padding:16px;font-size:12px;line-height:1.75;">
-                <b style="color:#00E676;font-size:13.5px;">🔬 PGT-A / PGT-M / PGT-SR Yasal Statüsü:</b><br>
+                <b style="color:#10B981;font-size:13.5px;">🔬 PGT-A / PGT-M / PGT-SR Yasal Statüsü:</b><br>
                 <div style="color:#E1E7EC;margin-top:4px;">{ivf_pgt.get("pgt_status") or ivf_pgt.get("pgt_legal_status") or f"PGT-A ve PGT-M (Talasemi, anöploidi taramaları) {sel_reg_country} yetkili sağlık otoritesi lisanslı genetik merkezlerde yasaldır."}</div><br>
                 <b style="color:#EF4444;font-size:13.5px;">🚫 Cinsiyet Seçimi (Sex Selection) Biyoetik Hükmü:</b><br>
                 <div style="color:#E1E7EC;margin-top:4px;">{ivf_pgt.get("sex_selection_rule") or f"{sel_reg_country} biyoetik mevzuatı uyarınca X'e bağlı ölümcül kalıtsal hastalıkların engellenmesi haricinde sosyal amaçlı cinsiyet seçimi yasaktır."}</div>
@@ -17656,10 +17638,10 @@ def render_regulations_hub():
         if c_decrees:
             for d in c_decrees:
                 st.markdown(f"""
-                <div style="background:rgba(15,23,42,0.8);border:1px solid rgba(0,245,255,0.25);border-left:4px solid #00F5FF;border-radius:8px;padding:14px;margin-bottom:12px;font-size:12px;line-height:1.7;">
+                <div style="background:rgba(15,23,42,0.8);border:1px solid rgba(125,168,223,0.25);border-left:4px solid #7DA8DF;border-radius:8px;padding:14px;margin-bottom:12px;font-size:12px;line-height:1.7;">
                     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                        <b style="color:#00F5FF;font-size:13px;">📑 {d.get('decree_no', 'RESMİ TEBLİĞ')} — {d.get('title', 'Bakanlık Kararı')}</b>
-                        <span style="background:rgba(0,230,118,0.15);color:#00E676;padding:2px 8px;border-radius:4px;font-weight:700;font-size:10.5px;">{d.get('status', 'Yürürlükte')}</span>
+                        <b style="color:#7DA8DF;font-size:13px;">📑 {d.get('decree_no', 'RESMİ TEBLİĞ')} — {d.get('title', 'Bakanlık Kararı')}</b>
+                        <span style="background:rgba(0,230,118,0.15);color:#10B981;padding:2px 8px;border-radius:4px;font-weight:700;font-size:10.5px;">{d.get('status', 'Yürürlükte')}</span>
                     </div>
                     <b>Hüküm:</b> {d.get('summary', 'Detaylı regülasyon maddesi...')}<br>
                     <b style="color:#FFD700;">ZEUS Operasyonuna Etkisi:</b> {d.get('impact_zeus', 'Konsolosluk tasdikli evraklar hazır bulundurulmalıdır.')}
@@ -17804,7 +17786,7 @@ def render_risk_scenario_simulator_view():
                 col_map = {'Öngörülen Ciro': '#7C93BD', 'Öngörülen Brüt Kâr': '#13A6B5'}
             else:
                 y_cols = ['Öngörülen Ciro']
-                col_map = {'Öngörülen Ciro': '#00F5FF'}
+                col_map = {'Öngörülen Ciro': '#7DA8DF'}
 
             fig_sc = px.bar(
                 pd.DataFrame(chart_data),
@@ -17943,15 +17925,15 @@ def render_risk_scenario_simulator_view():
             ai_risk_placeholder = st.empty()
             with ai_risk_placeholder.container():
                 components.html("""
-                    <div id="risk-loader-card" style="display:flex;flex-direction:column;justify-content:center;gap:12px;height:132px;padding:20px 24px;font-family:'IBM Plex Sans',sans-serif;background:#0F172A;border-radius:8px;border:1px solid rgba(226,232,240,0.10);box-sizing:border-box;">
+                    <div id="risk-loader-card" style="display:flex;flex-direction:column;justify-content:center;gap:12px;height:132px;padding:20px 24px;font-family:'Inter',sans-serif;background:#121C2B;border-radius:8px;border:1px solid rgba(226,232,240,0.10);box-sizing:border-box;">
                         <div style="display:flex;align-items:center;justify-content:space-between;">
                             <div style="display:flex;align-items:center;gap:10px;">
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7DA8DF" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
                                 <span style="color:#FAFAFA;font-weight:600;font-size:13px;letter-spacing:-0.01em;">Finansal Risk & Likidite Analizi Hesaplanıyor</span>
                             </div>
-                            <span style="color:#94A3B8;font-family:'IBM Plex Mono',monospace;font-size:11px;">MODEL: ZGMI-RISK</span>
+                            <span style="color:#94A3B8;font-family:'Geist Mono',monospace;font-size:11px;">MODEL: ZGMI-RISK</span>
                         </div>
-                        <div style="width:100%;height:4px;background:rgba(226,232,240,0.08);border-radius:4px;overflow:hidden;">
+                        <div style="width:100%;height:4px;background:#263347;border-radius:4px;overflow:hidden;">
                             <div id="risk-progress-fill" style="width:0%;height:100%;background:#0C5CAB;border-radius:4px;"></div>
                         </div>
                     </div>
@@ -18363,11 +18345,11 @@ def render_churn_and_partner_performance_view():
         # Country Benchmark Card
         bench_card_html = f"""<div style="background:rgba(19,166,181,0.06);border:1px solid rgba(19,166,181,0.28);border-radius:10px;padding:12px 16px;margin-bottom:16px;font-size:12px;line-height:1.7;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-    <span style="font-weight:700;color:#00F5FF;font-size:13px;">🌍 Değerlendirme Kriteri: {eval_country} Ülke Şartları & IVF Pazar Kıyaslama Rasyoları</span>
+    <span style="font-weight:700;color:#7DA8DF;font-size:13px;">🌍 Değerlendirme Kriteri: {eval_country} Ülke Şartları & IVF Pazar Kıyaslama Rasyoları</span>
     <span style="background:rgba(19,166,181,0.2);color:#4FD1DE;padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600;">{c_gdp_tier}</span>
     </div>
-    • <b>Toplam Lisanslı IVF Klinik Havuzu:</b> {total_country_clinics} Merkez &nbsp;|&nbsp; <b>Partner Kurulu Cihaz:</b> {tot_all_dev} Adet &nbsp;→&nbsp; <span style="color:#00F5FF;font-weight:700;">%{pen_rate:.1f} Pazar Penetrasyonu</span><br>
-    • <b>Kişi Başı GSYİH & Refah:</b> ${c_gdp:,} USD &nbsp;|&nbsp; <b>Devlet IVF Güvencesi:</b> <span style="color:#00E676;font-weight:600;">{c_support}</span><br>
+    • <b>Toplam Lisanslı IVF Klinik Havuzu:</b> {total_country_clinics} Merkez &nbsp;|&nbsp; <b>Partner Kurulu Cihaz:</b> {tot_all_dev} Adet &nbsp;→&nbsp; <span style="color:#7DA8DF;font-weight:700;">%{pen_rate:.1f} Pazar Penetrasyonu</span><br>
+    • <b>Kişi Başı GSYİH & Refah:</b> ${c_gdp:,} USD &nbsp;|&nbsp; <b>Devlet IVF Güvencesi:</b> <span style="color:#10B981;font-weight:600;">{c_support}</span><br>
     • <b>Gümrük & İthalat Bariyeri:</b> %{c_customs_pct:.1f} Tarife / Ortalama {c_customs_days} Gün Bekleme &nbsp;({c_import_diff})<br>
     • <b>Cihaz Başına Ortalama Sarf Tüketimi:</b> <span style="color:#FFD700;font-weight:700;">{boxes_per_dev:.1f} Kutu / Cihaz</span> (Toplam {tot_all_con} Kutu Sarf Hacmi)
     </div>"""
@@ -18512,7 +18494,7 @@ def render_churn_and_partner_performance_view():
         if "CMC" in eval_dist_name or "CONSULTANT" in eval_dist_name:
             st.markdown("""
             <div style="background:rgba(19,166,181,0.08);border:1px solid #13A6B5;border-radius:10px;padding:16px;">
-                <b style="color:#00F5FF;font-size:15px;">📋 CMC (Filistin Pazarı) Özel Yönetici Özeti:</b><br>
+                <b style="color:#7DA8DF;font-size:15px;">📋 CMC (Filistin Pazarı) Özel Yönetici Özeti:</b><br>
                 <div style="color:#CCD7E6;font-size:13px;line-height:1.6;margin-top:6px;">
                     <b>Teşhis:</b> CMC, 2024 ve 2025 yıllarında toplam <b>5 adet ZEUS Pulse Stimulator (AOA)</b> cihazı alarak Filistin'deki referans klinik altyapısını tamamlamıştır. 2026 yılında yeni cihaz alımı yapılmaması toplam ciroda %71.8 düşüş gibi görünse de, <b>46 kutuluk sarf alımı</b> cihazların tam kapasite çalıştığını teyit etmektedir.<br>
                     <b>Kritik Risk:</b> Siparişlerin çeyreklik düzenli açılmaması (2025Q2 ve 2026Q2'de sıfır sipariş); kliniklerin sarf stoku tükenene kadar beklediğini göstermektedir.<br>
@@ -18523,7 +18505,7 @@ def render_churn_and_partner_performance_view():
         else:
             st.markdown(f"""
             <div style="background:rgba(19,166,181,0.08);border:1px solid #13A6B5;border-radius:10px;padding:16px;">
-                <b style="color:#00F5FF;font-size:15px;">📋 {eval_dist_name} Yönetici Aksiyon Notu:</b><br>
+                <b style="color:#7DA8DF;font-size:15px;">📋 {eval_dist_name} Yönetici Aksiyon Notu:</b><br>
                 <div style="color:#CCD7E6;font-size:13px;line-height:1.6;margin-top:6px;">
                     <b>Stratejik Durum:</b> Toplam {format_curr(tot_all_rev)} ciro, {tot_all_dev} kurulu cihaz ve {tot_all_con} kutu sarf malzemesi kaydı bulunmaktadır.<br>
                     <b>Öneri:</b> Çeyreklik sipariş dalgalanmalarını gidermek amacıyla yıllık minimum sarf sipariş taahhüdü ve indirim kademeleri devreye alınmalıdır.
@@ -18594,12 +18576,12 @@ def render_decision_maker_finder_hub(country_df):
     <div style="background:linear-gradient(135deg, rgba(0,119,181,0.15) 0%, rgba(15,23,42,0.95) 100%);border:1.5px solid #0077B5;border-radius:14px;padding:20px 24px;margin-bottom:18px;box-shadow:0 8px 24px rgba(0,0,0,0.35);">
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
             <div>
-                <span style="background:rgba(0,119,181,0.25);color:#38BDF8;font-size:11px;font-weight:800;padding:4px 10px;border-radius:6px;border:1px solid #0077B5;">B2B DECISION MAKER RADAR & LINKEDIN ENGINE</span>
+                <span style="background:rgba(0,119,181,0.25);color:#7DA8DF;font-size:11px;font-weight:800;padding:4px 10px;border-radius:6px;border:1px solid #0077B5;">B2B DECISION MAKER RADAR & LINKEDIN ENGINE</span>
                 <h2 style="margin:6px 0 2px 0;color:#FFFFFF;font-size:24px;font-weight:800;">🤝 Doğrulanmış Karar Verici Bulucu (LinkedIn & E-posta)</h2>
                 <div style="color:#CBD5E1;font-size:13px;">Uluslararası hedef pazarlarda Tüp Bebek (IVF) Klinik Direktörleri, Baş Embriyologlar ve Medikal Satınalma Heyetine canlı LinkedIn arama ve doğrulanmış kurumsal temas kanalı.</div>
             </div>
             <div style="text-align:right;">
-                <span style="background:rgba(0,230,118,0.15);color:#00E676;border:1px solid #00E676;padding:5px 12px;border-radius:20px;font-weight:700;font-size:12px;">● CANLI ARAMA MOTORU AKTİF</span>
+                <span style="background:rgba(0,230,118,0.15);color:#10B981;border:1px solid #10B981;padding:5px 12px;border-radius:20px;font-weight:700;font-size:12px;">● CANLI ARAMA MOTORU AKTİF</span>
                 <div style="color:#94A3B8;font-size:11px;margin-top:4px;">58 Bağımsız Pazar Taranıyor</div>
             </div>
         </div>
@@ -18612,7 +18594,7 @@ def render_decision_maker_finder_hub(country_df):
         st.markdown("""
         <div style="background:#0F192E;border:1px solid rgba(0,119,181,0.35);border-radius:10px;padding:12px 14px;text-align:center;">
             <div style="color:#8FA3C0;font-size:11px;font-weight:600;">HEDEF KARAR VERİCİ HAVUZU</div>
-            <div style="color:#38BDF8;font-size:22px;font-weight:800;">1,850+ Profil</div>
+            <div style="color:#7DA8DF;font-size:22px;font-weight:800;">1,850+ Profil</div>
             <div style="color:#CBD5E1;font-size:11px;">Embriyolog & Klinik Direktörü</div>
         </div>
         """, unsafe_allow_html=True)
@@ -18620,7 +18602,7 @@ def render_decision_maker_finder_hub(country_df):
         st.markdown("""
         <div style="background:#0F192E;border:1px solid rgba(0,230,118,0.3);border-radius:10px;padding:12px 14px;text-align:center;">
             <div style="color:#8FA3C0;font-size:11px;font-weight:600;">KAPSANAN PAZAR</div>
-            <div style="color:#00E676;font-size:22px;font-weight:800;">58 Ülke</div>
+            <div style="color:#10B981;font-size:22px;font-weight:800;">58 Ülke</div>
             <div style="color:#CBD5E1;font-size:11px;">Avrupa, MENA, LATAM, Asya</div>
         </div>
         """, unsafe_allow_html=True)
@@ -18725,8 +18707,8 @@ def render_decision_maker_finder_hub(country_df):
     st.markdown(f"""
     <div style="background:rgba(15,23,42,0.8);border:1.5px solid #0077B5;border-radius:10px;padding:14px 18px;margin:8px 0 14px 0;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-            <span style="font-size:13px;font-weight:700;color:#00F5FF;">🎯 Doğrulanmış Arama Sorgusu & LinkedIn Filtresi ({sel_c}):</span>
-            <span style="background:rgba(0,119,181,0.2);color:#38BDF8;font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px;">Canlı Tıklanabilir Bağlantılar</span>
+            <span style="font-size:13px;font-weight:700;color:#7DA8DF;">🎯 Doğrulanmış Arama Sorgusu & LinkedIn Filtresi ({sel_c}):</span>
+            <span style="background:rgba(0,119,181,0.2);color:#7DA8DF;font-size:11px;font-weight:700;padding:2px 8px;border-radius:4px;">Canlı Tıklanabilir Bağlantılar</span>
         </div>
         <div style="font-size:11.5px;color:#94A3B8;margin-bottom:4px;">LinkedIn: <code style="color:#CCD7E6;">{full_lk_query} {sel_c}</code></div>
         <div style="font-size:11.5px;color:#94A3B8;">Google X-Ray (Şifresiz Profil): <code style="color:#FFB800;">{gx_query}</code></div>
@@ -18769,8 +18751,8 @@ def render_decision_maker_finder_hub(country_df):
 
     with p_tab1:
         st.markdown(f"""
-        <div style="background:rgba(15,23,42,0.85);border:1px solid rgba(0,245,255,0.25);border-radius:8px;padding:14px;font-size:12px;color:#CBD5E1;line-height:1.65;">
-            <b style="color:#00F5FF;">LinkedIn InMail Notu ({sel_c} Uyumlu):</b><br>
+        <div style="background:rgba(15,23,42,0.85);border:1px solid rgba(125,168,223,0.25);border-radius:8px;padding:14px;font-size:12px;color:#CBD5E1;line-height:1.65;">
+            <b style="color:#7DA8DF;">LinkedIn InMail Notu ({sel_c} Uyumlu):</b><br>
             <i>"Sayın Meslektaşım, {inst_disp} bünyesindeki öncü IVF ve embriyoloji çalışmalarınızı takdirle takip ediyoruz. CE Sertifikalı (Class IIa) patentli Elektriksel Oosit Aktivasyon (AOA) sistemimiz ZEUS Pulse Stimulator (ZPS 26) ile TFF vakalarında %82.3 döllenme ve sub-%1.2 lizis sağlayan klinik protokolümüzü paylaşmak üzere ağınıza katılmak isterim. Saygılarımla."</i>
         </div>
         """, unsafe_allow_html=True)
@@ -18778,7 +18760,7 @@ def render_decision_maker_finder_hub(country_df):
     with p_tab2:
         st.markdown(f"""
         <div style="background:rgba(15,23,42,0.85);border:1px solid rgba(0,230,118,0.25);border-radius:8px;padding:14px;font-size:12px;color:#CBD5E1;line-height:1.65;">
-            <b style="color:#00E676;">Resmi B2B Teklif & Bilimsel Tanıtım Mektubu:</b><br>
+            <b style="color:#10B981;">Resmi B2B Teklif & Bilimsel Tanıtım Mektubu:</b><br>
             <b>Konu:</b> Yenilikçi Elektriksel Oosit Aktivasyonu (AOA) Protokolü & Klinik İşbirliği — {inst_disp}<br><br>
             Sayın {inst_disp} Direktörlüğü ve Laboratuvar Heyeti,<br><br>
             ZEUS Bioscience olarak, Toplam Döllenme Başarısızlığı (TFF) ve suboptimal oosit maturasyon vakalarında döllenme oranını %24'ten %82.3'e çıkaran CE Sertifikalı (Class IIa) <b>ZEUS Pulse Stimulator (ZPS 26)</b> teknolojimizi bilgilerinize sunmaktan onur duyarız.<br><br>
@@ -18827,9 +18809,9 @@ def render_decision_maker_finder_hub(country_df):
                 with pc1:
                     st.markdown(f"""
                     <div style="font-size:12px;color:#CBD5E1;line-height:1.6;">
-                        <b>🏷️ Kategori:</b> {pr.get('category', 'IVF Merkezi')} | <b>Seviye:</b> <span style="color:#00F5FF;font-weight:700;">{pr.get('tier', 'Tier 1')}</span><br>
+                        <b>🏷️ Kategori:</b> {pr.get('category', 'IVF Merkezi')} | <b>Seviye:</b> <span style="color:#7DA8DF;font-weight:700;">{pr.get('tier', 'Tier 1')}</span><br>
                         <b>👤 Karar Verici Personel:</b> <span style="color:#FFFFFF;font-weight:600;">{pr.get('contact_person', 'Medikal Direktör & Baş Embriyolog')}</span><br>
-                        <b>🎯 Eşleşen ZEUS Çözümü:</b> <span style="color:#00E676;">{pr.get('product_match', 'ZEUS Pulse Stimulator (ZPS 26) + Z-Dish')}</span><br>
+                        <b>🎯 Eşleşen ZEUS Çözümü:</b> <span style="color:#10B981;">{pr.get('product_match', 'ZEUS Pulse Stimulator (ZPS 26) + Z-Dish')}</span><br>
                         <b>💡 Stratejik Gerekçe:</b> {pr.get('strategy_rationale', 'Yüksek siklus hacmi ve AOA ihtiyacı')}
                     </div>
                     {render_prospect_rec_html(pr, c_row, sel_c)}
@@ -18838,8 +18820,8 @@ def render_decision_maker_finder_hub(country_df):
                     st.markdown(f"""
                     <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:10px;font-size:11.5px;color:#CCD7E6;">
                         <b>📞 Santral / Tel:</b> {pr.get('phone', '+90 212 000 0000')}<br>
-                        <b>🌐 Web:</b> <a href="http://{pr.get('website','zeusbioscience.com')}" target="_blank" style="color:#38BDF8;">{pr.get('website','Web Sitesi')}</a><br>
-                        <b>📧 Kayıtlı E-posta:</b> <code style="color:{'#F87171' if is_info_mail else '#00E676'};">{pr.get('email','contact@zeusbioscience.com')}</code>
+                        <b>🌐 Web:</b> <a href="http://{pr.get('website','zeusbioscience.com')}" target="_blank" style="color:#7DA8DF;">{pr.get('website','Web Sitesi')}</a><br>
+                        <b>📧 Kayıtlı E-posta:</b> <code style="color:{'#F87171' if is_info_mail else '#10B981'};">{pr.get('email','contact@zeusbioscience.com')}</code>
                     </div>
                     """, unsafe_allow_html=True)
 
@@ -18944,16 +18926,16 @@ def render_active_omni_search_hub(query_str):
 
     # Render Header Card with Clear Button
     st.markdown(f"""
-    <div style="background:linear-gradient(135deg, rgba(15,23,42,0.96) 0%, rgba(30,41,59,0.94) 100%);border:1.5px solid #00F5FF;border-radius:12px;padding:14px 18px;margin-bottom:14px;box-shadow:0 6px 20px rgba(0,245,255,0.2);">
+    <div style="background:linear-gradient(135deg, rgba(15,23,42,0.96) 0%, rgba(30,41,59,0.94) 100%);border:1.5px solid #7DA8DF;border-radius:12px;padding:14px 18px;margin-bottom:14px;box-shadow:0 6px 20px rgba(125,168,223,0.2);">
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
             <div style="display:flex;align-items:center;gap:10px;">
                 <span style="font-size:20px;">🔍</span>
                 <div>
                     <h4 style="margin:0;color:#FFFFFF;font-size:16px;font-weight:800;">
-                        Canlı Arama Sonuçları: <span style="color:#00F5FF;">"{q_clean}"</span>
+                        Canlı Arama Sonuçları: <span style="color:#7DA8DF;">"{q_clean}"</span>
                     </h4>
                     <div style="color:#94A3B8;font-size:12px;margin-top:2px;">
-                        Toplam <b style="color:#00E676;">{tot_matches}</b> sonuç eşleşti ({len(matched_cultures)} Kültür & Sözleşme, {len(matched_firms)} Kurum/Firma, {len(matched_tenders)} İhale, {len(matched_products)} Ürün/Mevzuat)
+                        Toplam <b style="color:#10B981;">{tot_matches}</b> sonuç eşleşti ({len(matched_cultures)} Kültür & Sözleşme, {len(matched_firms)} Kurum/Firma, {len(matched_tenders)} İhale, {len(matched_products)} Ürün/Mevzuat)
                     </div>
                 </div>
             </div>
@@ -18973,7 +18955,7 @@ def render_active_omni_search_hub(query_str):
 
     # QUICK JUMP SHORTCUT BUTTONS (Doğrudan İlgili Masaya / Sekmeye Git)
     st.markdown("""
-    <div style="background:rgba(255,255,255,0.02);border:1px dashed rgba(0,245,255,0.25);border-radius:8px;padding:8px 12px;margin-bottom:12px;">
+    <div style="background:rgba(255,255,255,0.02);border:1px dashed rgba(125,168,223,0.25);border-radius:8px;padding:8px 12px;margin-bottom:12px;">
         <span style="font-size:11.5px;color:#CBD5E1;font-weight:700;">🚀 Doğrudan İlgili Masaya / Sekmeye Git (Tek Tıkla Geçiş):</span>
     </div>
     """, unsafe_allow_html=True)
@@ -19076,15 +19058,15 @@ def render_active_omni_search_hub(query_str):
                         f_strat = f_item.get('strategy_rationale', '')
 
                         st.markdown(f"""
-                        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,245,255,0.22);border-radius:8px;padding:12px 14px;margin-bottom:8px;">
+                        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(125,168,223,0.22);border-radius:8px;padding:12px 14px;margin-bottom:8px;">
                             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-                                <b style="color:#00F5FF;font-size:14px;">{f_name}</b>
-                                <span style="background:rgba(0,245,255,0.12);color:#00F5FF;border:1px solid rgba(0,245,255,0.3);padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:700;">{f_c} • {f_tier}</span>
+                                <b style="color:#7DA8DF;font-size:14px;">{f_name}</b>
+                                <span style="background:rgba(125,168,223,0.12);color:#7DA8DF;border:1px solid rgba(125,168,223,0.3);padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:700;">{f_c} • {f_tier}</span>
                             </div>
                             <div style="color:#CBD5E1;font-size:11.8px;margin-top:4px;">
                                 📍 <b>Şehir / Kategori:</b> {f_city} | {f_cat}<br>
                                 👤 <b>Yetkili Muhatap:</b> {f_person}<br>
-                                ✉️ <b>E-posta:</b> <a href="mailto:{f_email}" style="color:#38BDF8;text-decoration:none;">{f_email}</a> {f'| 📞 <b>Telefon:</b> {f_phone}' if f_phone else ''} {f'| 🌐 <a href="{f_web}" target="_blank" style="color:#00F5FF;text-decoration:none;">Web</a>' if f_web else ''}
+                                ✉️ <b>E-posta:</b> <a href="mailto:{f_email}" style="color:#7DA8DF;text-decoration:none;">{f_email}</a> {f'| 📞 <b>Telefon:</b> {f_phone}' if f_phone else ''} {f'| 🌐 <a href="{f_web}" target="_blank" style="color:#7DA8DF;text-decoration:none;">Web</a>' if f_web else ''}
                             </div>
                             {f'<div style="color:#94A3B8;font-size:11px;margin-top:4px;border-top:1px dashed rgba(255,255,255,0.08);padding-top:4px;">💡 <b>Stratejik Gerekçe:</b> {f_strat}</div>' if f_strat else ''}
                         </div>
@@ -19107,8 +19089,8 @@ def render_active_omni_search_hub(query_str):
                         st.markdown(f"""
                         <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,230,118,0.25);border-radius:8px;padding:12px 14px;margin-bottom:8px;">
                             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-                                <b style="color:#00E676;font-size:13.5px;">🏛️ {t_country} Sağlık İhaleleri & Satın Alma Kanalları</b>
-                                <span style="background:rgba(0,230,118,0.12);color:#00E676;border:1px solid rgba(0,230,118,0.3);padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:700;">Bütçe: {t_bgt}</span>
+                                <b style="color:#10B981;font-size:13.5px;">🏛️ {t_country} Sağlık İhaleleri & Satın Alma Kanalları</b>
+                                <span style="background:rgba(0,230,118,0.12);color:#10B981;border:1px solid rgba(0,230,118,0.3);padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:700;">Bütçe: {t_bgt}</span>
                             </div>
                             <div style="color:#CBD5E1;font-size:11.8px;margin-top:4px;">
                                 🏛️ <b>Yetkili Otorite:</b> {t_auth}
@@ -19122,7 +19104,7 @@ def render_active_omni_search_hub(query_str):
                             else:
                                 p_name = str(port)
                                 p_url = '#'
-                            st.markdown(f'<a href="{p_url}" target="_blank" style="display:inline-block;background:rgba(0,245,255,0.1);color:#00F5FF;border:1px solid rgba(0,245,255,0.3);padding:3px 8px;border-radius:4px;font-size:11px;text-decoration:none;">🔗 {p_name}</a>', unsafe_allow_html=True)
+                            st.markdown(f'<a href="{p_url}" target="_blank" style="display:inline-block;background:rgba(125,168,223,0.1);color:#7DA8DF;border:1px solid rgba(125,168,223,0.3);padding:3px 8px;border-radius:4px;font-size:11px;text-decoration:none;">🔗 {p_name}</a>', unsafe_allow_html=True)
                         st.markdown("</div></div>", unsafe_allow_html=True)
                         if st.button(f"Bu İhalenin Masasına Git ({t_country})", key=f"btn_go_tender_item_{t_country}_{idx_t}"):
                             st.session_state["main_nav_radio"] = "01 / Pazar İstihbaratı & Ülke Analizi"
@@ -19135,14 +19117,14 @@ def render_active_omni_search_hub(query_str):
                 else:
                     for idx_p, pr in enumerate(matched_products):
                         st.markdown(f"""
-                        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,245,255,0.25);border-radius:8px;padding:12px 14px;margin-bottom:8px;">
+                        <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(125,168,223,0.25);border-radius:8px;padding:12px 14px;margin-bottom:8px;">
                             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-                                <b style="color:#00F5FF;font-size:14px;">{pr['title']}</b>
-                                <span style="background:rgba(0,245,255,0.12);color:#00F5FF;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:700;">{pr['badge']}</span>
+                                <b style="color:#7DA8DF;font-size:14px;">{pr['title']}</b>
+                                <span style="background:rgba(125,168,223,0.12);color:#7DA8DF;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:700;">{pr['badge']}</span>
                             </div>
                             <div style="color:#CBD5E1;font-size:11.8px;margin-top:4px;line-height:1.6;">
                                 🔬 <b>Spesifikasyon:</b> {pr['specs']}<br>
-                                📜 <b>Sertifikasyon:</b> <span style="color:#00E676;font-weight:700;">{pr['cert']}</span> | 💰 <b>Fiyat:</b> <span style="color:#FFD700;font-weight:700;">{pr['price']}</span><br>
+                                📜 <b>Sertifikasyon:</b> <span style="color:#10B981;font-weight:700;">{pr['cert']}</span> | 💰 <b>Fiyat:</b> <span style="color:#FFD700;font-weight:700;">{pr['price']}</span><br>
                                 🎯 <b>Klinik Endikasyon:</b> {pr['indications']}
                             </div>
                         </div>
@@ -19159,7 +19141,7 @@ st.markdown("""
 <style>
     /* Executive Console Dock Container (Enterprise Navy Glass) */
     div[class*="st-key-zgmi_top_control_dock"] {
-        background: #0F172A !important;
+        background: #121C2B !important;
         border: 1px solid rgba(226, 232, 240, 0.10) !important;
         border-radius: 8px !important;
         padding: 6px 12px !important;
@@ -19172,31 +19154,31 @@ st.markdown("""
     div[class*="st-key-bot_prev_nav_"] button,
     div[class*="st-key-bot_next_nav_"] button {
         border-radius: 50% !important;
-        width: 34px !important;
-        height: 34px !important;
-        min-width: 34px !important;
-        max-width: 34px !important;
+        width: 32px !important;
+        height: 32px !important;
+        min-width: 32px !important;
+        max-width: 32px !important;
         padding: 0 !important;
         margin: 0 auto !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        background: #111622 !important;
-        border: 1px solid rgba(226, 232, 240, 0.09) !important;
-        color: #94A3B8 !important;
-        font-size: 15px !important;
+        background: #121C2B !important;
+        border: 1px solid #263347 !important;
+        color: #CBD5E1 !important;
+        font-size: 14px !important;
         font-weight: 500 !important;
         line-height: 1 !important;
         box-shadow: none !important;
-        transition: all 160ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+        transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
     div[class*="st-key-btn_prev_"] button:hover,
     div[class*="st-key-btn_next_"] button:hover,
     div[class*="st-key-bot_prev_nav_"] button:hover,
     div[class*="st-key-bot_next_nav_"] button:hover {
-        background: #161D2E !important;
-        border-color: rgba(56, 189, 248, 0.45) !important;
-        color: #38BDF8 !important;
+        background: #162235 !important;
+        border-color: #7DA8DF !important;
+        color: #7DA8DF !important;
     }
 
     /* Subview Pills Container */
@@ -19221,31 +19203,30 @@ st.markdown("""
         width: auto !important;
         min-width: max-content !important;
         max-width: none !important;
-        height: 34px !important;
-        border-radius: 6px !important;
-        background: #111622 !important;
-        border: 1px solid rgba(226, 232, 240, 0.09) !important;
+        height: 32px !important;
+        border-radius: 4px !important;
+        background: #121C2B !important;
+        border: 1px solid #263347 !important;
         color: #94A3B8 !important;
         font-family: var(--zg-font-sans) !important;
-        font-size: 12.5px !important;
+        font-size: 12px !important;
         font-weight: 500 !important;
-        letter-spacing: -0.01em !important;
-        padding: 5px 12px !important;
+        padding: 4px 12px !important;
         margin: 0 2px !important;
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
         white-space: nowrap !important;
         box-shadow: none !important;
-        transition: all 160ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+        transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
 
     div[data-testid="stButtonGroup"] button:hover,
     div[data-testid="stButtonGroup"] [data-variant="pills"]:hover,
     div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stButtonGroup"] button:hover {
-        background: #161D2E !important;
-        border-color: rgba(226, 232, 240, 0.22) !important;
-        color: #F8FAFC !important;
+        background: #162235 !important;
+        border-color: #364966 !important;
+        color: #CBD5E1 !important;
     }
 
     div[data-testid="stButtonGroup"] button[aria-selected="true"],
@@ -19258,15 +19239,15 @@ st.markdown("""
         width: auto !important;
         min-width: max-content !important;
         max-width: none !important;
-        height: 34px !important;
-        border-radius: 6px !important;
-        background: #161D2E !important;
-        border: 1px solid rgba(56, 189, 248, 0.55) !important;
+        height: 32px !important;
+        border-radius: 4px !important;
+        background: #0B111C !important;
+        border: 1px solid #7DA8DF !important;
         color: #F8FAFC !important;
         font-family: var(--zg-font-sans) !important;
-        font-size: 12.5px !important;
+        font-size: 12px !important;
         font-weight: 600 !important;
-        padding: 5px 14px !important;
+        padding: 4px 12px !important;
         box-shadow: none !important;
         white-space: nowrap !important;
     }
@@ -19276,36 +19257,36 @@ st.markdown("""
         white-space: nowrap !important;
         overflow: visible !important;
         text-overflow: clip !important;
-        font-size: 12.5px !important;
+        font-size: 12px !important;
         color: inherit !important;
     }
 
     div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stTextInput"] div[data-baseweb="input"] {
-        border-radius: 6px !important;
-        background: #111622 !important;
-        border: 1px solid rgba(226, 232, 240, 0.09) !important;
-        height: 34px !important;
+        border-radius: 4px !important;
+        background: #0B111C !important;
+        border: 1px solid #263347 !important;
+        height: 32px !important;
         box-shadow: none !important;
-        transition: all 160ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+        transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
     div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stTextInput"] div[data-baseweb="input"]:focus-within {
-        border-color: #38BDF8 !important;
+        border-color: #7DA8DF !important;
     }
 </style>
 """, unsafe_allow_html=True)
 
 # OFFICIAL TOP STRIP: CE CERTIFIED & ISO 13485 / 14001 / 45001
 st.markdown(f'''
-<div style="background: #111622; border: 1px solid rgba(226, 232, 240, 0.09); border-radius: 6px; padding: 8px 16px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+<div style="background: #121C2B; border: 1px solid #263347; border-radius: 6px; padding: 8px 16px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
     <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
         <span style="display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:500;color:#94A3B8;letter-spacing:0.06em;text-transform:uppercase;margin-right:4px;">
             {lucide_icon("shield-check", size=16, stroke_width=1.65, color=ICON_MUTED)}
             <span>KALİTE AKREDİTASYONU</span>
         </span>
-        <span style="background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.25);color:#F8FAFC;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:500;font-family:'IBM Plex Mono',monospace;">CE MDR · Class IIa</span>
-        <span style="background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.25);color:#34D399;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:500;font-family:'IBM Plex Mono',monospace;">ISO 13485:2016</span>
-        <span style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.25);color:#FBBF24;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:500;font-family:'IBM Plex Mono',monospace;">ISO 14001:2015</span>
-        <span style="background:rgba(148,163,184,0.08);border:1px solid rgba(148,163,184,0.25);color:#CBD5E1;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:500;font-family:'IBM Plex Mono',monospace;">ISO 45001:2018</span>
+        <span style="background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.25);color:#F8FAFC;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:500;font-family:'Geist Mono',monospace;">CE MDR · Class IIa</span>
+        <span style="background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.25);color:#34D399;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:500;font-family:'Geist Mono',monospace;">ISO 13485:2016</span>
+        <span style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.25);color:#FBBF24;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:500;font-family:'Geist Mono',monospace;">ISO 14001:2015</span>
+        <span style="background:rgba(148,163,184,0.08);border:1px solid rgba(148,163,184,0.25);color:#CBD5E1;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:500;font-family:'Geist Mono',monospace;">ISO 45001:2018</span>
     </div>
     <div style="font-size:11px;color:#94A3B8;font-weight:400;display:flex;align-items:center;gap:8px;">
         <span style="color:#CBD5E1;font-weight:500;">Elektriksel Oosit Aktivasyonu (AOA)</span>
@@ -19379,8 +19360,8 @@ with st.container(key="zgmi_top_control_dock"):
             active_view = active_subviews[0]
             st.markdown(f"""
             <div style="display:flex;align-items:center;gap:10px;padding:4px 0;">
-                <span style="font-size:14px;font-weight:700;color:#00F5FF;letter-spacing:0.02em;">{nav_selection}</span>
-                <span style="background:rgba(0,245,255,0.12);color:#00F5FF;border:1px solid rgba(0,245,255,0.3);padding:2px 10px;border-radius:12px;font-size:11px;font-weight:600;">{cur_nav_info.get('badge', 'Modül Aktif')}</span>
+                <span style="font-size:14px;font-weight:700;color:#7DA8DF;letter-spacing:0.02em;">{nav_selection}</span>
+                <span style="background:rgba(125,168,223,0.12);color:#7DA8DF;border:1px solid rgba(125,168,223,0.3);padding:2px 10px;border-radius:12px;font-size:11px;font-weight:600;">{cur_nav_info.get('badge', 'Modül Aktif')}</span>
             </div>
             """, unsafe_allow_html=True)
 
@@ -19419,12 +19400,12 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
         sys_dt_hdr = get_system_datetime_display()
         st.markdown(f'''
         <div style='text-align:right;padding-top:4px;'>
-            <div style="display:inline-flex;align-items:center;gap:8px;background:#111622;border:1px solid rgba(226,232,240,0.09);border-radius:6px;padding:6px 12px;margin-bottom:6px;white-space:nowrap;">
+            <div style="display:inline-flex;align-items:center;gap:8px;background:#121C2B;border:1px solid #263347;border-radius:6px;padding:6px 12px;margin-bottom:6px;white-space:nowrap;">
                 <span class="status-dot-live"></span>
                 <span style="color:#F8FAFC;font-weight:500;font-size:11.5px;">System Online</span>
                 <span style="color:#475569;">|</span>
                 {lucide_icon("clock", size=16, stroke_width=1.5, color=ICON_MUTED)}
-                <span style="color:#CBD5E1;font-weight:500;font-size:11.5px;font-family:'IBM Plex Mono',monospace;">{sys_dt_hdr}</span>
+                <span style="color:#CBD5E1;font-weight:500;font-size:11.5px;font-family:'Geist Mono',monospace;">{sys_dt_hdr}</span>
             </div>
             <br>
             <small style='color:#94A3B8;font-size:11.5px;'>Seçili Dönem: <b style="color:#F8FAFC;">{year_sel}</b></small>
@@ -19478,10 +19459,10 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
     all_time_tot_banner = sum(y_sums_banner.values())
 
     st.markdown(f'''
-    <div style="background:#111622;border:1px solid rgba(226,232,240,0.09);border-radius:6px;padding:14px 18px;margin-bottom:16px;">
+    <div style="background:#121C2B;border:1px solid #263347;border-radius:6px;padding:14px 18px;margin-bottom:16px;">
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
             <div>
-                <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.25);border-radius:4px;padding:3px 8px;font-size:11px;font-weight:600;color:#38BDF8;letter-spacing:0.04em;">RESMİ VERİ KAPSAMI & 7 YILLIK TÜM DÖNEMLER (2020 - 2026)</span>
+                <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.25);border-radius:4px;padding:3px 8px;font-size:11px;font-weight:600;color:#7DA8DF;letter-spacing:0.04em;">RESMİ VERİ KAPSAMI & 7 YILLIK TÜM DÖNEMLER (2020 - 2026)</span>
                 <div style="font-size:13px;color:#CBD5E1;margin-top:6px;line-height:1.5;">
                     Seçili Kapsam: <b style="color:#F8FAFC;">{year_sel}</b> | Kapsam: <b style="color:#34D399;">HERKES DAHİLDİR</b> (6 Yetkili Distribütör + 42 Doğrudan Klinik/Hastane + Kardeş Şirket Gen-Sa).
                 </div>
@@ -19493,7 +19474,7 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
                 <div>2023: <b>{format_curr(y_sums_banner[2023])}</b></div>
                 <div>2024: <b>{format_curr(y_sums_banner[2024])}</b></div>
                 <div>2025: <b>{format_curr(y_sums_banner[2025])}</b></div>
-                <div>2026: <b style="color:#00F5FF;">{format_curr(y_sums_banner[2026])}</b></div>
+                <div>2026: <b style="color:#7DA8DF;">{format_curr(y_sums_banner[2026])}</b></div>
                 <div style="border-left:1px solid rgba(255,255,255,0.20);padding-left:8px;"><b>Tüm Zamanlar:</b> <b style="color:#10B981;">{format_curr(all_time_tot_banner)}</b></div>
             </div>
         </div>
@@ -19520,7 +19501,7 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
         st.markdown('''
         <div style="text-align:right;padding-top:4px;">
             <span style="font-size:11px;color:#94A3B8;">2026 Kanal Kırılımı: </span>
-            <span style="font-size:11px;color:#00F5FF;font-weight:700;">Distribütör: $107.7K (%50.1)</span>
+            <span style="font-size:11px;color:#7DA8DF;font-weight:700;">Distribütör: $107.7K (%50.1)</span>
             <span style="color:#64748B;"> | </span>
             <span style="font-size:11px;color:#FFB800;font-weight:700;">Klinikler: $74.1K (%34.5)</span>
             <span style="color:#64748B;"> | </span>
@@ -19534,8 +19515,8 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
     if "Distribütörler" in exec_scope:
         sc_rows = dist_rows
         scope_badge_label = "YALNIZCA DİSTRİBÜTÖRLER"
-        scope_badge_bg = "rgba(0,245,255,0.15)"
-        scope_badge_color = "#00F5FF"
+        scope_badge_bg = "rgba(125,168,223,0.15)"
+        scope_badge_color = "#7DA8DF"
         scope_desc_str = "6 Yetkili Distribütör Hub ($107.7K)"
     elif "Klinikler" in exec_scope:
         sc_rows = pure_clinic_rows
@@ -19648,7 +19629,7 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
     # --------------------------------------------------------------------------
     # 🏛️ 2020-2026 KONSOLİDE TÜM ZAMANLAR KÜMÜLATİF SKOR PANELİ
     all_time_matrix_html = (
-        f'<div style="background:linear-gradient(135deg, rgba(13,22,40,0.92) 0%, rgba(20,32,56,0.88) 100%); border:1px solid rgba(0,245,255,0.32); border-radius:12px; padding:15px 18px; margin-bottom:18px; box-shadow:0 8px 28px rgba(0,0,0,0.45); backdrop-filter:blur(12px);">'
+        f'<div style="background:linear-gradient(135deg, rgba(13,22,40,0.92) 0%, rgba(20,32,56,0.88) 100%); border:1px solid rgba(125,168,223,0.32); border-radius:12px; padding:15px 18px; margin-bottom:18px; box-shadow:0 8px 28px rgba(0,0,0,0.45);">'
         f'<div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; margin-bottom:12px; border-bottom:1px solid rgba(255,255,255,0.08); padding-bottom:8px;">'
         f'<div style="display:flex; align-items:center; gap:10px;">'
         f'<span style="font-size:19px;">🏛️</span>'
@@ -19663,26 +19644,26 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
         f'</div>'
         f'</div>'
         f'<div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(230px, 1fr)); gap:12px;">'
-        f'<div style="background:rgba(15,23,42,0.75); border:1px solid rgba(0,245,255,0.22); border-left:3px solid #00F5FF; border-radius:8px; padding:10px 14px;">'
+        f'<div style="background:rgba(15,23,42,0.75); border:1px solid rgba(125,168,223,0.22); border-left:3px solid #7DA8DF; border-radius:8px; padding:10px 14px;">'
         f'<div style="display:flex; justify-content:space-between; align-items:center;">'
         f'<span style="font-size:11px; font-weight:700; color:#94A3B8; text-transform:uppercase;">🌐 2020-2026 TOPLAM NET SATIŞ</span>'
-        f'<span style="font-size:9.5px; background:rgba(0,245,255,0.15); color:#00F5FF; padding:1px 5px; border-radius:3px; font-weight:700;">KÜMÜLATİF</span>'
+        f'<span style="font-size:9.5px; background:rgba(125,168,223,0.15); color:#7DA8DF; padding:1px 5px; border-radius:3px; font-weight:700;">KÜMÜLATİF</span>'
         f'</div>'
-        f'<div style="font-size:24px; font-weight:800; color:#00F5FF; margin-top:3px;">{format_curr(sc_all_time_rev)}</div>'
+        f'<div style="font-size:24px; font-weight:800; color:#7DA8DF; margin-top:3px;">{format_curr(sc_all_time_rev)}</div>'
         f'<div style="font-size:10px; color:#E2E8F0; margin-top:3px;">🤝 Dist: <b>{format_curr(sc_all_time_dist_rev)}</b> <span style="color:#64748B;">|</span> 🏥 Klinik: <b>{format_curr(sc_all_time_clin_rev)}</b>{(" <span style='color:#64748B;'>|</span> 🏢 Gen-Sa: <b>" + format_curr(sc_all_time_sister_rev) + "</b>") if sc_all_time_sister_rev > 0 else ""}</div>'
         f'<div style="margin-top:6px; padding-top:5px; border-top:1px solid rgba(255,255,255,0.06); font-size:9.5px; color:#94A3B8; display:flex; justify-content:space-between; flex-wrap:wrap; gap:3px;">'
-        f'<span>2020:<b>{format_curr(sc_rev_yr[2020])}</b></span><span>2021:<b>{format_curr(sc_rev_yr[2021])}</b></span><span>2022:<b>{format_curr(sc_rev_yr[2022])}</b></span><span>2023:<b>{format_curr(sc_rev_yr[2023])}</b></span><span>2024:<b>{format_curr(sc_rev_yr[2024])}</b></span><span>2025:<b>{format_curr(sc_rev_yr[2025])}</b></span><span style="color:#00F5FF;">2026:<b>{format_curr(sc_rev_yr[2026])}</b></span>'
+        f'<span>2020:<b>{format_curr(sc_rev_yr[2020])}</b></span><span>2021:<b>{format_curr(sc_rev_yr[2021])}</b></span><span>2022:<b>{format_curr(sc_rev_yr[2022])}</b></span><span>2023:<b>{format_curr(sc_rev_yr[2023])}</b></span><span>2024:<b>{format_curr(sc_rev_yr[2024])}</b></span><span>2025:<b>{format_curr(sc_rev_yr[2025])}</b></span><span style="color:#7DA8DF;">2026:<b>{format_curr(sc_rev_yr[2026])}</b></span>'
         f'</div>'
         f'</div>'
-        f'<div style="background:rgba(15,23,42,0.75); border:1px solid rgba(56,189,248,0.22); border-left:3px solid #38BDF8; border-radius:8px; padding:10px 14px;">'
+        f'<div style="background:rgba(15,23,42,0.75); border:1px solid rgba(56,189,248,0.22); border-left:3px solid #7DA8DF; border-radius:8px; padding:10px 14px;">'
         f'<div style="display:flex; justify-content:space-between; align-items:center;">'
         f'<span style="font-size:11px; font-weight:700; color:#94A3B8; text-transform:uppercase;">🔬 2020-2026 TOPLAM SATILAN CİHAZ</span>'
-        f'<span style="font-size:9.5px; background:rgba(56,189,248,0.15); color:#38BDF8; padding:1px 5px; border-radius:3px; font-weight:700;">{sc_all_time_dev_cnt} CİHAZ</span>'
+        f'<span style="font-size:9.5px; background:rgba(56,189,248,0.15); color:#7DA8DF; padding:1px 5px; border-radius:3px; font-weight:700;">{sc_all_time_dev_cnt} CİHAZ</span>'
         f'</div>'
-        f'<div style="font-size:24px; font-weight:800; color:#38BDF8; margin-top:3px;">{sc_all_time_dev_cnt:,} Adet Cihaz</div>'
+        f'<div style="font-size:24px; font-weight:800; color:#7DA8DF; margin-top:3px;">{sc_all_time_dev_cnt:,} Adet Cihaz</div>'
         f'<div style="font-size:10px; color:#E2E8F0; margin-top:3px;">🤝 Dist: <b>{sc_all_time_dist_dev} Cihaz</b> <span style="color:#64748B;">|</span> 🏥 Klinik: <b>{sc_all_time_clin_dev} Cihaz</b>{(" <span style='color:#64748B;'>|</span> 🏢 Gen-Sa: <b>" + str(sc_all_time_sister_dev) + "</b>") if sc_all_time_sister_dev > 0 else ""}</div>'
         f'<div style="margin-top:6px; padding-top:5px; border-top:1px solid rgba(255,255,255,0.06); font-size:9.5px; color:#94A3B8; display:flex; justify-content:space-between; flex-wrap:wrap; gap:3px;">'
-        f'<span>2020:<b>{sc_dev_yr[2020]}</b></span><span>2021:<b>{sc_dev_yr[2021]}</b></span><span>2022:<b>{sc_dev_yr[2022]}</b></span><span>2023:<b>{sc_dev_yr[2023]}</b></span><span>2024:<b>{sc_dev_yr[2024]}</b></span><span>2025:<b>{sc_dev_yr[2025]}</b></span><span style="color:#38BDF8;">2026:<b>{sc_dev_yr[2026]}</b></span>'
+        f'<span>2020:<b>{sc_dev_yr[2020]}</b></span><span>2021:<b>{sc_dev_yr[2021]}</b></span><span>2022:<b>{sc_dev_yr[2022]}</b></span><span>2023:<b>{sc_dev_yr[2023]}</b></span><span>2024:<b>{sc_dev_yr[2024]}</b></span><span>2025:<b>{sc_dev_yr[2025]}</b></span><span style="color:#7DA8DF;">2026:<b>{sc_dev_yr[2026]}</b></span>'
         f'</div>'
         f'</div>'
         f'<div style="background:rgba(15,23,42,0.75); border:1px solid rgba(255,184,0,0.22); border-left:3px solid #FFB800; border-radius:8px; padding:10px 14px;">'
@@ -19718,20 +19699,20 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
     k1, k2, k3, k4, k5, k6 = st.columns(6)
     with k1:
         st.markdown(
-            f'<div class="kpi-container" style="border-top: 3px solid #00F5FF;">'
+            f'<div class="kpi-container" style="border-top: 3px solid #7DA8DF;">'
             f'<div>'
             f'<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:4px;margin-bottom:6px;">'
             f'<div>'
             f'<div style="font-size:13px;font-weight:800;color:#FFFFFF;line-height:1.2;">Net Satış</div>'
             f'<div style="font-size:9px;color:#94A3B8;font-weight:600;letter-spacing:0.4px;">NET SALES</div>'
             f'</div>'
-            f'<span style="font-size:8.5px;background:rgba(0,245,255,0.15);color:#00F5FF;padding:2px 5px;border-radius:4px;font-weight:700;white-space:nowrap;flex-shrink:0;">{y_badge_str}</span>'
+            f'<span style="font-size:8.5px;background:rgba(125,168,223,0.15);color:#7DA8DF;padding:2px 5px;border-radius:4px;font-weight:700;white-space:nowrap;flex-shrink:0;">{y_badge_str}</span>'
             f'</div>'
             f'<div class="kpi-val" style="font-size:23px;font-weight:800;color:#FFFFFF;margin-top:2px;">{format_curr(sc_total_rev)}</div>'
-            f'<div style="font-size:10px;color:#00E676;font-weight:600;margin-top:1px;">{("233,905.19 TL Muhasebe Tutarı" if "2020" in year_sel else f"+{sc_avg_growth:.1f}% vs LY")}</div>'
+            f'<div style="font-size:10px;color:#10B981;font-weight:600;margin-top:1px;">{("233,905.19 TL Muhasebe Tutarı" if "2020" in year_sel else f"+{sc_avg_growth:.1f}% vs LY")}</div>'
             f'</div>'
             f'<div style="margin-top:6px;">'
-            f'<div style="background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.22);border-radius:5px;padding:3px 6px;font-size:9.5px;color:#00F5FF;font-weight:700;">'
+            f'<div style="background:rgba(125,168,223,0.08);border:1px solid rgba(125,168,223,0.22);border-radius:5px;padding:3px 6px;font-size:9.5px;color:#7DA8DF;font-weight:700;">'
             f'🌐 2020-2026 Toplam: <b>{format_curr(sc_all_time_rev)}</b>'
             f'</div>'
             f'<div style="margin-top:5px;padding-top:5px;border-top:1px solid rgba(255,255,255,0.08);font-size:9.5px;line-height:1.4;color:#94A3B8;">'
@@ -19775,20 +19756,20 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
         )
     with k3:
         st.markdown(
-            f'<div class="kpi-container" style="border-top: 3px solid #38BDF8;">'
+            f'<div class="kpi-container" style="border-top: 3px solid #7DA8DF;">'
             f'<div>'
             f'<div style="display:flex;justify-content:space-between;align-items:flex-start;gap:4px;margin-bottom:6px;">'
             f'<div>'
             f'<div style="font-size:13px;font-weight:800;color:#FFFFFF;line-height:1.2;">Kurulu Cihaz</div>'
             f'<div style="font-size:9px;color:#94A3B8;font-weight:600;letter-spacing:0.4px;">CİHAZ SATIŞI</div>'
             f'</div>'
-            f'<span style="font-size:8.5px;background:rgba(56,189,248,0.15);color:#38BDF8;padding:2px 5px;border-radius:4px;font-weight:700;white-space:nowrap;flex-shrink:0;">{y_badge_str}</span>'
+            f'<span style="font-size:8.5px;background:rgba(56,189,248,0.15);color:#7DA8DF;padding:2px 5px;border-radius:4px;font-weight:700;white-space:nowrap;flex-shrink:0;">{y_badge_str}</span>'
             f'</div>'
             f'<div class="kpi-val" style="font-size:23px;font-weight:800;color:#FFFFFF;margin-top:2px;">{sc_total_devices:,} Cihaz</div>'
-            f'<div style="font-size:10px;color:#00E676;font-weight:600;margin-top:1px;">{("3 Set: Florya, Diyarlife, Tavmergen" if "2020" in year_sel else f"Cihaz Geliri: {format_curr(sc_total_dev_rev)}")}</div>'
+            f'<div style="font-size:10px;color:#10B981;font-weight:600;margin-top:1px;">{("3 Set: Florya, Diyarlife, Tavmergen" if "2020" in year_sel else f"Cihaz Geliri: {format_curr(sc_total_dev_rev)}")}</div>'
             f'</div>'
             f'<div style="margin-top:6px;">'
-            f'<div style="background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.22);border-radius:5px;padding:3px 6px;font-size:9.5px;color:#38BDF8;font-weight:700;">'
+            f'<div style="background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.22);border-radius:5px;padding:3px 6px;font-size:9.5px;color:#7DA8DF;font-weight:700;">'
             f'🌐 2020-2026: <b>{sc_all_time_dev_cnt} Cihaz</b> ({format_curr(sc_all_time_dev_rev)})'
             f'</div>'
             f'<div style="margin-top:5px;padding-top:5px;border-top:1px solid rgba(255,255,255,0.08);font-size:9.5px;line-height:1.4;color:#94A3B8;">'
@@ -19839,7 +19820,7 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
             f'<span style="font-size:8.5px;background:rgba(168,85,247,0.15);color:#A855F7;padding:2px 5px;border-radius:4px;font-weight:700;white-space:nowrap;flex-shrink:0;">AĞIRLIKLI ORT.</span>'
             f'</div>'
             f'<div class="kpi-val" style="font-size:23px;font-weight:800;color:#FFFFFF;margin-top:2px;">{sc_avg_margin:.1f}%</div>'
-            f'<div style="font-size:10px;color:#00E676;font-weight:600;margin-top:1px;">+0.8 pt vs Bütçe Hedefi</div>'
+            f'<div style="font-size:10px;color:#10B981;font-weight:600;margin-top:1px;">+0.8 pt vs Bütçe Hedefi</div>'
             f'</div>'
             f'<div style="margin-top:6px;">'
             f'<div style="background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.22);border-radius:5px;padding:3px 6px;font-size:9.5px;color:#C084FC;font-weight:700;">'
@@ -19881,18 +19862,18 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
         )
     if "2020" in year_sel:
         st.markdown("""
-        <div style="background:rgba(0,245,255,0.06);border:1.5px solid rgba(0,245,255,0.35);border-radius:10px;padding:12px 16px;margin-top:4px;margin-bottom:14px;box-shadow:0 4px 16px rgba(0,0,0,0.25);">
-            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;border-bottom:1px solid rgba(0,245,255,0.18);padding-bottom:8px;margin-bottom:10px;">
+        <div style="background:rgba(125,168,223,0.06);border:1.5px solid rgba(125,168,223,0.35);border-radius:10px;padding:12px 16px;margin-top:4px;margin-bottom:14px;box-shadow:0 4px 16px rgba(0,0,0,0.25);">
+            <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;border-bottom:1px solid rgba(125,168,223,0.18);padding-bottom:8px;margin-bottom:10px;">
                 <div style="display:flex;align-items:center;gap:8px;">
                     <span style="font-size:16px;">📋</span>
-                    <span style="font-size:13px;font-weight:800;color:#00F5FF;letter-spacing:0.5px;">2020 YILI RESMİ GELİR TABLOSU VE SÖZLEŞME NET DAĞILIMI</span>
+                    <span style="font-size:13px;font-weight:800;color:#7DA8DF;letter-spacing:0.5px;">2020 YILI RESMİ GELİR TABLOSU VE SÖZLEŞME NET DAĞILIMI</span>
                 </div>
                 <span style="background:rgba(16,185,129,0.2);color:#10B981;border:1px solid rgba(16,185,129,0.4);padding:3px 10px;border-radius:6px;font-size:11px;font-weight:700;">✓ %100 Doğrulanmış Excel Verisi</span>
             </div>
             <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));gap:12px;font-size:12px;">
-                <div style="background:rgba(15,23,42,0.8);border:1px solid rgba(0,245,255,0.2);border-radius:6px;padding:10px 12px;">
+                <div style="background:rgba(15,23,42,0.8);border:1px solid rgba(125,168,223,0.2);border-radius:6px;padding:10px 12px;">
                     <div style="color:#94A3B8;font-size:11px;font-weight:700;">🧪 DISH KUTUSU (1x2)</div>
-                    <div style="font-size:18px;font-weight:800;color:#00F5FF;margin-top:2px;">25 Kutu</div>
+                    <div style="font-size:18px;font-weight:800;color:#7DA8DF;margin-top:2px;">25 Kutu</div>
                     <div style="color:#CBD5E1;font-size:10.5px;margin-top:2px;">100 Mikro-Pool • 500 Oosit Tedavi Kapasitesi</div>
                 </div>
                 <div style="background:rgba(15,23,42,0.8);border:1px solid rgba(255,184,0,0.2);border-radius:6px;padding:10px 12px;">
@@ -19902,7 +19883,7 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
                 </div>
                 <div style="background:rgba(15,23,42,0.8);border:1px solid rgba(56,189,248,0.2);border-radius:6px;padding:10px 12px;">
                     <div style="color:#94A3B8;font-size:11px;font-weight:700;">⚡ CİHAZ (ZEUS PULSE STIMULATOR)</div>
-                    <div style="font-size:18px;font-weight:800;color:#38BDF8;margin-top:2px;">3 Adet Set</div>
+                    <div style="font-size:18px;font-weight:800;color:#7DA8DF;margin-top:2px;">3 Adet Set</div>
                     <div style="color:#CBD5E1;font-size:10.5px;margin-top:2px;">Florya ($15.3K), Diyarlife ($730), Tavmergen ($11.8K)</div>
                 </div>
                 <div style="background:rgba(15,23,42,0.8);border:1px solid rgba(16,185,129,0.2);border-radius:6px;padding:10px 12px;">
@@ -19917,12 +19898,12 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
 
     # Global Choropleth Map with Layer Selection
     region_color_map = {
-        'Europe': '#00F5FF',
+        'Europe': '#7DA8DF',
         'MENA': '#F59E0B',
         'Asia-Pacific': '#10B981',
         'Latin America': '#EC4899',
         'Africa': '#8B5CF6',
-        'North America': '#38BDF8'
+        'North America': '#7DA8DF'
     }
 
     col_map_head, col_map_sel = st.columns([2.0, 1.8])
@@ -19949,7 +19930,7 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
         'QAT': ('🇶🇦 Katar', '#A855F7', 'INTERNATIONAL TECHNICAL LEGACY (4 Cihaz)'),
         'KOR': ('🇰🇷 Güney Kore', '#FF9100', 'SJNU INC (7 Cihaz)'),
         'KWT': ('🇰🇼 Kuveyt', '#F43F5E', 'ADVANCED TECHNOLOGY COMPANY (3 Cihaz)'),
-        'PSE': ('🇵🇸 Filistin', '#38BDF8', 'CONSULTANT MEDICAL COMPANY (5 Cihaz)')
+        'PSE': ('🇵🇸 Filistin', '#7DA8DF', 'CONSULTANT MEDICAL COMPANY (5 Cihaz)')
     }
     dist_color_discrete = {
         '🇯🇴 Ürdün': '#FFD700',
@@ -19959,12 +19940,12 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
         '🇶🇦 Katar': '#A855F7',
         '🇰🇷 Güney Kore': '#FF9100',
         '🇰🇼 Kuveyt': '#F43F5E',
-        '🇵🇸 Filistin': '#38BDF8',
+        '🇵🇸 Filistin': '#7DA8DF',
         'Distribütörsüz Pazar': '#131D31'
     }
 
     zeus_presence_map = {
-        'TUR': ('🇹🇷 Türkiye (Merkez & 25 Klinik)', '#00F5FF', '$219.1K', '1,384 Ünite', 'ZEUS Genel Merkez & Doğrudan Klinik Ağı'),
+        'TUR': ('🇹🇷 Türkiye (Merkez & 25 Klinik)', '#7DA8DF', '$219.1K', '1,384 Ünite', 'ZEUS Genel Merkez & Doğrudan Klinik Ağı'),
         'JOR': ('🇯🇴 Ürdün (SIRIUS PHARM)', '#FFD700', '$165.3K', '693 Ünite', 'Yetkili Distribütör (18 Cihaz)'),
         'IRQ': ('🇮🇶 Irak (SIRIUS Konsorsiyumu)', '#FF3366', '$165.3K', '693 Ünite', 'Yetkili Distribütör Kurulu Tabanı'),
         'QAT': ('🇶🇦 Katar (ITL)', '#A855F7', '$72.9K', '453 Ünite', 'Yetkili Distribütör (4 Cihaz)'),
@@ -19972,7 +19953,7 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
         'SAU': ('🇸🇦 Suudi Arabistan (AMS)', '#10B981', '$29.5K', '95 Ünite', 'Yetkili Distribütör (3 Cihaz)'),
         'ARE': ('🇦🇪 BAE (Sellco)', '#EAB308', '$23.2K', '52 Ünite', 'Doğrudan Ticari Müşteri & Spot Dağıtım'),
         'KWT': ('🇰🇼 Kuveyt (ATC)', '#F43F5E', '$26.3K', '12 Ünite', 'Yetkili Distribütör (3 Cihaz)'),
-        'PSE': ('🇵🇸 Filistin (CMC)', '#38BDF8', '$46.7K', '120 Ünite', 'Yetkili Distribütör (5 Cihaz)'),
+        'PSE': ('🇵🇸 Filistin (CMC)', '#7DA8DF', '$46.7K', '120 Ünite', 'Yetkili Distribütör (5 Cihaz)'),
         'BEL': ('🇧🇪 Belçika (Ghent Univ / UGent)', '#C084FC', '$16.1K', '3 Cihaz', 'Akademik & Klinik Referans Merkezi'),
         'ALB': ('🇦🇱/🇸🇰 Arnavutluk-Slovakya (Stem Gene)', '#E879F9', '$18.8K', '121 Ünite', 'Özel IVF Klinikleri Ağı'),
         'GBR': ('🇬🇧 İngiltere (Londra Klinik Validasyon)', '#818CF8', '$0.0', '6 Cihaz', 'Validasyon & Referans Klinik Donanımı'),
@@ -19982,7 +19963,7 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
         'SYR': ('🇸🇾 Suriye (Şam)', '#FDA4AF', '$480', '10 Ünite', 'Spot Klinik Alımı')
     }
     zeus_presence_colors = {
-        '🇹🇷 Türkiye (Merkez & 25 Klinik)': '#00F5FF',
+        '🇹🇷 Türkiye (Merkez & 25 Klinik)': '#7DA8DF',
         '🇯🇴 Ürdün (SIRIUS PHARM)': '#FFD700',
         '🇮🇶 Irak (SIRIUS Konsorsiyumu)': '#FF3366',
         '🇶🇦 Katar (ITL)': '#A855F7',
@@ -19990,7 +19971,7 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
         '🇸🇦 Suudi Arabistan (AMS)': '#10B981',
         '🇦🇪 BAE (Sellco)': '#EAB308',
         '🇰🇼 Kuveyt (ATC)': '#F43F5E',
-        '🇵🇸 Filistin (CMC)': '#38BDF8',
+        '🇵🇸 Filistin (CMC)': '#7DA8DF',
         '🇧🇪 Belçika (Ghent Univ / UGent)': '#C084FC',
         '🇦🇱/🇸🇰 Arnavutluk-Slovakya (Stem Gene)': '#E879F9',
         '🇬🇧 İngiltere (Londra Klinik Validasyon)': '#818CF8',
@@ -20076,7 +20057,7 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
     # 3. 2D Choropleth for Market Opportunity Score
     fig_map_opp = px.choropleth(
         m_df, locations="iso3", color="Opportunity Score",
-        color_continuous_scale=[[0.0, "#1E293B"], [0.25, "#4F46E5"], [0.5, "#06B6D4"], [0.75, "#00F5FF"], [1.0, "#10B981"]],
+        color_continuous_scale=[[0.0, "#1E293B"], [0.25, "#4F46E5"], [0.5, "#06B6D4"], [0.75, "#7DA8DF"], [1.0, "#10B981"]],
         range_color=[35, 98],
         hover_name="Country",
         hover_data={"iso3": False, "Coverage": True, "Distributor": True, "Clinics": True, "Annual Cycles": True, "Opportunity Score": True}
@@ -20127,25 +20108,25 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
     <meta charset="utf-8">
     <style>
         body { margin: 0; padding: 0; overflow: hidden; background: transparent; font-family: 'Manrope', system-ui, sans-serif; }
-        #globe-container { position: relative; width: 100%; height: 530px; border-radius: 16px; background: radial-gradient(circle at 50% 40%, rgba(10, 18, 36, 0.95) 0%, rgba(4, 7, 16, 0.98) 100%); border: 1px solid rgba(0, 245, 255, 0.25); box-shadow: 0 12px 40px rgba(0,0,0,0.6), inset 0 0 35px rgba(0, 245, 255, 0.05); }
+        #globe-container { position: relative; width: 100%; height: 530px; border-radius: 16px; background: radial-gradient(circle at 50% 40%, rgba(10, 18, 36, 0.95) 0%, rgba(4, 7, 16, 0.98) 100%); border: 1px solid rgba(125, 168, 223, 0.25); box-shadow: 0 12px 40px rgba(0,0,0,0.6), inset 0 0 35px rgba(125, 168, 223, 0.05); }
         
         #telemetry-box { position: absolute; top: 14px; left: 16px; pointer-events: none; z-index: 10; }
-        .hud-badge { font-size: 10.5px; font-weight: 700; letter-spacing: 0.1em; color: #00F5FF; background: rgba(0, 245, 255, 0.1); border: 1px solid rgba(0, 245, 255, 0.3); border-radius: 6px; padding: 5px 12px; display: inline-flex; align-items: center; gap: 6px; backdrop-filter: blur(8px); }
+        .hud-badge { font-size: 10.5px; font-weight: 700; letter-spacing: 0.1em; color: #7DA8DF; background: rgba(125, 168, 223, 0.1); border: 1px solid rgba(125, 168, 223, 0.3); border-radius: 6px; padding: 5px 12px; display: inline-flex; align-items: center; gap: 6px; }
         .hud-sub { font-size: 11px; color: #94A3B8; margin-top: 5px; font-weight: 500; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }
         
         #fly-nav { position: absolute; top: 14px; right: 16px; display: flex; gap: 6px; z-index: 10; flex-wrap: wrap; justify-content: flex-end; }
-        .fly-btn { background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(255, 255, 255, 0.12); color: #E2E8F0; padding: 5px 11px; border-radius: 8px; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); backdrop-filter: blur(12px); }
-        .fly-btn:hover { background: rgba(0, 245, 255, 0.18); border-color: #00F5FF; color: #FFFFFF; transform: translateY(-1px); box-shadow: 0 4px 15px rgba(0, 245, 255, 0.25); }
-        .fly-btn.active { background: linear-gradient(90deg, rgba(0,245,255,0.25) 0%, rgba(16,185,129,0.2) 100%); border-color: #00F5FF; color: #00F5FF; font-weight: 700; }
+        .fly-btn { background: rgba(15, 23, 42, 0.75); border: 1px solid rgba(255, 255, 255, 0.12); color: #E2E8F0; padding: 5px 11px; border-radius: 8px; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1); }
+        .fly-btn:hover { background: rgba(125, 168, 223, 0.18); border-color: #7DA8DF; color: #FFFFFF; transform: translateY(-1px); box-shadow: 0 4px 15px rgba(125, 168, 223, 0.25); }
+        .fly-btn.active { background: linear-gradient(90deg, rgba(125,168,223,0.25) 0%, rgba(16,185,129,0.2) 100%); border-color: #7DA8DF; color: #7DA8DF; font-weight: 700; }
 
         #bottom-bar { position: absolute; bottom: 12px; left: 16px; right: 16px; display: flex; justify-content: space-between; align-items: center; pointer-events: none; z-index: 10; }
-        #rot-toggle { pointer-events: auto; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(0, 245, 255, 0.3); color: #00F5FF; padding: 6px 14px; border-radius: 999px; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.2s; backdrop-filter: blur(8px); display: flex; align-items: center; gap: 6px; }
-        #rot-toggle:hover { background: rgba(0, 245, 255, 0.2); transform: scale(1.02); box-shadow: 0 0 16px rgba(0, 245, 255, 0.3); }
-        #hint-pill { background: rgba(7, 11, 20, 0.8); border: 1px solid rgba(255, 255, 255, 0.08); color: #94A3B8; padding: 4px 14px; border-radius: 999px; font-size: 10.5px; backdrop-filter: blur(8px); }
+        #rot-toggle { pointer-events: auto; background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(125, 168, 223, 0.3); color: #7DA8DF; padding: 6px 14px; border-radius: 999px; font-size: 11px; font-weight: 600; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 6px; }
+        #rot-toggle:hover { background: rgba(125, 168, 223, 0.2); transform: scale(1.02); box-shadow: 0 0 16px rgba(125, 168, 223, 0.3); }
+        #hint-pill { background: rgba(7, 11, 20, 0.8); border: 1px solid rgba(255, 255, 255, 0.08); color: #94A3B8; padding: 4px 14px; border-radius: 999px; font-size: 10.5px; }
 
-        #hud-tooltip { position: absolute; display: none; pointer-events: none; background: rgba(10, 16, 28, 0.94); border: 1px solid #00F5FF; border-radius: 12px; padding: 12px 16px; backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); box-shadow: 0 10px 35px rgba(0, 245, 255, 0.3), 0 0 15px rgba(0,0,0,0.8); z-index: 99; min-width: 230px; }
+        #hud-tooltip { position: absolute; display: none; pointer-events: none; background: rgba(10, 16, 28, 0.94); border: 1px solid #7DA8DF; border-radius: 12px; padding: 12px 16px; box-shadow: 0 10px 35px rgba(125, 168, 223, 0.3), 0 0 15px rgba(0,0,0,0.8); z-index: 99; min-width: 230px; }
         #tt-title { font-size: 13px; font-weight: 700; color: #FFFFFF; margin-bottom: 2px; }
-        #tt-city { font-size: 11px; color: #00F5FF; margin-bottom: 8px; font-weight: 600; }
+        #tt-city { font-size: 11px; color: #7DA8DF; margin-bottom: 8px; font-weight: 600; }
         .tt-metric-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; font-size: 11.5px; }
         .tt-label { color: #94A3B8; }
         .tt-val { font-weight: 700; font-family: 'Geist Mono', monospace; }
@@ -20181,7 +20162,7 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
             <div id="tt-city"></div>
             <div class="tt-metric-row">
                 <span class="tt-label">Kurulu Taban:</span>
-                <span class="tt-val" id="tt-dev" style="color:#00F5FF;"></span>
+                <span class="tt-val" id="tt-dev" style="color:#7DA8DF;"></span>
             </div>
             <div class="tt-metric-row">
                 <span class="tt-label">Kümülatif Hasılat:</span>
@@ -20488,9 +20469,9 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
                 ttDev.innerText = d.dev;
                 ttRev.innerText = d.rev;
                 ttStatus.innerText = d.status;
-                ttStatus.style.background = (d.isHQ ? 'rgba(0,245,255,0.2)' : 'rgba(56,189,248,0.2)');
-                ttStatus.style.color = '#00F5FF';
-                ttStatus.style.border = '1px solid rgba(0,245,255,0.5)';
+                ttStatus.style.background = (d.isHQ ? 'rgba(125,168,223,0.2)' : 'rgba(56,189,248,0.2)');
+                ttStatus.style.color = '#7DA8DF';
+                ttStatus.style.border = '1px solid rgba(125,168,223,0.5)';
 
                 let tx = e.clientX - rect.left + 16;
                 let ty = e.clientY - rect.top - 30;
@@ -20499,7 +20480,7 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
                 tooltip.style.left = tx + 'px';
                 tooltip.style.top = ty + 'px';
                 tooltip.style.display = 'block';
-                tooltip.style.borderColor = '#00F5FF';
+                tooltip.style.borderColor = '#7DA8DF';
                 container.style.cursor = 'pointer';
             } else {
                 if (hoveredTarget) {
@@ -20599,9 +20580,9 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
     # 1. Official Authorized Distributors Tab
     with tab_dist:
         st.markdown('''
-        <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(0,245,255,0.25);border-left:4px solid #00F5FF;border-radius:10px;padding:10px 14px;margin-bottom:12px;backdrop-filter:blur(12px);">
+        <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(125,168,223,0.25);border-left:4px solid #7DA8DF;border-radius:10px;padding:10px 14px;margin-bottom:12px;">
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-                <span style="font-size:12.5px;color:#E2E8F0;"><b style="color:#00F5FF;">Resmi Distribütör Koridoru:</b> 6 Yetkili Ülke Partneri, sahadaki 21 aktif cihaz filosu ve Ankara Genel Merkezli ikmal hatları.</span>
+                <span style="font-size:12.5px;color:#E2E8F0;"><b style="color:#7DA8DF;">Resmi Distribütör Koridoru:</b> 6 Yetkili Ülke Partneri, sahadaki 21 aktif cihaz filosu ve Ankara Genel Merkezli ikmal hatları.</span>
                 <span style="font-size:11px;color:#10B981;font-weight:700;">● %100 Doğrulanmış Excel Sözleşme Verisi</span>
             </div>
         </div>
@@ -20615,15 +20596,15 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
         # 6 Distributor Glass Performance Cards (Cihaz & Sarf / Consumable Çift Metrik)
         st.markdown('''
         <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(195px, 1fr));gap:10px;margin-top:12px;">
-            <div style="background:rgba(15,23,42,0.65);border:1px solid rgba(0,245,255,0.3);border-top:3px solid #00F5FF;border-radius:10px;padding:10px 12px;backdrop-filter:blur(12px);">
+            <div style="background:rgba(15,23,42,0.65);border:1px solid rgba(125,168,223,0.3);border-top:3px solid #7DA8DF;border-radius:10px;padding:10px 12px;">
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                     <span style="font-size:12px;font-weight:700;color:#FFFFFF;">SIRIUS PHARM</span>
-                    <span style="font-size:10px;color:#00F5FF;font-weight:600;">ÜRDÜN - IRAK</span>
+                    <span style="font-size:10px;color:#7DA8DF;font-weight:600;">ÜRDÜN - IRAK</span>
                 </div>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;background:rgba(0,0,0,0.25);padding:6px 8px;border-radius:6px;margin-top:7px;border:1px solid rgba(255,255,255,0.06);">
                     <div>
                         <div style="font-size:9.5px;color:#94A3B8;font-weight:600;">🔬 CİHAZ</div>
-                        <div style="font-size:14px;font-weight:800;color:#00F5FF;margin-top:1px;">18 Adet</div>
+                        <div style="font-size:14px;font-weight:800;color:#7DA8DF;margin-top:1px;">18 Adet</div>
                         <div style="font-size:10px;color:#64748B;">$112.1K</div>
                     </div>
                     <div>
@@ -20637,15 +20618,15 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
                     <span style="font-weight:800;color:#10B981;font-size:11.5px;">$165.3K</span>
                 </div>
             </div>
-            <div style="background:rgba(15,23,42,0.65);border:1px solid rgba(0,245,255,0.3);border-top:3px solid #00F5FF;border-radius:10px;padding:10px 12px;backdrop-filter:blur(12px);">
+            <div style="background:rgba(15,23,42,0.65);border:1px solid rgba(125,168,223,0.3);border-top:3px solid #7DA8DF;border-radius:10px;padding:10px 12px;">
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                     <span style="font-size:12px;font-weight:700;color:#FFFFFF;">ITL</span>
-                    <span style="font-size:10px;color:#00F5FF;font-weight:600;">KATAR</span>
+                    <span style="font-size:10px;color:#7DA8DF;font-weight:600;">KATAR</span>
                 </div>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;background:rgba(0,0,0,0.25);padding:6px 8px;border-radius:6px;margin-top:7px;border:1px solid rgba(255,255,255,0.06);">
                     <div>
                         <div style="font-size:9.5px;color:#94A3B8;font-weight:600;">🔬 CİHAZ</div>
-                        <div style="font-size:14px;font-weight:800;color:#00F5FF;margin-top:1px;">4 Adet</div>
+                        <div style="font-size:14px;font-weight:800;color:#7DA8DF;margin-top:1px;">4 Adet</div>
                         <div style="font-size:10px;color:#64748B;">$35.5K</div>
                     </div>
                     <div>
@@ -20659,15 +20640,15 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
                     <span style="font-weight:800;color:#10B981;font-size:11.5px;">$72.9K</span>
                 </div>
             </div>
-            <div style="background:rgba(15,23,42,0.65);border:1px solid rgba(0,245,255,0.3);border-top:3px solid #00F5FF;border-radius:10px;padding:10px 12px;backdrop-filter:blur(12px);">
+            <div style="background:rgba(15,23,42,0.65);border:1px solid rgba(125,168,223,0.3);border-top:3px solid #7DA8DF;border-radius:10px;padding:10px 12px;">
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                     <span style="font-size:12px;font-weight:700;color:#FFFFFF;">SJNU INC</span>
-                    <span style="font-size:10px;color:#00F5FF;font-weight:600;">GÜNEY KORE</span>
+                    <span style="font-size:10px;color:#7DA8DF;font-weight:600;">GÜNEY KORE</span>
                 </div>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;background:rgba(0,0,0,0.25);padding:6px 8px;border-radius:6px;margin-top:7px;border:1px solid rgba(255,255,255,0.06);">
                     <div>
                         <div style="font-size:9.5px;color:#94A3B8;font-weight:600;">🔬 CİHAZ</div>
-                        <div style="font-size:14px;font-weight:800;color:#00F5FF;margin-top:1px;">7 Adet</div>
+                        <div style="font-size:14px;font-weight:800;color:#7DA8DF;margin-top:1px;">7 Adet</div>
                         <div style="font-size:10px;color:#64748B;">$51.5K</div>
                     </div>
                     <div>
@@ -20681,15 +20662,15 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
                     <span style="font-weight:800;color:#10B981;font-size:11.5px;">$68.6K</span>
                 </div>
             </div>
-            <div style="background:rgba(15,23,42,0.65);border:1px solid rgba(0,245,255,0.3);border-top:3px solid #00F5FF;border-radius:10px;padding:10px 12px;backdrop-filter:blur(12px);">
+            <div style="background:rgba(15,23,42,0.65);border:1px solid rgba(125,168,223,0.3);border-top:3px solid #7DA8DF;border-radius:10px;padding:10px 12px;">
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                     <span style="font-size:12px;font-weight:700;color:#FFFFFF;">CMC</span>
-                    <span style="font-size:10px;color:#00F5FF;font-weight:600;">FİLİSTİN</span>
+                    <span style="font-size:10px;color:#7DA8DF;font-weight:600;">FİLİSTİN</span>
                 </div>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;background:rgba(0,0,0,0.25);padding:6px 8px;border-radius:6px;margin-top:7px;border:1px solid rgba(255,255,255,0.06);">
                     <div>
                         <div style="font-size:9.5px;color:#94A3B8;font-weight:600;">🔬 CİHAZ</div>
-                        <div style="font-size:14px;font-weight:800;color:#00F5FF;margin-top:1px;">5 Adet</div>
+                        <div style="font-size:14px;font-weight:800;color:#7DA8DF;margin-top:1px;">5 Adet</div>
                         <div style="font-size:10px;color:#64748B;">$38.0K</div>
                     </div>
                     <div>
@@ -20703,15 +20684,15 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
                     <span style="font-weight:800;color:#10B981;font-size:11.5px;">$46.7K</span>
                 </div>
             </div>
-            <div style="background:rgba(15,23,42,0.65);border:1px solid rgba(0,245,255,0.3);border-top:3px solid #00F5FF;border-radius:10px;padding:10px 12px;backdrop-filter:blur(12px);">
+            <div style="background:rgba(15,23,42,0.65);border:1px solid rgba(125,168,223,0.3);border-top:3px solid #7DA8DF;border-radius:10px;padding:10px 12px;">
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                     <span style="font-size:12px;font-weight:700;color:#FFFFFF;">AMS</span>
-                    <span style="font-size:10px;color:#00F5FF;font-weight:600;">SUUDİ ARABİSTAN</span>
+                    <span style="font-size:10px;color:#7DA8DF;font-weight:600;">SUUDİ ARABİSTAN</span>
                 </div>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;background:rgba(0,0,0,0.25);padding:6px 8px;border-radius:6px;margin-top:7px;border:1px solid rgba(255,255,255,0.06);">
                     <div>
                         <div style="font-size:9.5px;color:#94A3B8;font-weight:600;">🔬 CİHAZ</div>
-                        <div style="font-size:14px;font-weight:800;color:#00F5FF;margin-top:1px;">3 Adet</div>
+                        <div style="font-size:14px;font-weight:800;color:#7DA8DF;margin-top:1px;">3 Adet</div>
                         <div style="font-size:10px;color:#64748B;">$22.0K</div>
                     </div>
                     <div>
@@ -20725,15 +20706,15 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
                     <span style="font-weight:800;color:#10B981;font-size:11.5px;">$29.5K</span>
                 </div>
             </div>
-            <div style="background:rgba(15,23,42,0.65);border:1px solid rgba(0,245,255,0.3);border-top:3px solid #00F5FF;border-radius:10px;padding:10px 12px;backdrop-filter:blur(12px);">
+            <div style="background:rgba(15,23,42,0.65);border:1px solid rgba(125,168,223,0.3);border-top:3px solid #7DA8DF;border-radius:10px;padding:10px 12px;">
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                     <span style="font-size:12px;font-weight:700;color:#FFFFFF;">ATC</span>
-                    <span style="font-size:10px;color:#00F5FF;font-weight:600;">KUVEYT</span>
+                    <span style="font-size:10px;color:#7DA8DF;font-weight:600;">KUVEYT</span>
                 </div>
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px;background:rgba(0,0,0,0.25);padding:6px 8px;border-radius:6px;margin-top:7px;border:1px solid rgba(255,255,255,0.06);">
                     <div>
                         <div style="font-size:9.5px;color:#94A3B8;font-weight:600;">🔬 CİHAZ</div>
-                        <div style="font-size:14px;font-weight:800;color:#00F5FF;margin-top:1px;">3 Adet</div>
+                        <div style="font-size:14px;font-weight:800;color:#7DA8DF;margin-top:1px;">3 Adet</div>
                         <div style="font-size:10px;color:#64748B;">$25.5K</div>
                     </div>
                     <div>
@@ -20753,10 +20734,10 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
     # 2. All ZEUS Presence Countries Tab
     with tab_zeus:
         st.markdown('''
-        <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(56,189,248,0.25);border-left:4px solid #38BDF8;border-radius:10px;padding:10px 14px;margin-bottom:12px;backdrop-filter:blur(12px);">
+        <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(56,189,248,0.25);border-left:4px solid #7DA8DF;border-radius:10px;padding:10px 14px;margin-bottom:12px;">
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-                <span style="font-size:12.5px;color:#E2E8F0;"><b style="color:#38BDF8;">ZEUS Küresel Operasyon Ayak İzi:</b> 19 Ülke, 49 Kurum & Klinik, 1,280 Doğrulanmış Fatura ve $936,546 USD konsolide hasılat.</span>
-                <span style="font-size:11px;color:#38BDF8;font-weight:700;">● Kurulu Cihazlar + Düzenli Sarf Tüketimi</span>
+                <span style="font-size:12.5px;color:#E2E8F0;"><b style="color:#7DA8DF;">ZEUS Küresel Operasyon Ayak İzi:</b> 19 Ülke, 49 Kurum & Klinik, 1,280 Doğrulanmış Fatura ve $936,546 USD konsolide hasılat.</span>
+                <span style="font-size:11px;color:#7DA8DF;font-weight:700;">● Kurulu Cihazlar + Düzenli Sarf Tüketimi</span>
             </div>
         </div>
         ''', unsafe_allow_html=True)
@@ -20790,7 +20771,7 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
     # 3. Market Opportunity Score Tab (Potential Markets)
     with tab_opp:
         st.markdown('''
-        <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(16,185,129,0.25);border-left:4px solid #10B981;border-radius:10px;padding:10px 14px;margin-bottom:12px;backdrop-filter:blur(12px);">
+        <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(16,185,129,0.25);border-left:4px solid #10B981;border-radius:10px;padding:10px 14px;margin-bottom:12px;">
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
                 <span style="font-size:12.5px;color:#E2E8F0;"><b style="color:#10B981;">Pazar Fırsat & Büyüme Potansiyeli:</b> 48 Küresel IVF Pazarı. Klinik sayısı, yıllık IVF döngüsü ve kişi başı GSYİH verilerine dayalı AI fırsat skoru (35 - 98).</span>
                 <span style="font-size:11px;color:#10B981;font-weight:700;">● Hedef Büyüme Koridorları</span>
@@ -20821,7 +20802,7 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
     # 4. Commercial Risk Profile Tab
     with tab_risk:
         st.markdown('''
-        <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(245,158,11,0.25);border-left:4px solid #F59E0B;border-radius:10px;padding:10px 14px;margin-bottom:12px;backdrop-filter:blur(12px);">
+        <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(245,158,11,0.25);border-left:4px solid #F59E0B;border-radius:10px;padding:10px 14px;margin-bottom:12px;">
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
                 <span style="font-size:12.5px;color:#E2E8F0;"><b style="color:#F59E0B;">Ticari, Regülasyon ve Gümrük Riski:</b> 48 ülkenin ithalat lisansı, tıbbi cihaz ruhsatı ve döviz transfer risk matrisi.</span>
                 <span style="font-size:11px;color:#F59E0B;font-weight:700;">● Risk Dağılımı: 22 Düşük | 18 Orta | 8 Yüksek</span>
@@ -20913,7 +20894,7 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
             x_ax, y_dev, y_con = sel_months, m_dev, m_con
 
         fig_trend = go.Figure()
-        fig_trend.add_trace(go.Bar(name='Cihaz / Donanım (Capital Devices)', x=x_ax, y=y_dev, marker_color='#00F5FF'))
+        fig_trend.add_trace(go.Bar(name='Cihaz / Donanım (Capital Devices)', x=x_ax, y=y_dev, marker_color='#7DA8DF'))
         fig_trend.add_trace(go.Bar(name='Tekrar Eden Sarf (Consumables)', x=x_ax, y=y_con, marker_color='#FFB800'))
         fig_trend.update_layout(
             barmode='stack',
@@ -21021,8 +21002,8 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
         
         st.markdown(f"""
         <div style="background:rgba(0,230,118,0.06);border:1px solid rgba(0,230,118,0.3);border-radius:6px;padding:6px 12px;margin-bottom:14px;font-size:11.5px;display:flex;justify-content:space-between;align-items:center;">
-            <span><b style="color:#00E676;">📋 Aktif Plan:</b> {p1['plan_type']} &nbsp;|&nbsp; <span style="color:#8FA3C0;">{p1['responsible_unit']}</span></span>
-            <span style="background:rgba(0,230,118,0.15);color:#00E676;padding:2px 8px;border-radius:4px;font-weight:700;">{p1['status']} ➔</span>
+            <span><b style="color:#10B981;">📋 Aktif Plan:</b> {p1['plan_type']} &nbsp;|&nbsp; <span style="color:#8FA3C0;">{p1['responsible_unit']}</span></span>
+            <span style="background:rgba(0,230,118,0.15);color:#10B981;padding:2px 8px;border-radius:4px;font-weight:700;">{p1['status']} ➔</span>
         </div>
         """, unsafe_allow_html=True)
 
@@ -21139,10 +21120,10 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
         # Alert 4: Dish vs Liquid Rasyosu
         p4 = p_dict['dish_liquid_ratio']
         st.markdown(f"""
-        <div class="alert-card" style="border-left-color: #00F5FF; background:#0F192E; padding:14px; border-radius:8px; margin-bottom:8px; border:1px solid rgba(0,245,255,0.25);">
+        <div class="alert-card" style="border-left-color: #7DA8DF; background:#0F192E; padding:14px; border-radius:8px; margin-bottom:8px; border:1px solid rgba(125,168,223,0.25);">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-                <strong style="color:#00F5FF; font-size:13.5px;">{p4['title']}</strong>
-                <span style="font-size:10px; background:rgba(0,245,255,0.15); color:#00F5FF; padding:3px 8px; border-radius:4px; font-weight:700;">{p4['badge']}</span>
+                <strong style="color:#7DA8DF; font-size:13.5px;">{p4['title']}</strong>
+                <span style="font-size:10px; background:rgba(125,168,223,0.15); color:#7DA8DF; padding:3px 8px; border-radius:4px; font-weight:700;">{p4['badge']}</span>
             </div>
             <div style="font-size:12.5px; color:#CCD7E6; margin-top:6px; line-height:1.5;">
                 <b>Kanıt:</b> {p4['evidence']}<br>
@@ -21184,9 +21165,9 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
                     st.rerun()
 
         st.markdown(f"""
-        <div style="background:rgba(0,245,255,0.06);border:1px solid rgba(0,245,255,0.3);border-radius:6px;padding:6px 12px;margin-bottom:14px;font-size:11.5px;display:flex;justify-content:space-between;align-items:center;">
-            <span><b style="color:#00F5FF;">📋 Aktif Plan:</b> {p4['plan_type']} &nbsp;|&nbsp; <span style="color:#8FA3C0;">{p4['responsible_unit']}</span></span>
-            <span style="background:rgba(0,245,255,0.15);color:#00F5FF;padding:2px 8px;border-radius:4px;font-weight:700;">{p4['status']} ➔</span>
+        <div style="background:rgba(125,168,223,0.06);border:1px solid rgba(125,168,223,0.3);border-radius:6px;padding:6px 12px;margin-bottom:14px;font-size:11.5px;display:flex;justify-content:space-between;align-items:center;">
+            <span><b style="color:#7DA8DF;">📋 Aktif Plan:</b> {p4['plan_type']} &nbsp;|&nbsp; <span style="color:#8FA3C0;">{p4['responsible_unit']}</span></span>
+            <span style="background:rgba(125,168,223,0.15);color:#7DA8DF;padding:2px 8px;border-radius:4px;font-weight:700;">{p4['status']} ➔</span>
         </div>
         """, unsafe_allow_html=True)
 
@@ -21211,7 +21192,7 @@ elif active_view in ["2026 Q4 & 2027 Satış Projeksiyonu", "✦ Biyoistihbarat 
     st.markdown("""
     <div style="background:linear-gradient(135deg, rgba(19,166,181,0.15) 0%, rgba(11,31,60,0.4) 100%);border:1px solid rgba(19,166,181,0.35);padding:16px 20px;border-radius:14px;margin-bottom:20px;">
         <div style="display:flex;align-items:center;gap:10px;">
-            <span style="font-size:22px;color:#00F5FF;">✦</span>
+            <span style="font-size:22px;color:#7DA8DF;">✦</span>
             <div>
                 <span style="font-weight:700;font-size:15px;color:#4FD1DE;">ZEUS AI Commercial Intelligence Engine Aktif</span><br>
                 <span style="font-size:13px;color:#CCD7E6;">Bu modül; 48 ülkedeki klinik IVF siklus verilerini, distribütör sipariş frekanslarını ve ürün kırılımlarını tarayarak düşüş trendindeki ürünleri yakalar, gelecek ayın satış hacmini modeller ve bölgesel verimsizlikleri raporlar.</span>
@@ -21501,8 +21482,8 @@ elif active_view in ["2026 Q4 & 2027 Satış Projeksiyonu", "✦ Biyoistihbarat 
 
             revised_diag = (
                 f"{orig_diag}<br><br>"
-                f"<div style='background:rgba(0,245,255,0.06);border:1px solid rgba(0,245,255,0.25);border-left:4px solid #00F5FF;padding:10px 14px;border-radius:6px;'>"
-                f"<b style='color:#00F5FF;'>👨‍💼 {role} ({perspective_label}) Değerlendirmesi & Revize Teşhis:</b><br>"
+                f"<div style='background:rgba(125,168,223,0.06);border:1px solid rgba(125,168,223,0.25);border-left:4px solid #7DA8DF;padding:10px 14px;border-radius:6px;'>"
+                f"<b style='color:#7DA8DF;'>👨‍💼 {role} ({perspective_label}) Değerlendirmesi & Revize Teşhis:</b><br>"
                 f"Sistemimize işlenen resmi değerlendirme notu: <i>\"{clean_note}\"</i>.<br>"
                 f"Bu stratejik geri bildirim doğrultusunda vaka, kurumun <b>{role}</b> koordinasyonundaki öncelikli icra ve müzakere gündemine alınmıştır."
                 f"</div>"
@@ -21593,7 +21574,7 @@ Immediate Resolution: ZEUS Bioscience is actively incorporating this high-level 
                 f'</div>'
                 f'{reval_badge_html}'
                 f'<div style="font-size:13px; color:#CCD7E6; margin-bottom:10px; line-height:1.55;">'
-                f'<b style="color:#00F5FF;">🔍 Klinik & Ticari Kök Neden:</b> {active_diag}'
+                f'<b style="color:#7DA8DF;">🔍 Klinik & Ticari Kök Neden:</b> {active_diag}'
                 f'</div>'
                 f'<div style="font-size:13px; color:#CCD7E6; margin-bottom:12px; line-height:1.55;">'
                 f'<b style="color:#5FD3AE;">🤖 Yapay Zeka Somut Eylem Planı:</b>'
@@ -21687,8 +21668,8 @@ Immediate Resolution: ZEUS Bioscience is actively incorporating this high-level 
                 if run_ai_btn or st.session_state.get(f'ran_ai_{case_id}', False):
                     st.session_state[f'ran_ai_{case_id}'] = True
                     memo_html = (
-                        f'<div style="background:rgba(19,166,181,0.06); border-left:4px solid #00F5FF; padding:14px; border-radius:8px; margin-top:10px;">'
-                        f'<div style="font-weight:700; color:#00F5FF; font-size:13.5px; margin-bottom:6px;">📋 ZEUS AI YÖNETİCİ EYLEM NOTU: {case_id.upper()} ({tone_sel})</div>'
+                        f'<div style="background:rgba(19,166,181,0.06); border-left:4px solid #7DA8DF; padding:14px; border-radius:8px; margin-top:10px;">'
+                        f'<div style="font-weight:700; color:#7DA8DF; font-size:13.5px; margin-bottom:6px;">📋 ZEUS AI YÖNETİCİ EYLEM NOTU: {case_id.upper()} ({tone_sel})</div>'
                         f'<div style="font-size:12.5px; color:#CCD7E6; line-height:1.55;">'
                         f'<b>1. Finansal Maruziyet Analizi:</b> {ai_memo_data["financial"]}<br>'
                         f'<b>2. Müzakere Kaldıracı:</b> {ai_memo_data["leverage"]}<br>'
@@ -22194,13 +22175,13 @@ ZEUS Bioscience Scientific Affairs""",
 
     with row2_c2:
         is_active = (st.session_state['expanded_audit_card'] == 'active')
-        card_border = "#00E676" if not is_active else "#FFFFFF"
+        card_border = "#10B981" if not is_active else "#FFFFFF"
         glow = "box-shadow:0 0 16px rgba(0,230,118,0.4);" if is_active else ""
         st.markdown(f"""
         <div style="background:#0F192E; border:1.5px solid {card_border}; border-radius:12px; padding:16px 18px; min-height:148px; {glow}">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-size:12.5px; color:#00E676; font-weight:700; text-transform:uppercase;">🟢 Aktif Düzenli Sarf Tüketimi</span>
-                <span style="font-size:22px; font-weight:700; color:#00E676;">{len(active_cons)} Kurum</span>
+                <span style="font-size:12.5px; color:#10B981; font-weight:700; text-transform:uppercase;">🟢 Aktif Düzenli Sarf Tüketimi</span>
+                <span style="font-size:22px; font-weight:700; color:#10B981;">{len(active_cons)} Kurum</span>
             </div>
             <div style="font-size:12px; color:#CCD7E6; margin-top:8px; line-height:1.45;">
                 <b>Kapsam:</b> Rutin döngüde sarf çekenler: Sirius Pharm (236 Kutu), ITL Katar (247 Kutu), SJNU Kore (127 Kutu), CMC Filistin (46 Kutu), Gen-Sa (30 Kutu), Stem Gene (29 Kutu), İzmir Tüp Bebek (18 Kutu), İst. Kadın Doğum (16 Kutu).
@@ -22214,13 +22195,13 @@ ZEUS Bioscience Scientific Affairs""",
 
     with row2_c3:
         is_active = (st.session_state['expanded_audit_card'] == 'consonly')
-        card_border = "#00F5FF" if not is_active else "#FFFFFF"
-        glow = "box-shadow:0 0 16px rgba(0,245,255,0.4);" if is_active else ""
+        card_border = "#7DA8DF" if not is_active else "#FFFFFF"
+        glow = "box-shadow:0 0 16px rgba(125,168,223,0.4);" if is_active else ""
         st.markdown(f"""
         <div style="background:#0F192E; border:1.5px solid {card_border}; border-radius:12px; padding:16px 18px; min-height:148px; {glow}">
             <div style="display:flex; justify-content:space-between; align-items:center;">
-                <span style="font-size:12.5px; color:#00F5FF; font-weight:700; text-transform:uppercase;">📦 Yalnızca Sarf Alan Klinikler</span>
-                <span style="font-size:22px; font-weight:700; color:#00F5FF;">{len(cons_only)} Klinik</span>
+                <span style="font-size:12.5px; color:#7DA8DF; font-weight:700; text-transform:uppercase;">📦 Yalnızca Sarf Alan Klinikler</span>
+                <span style="font-size:22px; font-weight:700; color:#7DA8DF;">{len(cons_only)} Klinik</span>
             </div>
             <div style="font-size:12px; color:#CCD7E6; margin-top:8px; line-height:1.45;">
                 <b>Kapsam:</b> Cihaz kaydı olmadan doğrudan sarf tüketen 21 yerli tüp bebek merkezi (Tavmergen 352 Kutu, Pınar Sağlık 130 Kutu, Eurofertil, Bahçeci vb.).
@@ -22262,12 +22243,12 @@ ZEUS Bioscience Scientific Affairs""",
             target_list = active_cons
             exp_title = "🟢 BÜYÜTÜLMÜŞ DETAY KARTI: Aktif & Düzenli Sarf Tüketen Kurumlar"
             exp_desc = "Cihaz ve sarf alımları sağlıklı rutin klinik döngüde devam eden lokomotif merkezler ve uluslararası distribütörlerdir."
-            exp_theme = "#00E676"
+            exp_theme = "#10B981"
         else: # consonly
             target_list = cons_only
             exp_title = "📦 BÜYÜTÜLMÜŞ DETAY KARTI: Yalnızca Sarf Alan Tüp Bebek Merkezleri (Cihaz Kaydı Olmayanlar)"
             exp_desc = "Doğrudan sarf tüketen 21 yerli tüp bebek kliniğidir. Merkezlerinde fason veya dış kaynaklı cihaz bulunmakta olup, yeni nesil Piezo donanım yükseltmesi için birincil hedef konumundadırlar."
-            exp_theme = "#00F5FF"
+            exp_theme = "#7DA8DF"
 
         # Render Expanded Card Container
         st.markdown(f"""
@@ -22432,14 +22413,12 @@ ZEUS Bioscience Scientific Affairs""",
         st.markdown(f'''
         <div style="
             background: linear-gradient(145deg, rgba(16, 26, 46, 0.75) 0%, rgba(9, 16, 30, 0.88) 100%);
-            border: 1px solid rgba(0, 245, 255, 0.16);
+            border: 1px solid rgba(125, 168, 223, 0.16);
             border-left: 4px solid {card_border_color};
-            border-top: 1px solid rgba(0, 245, 255, 0.3);
+            border-top: 1px solid rgba(125, 168, 223, 0.3);
             border-radius: 14px;
             padding: 16px 20px;
             margin-bottom: 18px;
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
             box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35);
         ">
             <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
@@ -22470,7 +22449,7 @@ ZEUS Bioscience Scientific Affairs""",
                 color:#CBD5E1;
                 line-height:1.5;
             ">
-                <span style="color:#00F5FF; font-weight:600; text-transform:uppercase; font-size:11px; letter-spacing:0.05em; display:block; margin-bottom:2px;">Yapay Zeka Teşhisi ve Eylem Önerisi</span>
+                <span style="color:#7DA8DF; font-weight:600; text-transform:uppercase; font-size:11px; letter-spacing:0.05em; display:block; margin-bottom:2px;">Yapay Zeka Teşhisi ve Eylem Önerisi</span>
                 {target_rec['action_rec']}
             </div>
         </div>
@@ -22481,8 +22460,8 @@ ZEUS Bioscience Scientific Affairs""",
         with inv_col1:
             st.markdown(f'''
             <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
-                <div style="width:26px; height:26px; border-radius:7px; background:rgba(0,245,255,0.1); border:1px solid rgba(0,245,255,0.25); display:flex; align-items:center; justify-content:center; color:#00F5FF;">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                <div style="width:26px; height:26px; border-radius:7px; background:rgba(125,168,223,0.1); border:1px solid rgba(125,168,223,0.25); display:flex; align-items:center; justify-content:center; color:#7DA8DF;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7DA8DF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
                 </div>
                 <span style="font-size:14px; font-weight:600; color:#E2E8F0;">Satın Alınan Cihazlar <span style="font-size:12px; color:#94A3B8; font-weight:400;">({target_rec['dev_qty']} Ünite — Toplam ${target_rec['dev_amt']:,.2f})</span></span>
             </div>
@@ -22494,7 +22473,7 @@ ZEUS Bioscience Scientific Affairs""",
                 st.dataframe(dev_inv_df, use_container_width=True, hide_index=True)
             else:
                 st.markdown('''
-                <div style="background:rgba(15,23,42,0.6); border:1px solid rgba(0,245,255,0.15); border-left:3px solid #00F5FF; border-radius:10px; padding:14px; color:#94A3B8; font-size:12.5px; backdrop-filter:blur(10px);">
+                <div style="background:rgba(15,23,42,0.6); border:1px solid rgba(125,168,223,0.15); border-left:3px solid #7DA8DF; border-radius:10px; padding:14px; color:#94A3B8; font-size:12.5px;">
                     Bu kurum adına doğrudan kesilmiş cihaz faturası bulunmamaktadır (Yalnızca sarf tüketicisi veya fason laboratuvar).
                 </div>
                 ''', unsafe_allow_html=True)
@@ -22502,8 +22481,8 @@ ZEUS Bioscience Scientific Affairs""",
         with inv_col2:
             st.markdown(f'''
             <div style="display:flex; align-items:center; gap:8px; margin-bottom:8px;">
-                <div style="width:26px; height:26px; border-radius:7px; background:rgba(0,245,255,0.1); border:1px solid rgba(0,245,255,0.25); display:flex; align-items:center; justify-content:center; color:#00F5FF;">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31"></path><path d="M14 9.3V1.99"></path><path d="M8.5 2h7"></path><path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path><path d="M5.52 16h12.96"></path></svg>
+                <div style="width:26px; height:26px; border-radius:7px; background:rgba(125,168,223,0.1); border:1px solid rgba(125,168,223,0.25); display:flex; align-items:center; justify-content:center; color:#7DA8DF;">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#7DA8DF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31"></path><path d="M14 9.3V1.99"></path><path d="M8.5 2h7"></path><path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path><path d="M5.52 16h12.96"></path></svg>
                 </div>
                 <span style="font-size:14px; font-weight:600; color:#E2E8F0;">Satın Alınan Sarf Malzemeleri <span style="font-size:12px; color:#94A3B8; font-weight:400;">({target_rec['cons_qty']} Adet/Kutu — Toplam ${target_rec['cons_amt']:,.2f})</span></span>
             </div>
@@ -22521,8 +22500,6 @@ ZEUS Bioscience Scientific Affairs""",
                     border-left: 3px solid #EF4444;
                     border-radius: 12px;
                     padding: 16px 18px;
-                    backdrop-filter: blur(14px);
-                    -webkit-backdrop-filter: blur(14px);
                     box-shadow: 0 4px 18px rgba(0,0,0,0.3);
                 ">
                     <div style="display:flex; align-items:center; gap:8px; margin-bottom:6px;">
@@ -22761,30 +22738,30 @@ ZEUS Bioscience Scientific Affairs""",
             for rk, r_item in reg_dict.items():
                 r_col = r_item['color']
                 status_badge_bg = 'rgba(0,230,118,0.15)' if 'Onay' in r_item.get('consensus_status', '') or 'Uyumlu' in r_item.get('consensus_status', '') else 'rgba(255,184,0,0.15)'
-                status_badge_txt = '#00E676' if 'Onay' in r_item.get('consensus_status', '') or 'Uyumlu' in r_item.get('consensus_status', '') else '#FFB800'
+                status_badge_txt = '#10B981' if 'Onay' in r_item.get('consensus_status', '') or 'Uyumlu' in r_item.get('consensus_status', '') else '#FFB800'
 
                 dev_list = r_item.get('recommended_devices', [])
-                dev_pills = ''.join([f'<span style="background:rgba(0,245,255,0.12);color:#00F5FF;border:1px solid rgba(0,245,255,0.3);padding:2px 7px;border-radius:4px;font-size:10.5px;font-weight:700;margin-right:4px;display:inline-block;margin-bottom:3px;">{d}</span>' for d in dev_list])
+                dev_pills = ''.join([f'<span style="background:rgba(125,168,223,0.12);color:#7DA8DF;border:1px solid rgba(125,168,223,0.3);padding:2px 7px;border-radius:4px;font-size:10.5px;font-weight:700;margin-right:4px;display:inline-block;margin-bottom:3px;">{d}</span>' for d in dev_list])
 
                 card_html = (
-                    f'<div style="background:rgba(15,23,42,0.65);border-left:4px solid {r_col};border:1px solid rgba(255,255,255,0.06);border-left-width:4px;padding:12px 14px;border-radius:10px;margin-bottom:8px;backdrop-filter:blur(8px);">'
+                    f'<div style="background:rgba(15,23,42,0.65);border-left:4px solid {r_col};border:1px solid rgba(255,255,255,0.06);border-left-width:4px;padding:12px 14px;border-radius:10px;margin-bottom:8px;">'
                     f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">'
                     f'<b style="color:{r_col};font-size:13.5px;">{r_item["name"]}</b>'
-                    f'<span style="font-size:11px;color:#00F5FF;font-weight:700;background:rgba(0,245,255,0.1);padding:2px 8px;border-radius:4px;border:1px solid rgba(0,245,255,0.25);">{r_item["opportunity"]}</span>'
+                    f'<span style="font-size:11px;color:#7DA8DF;font-weight:700;background:rgba(125,168,223,0.1);padding:2px 8px;border-radius:4px;border:1px solid rgba(125,168,223,0.25);">{r_item["opportunity"]}</span>'
                     f'</div>'
                     f'<div style="font-size:11px;color:#8A99AD;margin-bottom:6px;">{r_item["stats"]}</div>'
                     f'<div style="font-size:11.5px;color:#CBD5E1;line-height:1.45;margin-bottom:6px;">'
                     f'<b style="color:#F87171;">⚠️ Zayıflık:</b> {r_item["ai_weakness"]}<br>'
-                    f'<b style="color:#38BDF8;">🤖 AI Aksiyonu:</b> {r_item["ai_action"]}'
+                    f'<b style="color:#7DA8DF;">🤖 AI Aksiyonu:</b> {r_item["ai_action"]}'
                     f'</div>'
-                    f'<div style="background:rgba(0,245,255,0.05);border:1px solid rgba(0,245,255,0.2);border-radius:6px;padding:7px 10px;margin-bottom:6px;">'
-                    f'<b style="color:#00F5FF;font-size:11px;">🔬 Tavsiye Edilen ZEUS Cihaz & Teknolojileri:</b><br>'
+                    f'<div style="background:rgba(125,168,223,0.05);border:1px solid rgba(125,168,223,0.2);border-radius:6px;padding:7px 10px;margin-bottom:6px;">'
+                    f'<b style="color:#7DA8DF;font-size:11px;">🔬 Tavsiye Edilen ZEUS Cihaz & Teknolojileri:</b><br>'
                     f'<div style="margin-top:4px;margin-bottom:3px;">{dev_pills}</div>'
                     f'<span style="color:#CCD7E6;font-size:10.5px;line-height:1.4;">{r_item.get("device_rationale", "")}</span>'
                     f'</div>'
                     f'<div style="background:rgba(0,0,0,0.35);border:1px solid rgba(255,255,255,0.06);border-left:3px solid {r_col};border-radius:6px;padding:8px 10px;font-size:11.5px;margin-bottom:6px;">'
                     f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;">'
-                    f'<b style="color:#00F5FF;font-size:11px;">👨‍💼 Uzman Görüşü ({r_item.get("expert_role", r_item["expert_title"])}):</b>'
+                    f'<b style="color:#7DA8DF;font-size:11px;">👨‍💼 Uzman Görüşü ({r_item.get("expert_role", r_item["expert_title"])}):</b>'
                     f'<span style="font-size:9.5px;color:{status_badge_txt};background:{status_badge_bg};padding:1px 6px;border-radius:3px;font-weight:700;">{r_item["consensus_status"]}</span>'
                     f'</div>'
                     f'<div style="color:#E2E8F0;line-height:1.4;">{r_item["expert_opinion"]}</div>'
@@ -22934,14 +22911,14 @@ ZEUS Bioscience Scientific Affairs""",
             elif 'DEFCON 3' in geo_data['alert_level']:
                 geo_data['alert_badge_color'] = '#FF9800'
             elif 'DEFCON 5' in geo_data['alert_level']:
-                geo_data['alert_badge_color'] = '#00E676'
+                geo_data['alert_badge_color'] = '#10B981'
             else:
-                geo_data['alert_badge_color'] = '#00F5FF'
+                geo_data['alert_badge_color'] = '#7DA8DF'
 
         with col_gsel2:
             st.markdown(f"""
             <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:10px 14px; font-size:11.5px; margin-top:25px;">
-                <span style="color:#8FA3C0;">Pazar Bölgesi:</span> <b style="color:#00F5FF;">{geo_data['region']}</b> | 
+                <span style="color:#8FA3C0;">Pazar Bölgesi:</span> <b style="color:#7DA8DF;">{geo_data['region']}</b> | 
                 <span style="color:#8FA3C0;">Klinik Sayısı:</span> <b style="color:#10B981;">{geo_data['clinics']}</b><br>
                 <span style="color:#8FA3C0;">Yıllık Siklus:</span> <b style="color:#FFB800;">{geo_data['cycles']:,}</b> | 
                 <span style="color:#8FA3C0;">Kişi Başı GSYİH:</span> <b style="color:#FFFFFF;">{geo_data['gdp_pc']}</b>
@@ -22952,8 +22929,8 @@ ZEUS Bioscience Scientific Affairs""",
 
         # 1. SPECIAL CALLOUT BANNER: SEÇİLEN ÜLKENİN FİNANS & TAHSİLAT GERÇEĞİ
         is_iraq = (sel_code == 'IQ')
-        banner_border = '#00E676' if (is_iraq or '0.00' in geo_data['payment_risk_title']) else '#00F5FF'
-        banner_bg = 'rgba(0,230,118,0.12)' if (is_iraq or '0.00' in geo_data['payment_risk_title']) else 'rgba(0,245,255,0.08)'
+        banner_border = '#10B981' if (is_iraq or '0.00' in geo_data['payment_risk_title']) else '#7DA8DF'
+        banner_bg = 'rgba(0,230,118,0.12)' if (is_iraq or '0.00' in geo_data['payment_risk_title']) else 'rgba(125,168,223,0.08)'
         
         banner_title = "FİNANS & HUKUK GERÇEĞİ: IRAK OPERASYONUNDA SIFIR TAHSİLAT RİSKİ (AMMAN TAKASLI)" if is_iraq else f"FİNANS, MEVZUAT & TAHSİLAT GÜVENCESİ: {geo_data['flag']} {geo_data['name'].upper()} PAZARI"
         banner_subtitle = "Ödemeler ve fatura bedelleri yetkili distribütörümüz Sirius Pharm Company'nin Ürdün (Amman) regüle kurumsal hesabı üzerinden eksiksiz tahsil edilmektedir." if is_iraq else f"Yetkili Bankacılık Kanalı: {geo_data['payment_guarantor']}"
@@ -22974,12 +22951,12 @@ ZEUS Bioscience Scientific Affairs""",
                 </span>
             </div>
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap:12px; background:rgba(0,0,0,0.3); padding:10px 14px; border-radius:8px; font-size:11.8px; margin:10px 0;">
-                <div><span style="color:#8FA3C0;">Finansal Tahsilat Riski:</span><br><b style="color:#00E676; font-size:13.5px;">{geo_data['payment_risk_title']}</b></div>
-                <div><span style="color:#8FA3C0;">Yetkili Ödeme Kanalı:</span><br><b style="color:#00F5FF;">{geo_data['payment_guarantor']}</b></div>
+                <div><span style="color:#8FA3C0;">Finansal Tahsilat Riski:</span><br><b style="color:#10B981; font-size:13.5px;">{geo_data['payment_risk_title']}</b></div>
+                <div><span style="color:#8FA3C0;">Yetkili Ödeme Kanalı:</span><br><b style="color:#7DA8DF;">{geo_data['payment_guarantor']}</b></div>
                 <div><span style="color:#8FA3C0;">Operasyonel Lojistik Odak:</span><br><b style="color:#FFB800;">{geo_data['lead_time_status']}</b></div>
             </div>
             <div style="font-size:12.2px; color:#E2E8F0; line-height:1.5; background:rgba(255,255,255,0.03); padding:10px 14px; border-radius:6px; border-left:3px solid {banner_border};">
-                <b style="color:#00F5FF;">👨‍⚕️ {geo_data['expert_title']}:</b><br>
+                <b style="color:#7DA8DF;">👨‍⚕️ {geo_data['expert_title']}:</b><br>
                 <span>{geo_data['expert_comment']}</span>
             </div>
         </div>
@@ -23030,20 +23007,20 @@ ZEUS Bioscience Scientific Affairs""",
             st.markdown(f"""
             <div style="background:#0F192E;border:1px solid rgba(0,230,118,0.3);border-radius:8px;padding:12px;text-align:center;">
                 <div style="color:#8FA3C0;font-size:11px;font-weight:600;">FİNANSAL TAHSİLAT RİSKİ</div>
-                <div style="color:#00E676;font-size:17px;font-weight:800;">{geo_data['payment_risk_title'].split('—')[0].split('(')[0].strip()}</div>
+                <div style="color:#10B981;font-size:17px;font-weight:800;">{geo_data['payment_risk_title'].split('—')[0].split('(')[0].strip()}</div>
                 <div style="color:#CCD7E6;font-size:11px;">{geo_data['payment_assurance_pct']}</div>
             </div>
             """, unsafe_allow_html=True)
         with geo_kpi3:
             st.markdown(f"""
-            <div style="background:#0F192E;border:1px solid rgba(0,245,255,0.3);border-radius:8px;padding:12px;text-align:center;">
+            <div style="background:#0F192E;border:1px solid rgba(125,168,223,0.3);border-radius:8px;padding:12px;text-align:center;">
                 <div style="color:#8FA3C0;font-size:11px;font-weight:600;">ALTERNATİF HAVA KÖPRÜSÜ FARKI</div>
-                <div style="color:#00F5FF;font-size:16px;font-weight:800;">{geo_data['freight_contingency_cost'].split('(')[0].strip()}</div>
+                <div style="color:#7DA8DF;font-size:16px;font-weight:800;">{geo_data['freight_contingency_cost'].split('(')[0].strip()}</div>
                 <div style="color:#CCD7E6;font-size:11px;">%50 Ticaret Bakanlığı Teşvikli</div>
             </div>
             """, unsafe_allow_html=True)
         with geo_kpi4:
-            st_col = "#00E676" if geo_data['status'] == 'Onaylandı & Yürürlükte' else "#FFB800"
+            st_col = "#10B981" if geo_data['status'] == 'Onaylandı & Yürürlükte' else "#FFB800"
             st.markdown(f"""
             <div style="background:#0F192E;border:1px solid {st_col};border-radius:8px;padding:12px;text-align:center;">
                 <div style="color:#8FA3C0;font-size:11px;font-weight:600;">KRİZ PROTOKOLÜ STATÜSÜ</div>
@@ -23063,9 +23040,9 @@ ZEUS Bioscience Scientific Affairs""",
             target_g_col = g_col1 if g_idx % 2 == 0 else g_col2
             with target_g_col:
                 st.markdown(f"""
-                <div style="background:#0F192E; border:1px solid rgba(0,245,255,0.2); border-radius:10px; padding:14px 16px; margin-bottom:12px; height:100%;">
+                <div style="background:#0F192E; border:1px solid rgba(125,168,223,0.2); border-radius:10px; padding:14px 16px; margin-bottom:12px; height:100%;">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
-                        <span style="font-size:11px; font-weight:700; color:#00F5FF; background:rgba(0,245,255,0.1); padding:2px 8px; border-radius:4px;">
+                        <span style="font-size:11px; font-weight:700; color:#7DA8DF; background:rgba(125,168,223,0.1); padding:2px 8px; border-radius:4px;">
                             {g_item['source']}
                         </span>
                         <span style="font-size:10.5px; color:#8FA3C0;">{g_item['date']}</span>
@@ -23116,7 +23093,7 @@ ZEUS Bioscience Scientific Affairs""",
         <div style="background:#0F192E; border:1px solid rgba(19,166,181,0.3); border-radius:10px; padding:16px 20px;">
             <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap:12px;">
                 <div style="background:rgba(255,255,255,0.02); padding:10px 14px; border-radius:8px;">
-                    <b style="color:#00F5FF; font-size:12.5px;">1. Direkt Tarifeli Medikal Hava Köprüsü</b>
+                    <b style="color:#7DA8DF; font-size:12.5px;">1. Direkt Tarifeli Medikal Hava Köprüsü</b>
                     <p style="color:#CCD7E6; font-size:11.5px; margin-top:4px; line-height:1.4;">
                         Ankara Esenboğa (ESB) veya İstanbul (IST) çıkışlı THY Kargo tarifeli seferleriyle {geo_data['name']} merkezine 24-48 saatte soğuk zincir teslimatı garanti altına alınır.
                     </p>
@@ -23277,8 +23254,8 @@ elif active_view in ["🤝 Yetkili Distribütör Karneleri & CRM", "🤝 Distrib
 
     # Contextual note for year clarity
     st.markdown(f"""
-    <div style="background:rgba(19,166,181,0.08);border:1px solid rgba(19,166,181,0.25);border-left:4px solid #00F5FF;padding:10px 14px;border-radius:8px;margin:12px 0 16px 0;font-size:12px;color:#CCD7E6;">
-        <b>📅 Analiz Edilen Dönem:</b> <span style="color:#00F5FF;font-weight:700;">{crm_year_filter}</span> &nbsp;|&nbsp; 
+    <div style="background:rgba(19,166,181,0.08);border:1px solid rgba(19,166,181,0.25);border-left:4px solid #7DA8DF;padding:10px 14px;border-radius:8px;margin:12px 0 16px 0;font-size:12px;color:#CCD7E6;">
+        <b>📅 Analiz Edilen Dönem:</b> <span style="color:#7DA8DF;font-weight:700;">{crm_year_filter}</span> &nbsp;|&nbsp; 
         Aşağıdaki tabloda her müşterinin <b>2020'den 2026'ya kadar tüm yıllık ve konsolide ciroları</b> yan yana listelenmiştir. Önceki yıllarda cihaz satın almış ancak bu yıl henüz sipariş vermemiş müşteriler (ör. <b>Kuwait ATC: 2025'te 3 Cihaz, $26.2K</b> veya <b>UAE Sellco: 2025'te net 1 Cihaz ($19K) ve $4.1K sarf — LIR iade düşülmüş</b>) eksiksiz olarak raporlanmaktadır.
     </div>
     """, unsafe_allow_html=True)
@@ -23380,9 +23357,9 @@ elif active_view in ["🤝 Yetkili Distribütör Karneleri & CRM", "🤝 Distrib
             yr_rev = sel_r_map.get(yr_k, 0.0)
             yr_dev = sel_dc_map.get(yr_k, 0)
             yr_con = sel_cc_map.get(yr_k, 0)
-            border_c = "rgba(0,245,255,0.4)" if yr_rev > 0 else "rgba(255,255,255,0.07)"
-            bg_c = "rgba(0,245,255,0.06)" if yr_rev > 0 else "rgba(15,23,42,0.6)"
-            txt_c = "#00F5FF" if yr_rev > 0 else "#64748B"
+            border_c = "rgba(125,168,223,0.4)" if yr_rev > 0 else "rgba(255,255,255,0.07)"
+            bg_c = "rgba(125,168,223,0.06)" if yr_rev > 0 else "rgba(15,23,42,0.6)"
+            txt_c = "#7DA8DF" if yr_rev > 0 else "#64748B"
             yr_boxes_html += f'''
             <div style="background:{bg_c};border:1px solid {border_c};border-radius:8px;padding:8px 10px;">
                 <span style="font-size:10.5px;color:{txt_c};font-weight:700;">{yr_k}</span><br>
@@ -23394,9 +23371,9 @@ elif active_view in ["🤝 Yetkili Distribütör Karneleri & CRM", "🤝 Distrib
         all_dev = sel_dc_map.get('ALL', sel_acc['devices_count'])
         all_con = sel_cc_map.get('ALL', sel_acc.get('consumables_count', 0))
         yr_boxes_html += f'''
-        <div style="background:linear-gradient(135deg, rgba(19,166,181,0.18) 0%, rgba(15,25,46,0.95) 100%);border:1.5px solid #00F5FF;border-radius:8px;padding:8px 10px;">
+        <div style="background:linear-gradient(135deg, rgba(19,166,181,0.18) 0%, rgba(15,25,46,0.95) 100%);border:1.5px solid #7DA8DF;border-radius:8px;padding:8px 10px;">
             <span style="font-size:10.5px;color:#FFB800;font-weight:800;">2020-2026</span><br>
-            <b style="font-size:13.5px;color:#00F5FF;">{format_curr(all_rev)}</b><br>
+            <b style="font-size:13.5px;color:#7DA8DF;">{format_curr(all_rev)}</b><br>
             <span style="font-size:9.5px;color:#FFB800;">C: {all_dev} | S: {all_con}</span>
         </div>'''
 
@@ -23761,28 +23738,28 @@ elif active_view in ["Cihaz vs Sarf Gelir Trendleri", "↗ Cihaz vs Sarf Gelir T
     kpi_s1, kpi_s2, kpi_s3, kpi_s4 = st.columns(4)
     with kpi_s1:
         st.markdown(f'''
-        <div class="glass-metric-card" style="border-top:1px solid #00F5FF;box-shadow:0 8px 25px rgba(0,245,255,0.15);">
+        <div class="glass-metric-card" style="border-top:1px solid #7DA8DF;box-shadow:0 8px 25px rgba(125,168,223,0.15);">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
                 <span class="glass-metric-header">Toplam Net Hasılat</span>
                 <div class="glass-icon-box" style="margin-bottom:0;width:30px;height:30px;">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7DA8DF" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
                 </div>
             </div>
-            <div class="glass-metric-val" style="color:#00F5FF;font-size:24px;">{format_curr(total_rev)}</div>
+            <div class="glass-metric-val" style="color:#7DA8DF;font-size:24px;">{format_curr(total_rev)}</div>
             <div style="font-size:11px;color:#10B981;font-weight:600;margin-top:4px;">● 1,280 Doğrulanmış Fatura Satırı</div>
         </div>
         ''', unsafe_allow_html=True)
     with kpi_s2:
         st.markdown(f'''
-        <div class="glass-metric-card" style="border-top:1px solid #38BDF8;box-shadow:0 8px 25px rgba(56,189,248,0.12);">
+        <div class="glass-metric-card" style="border-top:1px solid #7DA8DF;box-shadow:0 8px 25px rgba(56,189,248,0.12);">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
                 <span class="glass-metric-header">Cihaz / Donanım Portföyü</span>
                 <div class="glass-icon-box" style="margin-bottom:0;width:30px;height:30px;">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#7DA8DF" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
                 </div>
             </div>
             <div class="glass-metric-val" style="color:#E2E8F0;font-size:24px;">{format_curr(total_dev_rev)}</div>
-            <div style="font-size:11px;color:#38BDF8;font-weight:600;margin-top:4px;">● {total_devices} Adet Kurulu Cihaz</div>
+            <div style="font-size:11px;color:#7DA8DF;font-weight:600;margin-top:4px;">● {total_devices} Adet Kurulu Cihaz</div>
         </div>
         ''', unsafe_allow_html=True)
     with kpi_s3:
@@ -23864,7 +23841,7 @@ elif active_view in ["Cihaz vs Sarf Gelir Trendleri", "↗ Cihaz vs Sarf Gelir T
         total_p_rev = p_summary['Revenue'].sum()
         p_summary['Share_Pct'] = (p_summary['Revenue'] / total_p_rev * 100).round(1)
         
-        neon_colors = ['#00F5FF', '#10B981', '#8B5CF6', '#F59E0B', '#EC4899', '#38BDF8']
+        neon_colors = ['#7DA8DF', '#10B981', '#8B5CF6', '#F59E0B', '#EC4899', '#7DA8DF']
 
         if chart_3d_mode == "3D Holografik Sahne (360°)":
             # Dynamic Three.js items construction with Floating 3D Product & Percentage Badges
@@ -23906,8 +23883,8 @@ elif active_view in ["Cihaz vs Sarf Gelir Trendleri", "↗ Cihaz vs Sarf Gelir T
     <meta charset="utf-8">
     <style>
         body { margin: 0; padding: 0; overflow: hidden; background: transparent; font-family: 'Manrope', system-ui, sans-serif; }
-        #stage-wrap { position: relative; width: 100%; height: 320px; border-radius: 14px; background: radial-gradient(circle at 50% 30%, rgba(15,25,48,0.95) 0%, rgba(7,11,20,0.98) 100%); border: 1px solid rgba(0,245,255,0.22); box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
-        #telemetry-tag { position: absolute; top: 10px; left: 12px; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; color: #00F5FF; background: rgba(0,245,255,0.08); border: 1px solid rgba(0,245,255,0.25); border-radius: 6px; padding: 4px 10px; pointer-events: none; }
+        #stage-wrap { position: relative; width: 100%; height: 320px; border-radius: 14px; background: radial-gradient(circle at 50% 30%, rgba(15,25,48,0.95) 0%, rgba(7,11,20,0.98) 100%); border: 1px solid rgba(125,168,223,0.22); box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
+        #telemetry-tag { position: absolute; top: 10px; left: 12px; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; color: #7DA8DF; background: rgba(125,168,223,0.08); border: 1px solid rgba(125,168,223,0.25); border-radius: 6px; padding: 4px 10px; pointer-events: none; }
         #rot-hint { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); font-size: 10px; color: #94A3B8; pointer-events: none; background: rgba(10,16,28,0.85); padding: 3px 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.08); white-space: nowrap; }
         
         /* 3D Floating Summit Badges */
@@ -23917,14 +23894,12 @@ elif active_view in ["Cihaz vs Sarf Gelir Trendleri", "↗ Cihaz vs Sarf Gelir T
             left: 0;
             pointer-events: none;
             background: rgba(10, 16, 28, 0.88);
-            border: 1px solid rgba(0, 245, 255, 0.4);
+            border: 1px solid rgba(125, 168, 223, 0.4);
             border-radius: 6px;
             padding: 2px 7px;
             font-size: 10px;
             font-weight: 700;
             white-space: nowrap;
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
             display: flex;
             align-items: center;
             gap: 5px;
@@ -23935,9 +23910,9 @@ elif active_view in ["Cihaz vs Sarf Gelir Trendleri", "↗ Cihaz vs Sarf Gelir T
         .badge-pct { font-family: 'Geist Mono', monospace; font-weight: 800; font-size: 10.5px; }
 
         /* Detailed HUD Tooltip on Hover */
-        #hud-tooltip { position: absolute; display: none; pointer-events: none; background: rgba(10,16,28,0.96); border: 1px solid #00F5FF; border-radius: 10px; padding: 10px 14px; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: 0 8px 30px rgba(0,245,255,0.35); z-index: 999; min-width: 170px; }
+        #hud-tooltip { position: absolute; display: none; pointer-events: none; background: rgba(10,16,28,0.96); border: 1px solid #7DA8DF; border-radius: 10px; padding: 10px 14px; box-shadow: 0 8px 30px rgba(125,168,223,0.35); z-index: 999; min-width: 170px; }
         #tt-title { font-size: 12px; font-weight: 700; color: #FFFFFF; margin-bottom: 4px; }
-        #tt-rev { font-size: 14.5px; font-weight: 800; color: #00F5FF; font-family: monospace; }
+        #tt-rev { font-size: 14.5px; font-weight: 800; color: #7DA8DF; font-family: monospace; }
         #tt-pct { font-size: 11px; font-weight: 600; color: #10B981; background: rgba(16,185,129,0.12); padding: 2px 6px; border-radius: 4px; margin-left: 6px; }
         #tt-cat { font-size: 10px; color: #94A3B8; margin-top: 4px; }
     </style>
@@ -24211,7 +24186,7 @@ elif active_view in ["Cihaz vs Sarf Gelir Trendleri", "↗ Cihaz vs Sarf Gelir T
                 hovertemplate="<b>%{label}</b><br>Hasılat: $%{value:,.2f}<br>Pay: %{percent}<extra></extra>"
             )])
             fig_pie.add_annotation(
-                text=f"<span style='font-size:11px;color:#94A3B8;font-weight:600;'>KONSOLİDE</span><br><b style='font-size:18px;color:#00F5FF;'>${total_p_rev/1000:,.0f}K</b>",
+                text=f"<span style='font-size:11px;color:#94A3B8;font-weight:600;'>KONSOLİDE</span><br><b style='font-size:18px;color:#7DA8DF;'>${total_p_rev/1000:,.0f}K</b>",
                 x=0.5, y=0.5,
                 showarrow=False,
                 align='center'
@@ -24263,7 +24238,7 @@ elif active_view in ["Cihaz vs Sarf Gelir Trendleri", "↗ Cihaz vs Sarf Gelir T
         fig_split = px.bar(
             s_df, x='Tutar', y='Partner', color='Gelir Tipi', orientation='h',
             color_discrete_map={
-                'Cihaz / Donanım (Capital Devices)': '#00F5FF',
+                'Cihaz / Donanım (Capital Devices)': '#7DA8DF',
                 'Tekrar Eden Sarf (Consumables)': '#10B981'
             }
         )
@@ -24276,7 +24251,7 @@ elif active_view in ["Cihaz vs Sarf Gelir Trendleri", "↗ Cihaz vs Sarf Gelir T
             margin=dict(l=140, r=20, t=45, b=30),
             xaxis=dict(
                 title="Toplam Hasılat ($ USD)",
-                gridcolor='rgba(0, 245, 255, 0.08)',
+                gridcolor='rgba(125, 168, 223, 0.08)',
                 color='#94A3B8'
             ),
             yaxis=dict(
@@ -24291,7 +24266,7 @@ elif active_view in ["Cihaz vs Sarf Gelir Trendleri", "↗ Cihaz vs Sarf Gelir T
                 xanchor="center",
                 x=0.5,
                 bgcolor='rgba(15,23,42,0.85)',
-                bordercolor='rgba(0,245,255,0.2)',
+                bordercolor='rgba(125,168,223,0.2)',
                 borderwidth=1,
                 font=dict(color="#E2E8F0", size=11)
             )
@@ -24308,7 +24283,7 @@ elif active_view in ["Cihaz vs Sarf Gelir Trendleri", "↗ Cihaz vs Sarf Gelir T
     # --------------------------------------------------------------------------
     st.markdown("---")
     st.markdown('''
-    <div style="background:linear-gradient(135deg, rgba(13,22,40,0.95) 0%, rgba(20,32,56,0.92) 100%);border:1px solid rgba(0,245,255,0.35);border-radius:12px;padding:16px 20px;margin-bottom:18px;box-shadow:0 8px 30px rgba(0,0,0,0.5);">
+    <div style="background:linear-gradient(135deg, rgba(13,22,40,0.95) 0%, rgba(20,32,56,0.92) 100%);border:1px solid rgba(125,168,223,0.35);border-radius:12px;padding:16px 20px;margin-bottom:18px;box-shadow:0 8px 30px rgba(0,0,0,0.5);">
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;margin-bottom:12px;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:10px;">
             <div style="display:flex;align-items:center;gap:10px;">
                 <span style="font-size:22px;">📊</span>
@@ -24318,7 +24293,7 @@ elif active_view in ["Cihaz vs Sarf Gelir Trendleri", "↗ Cihaz vs Sarf Gelir T
                 </div>
             </div>
             <div style="display:flex;gap:8px;align-items:center;">
-                <span style="background:rgba(0,245,255,0.15);color:#00F5FF;border:1px solid rgba(0,245,255,0.4);padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;">7 Yıllık Arşiv (2020 - 2026)</span>
+                <span style="background:rgba(125,168,223,0.15);color:#7DA8DF;border:1px solid rgba(125,168,223,0.4);padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;">7 Yıllık Arşiv (2020 - 2026)</span>
                 <span style="background:rgba(16,185,129,0.15);color:#10B981;border:1px solid rgba(16,185,129,0.3);padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;">✓ 77 Cihaz • 4,219 Kutu Sarf • $936.5K</span>
             </div>
         </div>
@@ -24335,17 +24310,17 @@ elif active_view in ["Cihaz vs Sarf Gelir Trendleri", "↗ Cihaz vs Sarf Gelir T
     mat_c1, mat_c2, mat_c3, mat_c4 = st.columns(4)
     with mat_c1:
         st.markdown(f'''
-        <div class="glass-metric-card" style="border-top:2px solid #00F5FF;padding:10px 14px;">
+        <div class="glass-metric-card" style="border-top:2px solid #7DA8DF;padding:10px 14px;">
             <div style="font-size:11px;font-weight:700;color:#94A3B8;text-transform:uppercase;">7 Yıllık Toplam Ciro</div>
-            <div style="font-size:22px;font-weight:800;color:#00F5FF;margin-top:2px;">${mat_df['total_usd'].sum():,.2f} USD</div>
+            <div style="font-size:22px;font-weight:800;color:#7DA8DF;margin-top:2px;">${mat_df['total_usd'].sum():,.2f} USD</div>
             <div style="font-size:10px;color:#10B981;margin-top:2px;">₺{mat_df['total_tl'].sum():,.2f} TL Resmi Muhasebe</div>
         </div>
         ''', unsafe_allow_html=True)
     with mat_c2:
         st.markdown(f'''
-        <div class="glass-metric-card" style="border-top:2px solid #38BDF8;padding:10px 14px;">
+        <div class="glass-metric-card" style="border-top:2px solid #7DA8DF;padding:10px 14px;">
             <div style="font-size:11px;font-weight:700;color:#94A3B8;text-transform:uppercase;">Kurulu Cihaz Tabanı</div>
-            <div style="font-size:22px;font-weight:800;color:#38BDF8;margin-top:2px;">{int(mat_df['devices'].sum())} Adet Cihaz</div>
+            <div style="font-size:22px;font-weight:800;color:#7DA8DF;margin-top:2px;">{int(mat_df['devices'].sum())} Adet Cihaz</div>
             <div style="font-size:10px;color:#94A3B8;margin-top:2px;">${mat_df['device_rev'].sum():,.2f} USD Cihaz Satışı</div>
         </div>
         ''', unsafe_allow_html=True)
@@ -24377,7 +24352,7 @@ elif active_view in ["Cihaz vs Sarf Gelir Trendleri", "↗ Cihaz vs Sarf Gelir T
             name='Cihaz / Donanım Geliri ($ USD)',
             x=mat_df['year_label'],
             y=mat_df['device_rev'],
-            marker_color='#00F5FF',
+            marker_color='#7DA8DF',
             text=[f"${v/1000:.1f}K" for v in mat_df['device_rev']],
             textposition='auto',
             hovertemplate="<b>%{x}</b><br>Cihaz Hasılatı: $%{y:,.2f}<extra></extra>"
@@ -24406,8 +24381,8 @@ elif active_view in ["Cihaz vs Sarf Gelir Trendleri", "↗ Cihaz vs Sarf Gelir T
             mode='lines+markers+text',
             text=mat_df['devices'],
             textposition='top right',
-            line=dict(color='#38BDF8', width=3, dash='dot'),
-            marker=dict(size=9, color='#38BDF8', symbol='diamond'),
+            line=dict(color='#7DA8DF', width=3, dash='dot'),
+            marker=dict(size=9, color='#7DA8DF', symbol='diamond'),
             hovertemplate="<b>%{x}</b><br>Kurulan Cihaz: %{y} Adet<extra></extra>"
         ),
         secondary_y=True
@@ -24442,13 +24417,13 @@ elif active_view in ["Cihaz vs Sarf Gelir Trendleri", "↗ Cihaz vs Sarf Gelir T
             xanchor="center",
             x=0.5,
             bgcolor='rgba(15,23,42,0.85)',
-            bordercolor='rgba(0,245,255,0.25)',
+            bordercolor='rgba(125,168,223,0.25)',
             borderwidth=1,
             font=dict(color="#E2E8F0", size=11)
         )
     )
     fig_mat.update_xaxes(title_text="Yıl (2020 – 2026)", gridcolor='rgba(255,255,255,0.06)', color='#E2E8F0')
-    fig_mat.update_yaxes(title_text="Hasılat ($ USD)", secondary_y=False, gridcolor='rgba(0,245,255,0.08)', color='#00F5FF')
+    fig_mat.update_yaxes(title_text="Hasılat ($ USD)", secondary_y=False, gridcolor='rgba(125,168,223,0.08)', color='#7DA8DF')
     fig_mat.update_yaxes(title_text="Adet / Kutu Hacmi", secondary_y=True, gridcolor='rgba(255,184,0,0.05)', color='#FFB800')
 
     st.plotly_chart(fig_mat, use_container_width=True)
@@ -24517,11 +24492,11 @@ elif active_view in ["Cihaz vs Sarf Gelir Trendleri", "↗ Cihaz vs Sarf Gelir T
 
     # Informational Glass Notice Banner
     st.markdown('''
-    <div style="background:rgba(15,23,42,0.65);border:1px solid rgba(0,245,255,0.25);border-left:4px solid #00F5FF;border-radius:10px;padding:11px 16px;margin-bottom:14px;backdrop-filter:blur(16px);">
+    <div style="background:rgba(15,23,42,0.65);border:1px solid rgba(125,168,223,0.25);border-left:4px solid #7DA8DF;border-radius:10px;padding:11px 16px;margin-bottom:14px;">
         <div style="display:flex;align-items:center;gap:12px;">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7DA8DF" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
             <div style="font-size:12.5px;color:#E2E8F0;line-height:1.45;">
-                <b style="color:#00F5FF;">Kurulu Cihaz Tabanı ve Hasılat Doğrulama Notu:</b> Aşağıdaki tabloda distribütörlerin sahadaki <b>gerçek toplam kurulu cihaz filosu (Sirius: 18, SJNU: 7, CMC: 5, ITL: 4, AMS: 3, ATC: 3 Adet)</b> ve tüm zamanlar cirosu listelenmektedir. Örneğin; <b>Kuwait ATC (3 Cihaz)</b> ve <b>Saudi AMS (3 Cihaz)</b> donanım teslimatlarını 2025'te tamamlamış olup, 2026 sütununda ise cari yıl gerçekleşmeleri şeffaf olarak gösterilmektedir.
+                <b style="color:#7DA8DF;">Kurulu Cihaz Tabanı ve Hasılat Doğrulama Notu:</b> Aşağıdaki tabloda distribütörlerin sahadaki <b>gerçek toplam kurulu cihaz filosu (Sirius: 18, SJNU: 7, CMC: 5, ITL: 4, AMS: 3, ATC: 3 Adet)</b> ve tüm zamanlar cirosu listelenmektedir. Örneğin; <b>Kuwait ATC (3 Cihaz)</b> ve <b>Saudi AMS (3 Cihaz)</b> donanım teslimatlarını 2025'te tamamlamış olup, 2026 sütununda ise cari yıl gerçekleşmeleri şeffaf olarak gösterilmektedir.
             </div>
         </div>
     </div>
@@ -24640,10 +24615,10 @@ elif active_view in ["Cihaz vs Sarf Gelir Trendleri", "↗ Cihaz vs Sarf Gelir T
     # 2. Annual Market Capacity & AI Quota Recommendation Desk (Requested by User)
     with lead_tab_quota:
         st.markdown("""
-        <div style="background:rgba(19,166,181,0.08);border:1px solid rgba(0,245,255,0.25);border-left:4px solid #00F5FF;border-radius:10px;padding:12px 16px;margin-bottom:16px;">
+        <div style="background:rgba(19,166,181,0.08);border:1px solid rgba(125,168,223,0.25);border-left:4px solid #7DA8DF;border-radius:10px;padding:12px 16px;margin-bottom:16px;">
             <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
                 <div>
-                    <span style="font-size:13px;font-weight:700;color:#00F5FF;">🎯 YILLIK PAZAR KAPASİTESİ & Aİ ASGARİ SİPARİŞ KOTALARI MASASI</span>
+                    <span style="font-size:13px;font-weight:700;color:#7DA8DF;">🎯 YILLIK PAZAR KAPASİTESİ & Aİ ASGARİ SİPARİŞ KOTALARI MASASI</span>
                     <div style="font-size:12px;color:#E2E8F0;margin-top:3px;line-height:1.45;">
                         Cihaz almış fakat düzenli yıllık sipariş vermeyen <b>pasif/uyuyan distribütörleri</b> aktive etmek için her ülkenin <b>GSYİH (GDP), Yıllık Siklus, Klinik Sayısı ve Gümrük Rejimi</b> parametrelerine göre AI asgari yıllık sipariş tahmini üretilmiştir. Yöneticiler değerlendirme yorumu ekleyip resmi kotayı belirleyebilir; kaydedilen kararlar doğrudan <b>Strategic Decision Center</b>'a aktarılır.
                     </div>
@@ -24659,9 +24634,9 @@ elif active_view in ["Cihaz vs Sarf Gelir Trendleri", "↗ Cihaz vs Sarf Gelir T
 
         for q_id, q_data in q_dict.items():
             is_dormant = "UYUYAN" in q_data['status_diagnosis'] or "KRİTİK" in q_data['status_diagnosis'] or "SPOT" in q_data['status_diagnosis']
-            card_border = "#FF5252" if is_dormant else "#00F5FF"
-            badge_bg = "rgba(255,82,82,0.15)" if is_dormant else "rgba(0,245,255,0.15)"
-            badge_color = "#FF5252" if is_dormant else "#00F5FF"
+            card_border = "#FF5252" if is_dormant else "#7DA8DF"
+            badge_bg = "rgba(255,82,82,0.15)" if is_dormant else "rgba(125,168,223,0.15)"
+            badge_color = "#FF5252" if is_dormant else "#7DA8DF"
 
             quota_card_html = f"""<div style="background:#0F192E;border:1.5px solid {card_border};border-radius:12px;padding:16px 20px;margin-bottom:16px;box-shadow:0 6px 18px rgba(0,0,0,0.35);">
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:8px;">
@@ -24678,7 +24653,7 @@ elif active_view in ["Cihaz vs Sarf Gelir Trendleri", "↗ Cihaz vs Sarf Gelir T
 </div>
 <div>
 <div style="font-size:10px;color:#94A3B8;font-weight:600;">🏥 LİSANSLI KLİNİK SAYISI:</div>
-<div style="font-size:12px;color:#00F5FF;font-weight:700;margin-top:1px;">{q_data['clinics']} Klinik</div>
+<div style="font-size:12px;color:#7DA8DF;font-weight:700;margin-top:1px;">{q_data['clinics']} Klinik</div>
 </div>
 <div>
 <div style="font-size:10px;color:#94A3B8;font-weight:600;">🔄 YILLIK IVF SİKLUS HACMİ:</div>
@@ -24690,14 +24665,14 @@ elif active_view in ["Cihaz vs Sarf Gelir Trendleri", "↗ Cihaz vs Sarf Gelir T
 </div>
 </div>
 <div style="font-size:11.5px;color:#CCD7E6;margin-bottom:10px;padding:6px 10px;background:rgba(0,0,0,0.25);border-radius:6px;">
-<b>🔬 Sahadaki Kurulu Taban:</b> <span style="color:#00F5FF;font-weight:700;">{q_data['installed_devices']} Cihaz</span> | 
+<b>🔬 Sahadaki Kurulu Taban:</b> <span style="color:#7DA8DF;font-weight:700;">{q_data['installed_devices']} Cihaz</span> | 
 <b>📜 Geçmiş Sipariş Çekişi:</b> <span style="color:#E2E8F0;">{q_data['historical_summary']}</span>
 </div>
-<div style="background:rgba(0,245,255,0.04);border-left:3px solid #00F5FF;padding:10px 14px;border-radius:6px;margin-bottom:12px;">
-<div style="font-size:11px;font-weight:700;color:#00F5FF;margin-bottom:3px;">🤖 AI Pazar Kapasitesi Analizi & Kota Rasyoneli:</div>
+<div style="background:rgba(125,168,223,0.04);border-left:3px solid #7DA8DF;padding:10px 14px;border-radius:6px;margin-bottom:12px;">
+<div style="font-size:11px;font-weight:700;color:#7DA8DF;margin-bottom:3px;">🤖 AI Pazar Kapasitesi Analizi & Kota Rasyoneli:</div>
 <div style="font-size:12px;color:#CBD5E1;line-height:1.5;">{q_data['ai_rationale']}</div>
-<div style="margin-top:8px;padding-top:6px;border-top:1px dashed rgba(0,245,255,0.2);display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;">
-<span>🎯 <b>AI Önerilen Cihaz:</b> <b style="color:#00F5FF;">+{q_data['ai_target_devices']} Adet</b></span>
+<div style="margin-top:8px;padding-top:6px;border-top:1px dashed rgba(125,168,223,0.2);display:flex;gap:16px;flex-wrap:wrap;font-size:11.5px;">
+<span>🎯 <b>AI Önerilen Cihaz:</b> <b style="color:#7DA8DF;">+{q_data['ai_target_devices']} Adet</b></span>
 <span>🧪 <b>AI Önerilen Sarf:</b> <b style="color:#FFB800;">{q_data['ai_target_consumables']} Kutu</b></span>
 <span>💰 <b>AI Asgari Ciro Kotası:</b> <b style="color:#10B981;">{format_curr(q_data['ai_target_revenue'])}</b></span>
 </div>
@@ -24866,7 +24841,7 @@ elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyas
             with cg1:
                 fig_cycles = px.bar(
                     cmp_df, x='name', y='cycles', text='cycles', color='name',
-                    color_discrete_sequence=['#00F5FF', '#13A6B5', '#7C93BD', '#FFB800', '#00E676', '#FF5252'],
+                    color_discrete_sequence=['#7DA8DF', '#13A6B5', '#7C93BD', '#FFB800', '#10B981', '#FF5252'],
                     title="Yıllık Tahmini IVF Tedavi Siklus Hacmi (Cycles)",
                     labels={'cycles': 'Yıllık Siklus', 'name': 'Ülke'}
                 )
@@ -24877,7 +24852,7 @@ elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyas
             with cg2:
                 fig_clinics = px.bar(
                     cmp_df, x='name', y='clinics', text='clinics', color='name',
-                    color_discrete_sequence=['#00F5FF', '#13A6B5', '#7C93BD', '#FFB800', '#00E676', '#FF5252'],
+                    color_discrete_sequence=['#7DA8DF', '#13A6B5', '#7C93BD', '#FFB800', '#10B981', '#FF5252'],
                     title="Lisanslı Aktif IVF Klinik Sayısı",
                     labels={'clinics': 'Klinik Sayısı', 'name': 'Ülke'}
                 )
@@ -24893,7 +24868,7 @@ elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyas
             with eg1:
                 fig_econ = px.bar(
                     cmp_df, x='name', y='gdp_pc', text='gdp_pc', color='name',
-                    color_discrete_sequence=['#00E676', '#00F5FF', '#13A6B5', '#FFB800', '#7C93BD', '#FF5252'],
+                    color_discrete_sequence=['#10B981', '#7DA8DF', '#13A6B5', '#FFB800', '#7C93BD', '#FF5252'],
                     title="Kişi Başı GSYİH (GDP Per Capita - USD)",
                     labels={'gdp_pc': 'Kişi Başı Gelir (USD)', 'name': 'Ülke'}
                 )
@@ -24904,7 +24879,7 @@ elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyas
             with eg2:
                 fig_pop_gdp = px.bar(
                     cmp_df, x='name', y='pop', text='pop', color='name',
-                    color_discrete_sequence=['#7C93BD', '#13A6B5', '#00F5FF', '#FFB800', '#00E676', '#FF5252'],
+                    color_discrete_sequence=['#7C93BD', '#13A6B5', '#7DA8DF', '#FFB800', '#10B981', '#FF5252'],
                     title="Ülke Nüfusu (Milyon Kişi - World Bank)",
                     labels={'pop': 'Nüfus (Milyon)', 'name': 'Ülke'}
                 )
@@ -24931,12 +24906,12 @@ elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyas
                     melted_tech, x='name', y='Rate', color='Technology', barmode='group',
                     title="Klinik Teknoloji & Y?ntem Adaptasyon Oranlar? (%)",
                     labels={'Rate': 'Oran (%)', 'name': '?lke'},
-                    color_discrete_sequence=['#00F5FF', '#FFB800', '#00E676']
+                    color_discrete_sequence=['#7DA8DF', '#FFB800', '#10B981']
                 )
                 fig_tech.update_layout(
                     template='plotly_dark',
-                    paper_bgcolor='#0F172A',
-                    plot_bgcolor='#0F172A',
+                    paper_bgcolor='#121C2B',
+                    plot_bgcolor='#121C2B',
                     font=dict(family='Manrope, sans-serif'),
                     height=380,
                     margin=dict(t=65, b=75, l=15, r=15),
@@ -24964,15 +24939,15 @@ elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyas
             with tg2:
                 fig_dens = px.bar(
                     cmp_df, x='name', y='clinics_per_m', text='clinics_per_m', color='name',
-                    color_discrete_sequence=['#13A6B5', '#00F5FF', '#7C93BD', '#FFB800', '#00E676', '#FF5252'],
+                    color_discrete_sequence=['#13A6B5', '#7DA8DF', '#7C93BD', '#FFB800', '#10B981', '#FF5252'],
                     title="Pazar Doygunlu?u (Milyon N?fus Ba??na Lisansl? Klinik Say?s?)",
                     labels={'clinics_per_m': 'Klinik / Milyon N?fus', 'name': '?lke'}
                 )
                 fig_dens.update_traces(texttemplate='%{text:.2f} klinik/M', textposition='outside')
                 fig_dens.update_layout(
                     template='plotly_dark',
-                    paper_bgcolor='#0F172A',
-                    plot_bgcolor='#0F172A',
+                    paper_bgcolor='#121C2B',
+                    plot_bgcolor='#121C2B',
                     font=dict(family='Manrope, sans-serif'),
                     showlegend=False,
                     height=380,
@@ -24993,7 +24968,7 @@ elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyas
             # 4. STRATEJİK FIRSAT & RİSK DAĞILIM MATRİSİ (BUBBLE PLOT)
             # ------------------------------------------------------------------
             st.markdown("#### 4. Stratejik Pazar Fırsatı vs Alım Gücü Matrisi")
-            risk_color_map = {'Low': '#00E676', 'Medium': '#FFB800', 'High': '#FF5252'}
+            risk_color_map = {'Low': '#10B981', 'Medium': '#FFB800', 'High': '#FF5252'}
             
             fig_bubble = px.scatter(
                 cmp_df, x='score', y='gdp_pc', size='cycles', color='risk',
@@ -25105,9 +25080,9 @@ elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyas
             # ==================================================================
             if show_table:
                 st.markdown(f"""
-                <div style="background:rgba(0,245,255,0.06);border:1px solid rgba(0,245,255,0.3);border-radius:8px;padding:10px 16px;margin-bottom:12px;font-size:12.5px;color:#E0F7FA;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
+                <div style="background:rgba(125,168,223,0.06);border:1px solid rgba(125,168,223,0.3);border-radius:8px;padding:10px 16px;margin-bottom:12px;font-size:12.5px;color:#E0F7FA;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
                     <div>
-                        <b>🔍 Aktif Tablo Filtresi:</b> <span style="color:#00F5FF;font-weight:700;">{cat_filter}</span> 
+                        <b>🔍 Aktif Tablo Filtresi:</b> <span style="color:#7DA8DF;font-weight:700;">{cat_filter}</span> 
                         &nbsp;|&nbsp; <b>Listelenen Gösterge:</b> <span style="color:#FFB800;font-weight:700;">{len(selected_metric_rows)} / 22 Metrik</span>
                     </div>
                     <div style="font-size:11.5px;color:#94A3B8;">
@@ -25146,7 +25121,7 @@ elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyas
                         score_sorted,
                         x='score', y='name', orientation='h',
                         color='risk',
-                        color_discrete_map={'Low': '#00E676', 'Medium': '#FFB800', 'High': '#FF5252'},
+                        color_discrete_map={'Low': '#10B981', 'Medium': '#FFB800', 'High': '#FF5252'},
                         text='score',
                         title="Pazar Fırsat Skoru (0-100) & Ticari Risk",
                         labels={'score': 'Fırsat Skoru', 'name': 'Pazar', 'risk': 'Ticari Risk'}
@@ -25180,7 +25155,7 @@ elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyas
                         cycles_sorted,
                         x='name', y='cycles',
                         color='name',
-                        color_discrete_sequence=['#00F5FF', '#13A6B5', '#7C93BD', '#FFB800', '#00E676', '#FF5252'],
+                        color_discrete_sequence=['#7DA8DF', '#13A6B5', '#7C93BD', '#FFB800', '#10B981', '#FF5252'],
                         text='cycles',
                         title="Yıllık Tahmini IVF Siklus Hacmi (Tedavi Sayısı)",
                         labels={'cycles': 'Yıllık Siklus', 'name': 'Pazar'}
@@ -25246,21 +25221,21 @@ elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyas
                                 f'<td style="padding:9px 10px;font-weight:700;color:#FFFFFF;font-size:12.5px;white-space:nowrap;">'
                                 f'<span style="font-size:14px;margin-right:4px;">{flag}</span> {c_name} '
                                 f'<span style="display:inline-block;margin-left:5px;font-size:9.5px;color:{risk_col};background:{risk_col}18;border:1px solid {risk_col}44;padding:1px 5px;border-radius:4px;font-weight:600;">{risk_txt}</span>'
-                                f'<div style="font-size:9.5px;color:#94A3B8;margin-top:2px;">🏛️ Destek: <b style="color:#FFB800;">%{r.get("state_support_pct", 40):.0f}</b> | IVF/GSYİH: <b style="color:#00F5FF;">%{r.get("ivf_gdp_pct", 0.08):.2f}</b></div>'
+                                f'<div style="font-size:9.5px;color:#94A3B8;margin-top:2px;">🏛️ Destek: <b style="color:#FFB800;">%{r.get("state_support_pct", 40):.0f}</b> | IVF/GSYİH: <b style="color:#7DA8DF;">%{r.get("ivf_gdp_pct", 0.08):.2f}</b></div>'
                                 f'<div style="font-size:9.5px;color:#8FA3C0;margin-top:1px;">📦 Gümrük: <b style="color:#FF5252;">%{r.get("customs_tariff_pct", 5.0):.1f}</b> | 📜 Belge: <b style="color:#FFB800;">{r.get("doc_barrier_label", "Orta")}</b> ({r.get("customs_clearance_days", 10):.0f}g)</div></td>'
                                 f'<td style="padding:9px 8px;text-align:center;white-space:nowrap;">'
-                                f'<span style="background:rgba(0,245,255,0.12);border:1px solid rgba(0,245,255,0.35);color:#00F5FF;font-weight:800;font-size:12px;padding:3px 8px;border-radius:6px;font-family:monospace;">{score_fmt}</span></td>'
+                                f'<span style="background:rgba(125,168,223,0.12);border:1px solid rgba(125,168,223,0.35);color:#7DA8DF;font-weight:800;font-size:12px;padding:3px 8px;border-radius:6px;font-family:monospace;">{score_fmt}</span></td>'
                                 f'<td style="padding:9px 10px;text-align:right;color:#E2E8F0;font-family:monospace;font-size:12px;font-weight:600;white-space:nowrap;">{gdp_fmt}</td>'
-                                f'<td style="padding:9px 10px;text-align:right;color:#38BDF8;font-family:monospace;font-size:12px;font-weight:600;white-space:nowrap;">{cyc_fmt}</td>'
+                                f'<td style="padding:9px 10px;text-align:right;color:#7DA8DF;font-family:monospace;font-size:12px;font-weight:600;white-space:nowrap;">{cyc_fmt}</td>'
                                 f'<td style="padding:9px 8px;text-align:center;color:#E2E8F0;font-size:12px;white-space:nowrap;">{cln_fmt} <span style="font-size:10px;color:#94A3B8;">/M</span></td>'
                                 f'<td style="padding:9px 8px;text-align:center;color:#F59E0B;font-weight:700;font-size:12px;white-space:nowrap;">{icsi_fmt}</td>'
                                 f'</tr>'
                             )
 
                         matrix_html = (
-                            '<div style="background:rgba(15,23,42,0.75);border:1px solid rgba(0,245,255,0.22);border-radius:12px;padding:10px 14px;backdrop-filter:blur(14px);box-shadow:0 8px 24px rgba(0,0,0,0.4);overflow-x:auto;height:340px;box-sizing:border-box;">'
+                            '<div style="background:rgba(15,23,42,0.75);border:1px solid rgba(125,168,223,0.22);border-radius:12px;padding:10px 14px;box-shadow:0 8px 24px rgba(0,0,0,0.4);overflow-x:auto;height:340px;box-sizing:border-box;">'
                             '<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;padding-bottom:6px;border-bottom:1px solid rgba(255,255,255,0.06);">'
-                            '<span style="font-size:12px;font-weight:700;color:#00F5FF;letter-spacing:0.04em;">⚡ SEÇİLEN PAZARLARIN TEMEL STRATEJİK GÖSTERGELERİ</span>'
+                            '<span style="font-size:12px;font-weight:700;color:#7DA8DF;letter-spacing:0.04em;">⚡ SEÇİLEN PAZARLARIN TEMEL STRATEJİK GÖSTERGELERİ</span>'
                             '<span style="font-size:10.5px;color:#94A3B8;">(WDI & ESHRE/CDC Verileri)</span>'
                             '</div>'
                             '<table style="width:100%;border-collapse:collapse;font-family:Inter,system-ui,sans-serif;">'
@@ -25281,7 +25256,7 @@ elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyas
                         st.markdown(matrix_html, unsafe_allow_html=True)
 
                     elif bench_mode == "📊 Karşılaştırmalı Sütun Grafiği":
-                        c_colors = ['#00F5FF', '#10B981', '#F59E0B', '#A855F7', '#EC4899', '#3B82F6']
+                        c_colors = ['#7DA8DF', '#10B981', '#F59E0B', '#A855F7', '#EC4899', '#3B82F6']
                         fig_bars = go.Figure()
                         for c_idx, (_, r) in enumerate(cmp_df.iterrows()):
                             c_name = r['name']
@@ -25374,18 +25349,18 @@ elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyas
 
                     metric_map = {
                         "🏥 Sağlık Harcaması / GSYİH (%)": ('health_pct', '%{:.1f}', 'Sağlık Payı %', '#5FD3AE'),
-                        "🧬 IVF & PGT Harcaması / GSYİH (%)": ('ivf_gdp_pct', '%{:.2f}', 'IVF/PGT GSYİH %', '#00F5FF'),
+                        "🧬 IVF & PGT Harcaması / GSYİH (%)": ('ivf_gdp_pct', '%{:.2f}', 'IVF/PGT GSYİH %', '#7DA8DF'),
                         "🏛️ IVF & PGT Devlet Desteği & Geri Ödeme (%)": ('state_support_pct', '%{:.0f}', 'Devlet Desteği %', '#FFB800'),
                         "📦 Gümrük Vergisi Oranı (%) [Customs Tariff %]": ('customs_tariff_pct', '%{:.1f}', 'Gümrük Vergisi %', '#FF5252'),
                         "📜 Belgelendirme & Sertifikasyon Zorluğu (1-10 Skor) [Documentation Barriers]": ('doc_barrier_score', '{:.1f} / 10', 'Belge Zorluk Skoru (1-10)', '#FF9800'),
                         "⏳ Gümrükleme & Çekim Süresi (Gün) [Customs Clearance Days]": ('customs_clearance_days', '{:.0f} Gün', 'Bekleme Süresi (Gün)', '#A855F7'),
                         "🛃 Gümrük & İthalat Şartları Zorluk Endeksi (0-100 Puan) [Customs Conditions Index]": ('customs_difficulty_index', '{:.0f} Puan', 'Bileşik Zorluk Skoru', '#EC4899'),
-                        "💰 Kişi Başı GSYİH (GDP Per Capita - USD)": ('gdp_pc', '${:,.0f}', 'USD Gelir', '#00E676'),
-                        "🏢 Lisanslı Aktif IVF Klinik Sayısı": ('clinics', '{:,.0f} Klinik', 'Klinik', '#00F5FF'),
+                        "💰 Kişi Başı GSYİH (GDP Per Capita - USD)": ('gdp_pc', '${:,.0f}', 'USD Gelir', '#10B981'),
+                        "🏢 Lisanslı Aktif IVF Klinik Sayısı": ('clinics', '{:,.0f} Klinik', 'Klinik', '#7DA8DF'),
                         "🌐 Milyon Nüfusa Düşen Klinik Yoğunluğu": ('clinics_per_m', '{:.2f} kl./M', 'Klinik / Milyon', '#13A6B5'),
                         "🔬 PGT Genetik Tanı Oranı (%)": ('pgt_pct', '%{:.1f}', 'PGT %', '#7C93BD'),
                         "🧬 ICSI Mikroenjeksiyon Adaptasyonu (%)": ('icsi_pct', '%{:.1f}', 'ICSI %', '#FFB800'),
-                        "❄️ Kriyoprezervasyon Dondurma Oranı (%)": ('cryo_pct', '%{:.1f}', 'Cryo %', '#00F5FF'),
+                        "❄️ Kriyoprezervasyon Dondurma Oranı (%)": ('cryo_pct', '%{:.1f}', 'Cryo %', '#7DA8DF'),
                         "📈 Klinik Başına Yıllık Ortalama Siklus": ('cycles_per_clinic', '{:,.0f} siklus', 'Siklus/Klinik', '#FF8A96')
                     }
                     col_key, fmt_str, y_lbl, bar_clr = metric_map[dyn_metric_choice]
@@ -25398,7 +25373,7 @@ elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyas
                         x='name', y=col_key,
                         text='display_label',
                         color='name',
-                        color_discrete_sequence=['#00F5FF', '#00E676', '#13A6B5', '#FFB800', '#7C93BD', '#FF5252'],
+                        color_discrete_sequence=['#7DA8DF', '#10B981', '#13A6B5', '#FFB800', '#7C93BD', '#FF5252'],
                         title=f"{dyn_metric_choice} Karşılaştırması",
                         labels={col_key: y_lbl, 'name': 'Pazar'}
                     )
@@ -25422,8 +25397,8 @@ elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyas
                                 Seçilen pazarlarda gümrük tarifesi, resmi medikal tescil ve çekim süreleri sevkiyat termin sürelerini ve nihai marjı belirler:
                             </div>
                             <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));gap:8px;">
-                                <div style="background:rgba(255,255,255,0.03);padding:8px 10px;border-radius:6px;border-left:3px solid #00F5FF;">
-                                    <span style="color:#00F5FF;font-weight:700;">🇪🇺 AB / EFTA:</span> %0 Gümrük, 2-3 Gün, CE Sertifikalı Serbest Dolaşım.
+                                <div style="background:rgba(255,255,255,0.03);padding:8px 10px;border-radius:6px;border-left:3px solid #7DA8DF;">
+                                    <span style="color:#7DA8DF;font-weight:700;">🇪🇺 AB / EFTA:</span> %0 Gümrük, 2-3 Gün, CE Sertifikalı Serbest Dolaşım.
                                 </div>
                                 <div style="background:rgba(255,255,255,0.03);padding:8px 10px;border-radius:6px;border-left:3px solid #10B981;">
                                     <span style="color:#10B981;font-weight:700;">🌴 Körfez (GCC):</span> %5 Gümrük, 5-10 Gün, SFDA/MOHAP Tescili.
@@ -25510,7 +25485,7 @@ elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyas
 
                 st.markdown(f"""
                 <div style="background:rgba(0,119,181,0.08);border:1.5px solid #0077B5;border-radius:10px;padding:14px 18px;margin:12px 0 16px 0;">
-                    <div style="font-size:13px;font-weight:700;color:#00F5FF;margin-bottom:4px;">🎯 Hedefli Arama Sorgusu ({lk_country_scout}):</div>
+                    <div style="font-size:13px;font-weight:700;color:#7DA8DF;margin-bottom:4px;">🎯 Hedefli Arama Sorgusu ({lk_country_scout}):</div>
                     <div style="font-size:11px;color:#8A99AD;margin-bottom:4px;">LinkedIn: <code style="color:#CCD7E6;">{full_lk_q_scout} {lk_country_scout}</code></div>
                     <div style="font-size:11px;color:#8A99AD;">Google X-Ray (Şifresiz): <code style="color:#FFB800;">{gx_scout_q}</code></div>
                 </div>
@@ -25534,15 +25509,15 @@ elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyas
                 scout_inmail_c1, scout_inmail_c2 = st.columns(2)
                 with scout_inmail_c1:
                     st.markdown("""
-                    <div style="background:rgba(15,23,42,0.8);border:1px solid rgba(0,245,255,0.25);border-radius:8px;padding:12px;font-size:12px;line-height:1.6;">
-                        <b style="color:#00F5FF;">📩 1. LinkedIn Bağlantı İsteği Notu (300 Karakter Limiti):</b><br>
+                    <div style="background:rgba(15,23,42,0.8);border:1px solid rgba(125,168,223,0.25);border-radius:8px;padding:12px;font-size:12px;line-height:1.6;">
+                        <b style="color:#7DA8DF;">📩 1. LinkedIn Bağlantı İsteği Notu (300 Karakter Limiti):</b><br>
                         <i>"Sayın Meslektaşım, {Klinik} bünyesindeki öncü ART çalışmalarınızı takdirle takip ediyoruz. CE Sertifikalı (Class IIa) onaylı Piezoelektrik oosit aktivasyon sistemimizin (ZPS 26) TFF vakalarındaki %82 döllenme klinik verilerini paylaşmak üzere ağınıza katılmak isterim. Saygılarımla."</i>
                     </div>
                     """, unsafe_allow_html=True)
                 with scout_inmail_c2:
                     st.markdown("""
                     <div style="background:rgba(15,23,42,0.8);border:1px solid rgba(0,230,118,0.25);border-radius:8px;padding:12px;font-size:12px;line-height:1.6;">
-                        <b style="color:#00E676;">💼 2. Detaylı Bilimsel InMail & Vaka Çalıştayı Daveti:</b><br>
+                        <b style="color:#10B981;">💼 2. Detaylı Bilimsel InMail & Vaka Çalıştayı Daveti:</b><br>
                         <i>"Sayın Laboratuvar Direktörü, Ebner 2015 hakemli literatüründe gösterildiği üzere mikro-elektriksel puls uyarımı, sivri iğne travmasına kıyasla oosit lizis oranını <%1'e düşürmektedir. Merkezinizde 14 günlük yerinde vaka çalıştayı ve numune Z-Dish kiti sunmaktan onur duyarız."</i>
                     </div>
                     """, unsafe_allow_html=True)
@@ -25601,32 +25576,32 @@ elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyas
             <div style="background:rgba(19,166,181,0.08);border:1px solid rgba(19,166,181,0.3);border-radius:10px;padding:15px;margin-bottom:18px;">
                 <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
                     <div>
-                        <span style="font-size:18px;font-weight:700;color:#00F5FF;">📍 {radar_country} ({target_country_row['region']})</span>
+                        <span style="font-size:18px;font-weight:700;color:#7DA8DF;">📍 {radar_country} ({target_country_row['region']})</span>
                         <span style="margin-left:12px;font-size:12px;background:rgba(255,255,255,0.1);padding:3px 8px;border-radius:4px;color:#CCD7E6;">
-                            Risk: <b style="color:{'#00E676' if target_country_row['risk']=='Low' else ('#FFB800' if target_country_row['risk']=='Medium' else '#FF5252')};">{target_country_row['risk']}</b>
+                            Risk: <b style="color:{'#10B981' if target_country_row['risk']=='Low' else ('#FFB800' if target_country_row['risk']=='Medium' else '#FF5252')};">{target_country_row['risk']}</b>
                         </span>
                     </div>
                     <div>
                         <span style="font-size:13px;color:#CCD7E6;">Mevcut Distribütör:</span> 
-                        <b style="color:{'#00E676' if has_partner else '#FF5252'};">{current_dist_name if has_partner else '❌ Yetkili Bayi Yok (Açık Beyaz Boşluk)'}</b>
+                        <b style="color:{'#10B981' if has_partner else '#FF5252'};">{current_dist_name if has_partner else '❌ Yetkili Bayi Yok (Açık Beyaz Boşluk)'}</b>
                     </div>
                 </div>
                 <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(130px, 1fr));gap:12px;margin-top:12px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.08);">
                     <div><span style="color:#8A99AD;font-size:11px;">Lisanslı IVF Kliniği</span><br><b style="font-size:14px;color:#FFF;">{target_country_row['clinics']:,} Klinik</b></div>
                     <div><span style="color:#8A99AD;font-size:11px;">Yıllık Siklus</span><br><b style="font-size:14px;color:#FFF;">{target_country_row['cycles']:,} Siklus</b></div>
-                    <div><span style="color:#8A99AD;font-size:11px;">Kişi Başı Gelir</span><br><b style="font-size:14px;color:#00E676;">${target_country_row['gdp_pc']:,}</b></div>
-                    <div><span style="color:#8A99AD;font-size:11px;">ICSI Adaptasyonu</span><br><b style="font-size:14px;color:#00F5FF;">%{target_country_row['icsi_pct']}%</b></div>
-                    <div><span style="color:#8A99AD;font-size:11px;">1. Öncelikli Çözüm</span><br><b style="font-size:13px;color:#00F5FF;">{top_dev_obj['icon']} {top_dev_obj['code']}</b></div>
+                    <div><span style="color:#8A99AD;font-size:11px;">Kişi Başı Gelir</span><br><b style="font-size:14px;color:#10B981;">${target_country_row['gdp_pc']:,}</b></div>
+                    <div><span style="color:#8A99AD;font-size:11px;">ICSI Adaptasyonu</span><br><b style="font-size:14px;color:#7DA8DF;">%{target_country_row['icsi_pct']}%</b></div>
+                    <div><span style="color:#8A99AD;font-size:11px;">1. Öncelikli Çözüm</span><br><b style="font-size:13px;color:#7DA8DF;">{top_dev_obj['icon']} {top_dev_obj['code']}</b></div>
                 </div>
                 <div style="margin-top:12px;padding-top:10px;border-top:1px dashed rgba(255,255,255,0.1);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
                     <div>
                         <span style="color:#8A99AD;font-size:11.5px;">🔬 AI 4'lü Teknoloji Uygunluğu ({radar_country}):</span>
                     </div>
                     <div style="display:flex;gap:6px;flex-wrap:wrap;">
-                        <span style="background:rgba(0,245,255,0.12);color:#00F5FF;border:1px solid rgba(0,245,255,0.3);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">⚡ ZPS 26: %{c_dev_suit['zps26']['score']}</span>
+                        <span style="background:rgba(125,168,223,0.12);color:#7DA8DF;border:1px solid rgba(125,168,223,0.3);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">⚡ ZPS 26: %{c_dev_suit['zps26']['score']}</span>
                         <span style="background:rgba(95,211,174,0.12);color:#5FD3AE;border:1px solid rgba(95,211,174,0.3);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">🧬 BioPSafe: %{c_dev_suit['biopsafe']['score']}</span>
                         <span style="background:rgba(255,184,0,0.12);color:#FFB800;border:1px solid rgba(255,184,0,0.3);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">🛡️ Mismatch: %{c_dev_suit['mismatch_blocker']['score']}</span>
-                        <span style="background:rgba(56,189,248,0.12);color:#38BDF8;border:1px solid rgba(56,189,248,0.3);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">❄️ Smart Cryo: %{c_dev_suit['smart_cryo']['score']}</span>
+                        <span style="background:rgba(56,189,248,0.12);color:#7DA8DF;border:1px solid rgba(56,189,248,0.3);padding:2px 8px;border-radius:4px;font-size:11px;font-weight:600;">❄️ Smart Cryo: %{c_dev_suit['smart_cryo']['score']}</span>
                     </div>
                 </div>
                 {f'''<div style="margin-top:10px;padding-top:8px;border-top:1px dashed rgba(255,184,0,0.25);font-size:11.5px;color:#FFB800;">
@@ -25684,22 +25659,22 @@ elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyas
                         lk_keywords_disp = lk_bundle['keywords']
                         gx_keywords_disp = lk_bundle['gx_keywords']
 
-                        card_tier_color = '#00F5FF' if 'Tier 1' in p['tier'] else '#FFB800'
+                        card_tier_color = '#7DA8DF' if 'Tier 1' in p['tier'] else '#FFB800'
                         card_html = (
                             f'<div style="background:#0F192E;border:1px solid rgba(255,255,255,0.08);border-left:4px solid {card_tier_color};border-radius:8px;padding:14px;margin-bottom:12px;box-shadow:0 4px 12px rgba(0,0,0,0.25);">'
                             f'<div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:8px;">'
                             f'<div><h4 style="margin:0 0 4px 0;color:#FFFFFF;font-size:16px;">{p["name"]}</h4>'
                             f'<span style="font-size:12px;color:#8A99AD;">📍 {p["city"]} | {p["category"]}</span></div>'
-                            f'<div><span style="background:rgba(0,245,255,0.12);color:#00F5FF;border:1px solid rgba(0,245,255,0.3);padding:3px 8px;border-radius:4px;font-size:11px;font-weight:600;">{p["tier"]}</span>'
-                            f'<span style="background:rgba(0,230,118,0.15);color:#00E676;border:1px solid rgba(0,230,118,0.3);padding:3px 8px;border-radius:4px;font-size:11px;font-weight:700;margin-left:6px;">{p["est_revenue"]}</span></div></div>'
+                            f'<div><span style="background:rgba(125,168,223,0.12);color:#7DA8DF;border:1px solid rgba(125,168,223,0.3);padding:3px 8px;border-radius:4px;font-size:11px;font-weight:600;">{p["tier"]}</span>'
+                            f'<span style="background:rgba(0,230,118,0.15);color:#10B981;border:1px solid rgba(0,230,118,0.3);padding:3px 8px;border-radius:4px;font-size:11px;font-weight:700;margin-left:6px;">{p["est_revenue"]}</span></div></div>'
                             f'<div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:10px;margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,0.06);font-size:12px;">'
                             f'<div><span style="color:#8A99AD;">Hacim / Siklus:</span> <b style="color:#CCD7E6;">{p["volume"]}</b></div>'
                             f'<div><span style="color:#8A99AD;">Karar Verici Persona:</span> <b style="color:#CCD7E6;">{p["decision_maker"]}</b></div>'
-                            f'<div><span style="color:#8A99AD;">Uyumlu ZEUS Çözümü:</span> <b style="color:#00F5FF;">{p["product_match"]}</b></div></div>'
+                            f'<div><span style="color:#8A99AD;">Uyumlu ZEUS Çözümü:</span> <b style="color:#7DA8DF;">{p["product_match"]}</b></div></div>'
                             f'{render_prospect_rec_html(p, target_country_row, radar_country)}'
                             f'<div style="margin-top:10px;background:rgba(19,166,181,0.08);border:1px solid rgba(19,166,181,0.25);border-radius:6px;padding:10px 12px;">'
                             f'<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;border-bottom:1px solid rgba(19,166,181,0.15);padding-bottom:6px;flex-wrap:wrap;gap:6px;">'
-                            f'<div><span style="color:#00F5FF;font-weight:700;font-size:12px;">📞 Kurumsal İletişim & Doğrulanmış Arama Ağı</span>'
+                            f'<div><span style="color:#7DA8DF;font-weight:700;font-size:12px;">📞 Kurumsal İletişim & Doğrulanmış Arama Ağı</span>'
                             f'<span style="margin-left:8px;font-size:10px;color:#5FD3AE;background:rgba(95,211,174,0.15);border:1px solid rgba(95,211,174,0.3);padding:2px 6px;border-radius:3px;">✓ Doğrulanmış Temas Kanalı</span></div>'
                             f'<div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">'
                             f'<a href="{lk_direct_card_url}" target="_blank" style="background:#0077B5;color:#FFFFFF;padding:5px 10px;border-radius:4px;font-size:11px;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;gap:4px;box-shadow:0 2px 6px rgba(0,119,181,0.3);">'
@@ -25713,13 +25688,13 @@ elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyas
                             f'<span>🏢</span> <span>Kurum Profili ↗</span></a>'
                             f'</div></div>'
                             f'<div style="font-size:10.5px;color:#94A3B8;background:rgba(0,0,0,0.3);padding:6px 10px;border-radius:4px;margin-bottom:8px;line-height:1.5;">'
-                            f'<div>🎯 <b>Doğrulanmış LinkedIn Arama:</b> <code style="color:#00F5FF;font-size:10.5px;">{lk_keywords_disp}</code></div>'
+                            f'<div>🎯 <b>Doğrulanmış LinkedIn Arama:</b> <code style="color:#7DA8DF;font-size:10.5px;">{lk_keywords_disp}</code></div>'
                             f'<div style="margin-top:2px;">⚡ <b>Google X-Ray (Şifresiz / Açık Ağ):</b> <code style="color:#FFB800;font-size:10.5px;">{gx_keywords_disp}</code> <span style="color:#8A99AD;font-size:10px;">(LinkedIn oturumunuz açık değilse "⚡ Google X-Ray" butonu ile hedeflere şifresiz ulaşabilirsiniz)</span></div>'
                             f'</div>'
                             f'<div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));gap:8px;font-size:12px;">'
                             f'<div><span style="color:#8A99AD;">👤 Yetkili Muhatap:</span> <b style="color:#FFFFFF;">{c_person}</b></div>'
-                            f'<div><span style="color:#8A99AD;">✉️ Resmi E-posta:</span> {("<a href=\'mailto:" + c_email + "' style=\'color:#00F5FF;text-decoration:none;font-weight:600;\'>" + c_email + "</a> <span style=\'font-size:10px;color:#FFB800;background:rgba(255,184,0,0.15);padding:1px 5px;border-radius:3px;\' title=\'Kurumsal Exchange güvenlik duvarı (550 Access Denied) riski nedeniyle LinkedIn butonunu kullanın⚠️\'>⚠️ Genel Kutu (LinkedIn Karar Verici Önerilir)</span>") if (c_email and any(c_email.lower().startswith(p) for p in ["info@", "contact@", "admin@", "office@", "reception@"])) else (("<a href=\'mailto:" + c_email + "' style=\'color:#00F5FF;text-decoration:none;font-weight:600;\'>" + c_email + "</a> <span style=\'font-size:10px;color:#00E676;background:rgba(0,230,118,0.15);padding:1px 5px;border-radius:3px;\'>✓ Doğrulanmış E-posta</span>") if (c_email and "@" in c_email and "." in c_email.split("@")[1] and not any(k in c_email for k in ["medtech.com", "clinic.org", "example"])) else "<span style=\'color:#CBD5E1;\'>Doğrudan İletişim Tercih Edilir</span> <span style=\'font-size:10px;color:#FFB800;background:rgba(255,184,0,0.15);padding:1px 5px;border-radius:3px;\'>⚠️ E-Posta Bounced Riski (LinkedIn/Tel Kullanın)</span>")}</div>'
-                            f'<div><span style="color:#8A99AD;">📞 Santral / Tel:</span> <a href="tel:{c_phone}" style="color:#00E676;text-decoration:none;font-weight:700;">{c_phone}</a>{(" &nbsp;|&nbsp; <a href='https://wa.me/" + re.sub(r"[^\d]", "", c_phone) + "' target='_blank' style='color:#25D366;text-decoration:none;font-weight:700;'>💬 WhatsApp</a>") if (re.sub(r"[^\d]", "", c_phone) and len(re.sub(r"[^\d]", "", c_phone))>=8) else ""}</div>'
+                            f'<div><span style="color:#8A99AD;">✉️ Resmi E-posta:</span> {("<a href=\'mailto:" + c_email + "' style=\'color:#7DA8DF;text-decoration:none;font-weight:600;\'>" + c_email + "</a> <span style=\'font-size:10px;color:#FFB800;background:rgba(255,184,0,0.15);padding:1px 5px;border-radius:3px;\' title=\'Kurumsal Exchange güvenlik duvarı (550 Access Denied) riski nedeniyle LinkedIn butonunu kullanın⚠️\'>⚠️ Genel Kutu (LinkedIn Karar Verici Önerilir)</span>") if (c_email and any(c_email.lower().startswith(p) for p in ["info@", "contact@", "admin@", "office@", "reception@"])) else (("<a href=\'mailto:" + c_email + "' style=\'color:#7DA8DF;text-decoration:none;font-weight:600;\'>" + c_email + "</a> <span style=\'font-size:10px;color:#10B981;background:rgba(0,230,118,0.15);padding:1px 5px;border-radius:3px;\'>✓ Doğrulanmış E-posta</span>") if (c_email and "@" in c_email and "." in c_email.split("@")[1] and not any(k in c_email for k in ["medtech.com", "clinic.org", "example"])) else "<span style=\'color:#CBD5E1;\'>Doğrudan İletişim Tercih Edilir</span> <span style=\'font-size:10px;color:#FFB800;background:rgba(255,184,0,0.15);padding:1px 5px;border-radius:3px;\'>⚠️ E-Posta Bounced Riski (LinkedIn/Tel Kullanın)</span>")}</div>'
+                            f'<div><span style="color:#8A99AD;">📞 Santral / Tel:</span> <a href="tel:{c_phone}" style="color:#10B981;text-decoration:none;font-weight:700;">{c_phone}</a>{(" &nbsp;|&nbsp; <a href='https://wa.me/" + re.sub(r"[^\d]", "", c_phone) + "' target='_blank' style='color:#25D366;text-decoration:none;font-weight:700;'>💬 WhatsApp</a>") if (re.sub(r"[^\d]", "", c_phone) and len(re.sub(r"[^\d]", "", c_phone))>=8) else ""}</div>'
                             f'<div><span style="color:#8A99AD;">🌐 Web Sitesi:</span> <a href="{c_web}" target="_blank" style="color:#4FD1DE;text-decoration:none;font-weight:600;">{c_web_clean} ↗</a></div>'
                             f'<div style="grid-column: 1 / -1;"><span style="color:#8A99AD;">📍 Merkez Adres:</span> <span style="color:#CCD7E6;">{c_address}</span></div></div></div>'
                             f'<div style="margin-top:10px;font-size:12px;color:#B0BEC5;background:rgba(0,0,0,0.25);padding:8px 10px;border-radius:6px;">'
@@ -25790,7 +25765,7 @@ elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyas
                                 st.session_state[user_note_key] = ""
 
                             st.markdown("""
-                            <div style="font-weight:700;color:#00F5FF;font-size:12.5px;margin-top:10px;margin-bottom:4px;">
+                            <div style="font-weight:700;color:#7DA8DF;font-size:12.5px;margin-top:10px;margin-bottom:4px;">
                                 ✍️ Yönetici Talimatı / Özel Teklif & Mesaj Yorumu (Buraya yazacağınız yoruma göre mail ve LinkedIn metni anında güncellenir):
                             </div>
                             """, unsafe_allow_html=True)
@@ -25997,7 +25972,7 @@ BODY:
                             curr_subj, curr_body = st.session_state.get(pitch_state_key, build_executive_pitch(p, radar_country, strat_mode, user_custom_note, eff_selected_lang))
 
                             cult_playbook = resolve_country_buying_behavior(radar_country)
-                            cp_color = cult_playbook.get('badge_color', '#00F5FF')
+                            cp_color = cult_playbook.get('badge_color', '#7DA8DF')
                             st.markdown(f"""
                             <div style="background:rgba(15,23,42,0.92);border:1.5px solid {cp_color};border-radius:10px;padding:12px 14px;margin-bottom:12px;box-shadow:0 4px 12px rgba(0,0,0,0.3);">
                                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:6px;">
@@ -26012,8 +25987,8 @@ BODY:
                                     <div style="background:rgba(0,0,0,0.25);padding:6px 8px;border-radius:6px;border-left:2.5px solid #FFD700;">
                                         <b style="color:#FFD700;">🏷️ Pazarlık Yaklaşımı:</b><br><span style="color:#E2E8F0;">{cult_playbook.get('bargaining_advice')}</span>
                                     </div>
-                                    <div style="background:rgba(0,0,0,0.25);padding:6px 8px;border-radius:6px;border-left:2.5px solid #00E676;">
-                                        <b style="color:#00E676;">🎯 Öncelikli İkna Unsuru:</b><br><span style="color:#E2E8F0;">{cult_playbook.get('primary_proof_point')}</span>
+                                    <div style="background:rgba(0,0,0,0.25);padding:6px 8px;border-radius:6px;border-left:2.5px solid #10B981;">
+                                        <b style="color:#10B981;">🎯 Öncelikli İkna Unsuru:</b><br><span style="color:#E2E8F0;">{cult_playbook.get('primary_proof_point')}</span>
                                     </div>
                                     <div style="background:rgba(0,0,0,0.25);padding:6px 8px;border-radius:6px;border-left:2.5px solid #FFB800;">
                                         <b style="color:#FFB800;">🍽️ İş Yemeği & Ağırlama:</b><br><span style="color:#E2E8F0;">{cult_playbook.get('dining_hospitality_protocol', '')}</span>
@@ -26045,7 +26020,7 @@ BODY:
                                 b_col1, b_col2, b_col3 = st.columns([1.5, 1, 1])
                                 with b_col1:
                                     st.markdown(
-                                        f'<a href="{dyn_mailto_url}" target="_blank" style="display:inline-block;width:100%;text-align:center;background:#00F5FF;color:#0F192E;font-weight:700;padding:8px 14px;border-radius:6px;text-decoration:none;font-size:12px;box-shadow:0 2px 8px rgba(0,245,255,0.25);">'
+                                        f'<a href="{dyn_mailto_url}" target="_blank" style="display:inline-block;width:100%;text-align:center;background:#7DA8DF;color:#0F192E;font-weight:700;padding:8px 14px;border-radius:6px;text-decoration:none;font-size:12px;box-shadow:0 2px 8px rgba(125,168,223,0.25);">'
                                         f'✉️ Bu Metinle E-posta Gönder ({c_email})</a>',
                                         unsafe_allow_html=True
                                     )
@@ -26169,7 +26144,7 @@ BODY:
 
             # Top Strategic Callout with YouTube & Official 2026 Catalog References
             st.markdown("""
-            <div style="background:linear-gradient(135deg, rgba(15,25,46,0.95) 0%, rgba(19,166,181,0.2) 100%);border:1px solid rgba(0,245,255,0.35);border-left:5px solid #00F5FF;border-radius:12px;padding:16px 20px;margin-bottom:20px;box-shadow:0 8px 24px rgba(0,0,0,0.35);">
+            <div style="background:linear-gradient(135deg, rgba(15,25,46,0.95) 0%, rgba(19,166,181,0.2) 100%);border:1px solid rgba(125,168,223,0.35);border-left:5px solid #7DA8DF;border-radius:12px;padding:16px 20px;margin-bottom:20px;box-shadow:0 8px 24px rgba(0,0,0,0.35);">
                 <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:12px;">
                     <div>
                         <div style="display:flex;align-items:center;gap:10px;">
@@ -26223,9 +26198,9 @@ BODY:
                 # 4-device suitability KPI badges
                 st.markdown(f"""
                 <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(130px, 1fr));gap:10px;margin-top:6px;">
-                    <div style="background:#0F192E;border:1px solid rgba(0,245,255,0.3);border-radius:8px;padding:10px;text-align:center;">
+                    <div style="background:#0F192E;border:1px solid rgba(125,168,223,0.3);border-radius:8px;padding:10px;text-align:center;">
                         <span style="font-size:11px;color:#8A99AD;">⚡ ZPS 26 Stimulator</span><br>
-                        <b style="font-size:18px;color:#00F5FF;">%{dev_suit['zps26']['score']}</b><br>
+                        <b style="font-size:18px;color:#7DA8DF;">%{dev_suit['zps26']['score']}</b><br>
                         <span style="font-size:10px;color:#5FD3AE;">{dev_suit['zps26']['tier']}</span>
                     </div>
                     <div style="background:#0F192E;border:1px solid rgba(95,211,174,0.3);border-radius:8px;padding:10px;text-align:center;">
@@ -26240,8 +26215,8 @@ BODY:
                     </div>
                     <div style="background:#0F192E;border:1px solid rgba(56,189,248,0.3);border-radius:8px;padding:10px;text-align:center;">
                         <span style="font-size:11px;color:#8A99AD;">❄️ Smart Cryo-Tools</span><br>
-                        <b style="font-size:18px;color:#38BDF8;">%{dev_suit['smart_cryo']['score']}</b><br>
-                        <span style="font-size:10px;color:#38BDF8;">{dev_suit['smart_cryo']['tier']}</span>
+                        <b style="font-size:18px;color:#7DA8DF;">%{dev_suit['smart_cryo']['score']}</b><br>
+                        <span style="font-size:10px;color:#7DA8DF;">{dev_suit['smart_cryo']['tier']}</span>
                     </div>
                 </div>
                 """, unsafe_allow_html=True)
@@ -26262,23 +26237,23 @@ BODY:
                 z_info = ZEUS_CLINICAL_DEVICE_PORTFOLIO['zps26']
                 z_suit = dev_suit['zps26']
                 st.markdown(f"""
-                <div style="background:rgba(15,25,46,0.85);border:1px solid rgba(0,245,255,0.3);border-radius:12px;padding:18px;margin-bottom:14px;">
+                <div style="background:rgba(15,25,46,0.85);border:1px solid rgba(125,168,223,0.3);border-radius:12px;padding:18px;margin-bottom:14px;">
                     <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;">
                         <div>
-                            <span style="background:rgba(0,245,255,0.15);color:#00F5FF;border:1px solid rgba(0,245,255,0.3);padding:3px 8px;border-radius:4px;font-size:11px;font-weight:700;">{z_info['code']}</span>
+                            <span style="background:rgba(125,168,223,0.15);color:#7DA8DF;border:1px solid rgba(125,168,223,0.3);padding:3px 8px;border-radius:4px;font-size:11px;font-weight:700;">{z_info['code']}</span>
                             <h3 style="margin:6px 0 2px 0;color:#FFFFFF;font-size:18px;">⚡ {z_info['name']}</h3>
                             <span style="color:#8A99AD;font-size:12.5px;">{z_info['tagline']}</span>
                         </div>
                         <div style="text-align:right;">
                             <span style="font-size:12px;color:#8A99AD;">{target_dev_country} AI Uygunluk Skoru:</span><br>
-                            <b style="font-size:22px;color:#00F5FF;">%{z_suit['score']}</b>
+                            <b style="font-size:22px;color:#7DA8DF;">%{z_suit['score']}</b>
                             <span style="display:block;font-size:11px;color:#5FD3AE;">{z_suit['tier']}</span>
                         </div>
                     </div>
                     
                     <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-top:14px;padding-top:12px;border-top:1px solid rgba(255,255,255,0.08);">
                         <div style="background:rgba(0,0,0,0.25);padding:12px;border-radius:8px;">
-                            <b style="color:#00F5FF;font-size:12.5px;">📋 User Manual & Donanım Mimarisi:</b>
+                            <b style="color:#7DA8DF;font-size:12.5px;">📋 User Manual & Donanım Mimarisi:</b>
                             <ul style="color:#CCD7E6;font-size:11.5px;margin:6px 0 0 16px;padding:0;line-height:1.6;">
                                 <li><b>Güç / Voltaj:</b> {z_info['specs']['voltage']}</li>
                                 <li><b>Ekran & Kontrol:</b> {z_info['specs']['screen']}</li>
@@ -26296,10 +26271,10 @@ BODY:
                         </div>
                     </div>
 
-                    <div style="margin-top:12px;background:rgba(0,245,255,0.06);border:1px solid rgba(0,245,255,0.2);border-radius:8px;padding:12px;">
-                        <b style="color:#00F5FF;font-size:12.5px;">📚 Resmi Katalogdaki Bilimsel Yayınlar ve Kanıta Dayalı Klinik Kanıtlar:</b>
+                    <div style="margin-top:12px;background:rgba(125,168,223,0.06);border:1px solid rgba(125,168,223,0.2);border-radius:8px;padding:12px;">
+                        <b style="color:#7DA8DF;font-size:12.5px;">📚 Resmi Katalogdaki Bilimsel Yayınlar ve Kanıta Dayalı Klinik Kanıtlar:</b>
                         <div style="display:grid;grid-template-columns:1fr;gap:6px;margin-top:8px;">
-                            {''.join([f'<div style="background:rgba(0,0,0,0.3);padding:8px 12px;border-radius:6px;font-size:11.5px;color:#E2E8F0;border-left:3px solid #00F5FF;">• {ev}</div>' for ev in z_info.get('clinical_evidence', [])])}
+                            {''.join([f'<div style="background:rgba(0,0,0,0.3);padding:8px 12px;border-radius:6px;font-size:11.5px;color:#E2E8F0;border-left:3px solid #7DA8DF;">• {ev}</div>' for ev in z_info.get('clinical_evidence', [])])}
                         </div>
                     </div>
 
@@ -26313,8 +26288,8 @@ BODY:
                         </div>
                     </div>
 
-                    <div style="margin-top:12px;background:rgba(0,245,255,0.06);border-left:4px solid #00F5FF;padding:10px 14px;border-radius:6px;">
-                        <b style="color:#00F5FF;font-size:12px;">🎯 {target_dev_country} Pazarı İçin AI Teşhisi:</b>
+                    <div style="margin-top:12px;background:rgba(125,168,223,0.06);border-left:4px solid #7DA8DF;padding:10px 14px;border-radius:6px;">
+                        <b style="color:#7DA8DF;font-size:12px;">🎯 {target_dev_country} Pazarı İçin AI Teşhisi:</b>
                         <div style="color:#CCD7E6;font-size:12px;margin-top:2px;">{z_suit['rationale']}</div>
                     </div>
                 </div>
@@ -26352,7 +26327,7 @@ BODY:
                             </ul>
                         </div>
                         <div style="background:rgba(0,0,0,0.25);padding:12px;border-radius:8px;">
-                            <b style="color:#00F5FF;font-size:12.5px;">🔬 Klinik Amaç ve Çözülen Problem:</b>
+                            <b style="color:#7DA8DF;font-size:12.5px;">🔬 Klinik Amaç ve Çözülen Problem:</b>
                             <p style="color:#CCD7E6;font-size:11.5px;margin:6px 0 10px 0;line-height:1.55;">{b_info['clinical_purpose']}</p>
                             <b style="color:#FFB800;font-size:12px;">Hedef Kurumlar & PGT Odaklılığı:</b>
                             <p style="color:#CCD7E6;font-size:11.5px;margin:2px 0 0 0;">{b_info['target_clinics']}</p>
@@ -26415,8 +26390,8 @@ BODY:
                                     <li><b>Sıfır Mobil Erişim:</b> Doktor ve hasta laboratuvardan kopuktur; kapalı yerel ağa hapsolmuştur.</li>
                                 </ul>
                             </div>
-                            <div style="background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.25);border-radius:6px;padding:10px;">
-                                <b style="color:#00F5FF;font-size:12px;">✅ ZEUS Mismatch Blocker Üstünlüğü:</b>
+                            <div style="background:rgba(125,168,223,0.08);border:1px solid rgba(125,168,223,0.25);border-radius:6px;padding:10px;">
+                                <b style="color:#7DA8DF;font-size:12px;">✅ ZEUS Mismatch Blocker Üstünlüğü:</b>
                                 <ul style="color:#CCD7E6;font-size:11px;margin:6px 0 0 16px;padding:0;line-height:1.5;">
                                     <li><b>Free of Charge Barkod & $25 USD Siklus Lisansı:</b> 2D barkodlar tamamen ücretsizdir (Free of Charge); döngü başı sabit $25 USD lisans ile şeffaf maliyet.</li>
                                     <li><b>7 Terminalli Tam Süreç:</b> OPU Ameliyathanesinde doktora dönük sessiz oosit sayacı ekranından kriyobankaya.</li>
@@ -26436,7 +26411,7 @@ BODY:
 
                     <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-top:12px;">
                         <div style="background:rgba(0,0,0,0.25);padding:12px;border-radius:8px;">
-                            <b style="color:#00F5FF;font-size:12.5px;">💰 Ekonomik Devrim: QR vs Çipli Sistemler:</b>
+                            <b style="color:#7DA8DF;font-size:12.5px;">💰 Ekonomik Devrim: QR vs Çipli Sistemler:</b>
                             <p style="color:#CCD7E6;font-size:11.5px;margin:6px 0 0 0;line-height:1.55;">{m_info['specs']['economic_advantage']}</p>
                             <div style="margin-top:8px;font-size:11px;color:#5FD3AE;">
                                 <b>Operasyonel Özellikler:</b> {m_info['specs']['security_logic']}
@@ -26462,29 +26437,29 @@ BODY:
                 <div style="background:rgba(15,25,46,0.85);border:1px solid rgba(56,189,248,0.3);border-radius:12px;padding:18px;margin-bottom:14px;">
                     <div style="display:flex;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;gap:10px;">
                         <div>
-                            <span style="background:rgba(56,189,248,0.15);color:#38BDF8;border:1px solid rgba(56,189,248,0.3);padding:3px 8px;border-radius:4px;font-size:11px;font-weight:700;">{c_info['code']}</span>
+                            <span style="background:rgba(56,189,248,0.15);color:#7DA8DF;border:1px solid rgba(56,189,248,0.3);padding:3px 8px;border-radius:4px;font-size:11px;font-weight:700;">{c_info['code']}</span>
                             <h3 style="margin:6px 0 2px 0;color:#FFFFFF;font-size:18px;">❄️ {c_info['name']}</h3>
                             <span style="color:#8A99AD;font-size:12.5px;">{c_info['tagline']}</span>
                         </div>
                         <div style="text-align:right;">
                             <span style="font-size:12px;color:#8A99AD;">{target_dev_country} AI Uygunluk Skoru:</span><br>
-                            <b style="font-size:22px;color:#38BDF8;">%{c_suit['score']}</b>
-                            <span style="display:block;font-size:11px;color:#38BDF8;">{c_suit['tier']}</span>
+                            <b style="font-size:22px;color:#7DA8DF;">%{c_suit['score']}</b>
+                            <span style="display:block;font-size:11px;color:#7DA8DF;">{c_suit['tier']}</span>
                         </div>
                     </div>
 
                     <!-- CRYO PINPOINT ADDRESSING & THERMAL SHOCK TRIO -->
                     <div style="margin-top:14px;background:rgba(0,0,0,0.35);border-radius:8px;padding:14px;border:1px solid rgba(56,189,248,0.25);">
-                        <b style="color:#38BDF8;font-size:13px;">🎯 Şahitlik Sistemiyle Entegre 'Nokta Atışı' Adresleme & Termal Şok Koruması:</b>
+                        <b style="color:#7DA8DF;font-size:13px;">🎯 Şahitlik Sistemiyle Entegre 'Nokta Atışı' Adresleme & Termal Şok Koruması:</b>
                         <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:10px;margin-top:10px;">
-                            <div style="background:rgba(0,245,255,0.06);border:1px solid rgba(0,245,255,0.2);border-radius:6px;padding:10px;">
-                                <b style="color:#00F5FF;font-size:12px;">📍 'Nokta Atışı' Hedef Bulma Algoritması:</b>
+                            <div style="background:rgba(125,168,223,0.06);border:1px solid rgba(125,168,223,0.2);border-radius:6px;padding:10px;">
+                                <b style="color:#7DA8DF;font-size:12px;">📍 'Nokta Atışı' Hedef Bulma Algoritması:</b>
                                 <p style="color:#CCD7E6;font-size:11px;margin:4px 0 0 0;line-height:1.5;">
                                     Hasta sistemden çağrıldığında hedef payetin koordinatları anında ekranda parlar: <b>Tank # &rarr; Kanister # &rarr; Cane # &rarr; Sekizgen Goblet (Renk) &rarr; Smart Straw #</b>. Arama süresini %80 kısaltır; yanlış payet çekme riskini sıfırlar.
                                 </p>
                             </div>
                             <div style="background:rgba(0,230,118,0.06);border:1px solid rgba(0,230,118,0.2);border-radius:6px;padding:10px;">
-                                <b style="color:#00E676;font-size:12px;">🛡️ Termal Şok Koruma Üçlüsü (&gt;%95 Canlılık):</b>
+                                <b style="color:#10B981;font-size:12px;">🛡️ Termal Şok Koruma Üçlüsü (&gt;%95 Canlılık):</b>
                                 <ul style="color:#CCD7E6;font-size:11px;margin:4px 0 0 16px;padding:0;line-height:1.5;">
                                     <li><b>Sekizgen Goblet (ZCT25-002):</b> Tank dışına çıkarıldığında tabanında sıvı azot tutarak payet uçlarını sürekli &lt;-150&deg;C'de tutar.</li>
                                     <li><b>Cryo-Box (ZCT25-010):</b> Yalıtımlı azot çalışma kutusu.</li>
@@ -26496,7 +26471,7 @@ BODY:
 
                     <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));gap:14px;margin-top:12px;">
                         <div style="background:rgba(0,0,0,0.25);padding:12px;border-radius:8px;">
-                            <b style="color:#38BDF8;font-size:12.5px;">📐 4 Temel Kriyobiyoloji Darboğazını Çözen Donanım:</b>
+                            <b style="color:#7DA8DF;font-size:12.5px;">📐 4 Temel Kriyobiyoloji Darboğazını Çözen Donanım:</b>
                             <ul style="color:#CCD7E6;font-size:11.5px;margin:6px 0 0 16px;padding:0;line-height:1.6;">
                                 <li><b>Kapasite Artışı:</b> {c_info['specs']['capacity_boost']}</li>
                                 <li><b>CAPEX Tasarrufu:</b> {c_info['specs']['zero_capex']}</li>
@@ -26509,7 +26484,7 @@ BODY:
                             </ul>
                         </div>
                         <div style="background:rgba(0,0,0,0.25);padding:12px;border-radius:8px;">
-                            <b style="color:#00E676;font-size:12.5px;">💰 Çözülen Darboğaz & Finansal Tasarruf:</b>
+                            <b style="color:#10B981;font-size:12.5px;">💰 Çözülen Darboğaz & Finansal Tasarruf:</b>
                             <p style="color:#CCD7E6;font-size:11.5px;margin:6px 0 10px 0;line-height:1.55;">{c_info['clinical_purpose']}</p>
                             <div style="background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.25);padding:8px 10px;border-radius:6px;font-size:11.5px;color:#5FD3AE;">
                                 <b>Finansal ROI:</b> Klinik başına $35,000–$50,000 yeni tank ve oda genişletme maliyetini sıfırlar.
@@ -26518,7 +26493,7 @@ BODY:
                     </div>
 
                     <div style="margin-top:12px;background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.25);border-radius:8px;padding:12px;">
-                        <b style="color:#38BDF8;font-size:12.5px;">🧪 Resmi Katalog Kodlarıyla Kriyojenik Sarf & Aksesuar Kiti:</b>
+                        <b style="color:#7DA8DF;font-size:12.5px;">🧪 Resmi Katalog Kodlarıyla Kriyojenik Sarf & Aksesuar Kiti:</b>
                         <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:8px;margin-top:8px;">
                             {''.join([f'<div style="background:rgba(0,0,0,0.3);padding:8px 10px;border-radius:6px;font-size:11.5px;color:#E2E8F0;">• {c}</div>' for c in c_info['consumables']])}
                         </div>
@@ -26527,8 +26502,8 @@ BODY:
                         </div>
                     </div>
 
-                    <div style="margin-top:12px;background:rgba(56,189,248,0.06);border-left:4px solid #38BDF8;padding:10px 14px;border-radius:6px;">
-                        <b style="color:#38BDF8;font-size:12px;">🎯 {target_dev_country} Pazarı İçin AI Teşhisi:</b>
+                    <div style="margin-top:12px;background:rgba(56,189,248,0.06);border-left:4px solid #7DA8DF;padding:10px 14px;border-radius:6px;">
+                        <b style="color:#7DA8DF;font-size:12px;">🎯 {target_dev_country} Pazarı İçin AI Teşhisi:</b>
                         <div style="color:#CCD7E6;font-size:12px;margin-top:2px;">{c_suit['rationale']}</div>
                     </div>
                 </div>
@@ -26558,16 +26533,16 @@ BODY:
                     dist_cards = []
                     for d in ZEUS_GLOBAL_REFERENCE_NETWORK_2026['distributors']:
                         is_match = target_dev_country in d['countries']
-                        border_col = "#00F5FF" if is_match else "rgba(255,255,255,0.1)"
-                        bg_col = "rgba(0,245,255,0.06)" if is_match else "rgba(0,0,0,0.25)"
-                        match_pill = "<span style='background:#00F5FF;color:#0F192E;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700;margin-left:6px;'>SEÇİLEN ÜLKE PARTNERİ</span>" if is_match else ""
+                        border_col = "#7DA8DF" if is_match else "rgba(255,255,255,0.1)"
+                        bg_col = "rgba(125,168,223,0.06)" if is_match else "rgba(0,0,0,0.25)"
+                        match_pill = "<span style='background:#7DA8DF;color:#0F192E;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700;margin-left:6px;'>SEÇİLEN ÜLKE PARTNERİ</span>" if is_match else ""
                         
                         dist_cards.append(f"""
                         <div style="background:{bg_col};border:1px solid {border_col};border-radius:8px;padding:12px;margin-bottom:10px;">
                             <div style="display:flex;justify-content:space-between;align-items:flex-start;">
                                 <div>
                                     <b style="color:#FFFFFF;font-size:14px;">{d['name']}</b> {match_pill}<br>
-                                    <span style="color:#00F5FF;font-size:12px;">📍 Bölge: {d['territory_tr']}</span>
+                                    <span style="color:#7DA8DF;font-size:12px;">📍 Bölge: {d['territory_tr']}</span>
                                 </div>
                                 <span style="font-size:11px;color:#5FD3AE;background:rgba(95,211,174,0.15);padding:2px 8px;border-radius:4px;">{d['status'].split('(')[0]}</span>
                             </div>
@@ -26589,9 +26564,9 @@ BODY:
                     int_cards = []
                     for c in ZEUS_GLOBAL_REFERENCE_NETWORK_2026['international_centers']:
                         is_match = c['country'] == target_dev_country
-                        border_col = "#00F5FF" if is_match else "rgba(255,255,255,0.08)"
-                        bg_col = "rgba(0,245,255,0.06)" if is_match else "rgba(0,0,0,0.25)"
-                        match_pill = "<span style='background:#00F5FF;color:#0F192E;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700;margin-left:6px;'>SEÇİLEN ÜLKE</span>" if is_match else ""
+                        border_col = "#7DA8DF" if is_match else "rgba(255,255,255,0.08)"
+                        bg_col = "rgba(125,168,223,0.06)" if is_match else "rgba(0,0,0,0.25)"
+                        match_pill = "<span style='background:#7DA8DF;color:#0F192E;padding:2px 6px;border-radius:4px;font-size:10px;font-weight:700;margin-left:6px;'>SEÇİLEN ÜLKE</span>" if is_match else ""
 
                         int_cards.append(f"""
                         <div style="background:{bg_col};border:1px solid {border_col};border-radius:8px;padding:10px 14px;margin-bottom:8px;">
@@ -26611,7 +26586,7 @@ BODY:
                         dom_cards.append(f"""
                         <div style="background:rgba(0,0,0,0.25);border:1px solid rgba(255,255,255,0.08);border-radius:8px;padding:10px 14px;margin-bottom:8px;">
                             <div style="display:flex;justify-content:space-between;align-items:center;">
-                                <b style="color:#00F5FF;font-size:13px;">{dom['name']}</b>
+                                <b style="color:#7DA8DF;font-size:13px;">{dom['name']}</b>
                                 <span style="color:#FFB800;font-size:11px;">📍 {dom['city']}</span>
                             </div>
                             <div style="font-size:11.5px;color:#CCD7E6;margin-top:2px;">{dom['type']}</div>
@@ -26726,7 +26701,7 @@ BODY:
                 return {
                     "flag": "🇸🇦", "country": "Suudi Arabistan (Saudi Arabia)", "phase": 1,
                     "phase_label": "FAZ 1: Yüksek Bütçe & Prestij Odaklı Pazarlar (0 - 60 Gün)",
-                    "color": "#00F5FF", "market_size": f"{clinics} Klinik | ~{cycles:,} Siklus | ${gdp_pc:,} GSYİH | Bütçe: $150K - $350K",
+                    "color": "#7DA8DF", "market_size": f"{clinics} Klinik | ~{cycles:,} Siklus | ${gdp_pc:,} GSYİH | Bütçe: $150K - $350K",
                     "summary_bullet": f"{clinics} klinik, {cycles:,} siklus; Suudi Arabistan'da düzenlenecek yeni MEFS kongresinde canlı vaka çalıştayı ve AMS Saudi iş birliği ile penetrasyon sağlanmalıdır.",
                     "decision_maker": "Merkez Direktörleri / KOL Hekimler & Kraliyet Hastaneleri Satın Alma Heyeti",
                     "barrier": "Yerel mevzuat, dil ve sekreterlik filtreleri nedeniyle soğuk e-postalar düşük dönüşüm üretir. Bağımsız klinik kanıt, SFDA uyumu ve CE Certified teknik dosya talep edilir.",
@@ -26741,7 +26716,7 @@ BODY:
                 return {
                     "flag": "🇪🇬", "country": "Mısır (Egypt)", "phase": 1,
                     "phase_label": "FAZ 1: Hızlı Karar & Peşin Pazarlar (0 - 60 Gün)",
-                    "color": "#00F5FF", "market_size": f"{clinics} Klinik | ~{cycles:,} Siklus | Yüksek AOA İhtiyacı",
+                    "color": "#7DA8DF", "market_size": f"{clinics} Klinik | ~{cycles:,} Siklus | Yüksek AOA İhtiyacı",
                     "summary_bullet": f"{clinics} klinik, {cycles:,} siklus; ağır erkek faktörü ve TESE vakaları nedeniyle AOA talebi çok yüksektir, karar verici doğrudan hekim-patronlardır.",
                     "decision_maker": "Hekim-Patronlar (Prof. Dr. unvanlı klinik kurucuları ve sahipleri)",
                     "barrier": "Kurumsal e-posta kutuları düzenli okunmaz. Ağır erkek faktörü ve TESE/Globozoospermi oranı çok yüksektir; sekreterlik yerine doğrudan hekimle WhatsApp veya yüz yüze görüşmeyle peşin alım yapılır.",
@@ -26756,7 +26731,7 @@ BODY:
                 return {
                     "flag": "🇦🇪", "country": "BAE (United Arab Emirates)", "phase": 1,
                     "phase_label": "FAZ 1: Hızlı Karar & Serbest Bölge Ticareti (0 - 60 Gün)",
-                    "color": "#00F5FF", "market_size": f"{clinics} Klinik | ~{cycles:,} Siklus | ${gdp_pc:,} GSYİH",
+                    "color": "#7DA8DF", "market_size": f"{clinics} Klinik | ~{cycles:,} Siklus | ${gdp_pc:,} GSYİH",
                     "summary_bullet": f"{clinics} klinik, $53K gelir, serbest bölge gümrüksüz medikal ithalatı; karar vericiler yabancı İngilizce konuşan embriyologlardır.",
                     "decision_maker": "Expat Baş Embriyologlar (Avrupalı/Amerikalı) & Özel Klinik Medikal Direktörleri",
                     "barrier": "Yoğun rekabet ve prestij beklentisi. Karar vericiler İngilizce konuşan uluslararası embriyologlardır; cihazın CE belgesi ve yayınlanmış kanıtı hemen doğrulanmalıdır.",
@@ -26771,7 +26746,7 @@ BODY:
                 return {
                     "flag": "🇹🇷", "country": "Türkiye (Turkey)", "phase": 1,
                     "phase_label": "FAZ 1: İç Pazar & Sarf Penetrasyonu (0 - 60 Gün)",
-                    "color": "#00F5FF", "market_size": f"{clinics} Klinik | ~{cycles:,} Siklus | 1,280 Fatura İç Pazar Verisi",
+                    "color": "#7DA8DF", "market_size": f"{clinics} Klinik | ~{cycles:,} Siklus | 1,280 Fatura İç Pazar Verisi",
                     "summary_bullet": f"{clinics} klinik, {cycles:,} siklus; sahadaki uyuyan cihazlara yerinde aplikasyon eğitimi verilerek sarf nakit akışı hemen artırılmalıdır.",
                     "decision_maker": "Tüp Bebek Merkezi Sorumlu Hekimleri & Kıdemli Laboratuvar Embriyologları",
                     "barrier": "Sahada kurulu elektriksel AOA cihazları bulunmakta ancak bazılarında sarf alımı durmuş veya düşük kalmaktadır. Bariyer cihaz yokluğu değil, klinik rutin adaptasyonu ve sarf ikmalidir.",
@@ -26784,7 +26759,7 @@ BODY:
                 }
             else:
                 phase_num = classify_gtm_phase(c_name)
-                color_map = {1: "#00F5FF", 2: "#FFB800", 3: "#10B981"}
+                color_map = {1: "#7DA8DF", 2: "#FFB800", 3: "#10B981"}
                 phase_lbl = {
                     1: "FAZ 1: Hızlı Karar & Doğrudan Klinik Satışı (0 - 60 Gün)",
                     2: "FAZ 2: Özel Klinik Zincirleri & Tıp Turizmi (30 - 90 Gün)",
@@ -26826,7 +26801,7 @@ BODY:
 
             gtm_col1, gtm_col2, gtm_col3 = st.columns(3)
             with gtm_col1:
-                st.markdown(f"""<div class="kpi-container" style="border-top:3px solid #00F5FF;">
+                st.markdown(f"""<div class="kpi-container" style="border-top:3px solid #7DA8DF;">
 <div class="kpi-header">🥇 FAZ 1 (Hızlı Karar & Peşin)</div>
 <div class="kpi-val" style="font-size:17px; min-height:48px; display:flex; align-items:center;">{p1_val}</div>
 <div class="kpi-sub kpi-pos">{p1_sub}</div>
@@ -27246,7 +27221,7 @@ Web: www.zeusbioscience.com""", language="markdown")
                 # Action Bar
                 st.markdown(f"""
                 <div style="background:rgba(0,119,181,0.08);border:1.5px solid #0077B5;border-radius:10px;padding:14px 18px;margin:12px 0 16px 0;">
-                    <div style="font-size:14px;font-weight:700;color:#00F5FF;margin-bottom:4px;">🎯 Hedefli Arama Sorgusu ({lk_country}):</div>
+                    <div style="font-size:14px;font-weight:700;color:#7DA8DF;margin-bottom:4px;">🎯 Hedefli Arama Sorgusu ({lk_country}):</div>
                     <div style="font-size:11px;color:#8A99AD;margin-bottom:4px;">LinkedIn: <code style="color:#CCD7E6;">{full_lk_query} {lk_country}</code></div>
                     <div style="font-size:11px;color:#8A99AD;">Google X-Ray (Şifresiz): <code style="color:#FFB800;">{gx_country_q}</code></div>
                 </div>
@@ -27303,13 +27278,13 @@ Web: www.zeusbioscience.com""", language="markdown")
 
                         with st.container():
                             st.markdown(f"""
-                            <div style="background:#0F192E;border:1px solid rgba(0,245,255,0.2);border-left:4px solid #00F5FF;border-radius:8px;padding:12px 16px;margin-bottom:10px;">
+                            <div style="background:#0F192E;border:1px solid rgba(125,168,223,0.2);border-left:4px solid #7DA8DF;border-radius:8px;padding:12px 16px;margin-bottom:10px;">
                                 <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
                                     <div>
                                         <b style="color:#FFFFFF;font-size:14px;">{dm_leader}</b><br>
-                                        <span style="color:#00F5FF;font-size:12px;">🏥 {dm_inst}</span> &nbsp;|&nbsp; 
+                                        <span style="color:#7DA8DF;font-size:12px;">🏥 {dm_inst}</span> &nbsp;|&nbsp; 
                                         <span style="color:#94A3B8;font-size:11.5px;">📍 {dm_loc}</span> &nbsp;|&nbsp; 
-                                        <span style="color:#00E676;font-size:11.5px;">✉️ {dm_email}</span>
+                                        <span style="color:#10B981;font-size:11.5px;">✉️ {dm_email}</span>
                                     </div>
                                 </div>
                             </div>
@@ -27367,7 +27342,7 @@ I would welcome the opportunity to coordinate a brief 10-minute scientific brief
                 # KPI Comparison Badges
                 wp_k1, wp_k2, wp_k3 = st.columns(3)
                 with wp_k1:
-                    st.markdown('''<div class="kpi-container" style="border-top:3px solid #00F5FF;">
+                    st.markdown('''<div class="kpi-container" style="border-top:3px solid #7DA8DF;">
                     <div class="kpi-header">2PN DÖLLENME ORANI (FERTILIZATION)</div>
                     <div class="kpi-val">%24.6 ➔ %82.3</div>
                     <div class="kpi-sub kpi-pos">▲ +%57.7 Artış (p < 0.001)</div>
@@ -27387,13 +27362,13 @@ I would welcome the opportunity to coordinate a brief 10-minute scientific brief
 
                 st.markdown("<div style='height: 10px;'></div>", unsafe_allow_html=True)
 
-                st.markdown("""<div style="background:#0F192E; border:1.5px solid #00F5FF; border-radius:12px; padding:20px; margin-bottom:16px;">
-<div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(0,245,255,0.25); padding-bottom:10px; margin-bottom:14px;">
+                st.markdown("""<div style="background:#0F192E; border:1.5px solid #7DA8DF; border-radius:12px; padding:20px; margin-bottom:16px;">
+<div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(125,168,223,0.25); padding-bottom:10px; margin-bottom:14px;">
 <div>
-<span style="font-size:18px; font-weight:800; color:#00F5FF;">ZEUS CLINICAL WHITEPAPER (EXECUTIVE BRIEF)</span><br>
+<span style="font-size:18px; font-weight:800; color:#7DA8DF;">ZEUS CLINICAL WHITEPAPER (EXECUTIVE BRIEF)</span><br>
 <span style="font-size:12px; color:#94A3B8;">Doküman: ZGMI-WHITE-2026-AOA | Peer-Reviewed Multicentric Cohort Summary</span>
 </div>
-<span style="background:rgba(0,245,255,0.15); color:#00F5FF; border:1px solid #00F5FF; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">CE MARK CERTIFIED</span>
+<span style="background:rgba(125,168,223,0.15); color:#7DA8DF; border:1px solid #7DA8DF; padding:4px 10px; border-radius:6px; font-weight:700; font-size:12px;">CE MARK CERTIFIED</span>
 </div>
 
 <h5 style="color:#FFFFFF; margin-top:0;">Overcoming Oocyte Activation Deficiency: Clinical Efficacy of ZEUS Pulse Stimulator (AOA) AOA in Failed Fertilization Cycles</h5>
@@ -27406,7 +27381,7 @@ I would welcome the opportunity to coordinate a brief 10-minute scientific brief
 <tr style="background:rgba(255,255,255,0.06); text-align:left; border-bottom:1px solid rgba(255,255,255,0.15);">
 <th style="padding:8px;">Klinik Parametre (Metric)</th>
 <th style="padding:8px; text-align:center;">Standart ICSI (Önceki Siklus)</th>
-<th style="padding:8px; text-align:center; color:#00F5FF;">ZEUS Elektriksel AOA Siklusu</th>
+<th style="padding:8px; text-align:center; color:#7DA8DF;">ZEUS Elektriksel AOA Siklusu</th>
 <th style="padding:8px; text-align:center; color:#10B981;">Klinik Kazanım (p-value)</th>
 </tr>
 <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
@@ -27415,22 +27390,22 @@ I would welcome the opportunity to coordinate a brief 10-minute scientific brief
 <td style="padding:7px; text-align:center;">158 Oosit</td>
 <td style="padding:7px; text-align:center;">—</td>
 </tr>
-<tr style="border-bottom:1px solid rgba(255,255,255,0.05); background:rgba(0,245,255,0.03);">
+<tr style="border-bottom:1px solid rgba(255,255,255,0.05); background:rgba(125,168,223,0.03);">
 <td style="padding:7px; font-weight:700;">2PN Döllenme Oranı (Fertilization Rate)</td>
 <td style="padding:7px; text-align:center; color:#FF5252; font-weight:700;">%24.6 (TFF/Düşük)</td>
-<td style="padding:7px; text-align:center; color:#00F5FF; font-weight:800; font-size:13px;">%82.3</td>
+<td style="padding:7px; text-align:center; color:#7DA8DF; font-weight:800; font-size:13px;">%82.3</td>
 <td style="padding:7px; text-align:center; color:#10B981; font-weight:700;">+%57.7 Artış (p < 0.001)</td>
 </tr>
 <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
 <td style="padding:7px;">Day-3 Yüksek Kalite Embriyo Oranı</td>
 <td style="padding:7px; text-align:center;">%42.0</td>
-<td style="padding:7px; text-align:center; color:#00F5FF;">%74.5</td>
+<td style="padding:7px; text-align:center; color:#7DA8DF;">%74.5</td>
 <td style="padding:7px; text-align:center; color:#10B981;">+%32.5 İyileşme</td>
 </tr>
 <tr style="border-bottom:1px solid rgba(255,255,255,0.05);">
 <td style="padding:7px;">Day-5 Kullanılabilir Blastosist Oranı</td>
 <td style="padding:7px; text-align:center;">%21.4</td>
-<td style="padding:7px; text-align:center; color:#00F5FF;">%48.1</td>
+<td style="padding:7px; text-align:center; color:#7DA8DF;">%48.1</td>
 <td style="padding:7px; text-align:center; color:#10B981;">2.2 Kat Blastosist Artışı</td>
 </tr>
 <tr>
@@ -27525,8 +27500,8 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
                         prof = get_country_gtm_barrier_profile(c, country_map.get(c_code))
                         p1_items.append(f"<li><b>{prof['flag']} {c}:</b> {prof['summary_bullet']}</li>")
                     p1_bullets = "".join(p1_items) if p1_items else "<li><i>Seçili ülkeler arasında Faz 1 pazarı bulunmuyor. (Örn: BAE, Mısır, Bakü & TR doğrudan hekim-patronlara hızlı satış pazarlarıdır).</i></li>"
-                    st.markdown(f"""<div style="background:rgba(0,245,255,0.05); border:1px solid rgba(0,245,255,0.3); border-radius:10px; padding:16px; margin-bottom:14px; min-height:160px;">
-<span style="font-weight:700; color:#00F5FF; font-size:14px;">🥇 FAZ 1 (0 - 60 Gün): Hızlı Karar & Peşin Pazarlar (Seçili)</span>
+                    st.markdown(f"""<div style="background:rgba(125,168,223,0.05); border:1px solid rgba(125,168,223,0.3); border-radius:10px; padding:16px; margin-bottom:14px; min-height:160px;">
+<span style="font-weight:700; color:#7DA8DF; font-size:14px;">🥇 FAZ 1 (0 - 60 Gün): Hızlı Karar & Peşin Pazarlar (Seçili)</span>
 <ul style="font-size:12px; color:#E2E8F0; line-height:1.7; margin-top:8px;">
 {p1_bullets}
 </ul>
@@ -27568,7 +27543,7 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
 
 <div style="display:grid; grid-template-columns: 1fr 1fr; gap:16px;">
 <div style="background:rgba(255,255,255,0.02); border-radius:8px; padding:12px; border:1px solid rgba(255,255,255,0.06);">
-<span style="color:#00F5FF; font-weight:700; font-size:13px;">👤 Karar Verici Yapısı:</span>
+<span style="color:#7DA8DF; font-weight:700; font-size:13px;">👤 Karar Verici Yapısı:</span>
 <p style="font-size:12px; color:#CBD5E1; margin:6px 0 0 0; line-height:1.5;">{prof['decision_maker']}</p>
 <hr style="border:0; border-top:1px solid rgba(255,255,255,0.08); margin:10px 0;">
 <span style="color:#FF5252; font-weight:700; font-size:13px;">🚧 Kilit Pazar Bariyeri ("Çıkmazı"):</span>
@@ -27619,7 +27594,7 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
                     st.markdown(f"##### 👨‍⚕️ {sel_gtm_dir_country} Öncü IVF Merkezleri & Karar Verici Profesörler")
                     st.dataframe(pd.DataFrame(dir_res['decision_makers']), use_container_width=True, hide_index=True)
 
-                st.markdown(f"""<div style="background:rgba(0,245,255,0.04); border-left:4px solid #00F5FF; padding:12px 16px; border-radius:6px; margin-top:14px; font-size:12.5px; color:#E2E8F0;">
+                st.markdown(f"""<div style="background:rgba(125,168,223,0.04); border-left:4px solid #7DA8DF; padding:12px 16px; border-radius:6px; margin-top:14px; font-size:12.5px; color:#E2E8F0;">
 <b>💡 {sel_gtm_dir_country} İletişim & Pazara Giriş Stratejisi:</b> {dir_res['market_context']}
 </div>""", unsafe_allow_html=True)
 
@@ -27691,14 +27666,14 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
             <div style="background:linear-gradient(135deg, rgba(19,166,181,0.14) 0%, rgba(11,20,38,0.85) 100%);border:1.5px solid #13A6B5;border-radius:12px;padding:18px 20px;margin-bottom:18px;box-shadow:0 6px 18px rgba(0,0,0,0.35);">
                 <div style="display:flex;justify-content:space-between;align-items:center;">
                     <div>
-                        <h3 style="margin:0;color:#00F5FF;font-size:20px;">🏛️ {cmp_kb_country} Stratejik Pazar Profili, Bakanlık Kararları & İstihbaratı</h3>
+                        <h3 style="margin:0;color:#7DA8DF;font-size:20px;">🏛️ {cmp_kb_country} Stratejik Pazar Profili, Bakanlık Kararları & İstihbaratı</h3>
                         <div style="color:#B0C4DE;font-size:12.5px;margin-top:5px;">
                             Resmi Otorite: <b style="color:#FFFFFF;">{auth_name}</b> &nbsp;|&nbsp; 
-                            Yetkili Heyet: <b style="color:#00E676;">{kb_info.get("specialist_name", "Bölgesel İlaç ve Medikal Cihaz Denetim Heyeti")}</b>
+                            Yetkili Heyet: <b style="color:#10B981;">{kb_info.get("specialist_name", "Bölgesel İlaç ve Medikal Cihaz Denetim Heyeti")}</b>
                         </div>
                     </div>
                     <div style="text-align:right;">
-                        <span style="background:rgba(0,245,255,0.18);color:#00F5FF;padding:5px 14px;border-radius:14px;font-weight:700;font-size:12.5px;border:1px solid #13A6B5;">{kb_macro['gdp_tier']}</span>
+                        <span style="background:rgba(125,168,223,0.18);color:#7DA8DF;padding:5px 14px;border-radius:14px;font-weight:700;font-size:12.5px;border:1px solid #13A6B5;">{kb_macro['gdp_tier']}</span>
                         <div style="color:#8FA3C0;font-size:11.5px;margin-top:5px;">Aktif Klinik: <b>{kb_macro['clinics']}</b> &nbsp;|&nbsp; Gümrük Tarifesi: <b>%{kb_macro['customs_tariff_pct']:.1f}</b></div>
                     </div>
                 </div>
@@ -27722,27 +27697,27 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
             with k_tab1:
                 st.markdown(f"""
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
-                    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
-                        <div style="font-weight:700;color:#00F5FF;font-size:13.5px;margin-bottom:8px;">📦 Gümrük Vergisi, KDV & GTİP Kodları</div>
+                    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(125,168,223,0.25);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
+                        <div style="font-weight:700;color:#7DA8DF;font-size:13.5px;margin-bottom:8px;">📦 Gümrük Vergisi, KDV & GTİP Kodları</div>
                         • <b>Gümrük Tarife Oranı:</b> <span style="color:#FFD700;font-weight:600;">{cust_reg.get('tariff_rate', 'Standart %5.0')}</span><br>
                         • <b>KDV / Vergi Rejimi:</b> <span style="color:#FFFFFF;">{cust_reg.get('vat_rate', '%15.0 Standart KDV')}</span><br>
-                        • <b>Cihaz GTİP Kodu:</b> <code style="color:#00F5FF;">{cust_reg.get('gtip_device', 'GTIP 9018.90')}</code><br>
-                        • <b>Sarf / Kit GTİP Kodu:</b> <code style="color:#00E676;">{cust_reg.get('gtip_consumable', 'GTIP 3822.00')}</code><br>
-                        • <b>Liman / Gümrük Bekleme:</b> <span style="color:#00E676;font-weight:600;">{cust_reg.get('clearance_days', '15 Gün Tampon')}</span>
+                        • <b>Cihaz GTİP Kodu:</b> <code style="color:#7DA8DF;">{cust_reg.get('gtip_device', 'GTIP 9018.90')}</code><br>
+                        • <b>Sarf / Kit GTİP Kodu:</b> <code style="color:#10B981;">{cust_reg.get('gtip_consumable', 'GTIP 3822.00')}</code><br>
+                        • <b>Liman / Gümrük Bekleme:</b> <span style="color:#10B981;font-weight:600;">{cust_reg.get('clearance_days', '15 Gün Tampon')}</span>
                     </div>
-                    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
-                        <div style="font-weight:700;color:#00F5FF;font-size:13.5px;margin-bottom:8px;">🏛️ Tescil Otoritesi & Ruhsatlandırma Protokolü</div>
+                    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(125,168,223,0.25);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
+                        <div style="font-weight:700;color:#7DA8DF;font-size:13.5px;margin-bottom:8px;">🏛️ Tescil Otoritesi & Ruhsatlandırma Protokolü</div>
                         • <b>Resmi Otorite:</b> <b>{cust_reg.get('authority_full', auth_name)}</b><br>
                         • <b>Ruhsat & Tescil Protokolü:</b> {cust_reg.get('registration_path', 'CE Sertifikalı Harmonize İthal İzni')}<br>
-                        • <b>Cihaz Uygunluğu:</b> <span style="background:rgba(0,230,118,0.15);color:#00E676;padding:2px 8px;border-radius:4px;font-weight:700;">CE Device Certified (CE Sertifikalı Tıbbi Cihaz)</span><br>
+                        • <b>Cihaz Uygunluğu:</b> <span style="background:rgba(0,230,118,0.15);color:#10B981;padding:2px 8px;border-radius:4px;font-weight:700;">CE Device Certified (CE Sertifikalı Tıbbi Cihaz)</span><br>
                         • <b>İthalat Zorluk Seviyesi:</b> {kb_macro['import_difficulty']}
                     </div>
                     <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
-                        <div style="font-weight:700;color:#00F5FF;font-size:13.5px;margin-bottom:8px;">📋 Zorunlu Gümrük ve Tescil Belgeleri</div>
+                        <div style="font-weight:700;color:#7DA8DF;font-size:13.5px;margin-bottom:8px;">📋 Zorunlu Gümrük ve Tescil Belgeleri</div>
                         <div style="color:#C4D1D9;">{cust_reg.get('required_docs', 'COO, FSC, CE Deklarasyonu')}</div>
                     </div>
                     <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
-                        <div style="font-weight:700;color:#00F5FF;font-size:13.5px;margin-bottom:8px;">❄️ Soğuk Zincir & Medikal Lojistik Standartları</div>
+                        <div style="font-weight:700;color:#7DA8DF;font-size:13.5px;margin-bottom:8px;">❄️ Soğuk Zincir & Medikal Lojistik Standartları</div>
                         <div style="color:#C4D1D9;">{cust_reg.get('cold_chain_rules', '+2°C / +8°C veri kaydedicili transfer')}</div>
                     </div>
                 </div>
@@ -27752,15 +27727,15 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
             with k_tab2:
                 st.markdown(f"""
                 <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
-                    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
-                        <div style="font-weight:700;color:#00F5FF;font-size:13.5px;margin-bottom:8px;">👶 Ulusal IVF & Embriyo Transfer Kısıtlamaları</div>
+                    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(125,168,223,0.25);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
+                        <div style="font-weight:700;color:#7DA8DF;font-size:13.5px;margin-bottom:8px;">👶 Ulusal IVF & Embriyo Transfer Kısıtlamaları</div>
                         • <b>Transfer Sınırları & eSET Kuralı:</b><br>
                         <span style="color:#E1E7EC;">{ivf_pgt.get('transfer_rules', 'Çoğul gebelik kısıtlaması ve tek embriyo transfer teşviki')}</span><br><br>
                         • <b>Devlet Desteği & Geri Ödeme:</b><br>
                         <span style="color:#E1E7EC;">{ivf_pgt.get('cycle_funding', 'Özel kliniklerde cepten ödeme')}</span>
                     </div>
-                    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
-                        <div style="font-weight:700;color:#00F5FF;font-size:13.5px;margin-bottom:8px;">🧬 PGT (Preimplantation Genetic Testing) Yasal Çerçevesi</div>
+                    <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(125,168,223,0.25);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
+                        <div style="font-weight:700;color:#7DA8DF;font-size:13.5px;margin-bottom:8px;">🧬 PGT (Preimplantation Genetic Testing) Yasal Çerçevesi</div>
                         • <b>PGT-A / PGT-M / PGT-SR Statüsü:</b><br>
                         <span style="color:#E1E7EC;">{ivf_pgt.get('pgt_legal_status', 'Tıbbi endikasyonla lisanslı genetik merkezlerde serbesttir')}</span><br><br>
                         • <b>Embriyo Biyopsisi Standardı:</b><br>
@@ -27785,16 +27760,16 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
                 st.markdown("##### 🏛️ Çok Disiplinli Uzman Heyeti Görüşleri (Multidisciplinary Committee Stance)")
                 st.markdown(f"""
                 <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px;">
-                    <div style="background:rgba(0,245,255,0.04);border-left:3.5px solid #00F5FF;padding:12px 14px;border-radius:8px;font-size:12px;line-height:1.6;">
-                        <b style="color:#00F5FF;">👔 CEO (İcra Kurulu Başkanı — Strateji & Kurumsal Vizyon):</b><br>
+                    <div style="background:rgba(125,168,223,0.04);border-left:3.5px solid #7DA8DF;padding:12px 14px;border-radius:8px;font-size:12px;line-height:1.6;">
+                        <b style="color:#7DA8DF;">👔 CEO (İcra Kurulu Başkanı — Strateji & Kurumsal Vizyon):</b><br>
                         <span style="color:#CCD7E6;">{exp_ops.get('ceo', 'Pazar genişlemesi ve kârlı büyüme dengesi.')}</span>
                     </div>
                     <div style="background:rgba(255,215,0,0.04);border-left:3.5px solid #FFD700;padding:12px 14px;border-radius:8px;font-size:12px;line-height:1.6;">
                         <b style="color:#FFD700;">💼 VP of Global Sales (Uluslararası Satış & Distribütör Yönetimi):</b><br>
                         <span style="color:#CCD7E6;">{exp_ops.get('sales', 'Distribütör kota takibi ve yerel pazar penetrasyonu.')}</span>
                     </div>
-                    <div style="background:rgba(0,230,118,0.04);border-left:3.5px solid #00E676;padding:12px 14px;border-radius:8px;font-size:12px;line-height:1.6;">
-                        <b style="color:#00E676;">🔬 Chief Embryology Officer (Baş Embriyolog — Klinik & Laboratuvar Güvenliği):</b><br>
+                    <div style="background:rgba(0,230,118,0.04);border-left:3.5px solid #10B981;padding:12px 14px;border-radius:8px;font-size:12px;line-height:1.6;">
+                        <b style="color:#10B981;">🔬 Chief Embryology Officer (Baş Embriyolog — Klinik & Laboratuvar Güvenliği):</b><br>
                         <span style="color:#CCD7E6;">{exp_ops.get('embryo', 'Oosit membran esnekliği, %82.3 döllenme oranı ve kimyasal toksisite eliminasyonu.')}</span>
                     </div>
                     <div style="background:rgba(186,104,200,0.04);border-left:3.5px solid #BA68C8;padding:12px 14px;border-radius:8px;font-size:12px;line-height:1.6;">
@@ -27827,11 +27802,11 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
                         <div style="background:#0F192E;border:1.5px solid #13A6B5;border-radius:10px;padding:14px 16px;margin-bottom:12px;box-shadow:0 4px 14px rgba(0,0,0,0.25);">
                             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
                                 <div>
-                                    <span style="background:rgba(0,245,255,0.15);color:#00F5FF;font-weight:700;font-size:12px;padding:3px 10px;border-radius:6px;border:1px solid #13A6B5;">📜 {dec['decree_no']}</span>
+                                    <span style="background:rgba(125,168,223,0.15);color:#7DA8DF;font-weight:700;font-size:12px;padding:3px 10px;border-radius:6px;border:1px solid #13A6B5;">📜 {dec['decree_no']}</span>
                                     <span style="font-weight:700;color:#FFFFFF;font-size:13.5px;margin-left:10px;">{dec['title']}</span>
                                 </div>
                                 <div style="text-align:right;">
-                                    <span style="color:#00E676;font-size:11px;font-weight:700;background:rgba(0,230,118,0.1);padding:3px 8px;border-radius:4px;">{dec.get('status', '🟢 Yürürlükte')}</span>
+                                    <span style="color:#10B981;font-size:11px;font-weight:700;background:rgba(0,230,118,0.1);padding:3px 8px;border-radius:4px;">{dec.get('status', '🟢 Yürürlükte')}</span>
                                     <span style="color:#8FA3C0;font-size:11px;margin-left:8px;">📅 {dec.get('date', '2024-2026')}</span>
                                 </div>
                             </div>
@@ -27840,7 +27815,7 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
                             </div>
                             <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;background:rgba(0,0,0,0.25);padding:10px 12px;border-radius:8px;font-size:11.5px;margin-top:8px;">
                                 <div>
-                                    <span style="color:#00F5FF;font-weight:700;">🔬 Cihaz & Donanım Şartı (Elektriksel Oosit Aktivasyon - ZPS 26):</span><br>
+                                    <span style="color:#7DA8DF;font-weight:700;">🔬 Cihaz & Donanım Şartı (Elektriksel Oosit Aktivasyon - ZPS 26):</span><br>
                                     <span style="color:#E1E7EC;">{dec.get('impact_zeus', '')}</span>
                                 </div>
                                 <div>
@@ -27862,27 +27837,27 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
 
                 # Active Country Spotlight Dossier Card
                 st.markdown(f"""
-                <div style="background:linear-gradient(135deg, rgba(15,23,42,0.92) 0%, rgba(19,166,181,0.12) 100%);border:1.5px solid #00F5FF;border-radius:12px;padding:18px 20px;margin-bottom:18px;box-shadow:0 8px 24px rgba(0,0,0,0.35);">
+                <div style="background:linear-gradient(135deg, rgba(15,23,42,0.92) 0%, rgba(19,166,181,0.12) 100%);border:1.5px solid #7DA8DF;border-radius:12px;padding:18px 20px;margin-bottom:18px;box-shadow:0 8px 24px rgba(0,0,0,0.35);">
                     <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:10px;margin-bottom:14px;flex-wrap:wrap;gap:8px;">
                         <div>
-                            <span style="font-size:16px;font-weight:800;color:#00F5FF;">🏛️ {reg_single['flag']} {cmp_kb_country} Tıbbi Cihaz Tescil Dosyası & Resmi Başvuru Şartnamesi</span>
-                            <div style="font-size:11.5px;color:#94A3B8;margin-top:2px;">Hedef Pazar: <b style="color:#FFF;">{reg_single['country_tr']}</b> &nbsp;|&nbsp; Regülasyon Kapsamı: <b style="color:#00E676;">{reg_single['device_classification']}</b></div>
+                            <span style="font-size:16px;font-weight:800;color:#7DA8DF;">🏛️ {reg_single['flag']} {cmp_kb_country} Tıbbi Cihaz Tescil Dosyası & Resmi Başvuru Şartnamesi</span>
+                            <div style="font-size:11.5px;color:#94A3B8;margin-top:2px;">Hedef Pazar: <b style="color:#FFF;">{reg_single['country_tr']}</b> &nbsp;|&nbsp; Regülasyon Kapsamı: <b style="color:#10B981;">{reg_single['device_classification']}</b></div>
                         </div>
-                        <span style="background:rgba(0,245,255,0.15);color:#00F5FF;border:1px solid #13A6B5;padding:4px 12px;border-radius:6px;font-size:11.5px;font-weight:700;">
+                        <span style="background:rgba(125,168,223,0.15);color:#7DA8DF;border:1px solid #13A6B5;padding:4px 12px;border-radius:6px;font-size:11.5px;font-weight:700;">
                             {reg_single['fast_track_available']}
                         </span>
                     </div>
 
                     <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(210px, 1fr));gap:12px;margin-bottom:14px;">
-                        <div style="background:rgba(255,255,255,0.03);padding:10px 14px;border-radius:8px;border-left:3px solid #00F5FF;">
+                        <div style="background:rgba(255,255,255,0.03);padding:10px 14px;border-radius:8px;border-left:3px solid #7DA8DF;">
                             <div style="font-size:10.5px;color:#8FA3C0;text-transform:uppercase;">🏛️ Başvurulacak Merci & Portal</div>
                             <div style="font-size:12.5px;font-weight:700;color:#FFFFFF;margin-top:3px;">{reg_single['authority_name']}</div>
-                            <div style="font-size:11px;color:#00F5FF;margin-top:2px;">{reg_single['department_portal']}</div>
+                            <div style="font-size:11px;color:#7DA8DF;margin-top:2px;">{reg_single['department_portal']}</div>
                         </div>
                         <div style="background:rgba(255,255,255,0.03);padding:10px 14px;border-radius:8px;border-left:3px solid #FFD700;">
                             <div style="font-size:10.5px;color:#8FA3C0;text-transform:uppercase;">💰 Resmi Bakanlık Başvuru Harcı</div>
                             <div style="font-size:13.5px;font-weight:800;color:#FFD700;margin-top:3px;">{reg_single['official_filing_fee']}</div>
-                            <div style="font-size:11px;color:#E2E8F0;margin-top:2px;">Yaklaşık: <b style="color:#00E676;">{reg_single['official_filing_fee_usd']}</b></div>
+                            <div style="font-size:11px;color:#E2E8F0;margin-top:2px;">Yaklaşık: <b style="color:#10B981;">{reg_single['official_filing_fee_usd']}</b></div>
                         </div>
                         <div style="background:rgba(255,255,255,0.03);padding:10px 14px;border-radius:8px;border-left:3px solid #10B981;">
                             <div style="font-size:10.5px;color:#8FA3C0;text-transform:uppercase;">💵 Toplam Cihaz Başı Tescil Maliyeti</div>
@@ -27897,7 +27872,7 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
                     </div>
 
                     <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:14px;margin-bottom:12px;">
-                        <div style="font-weight:700;color:#00F5FF;font-size:12.5px;margin-bottom:8px;">📋 {cmp_kb_country} İçin Zorunlu Resmi Başvuru Evrakları:</div>
+                        <div style="font-weight:700;color:#7DA8DF;font-size:12.5px;margin-bottom:8px;">📋 {cmp_kb_country} İçin Zorunlu Resmi Başvuru Evrakları:</div>
                         <div style="font-size:11.8px;color:#CCD7E6;line-height:1.75;">
                             {"<br>".join(["• " + d for d in reg_single["required_documents"]])}
                         </div>
@@ -27964,8 +27939,8 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
                 with th_c1:
                     # Active Tenders & Procurement Portals
                     st.markdown(f"""
-                    <div style="background:rgba(15,23,42,0.85);border:1px solid rgba(0,245,255,0.3);border-radius:10px;padding:16px;margin-bottom:14px;box-shadow:0 4px 14px rgba(0,0,0,0.35);">
-                        <div style="font-weight:800;color:#00F5FF;font-size:14px;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+                    <div style="background:rgba(15,23,42,0.85);border:1px solid rgba(125,168,223,0.3);border-radius:10px;padding:16px;margin-bottom:14px;box-shadow:0 4px 14px rgba(0,0,0,0.35);">
+                        <div style="font-weight:800;color:#7DA8DF;font-size:14px;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
                             <span>📢 {t_intel['flag']} {cmp_kb_country} Açılan İhale Türleri & Satın Alma Kanalları</span>
                         </div>
                         <div style="font-size:11px;color:#8FA3C0;margin-bottom:8px;"><b>Yetkili Kurum:</b> {t_intel.get('tender_authority', 'Kamu Sağlık Otoritesi')}</div>
@@ -27985,7 +27960,7 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
                         <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px;font-size:11px;">
                             <div style="background:rgba(0,230,118,0.06);border:1px solid rgba(0,230,118,0.25);padding:8px 10px;border-radius:6px;">
                                 <span style="color:#8FA3C0;">İhale Modeli Dağılımı:</span><br>
-                                <b style="color:#00E676;">{t_params.get('tender_type_dist', 'Açık İhale %60')}</b>
+                                <b style="color:#10B981;">{t_params.get('tender_type_dist', 'Açık İhale %60')}</b>
                             </div>
                             <div style="background:rgba(255,184,0,0.06);border:1px solid rgba(255,184,0,0.25);padding:8px 10px;border-radius:6px;">
                                 <span style="color:#8FA3C0;">Ödeme Vadesi:</span><br>
@@ -27999,13 +27974,13 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
                     # Technical Specifications Guide
                     st.markdown(f"""
                     <div style="background:rgba(15,23,42,0.85);border:1px solid rgba(0,230,118,0.3);border-radius:10px;padding:16px;margin-bottom:14px;box-shadow:0 4px 14px rgba(0,0,0,0.35);">
-                        <div style="font-weight:800;color:#00E676;font-size:14px;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
+                        <div style="font-weight:800;color:#10B981;font-size:14px;margin-bottom:10px;display:flex;align-items:center;gap:6px;">
                             <span>📋 {cmp_kb_country} Resmi Teknik Şartname Kılavuzu (ZPS 26)</span>
                         </div>
-                        <div style="font-size:12px;font-weight:700;color:#FFFFFF;margin-bottom:6px;">Başlık: <span style="color:#00F5FF;">{t_specs.get('device_title', 'ZEUS Pulse Stimulator (AOA) ve Reaktif Sarf Sistemi')}</span></div>
+                        <div style="font-size:12px;font-weight:700;color:#FFFFFF;margin-bottom:6px;">Başlık: <span style="color:#7DA8DF;">{t_specs.get('device_title', 'ZEUS Pulse Stimulator (AOA) ve Reaktif Sarf Sistemi')}</span></div>
                         
                         <div style="font-size:11.8px;color:#CBD5E1;line-height:1.7;margin-bottom:10px;">
-                            <b style="color:#00E676;">⚡ Cihaz Fonksiyonel & Teknik Kriterleri:</b><br>
+                            <b style="color:#10B981;">⚡ Cihaz Fonksiyonel & Teknik Kriterleri:</b><br>
                             {"<br>".join(["• " + s for s in t_specs.get("core_specs", [])])}
                         </div>
 
@@ -28015,7 +27990,7 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
                         </div>
 
                         <div style="font-size:11.5px;color:#94A3B8;line-height:1.6;border-top:1px dashed rgba(255,255,255,0.08);padding-top:8px;">
-                            <b style="color:#38BDF8;">🧪 Sarf Malzeme & Kültür Kit Koşulları:</b><br>
+                            <b style="color:#7DA8DF;">🧪 Sarf Malzeme & Kültür Kit Koşulları:</b><br>
                             {"<br>".join(["• " + cs for cs in t_specs.get("consumable_specs", [])])}
                         </div>
                     </div>
@@ -28107,10 +28082,10 @@ Cihaz, tüp bebek (IVF/ICSI) laboratuvarlarında Total Döllenme Başarısızlı
             # Do's and Don'ts Card
             st.markdown(f"""
             <div style="background:rgba(19,166,181,0.05);border:1px solid rgba(19,166,181,0.25);border-radius:10px;padding:14px;margin-top:14px;margin-bottom:18px;font-size:12px;line-height:1.7;">
-                <div style="font-weight:700;color:#00F5FF;font-size:14px;margin-bottom:6px;">💡 Executive Do's & Don'ts ({cmp_kb_country} İçin Yönetici İlkeleri)</div>
+                <div style="font-weight:700;color:#7DA8DF;font-size:14px;margin-bottom:6px;">💡 Executive Do's & Don'ts ({cmp_kb_country} İçin Yönetici İlkeleri)</div>
                 <div style="display:flex;gap:20px;">
-                    <div style="flex:1;background:rgba(0,230,118,0.06);padding:10px;border-radius:8px;border-left:3px solid #00E676;">
-                        <b style="color:#00E676;">✅ YAPILMASI GEREKENLER (DO's):</b><br>
+                    <div style="flex:1;background:rgba(0,230,118,0.06);padding:10px;border-radius:8px;border-left:3px solid #10B981;">
+                        <b style="color:#10B981;">✅ YAPILMASI GEREKENLER (DO's):</b><br>
                         {prof.get('dos', 'Klinik embriyologlarına yerinde aplikasyon eğitimi ve vaka desteği sunun.')}
                     </div>
                     <div style="flex:1;background:rgba(255,82,82,0.06);padding:10px;border-radius:8px;border-left:3px solid #FF5252;">
@@ -28173,7 +28148,7 @@ Cihaz, tüp bebek (IVF/ICSI) laboratuvarlarında Total Döllenme Başarısızlı
                         'date': cn['date'],
                         'author': cn['author'],
                         'note': cn['note'],
-                        'border': '#00F5FF'
+                        'border': '#7DA8DF'
                     })
 
             for dec in kb_info.get('ministry_decrees', []):
@@ -28183,7 +28158,7 @@ Cihaz, tüp bebek (IVF/ICSI) laboratuvarlarında Total Döllenme Başarısızlı
                     'country': cmp_kb_country,
                     'date': dec.get('date', '2024-2026'),
                     'author': auth_name,
-                    'note': f"<b>Resmi Tebliğ Özeti:</b> {dec.get('summary', '')}<br><span style='color:#00F5FF;'><b>Donanım Şartı:</b> {dec.get('impact_zeus', '')}</span> | <span style='color:#FFB800;'><b>Sarf Şartı:</b> {dec.get('consumable_rule', '')}</span>",
+                    'note': f"<b>Resmi Tebliğ Özeti:</b> {dec.get('summary', '')}<br><span style='color:#7DA8DF;'><b>Donanım Şartı:</b> {dec.get('impact_zeus', '')}</span> | <span style='color:#FFB800;'><b>Sarf Şartı:</b> {dec.get('consumable_rule', '')}</span>",
                     'border': '#13A6B5'
                 })
 
@@ -28193,8 +28168,8 @@ Cihaz, tüp bebek (IVF/ICSI) laboratuvarlarında Total Döllenme Başarısızlı
                 'country': cmp_kb_country,
                 'date': '2026-10-25',
                 'author': kb_info.get('specialist_name', 'Bölgesel İlaç ve Medikal Cihaz Denetim Heyeti'),
-                'note': f"{kb_info.get('clinical_dynamics', '')} <br><b style='color:#00E676;'>Tavsiye Edilen Koruma:</b> {kb_info.get('commercial_guardrails', '')}",
-                'border': '#00E676'
+                'note': f"{kb_info.get('clinical_dynamics', '')} <br><b style='color:#10B981;'>Tavsiye Edilen Koruma:</b> {kb_info.get('commercial_guardrails', '')}",
+                'border': '#10B981'
             })
 
             for item in country_feed_items[:6]:
@@ -28320,9 +28295,9 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
 
         with sel_c2:
             st.markdown(f"""
-            <div style="background:rgba(0,245,255,0.06);border:1px solid #13A6B5;border-radius:10px;padding:10px 14px;margin-top:24px;font-size:12px;line-height:1.5;">
+            <div style="background:rgba(125,168,223,0.06);border:1px solid #13A6B5;border-radius:10px;padding:10px 14px;margin-top:24px;font-size:12px;line-height:1.5;">
                 <b>🏛️ Otorite:</b> {auth_name[:40]}...<br>
-                <b>📋 Gelir Statüsü:</b> <span style="color:#00F5FF;font-weight:700;">{c_macro['gdp_tier']}</span> (${c_macro['gdp_pc']:,} USD) &nbsp;|&nbsp; 
+                <b>📋 Gelir Statüsü:</b> <span style="color:#7DA8DF;font-weight:700;">{c_macro['gdp_tier']}</span> (${c_macro['gdp_pc']:,} USD) &nbsp;|&nbsp; 
                 <b>Gümrük:</b> <span style="color:#FFD700;font-weight:700;">%{c_macro['customs_tariff_pct']:.1f}</span>
             </div>
             """, unsafe_allow_html=True)
@@ -28366,14 +28341,14 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
         <div style="background:linear-gradient(135deg, rgba(19,166,181,0.18) 0%, rgba(11,20,38,0.92) 100%);border:1.5px solid #13A6B5;border-radius:12px;padding:18px 22px;margin:12px 0 18px 0;box-shadow:0 6px 20px rgba(0,0,0,0.35);">
             <div style="display:flex;justify-content:space-between;align-items:center;">
                 <div>
-                    <h2 style="margin:0;color:#00F5FF;font-size:22px;font-weight:800;">🏛️ {sel_country} 360° Ülke İstihbarat & Bütünleşik Raporu</h2>
+                    <h2 style="margin:0;color:#7DA8DF;font-size:22px;font-weight:800;">🏛️ {sel_country} 360° Ülke İstihbarat & Bütünleşik Raporu</h2>
                     <div style="color:#CBD5E1;font-size:13px;margin-top:6px;">
                         Resmi Tescil Otoritesi: <b style="color:#FFFFFF;">{auth_name}</b> &nbsp;|&nbsp; 
-                        Sorumlu Heyet: <b style="color:#00E676;">{c_kb.get('specialist_name', 'Bölgesel Medikal Denetim Heyeti')}</b>
+                        Sorumlu Heyet: <b style="color:#10B981;">{c_kb.get('specialist_name', 'Bölgesel Medikal Denetim Heyeti')}</b>
                     </div>
                 </div>
                 <div style="text-align:right;">
-                    <span style="background:rgba(0,230,118,0.18);color:#00E676;padding:5px 14px;border-radius:14px;font-weight:800;font-size:13px;border:1px solid #00E676;">CE Device Certified (Class IIa)</span>
+                    <span style="background:rgba(0,230,118,0.18);color:#10B981;padding:5px 14px;border-radius:14px;font-weight:800;font-size:13px;border:1px solid #10B981;">CE Device Certified (Class IIa)</span>
                     <div style="color:#94A3B8;font-size:12px;margin-top:5px;">Aktif IVF Klinik: <b>{c_macro['clinics']}</b> &nbsp;|&nbsp; Yıllık Siklus: <b>{est_total_cycles:,.0f} Siklus</b></div>
                 </div>
             </div>
@@ -28401,8 +28376,8 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
         # EXECUTIVE MARKET INTELLIGENCE & KLİNİK KAPASİTE GÖSTERGELERİ
         # ----------------------------------------------------------------------
         st.markdown(f"""
-        <div style="background:rgba(0,245,255,0.03);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:8px 14px;margin-bottom:12px;">
-            <span style="color:#00F5FF;font-weight:800;font-size:13.5px;">📊 {sel_country} Market Intelligence & Makro Klinik Kapasite Göstergeleri</span>
+        <div style="background:rgba(125,168,223,0.03);border:1px solid rgba(125,168,223,0.25);border-radius:10px;padding:8px 14px;margin-bottom:12px;">
+            <span style="color:#7DA8DF;font-weight:800;font-size:13.5px;">📊 {sel_country} Market Intelligence & Makro Klinik Kapasite Göstergeleri</span>
             <span style="color:#94A3B8;font-size:11.5px;margin-left:10px;">Dünya Bankası (WDI) ve ESHRE resmi kayıtlarına dayalı ulusal pazar büyüklüğü</span>
         </div>
         """, unsafe_allow_html=True)
@@ -28419,7 +28394,7 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
                     <div style="font-size:24px;font-weight:800;color:#FFFFFF;margin:4px 0 6px 0;line-height:1.1;">{c_macro['clinics']} Klinik</div>
                 </div>
                 <div>
-                    <div style="font-size:11px;color:#00E676;background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.25);padding:3px 8px;border-radius:5px;display:inline-block;line-height:1.35;word-break:break-word;white-space:normal;">
+                    <div style="font-size:11px;color:#10B981;background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.25);padding:3px 8px;border-radius:5px;display:inline-block;line-height:1.35;word-break:break-word;white-space:normal;">
                         ↑ {c_macro['gdp_tier']}
                     </div>
                 </div>
@@ -28430,7 +28405,7 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
                     <div style="font-size:24px;font-weight:800;color:#FFFFFF;margin:4px 0 6px 0;line-height:1.1;">{est_total_cycles:,.0f} Siklus</div>
                 </div>
                 <div>
-                    <div style="font-size:11px;color:#00E676;background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.25);padding:3px 8px;border-radius:5px;display:inline-block;line-height:1.35;word-break:break-word;white-space:normal;">
+                    <div style="font-size:11px;color:#10B981;background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.25);padding:3px 8px;border-radius:5px;display:inline-block;line-height:1.35;word-break:break-word;white-space:normal;">
                         ↑ Klinik Başı: ~{int(est_total_cycles / max(c_macro['clinics'], 1)):,} Siklus
                     </div>
                 </div>
@@ -28441,7 +28416,7 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
                     <div style="font-size:24px;font-weight:800;color:#FFFFFF;margin:4px 0 6px 0;line-height:1.1;">${c_macro['gdp_pc']:,} USD</div>
                 </div>
                 <div>
-                    <div style="font-size:11px;color:#00E676;background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.25);padding:3px 8px;border-radius:5px;display:inline-block;line-height:1.35;word-break:break-word;white-space:normal;">
+                    <div style="font-size:11px;color:#10B981;background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.25);padding:3px 8px;border-radius:5px;display:inline-block;line-height:1.35;word-break:break-word;white-space:normal;">
                         ↑ Alım Gücü (SAGP): ${gdp_ppp_val:,} USD
                     </div>
                 </div>
@@ -28452,7 +28427,7 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
                     <div style="font-size:24px;font-weight:800;color:#FFFFFF;margin:4px 0 6px 0;line-height:1.1;">%{c_macro.get('icsi_pct', 82)}%</div>
                 </div>
                 <div>
-                    <div style="font-size:11px;color:#00E676;background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.25);padding:3px 8px;border-radius:5px;display:inline-block;line-height:1.35;word-break:break-word;white-space:normal;">
+                    <div style="font-size:11px;color:#10B981;background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.25);padding:3px 8px;border-radius:5px;display:inline-block;line-height:1.35;word-break:break-word;white-space:normal;">
                         ↑ Total Tedavi Penetrasyonu
                     </div>
                 </div>
@@ -28482,7 +28457,7 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
                     <div style="font-size:24px;font-weight:800;color:#FFFFFF;margin:4px 0 6px 0;line-height:1.1;">%{c_macro['customs_tariff_pct']:.1f}</div>
                 </div>
                 <div>
-                    <div style="font-size:11px;color:#00E676;background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.25);padding:3px 8px;border-radius:5px;display:inline-block;line-height:1.35;word-break:break-word;white-space:normal;">
+                    <div style="font-size:11px;color:#10B981;background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.25);padding:3px 8px;border-radius:5px;display:inline-block;line-height:1.35;word-break:break-word;white-space:normal;">
                         ↑ {vat_rate_str}
                     </div>
                 </div>
@@ -28495,22 +28470,22 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
                     <div style="font-size:24px;font-weight:800;color:#FFFFFF;margin:4px 0 6px 0;line-height:1.1;">{c_macro['customs_clearance_days']} Gün</div>
                 </div>
                 <div>
-                    <div style="font-size:11px;color:#00E676;background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.25);padding:3px 8px;border-radius:5px;display:inline-block;line-height:1.35;word-break:break-word;white-space:normal;">
+                    <div style="font-size:11px;color:#10B981;background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.25);padding:3px 8px;border-radius:5px;display:inline-block;line-height:1.35;word-break:break-word;white-space:normal;">
                         ↑ Gümrük Tamponu
                     </div>
                 </div>
             </div>
 
             <!-- Card 3: Mevcut Dağıtıcı / Kanal (Sığmazsa alta al) -->
-            <div style="background:rgba(15,23,42,0.65);border:1px solid rgba(0,245,255,0.3);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;justify-content:space-between;min-height:115px;">
+            <div style="background:rgba(15,23,42,0.65);border:1px solid rgba(125,168,223,0.3);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;justify-content:space-between;min-height:115px;">
                 <div>
                     <div style="font-size:11px;color:#8FA3C0;font-weight:600;text-transform:uppercase;letter-spacing:0.02em;">Mevcut Dağıtıcı / Kanal</div>
-                    <div style="font-size:16px;font-weight:800;color:#00F5FF;margin:4px 0 6px 0;line-height:1.35;word-break:break-word;white-space:normal;">
+                    <div style="font-size:16px;font-weight:800;color:#7DA8DF;margin:4px 0 6px 0;line-height:1.35;word-break:break-word;white-space:normal;">
                         {partner_full_str}
                     </div>
                 </div>
                 <div>
-                    <div style="font-size:11px;color:#00E676;background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.25);padding:3px 8px;border-radius:5px;display:inline-block;line-height:1.35;word-break:break-word;white-space:normal;">
+                    <div style="font-size:11px;color:#10B981;background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.25);padding:3px 8px;border-radius:5px;display:inline-block;line-height:1.35;word-break:break-word;white-space:normal;">
                         ↑ Yetkili Acente / Aday
                     </div>
                 </div>
@@ -28523,7 +28498,7 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
                     <div style="font-size:24px;font-weight:800;color:#FFFFFF;margin:4px 0 6px 0;line-height:1.1;">{erp_rev_str}</div>
                 </div>
                 <div>
-                    <div style="font-size:11px;color:#00E676;background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.25);padding:3px 8px;border-radius:5px;display:inline-block;line-height:1.35;word-break:break-word;white-space:normal;">
+                    <div style="font-size:11px;color:#10B981;background:rgba(0,230,118,0.1);border:1px solid rgba(0,230,118,0.25);padding:3px 8px;border-radius:5px;display:inline-block;line-height:1.35;word-break:break-word;white-space:normal;">
                         ↑ {erp_delta_str}
                     </div>
                 </div>
@@ -28550,7 +28525,7 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
             <div style="background:rgba(255,215,0,0.04);border:1px solid rgba(255,215,0,0.3);border-radius:8px;padding:10px 14px;margin-top:8px;font-size:12px;">
                 <b>🏢 Kayıtlı Partner / Müşteriler:</b> {p_comp_str} &nbsp;|&nbsp; 
                 <b>Toplam Faturalanan Kalem:</b> {len(c_sales)} Satır &nbsp;|&nbsp; 
-                <b>Sözleşme / LOA Statüsü:</b> <span style="color:#00E676;font-weight:700;">Yürürlükte / Aktif Dağıtım</span>
+                <b>Sözleşme / LOA Statüsü:</b> <span style="color:#10B981;font-weight:700;">Yürürlükte / Aktif Dağıtım</span>
             </div>
             """, unsafe_allow_html=True)
         else:
@@ -28649,12 +28624,12 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
         m_col1, m_col2 = st.columns(2)
         with m_col1:
             st.markdown(f"""
-            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:16px;font-size:12px;line-height:1.75;height:100%;">
-                <div style="font-weight:800;color:#00F5FF;font-size:14px;margin-bottom:8px;">📦 Gümrük, GTİP & İthalat Rejimi</div>
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(125,168,223,0.25);border-radius:10px;padding:16px;font-size:12px;line-height:1.75;height:100%;">
+                <div style="font-weight:800;color:#7DA8DF;font-size:14px;margin-bottom:8px;">📦 Gümrük, GTİP & İthalat Rejimi</div>
                 • <b>Gümrük Vergisi & KDV:</b> <span style="color:#FFD700;font-weight:700;">{cust_reg.get('tariff_rate', '%5.0')}</span> | {cust_reg.get('vat_rate', '%15 KDV')}<br>
-                • <b>Cihaz GTİP:</b> <code style="color:#00F5FF;">{cust_reg.get('gtip_device', 'GTIP 9018.90')}</code><br>
-                • <b>Sarf GTİP:</b> <code style="color:#00E676;">{cust_reg.get('gtip_consumable', 'GTIP 3822.00')}</code><br>
-                • <b>Liman / Gümrük Bekleme:</b> <span style="color:#00E676;font-weight:600;">{cust_reg.get('clearance_days', '15 Gün')}</span><br>
+                • <b>Cihaz GTİP:</b> <code style="color:#7DA8DF;">{cust_reg.get('gtip_device', 'GTIP 9018.90')}</code><br>
+                • <b>Sarf GTİP:</b> <code style="color:#10B981;">{cust_reg.get('gtip_consumable', 'GTIP 3822.00')}</code><br>
+                • <b>Liman / Gümrük Bekleme:</b> <span style="color:#10B981;font-weight:600;">{cust_reg.get('clearance_days', '15 Gün')}</span><br>
                 • <b>Tescil Otoritesi:</b> {cust_reg.get('authority_full', auth_name)}<br>
                 • <b>Yasal Ruhsat Yolu:</b> {cust_reg.get('registration_path', 'CE Sertifikalı Harmonize İthal İzni')}<br>
                 • <b>Zorunlu Evraklar:</b> {cust_reg.get('required_docs', 'COO, FSC, CE Deklarasyonu')}<br>
@@ -28664,8 +28639,8 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
 
         with m_col2:
             st.markdown(f"""
-            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:16px;font-size:12px;line-height:1.75;height:100%;">
-                <div style="font-weight:800;color:#00F5FF;font-size:14px;margin-bottom:8px;">🧬 Yeni IVF, Embriyo Transfer & PGT Kuralları</div>
+            <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(125,168,223,0.25);border-radius:10px;padding:16px;font-size:12px;line-height:1.75;height:100%;">
+                <div style="font-weight:800;color:#7DA8DF;font-size:14px;margin-bottom:8px;">🧬 Yeni IVF, Embriyo Transfer & PGT Kuralları</div>
                 • <b>Embriyo Transfer Kısıtı (eSET):</b><br>
                 <span style="color:#E1E7EC;">{ivf_pgt.get('transfer_rules', 'Çoğul gebelik kısıtlaması ve tek embriyo teşviki')}</span><br>
                 • <b>Devlet Desteği & Geri Ödeme:</b><br>
@@ -28681,27 +28656,27 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
         # Cihaz Tescil Mercii, Başvuru Evrakları & Resmi Harçlar Card (Country 360 Spotlight)
         reg_c360 = resolve_device_registration_info(sel_country)
         st.markdown(f"""
-        <div style="background:rgba(15,23,42,0.85);border:1.5px solid #00F5FF;border-radius:10px;padding:16px;margin-top:14px;box-shadow:0 4px 16px rgba(0,0,0,0.35);">
+        <div style="background:rgba(15,23,42,0.85);border:1.5px solid #7DA8DF;border-radius:10px;padding:16px;margin-top:14px;box-shadow:0 4px 16px rgba(0,0,0,0.35);">
             <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:10px;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
                 <div>
-                    <span style="font-size:14.5px;font-weight:800;color:#00F5FF;">🏛️ {reg_c360['flag']} {sel_country} Tıbbi Cihaz Tescil Mercii, Başvuru Evrakları & Resmi Harçlar</span>
+                    <span style="font-size:14.5px;font-weight:800;color:#7DA8DF;">🏛️ {reg_c360['flag']} {sel_country} Tıbbi Cihaz Tescil Mercii, Başvuru Evrakları & Resmi Harçlar</span>
                     <div style="font-size:11px;color:#94A3B8;margin-top:2px;">ZEUS Pulse Stimulator (ZPS 26) Sınıf IIa Aktif Tıbbi Cihaz ve Sarf Kayıt Protokolü</div>
                 </div>
-                <span style="background:rgba(0,230,118,0.15);color:#00E676;border:1px solid rgba(0,230,118,0.35);padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;">
+                <span style="background:rgba(0,230,118,0.15);color:#10B981;border:1px solid rgba(0,230,118,0.35);padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;">
                     {reg_c360['device_classification']}
                 </span>
             </div>
             
             <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:12px;margin-bottom:14px;">
-                <div style="background:rgba(255,255,255,0.03);padding:10px 12px;border-radius:8px;border-left:3px solid #00F5FF;">
+                <div style="background:rgba(255,255,255,0.03);padding:10px 12px;border-radius:8px;border-left:3px solid #7DA8DF;">
                     <div style="font-size:10.5px;color:#8FA3C0;text-transform:uppercase;">🏛️ Başvurulacak Otorite & Portal</div>
                     <div style="font-size:12px;font-weight:700;color:#FFFFFF;margin-top:2px;">{reg_c360['authority_name']}</div>
-                    <div style="font-size:11px;color:#00F5FF;margin-top:2px;">{reg_c360['department_portal']}</div>
+                    <div style="font-size:11px;color:#7DA8DF;margin-top:2px;">{reg_c360['department_portal']}</div>
                 </div>
                 <div style="background:rgba(255,255,255,0.03);padding:10px 12px;border-radius:8px;border-left:3px solid #FFD700;">
                     <div style="font-size:10.5px;color:#8FA3C0;text-transform:uppercase;">💰 Resmi Bakanlık Başvuru Harcı</div>
                     <div style="font-size:13.5px;font-weight:800;color:#FFD700;margin-top:2px;">{reg_c360['official_filing_fee']}</div>
-                    <div style="font-size:11px;color:#E2E8F0;margin-top:2px;">Yaklaşık: <b style="color:#00E676;">{reg_c360['official_filing_fee_usd']}</b></div>
+                    <div style="font-size:11px;color:#E2E8F0;margin-top:2px;">Yaklaşık: <b style="color:#10B981;">{reg_c360['official_filing_fee_usd']}</b></div>
                 </div>
                 <div style="background:rgba(255,255,255,0.03);padding:10px 12px;border-radius:8px;border-left:3px solid #10B981;">
                     <div style="font-size:10.5px;color:#8FA3C0;text-transform:uppercase;">💵 Toplam Cihaz Başı Tescil Maliyeti</div>
@@ -28716,7 +28691,7 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
             </div>
 
             <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:8px;padding:12px;margin-bottom:10px;">
-                <div style="font-weight:700;color:#00F5FF;font-size:12px;margin-bottom:6px;">📋 Gerekli Resmi Başvuru Evrakları:</div>
+                <div style="font-weight:700;color:#7DA8DF;font-size:12px;margin-bottom:6px;">📋 Gerekli Resmi Başvuru Evrakları:</div>
                 <div style="font-size:11.5px;color:#CBD5E1;line-height:1.7;">
                     {"<br>".join(["• " + doc for doc in reg_c360["required_documents"]])}
                 </div>
@@ -28737,11 +28712,11 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
             t_col1, t_col2 = st.columns([1.1, 1.2])
             with t_col1:
                 st.markdown(f"""
-                <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(0,245,255,0.2);border-radius:8px;padding:12px;font-size:11.8px;line-height:1.7;">
-                    <b style="color:#00F5FF;font-size:12.5px;">📢 Açılan İhale Türleri & Satın Alma Kanalları:</b><br>
+                <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(125,168,223,0.2);border-radius:8px;padding:12px;font-size:11.8px;line-height:1.7;">
+                    <b style="color:#7DA8DF;font-size:12.5px;">📢 Açılan İhale Türleri & Satın Alma Kanalları:</b><br>
                     • <b>Yetkili Otorite:</b> {tender_c360.get('tender_authority', 'Kamu Satın Alma Kurumu')}<br>
                     • <b>Tipik İhale Bütçesi:</b> <span style="color:#FFD700;font-weight:700;">{tender_c360.get('typical_budget_range', '$50K - $150K')}</span><br>
-                    • <b>Şartname Kilit Gücü:</b> <span style="color:#00E676;font-weight:700;">{tp_c360.get('lock_in_strength', '%90')}</span><br>
+                    • <b>Şartname Kilit Gücü:</b> <span style="color:#10B981;font-weight:700;">{tp_c360.get('lock_in_strength', '%90')}</span><br>
                     • <b>Teminat / Vade:</b> {tp_c360.get('bid_bond_rate', '%3')} | {tp_c360.get('payment_term_days', '60 Gün')}<br><br>
                     <b style="color:#FFFFFF;">Açılan Tipik İhaleler:</b><br>
                     {"<br>".join(["• " + t for t in tender_c360.get("active_tender_types", [])[:3]])}
@@ -28750,7 +28725,7 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
             with t_col2:
                 st.markdown(f"""
                 <div style="background:rgba(255,255,255,0.02);border:1px solid rgba(0,230,118,0.2);border-radius:8px;padding:12px;font-size:11.8px;line-height:1.7;">
-                    <b style="color:#00E676;font-size:12.5px;">📋 Şartname Kriterleri & Eylem Planı (ZPS 26):</b><br>
+                    <b style="color:#10B981;font-size:12.5px;">📋 Şartname Kriterleri & Eylem Planı (ZPS 26):</b><br>
                     • <b>Şartname Başlığı:</b> {ts_c360.get('device_title', 'ZEUS Pulse Stimulator (ZPS 26)')}<br>
                     • <b>Zorunlu Kriterler:</b> Kimyasalsız mikro-elektriksel puls stimülasyonu, sub-%1 lizis, MEA >%80 analizli sarflar.<br>
                     • <b>Zorunlu Belgeler:</b> CE Sertifikalı (Class IIa), ISO 13485, Yerel tescil barkodu.<br><br>
@@ -28773,16 +28748,16 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
 
         st.markdown(f"""
         <div style="display:flex;flex-direction:column;gap:10px;margin:12px 0 16px 0;">
-            <div style="background:rgba(0,245,255,0.04);border-left:4px solid #00F5FF;padding:12px 16px;border-radius:8px;font-size:12px;line-height:1.65;">
-                <b style="color:#00F5FF;">👔 CEO (İcra Kurulu Başkanı — Strateji & Kurumsal Vizyon):</b><br>
+            <div style="background:rgba(125,168,223,0.04);border-left:4px solid #7DA8DF;padding:12px 16px;border-radius:8px;font-size:12px;line-height:1.65;">
+                <b style="color:#7DA8DF;">👔 CEO (İcra Kurulu Başkanı — Strateji & Kurumsal Vizyon):</b><br>
                 <span style="color:#CBD5E1;">{exp_ops.get('ceo', 'Pazar genişlemesi ve kârlı büyüme dengesi.')}</span>
             </div>
             <div style="background:rgba(255,215,0,0.04);border-left:4px solid #FFD700;padding:12px 16px;border-radius:8px;font-size:12px;line-height:1.65;">
                 <b style="color:#FFD700;">💼 VP of Global Sales (Uluslararası Satış & Distribütör Yönetimi):</b><br>
                 <span style="color:#CBD5E1;">{exp_ops.get('sales', 'Distribütör kota takibi ve yerel pazar penetrasyonu.')}</span>
             </div>
-            <div style="background:rgba(0,230,118,0.04);border-left:4px solid #00E676;padding:12px 16px;border-radius:8px;font-size:12px;line-height:1.65;">
-                <b style="color:#00E676;">🔬 Chief Embryology Officer (Baş Embriyolog — Klinik & Laboratuvar Güvenliği):</b><br>
+            <div style="background:rgba(0,230,118,0.04);border-left:4px solid #10B981;padding:12px 16px;border-radius:8px;font-size:12px;line-height:1.65;">
+                <b style="color:#10B981;">🔬 Chief Embryology Officer (Baş Embriyolog — Klinik & Laboratuvar Güvenliği):</b><br>
                 <span style="color:#CBD5E1;">{exp_ops.get('embryo', 'Oosit membran esnekliği, %82.3 döllenme oranı ve kimyasal toksisite eliminasyonu.')}</span>
             </div>
             <div style="background:rgba(186,104,200,0.04);border-left:4px solid #BA68C8;padding:12px 16px;border-radius:8px;font-size:12px;line-height:1.65;">
@@ -28800,13 +28775,13 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
         # CANLI İSKONTO, CİHAZ & SARF FİYATI VE KÂRLILIK HESAPLAYICISI
         # ----------------------------------------------------------------------
         st.markdown(f"""
-        <div style="background:rgba(0,245,255,0.04);border:1px solid #13A6B5;border-radius:10px;padding:14px 18px;margin-top:14px;margin-bottom:12px;">
+        <div style="background:rgba(125,168,223,0.04);border:1px solid #13A6B5;border-radius:10px;padding:14px 18px;margin-top:14px;margin-bottom:12px;">
             <div style="display:flex;justify-content:space-between;align-items:center;">
                 <div>
-                    <span style="font-weight:800;color:#00F5FF;font-size:15px;">🧮 {sel_country} Canlı Cihaz & Sarf İskonto Simülatörü</span>
+                    <span style="font-weight:800;color:#7DA8DF;font-size:15px;">🧮 {sel_country} Canlı Cihaz & Sarf İskonto Simülatörü</span>
                     <div style="color:#94A3B8;font-size:11.5px;margin-top:2px;">Distribütör ve klinik transfer fiyatları, iskonto marjları ve ülke alım gücüne uygunluk analizi.</div>
                 </div>
-                <span style="background:rgba(0,245,255,0.15);color:#00F5FF;font-weight:800;font-size:11.5px;padding:3px 10px;border-radius:6px;border:1px solid #13A6B5;">Canlı Hesaplama Motoru</span>
+                <span style="background:rgba(125,168,223,0.15);color:#7DA8DF;font-weight:800;font-size:11.5px;padding:3px 10px;border-radius:6px;border:1px solid #13A6B5;">Canlı Hesaplama Motoru</span>
             </div>
         </div>
         """, unsafe_allow_html=True)
@@ -28838,8 +28813,8 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
         calc_col1, calc_col2 = st.columns(2)
         with calc_col1:
             st.markdown("""
-            <div style="background:rgba(0,245,255,0.03);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:10px 14px;margin-bottom:10px;">
-                <b style="color:#00F5FF;font-size:12.5px;">⚡ 1. Cihaz (Hardware) İskonto Hesaplama</b>
+            <div style="background:rgba(125,168,223,0.03);border:1px solid rgba(125,168,223,0.25);border-radius:10px;padding:10px 14px;margin-bottom:10px;">
+                <b style="color:#7DA8DF;font-size:12.5px;">⚡ 1. Cihaz (Hardware) İskonto Hesaplama</b>
             </div>
             """, unsafe_allow_html=True)
             
@@ -28879,13 +28854,13 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
                 c360_dev_bg = "rgba(255,184,0,0.12)"
                 c360_dev_bdr = "#F59E0B"
             elif 3 <= dev_qty <= 5:
-                c360_dev_msg = "<span style='color:#00E676;font-weight:700;'>✅ Küçük Filo (3-5 Cihaz):</span> %5 - %8 İskonto önerilir ($7,820 - $8,075 USD)."
+                c360_dev_msg = "<span style='color:#10B981;font-weight:700;'>✅ Küçük Filo (3-5 Cihaz):</span> %5 - %8 İskonto önerilir ($7,820 - $8,075 USD)."
                 c360_dev_bg = "rgba(0,230,118,0.12)"
-                c360_dev_bdr = "#00E676"
+                c360_dev_bdr = "#10B981"
             elif 6 <= dev_qty <= 9:
-                c360_dev_msg = "<span style='color:#00F5FF;font-weight:700;'>🏢 Büyük Filo (6-9 Cihaz):</span> %8 - %10 İskonto önerilir ($7,650 - $7,820 USD)."
-                c360_dev_bg = "rgba(0,245,255,0.12)"
-                c360_dev_bdr = "#00F5FF"
+                c360_dev_msg = "<span style='color:#7DA8DF;font-weight:700;'>🏢 Büyük Filo (6-9 Cihaz):</span> %8 - %10 İskonto önerilir ($7,650 - $7,820 USD)."
+                c360_dev_bg = "rgba(125,168,223,0.12)"
+                c360_dev_bdr = "#7DA8DF"
             else:
                 c360_dev_msg = "<span style='color:#C084FC;font-weight:700;'>🏆 İhale / Konsorsiyum Tavanı (10+ Cihaz):</span> Azami %10 - %12 İskonto. Cihaz brüt marjı >%50 kalmalıdır."
                 c360_dev_bg = "rgba(168,85,247,0.12)"
@@ -28907,10 +28882,10 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
             dev_warn = dev_disc_pct > rec_dev_max
             
             st.markdown(f"""
-            <div style="background:#0F192E;border:1px solid {'#FF6B6B' if dev_warn else '#00F5FF'};border-radius:10px;padding:12px;font-size:12px;line-height:1.65;margin-top:10px;">
+            <div style="background:#0F192E;border:1px solid {'#FF6B6B' if dev_warn else '#7DA8DF'};border-radius:10px;padding:12px;font-size:12px;line-height:1.65;margin-top:10px;">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
                     <span style="color:#FFFFFF;font-weight:700;">Net İskontolu Birim Cihaz:</span>
-                    <span style="color:#00F5FF;font-weight:800;font-size:14px;">${net_dev_unit:,.2f} USD</span>
+                    <span style="color:#7DA8DF;font-weight:800;font-size:14px;">${net_dev_unit:,.2f} USD</span>
                 </div>
                 <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
                     <span style="color:#94A3B8;">Cihaz Başı İndirim:</span>
@@ -28922,10 +28897,10 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
                 </div>
                 <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
                     <span style="color:#94A3B8;">Tahmini Brüt Kâr (Marj):</span>
-                    <span style="color:#00E676;font-weight:700;">${est_dev_margin_usd:,.2f} USD (%{est_dev_margin_pct:.1f})</span>
+                    <span style="color:#10B981;font-weight:700;">${est_dev_margin_usd:,.2f} USD (%{est_dev_margin_pct:.1f})</span>
                 </div>
                 <div style="background:rgba(255,255,255,0.05);padding:6px 10px;border-radius:6px;font-size:11px;">
-                    {'<span style="color:#FF6B6B;font-weight:700;">⚠️ TAVAN AŞIMI:</span> İskonto ' + sel_country + ' tavanını (%' + str(rec_dev_max) + ') aşıyor! CFO ve CEO onayı şarttır.' if dev_warn else '<span style="color:#00E676;font-weight:700;">✅ GÜVENLİ MARJ:</span> İskonto ülke tavanı (%' + str(rec_dev_max) + ') sınırları içerisindedir.'}
+                    {'<span style="color:#FF6B6B;font-weight:700;">⚠️ TAVAN AŞIMI:</span> İskonto ' + sel_country + ' tavanını (%' + str(rec_dev_max) + ') aşıyor! CFO ve CEO onayı şarttır.' if dev_warn else '<span style="color:#10B981;font-weight:700;">✅ GÜVENLİ MARJ:</span> İskonto ülke tavanı (%' + str(rec_dev_max) + ') sınırları içerisindedir.'}
                 </div>
             </div>
             """, unsafe_allow_html=True)
@@ -28977,9 +28952,9 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
                 c360_con_bg = "rgba(255,184,0,0.12)"
                 c360_con_bdr = "#F59E0B"
             elif 300 <= con_qty < 500:
-                c360_con_msg = "<span style='color:#00E676;font-weight:700;'>✅ Yüksek Hacim (300-499 Kutu):</span> %6 - %8 İskonto uygulanabilir."
+                c360_con_msg = "<span style='color:#10B981;font-weight:700;'>✅ Yüksek Hacim (300-499 Kutu):</span> %6 - %8 İskonto uygulanabilir."
                 c360_con_bg = "rgba(0,230,118,0.12)"
-                c360_con_bdr = "#00E676"
+                c360_con_bdr = "#10B981"
             else:
                 c360_con_msg = "<span style='color:#C084FC;font-weight:700;'>💎 Büyük Zincir / İhale (500+ Kutu):</span> Azami %10 - %12 İskonto. Sarf marjı >%60 korunmalıdır."
                 c360_con_bg = "rgba(168,85,247,0.12)"
@@ -29008,25 +28983,25 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
             <div style="background:{c360_con_bg};border:1.5px solid {c360_con_bdr};border-radius:8px;padding:10px 14px;margin-top:6px;margin-bottom:10px;font-size:12px;color:#E2E8F0;box-shadow:0 3px 10px rgba(0,0,0,0.25);">
                 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;flex-wrap:wrap;gap:6px;">
                     <div>{c360_con_msg}</div>
-                    <span style="background:rgba(0,245,255,0.15);color:#00F5FF;border:1px solid #00F5FF;padding:2px 8px;border-radius:4px;font-weight:700;font-size:10.5px;">
+                    <span style="background:rgba(125,168,223,0.15);color:#7DA8DF;border:1px solid #7DA8DF;padding:2px 8px;border-radius:4px;font-weight:700;font-size:10.5px;">
                         ⚡ 4 Pool Tek Dish (Max 20 Oosit/Dish)
                     </span>
                 </div>
-                <div style="font-size:12.5px;color:#00F5FF;margin-top:6px;font-weight:800;border-top:1px solid rgba(255,255,255,0.08);padding-top:6px;">
+                <div style="font-size:12.5px;color:#7DA8DF;margin-top:6px;font-weight:800;border-top:1px solid rgba(255,255,255,0.08);padding-top:6px;">
                     🧪 <b>Siklüs & Oosit Kapasitesi:</b> {con_qty:,} Kutu = {total_dishes_c360:,} Dish (4-Pool) = ~{patient_cycles_c360:,} Hasta Tedavi Siklüsü
                 </div>
                 <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(170px, 1fr));gap:8px;margin-top:6px;font-size:11px;">
-                    <div style="background:rgba(0,0,0,0.35);padding:6px 10px;border-radius:6px;border-left:2.5px solid #00F5FF;">
+                    <div style="background:rgba(0,0,0,0.35);padding:6px 10px;border-radius:6px;border-left:2.5px solid #7DA8DF;">
                         <span style="color:#94A3B8;">Toplam Mikro-Havuz (Pool):</span><br>
                         <b style="color:#FFFFFF;font-size:13px;">{total_pools_c360:,} Pool</b> (Her Dish 4 Pool)
                     </div>
-                    <div style="background:rgba(0,0,0,0.35);padding:6px 10px;border-radius:6px;border-left:2.5px solid #00E676;">
+                    <div style="background:rgba(0,0,0,0.35);padding:6px 10px;border-radius:6px;border-left:2.5px solid #10B981;">
                         <span style="color:#94A3B8;">Azami Oosit Kapasitesi:</span><br>
-                        <b style="color:#00E676;font-size:13px;">{max_oocytes_c360:,} Oosit</b> (Max 20/Dish)
+                        <b style="color:#10B981;font-size:13px;">{max_oocytes_c360:,} Oosit</b> (Max 20/Dish)
                     </div>
                     <div style="background:rgba(0,0,0,0.35);padding:6px 10px;border-radius:6px;border-left:2.5px solid #FFD700;">
                         <span style="color:#94A3B8;">Tek Hasta vs Çoklu Hasta Maliyeti:</span><br>
-                        <b style="color:#FFD700;font-size:13px;">${cost_per_dish_c360:,.2f} Tek Hasta</b> <span style="color:#00E676;font-size:11px;font-weight:700;">| ${multi_patient_vaka_maliyet:,.2f} Çoklu Hasta (4 Hasta/Dish)</span>
+                        <b style="color:#FFD700;font-size:13px;">${cost_per_dish_c360:,.2f} Tek Hasta</b> <span style="color:#10B981;font-size:11px;font-weight:700;">| ${multi_patient_vaka_maliyet:,.2f} Çoklu Hasta (4 Hasta/Dish)</span>
                     </div>
                 </div>
                 <div style="font-size:10.5px;color:#8FA3C0;margin-top:6px;line-height:1.45;">
@@ -29053,10 +29028,10 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
                 </div>
                 <div style="display:flex;justify-content:space-between;margin-bottom:8px;">
                     <span style="color:#94A3B8;">Tahmini Brüt Kâr (Marj):</span>
-                    <span style="color:#00E676;font-weight:700;">${est_con_margin_usd:,.2f} USD (%{est_con_margin_pct:.1f})</span>
+                    <span style="color:#10B981;font-weight:700;">${est_con_margin_usd:,.2f} USD (%{est_con_margin_pct:.1f})</span>
                 </div>
                 <div style="background:rgba(255,255,255,0.05);padding:6px 10px;border-radius:6px;font-size:11px;">
-                    {'<span style="color:#FF6B6B;font-weight:700;">⚠️ TAVAN AŞIMI:</span> İskonto ' + sel_country + ' tavanını (%' + str(rec_sarf_max) + ') aşıyor!' if con_warn else '<span style="color:#00E676;font-weight:700;">✅ GÜVENLİ MARJ:</span> Sarf iskontosu tavan (%' + str(rec_sarf_max) + ') ve yüksek marj (%60+) koruması dahilindedir.'}
+                    {'<span style="color:#FF6B6B;font-weight:700;">⚠️ TAVAN AŞIMI:</span> İskonto ' + sel_country + ' tavanını (%' + str(rec_sarf_max) + ') aşıyor!' if con_warn else '<span style="color:#10B981;font-weight:700;">✅ GÜVENLİ MARJ:</span> Sarf iskontosu tavan (%' + str(rec_sarf_max) + ') ve yüksek marj (%60+) koruması dahilindedir.'}
                 </div>
             </div>
             """, unsafe_allow_html=True)
@@ -29101,21 +29076,21 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
             zeus_margin = ((net_dev_unit - (net_dev_unit * 0.38)) / net_dev_unit * 100.0) if net_dev_unit > 0 else 60.0
 
             suitability_html = f"""
-            <div style="background:linear-gradient(135deg, rgba(0,230,118,0.08) 0%, rgba(15,23,42,0.92) 100%);border:1.5px solid #00E676;border-radius:12px;padding:16px 18px;margin-top:14px;box-shadow:0 6px 18px rgba(0,0,0,0.3);">
+            <div style="background:linear-gradient(135deg, rgba(0,230,118,0.08) 0%, rgba(15,23,42,0.92) 100%);border:1.5px solid #10B981;border-radius:12px;padding:16px 18px;margin-top:14px;box-shadow:0 6px 18px rgba(0,0,0,0.3);">
                 <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:8px;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
                     <div>
-                        <span style="font-size:15px;font-weight:800;color:#00E676;">🎯 {sel_country} İçin $8,500 USD Distribütör Fiyatı Uygunluk Raporu</span>
+                        <span style="font-size:15px;font-weight:800;color:#10B981;">🎯 {sel_country} İçin $8,500 USD Distribütör Fiyatı Uygunluk Raporu</span>
                         <div style="font-size:11.5px;color:#94A3B8;margin-top:2px;">Standart Tek Cihaz Transfer Fiyatı Analizi & CFO / Satış Heyeti Mutabakatı</div>
                     </div>
-                    <span style="background:rgba(0,230,118,0.2);color:#00E676;border:1px solid #00E676;padding:4px 12px;border-radius:6px;font-weight:800;font-size:12px;">
+                    <span style="background:rgba(0,230,118,0.2);color:#10B981;border:1px solid #10B981;padding:4px 12px;border-radius:6px;font-weight:800;font-size:12px;">
                         ✅ MÜKEMMEL PAZAR UYUMU (OPTIMAL FIT)
                     </span>
                 </div>
 
                 <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(180px, 1fr));gap:10px;margin-bottom:12px;font-size:12px;">
-                    <div style="background:rgba(255,255,255,0.03);padding:10px 12px;border-radius:8px;border-left:3px solid #00F5FF;">
+                    <div style="background:rgba(255,255,255,0.03);padding:10px 12px;border-radius:8px;border-left:3px solid #7DA8DF;">
                         <span style="color:#8FA3C0;font-size:10.5px;">ZEUS Üretici Brüt Marjı</span><br>
-                        <b style="color:#00F5FF;font-size:15px;">%{zeus_margin:.1f} Kâr</b><br>
+                        <b style="color:#7DA8DF;font-size:15px;">%{zeus_margin:.1f} Kâr</b><br>
                         <span style="font-size:10.5px;color:#94A3B8;">CFO Eşiği (%35+) Üstünde</span>
                     </div>
                     <div style="background:rgba(255,255,255,0.03);padding:10px 12px;border-radius:8px;border-left:3px solid #FFD700;">
@@ -29167,7 +29142,7 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
                         Tek bir Elektriksel oosit aktivasyon (AOA - The Spark of Life) sistemi için $85,000 USD fiyat {sel_country} ve küresel tüp bebek pazarında <b>fahiş kalır</b>. Küresel pazarda araştırma tipi genel elektroporatörlerin tavan fiyatı $24,500 USD bandındadır (üstelik CE Class IIa tıbbi cihaz onayı ve steril tek kullanımlık hasta dishi olmadan). Tek cihaz için bu fiyat verilirse distribütör ve klinik teklifi doğrudan reddeder.
                     </div>
                     <div style="border-top:1px dashed rgba(255,255,255,0.1);padding-top:8px;">
-                        <b style="color:#00E676;">2. Anahtar Teslim Kurumsal Filo / Kamu İhale Paketi Olarak Değerlendirilirse ($85,000 USD):</b><br>
+                        <b style="color:#10B981;">2. Anahtar Teslim Kurumsal Filo / Kamu İhale Paketi Olarak Değerlendirilirse ($85,000 USD):</b><br>
                         Eğer $85,000 USD bir <b>Turnkey IVF Laboratuvar Paketi</b> ise (Örneğin: <b>6 Adet ZPS 26 Elektriksel AOA Cihazı + 2 Adet BioPSafe Biyopsi İstasyonu + 1.000 Kutu Z-Dish Sarf</b>);<br>
                         • <b>{sel_country} Kamu / Üniversite İhaleleri</b> (Mısır UPA / Kasr Al-Ainy, Suudi NUPCO, Türkiye KHGM vb.) bütçe limitlerine <b>TAM OTURUR VE MÜKEMMEL UYGUNDUR</b>.<br>
                         • Büyük özel tüp bebek hastane zincirleri (Cleopatra, Bahçeci, Dr. Sulaiman Al Habib vb.) için anahtar teslim laboratuvar teknoloji yenileme paketi olarak hızla onaylanır.
@@ -29267,12 +29242,12 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
             st.success(f"{sel_country} Yönetici Stratejik Kararı ve Operasyonel Planlaması başarıyla kaydedildi!")
 
         # AUTOMATED STRATEGIC EVALUATION REPORT SYNTHESIS
-        verdict_badge_color = "#00E676" if "Onaylandı" in mgr_verdict else ("#FFB800" if "Şartlı" in mgr_verdict else "#FF6B6B")
+        verdict_badge_color = "#10B981" if "Onaylandı" in mgr_verdict else ("#FFB800" if "Şartlı" in mgr_verdict else "#FF6B6B")
         st.markdown(f"""
-        <div style="background:linear-gradient(135deg, rgba(0,245,255,0.08) 0%, rgba(15,25,46,0.95) 100%);border:1.5px solid #00F5FF;border-radius:12px;padding:18px 22px;margin-top:16px;box-shadow:0 6px 20px rgba(0,0,0,0.35);">
+        <div style="background:linear-gradient(135deg, rgba(125,168,223,0.08) 0%, rgba(15,25,46,0.95) 100%);border:1.5px solid #7DA8DF;border-radius:12px;padding:18px 22px;margin-top:16px;box-shadow:0 6px 20px rgba(0,0,0,0.35);">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
                 <div>
-                    <span style="color:#00F5FF;font-weight:800;font-size:16px;">📑 {sel_country} Yönetici Stratejik Değerlendirme & Konsensüs Raporu</span>
+                    <span style="color:#7DA8DF;font-weight:800;font-size:16px;">📑 {sel_country} Yönetici Stratejik Değerlendirme & Konsensüs Raporu</span>
                     <div style="color:#94A3B8;font-size:11.5px;margin-top:3px;">Kurul Onayı, Finansal Marj Uyumu ve Yasal Sözleşme Sentezi</div>
                 </div>
                 <div>
@@ -29284,23 +29259,23 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
             
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;font-size:12px;line-height:1.7;margin-bottom:12px;">
                 <div style="background:rgba(255,255,255,0.03);padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);">
-                    <b style="color:#00F5FF;">1. Yönetici Stratejik Hükmü:</b><br>
+                    <b style="color:#7DA8DF;">1. Yönetici Stratejik Hükmü:</b><br>
                     <span style="color:#CBD5E1;">{mgr_opinion}</span><br><br>
                     <b style="color:#FFB800;">2. Kurum İçi Operasyonel Plan:</b><br>
                     <span style="color:#CBD5E1;">{mgr_actions}</span>
                 </div>
                 <div style="background:rgba(255,255,255,0.03);padding:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);">
-                    <b style="color:#00E676;">3. Finansal & İskonto Uyumluluğu:</b><br>
+                    <b style="color:#10B981;">3. Finansal & İskonto Uyumluluğu:</b><br>
                     • Yıllık Anlaşma Bedeli: <b>${deal_tot_rev:,.2f} USD</b> | Konsolide Marj: <b>%{deal_blended_margin:.1f}</b><br>
-                    • Cihaz İskontosu: <b>%{dev_disc_pct:.1f}</b> (Tavan: %{rec_dev_max:.1f} — {'<span style="color:#FF6B6B;">TAVAN ÜSTÜ</span>' if dev_warn else '<span style="color:#00E676;">UYGUN</span>'})<br>
-                    • Sarf İskontosu: <b>%{con_disc_pct:.1f}</b> (Tavan: %{rec_sarf_max:.1f} — {'<span style="color:#FF6B6B;">TAVAN ÜSTÜ</span>' if con_warn else '<span style="color:#00E676;">UYGUN</span>'})<br><br>
+                    • Cihaz İskontosu: <b>%{dev_disc_pct:.1f}</b> (Tavan: %{rec_dev_max:.1f} — {'<span style="color:#FF6B6B;">TAVAN ÜSTÜ</span>' if dev_warn else '<span style="color:#10B981;">UYGUN</span>'})<br>
+                    • Sarf İskontosu: <b>%{con_disc_pct:.1f}</b> (Tavan: %{rec_sarf_max:.1f} — {'<span style="color:#FF6B6B;">TAVAN ÜSTÜ</span>' if con_warn else '<span style="color:#10B981;">UYGUN</span>'})<br><br>
                     <b style="color:#FF6B6B;">4. Hukuki Güvence Şartı:</b><br>
                     <span style="color:#CBD5E1;">{mgr_covenants}</span>
                 </div>
             </div>
             
             <div style="background:rgba(0,0,0,0.3);padding:10px 14px;border-radius:6px;font-size:11.5px;color:#A0AEC0;display:flex;justify-content:space-between;align-items:center;">
-                <span>🎯 <b>Heyet Konsensüs Skoru:</b> <span style="color:#00E676;font-weight:700;">%94 Yüksek Stratejik Uyum</span> (CEO, CFO, Sales, Embriyolog & QA tam mutabakatı)</span>
+                <span>🎯 <b>Heyet Konsensüs Skoru:</b> <span style="color:#10B981;font-weight:700;">%94 Yüksek Stratejik Uyum</span> (CEO, CFO, Sales, Embriyolog & QA tam mutabakatı)</span>
                 <span style="color:#64748B;">Resmi Rapor Tarihi: {datetime.now().strftime("%d.%m.%Y")}</span>
             </div>
         </div>
@@ -29319,12 +29294,12 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
                 st.markdown(f"""
                 <div style="background:#0F192E;border:1.5px solid #13A6B5;border-radius:10px;padding:14px 16px;margin-bottom:12px;">
                     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-                        <span style="color:#00F5FF;font-weight:800;font-size:12.5px;">📜 {dec['decree_no']} — {dec['title']}</span>
-                        <span style="color:#00E676;font-size:11px;font-weight:700;background:rgba(0,230,118,0.1);padding:3px 8px;border-radius:4px;">{dec.get('status', '🟢 Yürürlükte')}</span>
+                        <span style="color:#7DA8DF;font-weight:800;font-size:12.5px;">📜 {dec['decree_no']} — {dec['title']}</span>
+                        <span style="color:#10B981;font-size:11px;font-weight:700;background:rgba(0,230,118,0.1);padding:3px 8px;border-radius:4px;">{dec.get('status', '🟢 Yürürlükte')}</span>
                     </div>
                     <div style="color:#CBD5E1;font-size:12px;margin-bottom:6px;"><b>Hüküm:</b> {dec.get('summary', '')}</div>
                     <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;font-size:11.5px;background:rgba(0,0,0,0.25);padding:8px 10px;border-radius:6px;">
-                        <div><b style="color:#00F5FF;">Cihaz Şartı:</b> {dec.get('impact_zeus', '')}</div>
+                        <div><b style="color:#7DA8DF;">Cihaz Şartı:</b> {dec.get('impact_zeus', '')}</div>
                         <div><b style="color:#FFB800;">Sarf Şartı:</b> {dec.get('consumable_rule', '')}</div>
                     </div>
                 </div>
@@ -29335,10 +29310,10 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
         # Executive Do's & Don'ts Card
         st.markdown(f"""
         <div style="background:rgba(19,166,181,0.05);border:1px solid rgba(19,166,181,0.25);border-radius:10px;padding:14px;margin-top:10px;margin-bottom:18px;font-size:12px;line-height:1.7;">
-            <div style="font-weight:700;color:#00F5FF;font-size:14px;margin-bottom:6px;">💡 Executive Do's & Don'ts ({sel_country} İçin Yönetici İlkeleri)</div>
+            <div style="font-weight:700;color:#7DA8DF;font-size:14px;margin-bottom:6px;">💡 Executive Do's & Don'ts ({sel_country} İçin Yönetici İlkeleri)</div>
             <div style="display:flex;gap:20px;">
-                <div style="flex:1;background:rgba(0,230,118,0.06);padding:10px;border-radius:8px;border-left:3px solid #00E676;">
-                    <b style="color:#00E676;">✅ YAPILMASI GEREKENLER (DO's):</b><br>
+                <div style="flex:1;background:rgba(0,230,118,0.06);padding:10px;border-radius:8px;border-left:3px solid #10B981;">
+                    <b style="color:#10B981;">✅ YAPILMASI GEREKENLER (DO's):</b><br>
                     {c_kb.get('knowledge_profile', {}).get('dos', 'Klinik embriyologlarına yerinde aplikasyon eğitimi ve vaka desteği sunun.')}
                 </div>
                 <div style="flex:1;background:rgba(255,82,82,0.06);padding:10px;border-radius:8px;border-left:3px solid #FF5252;">
@@ -29522,12 +29497,12 @@ SERTİFİKASYON: CE Device Certified (CE Sertifikalı Class IIa)
                     
                     st.markdown(f"""
                     <div style="background:rgba(255,255,255,0.03);border:1.5px solid #13A6B5;border-radius:10px;padding:14px;font-size:12px;line-height:1.65;box-shadow:0 4px 14px rgba(0,0,0,0.25);">
-                        <div style="font-weight:800;color:#00F5FF;font-size:15px;margin-bottom:6px;">🌍 {c_name}</div>
+                        <div style="font-weight:800;color:#7DA8DF;font-size:15px;margin-bottom:6px;">🌍 {c_name}</div>
                         <b>Otorite:</b> {cust.get('authority_full', 'MOH')[:30]}...<br>
                         <b>Gümrük:</b> <span style="color:#FFD700;font-weight:700;">{cust.get('tariff_rate', '%5')}</span><br>
                         <b>eSET Sınırı:</b> {ivf.get('transfer_rules', '2 embriyo')[:40]}...<br>
                         <b>Cinsiyet Seçimi:</b> <span style="color:#FF6B6B;">{ivf.get('sex_selection_rule', 'Yasak')[:35]}...</span><br>
-                        <b>2027 Hedef:</b> <span style="color:#00E676;font-weight:700;">${p_fc.get('forecast_2027_usd', 50000):,.0f} USD</span><br>
+                        <b>2027 Hedef:</b> <span style="color:#10B981;font-weight:700;">${p_fc.get('forecast_2027_usd', 50000):,.0f} USD</span><br>
                         <hr style="border-color:rgba(19,166,181,0.2);margin:8px 0;">
                         <b>👔 CEO Notu:</b> {ops.get('ceo', '')[:65]}...<br>
                         <b>🔬 Embriyolog:</b> {ops.get('embryo', '')[:65]}...
@@ -29588,7 +29563,7 @@ elif active_view in ["Fiyatlandırma, 4-Pool Dish & ROI", "⌬ Fiyatlandırma, 4
                 perf_tier_name = "Tier 1: Platin Stratejik Partner (Ciro > $100K)"
                 perf_bonus = 3.5
                 perf_badge = "🌟 Platin Partner"
-                perf_badge_color = "#00F5FF"
+                perf_badge_color = "#7DA8DF"
             elif partner_rev >= 30000:
                 perf_tier_name = "Tier 2: Altın Büyüyen Partner (Ciro $30K–$100K)"
                 perf_bonus = 2.5
@@ -29629,16 +29604,16 @@ elif active_view in ["Fiyatlandırma, 4-Pool Dish & ROI", "⌬ Fiyatlandırma, 4
                 macro_jo = resolve_country_macro('Jordan')
                 macro_iq = resolve_country_macro('Iraq')
 
-                card_jordan_html = f"""<div style="background:rgba(0,245,255,0.05);border:1px solid rgba(0,245,255,0.35);border-radius:10px;padding:12px;margin:8px 0;font-size:12px;line-height:1.6;">
+                card_jordan_html = f"""<div style="background:rgba(125,168,223,0.05);border:1px solid rgba(125,168,223,0.35);border-radius:10px;padding:12px;margin:8px 0;font-size:12px;line-height:1.6;">
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-<span style="font-weight:700;color:#00F5FF;font-size:13px;">🇯🇴 Jordan (Ürdün) Makro & IVF Ekosistemi</span>
-<span style="background:rgba(0,245,255,0.18);color:#00F5FF;font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600;border:1px solid rgba(0,245,255,0.4);">{macro_jo['living_standard_code']}</span>
+<span style="font-weight:700;color:#7DA8DF;font-size:13px;">🇯🇴 Jordan (Ürdün) Makro & IVF Ekosistemi</span>
+<span style="background:rgba(125,168,223,0.18);color:#7DA8DF;font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600;border:1px solid rgba(125,168,223,0.4);">{macro_jo['living_standard_code']}</span>
 </div>
 <b>Kişi Başı GSYİH (GDP pc):</b> ${macro_jo['gdp_pc']:,} USD <span style="color:#8FA3C0;">({macro_jo['gdp_tier']})</span><br>
 <b>Yaşam Standardı & Refah:</b> {macro_jo['living_standard']}<br>
 <b>Aktif IVF Klinik Sayısı:</b> {macro_jo['clinics']} Merkez &nbsp;|&nbsp; <b>Nüfus:</b> {macro_jo['pop_m']}M<br>
 <b>Gümrük Vergisi & Süresi:</b> %{macro_jo['customs_tariff_pct']:.1f} ({macro_jo['customs_clearance_days']} Gün Bekleme — JFDA Medikal Tescili)<br>
-<b>Devlet IVF Desteği / Geri Ödeme:</b> <span style="color:#00E676;font-weight:600;">{macro_jo['ivf_support']}</span><br>
+<b>Devlet IVF Desteği / Geri Ödeme:</b> <span style="color:#10B981;font-weight:600;">{macro_jo['ivf_support']}</span><br>
 <span style="color:#8FA3C0;font-size:11px;">{macro_jo['ivf_support_desc']}</span>
 <div style="margin-top:4px;color:#FFB800;font-size:11px;"><b>Pazar Fiyat Hassasiyeti:</b> {macro_jo['price_sensitivity']} &nbsp;|&nbsp; <b>Saha Varlığı:</b> 8 Kurulu Cihaz (Amman)</div>
 </div>"""
@@ -29652,7 +29627,7 @@ elif active_view in ["Fiyatlandırma, 4-Pool Dish & ROI", "⌬ Fiyatlandırma, 4
 <b>Yaşam Standardı & Refah:</b> {macro_iq['living_standard']}<br>
 <b>Aktif IVF Klinik Sayısı:</b> {macro_iq['clinics']} Merkez &nbsp;|&nbsp; <b>Nüfus:</b> {macro_iq['pop_m']}M (Yıllık ~32,000 Siklus)<br>
 <b>Gümrük Vergisi & Süresi:</b> %{macro_iq['customs_tariff_pct']:.1f} ({macro_iq['customs_clearance_days']} Gün Bekleme — Kimadia Denetimi)<br>
-<b>Devlet IVF Desteği / Geri Ödeme:</b> <span style="color:#00E676;font-weight:600;">{macro_iq['ivf_support']}</span><br>
+<b>Devlet IVF Desteği / Geri Ödeme:</b> <span style="color:#10B981;font-weight:600;">{macro_iq['ivf_support']}</span><br>
 <span style="color:#8FA3C0;font-size:11px;">{macro_iq['ivf_support_desc']}</span>
 <div style="margin-top:4px;color:#FFB800;font-size:11px;"><b>Pazar Fiyat Hassasiyeti:</b> {macro_iq['price_sensitivity']} &nbsp;|&nbsp; <b>Saha Varlığı:</b> 10 Kurulu Cihaz (Bağdat/Erbil/Basra)</div>
 </div>"""
@@ -29663,7 +29638,7 @@ elif active_view in ["Fiyatlandırma, 4-Pool Dish & ROI", "⌬ Fiyatlandırma, 4
 <span style="color:{perf_badge_color};font-weight:700;">{perf_badge}</span>
 </div>
 <b>Excel Kayıtlı Toplam Ciro:</b> {format_curr(partner_rev)} &nbsp;|&nbsp; <b>Toplam Filo:</b> {partner_devs} Cihaz (8 Ürdün / 10 Irak) &nbsp;|&nbsp; <b>Sarf:</b> {partner_cons} Kutu<br>
-<b>Yıllık YoY Büyüme:</b> <span style="color:{'#00E676' if partner_growth >= 0 else '#FF5252'};font-weight:600;">%{partner_growth:+.1f}</span> &nbsp;|&nbsp; <b>Sınıf:</b> {partner_type_tr} (Yetkili Bölge Hub'ı)
+<b>Yıllık YoY Büyüme:</b> <span style="color:{'#10B981' if partner_growth >= 0 else '#FF5252'};font-weight:600;">%{partner_growth:+.1f}</span> &nbsp;|&nbsp; <b>Sınıf:</b> {partner_type_tr} (Yetkili Bölge Hub'ı)
 </div>"""
 
                 st.markdown(card_jordan_html, unsafe_allow_html=True)
@@ -29672,23 +29647,23 @@ elif active_view in ["Fiyatlandırma, 4-Pool Dish & ROI", "⌬ Fiyatlandırma, 4
             else:
                 card_single_html = f"""<div style="background:rgba(19,166,181,0.06);border:1px solid rgba(19,166,181,0.28);border-radius:10px;padding:12px;margin:10px 0 16px 0;font-size:12px;line-height:1.6;">
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-<span style="font-weight:700;color:#00F5FF;font-size:13px;">🌍 {calc_country} Makro & IVF Ekosistemi</span>
+<span style="font-weight:700;color:#7DA8DF;font-size:13px;">🌍 {calc_country} Makro & IVF Ekosistemi</span>
 <span style="background:rgba(19,166,181,0.2);color:#4FD1DE;font-size:11px;padding:2px 8px;border-radius:10px;font-weight:600;border:1px solid rgba(19,166,181,0.4);">{macro['living_standard_code']}</span>
 </div>
 <b>Kişi Başı GSYİH (GDP pc):</b> ${macro['gdp_pc']:,} USD <span style="color:#8FA3C0;">({macro['gdp_tier']})</span><br>
 <b>Yaşam Standardı & Refah:</b> {macro['living_standard']}<br>
 <b>Aktif IVF Klinik Sayısı:</b> {macro['clinics']} Merkez &nbsp;|&nbsp; <b>Nüfus:</b> {macro['pop_m']}M<br>
 <b>Gümrük Vergisi & Süresi:</b> %{macro['customs_tariff_pct']:.1f} ({macro['customs_clearance_days']} Gün Bekleme)<br>
-<b>Devlet IVF Desteği / Geri Ödeme:</b> <span style="color:#00E676;font-weight:600;">{macro['ivf_support']}</span><br>
+<b>Devlet IVF Desteği / Geri Ödeme:</b> <span style="color:#10B981;font-weight:600;">{macro['ivf_support']}</span><br>
 <span style="color:#8FA3C0;font-size:11px;">{macro['ivf_support_desc']}</span>
 <div style="margin-top:4px;color:#FFB800;font-size:11px;"><b>Pazar Fiyat Hassasiyeti:</b> {macro['price_sensitivity']}</div>
 <hr style="border-color:rgba(19,166,181,0.18);margin:8px 0;">
 <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
-<span style="font-weight:700;color:#00F5FF;font-size:13px;">📊 Partner Satış & Büyüme Performansı</span>
+<span style="font-weight:700;color:#7DA8DF;font-size:13px;">📊 Partner Satış & Büyüme Performansı</span>
 <span style="color:{perf_badge_color};font-weight:700;">{perf_badge}</span>
 </div>
 <b>Excel Kayıtlı Ciro:</b> {format_curr(partner_rev)} &nbsp;|&nbsp; <b>Kurulu Cihaz:</b> {partner_devs} Adet &nbsp;|&nbsp; <b>Sarf:</b> {partner_cons} Kutu<br>
-<b>Yıllık YoY Büyüme:</b> <span style="color:{'#00E676' if partner_growth >= 0 else '#FF5252'};font-weight:600;">%{partner_growth:+.1f}</span> &nbsp;|&nbsp; <b>Sınıf:</b> {partner_type_tr}
+<b>Yıllık YoY Büyüme:</b> <span style="color:{'#10B981' if partner_growth >= 0 else '#FF5252'};font-weight:600;">%{partner_growth:+.1f}</span> &nbsp;|&nbsp; <b>Sınıf:</b> {partner_type_tr}
 </div>"""
                 st.markdown(card_single_html, unsafe_allow_html=True)
             
@@ -29741,8 +29716,8 @@ elif active_view in ["Fiyatlandırma, 4-Pool Dish & ROI", "⌬ Fiyatlandırma, 4
             
             if "Standart IVF Sarf" in device_template:
                 st.markdown('''
-                <div style="background:rgba(0,245,255,0.06);border:1px solid rgba(0,245,255,0.3);border-radius:8px;padding:8px 12px;font-size:11.5px;margin-top:6px;line-height:1.5;">
-                    <b style="color:#00F5FF;">🧪 Z-Dish 4-Pool ROI & Fiyat Rehberi:</b><br>
+                <div style="background:rgba(125,168,223,0.06);border:1px solid rgba(125,168,223,0.3);border-radius:8px;padding:8px 12px;font-size:11.5px;margin-top:6px;line-height:1.5;">
+                    <b style="color:#7DA8DF;">🧪 Z-Dish 4-Pool ROI & Fiyat Rehberi:</b><br>
                     • <b>Distribütör Alış Fiyatı:</b> $100.00 USD / Dish<br>
                     • <b>Klinik Satış Fiyatı:</b> $150.00 USD / Dish (Distribütör Kârı: <b>+$50.00 USD</b>, %33.3 marj)<br>
                     • <b>Tek Hasta Modu:</b> 1 Dish = 1 Hasta (20 Oosite kadar) = <b>$150 USD/Vaka</b><br>
@@ -29769,9 +29744,9 @@ elif active_view in ["Fiyatlandırma, 4-Pool Dish & ROI", "⌬ Fiyatlandırma, 4
 
             st.markdown(f"""
             <div style="background:rgba(19,166,181,0.08);border:1px solid rgba(19,166,181,0.3);border-radius:10px;padding:8px 12px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;font-size:12px;">
-                <span>🤖 <b>AI Tavsiyesi:</b> <span style="color:#00F5FF;font-weight:700;">%{snap_ai['rec_device_discount']:.1f}</span></span>
+                <span>🤖 <b>AI Tavsiyesi:</b> <span style="color:#7DA8DF;font-weight:700;">%{snap_ai['rec_device_discount']:.1f}</span></span>
                 <span>👨‍⚕️ <b>Uzman Tavanı:</b> <span style="color:#FFB800;font-weight:700;">%{snap_expert['expert_max_discount']:.1f}</span></span>
-                <span>⚖️ <b>Ortak Konsensüs:</b> <span style="color:#00E676;font-weight:700;">%{snap_cons['final_device_discount']:.1f}</span></span>
+                <span>⚖️ <b>Ortak Konsensüs:</b> <span style="color:#10B981;font-weight:700;">%{snap_cons['final_device_discount']:.1f}</span></span>
                 <span style="background:rgba(255,255,255,0.08);color:{snap_cons['badge_color']};padding:2px 8px;border-radius:6px;font-size:11px;font-weight:600;">{snap_cons['consensus_status'].split(' ')[0]} {snap_cons['consensus_status'].split(' ')[1]}</span>
             </div>
             """, unsafe_allow_html=True)
@@ -29816,8 +29791,8 @@ elif active_view in ["Fiyatlandırma, 4-Pool Dish & ROI", "⌬ Fiyatlandırma, 4
 
             if is_authorized:
                 st.markdown(f"""
-                <div style="background:rgba(0,230,118,0.12);border:1px solid #00E676;border-radius:10px;padding:14px;margin-bottom:12px;">
-                    <div style="color:#00E676;font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px;">
+                <div style="background:rgba(0,230,118,0.12);border:1px solid #10B981;border-radius:10px;padding:14px;margin-bottom:12px;">
+                    <div style="color:#10B981;font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px;">
                         <span>✅</span> <span>İŞLEM ONAYLANDI: Yetki Limitleri Dahilinde</span>
                     </div>
                     <div style="color:#C4D1D9;font-size:12px;margin-top:4px;">
@@ -29860,17 +29835,17 @@ elif active_view in ["Fiyatlandırma, 4-Pool Dish & ROI", "⌬ Fiyatlandırma, 4
                 """, unsafe_allow_html=True)
 
             st.markdown(f"""<div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:12px;margin:10px 0 14px 0;">
-<div style="background:rgba(19,166,181,0.08);border:1px solid rgba(0,245,255,0.3);border-radius:10px;padding:12px 14px;box-shadow:0 4px 14px rgba(0,0,0,0.25);">
+<div style="background:rgba(19,166,181,0.08);border:1px solid rgba(125,168,223,0.3);border-radius:10px;padding:12px 14px;box-shadow:0 4px 14px rgba(0,0,0,0.25);">
 <div style="font-size:11px;font-weight:700;color:#8FA3C0;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px;white-space:normal;">İndirimli Net Hasılat</div>
-<div style="font-size:24px;font-weight:800;color:#00F5FF;font-family:'Geist Mono',monospace;letter-spacing:-0.02em;white-space:normal;overflow:visible;">{format_curr(net_revenue)}</div>
+<div style="font-size:24px;font-weight:800;color:#7DA8DF;font-family:'Geist Mono',monospace;letter-spacing:-0.02em;white-space:normal;overflow:visible;">{format_curr(net_revenue)}</div>
 <div style="font-size:11.5px;font-weight:600;color:#FF5252;margin-top:4px;display:flex;align-items:center;gap:4px;">
 <span>↓</span> <span>-{format_curr(disc_amt)} İskonto Bedeli</span>
 </div>
 </div>
 <div style="background:rgba(0,230,118,0.08);border:1px solid rgba(0,230,118,0.3);border-radius:10px;padding:12px 14px;box-shadow:0 4px 14px rgba(0,0,0,0.25);">
 <div style="font-size:11px;font-weight:700;color:#8FA3C0;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px;white-space:normal;">Brüt Kâr & Marj</div>
-<div style="font-size:24px;font-weight:800;color:#00E676;font-family:'Geist Mono',monospace;letter-spacing:-0.02em;white-space:normal;overflow:visible;">{format_curr(gross_profit)}</div>
-<div style="font-size:11.5px;font-weight:600;color:#00E676;margin-top:4px;display:flex;align-items:center;gap:4px;">
+<div style="font-size:24px;font-weight:800;color:#10B981;font-family:'Geist Mono',monospace;letter-spacing:-0.02em;white-space:normal;overflow:visible;">{format_curr(gross_profit)}</div>
+<div style="font-size:11.5px;font-weight:600;color:#10B981;margin-top:4px;display:flex;align-items:center;gap:4px;">
 <span>↑</span> <span>%{gross_margin:.1f} Brüt Marj</span>
 </div>
 </div>
@@ -29883,14 +29858,14 @@ elif active_view in ["Fiyatlandırma, 4-Pool Dish & ROI", "⌬ Fiyatlandırma, 4
             be_qty = int(math.ceil(calc_freight / unit_margin_contrib)) if unit_margin_contrib > 0 else None
 
             clean_matrix_html = f"""<div style="background:rgba(19,166,181,0.04);border:1px solid rgba(19,166,181,0.3);border-radius:10px;padding:12px;margin:12px 0;font-size:12px;">
-<div style="font-weight:700;color:#00F5FF;margin-bottom:8px;font-size:13px;">🧩 Çok Boyutlu İskonto Tavanı Analiz Matrisi</div>
+<div style="font-weight:700;color:#7DA8DF;margin-bottom:8px;font-size:13px;">🧩 Çok Boyutlu İskonto Tavanı Analiz Matrisi</div>
 <table style="width:100%;border-collapse:collapse;color:#E1E7EC;line-height:1.6;">
-<tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><td style="padding:5px 0;">📦 <b>Sipariş Hacmi Skalası:</b></td><td style="padding:5px 0;text-align:right;">{vol_tier_name}</td><td style="padding:5px 0;text-align:right;color:#00F5FF;font-weight:700;">+%{base_allowed_disc:.1f}</td></tr>
-<tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><td style="padding:5px 0;">🌐 <b>Ülke GSYİH & Yaşam Standardı:</b></td><td style="padding:5px 0;text-align:right;">${macro['gdp_pc']:,} ({macro['gdp_tier']})</td><td style="padding:5px 0;text-align:right;color:#00F5FF;font-weight:700;">+%{macro_allowance:.1f}</td></tr>
-<tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><td style="padding:5px 0;">🏛️ <b>Ulusal IVF Destek Rejimi:</b></td><td style="padding:5px 0;text-align:right;">{macro['ivf_support']}</td><td style="padding:5px 0;text-align:right;color:#00F5FF;font-weight:700;">+%{ivf_allowance:.1f}</td></tr>
-<tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><td style="padding:5px 0;">📈 <b>Partner Satış & Büyüme Performansı:</b></td><td style="padding:5px 0;text-align:right;">{perf_badge} ({format_curr(partner_rev)})</td><td style="padding:5px 0;text-align:right;color:#00F5FF;font-weight:700;">+%{total_perf_bonus:.1f}</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><td style="padding:5px 0;">📦 <b>Sipariş Hacmi Skalası:</b></td><td style="padding:5px 0;text-align:right;">{vol_tier_name}</td><td style="padding:5px 0;text-align:right;color:#7DA8DF;font-weight:700;">+%{base_allowed_disc:.1f}</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><td style="padding:5px 0;">🌐 <b>Ülke GSYİH & Yaşam Standardı:</b></td><td style="padding:5px 0;text-align:right;">${macro['gdp_pc']:,} ({macro['gdp_tier']})</td><td style="padding:5px 0;text-align:right;color:#7DA8DF;font-weight:700;">+%{macro_allowance:.1f}</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><td style="padding:5px 0;">🏛️ <b>Ulusal IVF Destek Rejimi:</b></td><td style="padding:5px 0;text-align:right;">{macro['ivf_support']}</td><td style="padding:5px 0;text-align:right;color:#7DA8DF;font-weight:700;">+%{ivf_allowance:.1f}</td></tr>
+<tr style="border-bottom:1px solid rgba(255,255,255,0.08);"><td style="padding:5px 0;">📈 <b>Partner Satış & Büyüme Performansı:</b></td><td style="padding:5px 0;text-align:right;">{perf_badge} ({format_curr(partner_rev)})</td><td style="padding:5px 0;text-align:right;color:#7DA8DF;font-weight:700;">+%{total_perf_bonus:.1f}</td></tr>
 {extra_tr}
-<tr style="border-top:2px solid #13A6B5;font-weight:700;color:#00F5FF;"><td style="padding:8px 0;">🏁 <b>TOPLAM YETKİLİ DİNAMİK TAVAN:</b></td><td style="padding:8px 0;text-align:right;">İzin Verilen Azami İskonto</td><td style="padding:8px 0;text-align:right;font-size:14px;color:#00E676;">%{allowed_disc:.1f}</td></tr>
+<tr style="border-top:2px solid #13A6B5;font-weight:700;color:#7DA8DF;"><td style="padding:8px 0;">🏁 <b>TOPLAM YETKİLİ DİNAMİK TAVAN:</b></td><td style="padding:8px 0;text-align:right;">İzin Verilen Azami İskonto</td><td style="padding:8px 0;text-align:right;font-size:14px;color:#10B981;">%{allowed_disc:.1f}</td></tr>
 </table>
 </div>"""
             st.markdown(clean_matrix_html, unsafe_allow_html=True)
@@ -29898,7 +29873,7 @@ elif active_view in ["Fiyatlandırma, 4-Pool Dish & ROI", "⌬ Fiyatlandırma, 4
             clean_kpi_html = f"""<div style="background:rgba(255,255,255,0.03);padding:14px;border-radius:10px;font-size:13px;line-height:1.8;">
 <b>Standart Liste Fiyatına Göre Kâr Değişimi:</b> {gross_margin - std_gm:+.1f} pt ({format_curr(gross_profit - std_gp)})<br>
 <b>Birim Efektif Realize Fiyat:</b> {format_curr(unit_final)} / adet (Liste: {format_curr(calc_price)})<br>
-<b>İskonto Güvenlik Farkı:</b> <span style="color:{'#00E676' if allowed_disc >= calc_disc else '#FF5252'};font-weight:700;">{allowed_disc - calc_disc:+.1f} puan</span> (Tavan: %{allowed_disc:.1f} vs Talep: %{calc_disc:.1f})<br>
+<b>İskonto Güvenlik Farkı:</b> <span style="color:{'#10B981' if allowed_disc >= calc_disc else '#FF5252'};font-weight:700;">{allowed_disc - calc_disc:+.1f} puan</span> (Tavan: %{allowed_disc:.1f} vs Talep: %{calc_disc:.1f})<br>
 <b>Navlun Başabaş Sipariş Hacmi:</b> {be_qty if be_qty else 'N/A'} adet
 </div>"""
             st.markdown(clean_kpi_html, unsafe_allow_html=True)
@@ -29948,8 +29923,8 @@ elif active_view in ["Fiyatlandırma, 4-Pool Dish & ROI", "⌬ Fiyatlandırma, 4
 
             # Macro indicator cards (Dual for Sirius Jordan-Iraq)
             if is_ai_sirius:
-                card_jo_ai_html = f"""<div style="background:rgba(0,245,255,0.05);border:1px solid rgba(0,245,255,0.3);border-radius:10px;padding:10px 12px;margin-top:10px;font-size:12px;line-height:1.6;">
-<div style="font-weight:700;color:#00F5FF;margin-bottom:4px;font-size:13px;">🇯🇴 Ürdün (Jordan) Pazar ve Gümrük Parametreleri</div>
+                card_jo_ai_html = f"""<div style="background:rgba(125,168,223,0.05);border:1px solid rgba(125,168,223,0.3);border-radius:10px;padding:10px 12px;margin-top:10px;font-size:12px;line-height:1.6;">
+<div style="font-weight:700;color:#7DA8DF;margin-bottom:4px;font-size:13px;">🇯🇴 Ürdün (Jordan) Pazar ve Gümrük Parametreleri</div>
 • <b>Kişi Başı GSYİH:</b> ${macro_jo_ai['gdp_pc']:,} USD ({macro_jo_ai['gdp_tier']})<br>
 • <b>Yaşam Standardı:</b> {macro_jo_ai['living_standard']}<br>
 • <b>Lisanslı IVF Klinik:</b> {macro_jo_ai['clinics']} Merkez | <b>Nüfus:</b> {macro_jo_ai['pop_m']}M<br>
@@ -29978,7 +29953,7 @@ elif active_view in ["Fiyatlandırma, 4-Pool Dish & ROI", "⌬ Fiyatlandırma, 4
                 st.markdown(card_cons_ai_html, unsafe_allow_html=True)
             else:
                 card_ai_single_html = f"""<div style="background:rgba(19,166,181,0.06);border:1px solid rgba(19,166,181,0.25);border-radius:10px;padding:12px;margin-top:14px;font-size:12px;line-height:1.7;">
-<div style="font-weight:700;color:#00F5FF;margin-bottom:6px;font-size:13px;">📌 {ai_country} Pazar ve Gümrük Parametreleri</div>
+<div style="font-weight:700;color:#7DA8DF;margin-bottom:6px;font-size:13px;">📌 {ai_country} Pazar ve Gümrük Parametreleri</div>
 • <b>Kişi Başı GSYİH:</b> ${ai_macro['gdp_pc']:,} USD ({ai_macro['gdp_tier']})<br>
 • <b>Yaşam Standardı:</b> {ai_macro['living_standard']}<br>
 • <b>Lisanslı IVF Klinik Sayısı:</b> {ai_macro['clinics']} Merkez &nbsp;|&nbsp; <b>Nüfus:</b> {ai_macro['pop_m']}M<br>
@@ -30011,13 +29986,13 @@ elif active_view in ["Fiyatlandırma, 4-Pool Dish & ROI", "⌬ Fiyatlandırma, 4
             )
 
             st.markdown(f"""
-            <div style="background:rgba(0,245,255,0.04);border:1px solid rgba(0,245,255,0.3);border-radius:10px;padding:12px;margin:8px 0 14px 0;font-size:12px;line-height:1.6;">
-                <div style="font-weight:700;color:#00F5FF;margin-bottom:4px;">🎁 AI Bundle Modeli:</div>
+            <div style="background:rgba(125,168,223,0.04);border:1px solid rgba(125,168,223,0.3);border-radius:10px;padding:12px;margin:8px 0 14px 0;font-size:12px;line-height:1.6;">
+                <div style="font-weight:700;color:#7DA8DF;margin-bottom:4px;">🎁 AI Bundle Modeli:</div>
                 <div style="background:rgba(19,166,181,0.12);padding:8px;border-radius:6px;font-weight:600;color:#FFFFFF;margin-bottom:6px;">
                     {ai_rec['bundle_desc']}
                 </div>
                 <b>🚢 Gümrük Dengeleme:</b> {ai_rec['customs_strategy']}<br>
-                <b>📈 1 Yıllık Tahmini Ek Sarf Potansiyeli:</b> <span style="color:#00E676;font-weight:700;">{ai_rec['annual_sarf_potential']}</span>
+                <b>📈 1 Yıllık Tahmini Ek Sarf Potansiyeli:</b> <span style="color:#10B981;font-weight:700;">{ai_rec['annual_sarf_potential']}</span>
             </div>
             """, unsafe_allow_html=True)
 
@@ -30033,7 +30008,7 @@ elif active_view in ["Fiyatlandırma, 4-Pool Dish & ROI", "⌬ Fiyatlandırma, 4
                 • <b>Klinik ve Embriyoloji Dinamiği:</b> {ai_expert['clinical_dynamics']}<br>
                 • <b>Mevzuat, Tescil & Gümrük Denetimi:</b> {ai_expert['regulatory_watch']}<br>
                 • <b>Bölgesel Rakip Tehdidi:</b> {ai_expert['competitor_threat']}<br>
-                • <b>🛡️ Uzman Ticari Koruma Şartları:</b> <span style="color:#00E676;font-weight:600;">{ai_expert['commercial_guardrails']}</span>
+                • <b>🛡️ Uzman Ticari Koruma Şartları:</b> <span style="color:#10B981;font-weight:600;">{ai_expert['commercial_guardrails']}</span>
             </div>
             """, unsafe_allow_html=True)
 
@@ -30117,14 +30092,14 @@ elif active_view in ["Fiyatlandırma, 4-Pool Dish & ROI", "⌬ Fiyatlandırma, 4
         <div style="background:linear-gradient(135deg, rgba(19,166,181,0.14) 0%, rgba(11,20,38,0.85) 100%);border:1.5px solid #13A6B5;border-radius:12px;padding:18px 20px;margin-bottom:18px;box-shadow:0 6px 18px rgba(0,0,0,0.35);">
             <div style="display:flex;justify-content:space-between;align-items:center;">
                 <div>
-                    <h3 style="margin:0;color:#00F5FF;font-size:20px;">🏛️ {kb_country} Stratejik Pazar Profili, Bakanlık Kararları & İstihbaratı</h3>
+                    <h3 style="margin:0;color:#7DA8DF;font-size:20px;">🏛️ {kb_country} Stratejik Pazar Profili, Bakanlık Kararları & İstihbaratı</h3>
                     <div style="color:#B0C4DE;font-size:12.5px;margin-top:5px;">
                         Resmi Otorite: <b style="color:#FFFFFF;">{auth_name}</b> &nbsp;|&nbsp; 
-                        Yetkili Heyet: <b style="color:#00E676;">{kb_info.get("specialist_name", "Bölgesel İlaç ve Medikal Cihaz Denetim Heyeti")}</b>
+                        Yetkili Heyet: <b style="color:#10B981;">{kb_info.get("specialist_name", "Bölgesel İlaç ve Medikal Cihaz Denetim Heyeti")}</b>
                     </div>
                 </div>
                 <div style="text-align:right;">
-                    <span style="background:rgba(0,245,255,0.18);color:#00F5FF;padding:5px 14px;border-radius:14px;font-weight:700;font-size:12.5px;border:1px solid #13A6B5;">{kb_macro["gdp_tier"]}</span>
+                    <span style="background:rgba(125,168,223,0.18);color:#7DA8DF;padding:5px 14px;border-radius:14px;font-weight:700;font-size:12.5px;border:1px solid #13A6B5;">{kb_macro["gdp_tier"]}</span>
                     <div style="color:#8FA3C0;font-size:11.5px;margin-top:5px;">Aktif Klinik: <b>{kb_macro["clinics"]}</b> &nbsp;|&nbsp; Gümrük Tarifesi: <b>%{kb_macro["customs_tariff_pct"]:.1f}</b></div>
                 </div>
             </div>
@@ -30146,27 +30121,27 @@ elif active_view in ["Fiyatlandırma, 4-Pool Dish & ROI", "⌬ Fiyatlandırma, 4
         with k_tab1:
             st.markdown(f"""
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
-                <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
-                    <div style="font-weight:700;color:#00F5FF;font-size:13.5px;margin-bottom:8px;">📦 Gümrük Vergisi, KDV & GTİP Kodları</div>
+                <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(125,168,223,0.25);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
+                    <div style="font-weight:700;color:#7DA8DF;font-size:13.5px;margin-bottom:8px;">📦 Gümrük Vergisi, KDV & GTİP Kodları</div>
                     • <b>Gümrük Tarife Oranı:</b> <span style="color:#FFD700;font-weight:600;">{cust_reg.get("tariff_rate", "Standart %5.0")}</span><br>
                     • <b>KDV / Vergi Rejimi:</b> <span style="color:#FFFFFF;">{cust_reg.get("vat_rate", "%15.0 Standart KDV")}</span><br>
-                    • <b>Cihaz GTİP Kodu:</b> <code style="color:#00F5FF;">{cust_reg.get("gtip_device", "GTIP 9018.90")}</code><br>
-                    • <b>Sarf / Kit GTİP Kodu:</b> <code style="color:#00E676;">{cust_reg.get("gtip_consumable", "GTIP 3822.00")}</code><br>
-                    • <b>Liman / Gümrük Bekleme:</b> <span style="color:#00E676;font-weight:600;">{cust_reg.get("clearance_days", "15 Gün Tampon")}</span>
+                    • <b>Cihaz GTİP Kodu:</b> <code style="color:#7DA8DF;">{cust_reg.get("gtip_device", "GTIP 9018.90")}</code><br>
+                    • <b>Sarf / Kit GTİP Kodu:</b> <code style="color:#10B981;">{cust_reg.get("gtip_consumable", "GTIP 3822.00")}</code><br>
+                    • <b>Liman / Gümrük Bekleme:</b> <span style="color:#10B981;font-weight:600;">{cust_reg.get("clearance_days", "15 Gün Tampon")}</span>
                 </div>
-                <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
-                    <div style="font-weight:700;color:#00F5FF;font-size:13.5px;margin-bottom:8px;">🏛️ Tescil Otoritesi & Ruhsatlandırma Protokolü</div>
+                <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(125,168,223,0.25);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
+                    <div style="font-weight:700;color:#7DA8DF;font-size:13.5px;margin-bottom:8px;">🏛️ Tescil Otoritesi & Ruhsatlandırma Protokolü</div>
                     • <b>Resmi Otorite:</b> <b>{cust_reg.get("authority_full", auth_name)}</b><br>
                     • <b>Ruhsat & Tescil Protokolü:</b> {cust_reg.get("registration_path", "CE Sertifikalı Harmonize İthal İzni")}<br>
-                    • <b>Cihaz Uygunluğu:</b> <span style="background:rgba(0,230,118,0.15);color:#00E676;padding:2px 8px;border-radius:4px;font-weight:700;">CE Device Certified (CE Sertifikalı Tıbbi Cihaz)</span><br>
+                    • <b>Cihaz Uygunluğu:</b> <span style="background:rgba(0,230,118,0.15);color:#10B981;padding:2px 8px;border-radius:4px;font-weight:700;">CE Device Certified (CE Sertifikalı Tıbbi Cihaz)</span><br>
                     • <b>İthalat Zorluk Seviyesi:</b> {kb_macro["import_difficulty"]}
                 </div>
                 <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
-                    <div style="font-weight:700;color:#00F5FF;font-size:13.5px;margin-bottom:8px;">📋 Zorunlu Gümrük ve Tescil Belgeleri</div>
+                    <div style="font-weight:700;color:#7DA8DF;font-size:13.5px;margin-bottom:8px;">📋 Zorunlu Gümrük ve Tescil Belgeleri</div>
                     <div style="color:#C4D1D9;">{cust_reg.get("required_docs", "COO, FSC, CE Deklarasyonu")}</div>
                 </div>
                 <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
-                    <div style="font-weight:700;color:#00F5FF;font-size:13.5px;margin-bottom:8px;">❄️ Soğuk Zincir & Medikal Lojistik Standartları</div>
+                    <div style="font-weight:700;color:#7DA8DF;font-size:13.5px;margin-bottom:8px;">❄️ Soğuk Zincir & Medikal Lojistik Standartları</div>
                     <div style="color:#C4D1D9;">{cust_reg.get("cold_chain_rules", "+2°C / +8°C veri kaydedicili transfer")}</div>
                 </div>
             </div>
@@ -30176,15 +30151,15 @@ elif active_view in ["Fiyatlandırma, 4-Pool Dish & ROI", "⌬ Fiyatlandırma, 4
         with k_tab2:
             st.markdown(f"""
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;">
-                <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
-                    <div style="font-weight:700;color:#00F5FF;font-size:13.5px;margin-bottom:8px;">👶 Ulusal IVF & Embriyo Transfer Kısıtlamaları</div>
+                <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(125,168,223,0.25);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
+                    <div style="font-weight:700;color:#7DA8DF;font-size:13.5px;margin-bottom:8px;">👶 Ulusal IVF & Embriyo Transfer Kısıtlamaları</div>
                     • <b>Transfer Sınırları & eSET Kuralı:</b><br>
                     <span style="color:#E1E7EC;">{ivf_pgt.get("transfer_rules", "Çoğul gebelik kısıtlaması ve tek embriyo transfer teşviki")}</span><br><br>
                     • <b>Devlet Desteği & Geri Ödeme:</b><br>
                     <span style="color:#E1E7EC;">{ivf_pgt.get("cycle_funding", "Özel kliniklerde cepten ödeme")}</span>
                 </div>
-                <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
-                    <div style="font-weight:700;color:#00F5FF;font-size:13.5px;margin-bottom:8px;">🧬 PGT (Preimplantation Genetic Testing) Yasal Çerçevesi</div>
+                <div style="background:rgba(255,255,255,0.03);border:1px solid rgba(125,168,223,0.25);border-radius:10px;padding:14px;font-size:12px;line-height:1.7;">
+                    <div style="font-weight:700;color:#7DA8DF;font-size:13.5px;margin-bottom:8px;">🧬 PGT (Preimplantation Genetic Testing) Yasal Çerçevesi</div>
                     • <b>PGT-A / PGT-M / PGT-SR Statüsü:</b><br>
                     <span style="color:#E1E7EC;">{ivf_pgt.get("pgt_legal_status", "Tıbbi endikasyonla lisanslı genetik merkezlerde serbesttir")}</span><br><br>
                     • <b>Embriyo Biyopsisi Standardı:</b><br>
@@ -30209,16 +30184,16 @@ elif active_view in ["Fiyatlandırma, 4-Pool Dish & ROI", "⌬ Fiyatlandırma, 4
             st.markdown("##### 🏛️ Çok Disiplinli Uzman Heyeti Görüşleri (Multidisciplinary Committee Stance)")
             st.markdown(f"""
             <div style="display:flex;flex-direction:column;gap:10px;margin-bottom:14px;">
-                <div style="background:rgba(0,245,255,0.04);border-left:3.5px solid #00F5FF;padding:12px 14px;border-radius:8px;font-size:12px;line-height:1.6;">
-                    <b style="color:#00F5FF;">👔 CEO (İcra Kurulu Başkanı — Strateji & Kurumsal Vizyon):</b><br>
+                <div style="background:rgba(125,168,223,0.04);border-left:3.5px solid #7DA8DF;padding:12px 14px;border-radius:8px;font-size:12px;line-height:1.6;">
+                    <b style="color:#7DA8DF;">👔 CEO (İcra Kurulu Başkanı — Strateji & Kurumsal Vizyon):</b><br>
                     <span style="color:#CCD7E6;">{exp_ops.get("ceo", "Pazar genişlemesi ve kârlı büyüme dengesi.")}</span>
                 </div>
                 <div style="background:rgba(255,215,0,0.04);border-left:3.5px solid #FFD700;padding:12px 14px;border-radius:8px;font-size:12px;line-height:1.6;">
                     <b style="color:#FFD700;">💼 VP of Global Sales (Uluslararası Satış & Distribütör Yönetimi):</b><br>
                     <span style="color:#CCD7E6;">{exp_ops.get("sales", "Distribütör kota takibi ve yerel pazar penetrasyonu.")}</span>
                 </div>
-                <div style="background:rgba(0,230,118,0.04);border-left:3.5px solid #00E676;padding:12px 14px;border-radius:8px;font-size:12px;line-height:1.6;">
-                    <b style="color:#00E676;">🔬 Chief Embryology Officer (Baş Embriyolog — Klinik & Laboratuvar Güvenliği):</b><br>
+                <div style="background:rgba(0,230,118,0.04);border-left:3.5px solid #10B981;padding:12px 14px;border-radius:8px;font-size:12px;line-height:1.6;">
+                    <b style="color:#10B981;">🔬 Chief Embryology Officer (Baş Embriyolog — Klinik & Laboratuvar Güvenliği):</b><br>
                     <span style="color:#CCD7E6;">{exp_ops.get("embryo", "Oosit membran esnekliği, %82.3 döllenme oranı ve kimyasal toksisite eliminasyonu.")}</span>
                 </div>
                 <div style="background:rgba(186,104,200,0.04);border-left:3.5px solid #BA68C8;padding:12px 14px;border-radius:8px;font-size:12px;line-height:1.6;">
@@ -30251,11 +30226,11 @@ elif active_view in ["Fiyatlandırma, 4-Pool Dish & ROI", "⌬ Fiyatlandırma, 4
                     <div style="background:#0F192E;border:1.5px solid #13A6B5;border-radius:10px;padding:14px 16px;margin-bottom:12px;box-shadow:0 4px 14px rgba(0,0,0,0.25);">
                         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
                             <div>
-                                <span style="background:rgba(0,245,255,0.15);color:#00F5FF;font-weight:700;font-size:12px;padding:3px 10px;border-radius:6px;border:1px solid #13A6B5;">📜 {dec['decree_no']}</span>
+                                <span style="background:rgba(125,168,223,0.15);color:#7DA8DF;font-weight:700;font-size:12px;padding:3px 10px;border-radius:6px;border:1px solid #13A6B5;">📜 {dec['decree_no']}</span>
                                 <span style="font-weight:700;color:#FFFFFF;font-size:13.5px;margin-left:10px;">{dec['title']}</span>
                             </div>
                             <div style="text-align:right;">
-                                <span style="color:#00E676;font-size:11px;font-weight:700;background:rgba(0,230,118,0.1);padding:3px 8px;border-radius:4px;">{dec.get('status', '🟢 Yürürlükte')}</span>
+                                <span style="color:#10B981;font-size:11px;font-weight:700;background:rgba(0,230,118,0.1);padding:3px 8px;border-radius:4px;">{dec.get('status', '🟢 Yürürlükte')}</span>
                                 <span style="color:#8FA3C0;font-size:11px;margin-left:8px;">📅 {dec.get('date', '2024-2026')}</span>
                             </div>
                         </div>
@@ -30264,7 +30239,7 @@ elif active_view in ["Fiyatlandırma, 4-Pool Dish & ROI", "⌬ Fiyatlandırma, 4
                         </div>
                         <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;background:rgba(0,0,0,0.25);padding:10px 12px;border-radius:8px;font-size:11.5px;margin-top:8px;">
                             <div>
-                                <span style="color:#00F5FF;font-weight:700;">🔬 Cihaz & Donanım Şartı (Elektriksel Oosit Aktivasyon - ZPS 26):</span><br>
+                                <span style="color:#7DA8DF;font-weight:700;">🔬 Cihaz & Donanım Şartı (Elektriksel Oosit Aktivasyon - ZPS 26):</span><br>
                                 <span style="color:#E1E7EC;">{dec.get('impact_zeus', '')}</span>
                             </div>
                             <div>
@@ -30280,10 +30255,10 @@ elif active_view in ["Fiyatlandırma, 4-Pool Dish & ROI", "⌬ Fiyatlandırma, 4
         # Do's and Don'ts Card
         st.markdown(f"""
         <div style="background:rgba(19,166,181,0.05);border:1px solid rgba(19,166,181,0.25);border-radius:10px;padding:14px;margin-top:14px;margin-bottom:18px;font-size:12px;line-height:1.7;">
-            <div style="font-weight:700;color:#00F5FF;font-size:14px;margin-bottom:6px;">💡 Executive Do's & Don'ts ({kb_country} İçin Yönetici İlkeleri)</div>
+            <div style="font-weight:700;color:#7DA8DF;font-size:14px;margin-bottom:6px;">💡 Executive Do's & Don'ts ({kb_country} İçin Yönetici İlkeleri)</div>
             <div style="display:flex;gap:20px;">
-                <div style="flex:1;background:rgba(0,230,118,0.06);padding:10px;border-radius:8px;border-left:3px solid #00E676;">
-                    <b style="color:#00E676;">✅ YAPILMASI GEREKENLER (DO's):</b><br>
+                <div style="flex:1;background:rgba(0,230,118,0.06);padding:10px;border-radius:8px;border-left:3px solid #10B981;">
+                    <b style="color:#10B981;">✅ YAPILMASI GEREKENLER (DO's):</b><br>
                     {prof.get('dos', 'Klinik embriyologlarına yerinde aplikasyon eğitimi ve vaka desteği sunun.')}
                 </div>
                 <div style="flex:1;background:rgba(255,82,82,0.06);padding:10px;border-radius:8px;border-left:3px solid #FF5252;">
@@ -30350,7 +30325,7 @@ elif active_view in ["Fiyatlandırma, 4-Pool Dish & ROI", "⌬ Fiyatlandırma, 4
                     'date': cn['date'],
                     'author': cn['author'],
                     'note': cn['note'],
-                    'border': '#00F5FF'
+                    'border': '#7DA8DF'
                 })
 
         # 2. Add verified official ministry decisions and regulatory committee notes
@@ -30361,7 +30336,7 @@ elif active_view in ["Fiyatlandırma, 4-Pool Dish & ROI", "⌬ Fiyatlandırma, 4
                 'country': kb_country,
                 'date': dec.get('date', '2024-2026'),
                 'author': auth_name,
-                'note': f"<b>Resmi Tebliğ Özeti:</b> {dec.get('summary', '')}<br><span style='color:#00F5FF;'><b>Donanım Şartı:</b> {dec.get('impact_zeus', '')}</span> | <span style='color:#FFB800;'><b>Sarf Şartı:</b> {dec.get('consumable_rule', '')}</span>",
+                'note': f"<b>Resmi Tebliğ Özeti:</b> {dec.get('summary', '')}<br><span style='color:#7DA8DF;'><b>Donanım Şartı:</b> {dec.get('impact_zeus', '')}</span> | <span style='color:#FFB800;'><b>Sarf Şartı:</b> {dec.get('consumable_rule', '')}</span>",
                 'border': '#13A6B5'
             })
 
@@ -30372,8 +30347,8 @@ elif active_view in ["Fiyatlandırma, 4-Pool Dish & ROI", "⌬ Fiyatlandırma, 4
             'country': kb_country,
             'date': '2026-10-25',
             'author': kb_info['specialist_name'],
-            'note': f"{kb_info['clinical_dynamics']} <br><b style='color:#00E676;'>Tavsiye Edilen Koruma:</b> {kb_info['commercial_guardrails']}",
-            'border': '#00E676'
+            'note': f"{kb_info['clinical_dynamics']} <br><b style='color:#10B981;'>Tavsiye Edilen Koruma:</b> {kb_info['commercial_guardrails']}",
+            'border': '#10B981'
         })
 
         # Render country feed
@@ -30445,9 +30420,9 @@ elif active_view in ["Rakip Analizi & RFID Trap Breaker", "⬡ Rakip Kıyaslama 
     ev_k1, ev_k2, ev_k3, ev_k4 = st.columns(4)
     with ev_k1:
         st.markdown(f"""
-        <div style="background:#0F192E;border:1px solid rgba(0,245,255,0.3);border-radius:8px;padding:12px;text-align:center;">
+        <div style="background:#0F192E;border:1px solid rgba(125,168,223,0.3);border-radius:8px;padding:12px;text-align:center;">
             <div style="color:#8FA3C0;font-size:11px;font-weight:600;">TOPLAM KARAR NOTU</div>
-            <div style="color:#00F5FF;font-size:22px;font-weight:800;">{sdc_n_total} Not</div>
+            <div style="color:#7DA8DF;font-size:22px;font-weight:800;">{sdc_n_total} Not</div>
             <div style="color:#CBD5E1;font-size:11px;">Aktif Kıyaslama Masasında</div>
         </div>
         """, unsafe_allow_html=True)
@@ -30455,7 +30430,7 @@ elif active_view in ["Rakip Analizi & RFID Trap Breaker", "⬡ Rakip Kıyaslama 
         st.markdown(f"""
         <div style="background:#0F192E;border:1px solid rgba(0,230,118,0.3);border-radius:8px;padding:12px;text-align:center;">
             <div style="color:#8FA3C0;font-size:11px;font-weight:600;">ONAYLANAN İCRA PLANI</div>
-            <div style="color:#00E676;font-size:22px;font-weight:800;">{sdc_n_approved} Strateji</div>
+            <div style="color:#10B981;font-size:22px;font-weight:800;">{sdc_n_approved} Strateji</div>
             <div style="color:#CBD5E1;font-size:11px;">Yürürlükte & Sahada İcrada</div>
         </div>
         """, unsafe_allow_html=True)
@@ -30494,15 +30469,15 @@ elif active_view in ["Rakip Analizi & RFID Trap Breaker", "⬡ Rakip Kıyaslama 
             </div>
             <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));gap:10px;font-size:12px;color:#CBD5E1;margin-bottom:8px;">
                 <div><b>⚔️ Hedef Rakip:</b> <span style="color:#FFB800;">{s_note['target_competitor']}</span></div>
-                <div><b>🛡️ ZEUS Donanımı:</b> <span style="color:#00F5FF;">{s_note['our_product']}</span></div>
-                <div><b>🎯 Seçilen Taktik:</b> <span style="color:#00E676;">{s_note['selected_strategy']}</span></div>
+                <div><b>🛡️ ZEUS Donanımı:</b> <span style="color:#7DA8DF;">{s_note['our_product']}</span></div>
+                <div><b>🎯 Seçilen Taktik:</b> <span style="color:#10B981;">{s_note['selected_strategy']}</span></div>
                 <div><b>👤 Karar Verici:</b> <span style="color:#E2E8F0;">{s_note['author']} ({s_note['timestamp']})</span></div>
             </div>
-            <div style="background:rgba(0,230,118,0.06);border-left:3px solid #00E676;padding:9px 12px;border-radius:4px;margin-bottom:8px;font-size:12px;color:#FFFFFF;line-height:1.5;">
-                <b style="color:#00E676;">✍️ Yönetici Karar Tutanağı & Saha Müzakere Notu:</b><br>{s_note['decision_note']}
+            <div style="background:rgba(0,230,118,0.06);border-left:3px solid #10B981;padding:9px 12px;border-radius:4px;margin-bottom:8px;font-size:12px;color:#FFFFFF;line-height:1.5;">
+                <b style="color:#10B981;">✍️ Yönetici Karar Tutanağı & Saha Müzakere Notu:</b><br>{s_note['decision_note']}
             </div>
-            <div style="background:rgba(0,245,255,0.05);border:1px solid rgba(0,245,255,0.25);border-radius:6px;padding:8px 12px;font-size:11.5px;color:#CCD7E6;">
-                <b style="color:#00F5FF;">🤖 ZEUS Karar Motoru (AI) Otomatik Denetim Raporu ({ev_item['risk_level']}):</b><br>
+            <div style="background:rgba(125,168,223,0.05);border:1px solid rgba(125,168,223,0.25);border-radius:6px;padding:8px 12px;font-size:11.5px;color:#CCD7E6;">
+                <b style="color:#7DA8DF;">🤖 ZEUS Karar Motoru (AI) Otomatik Denetim Raporu ({ev_item['risk_level']}):</b><br>
                 {' • '.join(ev_item['findings'])}
             </div>
         </div>
@@ -30555,7 +30530,7 @@ elif active_view in ["Rakip Analizi & RFID Trap Breaker", "⬡ Rakip Kıyaslama 
         is_approved = (a_plan.get('status') == 'Onaylandı & İcrada')
         border_col = a_plan['badge_color']
         badge_bg = 'rgba(0,230,118,0.15)' if is_approved else 'rgba(255,184,0,0.15)'
-        badge_txt = '#00E676' if is_approved else '#FFB800'
+        badge_txt = '#10B981' if is_approved else '#FFB800'
         
         plan_card_html = f"""<div style="background:#0F192E; border:1.5px solid {border_col}; border-radius:12px; padding:16px 20px; margin-bottom:14px; box-shadow:0 4px 14px rgba(0,0,0,0.3);">
 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
@@ -30567,14 +30542,14 @@ elif active_view in ["Rakip Analizi & RFID Trap Breaker", "⬡ Rakip Kıyaslama 
 <b>🤖 AI Tavsiyesi:</b> {a_plan['ai_recommendation']}
 </div>
 <div style="background:rgba(0,0,0,0.3); border-left:3px solid {border_col}; padding:10px 14px; border-radius:6px; margin:8px 0; font-size:12px;">
-<b style="color:#00F5FF;">✍️ Yönetici Değerlendirmesi & Saha Yorumu:</b><br>
+<b style="color:#7DA8DF;">✍️ Yönetici Değerlendirmesi & Saha Yorumu:</b><br>
 <span style="color:#E1E7EC;">{a_plan['user_comment']}</span>
 </div>
 <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:10px; background:rgba(255,255,255,0.02); padding:10px; border-radius:8px; font-size:11.5px; margin-top:8px;">
 <div><b style="color:#8FA3C0;">Kararlaştırılan Strateji:</b><br><span style="color:#FFFFFF; font-weight:600;">{a_plan['plan_type']}</span></div>
-<div><b style="color:#8FA3C0;">Sorumlu Birim:</b><br><span style="color:#00F5FF; font-weight:600;">{a_plan['responsible_unit']}</span></div>
+<div><b style="color:#8FA3C0;">Sorumlu Birim:</b><br><span style="color:#7DA8DF; font-weight:600;">{a_plan['responsible_unit']}</span></div>
 <div><b style="color:#8FA3C0;">Öncelik & Termin:</b><br><span style="color:#FFB800; font-weight:600;">{a_plan['priority']} | {a_plan['target_date']}</span></div>
-<div><b style="color:#8FA3C0;">Tahmini Finansal Etki (ROI):</b><br><span style="color:#00E676; font-weight:700;">{a_plan['roi_projection']}</span></div>
+<div><b style="color:#8FA3C0;">Tahmini Finansal Etki (ROI):</b><br><span style="color:#10B981; font-weight:700;">{a_plan['roi_projection']}</span></div>
 </div>
 <div style="font-size:11.5px; color:#CCD7E6; margin-top:8px;">
 <b>📌 Somut İcra Adımları:</b> {a_plan['action_steps']}
@@ -30649,16 +30624,16 @@ elif active_view in ["Rakip Analizi & RFID Trap Breaker", "⬡ Rakip Kıyaslama 
         elif 'DEFCON 3' in geo_p['alert_level']:
             geo_p['alert_badge_color'] = '#FF9800'
         elif 'DEFCON 5' in geo_p['alert_level']:
-            geo_p['alert_badge_color'] = '#00E676'
+            geo_p['alert_badge_color'] = '#10B981'
         else:
-            geo_p['alert_badge_color'] = '#00F5FF'
+            geo_p['alert_badge_color'] = '#7DA8DF'
 
     is_geo_appr = (geo_p.get('status') == 'Onaylandı & Yürürlükte')
 
     with c_sdc2:
         st.markdown(f"""
         <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:8px; padding:10px 14px; font-size:11.5px; margin-top:25px;">
-            <span style="color:#8FA3C0;">Pazar Bölgesi:</span> <b style="color:#00F5FF;">{geo_p['region']}</b> | 
+            <span style="color:#8FA3C0;">Pazar Bölgesi:</span> <b style="color:#7DA8DF;">{geo_p['region']}</b> | 
             <span style="color:#8FA3C0;">Klinik:</span> <b style="color:#10B981;">{geo_p['clinics']}</b><br>
             <span style="color:#8FA3C0;">Siklus:</span> <b style="color:#FFB800;">{geo_p['cycles']:,}</b> | 
             <span style="color:#8FA3C0;">GSYİH:</span> <b style="color:#FFFFFF;">{geo_p['gdp_pc']}</b>
@@ -30680,14 +30655,14 @@ elif active_view in ["Rakip Analizi & RFID Trap Breaker", "⬡ Rakip Kıyaslama 
         st.markdown(f"""
         <div style="background:#0F192E;border:1px solid rgba(0,230,118,0.25);border-radius:8px;padding:12px;text-align:center;">
             <div style="color:#8FA3C0;font-size:11px;font-weight:600;">FİNANSAL TAHSİLAT GÜVENCESİ</div>
-            <div style="color:#00E676;font-size:18px;font-weight:800;font-family:monospace;">{geo_p['payment_assurance_pct']}</div>
+            <div style="color:#10B981;font-size:18px;font-weight:800;font-family:monospace;">{geo_p['payment_assurance_pct']}</div>
             <div style="color:#CBD5E1;font-size:11px;">{geo_p['payment_risk_title'].split('—')[0].split('(')[0].strip()}</div>
         </div>
         """, unsafe_allow_html=True)
     with g_kpi3:
-        g_st_col = "#00E676" if is_geo_appr else "#FFB800"
+        g_st_col = "#10B981" if is_geo_appr else "#FFB800"
         st.markdown(f"""
-        <div style="background:#0F192E;border:1px solid rgba(0,245,255,0.25);border-radius:8px;padding:12px;text-align:center;">
+        <div style="background:#0F192E;border:1px solid rgba(125,168,223,0.25);border-radius:8px;padding:12px;text-align:center;">
             <div style="color:#8FA3C0;font-size:11px;font-weight:600;">KRİZ PROTOKOLÜ STATÜSÜ</div>
             <div style="color:{g_st_col};font-size:20px;font-weight:800;">{geo_p['status']}</div>
             <div style="color:#CBD5E1;font-size:11px;">Medikal Hava Köprüsü & Tampon Depo</div>
@@ -30697,22 +30672,22 @@ elif active_view in ["Rakip Analizi & RFID Trap Breaker", "⬡ Rakip Kıyaslama 
     st.markdown("<div style='height:10px;'></div>", unsafe_allow_html=True)
 
     # Executive 2-Column Comparison Card
-    g_bcol = "#00E676" if is_geo_appr else "#FF9800"
+    g_bcol = "#10B981" if is_geo_appr else "#FF9800"
     st.markdown(f"""
     <div style="background:#0F192E; border:1.5px solid {g_bcol}; border-radius:12px; padding:16px 20px; margin-bottom:12px; box-shadow:0 4px 14px rgba(0,0,0,0.3);">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; flex-wrap:wrap; gap:8px;">
-            <span style="font-weight:700; color:#00F5FF; font-size:14.5px;">⚔️ {geo_p['flag']} {geo_p['name']} Savaş Riski, Lojistik Koruma & Tahsilat Güvencesi Protokolü</span>
+            <span style="font-weight:700; color:#7DA8DF; font-size:14.5px;">⚔️ {geo_p['flag']} {geo_p['name']} Savaş Riski, Lojistik Koruma & Tahsilat Güvencesi Protokolü</span>
             <span style="background:{'rgba(0,230,118,0.15)' if is_geo_appr else 'rgba(255,184,0,0.15)'}; color:{g_st_col}; padding:3px 10px; border-radius:6px; font-weight:700; font-size:11px;">
                 {geo_p['status']}
             </span>
         </div>
         <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap:12px; margin-bottom:10px;">
-            <div style="background:rgba(0,0,0,0.25); padding:10px 12px; border-radius:8px; border-left:3px solid #38BDF8; font-size:11.8px; line-height:1.45;">
-                <b style="color:#38BDF8;">🤖 Yapay Zeka Teşhisi:</b><br>
+            <div style="background:rgba(0,0,0,0.25); padding:10px 12px; border-radius:8px; border-left:3px solid #7DA8DF; font-size:11.8px; line-height:1.45;">
+                <b style="color:#7DA8DF;">🤖 Yapay Zeka Teşhisi:</b><br>
                 <span style="color:#CCD7E6;">{geo_p['ai_diagnosis']}</span>
             </div>
-            <div style="background:rgba(0,230,118,0.05); padding:10px 12px; border-radius:8px; border-left:3px solid #00E676; font-size:11.8px; line-height:1.45;">
-                <b style="color:#00E676;">👨‍⚕️ Saha & Finans Uzmanı Konsensüsü:</b><br>
+            <div style="background:rgba(0,230,118,0.05); padding:10px 12px; border-radius:8px; border-left:3px solid #10B981; font-size:11.8px; line-height:1.45;">
+                <b style="color:#10B981;">👨‍⚕️ Saha & Finans Uzmanı Konsensüsü:</b><br>
                 <span style="color:#E1E7EC;">{geo_p['expert_comment']}</span>
             </div>
         </div>
@@ -30726,8 +30701,8 @@ elif active_view in ["Rakip Analizi & RFID Trap Breaker", "⬡ Rakip Kıyaslama 
             </ul>
         </div>
         <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; color:#8FA3C0; padding-top:6px; border-top:1px solid rgba(255,255,255,0.06);">
-            <span><b>Önlem Mandası:</b> <span style="color:#00F5FF;">{geo_p['action_mandate']}</span></span>
-            <span><b>Alternatif Maliyet Farkı:</b> <span style="color:#00E676; font-weight:700;">{geo_p['freight_contingency_cost']}</span></span>
+            <span><b>Önlem Mandası:</b> <span style="color:#7DA8DF;">{geo_p['action_mandate']}</span></span>
+            <span><b>Alternatif Maliyet Farkı:</b> <span style="color:#10B981; font-weight:700;">{geo_p['freight_contingency_cost']}</span></span>
         </div>
     </div>
     """, unsafe_allow_html=True)
@@ -30779,9 +30754,9 @@ elif active_view in ["Rakip Analizi & RFID Trap Breaker", "⬡ Rakip Kıyaslama 
     r_kpi1, r_kpi2, r_kpi3 = st.columns(3)
     with r_kpi1:
         st.markdown(f"""
-        <div style="background:#0F192E;border:1px solid rgba(0,245,255,0.25);border-radius:8px;padding:12px;text-align:center;">
+        <div style="background:#0F192E;border:1px solid rgba(125,168,223,0.25);border-radius:8px;padding:12px;text-align:center;">
             <div style="color:#8FA3C0;font-size:11px;font-weight:600;">TOPLAM AÇIK BÖLGESEL FIRSAT</div>
-            <div style="color:#00F5FF;font-size:22px;font-weight:800;font-family:monospace;">${total_reg_opp:,.0f} USD</div>
+            <div style="color:#7DA8DF;font-size:22px;font-weight:800;font-family:monospace;">${total_reg_opp:,.0f} USD</div>
             <div style="color:#CBD5E1;font-size:11px;">6 Küresel Bölge Portföyü</div>
         </div>
         """, unsafe_allow_html=True)
@@ -30789,7 +30764,7 @@ elif active_view in ["Rakip Analizi & RFID Trap Breaker", "⬡ Rakip Kıyaslama 
         st.markdown(f"""
         <div style="background:#0F192E;border:1px solid rgba(0,230,118,0.25);border-radius:8px;padding:12px;text-align:center;">
             <div style="color:#8FA3C0;font-size:11px;font-weight:600;">ONAYLANAN BÖLGESEL PROTOKOLLER</div>
-            <div style="color:#00E676;font-size:22px;font-weight:800;font-family:monospace;">{approved_reg_count} / 6 Bölge</div>
+            <div style="color:#10B981;font-size:22px;font-weight:800;font-family:monospace;">{approved_reg_count} / 6 Bölge</div>
             <div style="color:#CBD5E1;font-size:11px;">Uzman & AI Konsensüsü Sağlandı</div>
         </div>
         """, unsafe_allow_html=True)
@@ -30810,10 +30785,10 @@ elif active_view in ["Rakip Analizi & RFID Trap Breaker", "⬡ Rakip Kıyaslama 
         is_reg_approved = (r_item.get('status') == 'Onaylandı & İcrada')
         r_border = r_item['color']
         r_badge_bg = 'rgba(0,230,118,0.15)' if is_reg_approved else 'rgba(255,184,0,0.15)'
-        r_badge_txt = '#00E676' if is_reg_approved else '#FFB800'
+        r_badge_txt = '#10B981' if is_reg_approved else '#FFB800'
 
         dev_list_sdc = r_item.get('recommended_devices', [])
-        dev_pills_sdc = ''.join([f'<span style="background:rgba(0,245,255,0.12);color:#00F5FF;border:1px solid rgba(0,245,255,0.3);padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;margin-right:4px;display:inline-block;margin-bottom:3px;">{d}</span>' for d in dev_list_sdc])
+        dev_pills_sdc = ''.join([f'<span style="background:rgba(125,168,223,0.12);color:#7DA8DF;border:1px solid rgba(125,168,223,0.3);padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;margin-right:4px;display:inline-block;margin-bottom:3px;">{d}</span>' for d in dev_list_sdc])
         
         target_col = reg_col_left if idx_reg % 2 == 0 else reg_col_right
         with target_col:
@@ -30827,20 +30802,20 @@ elif active_view in ["Rakip Analizi & RFID Trap Breaker", "⬡ Rakip Kıyaslama 
                 </div>
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px; font-size:11px; color:#8FA3C0;">
                     <span>{r_item['stats']}</span>
-                    <span style="color:#00F5FF; font-weight:700; background:rgba(0,245,255,0.1); padding:1px 6px; border-radius:4px;">{r_item['opportunity']}</span>
+                    <span style="color:#7DA8DF; font-weight:700; background:rgba(125,168,223,0.1); padding:1px 6px; border-radius:4px;">{r_item['opportunity']}</span>
                 </div>
-                <div style="font-size:12px; color:#CCD7E6; margin-bottom:8px; line-height:1.45; background:rgba(0,0,0,0.25); padding:8px 10px; border-radius:6px; border-left:3px solid #38BDF8;">
+                <div style="font-size:12px; color:#CCD7E6; margin-bottom:8px; line-height:1.45; background:rgba(0,0,0,0.25); padding:8px 10px; border-radius:6px; border-left:3px solid #7DA8DF;">
                     <b style="color:#F87171;">⚠️ AI Zayıflık Teşhisi:</b> {r_item['ai_weakness']}<br>
-                    <b style="color:#38BDF8;">🤖 AI Aksiyon Önerisi:</b> {r_item['ai_action']}
+                    <b style="color:#7DA8DF;">🤖 AI Aksiyon Önerisi:</b> {r_item['ai_action']}
                 </div>
-                <div style="background:rgba(0,245,255,0.04); border:1px solid rgba(0,245,255,0.2); border-radius:6px; padding:7px 10px; margin-bottom:8px;">
-                    <b style="color:#00F5FF; font-size:11px;">🔬 Tavsiye Edilen ZEUS Cihaz & Teknolojileri:</b><br>
+                <div style="background:rgba(125,168,223,0.04); border:1px solid rgba(125,168,223,0.2); border-radius:6px; padding:7px 10px; margin-bottom:8px;">
+                    <b style="color:#7DA8DF; font-size:11px;">🔬 Tavsiye Edilen ZEUS Cihaz & Teknolojileri:</b><br>
                     <div style="margin-top:4px; margin-bottom:3px;">{dev_pills_sdc}</div>
                     <span style="color:#CCD7E6; font-size:10.5px; line-height:1.4;">{r_item.get('device_rationale', '')}</span>
                 </div>
-                <div style="background:rgba(0,245,255,0.04); border-left:3px solid {r_border}; padding:10px 12px; border-radius:6px; margin:8px 0; font-size:11.8px;">
+                <div style="background:rgba(125,168,223,0.04); border-left:3px solid {r_border}; padding:10px 12px; border-radius:6px; margin:8px 0; font-size:11.8px;">
                     <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:3px;">
-                        <b style="color:#00F5FF; font-size:11px;">👨‍⚕️ Uzman Görüşü ({r_item['expert_title']}):</b>
+                        <b style="color:#7DA8DF; font-size:11px;">👨‍⚕️ Uzman Görüşü ({r_item['expert_title']}):</b>
                         <span style="font-size:10px; color:#10B981; font-weight:700;">{r_item['consensus_status']}</span>
                     </div>
                     <span style="color:#E1E7EC; line-height:1.4;">{r_item['expert_opinion']}</span>
@@ -30855,7 +30830,7 @@ elif active_view in ["Rakip Analizi & RFID Trap Breaker", "⬡ Rakip Kıyaslama 
                 </div>
                 <div style="display:flex; justify-content:space-between; align-items:center; font-size:11px; color:#8FA3C0; margin-top:8px; padding-top:6px; border-top:1px solid rgba(255,255,255,0.06);">
                     <span><b>Öncelik:</b> <span style="color:#FFB800;">{r_item['decision_priority']}</span></span>
-                    <span><b>Hedef ROI:</b> <span style="color:#00E676; font-weight:700;">{r_item['target_roi']}</span></span>
+                    <span><b>Hedef ROI:</b> <span style="color:#10B981; font-weight:700;">{r_item['target_roi']}</span></span>
                 </div>
             </div>
             """, unsafe_allow_html=True)
@@ -30902,9 +30877,9 @@ elif active_view in ["Rakip Analizi & RFID Trap Breaker", "⬡ Rakip Kıyaslama 
     rfid_kpi1, rfid_kpi2, rfid_kpi3, rfid_kpi4 = st.columns(4)
     with rfid_kpi1:
         st.markdown("""
-        <div style="background:#0F192E;border:1px solid rgba(0,245,255,0.3);border-radius:8px;padding:12px;text-align:center;">
+        <div style="background:#0F192E;border:1px solid rgba(125,168,223,0.3);border-radius:8px;padding:12px;text-align:center;">
             <div style="color:#8A99AD;font-size:11px;font-weight:600;">SARF TASARRUF ÇARPANI</div>
-            <div style="color:#00F5FF;font-size:22px;font-weight:800;">$25 / CYCLE</div>
+            <div style="color:#7DA8DF;font-size:22px;font-weight:800;">$25 / CYCLE</div>
             <div style="color:#5FD3AE;font-size:11px;">Barkodlar Ücretsiz (Free of Charge)</div>
         </div>
         """, unsafe_allow_html=True)
@@ -30928,7 +30903,7 @@ elif active_view in ["Rakip Analizi & RFID Trap Breaker", "⬡ Rakip Kıyaslama 
         st.markdown("""
         <div style="background:#0F192E;border:1px solid rgba(56,189,248,0.3);border-radius:8px;padding:12px;text-align:center;">
             <div style="color:#8A99AD;font-size:11px;font-weight:600;">KRİYOMİMARİ & NOKTA ATIŞI</div>
-            <div style="color:#38BDF8;font-size:22px;font-weight:800;">4X KAPASİTE</div>
+            <div style="color:#7DA8DF;font-size:22px;font-weight:800;">4X KAPASİTE</div>
             <div style="color:#5FD3AE;font-size:11px;">Sıfır Termal Şok & Nokta Atışı Adres</div>
         </div>
         """, unsafe_allow_html=True)
@@ -30944,7 +30919,7 @@ elif active_view in ["Rakip Analizi & RFID Trap Breaker", "⬡ Rakip Kıyaslama 
 
     with rfid_tab1:
         st.markdown("""
-        <div style="background:rgba(15,25,46,0.85);border:1px solid rgba(0,245,255,0.25);border-radius:10px;padding:16px;margin-bottom:14px;">
+        <div style="background:rgba(15,25,46,0.85);border:1px solid rgba(125,168,223,0.25);border-radius:10px;padding:16px;margin-bottom:14px;">
             <h4 style="margin:0 0 8px 0;color:#FFFFFF;font-size:15px;">Neden Çoğu Klinik RI Witness (RFID) Yerine ZEUS Mismatch Blocker'ı Seçmeli?</h4>
             <p style="color:#CCD7E6;font-size:12px;line-height:1.55;margin:0;">
                 Geleneksel RFID sistemleri (RI Witness vb.) tüp bebek laboratuvarlarında ilk nesil şahitliği başlatmış olsa da, günümüzde kliniklerin kârlılığını kemiren ağır sarf maliyetleri ($15–$30/çipli kap), sinyal karışmaları ve sadece petri kabına odaklanıp embriyoloğu kağıda elle not almaya mahkûm eden kör noktalarıyla (gaps) ciddi bir operasyonel darboğaz yaratmaktadır. <b>ZEUS Mismatch Blocker & Smart Cryo-Tools</b>, bu açıkları kökten çözer.
@@ -31014,21 +30989,21 @@ elif active_view in ["Rakip Analizi & RFID Trap Breaker", "⬡ Rakip Kıyaslama 
         tank_capex_saving = 45000  # Smart Cryo-Tools 4X sayesinde yeni azot tankı almama tasarrufu
 
         st.markdown(f"""
-        <div style="background:rgba(15,25,46,0.9);border:1.5px solid #00F5FF;border-radius:12px;padding:18px;margin-top:10px;">
+        <div style="background:rgba(15,25,46,0.9);border:1.5px solid #7DA8DF;border-radius:12px;padding:18px;margin-top:10px;">
             <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:14px;text-align:center;">
                 <div style="background:rgba(255,82,82,0.1);border:1px solid rgba(255,82,82,0.3);border-radius:8px;padding:12px;">
                     <span style="color:#FF8A80;font-size:11.5px;font-weight:600;">MEVCUT RFID ÇİP YILLIK İSRAFI</span>
                     <h3 style="color:#FF5252;margin:4px 0;font-size:24px;">${curr_rfid_total:,.0f} USD</h3>
                     <span style="color:#CCD7E6;font-size:11px;">{sim_cycles:,} siklus x ${sim_rfid_cost}/çip</span>
                 </div>
-                <div style="background:rgba(0,245,255,0.1);border:1px solid rgba(0,245,255,0.3);border-radius:8px;padding:12px;">
+                <div style="background:rgba(125,168,223,0.1);border:1px solid rgba(125,168,223,0.3);border-radius:8px;padding:12px;">
                     <span style="color:#80D8FF;font-size:11.5px;font-weight:600;">ZEUS MISMATCH BLOCKER MALİYETİ</span>
-                    <h3 style="color:#00F5FF;margin:4px 0;font-size:24px;">${zeus_coin_total:,.0f} USD</h3>
+                    <h3 style="color:#7DA8DF;margin:4px 0;font-size:24px;">${zeus_coin_total:,.0f} USD</h3>
                     <span style="color:#CCD7E6;font-size:11px;">Free of Charge Barkod + $25/Siklus</span>
                 </div>
-                <div style="background:rgba(0,230,118,0.12);border:1.5px solid #00E676;border-radius:8px;padding:12px;">
+                <div style="background:rgba(0,230,118,0.12);border:1.5px solid #10B981;border-radius:8px;padding:12px;">
                     <span style="color:#B9F6CA;font-size:11.5px;font-weight:700;">YILLIK NET KLİNİK TASARRUFU</span>
-                    <h3 style="color:#00E676;margin:4px 0;font-size:26px;">+${annual_savings:,.0f} USD</h3>
+                    <h3 style="color:#10B981;margin:4px 0;font-size:26px;">+${annual_savings:,.0f} USD</h3>
                     <span style="color:#5FD3AE;font-size:11px;font-weight:700;">%{pct_savings:.1f} OPEX Azalması</span>
                 </div>
                 <div style="background:rgba(255,184,0,0.1);border:1px solid rgba(255,184,0,0.3);border-radius:8px;padding:12px;">
@@ -31179,7 +31154,7 @@ Web: www.zeusbioscience.com | Email: clinical@zeusbioscience.com"""
 
     qc1, qc2, qc3 = st.columns(3)
     with qc1:
-        st.markdown(f"""<div class="kpi-container" style="border-top:3px solid #00F5FF;">
+        st.markdown(f"""<div class="kpi-container" style="border-top:3px solid #7DA8DF;">
 <div class="kpi-header">Toplam Hedef Cihaz Alımı (2027)</div>
 <div class="kpi-val">{tot_target_dev} Cihaz</div>
 <div class="kpi-sub kpi-pos">Yeni Filo Dağıtımı</div>
@@ -31203,8 +31178,8 @@ Web: www.zeusbioscience.com | Email: clinical@zeusbioscience.com"""
         q = q_data
         is_appr = (q.get('status') == 'Onaylandı & İcrada')
         is_dorm = "UYUYAN" in q['status_diagnosis'] or "KRİTİK" in q['status_diagnosis'] or "SPOT" in q['status_diagnosis']
-        b_col = "#FF5252" if is_dorm else "#00F5FF"
-        b_txt = "#00E676" if is_appr else "#FFB800"
+        b_col = "#FF5252" if is_dorm else "#7DA8DF"
+        b_txt = "#10B981" if is_appr else "#FFB800"
         b_bg = "rgba(0,230,118,0.15)" if is_appr else "rgba(255,184,0,0.15)"
 
         card_quota_html = f"""<div style="background:#0F192E; border:1.5px solid {b_col}; border-radius:12px; padding:16px 20px; margin-bottom:12px; box-shadow:0 4px 14px rgba(0,0,0,0.3);">
@@ -31217,15 +31192,15 @@ Web: www.zeusbioscience.com | Email: clinical@zeusbioscience.com"""
 </div>
 <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap:8px; background:rgba(255,255,255,0.02); padding:8px 12px; border-radius:6px; font-size:11px; margin-bottom:8px;">
 <div><span style="color:#8FA3C0;">Pazar Gücü:</span> <b style="color:#FFFFFF;">{q['gdp_pc']}</b></div>
-<div><span style="color:#8FA3C0;">Klinik Kapasitesi:</span> <b style="color:#00F5FF;">{q['clinics']} Klinik ({q['cycles']})</b></div>
+<div><span style="color:#8FA3C0;">Klinik Kapasitesi:</span> <b style="color:#7DA8DF;">{q['clinics']} Klinik ({q['cycles']})</b></div>
 <div><span style="color:#8FA3C0;">Gümrük & İthalat:</span> <b style="color:#FFB800;">{q['customs']}</b></div>
 <div><span style="color:#8FA3C0;">Kurulu Taban:</span> <b style="color:#10B981;">{q['installed_devices']} Cihaz</b></div>
 </div>
 <div style="background:rgba(0,0,0,0.25); border-left:3px solid {b_col}; padding:8px 12px; border-radius:6px; margin-bottom:8px; font-size:12px;">
-<b style="color:#00F5FF;">✍️ Yönetici Değerlendirmesi:</b> <span style="color:#E2E8F0;">{q.get('user_comment', '')}</span>
+<b style="color:#7DA8DF;">✍️ Yönetici Değerlendirmesi:</b> <span style="color:#E2E8F0;">{q.get('user_comment', '')}</span>
 </div>
-<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:10px; background:rgba(0,245,255,0.04); padding:10px; border-radius:8px; font-size:11.5px; margin-bottom:8px;">
-<div><b style="color:#8FA3C0;">Onaylanan Cihaz Kotası:</b><br><span style="color:#00F5FF; font-weight:700; font-size:13px;">+{q.get('approved_devices', q['ai_target_devices'])} Adet</span></div>
+<div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap:10px; background:rgba(125,168,223,0.04); padding:10px; border-radius:8px; font-size:11.5px; margin-bottom:8px;">
+<div><b style="color:#8FA3C0;">Onaylanan Cihaz Kotası:</b><br><span style="color:#7DA8DF; font-weight:700; font-size:13px;">+{q.get('approved_devices', q['ai_target_devices'])} Adet</span></div>
 <div><b style="color:#8FA3C0;">Onaylanan Sarf Kotası:</b><br><span style="color:#FFB800; font-weight:700; font-size:13px;">{q.get('approved_consumables', q['ai_target_consumables'])} Kutu</span></div>
 <div><b style="color:#8FA3C0;">Asgari Yıllık Ciro Taahhüdü:</b><br><span style="color:#10B981; font-weight:700; font-size:13px;">{format_curr(q.get('approved_revenue', q['ai_target_revenue']))}</span></div>
 <div><b style="color:#8FA3C0;">Münhasırlık Şartı:</b><br><span style="color:#CCD7E6;">{q.get('enforcement_clause', 'Standart Sözleşme')}</span></div>
@@ -31508,7 +31483,7 @@ elif active_view in ["Partner Karneleri & Veri Masası", "📋 Partner Karneleri
         st.markdown(f'''
         <div class="glass-metric-card">
             <div class="glass-icon-box">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7DA8DF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
             </div>
             <div class="glass-metric-header">Reporting Period</div>
             <div class="glass-metric-val" style="font-size:16px;">{range_sel}</div>
@@ -31530,7 +31505,7 @@ elif active_view in ["Partner Karneleri & Veri Masası", "📋 Partner Karneleri
         st.markdown(f'''
         <div class="glass-metric-card">
             <div class="glass-icon-box">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7DA8DF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
             </div>
             <div class="glass-metric-header">Placed Equipment</div>
             <div class="glass-metric-val">{total_devices:,} <span style="font-size:13px;color:#94A3B8;font-weight:500;">Units</span></div>
@@ -31543,7 +31518,7 @@ elif active_view in ["Partner Karneleri & Veri Masası", "📋 Partner Karneleri
         st.markdown(f'''
         <div class="glass-metric-card">
             <div class="glass-icon-box">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31"></path><path d="M14 9.3V1.99"></path><path d="M8.5 2h7"></path><path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path><path d="M5.52 16h12.96"></path></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7DA8DF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 2v7.31"></path><path d="M14 9.3V1.99"></path><path d="M8.5 2h7"></path><path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path><path d="M5.52 16h12.96"></path></svg>
             </div>
             <div class="glass-metric-header">Consumables Base</div>
             <div class="glass-metric-val">{format_curr(total_con_rev)}</div>
@@ -31565,7 +31540,7 @@ elif active_view in ["Partner Karneleri & Veri Masası", "📋 Partner Karneleri
         st.markdown(f'''
         <div class="glass-metric-card">
             <div class="glass-icon-box">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7DA8DF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
             </div>
             <div class="glass-metric-header">Active Partner Network</div>
             <div class="glass-metric-val">{n_active_dists} <span style="font-size:13px;color:#94A3B8;font-weight:500;">Partners</span></div>
@@ -31754,7 +31729,7 @@ if len(active_subviews) > 1:
                 st.session_state[b_pills_key] = active_subviews[b_prev_idx]
                 st.rerun()
         with b_nav2:
-            st.markdown(f"<div style='text-align:center;color:#94A3B8;font-size:12px;'>Görünüm <b style='color:#FAFAFA;'>{b_curr_idx + 1} / {len(active_subviews)}</b> · <span style='color:#38BDF8;font-weight:500;'>{active_subviews[b_curr_idx].split('(')[0].strip()}</span></div>", unsafe_allow_html=True)
+            st.markdown(f"<div style='text-align:center;color:#94A3B8;font-size:12px;'>Görünüm <b style='color:#FAFAFA;'>{b_curr_idx + 1} / {len(active_subviews)}</b> · <span style='color:#7DA8DF;font-weight:500;'>{active_subviews[b_curr_idx].split('(')[0].strip()}</span></div>", unsafe_allow_html=True)
         with b_nav3:
             next_sub_label = active_subviews[b_next_idx].split('(')[0].strip()
             if st.button(f"Sonraki: {next_sub_label} ›", key=f"bot_next_nav_{b_pills_key}", use_container_width=True):
@@ -31772,7 +31747,7 @@ components.html("""
     <div id="zeus-engine-box" style="
         position: relative;
         overflow: hidden;
-        background: #0F172A;
+        background: #121C2B;
         border: 1px solid rgba(226, 232, 240, 0.10);
         border-radius: 8px;
         padding: 16px 22px;
@@ -31781,7 +31756,7 @@ components.html("""
         justify-content: space-between;
         gap: 16px;
         flex-wrap: wrap;
-        font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
         color: #FAFAFA;
         margin: 8px 0;
         box-sizing: border-box;
@@ -31800,14 +31775,14 @@ components.html("""
                 width: 36px;
                 height: 36px;
                 border-radius: 6px;
-                background: #131E32;
+                background: #162235;
                 border: 1px solid rgba(226, 232, 240, 0.10);
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 flex-shrink: 0;
             ">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7DA8DF" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round">
                     <rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/>
                     <path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/>
                     <path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/>
@@ -31827,14 +31802,14 @@ components.html("""
         </div>
 
         <div style="display: flex; align-items: center; gap: 20px; position: relative; z-index: 1; flex-wrap: wrap;">
-            <div style="display: flex; gap: 16px; border-right: 1px solid rgba(226, 232, 240, 0.08); padding-right: 18px;">
+            <div style="display: flex; gap: 16px; border-right: 1px solid #263347; padding-right: 18px;">
                 <div>
                     <div style="font-size: 10px; color: #64748B; text-transform: uppercase; letter-spacing: 0.06em;">Pazarlar</div>
-                    <div class="cu-num" data-target="48" style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 600; color: #FAFAFA;">48</div>
+                    <div class="cu-num" data-target="48" style="font-family: 'Geist Mono', monospace; font-size: 14px; font-weight: 600; color: #FAFAFA;">48</div>
                 </div>
                 <div>
                     <div style="font-size: 10px; color: #64748B; text-transform: uppercase; letter-spacing: 0.06em;">Fatura</div>
-                    <div class="cu-num" data-target="1280" style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 600; color: #FAFAFA;">1,280</div>
+                    <div class="cu-num" data-target="1280" style="font-family: 'Geist Mono', monospace; font-size: 14px; font-weight: 600; color: #FAFAFA;">1,280</div>
                 </div>
             </div>
 
@@ -31847,7 +31822,7 @@ components.html("""
                 background: rgba(16, 185, 129, 0.10);
                 border: 1px solid rgba(16, 185, 129, 0.28);
                 color: #34D399;
-                font-family: 'IBM Plex Mono', monospace;
+                font-family: 'Geist Mono', monospace;
                 font-size: 11px;
                 font-weight: 500;
                 letter-spacing: 0.04em;
@@ -31900,7 +31875,7 @@ components.html("""
 # EXECUTIVE ATTRIBUTION & COPYRIGHT FOOTER
 # ==========================================
 st.markdown('''
-<div style="text-align: center; margin-top: 36px; margin-bottom: 24px; padding: 20px 16px 16px 16px; border-top: 1px solid rgba(226, 232, 240, 0.08); background: #0F172A; border: 1px solid rgba(226, 232, 240, 0.08); border-radius: 8px; font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;">
+<div style="text-align: center; margin-top: 36px; margin-bottom: 24px; padding: 20px 16px 16px 16px; border-top: 1px solid #263347; background: #121C2B; border: 1px solid #263347; border-radius: 8px; font-family: 'Inter', system-ui, -apple-system, sans-serif;">
     <div style="font-size: 13.5px; font-weight: 600; color: #E2E8F0; letter-spacing: 0.04em; margin-bottom: 5px;">
         Conceived & Directed by <span style="color: #FAFAFA; font-weight: 700; border-bottom: 1px solid #0C5CAB; padding-bottom: 2px;">Sireen Khemesh</span>
     </div>

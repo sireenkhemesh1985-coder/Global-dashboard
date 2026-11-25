@@ -12,8 +12,8 @@ import re
 # Palette constants aligned with Linear / Bloomberg / Vercel Enterprise design system
 ICON_MUTED = "#94A3B8"
 ICON_SUBTLE = "#64748B"
-ICON_ACTIVE = "#38BDF8"
-ICON_PRIMARY = "#F8FAFC"
+ICON_ACTIVE = "#7DA8DF"
+ICON_PRIMARY = "#CBD5E1"
 ICON_SUCCESS = "#10B981"
 ICON_WARNING = "#F59E0B"
 ICON_DANGER = "#EF4444"
