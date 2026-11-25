@@ -50,555 +50,450 @@ def get_system_datetime_display():
 # Custom Styling (ZGMI Executive Theme)
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+    /* Google Fonts: Strict Rule B1 Compliance (Manrope + Geist Mono) */
+    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&display=swap');
     
+    /* Design System Tokens (Rules B1, B2, B3, B4, B7) */
+    :root {
+        --zg-font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        --zg-font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        
+        /* Fixed 12-Step Spacing Tokens (Rule B2) */
+        --zg-space-0: 0px;
+        --zg-space-1: 2px;
+        --zg-space-2: 4px;
+        --zg-space-3: 8px;
+        --zg-space-4: 12px;
+        --zg-space-5: 16px;
+        --zg-space-6: 24px;
+        --zg-space-7: 32px;
+        --zg-space-8: 40px;
+        --zg-space-9: 48px;
+        --zg-space-10: 64px;
+        
+        /* High-Contrast Flat Surfaces (Rule B4) */
+        --zg-surface-base: #070B14;
+        --zg-surface-card: #0E1626;
+        --zg-surface-elevated: #141E34;
+        --zg-surface-hover: #1A2640;
+        
+        /* Full Perimeter Borders (Rule B4) */
+        --zg-border-subtle: 1px solid rgba(0, 245, 255, 0.16);
+        --zg-border-medium: 1px solid rgba(0, 245, 255, 0.28);
+        --zg-border-active: 1px solid #00F5FF;
+        --zg-border-muted: 1px solid rgba(255, 255, 255, 0.08);
+        
+        /* Concentric Nested Radii (Rule B3: r_inner = r_outer - gap) */
+        --zg-radius-xs: 4px;
+        --zg-radius-sm: 6px;
+        --zg-radius-md: 8px;
+        --zg-radius-lg: 12px;
+        --zg-radius-xl: 16px;
+        --zg-radius-full: 9999px;
+        
+        /* Weighted Physical Deceleration (Rule B7) */
+        --zg-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+        --zg-transition: all 300ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
     /* Global Smooth Scrolling */
     html {
         scroll-behavior: smooth !important;
     }
 
-    /* Floating Back-To-Top Button */
+    /* Global Background & Typography Hygiene (Rule B1) */
+    html, body, [class*="css"], .stApp {
+        font-family: var(--zg-font-sans) !important;
+        background-color: var(--zg-surface-base) !important;
+        color: #E2E8F0 !important;
+        letter-spacing: -0.01em;
+    }
+
+    /* Strict Rule B1: Never use italics anywhere in UI */
+    i, em, span, p, div, b, strong, a, label, small, caption {
+        font-style: normal !important;
+    }
+
+    /* Strict Rule B1: Text-wrap balance for headings & pretty for paragraphs */
+    h1, h2, h3, h4, h5, h6 {
+        font-family: var(--zg-font-sans) !important;
+        text-wrap: balance !important;
+        color: #FFFFFF !important;
+        letter-spacing: -0.02em !important;
+        font-weight: 700 !important;
+    }
+    p, [data-testid="stMarkdownContainer"] p {
+        font-family: var(--zg-font-sans) !important;
+        text-wrap: pretty !important;
+        line-height: 1.55 !important;
+    }
+
+    /* Monospace Numeric Rule B1: Geist Mono with Tabular Numbers */
+    code, pre, [data-testid="stMetricValue"], .kpi-val, .glass-metric-val, .mono-num {
+        font-family: var(--zg-font-mono) !important;
+        font-feature-settings: 'tnum' on, 'zero' on !important;
+    }
+
+    /* Floating Back-To-Top Tactile Button */
     #btn-back-to-top {
         position: fixed;
-        bottom: 26px;
-        right: 26px;
+        bottom: 24px;
+        right: 24px;
         z-index: 999999;
-        background: linear-gradient(135deg, #00F5FF 0%, #0099FF 100%);
+        background: #00F5FF;
         color: #070B14 !important;
-        border-radius: 50%;
+        border-radius: var(--zg-radius-full);
         width: 44px;
         height: 44px;
         display: flex;
         align-items: center;
         justify-content: center;
         font-size: 18px;
-        font-weight: 800;
+        font-weight: 700;
         text-decoration: none !important;
-        box-shadow: 0 4px 18px rgba(0, 245, 255, 0.45);
-        border: 1.5px solid rgba(255, 255, 255, 0.6);
+        box-shadow: 0 4px 18px rgba(0, 245, 255, 0.40);
+        border: 1px solid rgba(255, 255, 255, 0.6);
         cursor: pointer;
-        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        transition: transform 300ms var(--zg-ease-out), box-shadow 300ms var(--zg-ease-out);
     }
     #btn-back-to-top:hover {
-        transform: translateY(-3px) scale(1.08);
-        box-shadow: 0 8px 26px rgba(0, 245, 255, 0.7);
-        color: #070B14 !important;
+        transform: translateY(-2px) scale(1.06);
+        box-shadow: 0 8px 24px rgba(0, 245, 255, 0.65);
     }
-
-    /* Global Background & Typography */
-    html, body, [class*="css"] {
-        font-family: 'Inter', system-ui, -apple-system, sans-serif;
-    }
-    
-    .stApp {
-        background: 
-            radial-gradient(circle at 14% 12%, rgba(0, 245, 255, 0.05) 0%, transparent 42%),
-            radial-gradient(circle at 86% 82%, rgba(19, 166, 181, 0.06) 0%, transparent 48%),
-            radial-gradient(circle at 50% 50%, rgba(11, 20, 38, 0.45) 0%, transparent 60%),
-            #070B14 !important;
-        color: #E2E8F0 !important;
-    }
-
-    /* Multi-line & Non-Truncating Metrics (Sığmazsa alta al) */
-    [data-testid="stMetricValue"] {
-        white-space: normal !important;
-        word-break: break-word !important;
-        overflow-wrap: break-word !important;
-        text-overflow: clip !important;
-        line-height: 1.25 !important;
-    }
-    [data-testid="stMetricDelta"] {
-        white-space: normal !important;
-        word-break: break-word !important;
-        overflow-wrap: break-word !important;
-    }
-    [data-testid="stMetricDelta"] > div {
-        white-space: normal !important;
-        word-break: break-word !important;
-        overflow-wrap: break-word !important;
-        text-overflow: clip !important;
+    #btn-back-to-top:active {
+        transform: translateY(0) scale(0.98);
     }
 
     /* Main Container Spacing */
     .main .block-container {
-        padding-top: 1.8rem !important;
+        padding-top: 1.5rem !important;
         padding-bottom: 3rem !important;
         max-width: 96% !important;
     }
 
-    /* Modern Glass Sidebar */
+    /* ====================================================================== */
+    /* EXECUTIVE SIDEBAR & NAVIGATION (Rule B4 Flat Obsidian Surfaces)         */
+    /* ====================================================================== */
     [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, rgba(10, 16, 28, 0.94) 0%, rgba(7, 11, 20, 0.98) 100%) !important;
-        backdrop-filter: blur(24px) !important;
-        -webkit-backdrop-filter: blur(24px) !important;
-        border-right: 1px solid rgba(0, 245, 255, 0.14) !important;
-        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.4) !important;
+        background-color: var(--zg-surface-base) !important;
+        background-image: none !important;
+        border-right: var(--zg-border-subtle) !important;
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.45) !important;
     }
     [data-testid="stSidebar"] hr {
         border-color: rgba(0, 245, 255, 0.12) !important;
         margin: 16px 0 !important;
     }
 
-    /* Sidebar Navigation - Ultra Modern SaaS Radio */
+    /* Sidebar Navigation Cards (Strict Rule B4: Full 4-Sided Borders) */
     [data-testid="stSidebar"] [data-testid="stRadio"] > div {
-        gap: 6px !important;
+        gap: 8px !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] label {
-        background: rgba(15, 23, 42, 0.45) !important;
-        border: 1px solid rgba(255, 255, 255, 0.04) !important;
-        border-radius: 8px !important;
-        padding: 9px 12px !important;
+        background: var(--zg-surface-card) !important;
+        border: var(--zg-border-muted) !important;
+        border-radius: var(--zg-radius-md) !important;
+        padding: 10px 14px !important;
         margin: 0 !important;
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        transition: var(--zg-transition) !important;
         cursor: pointer !important;
         display: flex !important;
         align-items: center !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] label:hover {
-        background: rgba(0, 245, 255, 0.08) !important;
-        border-color: rgba(0, 245, 255, 0.3) !important;
+        background: var(--zg-surface-elevated) !important;
+        border-color: rgba(0, 245, 255, 0.45) !important;
         transform: translateX(3px) !important;
-        box-shadow: 0 2px 14px rgba(0, 245, 255, 0.1) !important;
+        box-shadow: 0 4px 16px rgba(0, 245, 255, 0.12) !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] label[data-checked="true"],
     [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) {
-        background: linear-gradient(90deg, rgba(0, 245, 255, 0.16) 0%, rgba(19, 166, 181, 0.05) 100%) !important;
-        border: 1px solid rgba(0, 245, 255, 0.4) !important;
-        border-left: 3px solid #00F5FF !important;
-        box-shadow: 0 0 20px rgba(0, 245, 255, 0.14), inset 0 0 12px rgba(0, 245, 255, 0.06) !important;
+        background: var(--zg-surface-elevated) !important;
+        border: var(--zg-border-active) !important;
+        box-shadow: 0 0 20px rgba(0, 245, 255, 0.20), inset 0 0 12px rgba(0, 245, 255, 0.08) !important;
     }
-    [data-testid="stSidebar"] [data-testid="stRadio"] label span {
-        font-size: 13px !important;
+    [data-testid="stSidebar"] [data-testid="stRadio"] label p,
+    [data-testid="stSidebar"] [data-testid="stRadio"] label span,
+    [data-testid="stSidebar"] [data-testid="stRadio"] [data-testid="stMarkdownContainer"] {
+        display: block !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        font-size: 13.5px !important;
         font-weight: 500 !important;
         color: #E2E8F0 !important;
-        letter-spacing: 0.01em !important;
+        letter-spacing: -0.01em !important;
     }
+    [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) p,
     [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) span {
         color: #00F5FF !important;
         font-weight: 600 !important;
     }
-    [data-testid="stSidebar"] [data-testid="stRadio"] input[type="radio"] + div {
+    [data-testid="stSidebar"] [data-testid="stRadio"] input[type="radio"],
+    [data-testid="stSidebar"] [data-testid="stRadio"] div[data-baseweb="radio"] > div:first-child:not([data-testid="stMarkdownContainer"]) {
         display: none !important;
+        width: 0 !important;
+        height: 0 !important;
+        visibility: hidden !important;
+        opacity: 0 !important;
     }
 
-    /* Top Header Branding */
-    .zg-brand {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        margin-bottom: 22px;
-        padding-bottom: 14px;
-        border-bottom: 1px solid rgba(0, 245, 255, 0.16);
-    }
-    .zg-logo-box {
-        width: 44px;
-        height: 44px;
-        border-radius: 12px;
-        background: linear-gradient(135deg, #13A6B5 0%, #0B6F85 100%);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-weight: 800;
-        font-size: 24px;
-        color: #ffffff;
-        box-shadow: 0 0 20px rgba(0, 245, 255, 0.35);
-        border: 1px solid rgba(0, 245, 255, 0.4);
-    }
-    .zg-title {
-        font-size: 22px;
-        font-weight: 700;
-        letter-spacing: -0.01em;
-        background: linear-gradient(90deg, #FFFFFF 0%, #E2E8F0 50%, #00F5FF 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        margin: 0;
-        line-height: 1.2;
-    }
-    .zg-subtitle {
-        font-size: 12px;
-        color: #64748B;
-        margin: 0;
-        letter-spacing: 0.05em;
-        text-transform: uppercase;
-    }
-
-    /* KPI Cards - Enhanced Deep Slate Glass & Neon */
+    /* ====================================================================== */
+    /* EXECUTIVE METRIC CARDS (Strict Rule B4: Solid Flat Backgrounds)         */
+    /* ====================================================================== */
     .kpi-container {
-        background: linear-gradient(145deg, rgba(16, 26, 46, 0.85) 0%, rgba(9, 16, 30, 0.94) 100%) !important;
-        border: 1px solid rgba(0, 245, 255, 0.18) !important;
-        border-top: 1px solid rgba(0, 245, 255, 0.45) !important;
-        border-radius: 12px !important;
-        padding: 13px 12px !important;
-        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
-        backdrop-filter: blur(16px) !important;
-        -webkit-backdrop-filter: blur(16px) !important;
+        background: var(--zg-surface-card) !important;
+        background-image: none !important;
+        border: var(--zg-border-subtle) !important;
+        border-radius: var(--zg-radius-lg) !important;
+        padding: 16px !important;
+        transition: var(--zg-transition) !important;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35) !important;
         min-width: 0 !important;
         overflow: visible !important;
         position: relative !important;
-        min-height: 220px !important;
+        min-height: 190px !important;
         display: flex !important;
         flex-direction: column !important;
         justify-content: space-between !important;
     }
     .kpi-container:hover {
         transform: translateY(-2px) !important;
-        border-color: rgba(0, 245, 255, 0.65) !important;
-        box-shadow: 0 10px 30px rgba(0, 245, 255, 0.2), inset 0 0 12px rgba(0, 245, 255, 0.08) !important;
+        border-color: rgba(0, 245, 255, 0.50) !important;
+        box-shadow: 0 8px 24px rgba(0, 245, 255, 0.16) !important;
     }
     .kpi-header {
-        font-size: 11.5px !important;
-        font-weight: 700 !important;
-        color: #CCD7E6 !important;
+        font-size: 12px !important;
+        font-weight: 600 !important;
+        color: #94A3B8 !important;
         text-transform: uppercase !important;
-        letter-spacing: 0.04em !important;
-        margin-bottom: 2px !important;
-        white-space: normal !important;
-        word-break: break-word !important;
-        overflow: visible !important;
-        text-overflow: clip !important;
+        letter-spacing: 0.05em !important;
+        margin-bottom: 4px !important;
         display: block !important;
-        line-height: 1.25 !important;
+        line-height: 1.3 !important;
     }
     .kpi-val {
-        font-size: 23px !important;
-        font-weight: 800 !important;
-        font-family: 'JetBrains Mono', 'Inter', monospace !important;
-        font-feature-settings: 'tnum' !important;
+        font-size: 24px !important;
+        font-weight: 700 !important;
+        font-family: var(--zg-font-mono) !important;
         color: #FFFFFF !important;
         letter-spacing: -0.02em !important;
-        margin-bottom: 2px !important;
-        white-space: normal !important;
-        overflow: visible !important;
-        text-overflow: clip !important;
+        margin-bottom: 4px !important;
         display: block !important;
         line-height: 1.2 !important;
     }
     .kpi-sub {
-        font-size: 11px !important;
-        font-weight: 600 !important;
-        white-space: normal !important;
-        overflow: visible !important;
-        text-overflow: clip !important;
+        font-size: 12px !important;
+        font-weight: 500 !important;
         display: block !important;
     }
-    .kpi-pos { color: #10B981 !important; text-shadow: 0 0 8px rgba(16, 185, 129, 0.25) !important; }
-    .kpi-neg { color: #F43F5E !important; text-shadow: 0 0 8px rgba(244, 63, 94, 0.25) !important; }
-    .kpi-neu { color: #F59E0B !important; text-shadow: 0 0 8px rgba(245, 158, 11, 0.25) !important; }
+    .kpi-pos { color: #10B981 !important; }
+    .kpi-neg { color: #F43F5E !important; }
+    .kpi-neu { color: #F59E0B !important; }
 
-    /* Badges & Chips */
+    /* Glass Metric Card Grid (Rule B4 Flat Surfaces + Rule B3 Nested Radii) */
+    .glass-metric-card {
+        background: var(--zg-surface-card) !important;
+        background-image: none !important;
+        border: var(--zg-border-subtle) !important;
+        border-radius: var(--zg-radius-lg) !important;
+        padding: 16px !important;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35) !important;
+        transition: var(--zg-transition) !important;
+        margin-bottom: 12px !important;
+        min-height: 136px !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: space-between !important;
+    }
+    .glass-metric-card:hover {
+        transform: translateY(-2px) !important;
+        border-color: rgba(0, 245, 255, 0.50) !important;
+        box-shadow: 0 8px 24px rgba(0, 245, 255, 0.16) !important;
+    }
+    .glass-icon-box {
+        width: 36px;
+        height: 36px;
+        border-radius: var(--zg-radius-md);
+        background: var(--zg-surface-elevated);
+        border: var(--zg-border-subtle);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 8px;
+    }
+    .glass-metric-header {
+        font-size: 12px !important;
+        font-weight: 600 !important;
+        color: #94A3B8 !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.05em !important;
+        margin-bottom: 4px !important;
+    }
+    .glass-metric-val {
+        font-size: 22px !important;
+        font-weight: 700 !important;
+        font-family: var(--zg-font-mono) !important;
+        color: #FFFFFF !important;
+        letter-spacing: -0.02em !important;
+        margin-bottom: 2px !important;
+        line-height: 1.2 !important;
+    }
+    .glass-metric-sub {
+        font-size: 12px !important;
+        font-weight: 500 !important;
+        color: #64748B !important;
+    }
+
+    /* Badges & Status Chips (Rule B3: r_inner = r_outer - gap) */
     .chip {
         display: inline-flex !important;
         align-items: center !important;
-        gap: 5px !important;
+        gap: 6px !important;
         padding: 4px 10px !important;
-        border-radius: 999px !important;
-        font-size: 11px !important;
+        border-radius: var(--zg-radius-full) !important;
+        font-size: 12px !important;
         font-weight: 600 !important;
         letter-spacing: 0.02em !important;
-        margin-right: 4px !important;
-        backdrop-filter: blur(8px) !important;
+        margin-right: 6px !important;
     }
-    .chip-ok { background: rgba(16, 185, 129, 0.14) !important; color: #34D399 !important; border: 1px solid rgba(16, 185, 129, 0.3) !important; box-shadow: 0 0 10px rgba(16, 185, 129, 0.1) !important; }
-    .chip-wn { background: rgba(245, 158, 11, 0.14) !important; color: #FBBF24 !important; border: 1px solid rgba(245, 158, 11, 0.3) !important; box-shadow: 0 0 10px rgba(245, 158, 11, 0.1) !important; }
-    .chip-err { background: rgba(244, 63, 94, 0.14) !important; color: #FB7185 !important; border: 1px solid rgba(244, 63, 94, 0.3) !important; box-shadow: 0 0 10px rgba(244, 63, 94, 0.1) !important; }
-    .chip-info { background: rgba(0, 245, 255, 0.12) !important; color: #00F5FF !important; border: 1px solid rgba(0, 245, 255, 0.28) !important; box-shadow: 0 0 10px rgba(0, 245, 255, 0.1) !important; }
+    .chip-ok { background: rgba(16, 185, 129, 0.12) !important; color: #34D399 !important; border: 1px solid rgba(16, 185, 129, 0.3) !important; }
+    .chip-wn { background: rgba(245, 158, 11, 0.12) !important; color: #FBBF24 !important; border: 1px solid rgba(245, 158, 11, 0.3) !important; }
+    .chip-err { background: rgba(244, 63, 94, 0.12) !important; color: #FB7185 !important; border: 1px solid rgba(244, 63, 94, 0.3) !important; }
+    .chip-info { background: rgba(0, 245, 255, 0.10) !important; color: #00F5FF !important; border: 1px solid rgba(0, 245, 255, 0.28) !important; }
 
-    /* Alert Banner & Glass Cards */
+    /* Alert Banner (Rule B4: Full 4-Sided Perimeter Border, No border-left) */
     .alert-card {
-        border-radius: 12px !important;
-        padding: 14px 18px !important;
+        border-radius: var(--zg-radius-lg) !important;
+        padding: 16px !important;
         margin-bottom: 12px !important;
-        border-left: 3px solid #00F5FF !important;
-        background: linear-gradient(135deg, rgba(15, 23, 42, 0.7) 0%, rgba(10, 16, 28, 0.8) 100%) !important;
-        border-top: 1px solid rgba(0, 245, 255, 0.1) !important;
-        border-right: 1px solid rgba(0, 245, 255, 0.08) !important;
-        border-bottom: 1px solid rgba(0, 245, 255, 0.08) !important;
-        backdrop-filter: blur(14px) !important;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25) !important;
-    }
-
-    /* Headings */
-    h1, h2, h3 {
-        color: #F8FAFC !important;
-        font-weight: 700 !important;
-        letter-spacing: -0.02em !important;
-    }
-    h1 { font-size: 26px !important; }
-    h2 { font-size: 20px !important; }
-    h3 { font-size: 16px !important; color: #00F5FF !important; }
-    .stCaption, small {
-        color: #94A3B8 !important;
-        font-size: 12px !important;
-    }
-
-    /* Modern Tabs */
-    .stTabs [data-baseweb="tab-list"] {
-        gap: 6px !important;
-        background: rgba(11, 18, 32, 0.6) !important;
-        padding: 5px !important;
-        border-radius: 12px !important;
-        border: 1px solid rgba(0, 245, 255, 0.12) !important;
-        backdrop-filter: blur(14px) !important;
-    }
-    .stTabs [data-baseweb="tab"] {
-        border-radius: 8px !important;
-        padding: 8px 16px !important;
-        color: #94A3B8 !important;
-        font-weight: 500 !important;
-        background: transparent !important;
-        border: 1px solid transparent !important;
-        transition: all 0.2s ease !important;
-    }
-    .stTabs [data-baseweb="tab"]:hover {
-        color: #E2E8F0 !important;
-        background: rgba(255, 255, 255, 0.03) !important;
-    }
-    .stTabs [aria-selected="true"] {
-        background: rgba(0, 245, 255, 0.14) !important;
-        border: 1px solid rgba(0, 245, 255, 0.35) !important;
-        color: #00F5FF !important;
-        font-weight: 600 !important;
-        box-shadow: 0 0 14px rgba(0, 245, 255, 0.15) !important;
+        background: var(--zg-surface-card) !important;
+        background-image: none !important;
+        border: var(--zg-border-subtle) !important;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.30) !important;
     }
 
     /* ====================================================================== */
-    /* ULTRA-LUXURY GLASSMORPHIC BUTTON & INPUT SYSTEM (NON-AI EXECUTIVE UI)  */
+    /* STANDARDIZED BUTTONS (Rule B2: 8px x 12px Padding, 14px Font, Bold 600)*/
     /* ====================================================================== */
-
-    /* 1. Universal Secondary Glass Buttons (All standard st.button secondary) */
     .stButton > button,
     button[kind="secondary"],
     button[data-testid="baseButton-secondary"],
     button[data-testid="stBaseButton-secondary"],
     div[data-testid="stButton"] button {
-        background: linear-gradient(145deg, rgba(16, 26, 46, 0.85) 0%, rgba(9, 16, 30, 0.90) 100%) !important;
-        border: 1px solid rgba(0, 245, 255, 0.28) !important;
-        border-radius: 10px !important;
+        background: var(--zg-surface-card) !important;
+        background-image: none !important;
+        border: var(--zg-border-medium) !important;
+        border-radius: var(--zg-radius-md) !important;
         color: #F1F5F9 !important;
         font-weight: 600 !important;
-        font-size: 13px !important;
-        letter-spacing: 0.02em !important;
-        padding: 7px 18px !important;
-        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        backdrop-filter: blur(16px) !important;
-        -webkit-backdrop-filter: blur(16px) !important;
-        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
-        text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6) !important;
+        font-size: 14px !important;
+        letter-spacing: -0.01em !important;
+        padding: 8px 14px !important;
+        transition: var(--zg-transition) !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+        cursor: pointer !important;
     }
     .stButton > button:hover,
     button[kind="secondary"]:hover,
-    button[data-testid="baseButton-secondary"]:hover,
-    button[data-testid="stBaseButton-secondary"]:hover,
     div[data-testid="stButton"] button:hover {
-        background: linear-gradient(145deg, rgba(0, 245, 255, 0.18) 0%, rgba(19, 166, 181, 0.32) 100%) !important;
+        background: var(--zg-surface-elevated) !important;
         border-color: #00F5FF !important;
         color: #00F5FF !important;
-        box-shadow: 0 0 20px rgba(0, 245, 255, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
-        transform: translateY(-2px) !important;
+        box-shadow: 0 0 16px rgba(0, 245, 255, 0.30) !important;
+        transform: translateY(-1px) !important;
     }
     .stButton > button:active,
     button[kind="secondary"]:active,
-    button[data-testid="baseButton-secondary"]:active {
-        transform: translateY(0) scale(0.98) !important;
-        box-shadow: 0 0 10px rgba(0, 245, 255, 0.3) !important;
+    div[data-testid="stButton"] button:active {
+        transform: scale(0.98) !important;
     }
 
-    /* 2. Universal Primary Glass Buttons (st.button type="primary") */
+    /* Primary Buttons (Rule B2 / B4 Contrast) */
     .stButton > button[kind="primary"],
     button[kind="primary"],
     button[data-testid="baseButton-primary"],
     button[data-testid="stBaseButton-primary"],
     div[data-testid="stButton"] button[kind="primary"] {
-        background: linear-gradient(135deg, #00F5FF 0%, #0284C7 100%) !important;
-        border: 1px solid rgba(255, 255, 255, 0.45) !important;
-        border-radius: 10px !important;
+        background: #00F5FF !important;
+        background-image: none !important;
+        border: 1px solid #00F5FF !important;
+        border-radius: var(--zg-radius-md) !important;
         color: #070B14 !important;
-        font-weight: 800 !important;
-        font-size: 13px !important;
-        letter-spacing: 0.02em !important;
-        padding: 7px 20px !important;
-        backdrop-filter: blur(16px) !important;
-        -webkit-backdrop-filter: blur(16px) !important;
-        box-shadow: 0 4px 20px rgba(0, 245, 255, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.5) !important;
-        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        text-shadow: none !important;
+        font-weight: 700 !important;
+        font-size: 14px !important;
+        letter-spacing: -0.01em !important;
+        padding: 8px 16px !important;
+        box-shadow: 0 4px 18px rgba(0, 245, 255, 0.40) !important;
+        transition: var(--zg-transition) !important;
     }
     .stButton > button[kind="primary"]:hover,
-    button[kind="primary"]:hover,
-    button[data-testid="baseButton-primary"]:hover,
-    button[data-testid="stBaseButton-primary"]:hover {
-        background: linear-gradient(135deg, #38BDF8 0%, #00F5FF 100%) !important;
-        border-color: #FFFFFF !important;
-        color: #070B14 !important;
-        box-shadow: 0 0 28px rgba(0, 245, 255, 0.75), inset 0 1px 0 rgba(255, 255, 255, 0.6) !important;
-        transform: translateY(-2px) !important;
-    }
-
-    /* 3. Popover Trigger Buttons (e.g. Düzenle) */
-    div[data-testid="stPopover"] > button,
-    button[data-testid="stBaseButton-popover"] {
-        background: linear-gradient(145deg, rgba(16, 26, 46, 0.85) 0%, rgba(9, 16, 30, 0.90) 100%) !important;
-        border: 1px solid rgba(0, 245, 255, 0.28) !important;
-        border-radius: 10px !important;
-        color: #F1F5F9 !important;
-        font-weight: 600 !important;
-        font-size: 13px !important;
-        padding: 7px 18px !important;
-        backdrop-filter: blur(16px) !important;
-        transition: all 0.25s ease !important;
-    }
-    div[data-testid="stPopover"] > button:hover {
-        border-color: #00F5FF !important;
-        color: #00F5FF !important;
-        box-shadow: 0 0 20px rgba(0, 245, 255, 0.4) !important;
-        transform: translateY(-2px) !important;
-    }
-
-    /* 4. Streamlit Pills & ButtonGroup (Universal Frosted Glass Capsule Bar) */
-    div[data-testid="stButtonGroup"],
-    .stButtonGroup {
-        background: rgba(11, 19, 36, 0.80) !important;
-        backdrop-filter: blur(20px) !important;
-        -webkit-backdrop-filter: blur(20px) !important;
-        border: 1px solid rgba(0, 245, 255, 0.25) !important;
-        border-radius: 9999px !important;
-        padding: 3px 6px !important;
-        gap: 6px !important;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
-        display: inline-flex !important;
-        align-items: center !important;
-        width: fit-content !important;
-        max-width: 100% !important;
-    }
-    /* Pill Element - Unselected (Clear, readable, high contrast) */
-    div[data-testid="stButtonGroup"] [data-variant="pills"],
-    div[data-testid="stButtonGroup"] button,
-    button[data-testid="stBaseButton-pills"],
-    button[data-testid="baseButton-pills"],
-    div[data-testid="stButtonGroup"] [role="radio"] {
-        background: rgba(15, 23, 42, 0.75) !important;
-        border: 1px solid rgba(0, 245, 255, 0.22) !important;
-        border-radius: 9999px !important;
-        color: #E2E8F0 !important;
-        font-size: 13px !important;
-        font-weight: 600 !important;
-        letter-spacing: 0.01em !important;
-        padding: 6px 18px !important;
-        transition: all 0.22s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        backdrop-filter: blur(14px) !important;
-        white-space: nowrap !important;
-        width: auto !important;
-        min-width: max-content !important;
-        max-width: none !important;
-    }
-    /* Pill Element - Hover */
-    div[data-testid="stButtonGroup"] [data-variant="pills"]:hover,
-    div[data-testid="stButtonGroup"] button:hover,
-    button[data-testid="stBaseButton-pills"]:hover,
-    button[data-testid="baseButton-pills"]:hover {
-        background: rgba(0, 245, 255, 0.10) !important;
-        border-color: rgba(0, 245, 255, 0.45) !important;
-        color: #FFFFFF !important;
-        box-shadow: 0 0 16px rgba(0, 245, 255, 0.28) !important;
+    button[kind="primary"]:hover {
+        background: #38BDF8 !important;
+        border-color: #38BDF8 !important;
+        box-shadow: 0 6px 24px rgba(0, 245, 255, 0.60) !important;
         transform: translateY(-1px) !important;
     }
-    /* Pill Element - Active / Selected */
-    div[data-testid="stButtonGroup"] [data-variant="pills"][data-selected="true"],
-    div[data-testid="stButtonGroup"] [data-variant="pills"][data-selected],
-    div[data-testid="stButtonGroup"] [data-variant="pills"][aria-selected="true"],
-    div[data-testid="stButtonGroup"] button[data-selected="true"],
-    div[data-testid="stButtonGroup"] button[aria-selected="true"],
-    button[data-testid="stBaseButton-pillsActive"],
-    button[data-testid="baseButton-pillsActive"],
-    button[kind="pillsActive"],
-    div[data-testid="stButtonGroup"] [role="radio"][aria-checked="true"] {
-        background: linear-gradient(135deg, rgba(0, 245, 255, 0.28) 0%, rgba(16, 185, 129, 0.22) 100%) !important;
-        border: 1.5px solid #00F5FF !important;
-        border-radius: 9999px !important;
-        color: #FFFFFF !important;
-        font-weight: 700 !important;
-        box-shadow: 0 0 20px rgba(0, 245, 255, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
-        text-shadow: 0 0 10px rgba(0, 245, 255, 0.6) !important;
-        transform: translateY(-1px) !important;
+    .stButton > button[kind="primary"]:active,
+    button[kind="primary"]:active {
+        transform: scale(0.98) !important;
     }
 
-    /* 5. Modern Glass Inputs & Selectboxes */
+    /* Executive Forms (Rule B4 Flat Obsidian Surface) */
+    [data-testid="stForm"] {
+        background: var(--zg-surface-card) !important;
+        border: var(--zg-border-subtle) !important;
+        border-radius: var(--zg-radius-lg) !important;
+        padding: 24px !important;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.40) !important;
+    }
+
+    /* Executive Inputs & Selectboxes */
     div[data-baseweb="select"] > div,
     div[data-baseweb="input"] > div {
-        background: rgba(13, 21, 38, 0.75) !important;
-        border: 1px solid rgba(0, 245, 255, 0.22) !important;
-        border-radius: 10px !important;
+        background: var(--zg-surface-elevated) !important;
+        border: var(--zg-border-subtle) !important;
+        border-radius: var(--zg-radius-md) !important;
         color: #F8FAFC !important;
-        backdrop-filter: blur(14px) !important;
-        transition: all 0.25s ease !important;
+        transition: var(--zg-transition) !important;
     }
     div[data-baseweb="select"] > div:hover,
     div[data-baseweb="input"] > div:hover {
-        border-color: rgba(0, 245, 255, 0.55) !important;
-        box-shadow: 0 0 16px rgba(0, 245, 255, 0.22) !important;
+        border-color: rgba(0, 245, 255, 0.50) !important;
     }
     div[data-baseweb="select"] > div:focus-within,
     div[data-baseweb="input"] > div:focus-within {
         border-color: #00F5FF !important;
-        box-shadow: 0 0 20px rgba(0, 245, 255, 0.4) !important;
+        box-shadow: 0 0 16px rgba(0, 245, 255, 0.30) !important;
     }
 
-    /* 6. Specialized Bottom Navigation Glass Dock */
-    div[class*="st-key-zgmi_bottom_nav_dock"] {
-        background: linear-gradient(145deg, rgba(13, 21, 38, 0.75) 0%, rgba(9, 16, 30, 0.88) 100%) !important;
-        border: 1px solid rgba(0, 245, 255, 0.22) !important;
-        border-radius: 14px !important;
+    /* Executive Tabs (Rule B4 Flat Surfaces) */
+    .stTabs [data-baseweb="tab-list"] {
+        gap: 6px !important;
+        background: var(--zg-surface-card) !important;
+        padding: 6px !important;
+        border-radius: var(--zg-radius-lg) !important;
+        border: var(--zg-border-subtle) !important;
+    }
+    .stTabs [data-baseweb="tab"] {
+        border-radius: var(--zg-radius-md) !important;
         padding: 8px 16px !important;
-        backdrop-filter: blur(20px) !important;
-        -webkit-backdrop-filter: blur(20px) !important;
-        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
-        margin-top: 24px !important;
-        margin-bottom: 12px !important;
+        color: #94A3B8 !important;
+        font-size: 14px !important;
+        font-weight: 500 !important;
+        background: transparent !important;
+        border: 1px solid transparent !important;
+        transition: var(--zg-transition) !important;
     }
-
-    /* Dataframes & Tables */
-    [data-testid="stDataFrame"], [data-testid="stTable"] {
-        background: rgba(10, 16, 28, 0.65) !important;
-        border: 1px solid rgba(0, 245, 255, 0.14) !important;
-        border-radius: 12px !important;
-        padding: 4px !important;
-        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25) !important;
-        backdrop-filter: blur(16px) !important;
+    .stTabs [data-baseweb="tab"]:hover {
+        color: #E2E8F0 !important;
+        background: var(--zg-surface-elevated) !important;
     }
-
-    /* Expanders */
-    [data-testid="stExpander"] {
-        background: rgba(11, 18, 32, 0.5) !important;
-        border: 1px solid rgba(0, 245, 255, 0.12) !important;
-        border-radius: 12px !important;
-        backdrop-filter: blur(12px) !important;
-        overflow: hidden !important;
-    }
-
-    /* Universal Metric Truncation & Ellipsis Fix */
-    [data-testid="stMetric"] {
-        min-width: 0 !important;
-        overflow: visible !important;
-    }
-    [data-testid="stMetricValue"] {
-        font-size: 1.45rem !important;
-        white-space: normal !important;
-        word-break: break-word !important;
-        overflow: visible !important;
-        text-overflow: clip !important;
-    }
-    [data-testid="stMetricLabel"] {
-        white-space: normal !important;
-        word-break: break-word !important;
-        overflow: visible !important;
-        text-overflow: clip !important;
-    }
-    [data-testid="stMetricDelta"] {
-        white-space: normal !important;
-        word-break: break-word !important;
-        overflow: visible !important;
-        text-overflow: clip !important;
+    .stTabs [aria-selected="true"] {
+        background: var(--zg-surface-elevated) !important;
+        border: var(--zg-border-active) !important;
+        color: #00F5FF !important;
+        font-weight: 600 !important;
+        box-shadow: 0 0 14px rgba(0, 245, 255, 0.16) !important;
     }
 
     /* Custom Sleek Scrollbar */
@@ -607,271 +502,42 @@ st.markdown("""
         height: 6px;
     }
     ::-webkit-scrollbar-track {
-        background: rgba(7, 11, 20, 0.6);
+        background: var(--zg-surface-base);
     }
     ::-webkit-scrollbar-thumb {
         background: rgba(0, 245, 255, 0.22);
-        border-radius: 999px;
+        border-radius: var(--zg-radius-full);
     }
     ::-webkit-scrollbar-thumb:hover {
-        background: rgba(0, 245, 255, 0.5);
+        background: rgba(0, 245, 255, 0.50);
     }
 
-    /* Prevent Text Truncation in Checklists, Inputs, and Labels */
-    [data-testid="stCheckbox"] label,
-    [data-testid="stCheckbox"] label p,
-    [data-testid="stCheckbox"] label span,
-    [data-testid="stCheckbox"] label [data-testid="stMarkdownContainer"] p {
-        white-space: normal !important;
-        word-break: break-word !important;
-        overflow: visible !important;
-        text-overflow: clip !important;
-        line-height: 1.45 !important;
-        font-size: 12.5px !important;
-    }
-    [data-testid="stCheckbox"] {
-        margin-bottom: 8px !important;
-        padding: 3px 0 !important;
+    /* Dataframes & Tables */
+    [data-testid="stDataFrame"], [data-testid="stTable"] {
+        background: var(--zg-surface-card) !important;
+        border: var(--zg-border-subtle) !important;
+        border-radius: var(--zg-radius-lg) !important;
+        padding: 4px !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.30) !important;
     }
 
-    /* Streamlit Tabs Flexible Wrap & Sizing */
-    [data-testid="stTabs"] [data-baseweb="tab-list"] {
-        gap: 8px !important;
-        flex-wrap: wrap !important;
-        height: auto !important;
-        border-bottom: 1px solid rgba(0, 245, 255, 0.2) !important;
-    }
-    [data-testid="stTabs"] button[data-baseweb="tab"] {
-        white-space: normal !important;
-        height: auto !important;
-        padding: 8px 14px !important;
-        border-radius: 8px !important;
-        font-size: 13px !important;
-        letter-spacing: 0.02em !important;
-    }
-
-    /* Glass Metric Card Grid */
-    .glass-metric-card {
-        background: linear-gradient(145deg, rgba(16, 26, 46, 0.72) 0%, rgba(9, 16, 30, 0.86) 100%) !important;
-        border: 1px solid rgba(0, 245, 255, 0.16) !important;
-        border-top: 1px solid rgba(0, 245, 255, 0.35) !important;
-        border-radius: 14px !important;
-        padding: 14px 16px !important;
-        backdrop-filter: blur(16px) !important;
-        -webkit-backdrop-filter: blur(16px) !important;
-        box-shadow: 0 6px 22px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
-        transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        margin-bottom: 12px !important;
-        min-height: 140px !important;
-        display: flex !important;
-        flex-direction: column !important;
-        justify-content: space-between !important;
-    }
-    .glass-metric-card:hover {
-        transform: translateY(-3px) !important;
-        border-color: rgba(0, 245, 255, 0.65) !important;
-        box-shadow: 0 10px 30px rgba(0, 245, 255, 0.2), inset 0 0 12px rgba(0, 245, 255, 0.08) !important;
-    }
-    .glass-icon-box {
-        width: 36px;
-        height: 36px;
-        border-radius: 10px;
-        background: rgba(0, 245, 255, 0.08);
-        border: 1px solid rgba(0, 245, 255, 0.22);
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 10px;
-        box-shadow: 0 0 12px rgba(0, 245, 255, 0.15);
-    }
-    .glass-metric-header {
-        font-size: 11px !important;
-        font-weight: 600 !important;
-        color: #94A3B8 !important;
-        text-transform: uppercase !important;
-        letter-spacing: 0.06em !important;
-        margin-bottom: 4px !important;
-    }
-    .glass-metric-val {
-        font-size: 20px !important;
-        font-weight: 700 !important;
-        font-family: 'JetBrains Mono', 'Inter', monospace !important;
-        color: #FFFFFF !important;
-        letter-spacing: -0.02em !important;
-        margin-bottom: 2px !important;
-        line-height: 1.2 !important;
-    }
-    .glass-metric-sub {
-        font-size: 11px !important;
-        font-weight: 500 !important;
-        color: #64748B !important;
-    }
-
-    /* Sidebar Navigation - Ultra-Clean SaaS Pills */
-    [data-testid="stSidebar"] [data-testid="stRadio"] > div {
-        gap: 6px !important;
-    }
-    [data-testid="stSidebar"] [data-testid="stRadio"] label {
-        background: rgba(15, 23, 42, 0.45) !important;
-        border: 1px solid rgba(255, 255, 255, 0.05) !important;
-        border-radius: 9px !important;
-        padding: 9px 12px !important;
-        margin: 0 !important;
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
-        cursor: pointer !important;
-        display: flex !important;
-        align-items: center !important;
-    }
-    [data-testid="stSidebar"] [data-testid="stRadio"] label:hover {
-        background: rgba(0, 245, 255, 0.08) !important;
-        border-color: rgba(0, 245, 255, 0.3) !important;
-        transform: translateX(3px) !important;
-        box-shadow: 0 2px 14px rgba(0, 245, 255, 0.1) !important;
-    }
-    [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked),
-    [data-testid="stSidebar"] [data-testid="stRadio"] label[data-checked="true"] {
-        background: linear-gradient(90deg, rgba(0, 245, 255, 0.16) 0%, rgba(19, 166, 181, 0.05) 100%) !important;
-        border: 1px solid rgba(0, 245, 255, 0.45) !important;
-        border-left: 3px solid #00F5FF !important;
-        box-shadow: 0 0 20px rgba(0, 245, 255, 0.15) !important;
-    }
-    /* Explicitly make label text visible and styled */
-    [data-testid="stSidebar"] [data-testid="stRadio"] label p,
-    [data-testid="stSidebar"] [data-testid="stRadio"] label span,
-    [data-testid="stSidebar"] [data-testid="stRadio"] [data-testid="stMarkdownContainer"] {
-        display: block !important;
-        visibility: visible !important;
-        opacity: 1 !important;
-        font-size: 13px !important;
-        font-weight: 500 !important;
-        color: #E2E8F0 !important;
-        letter-spacing: 0.01em !important;
-    }
-    [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) p,
-    [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) span {
-        color: #00F5FF !important;
-        font-weight: 600 !important;
-    }
-    /* Hide only the radio circle and its svg */
-    [data-testid="stSidebar"] [data-testid="stRadio"] input[type="radio"],
-    [data-testid="stSidebar"] [data-testid="stRadio"] div[data-baseweb="radio"] > div:first-child:not([data-testid="stMarkdownContainer"]) {
-        display: none !important;
-        width: 0 !important;
-        height: 0 !important;
-        visibility: hidden !important;
-        opacity: 0 !important;
-        margin: 0 !important;
-        padding: 0 !important;
-    }
-
-    /* ==========================================================================
-       MOBILE RESPONSIVE & TOUCH OPTIMIZATION (Smartphones & Tablets <= 768px)
-       ========================================================================== */
+    /* Mobile Responsive Optimizations */
     @media (max-width: 768px) {
-        /* Container padding scaling */
         .main .block-container {
             padding-top: 1.0rem !important;
             padding-left: 0.6rem !important;
             padding-right: 0.6rem !important;
-            padding-bottom: 2.5rem !important;
             max-width: 100% !important;
         }
-
-        /* Top Executive KPI Cards & Columns - Mobile Stack */
-        [data-testid="stHorizontalBlock"] {
-            flex-wrap: wrap !important;
-            gap: 8px !important;
-        }
-        [data-testid="stHorizontalBlock"] > div[data-testid="column"] {
-            min-width: 100% !important;
-            flex: 1 1 100% !important;
-            margin-bottom: 6px !important;
-        }
-
-        /* Metric Cards Touch Optimization */
-        .glass-metric-card {
-            padding: 12px 14px !important;
-            border-radius: 12px !important;
-            margin-bottom: 8px !important;
-        }
-        .glass-metric-val {
-            font-size: 20px !important;
-        }
-        .glass-metric-header {
-            font-size: 11px !important;
-        }
-        .glass-metric-sub {
-            font-size: 10px !important;
-        }
-
-        /* Sidebar Navigation - Mobile Touch Friendly (Apple Touch Target 44px+) */
         [data-testid="stSidebar"] {
-            width: 86vw !important;
+            width: 88vw !important;
             max-width: 320px !important;
         }
-        [data-testid="stSidebar"] [data-testid="stRadio"] label {
-            padding: 12px 14px !important;
+        .stButton > button, div[data-testid="stButton"] button {
             min-height: 44px !important;
-            margin-bottom: 4px !important;
-        }
-        [data-testid="stSidebar"] [data-testid="stRadio"] label span,
-        [data-testid="stSidebar"] [data-testid="stRadio"] label p {
-            font-size: 13.5px !important;
-        }
-
-        /* Tabs Navigation - Smooth Mobile Horizontal Touch Scrolling */
-        .stTabs [data-baseweb="tab-list"] {
-            overflow-x: auto !important;
-            flex-wrap: nowrap !important;
-            scrollbar-width: thin !important;
-            -webkit-overflow-scrolling: touch !important;
-            gap: 6px !important;
-            padding-bottom: 6px !important;
-        }
-        .stTabs [data-baseweb="tab"] {
-            white-space: nowrap !important;
-            font-size: 12px !important;
-            padding: 8px 12px !important;
-        }
-
-        /* Dataframes & Tables - Touch Smooth Scroll */
-        .stDataFrame, div[data-testid="stTable"] {
-            overflow-x: auto !important;
-            -webkit-overflow-scrolling: touch !important;
-            width: 100% !important;
-        }
-
-        /* Headings & Typography Responsive Scaling */
-        h1, .stApp h1 {
-            font-size: 1.4rem !important;
-            line-height: 1.3 !important;
-        }
-        h2, .stApp h2 {
-            font-size: 1.2rem !important;
-        }
-        h3, .stApp h3 {
-            font-size: 1.05rem !important;
-        }
-        h4, .stApp h4 {
-            font-size: 0.95rem !important;
-        }
-
-        /* Plotly Charts & Iframes Responsive */
-        .js-plotly-plot, .plotly {
-            max-width: 100% !important;
-            overflow-x: hidden !important;
-        }
-
-        /* Selectboxes & Buttons Mobile Touch Sizing */
-        div[data-baseweb="select"] {
-            min-height: 44px !important;
-        }
-        button[kind="primary"], button[kind="secondary"] {
-            min-height: 44px !important;
-            font-size: 13px !important;
+            font-size: 14px !important;
         }
     }
-
 </style>
 """, unsafe_allow_html=True)
 
@@ -9158,9 +8824,9 @@ def render_login_gate():
         col_l, col_m, col_r = st.columns([1, 1.8, 1])
         with col_m:
             st.markdown("""
-            <div style="text-align: center; margin-top: 35px; margin-bottom: 20px;">
-                <div style="display: inline-block; padding: 6px 16px; background: rgba(0, 245, 255, 0.08); border: 1px solid rgba(0, 245, 255, 0.3); border-radius: 20px; margin-bottom: 14px;">
-                    <span style="font-size: 11px; font-weight: 700; color: #00F5FF; letter-spacing: 0.12em; text-transform: uppercase;">🔒 ZEUS BIOSCIENCE SECURE GATEWAY</span>
+            <div style="text-align: center; margin-top: 36px; margin-bottom: 16px;">
+                <div style="display: inline-block; padding: 6px 16px; background: #141E34; border: 1px solid rgba(0, 245, 255, 0.28); border-radius: 9999px; margin-bottom: 16px; box-shadow: 0 4px 14px rgba(0,0,0,0.3);">
+                    <span style="font-size: 12px; font-weight: 700; color: #00F5FF; letter-spacing: 0.08em; text-transform: uppercase;">?? ZEUS BIOSCIENCE SECURE GATEWAY</span>
                 </div>
             </div>
             """, unsafe_allow_html=True)
@@ -9172,17 +8838,17 @@ def render_login_gate():
                 st.image("zeus_logo_white.png", use_container_width=True)
 
             st.markdown("""
-            <div style="text-align: center; margin-top: 10px; margin-bottom: 24px;">
-                <h3 style="color: #FFFFFF; font-weight: 800; font-size: 20px; margin-bottom: 4px;">Global Market Intelligence (ZGMI)</h3>
-                <p style="color: #8FA3C0; font-size: 12.5px; margin: 0;">Lütfen panele erişmek için kurumsal kullanıcı adı ve şifrenizi giriniz.</p>
+            <div style="text-align: center; margin-top: 14px; margin-bottom: 24px;">
+                <h2 style="color: #FFFFFF; font-weight: 700; font-size: 24px; margin-bottom: 6px; letter-spacing: -0.02em; text-wrap: balance;">Global Market Intelligence (ZGMI)</h2>
+                <p style="color: #94A3B8; font-size: 14px; margin: 0; line-height: 1.5; text-wrap: pretty;">L?tfen panele eri?mek i?in kurumsal kullan?c? ad? ve ?ifrenizi giriniz.</p>
             </div>
             """, unsafe_allow_html=True)
 
             with st.form("zgmi_login_form", clear_on_submit=False):
-                inp_user = st.text_input("Kullanıcı Adı (Username):", placeholder="Kurumsal kullanıcı adınızı giriniz", key="inp_login_user")
-                inp_pass = st.text_input("Şifre (Password):", type="password", placeholder="••••••••", key="inp_login_pass")
+                inp_user = st.text_input("Kullan?c? Ad? (Username):", placeholder="Kurumsal kullan?c? ad?n?z? giriniz", key="inp_login_user")
+                inp_pass = st.text_input("?ifre (Password):", type="password", placeholder="????????", key="inp_login_pass")
                 st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
-                login_clicked = st.form_submit_button("🔐 Güvenli Giriş Yap (Sign In)", use_container_width=True)
+                login_clicked = st.form_submit_button("?? G?venli Giri? Yap (Sign In)", use_container_width=True)
 
             if login_clicked:
                 u_clean = inp_user.strip().lower()
@@ -9193,30 +8859,30 @@ def render_login_gate():
                     st.session_state["auth_name"] = USER_CREDENTIALS[u_clean]["name"]
                     st.session_state["auth_role"] = USER_CREDENTIALS[u_clean]["role"]
                     st.session_state["auth_badge"] = USER_CREDENTIALS[u_clean]["badge"]
-                    st.success("✅ Giriş doğrulandı! Yönlendiriliyorsunuz...")
+                    st.success("? Giri? do?ruland?! Y?nlendiriliyorsunuz...")
                     st.rerun()
                 else:
-                    st.error("❌ Hatalı kullanıcı adı veya şifre! Lütfen bilgilerinizi kontrol ediniz.")
+                    st.error("? Hatal? kullan?c? ad? veya ?ifre! L?tfen bilgilerinizi kontrol ediniz.")
 
             sys_dt_login = get_system_datetime_display()
             st.markdown(f"""
-            <div style="text-align: center; margin-top: 14px; margin-bottom: 6px;">
-                <span style="display: inline-flex; align-items: center; gap: 6px; background: rgba(0, 245, 255, 0.06); border: 1px solid rgba(0, 245, 255, 0.2); padding: 4px 14px; border-radius: 16px; font-size: 11px; color: #CBD5E1; font-family: 'JetBrains Mono', monospace;">
-                    <span>🕒 Canlı Sistem Zamanı:</span>
+            <div style="text-align: center; margin-top: 16px; margin-bottom: 8px;">
+                <span style="display: inline-flex; align-items: center; gap: 8px; background: #0E1626; border: 1px solid rgba(0, 245, 255, 0.25); padding: 6px 16px; border-radius: 9999px; font-size: 12px; color: #CBD5E1; font-family: 'Geist Mono', monospace;">
+                    <span style="color: #94A3B8;">?? Canl? Sistem Zaman?:</span>
                     <b style="color: #00F5FF;">{sys_dt_login}</b>
                 </span>
             </div>
-            <div style="text-align: center; margin-top: 8px; font-size: 11px; color: #64748B;">
-                <span style="display: inline-flex; align-items: center; gap: 6px; background: rgba(15, 23, 42, 0.6); border: 1px solid rgba(255, 255, 255, 0.05); padding: 6px 16px; border-radius: 20px;">
-                    <span style="color: #00F5FF;">🛡️</span> 256-Bit SSL Uçtan Uca Şifreli Kurumsal Yetkili Oturum
+            <div style="text-align: center; margin-top: 8px; font-size: 12px; color: #64748B;">
+                <span style="display: inline-flex; align-items: center; gap: 6px; background: #0E1626; border: 1px solid rgba(255, 255, 255, 0.08); padding: 6px 16px; border-radius: 9999px;">
+                    <span style="color: #00F5FF;">???</span> 256-Bit SSL U?tan Uca ?ifreli Kurumsal Yetkili Oturum
                 </span>
             </div>
-            <div style="text-align: center; margin-top: 24px; padding-top: 18px; border-top: 1px solid rgba(255, 255, 255, 0.08); font-family: 'Inter', system-ui, -apple-system, sans-serif;">
-                <div style="font-size: 12.5px; font-weight: 600; color: #94A3B8; letter-spacing: 0.04em; margin-bottom: 4px;">
+            <div style="text-align: center; margin-top: 24px; padding-top: 18px; border-top: 1px solid rgba(255, 255, 255, 0.08); font-family: 'Manrope', system-ui, -apple-system, sans-serif;">
+                <div style="font-size: 13px; font-weight: 600; color: #94A3B8; letter-spacing: 0.03em; margin-bottom: 4px;">
                     Conceived & Directed by <span style="color: #00F5FF; font-weight: 700; text-shadow: 0 0 12px rgba(0, 245, 255, 0.35);">Sireen Khemesh</span>
                 </div>
-                <div style="font-size: 11px; color: #64748B; letter-spacing: 0.03em; font-weight: 500;">
-                    © 2026 ZEUS Bioscience. All rights reserved
+                <div style="font-size: 12px; color: #64748B; letter-spacing: 0.02em; font-weight: 500;">
+                    ? 2026 ZEUS Bioscience. All rights reserved
                 </div>
             </div>
             """, unsafe_allow_html=True)
@@ -9248,16 +8914,16 @@ with st.sidebar:
     
     sys_dt_side = get_system_datetime_display()
     st.markdown(f'''
-    <div style="background: rgba(0, 245, 255, 0.05); border: 1px solid rgba(0, 245, 255, 0.22); border-radius: 8px; padding: 8px 12px; margin-top: -6px; margin-bottom: 12px; font-size: 11.5px;">
+    <div style="background: #0E1626; border: 1px solid rgba(0, 245, 255, 0.22); border-radius: 12px; padding: 12px 14px; margin-top: -6px; margin-bottom: 12px; font-size: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.3);">
         <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span style="color: #8FA3C0;">Oturum Açık:</span>
-            <span style="background: rgba(0, 230, 118, 0.15); color: #00E676; font-size: 9.5px; font-weight: 700; padding: 1px 6px; border-radius: 4px;">● {auth_user_badge}</span>
+            <span style="color: #94A3B8; font-size: 11px; font-weight: 500;">Oturum A??k:</span>
+            <span style="background: rgba(0, 230, 118, 0.15); color: #00E676; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 6px; border: 1px solid rgba(0, 230, 118, 0.3);">? {auth_user_badge}</span>
         </div>
-        <div style="font-weight: 700; color: #FFFFFF; font-size: 12.5px; margin-top: 2px;">👤 {auth_user_name}</div>
-        <div style="color: #00F5FF; font-size: 10.5px;">{auth_user_role}</div>
-        <div style="border-top: 1px solid rgba(255,255,255,0.08); margin-top: 6px; padding-top: 6px; color: #94A3B8; font-size: 10px; display: flex; justify-content: space-between; align-items: center;">
-            <span>🕒 Canlı Sistem Saati:</span>
-            <b style="color: #00F5FF; font-family: 'JetBrains Mono', monospace; font-size: 10px;">{sys_dt_side}</b>
+        <div style="font-weight: 700; color: #FFFFFF; font-size: 13px; margin-top: 4px;">?? {auth_user_name}</div>
+        <div style="color: #00F5FF; font-size: 11px; font-weight: 500;">{auth_user_role}</div>
+        <div style="border-top: 1px solid rgba(255,255,255,0.08); margin-top: 8px; padding-top: 8px; color: #94A3B8; font-size: 11px; display: flex; justify-content: space-between; align-items: center;">
+            <span>?? Canl? Sistem Saati:</span>
+            <b style="color: #00F5FF; font-family: 'Geist Mono', monospace; font-size: 11px;">{sys_dt_side}</b>
         </div>
     </div>
     ''', unsafe_allow_html=True)
@@ -9359,15 +9025,15 @@ with st.sidebar:
 
     cur_nav_info = nav_param_meta.get(nav_selection, {})
     if cur_nav_info:
-        params_html = "".join([f"<li style=\'margin-bottom:3px;\'>{p}</li>" for p in cur_nav_info.get("params", [])])
+        params_html = "".join([f"<li style='margin-bottom:4px;'>{p}</li>" for p in cur_nav_info.get("params", [])])
         st.markdown(f"""
-        <div style="background:rgba(15,23,42,0.85);border:1px solid {cur_nav_info.get('color', '#00F5FF')}44;border-left:3.5px solid {cur_nav_info.get('color', '#00F5FF')};border-radius:8px;padding:9px 12px;margin-top:8px;margin-bottom:12px;font-size:11.5px;box-shadow:0 4px 14px rgba(0,0,0,0.25);">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
-                <b style="color:{cur_nav_info.get('color', '#00F5FF')};font-size:12px;">{cur_nav_info.get('title')}</b>
-                <span style="background:{cur_nav_info.get('color', '#00F5FF')}22;color:{cur_nav_info.get('color', '#00F5FF')};font-size:10px;padding:1px 6px;border-radius:4px;font-weight:700;">{cur_nav_info.get('badge')}</span>
+        <div style="background:#0E1626;border:1px solid {cur_nav_info.get('color', '#00F5FF')}44;border-radius:12px;padding:12px 14px;margin-top:8px;margin-bottom:12px;box-shadow:0 4px 16px rgba(0,0,0,0.30);">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+                <b style="color:{cur_nav_info.get('color', '#00F5FF')};font-size:13px;font-weight:700;">{cur_nav_info.get('title')}</b>
+                <span style="background:{cur_nav_info.get('color', '#00F5FF')}22;color:{cur_nav_info.get('color', '#00F5FF')};font-size:11px;padding:2px 8px;border-radius:6px;font-weight:700;border:1px solid {cur_nav_info.get('color', '#00F5FF')}55;">{cur_nav_info.get('badge')}</span>
             </div>
-            <div style="color:#94A3B8;font-size:10px;margin-bottom:4px;font-weight:600;letter-spacing:0.3px;">İÇERDİĞİ KRİTİK PARAMETRELER:</div>
-            <ul style="color:#CBD5E1;padding-left:14px;margin:0;font-size:11px;line-height:1.45;">
+            <div style="color:#94A3B8;font-size:11px;margin-bottom:6px;font-weight:600;letter-spacing:0.4px;">??ERD??? KR?T?K PARAMETRELER:</div>
+            <ul style="color:#CBD5E1;padding-left:16px;margin:0;font-size:12px;line-height:1.6;">
                 {params_html}
             </ul>
         </div>
@@ -18880,50 +18546,48 @@ def render_active_omni_search_hub(query_str):
 # Universal Hub Header & Subview Switcher (Ultra-Luxury Glassmorphic Console Dock)
 st.markdown("""
 <style>
-    /* Executive Glass Capsule Dock Container */
+    /* Executive Console Dock Container (Rule B4 Flat Surface) */
     div[class*="st-key-zgmi_top_control_dock"] {
-        background: linear-gradient(145deg, rgba(13, 21, 38, 0.78) 0%, rgba(9, 16, 30, 0.88) 100%) !important;
+        background: #0E1626 !important;
         border: 1px solid rgba(0, 245, 255, 0.22) !important;
-        border-radius: 14px !important;
-        padding: 5px 12px !important;
-        backdrop-filter: blur(20px) !important;
-        -webkit-backdrop-filter: blur(20px) !important;
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+        border-radius: 12px !important;
+        padding: 6px 12px !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
         margin-bottom: 14px !important;
     }
-    /* Circular Navigation Glass Buttons - PREV / NEXT ONLY */
+    /* Circular Navigation Buttons */
     div[class*="st-key-btn_prev_"] button,
     div[class*="st-key-btn_next_"] button,
     div[class*="st-key-bot_prev_nav_"] button,
     div[class*="st-key-bot_next_nav_"] button {
         border-radius: 50% !important;
-        width: 38px !important;
-        height: 38px !important;
-        min-width: 38px !important;
-        max-width: 38px !important;
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        max-width: 36px !important;
         padding: 0 !important;
         margin: 0 auto !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        background: rgba(15, 23, 42, 0.85) !important;
-        border: 1px solid rgba(0, 245, 255, 0.35) !important;
+        background: #141E34 !important;
+        border: 1px solid rgba(0, 245, 255, 0.30) !important;
         color: #00F5FF !important;
-        font-size: 20px !important;
+        font-size: 18px !important;
         font-weight: 700 !important;
         line-height: 1 !important;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
+        transition: all 300ms cubic-bezier(0.22, 1, 0.36, 1) !important;
     }
     div[class*="st-key-btn_prev_"] button:hover,
     div[class*="st-key-btn_next_"] button:hover,
     div[class*="st-key-bot_prev_nav_"] button:hover,
     div[class*="st-key-bot_next_nav_"] button:hover {
-        background: rgba(0, 245, 255, 0.24) !important;
+        background: rgba(0, 245, 255, 0.20) !important;
         border-color: #00F5FF !important;
         color: #FFFFFF !important;
-        box-shadow: 0 0 20px rgba(0, 245, 255, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
-        transform: scale(1.1) !important;
+        box-shadow: 0 0 16px rgba(0, 245, 255, 0.5) !important;
+        transform: scale(1.08) !important;
     }
 
     /* Subview Pills - Always Full Width, High-Contrast & Beautifully Legible */
@@ -18940,7 +18604,7 @@ st.markdown("""
         max-width: 100% !important;
     }
 
-    /* Pill Items: MUST NEVER BE CIRCLES OR SQUASHED */
+    /* Pill Items: Rounded Full, High Contrast (Rule B3 & B4) */
     div[data-testid="stButtonGroup"] button,
     div[data-testid="stButtonGroup"] [data-variant="pills"],
     div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stButtonGroup"] button,
@@ -18949,40 +18613,37 @@ st.markdown("""
         width: auto !important;
         min-width: max-content !important;
         max-width: none !important;
-        height: 38px !important;
+        height: 36px !important;
         border-radius: 9999px !important;
-        background: rgba(15, 23, 42, 0.75) !important;
-        border: 1px solid rgba(0, 245, 255, 0.25) !important;
+        background: #141E34 !important;
+        border: 1px solid rgba(0, 245, 255, 0.22) !important;
         color: #E2E8F0 !important;
+        font-family: var(--zg-font-sans) !important;
         font-size: 13px !important;
         font-weight: 600 !important;
-        letter-spacing: 0.01em !important;
-        padding: 6px 18px !important;
-        margin: 0 3px !important;
+        letter-spacing: -0.01em !important;
+        padding: 6px 16px !important;
+        margin: 0 2px !important;
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
         white-space: nowrap !important;
-        overflow: visible !important;
-        text-overflow: clip !important;
-        backdrop-filter: blur(14px) !important;
-        -webkit-backdrop-filter: blur(14px) !important;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
-        transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important;
+        transition: all 300ms cubic-bezier(0.22, 1, 0.36, 1) !important;
         box-sizing: border-box !important;
     }
 
     div[data-testid="stButtonGroup"] button:hover,
     div[data-testid="stButtonGroup"] [data-variant="pills"]:hover,
     div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stButtonGroup"] button:hover {
-        background: rgba(0, 245, 255, 0.14) !important;
-        border-color: rgba(0, 245, 255, 0.55) !important;
+        background: rgba(0, 245, 255, 0.12) !important;
+        border-color: rgba(0, 245, 255, 0.50) !important;
         color: #FFFFFF !important;
-        box-shadow: 0 0 16px rgba(0, 245, 255, 0.35) !important;
+        box-shadow: 0 0 14px rgba(0, 245, 255, 0.28) !important;
         transform: translateY(-1px) !important;
     }
 
-    /* Selected Pill - Ultra-Luxury Glow & High Contrast */
+    /* Selected Pill - Executive Neon Accent */
     div[data-testid="stButtonGroup"] button[aria-selected="true"],
     div[data-testid="stButtonGroup"] button[data-selected="true"],
     div[data-testid="stButtonGroup"] [data-variant="pills"][data-selected="true"],
@@ -18993,21 +18654,20 @@ st.markdown("""
         width: auto !important;
         min-width: max-content !important;
         max-width: none !important;
-        height: 38px !important;
+        height: 36px !important;
         border-radius: 9999px !important;
-        background: linear-gradient(135deg, rgba(0, 245, 255, 0.32) 0%, rgba(16, 185, 129, 0.24) 100%) !important;
-        border: 1.5px solid #00F5FF !important;
-        color: #FFFFFF !important;
+        background: #00F5FF !important;
+        border: 1px solid #00F5FF !important;
+        color: #070B14 !important;
+        font-family: var(--zg-font-sans) !important;
         font-size: 13px !important;
         font-weight: 700 !important;
-        padding: 6px 20px !important;
-        box-shadow: 0 0 22px rgba(0, 245, 255, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3) !important;
-        text-shadow: 0 0 8px rgba(0, 245, 255, 0.6) !important;
+        padding: 6px 18px !important;
+        box-shadow: 0 0 20px rgba(0, 245, 255, 0.45) !important;
         transform: translateY(-1px) !important;
         white-space: nowrap !important;
     }
 
-    /* Ensure text inside pill buttons never truncates or clips */
     div[data-testid="stButtonGroup"] button *,
     div[data-testid="stButtonGroup"] [data-variant="pills"] * {
         white-space: nowrap !important;
@@ -19016,18 +18676,18 @@ st.markdown("""
         font-size: 13px !important;
         color: inherit !important;
     }
-    /* Integrated Omni-Search Capsule */
+    /* Omni-Search Capsule */
     div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stTextInput"] div[data-baseweb="input"] {
         border-radius: 9999px !important;
-        background: rgba(15, 23, 42, 0.85) !important;
+        background: #141E34 !important;
         border: 1px solid rgba(0, 245, 255, 0.25) !important;
         height: 36px !important;
-        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
-        transition: all 0.2s ease !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+        transition: all 300ms cubic-bezier(0.22, 1, 0.36, 1) !important;
     }
     div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stTextInput"] div[data-baseweb="input"]:focus-within {
         border-color: #00F5FF !important;
-        box-shadow: 0 0 20px rgba(0, 245, 255, 0.45) !important;
+        box-shadow: 0 0 16px rgba(0, 245, 255, 0.35) !important;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -19132,24 +18792,29 @@ if active_view in ["🌐 3D Dünya Küresi & Canlı ERP Kokpiti", "🌐 3D Düny
     col_h1, col_h2 = st.columns([2.5, 1.5])
     with col_h1:
         st.markdown(
-            "<div><span class='chip chip-info'>Executive Overview</span>"
-            "<span class='chip chip-ok' style='background:rgba(0,230,118,0.18);color:#00E676;border:1px solid rgba(0,230,118,0.3);'>✓ Canlı Doğrulanmış Medikal Satış Verisi (1,280 Fatura)</span><span class='chip chip-wn' style='background:rgba(255,184,0,0.18);color:#FFB800;border:1px solid rgba(255,184,0,0.3);'>AI Predictive Engine Active</span></div>"
-            "<h1 style='margin-top:4px;font-size:28px;font-weight:700;'>Global Commercial & Distribution Command Center</h1>"
-            "<p style='color:#8FA3C0;font-size:14px;margin-bottom:12px;'>ZEUS Üreme Teknolojileri küresel satış hacmi, klinik penetrasyon ve pazar yayılım paneli.</p>",
+            "<div style='margin-bottom:8px;'>"
+            "<span class='chip chip-info'>Executive Overview</span>"
+            "<span class='chip chip-ok'>? Canl? Do?rulanm?? Medikal Sat?? Verisi (1,280 Fatura)</span>"
+            "<span class='chip chip-wn'>AI Predictive Engine Active</span>"
+            "</div>"
+            "<h1 style='max-width:680px;font-size:36px;font-weight:700;line-height:1.15;letter-spacing:-0.02em;margin-top:4px;margin-bottom:8px;background:linear-gradient(90deg, #FFFFFF 0%, #94A3B8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-wrap:balance;'>"
+            "Global Commercial & Distribution<br>Command Center</h1>"
+            "<p style='max-width:680px;color:#94A3B8;font-size:14px;line-height:1.55;margin-bottom:12px;text-wrap:pretty;'>"
+            "ZEUS ?reme Teknolojileri k?resel sat?? hacmi, klinik penetrasyon ve pazar yay?l?m paneli.</p>",
             unsafe_allow_html=True
         )
     with col_h2:
         sys_dt_hdr = get_system_datetime_display()
         st.markdown(f'''
         <div style='text-align:right;padding-top:4px;'>
-            <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(0,245,255,0.08);border:1px solid rgba(0,245,255,0.3);border-radius:20px;padding:5px 14px;margin-bottom:6px;box-shadow:0 0 12px rgba(0,245,255,0.15);white-space:nowrap;">
-                <span style="color:#00E676;font-size:10px;">●</span>
-                <span style="color:#FFFFFF;font-weight:700;font-size:11px;letter-spacing:0.04em;">System Online</span>
-                <span style="color:rgba(0,245,255,0.4);">|</span>
-                <span style="color:#00F5FF;font-weight:700;font-size:12px;font-family:'JetBrains Mono',monospace;">🕒 {sys_dt_hdr}</span>
+            <div style="display:inline-flex;align-items:center;gap:8px;background:#0E1626;border:1px solid rgba(0,245,255,0.30);border-radius:9999px;padding:6px 16px;margin-bottom:6px;box-shadow:0 0 16px rgba(0,245,255,0.12);white-space:nowrap;">
+                <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#00E676;box-shadow:0 0 8px #00E676;"></span>
+                <span style="color:#FFFFFF;font-weight:600;font-size:12px;letter-spacing:0.04em;">System Online</span>
+                <span style="color:rgba(0,245,255,0.35);">|</span>
+                <span style="color:#00F5FF;font-weight:600;font-size:12px;font-family:'Geist Mono',monospace;">?? {sys_dt_hdr}</span>
             </div>
             <br>
-            <small style='color:#8FA3C0;'>Seçili Dönem: <b>{year_sel}</b></small>
+            <small style='color:#94A3B8;font-size:12px;'>Se?ili D?nem: <b style="color:#F8FAFC;">{year_sel}</b></small>
         </div>
         ''', unsafe_allow_html=True)
 
@@ -19200,23 +18865,23 @@ if active_view in ["🌐 3D Dünya Küresi & Canlı ERP Kokpiti", "🌐 3D Düny
     all_time_tot_banner = sum(y_sums_banner.values())
 
     st.markdown(f'''
-    <div style="background:rgba(19,166,181,0.08);border:1px solid rgba(0,245,255,0.25);border-left:4px solid #00F5FF;border-radius:10px;padding:11px 16px;margin-bottom:14px;backdrop-filter:blur(10px);">
-        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;">
+    <div style="background:#0E1626;border:1px solid rgba(0,245,255,0.22);border-radius:12px;padding:14px 18px;margin-bottom:16px;box-shadow:0 4px 18px rgba(0,0,0,0.35);">
+        <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
             <div>
-                <span style="font-size:12.5px;font-weight:700;color:#00F5FF;letter-spacing:0.5px;">📌 RESMİ VERİ KAPSAMI & 7 YILLIK TÜM DÖNEMLER (2020 - 2026):</span>
-                <div style="font-size:12px;color:#E2E8F0;margin-top:3px;line-height:1.45;">
-                    Seçili Kapsam: <b>{year_sel}</b> • Kapsam: <b>HERKES DAHİLDİR</b> (6 Yetkili Distribütör + 42 Doğrudan Klinik/Hastane + Kardeş Şirket Gen-Sa).
+                <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(0,245,255,0.10);border:1px solid rgba(0,245,255,0.28);border-radius:6px;padding:3px 10px;font-size:12px;font-weight:700;color:#00F5FF;letter-spacing:0.04em;">?? RESM? VER? KAPSAMI & 7 YILLIK T?M D?NEMLER (2020 - 2026)</span>
+                <div style="font-size:13px;color:#CBD5E1;margin-top:6px;line-height:1.5;">
+                    Se?ili Kapsam: <b style="color:#FFFFFF;">{year_sel}</b> ? Kapsam: <b style="color:#00E676;">HERKES DAH?LD?R</b> (6 Yetkili Distrib?t?r + 42 Do?rudan Klinik/Hastane + Karde? ?irket Gen-Sa).
                 </div>
             </div>
-            <div style="display:flex;gap:7px;font-size:10.5px;background:rgba(15,23,42,0.7);padding:5px 10px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);flex-wrap:wrap;align-items:center;">
-                <div>📅 2020: <b>{format_curr(y_sums_banner[2020])}</b></div>
-                <div>📅 2021: <b>{format_curr(y_sums_banner[2021])}</b></div>
-                <div>📅 2022: <b>{format_curr(y_sums_banner[2022])}</b></div>
-                <div>📅 2023: <b>{format_curr(y_sums_banner[2023])}</b></div>
-                <div>📅 2024: <b>{format_curr(y_sums_banner[2024])}</b></div>
-                <div>📅 2025: <b>{format_curr(y_sums_banner[2025])}</b></div>
-                <div>📅 2026: <b style="color:#00F5FF;">{format_curr(y_sums_banner[2026])}</b></div>
-                <div style="border-left:1px solid rgba(255,255,255,0.25);padding-left:7px;">🌐 <b>Tüm Zamanlar (2020-2026):</b> <b style="color:#10B981;">{format_curr(all_time_tot_banner)}</b></div>
+            <div style="display:flex;gap:8px;font-size:12px;font-family:'Geist Mono',monospace;background:#141E34;padding:6px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);flex-wrap:wrap;align-items:center;">
+                <div>?? 2020: <b>{format_curr(y_sums_banner[2020])}</b></div>
+                <div>?? 2021: <b>{format_curr(y_sums_banner[2021])}</b></div>
+                <div>?? 2022: <b>{format_curr(y_sums_banner[2022])}</b></div>
+                <div>?? 2023: <b>{format_curr(y_sums_banner[2023])}</b></div>
+                <div>?? 2024: <b>{format_curr(y_sums_banner[2024])}</b></div>
+                <div>?? 2025: <b>{format_curr(y_sums_banner[2025])}</b></div>
+                <div>?? 2026: <b style="color:#00F5FF;">{format_curr(y_sums_banner[2026])}</b></div>
+                <div style="border-left:1px solid rgba(255,255,255,0.20);padding-left:8px;">?? <b>T?m Zamanlar:</b> <b style="color:#10B981;">{format_curr(all_time_tot_banner)}</b></div>
             </div>
         </div>
     </div>
@@ -19848,7 +19513,7 @@ if active_view in ["🌐 3D Dünya Küresi & Canlı ERP Kokpiti", "🌐 3D Düny
 <head>
     <meta charset="utf-8">
     <style>
-        body { margin: 0; padding: 0; overflow: hidden; background: transparent; font-family: 'Inter', system-ui, sans-serif; }
+        body { margin: 0; padding: 0; overflow: hidden; background: transparent; font-family: 'Manrope', system-ui, sans-serif; }
         #globe-container { position: relative; width: 100%; height: 530px; border-radius: 16px; background: radial-gradient(circle at 50% 40%, rgba(10, 18, 36, 0.95) 0%, rgba(4, 7, 16, 0.98) 100%); border: 1px solid rgba(0, 245, 255, 0.25); box-shadow: 0 12px 40px rgba(0,0,0,0.6), inset 0 0 35px rgba(0, 245, 255, 0.05); }
         
         #telemetry-box { position: absolute; top: 14px; left: 16px; pointer-events: none; z-index: 10; }
@@ -19870,7 +19535,7 @@ if active_view in ["🌐 3D Dünya Küresi & Canlı ERP Kokpiti", "🌐 3D Düny
         #tt-city { font-size: 11px; color: #00F5FF; margin-bottom: 8px; font-weight: 600; }
         .tt-metric-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; font-size: 11.5px; }
         .tt-label { color: #94A3B8; }
-        .tt-val { font-weight: 700; font-family: 'JetBrains Mono', monospace; }
+        .tt-val { font-weight: 700; font-family: 'Geist Mono', monospace; }
         #tt-status { font-size: 10.5px; font-weight: 600; padding: 3px 8px; border-radius: 5px; margin-top: 6px; display: inline-block; }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
@@ -23682,7 +23347,7 @@ elif active_view in ["📈 Cihaz vs Sarf Gelir Trendleri (2020–2026)", "📊 C
 <head>
     <meta charset="utf-8">
     <style>
-        body { margin: 0; padding: 0; overflow: hidden; background: transparent; font-family: 'Inter', system-ui, sans-serif; }
+        body { margin: 0; padding: 0; overflow: hidden; background: transparent; font-family: 'Manrope', system-ui, sans-serif; }
         #stage-wrap { position: relative; width: 100%; height: 320px; border-radius: 14px; background: radial-gradient(circle at 50% 30%, rgba(15,25,48,0.95) 0%, rgba(7,11,20,0.98) 100%); border: 1px solid rgba(0,245,255,0.22); box-shadow: 0 8px 32px rgba(0,0,0,0.5); }
         #telemetry-tag { position: absolute; top: 10px; left: 12px; font-size: 10px; font-weight: 700; letter-spacing: 0.08em; color: #00F5FF; background: rgba(0,245,255,0.08); border: 1px solid rgba(0,245,255,0.25); border-radius: 6px; padding: 4px 10px; pointer-events: none; }
         #rot-hint { position: absolute; bottom: 8px; left: 50%; transform: translateX(-50%); font-size: 10px; color: #94A3B8; pointer-events: none; background: rgba(10,16,28,0.85); padding: 3px 12px; border-radius: 999px; border: 1px solid rgba(255,255,255,0.08); white-space: nowrap; }
@@ -23709,7 +23374,7 @@ elif active_view in ["📈 Cihaz vs Sarf Gelir Trendleri (2020–2026)", "📊 C
             z-index: 10;
         }
         .badge-name { color: #F1F5F9; font-size: 10px; font-weight: 600; letter-spacing: 0.02em; }
-        .badge-pct { font-family: 'JetBrains Mono', monospace; font-weight: 800; font-size: 10.5px; }
+        .badge-pct { font-family: 'Geist Mono', monospace; font-weight: 800; font-size: 10.5px; }
 
         /* Detailed HUD Tooltip on Hover */
         #hud-tooltip { position: absolute; display: none; pointer-events: none; background: rgba(10,16,28,0.96); border: 1px solid #00F5FF; border-radius: 10px; padding: 10px 14px; backdrop-filter: blur(16px); -webkit-backdrop-filter: blur(16px); box-shadow: 0 8px 30px rgba(0,245,255,0.35); z-index: 999; min-width: 170px; }
@@ -23964,7 +23629,7 @@ elif active_view in ["📈 Cihaz vs Sarf Gelir Trendleri (2020–2026)", "📊 C
                 <div style="background:rgba(15,23,42,0.6);border:1px solid rgba(255,255,255,0.06);border-left:3px solid {col};border-radius:9px;padding:8px 12px;margin-bottom:6px;">
                     <div style="display:flex;justify-content:space-between;align-items:center;">
                         <span style="font-size:12.5px;font-weight:600;color:#FFFFFF;">{row['Product']} <span style="font-size:10.5px;color:#94A3B8;font-weight:400;">({cat_tag})</span></span>
-                        <span style="font-size:12.5px;font-weight:700;color:{col};font-family:'JetBrains Mono',monospace;">${row['Revenue']:,.0f} <span style="font-size:11px;color:#94A3B8;">({row['Share_Pct']}%)</span></span>
+                        <span style="font-size:12.5px;font-weight:700;color:{col};font-family:'Geist Mono',monospace;">${row['Revenue']:,.0f} <span style="font-size:11px;color:#94A3B8;">({row['Share_Pct']}%)</span></span>
                     </div>
                     <div style="width:100%;height:4px;background:rgba(255,255,255,0.06);border-radius:999px;margin-top:5px;overflow:hidden;">
                         <div style="width:{row['Share_Pct']}%;height:100%;background:{col};border-radius:999px;box-shadow:0 0 8px {col};"></div>
@@ -24706,29 +24371,35 @@ elif active_view in ["⚖️ Çoklu Ülke Kıyaslama Masası (Multi-Country Matr
 
                 fig_tech = px.bar(
                     melted_tech, x='name', y='Rate', color='Technology', barmode='group',
-                    title="Klinik Teknoloji & Yöntem Adaptasyon Oranları (%)",
-                    labels={'Rate': 'Oran (%)', 'name': 'Ülke'},
+                    title="Klinik Teknoloji & Y?ntem Adaptasyon Oranlar? (%)",
+                    labels={'Rate': 'Oran (%)', 'name': '?lke'},
                     color_discrete_sequence=['#00F5FF', '#FFB800', '#00E676']
                 )
                 fig_tech.update_layout(
                     template='plotly_dark',
-                    height=360,
-                    margin=dict(t=50, b=65, l=10, r=10),
+                    paper_bgcolor='#0E1626',
+                    plot_bgcolor='#0E1626',
+                    font=dict(family='Manrope, sans-serif'),
+                    height=380,
+                    margin=dict(t=65, b=75, l=15, r=15),
                     title=dict(
-                        text="<b>Klinik Teknoloji & Yöntem Adaptasyon Oranları (%)</b>",
-                        font=dict(size=13, color='#FFFFFF')
+                        text="<b>Klinik Teknoloji & Y?ntem Adaptasyon Oranlar? (%)</b>",
+                        font=dict(family='Manrope, sans-serif', size=14, color='#FFFFFF'),
+                        y=0.96,
+                        x=0.02,
+                        xanchor='left'
                     ),
                     legend=dict(
                         orientation="h",
                         yanchor="top",
-                        y=-0.22,
+                        y=-0.25,
                         xanchor="center",
                         x=0.5,
                         title_text="",
-                        font=dict(size=11, color='#CBD5E1')
+                        font=dict(family='Manrope, sans-serif', size=11, color='#CBD5E1')
                     ),
                     yaxis=dict(gridcolor='rgba(255,255,255,0.08)', range=[0, 105]),
-                    xaxis=dict(title="Ülke")
+                    xaxis=dict(title="?lke")
                 )
                 st.plotly_chart(fig_tech, use_container_width=True)
 
@@ -24736,21 +24407,27 @@ elif active_view in ["⚖️ Çoklu Ülke Kıyaslama Masası (Multi-Country Matr
                 fig_dens = px.bar(
                     cmp_df, x='name', y='clinics_per_m', text='clinics_per_m', color='name',
                     color_discrete_sequence=['#13A6B5', '#00F5FF', '#7C93BD', '#FFB800', '#00E676', '#FF5252'],
-                    title="Pazar Doygunluğu (Milyon Nüfus Başına Lisanslı Klinik Sayısı)",
-                    labels={'clinics_per_m': 'Klinik / Milyon Nüfus', 'name': 'Ülke'}
+                    title="Pazar Doygunlu?u (Milyon N?fus Ba??na Lisansl? Klinik Say?s?)",
+                    labels={'clinics_per_m': 'Klinik / Milyon N?fus', 'name': '?lke'}
                 )
                 fig_dens.update_traces(texttemplate='%{text:.2f} klinik/M', textposition='outside')
                 fig_dens.update_layout(
                     template='plotly_dark',
+                    paper_bgcolor='#0E1626',
+                    plot_bgcolor='#0E1626',
+                    font=dict(family='Manrope, sans-serif'),
                     showlegend=False,
-                    height=360,
-                    margin=dict(t=50, b=65, l=10, r=10),
+                    height=380,
+                    margin=dict(t=65, b=55, l=15, r=15),
                     title=dict(
-                        text="<b>Pazar Doygunluğu (Milyon Nüfus Başına Lisanslı Klinik Sayısı)</b>",
-                        font=dict(size=13, color='#FFFFFF')
+                        text="<b>Pazar Doygunlu?u (Milyon N?fus Ba??na Lisansl? Klinik Say?s?)</b>",
+                        font=dict(family='Manrope, sans-serif', size=14, color='#FFFFFF'),
+                        y=0.96,
+                        x=0.02,
+                        xanchor='left'
                     ),
                     yaxis=dict(gridcolor='rgba(255,255,255,0.08)'),
-                    xaxis=dict(title="Ülke")
+                    xaxis=dict(title="?lke")
                 )
                 st.plotly_chart(fig_dens, use_container_width=True)
 
@@ -29627,14 +29304,14 @@ elif active_view in ["💰 Fiyatlandırma, 4-Pool Dish & Klinik ROI", "💰 Pric
             st.markdown(f"""<div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:12px;margin:10px 0 14px 0;">
 <div style="background:rgba(19,166,181,0.08);border:1px solid rgba(0,245,255,0.3);border-radius:10px;padding:12px 14px;box-shadow:0 4px 14px rgba(0,0,0,0.25);">
 <div style="font-size:11px;font-weight:700;color:#8FA3C0;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px;white-space:normal;">İndirimli Net Hasılat</div>
-<div style="font-size:24px;font-weight:800;color:#00F5FF;font-family:'JetBrains Mono',monospace;letter-spacing:-0.02em;white-space:normal;overflow:visible;">{format_curr(net_revenue)}</div>
+<div style="font-size:24px;font-weight:800;color:#00F5FF;font-family:'Geist Mono',monospace;letter-spacing:-0.02em;white-space:normal;overflow:visible;">{format_curr(net_revenue)}</div>
 <div style="font-size:11.5px;font-weight:600;color:#FF5252;margin-top:4px;display:flex;align-items:center;gap:4px;">
 <span>↓</span> <span>-{format_curr(disc_amt)} İskonto Bedeli</span>
 </div>
 </div>
 <div style="background:rgba(0,230,118,0.08);border:1px solid rgba(0,230,118,0.3);border-radius:10px;padding:12px 14px;box-shadow:0 4px 14px rgba(0,0,0,0.25);">
 <div style="font-size:11px;font-weight:700;color:#8FA3C0;text-transform:uppercase;letter-spacing:0.04em;margin-bottom:4px;white-space:normal;">Brüt Kâr & Marj</div>
-<div style="font-size:24px;font-weight:800;color:#00E676;font-family:'JetBrains Mono',monospace;letter-spacing:-0.02em;white-space:normal;overflow:visible;">{format_curr(gross_profit)}</div>
+<div style="font-size:24px;font-weight:800;color:#00E676;font-family:'Geist Mono',monospace;letter-spacing:-0.02em;white-space:normal;overflow:visible;">{format_curr(gross_profit)}</div>
 <div style="font-size:11.5px;font-weight:600;color:#00E676;margin-top:4px;display:flex;align-items:center;gap:4px;">
 <span>↑</span> <span>%{gross_margin:.1f} Brüt Marj</span>
 </div>
@@ -31543,7 +31220,7 @@ components.html("""
         display: flex;
         align-items: center;
         justify-content: space-between;
-        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        font-family: 'Manrope', system-ui, -apple-system, sans-serif;
         color: #F8FAFC;
         margin: 10px 0;
         box-sizing: border-box;
@@ -31618,7 +31295,7 @@ components.html("""
 # EXECUTIVE ATTRIBUTION & COPYRIGHT FOOTER
 # ==========================================
 st.markdown('''
-<div style="text-align: center; margin-top: 36px; margin-bottom: 24px; padding: 22px 16px 16px 16px; border-top: 1px solid rgba(255, 255, 255, 0.08); background: linear-gradient(180deg, rgba(15, 23, 42, 0) 0%, rgba(15, 23, 42, 0.5) 100%); border-radius: 12px; font-family: 'Inter', system-ui, -apple-system, sans-serif;">
+<div style="text-align: center; margin-top: 36px; margin-bottom: 24px; padding: 22px 16px 16px 16px; border-top: 1px solid rgba(255, 255, 255, 0.08); background: linear-gradient(180deg, rgba(15, 23, 42, 0) 0%, rgba(15, 23, 42, 0.5) 100%); border-radius: 12px; font-family: 'Manrope', system-ui, -apple-system, sans-serif;">
     <div style="font-size: 13.5px; font-weight: 600; color: #E2E8F0; letter-spacing: 0.04em; margin-bottom: 5px;">
         Conceived & Directed by <span style="color: #00F5FF; font-weight: 700; text-shadow: 0 0 12px rgba(0, 245, 255, 0.35);">Sireen Khemesh</span>
     </div>
