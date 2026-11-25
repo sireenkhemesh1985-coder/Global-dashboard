@@ -29,16 +29,223 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# Global Markdown HTML sanitizer: strips leading indentation so CommonMark never parses HTML as <pre><code> blocks
+from zeus_icons import (
+    lucide_icon,
+    MATERIAL_ICONS,
+    sanitize_ui_text,
+    ICON_MUTED,
+    ICON_SUBTLE,
+    ICON_ACTIVE,
+    ICON_PRIMARY,
+    ICON_SUCCESS,
+    ICON_WARNING,
+    ICON_DANGER,
+)
+
+# Presentation-layer sanitization & HTML indentation normalizer
 _original_st_markdown = st.markdown
+_original_st_title = st.title
+_original_st_header = st.header
+_original_st_subheader = st.subheader
+_original_st_caption = st.caption
+_original_st_info = st.info
+_original_st_success = st.success
+_original_st_warning = st.warning
+_original_st_error = st.error
+_original_st_expander = st.expander
+_original_st_tabs = st.tabs
+_original_st_metric = st.metric
+_original_st_selectbox = st.selectbox
+_original_st_multiselect = st.multiselect
+_original_st_button = st.button
+_original_st_download_button = st.download_button
+_original_st_link_button = st.link_button
+_original_st_form_submit_button = st.form_submit_button
+_original_st_radio = st.radio
+_original_st_checkbox = st.checkbox
+_original_st_toggle = st.toggle
+_original_st_pills = st.pills
+_original_st_popover = st.popover
+_original_st_text_area = st.text_area
+_original_st_text_input = st.text_input
+_original_st_number_input = st.number_input
+_original_st_slider = st.slider
+_original_st_dataframe = st.dataframe
+_original_st_table = st.table
+_original_st_plotly_chart = st.plotly_chart
 
 def _safe_st_markdown(body, *args, **kwargs):
-    if kwargs.get('unsafe_allow_html') and isinstance(body, str) and '<' in body:
-        lines = [line.strip() for line in body.splitlines() if line.strip()]
-        body = "\n".join(lines)
+    if isinstance(body, str):
+        body = sanitize_ui_text(body)
+        if kwargs.get('unsafe_allow_html') and '<' in body:
+            lines = [line.strip() for line in body.splitlines() if line.strip()]
+            body = "\n".join(lines)
     return _original_st_markdown(body, *args, **kwargs)
 
+def _safe_st_title(body, *args, **kwargs):
+    return _original_st_title(sanitize_ui_text(body), *args, **kwargs)
+
+def _safe_st_header(body, *args, **kwargs):
+    return _original_st_header(sanitize_ui_text(body), *args, **kwargs)
+
+def _safe_st_subheader(body, *args, **kwargs):
+    return _original_st_subheader(sanitize_ui_text(body), *args, **kwargs)
+
+def _safe_st_caption(body, *args, **kwargs):
+    return _original_st_caption(sanitize_ui_text(body), *args, **kwargs)
+
+def _safe_st_info(body, *args, **kwargs):
+    return _original_st_info(sanitize_ui_text(body), *args, **kwargs)
+
+def _safe_st_success(body, *args, **kwargs):
+    return _original_st_success(sanitize_ui_text(body), *args, **kwargs)
+
+def _safe_st_warning(body, *args, **kwargs):
+    return _original_st_warning(sanitize_ui_text(body), *args, **kwargs)
+
+def _safe_st_error(body, *args, **kwargs):
+    return _original_st_error(sanitize_ui_text(body), *args, **kwargs)
+
+def _safe_st_expander(label, *args, **kwargs):
+    return _original_st_expander(sanitize_ui_text(label), *args, **kwargs)
+
+def _safe_st_tabs(tabs, *args, **kwargs):
+    clean_tabs = [sanitize_ui_text(t) if isinstance(t, str) else t for t in tabs]
+    return _original_st_tabs(clean_tabs, *args, **kwargs)
+
+def _safe_st_metric(label, value, delta=None, *args, **kwargs):
+    clean_lbl = sanitize_ui_text(label) if isinstance(label, str) else label
+    clean_val = sanitize_ui_text(value) if isinstance(value, str) else value
+    clean_dlt = sanitize_ui_text(delta) if isinstance(delta, str) else delta
+    return _original_st_metric(clean_lbl, clean_val, delta=clean_dlt, *args, **kwargs)
+
 st.markdown = _safe_st_markdown
+st.title = _safe_st_title
+st.header = _safe_st_header
+st.subheader = _safe_st_subheader
+st.caption = _safe_st_caption
+st.info = _safe_st_info
+st.success = _safe_st_success
+st.warning = _safe_st_warning
+st.error = _safe_st_error
+st.expander = _safe_st_expander
+st.tabs = _safe_st_tabs
+st.metric = _safe_st_metric
+
+def _safe_st_selectbox(label, options, *args, **kwargs):
+    if "format_func" not in kwargs or kwargs["format_func"] is None:
+        kwargs["format_func"] = lambda x: sanitize_ui_text(x) if isinstance(x, str) else str(x)
+    return _original_st_selectbox(sanitize_ui_text(label), options, *args, **kwargs)
+
+def _safe_st_multiselect(label, options, *args, **kwargs):
+    if "format_func" not in kwargs or kwargs["format_func"] is None:
+        kwargs["format_func"] = lambda x: sanitize_ui_text(x) if isinstance(x, str) else str(x)
+    return _original_st_multiselect(sanitize_ui_text(label), options, *args, **kwargs)
+
+def _safe_st_button(label, *args, **kwargs):
+    return _original_st_button(sanitize_ui_text(label), *args, **kwargs)
+
+def _safe_st_download_button(label, *args, **kwargs):
+    return _original_st_download_button(sanitize_ui_text(label), *args, **kwargs)
+
+def _safe_st_link_button(label, url, *args, **kwargs):
+    return _original_st_link_button(sanitize_ui_text(label), url, *args, **kwargs)
+
+st.selectbox = _safe_st_selectbox
+st.multiselect = _safe_st_multiselect
+st.button = _safe_st_button
+st.download_button = _safe_st_download_button
+st.link_button = _safe_st_link_button
+
+def _safe_st_form_submit_button(label="Submit", *args, **kwargs):
+    return _original_st_form_submit_button(sanitize_ui_text(label), *args, **kwargs)
+
+st.form_submit_button = _safe_st_form_submit_button
+
+def _safe_st_radio(label, options, *args, **kwargs):
+    if "format_func" not in kwargs or kwargs["format_func"] is None:
+        kwargs["format_func"] = lambda x: sanitize_ui_text(x) if isinstance(x, str) else str(x)
+    return _original_st_radio(sanitize_ui_text(label), options, *args, **kwargs)
+
+def _safe_st_checkbox(label, *args, **kwargs):
+    return _original_st_checkbox(sanitize_ui_text(label), *args, **kwargs)
+
+def _safe_st_toggle(label, *args, **kwargs):
+    return _original_st_toggle(sanitize_ui_text(label), *args, **kwargs)
+
+def _safe_st_pills(label, options, *args, **kwargs):
+    if "format_func" not in kwargs or kwargs["format_func"] is None:
+        kwargs["format_func"] = lambda x: sanitize_ui_text(x) if isinstance(x, str) else str(x)
+    return _original_st_pills(sanitize_ui_text(label), options, *args, **kwargs)
+
+st.radio = _safe_st_radio
+st.checkbox = _safe_st_checkbox
+st.toggle = _safe_st_toggle
+st.pills = _safe_st_pills
+
+def _safe_st_popover(label, *args, **kwargs):
+    return _original_st_popover(sanitize_ui_text(label), *args, **kwargs)
+
+def _safe_st_text_area(label, *args, **kwargs):
+    if isinstance(kwargs.get("placeholder"), str):
+        kwargs["placeholder"] = sanitize_ui_text(kwargs["placeholder"])
+    return _original_st_text_area(sanitize_ui_text(label), *args, **kwargs)
+
+def _safe_st_text_input(label, *args, **kwargs):
+    if isinstance(kwargs.get("placeholder"), str):
+        kwargs["placeholder"] = sanitize_ui_text(kwargs["placeholder"])
+    return _original_st_text_input(sanitize_ui_text(label), *args, **kwargs)
+
+def _safe_st_number_input(label, *args, **kwargs):
+    return _original_st_number_input(sanitize_ui_text(label), *args, **kwargs)
+
+def _safe_st_slider(label, *args, **kwargs):
+    return _original_st_slider(sanitize_ui_text(label), *args, **kwargs)
+
+def _sanitize_df_display(data):
+    try:
+        if isinstance(data, pd.DataFrame):
+            df_c = data.copy()
+            df_c.columns = [sanitize_ui_text(c) if isinstance(c, str) else c for c in df_c.columns]
+            for col in df_c.columns:
+                if df_c[col].dtype == object:
+                    df_c[col] = df_c[col].map(lambda v: sanitize_ui_text(v) if isinstance(v, str) else v)
+            return df_c
+    except Exception:
+        pass
+    return data
+
+def _safe_st_dataframe(data=None, *args, **kwargs):
+    return _original_st_dataframe(_sanitize_df_display(data), *args, **kwargs)
+
+def _safe_st_table(data=None, *args, **kwargs):
+    return _original_st_table(_sanitize_df_display(data), *args, **kwargs)
+
+st.popover = _safe_st_popover
+st.text_area = _safe_st_text_area
+st.text_input = _safe_st_text_input
+st.number_input = _safe_st_number_input
+st.slider = _safe_st_slider
+st.dataframe = _safe_st_dataframe
+st.table = _safe_st_table
+
+def _safe_st_plotly_chart(figure_or_data, *args, **kwargs):
+    try:
+        if hasattr(figure_or_data, "layout") and hasattr(figure_or_data.layout, "title"):
+            t = getattr(figure_or_data.layout.title, "text", None)
+            if isinstance(t, str):
+                figure_or_data.layout.title.text = sanitize_ui_text(t)
+        if hasattr(figure_or_data, "data"):
+            for tr in figure_or_data.data:
+                if hasattr(tr, "name") and isinstance(tr.name, str):
+                    tr.name = sanitize_ui_text(tr.name)
+                if hasattr(tr, "text") and isinstance(tr.text, (list, tuple)):
+                    tr.text = [sanitize_ui_text(v) if isinstance(v, str) else v for v in tr.text]
+    except Exception:
+        pass
+    return _original_st_plotly_chart(figure_or_data, *args, **kwargs)
+
+st.plotly_chart = _safe_st_plotly_chart
 
 def get_system_datetime_display():
     # Turkey Standard Time (UTC+3 / TRT)
@@ -47,151 +254,127 @@ def get_system_datetime_display():
     months_tr = ['', 'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık']
     return f"{now_dt.day} {months_tr[now_dt.month]} {now_dt.year} • {now_dt.strftime('%H:%M:%S')}"
 
-# Custom Styling (ZGMI Quantum Neon Glassmorphism - Tier-1 MedTech OS)
+# Custom Styling (ZGMI Enterprise Design System — Linear / Bloomberg / Vercel Inspired)
 st.markdown("""
 <style>
-    /* Google Fonts: IBM Plex Sans & IBM Plex Mono */
-    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap');
 
     :root {
         --zg-font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         --zg-font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
-        --zg-space-xs: 4px;
-        --zg-space-sm: 8px;
-        --zg-space-md: 16px;
-        --zg-space-lg: 24px;
-        --zg-space-xl: 32px;
+        /* Core Enterprise Surface Hierarchy */
+        --zg-canvas: #09090B;
+        --zg-sidebar: #0B0F17;
+        --zg-surface: #111622;
+        --zg-surface-elevated: #161D2E;
+        --zg-surface-hover: #1B2336;
 
-        /* Deep Space Obsidian Canvas */
-        --zg-canvas: #03060C;
+        /* Hairline Borders */
+        --zg-border: 1px solid rgba(226, 232, 240, 0.09);
+        --zg-border-hover: 1px solid rgba(226, 232, 240, 0.20);
+        --zg-border-active: 1px solid rgba(56, 189, 248, 0.55);
 
-        /* True Translucent Frosted Glass (Refracts Grid + Neon Aurora Behind) */
-        --zg-glass-surface: linear-gradient(145deg, rgba(14, 23, 42, 0.52) 0%, rgba(7, 11, 22, 0.42) 100%);
-        --zg-glass-elevated: linear-gradient(145deg, rgba(20, 34, 60, 0.65) 0%, rgba(10, 17, 32, 0.55) 100%);
-        --zg-glass-blur: blur(22px) saturate(190%);
-
-        /* Neon Specular Borders & Depth Shadows */
-        --zg-glass-border: 1px solid rgba(56, 189, 248, 0.18);
-        --zg-glass-border-hover: 1px solid rgba(0, 240, 255, 0.55);
-        --zg-glass-shadow: 0 10px 36px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 0 20px rgba(0, 240, 255, 0.04);
-        --zg-glass-shadow-hover: 0 16px 46px rgba(0, 0, 0, 0.65), 0 0 28px rgba(0, 240, 255, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.25);
-
-        /* Neon & MedTech Accents */
-        --zg-neon-cyan: #00F0FF;
-        --zg-accent-cyan: #38BDF8;
+        /* Disciplined Accent Palette (Cyan reserved strictly for active states & primary actions) */
+        --zg-active-cyan: #38BDF8;
         --zg-primary: #0C5CAB;
         --zg-accent-emerald: #10B981;
         --zg-accent-amber: #F59E0B;
         --zg-accent-rose: #EF4444;
-        --zg-accent-indigo: #818CF8;
 
-        /* Metallic Silver Typography */
-        --zg-silver-pure: #FAFAFA;
-        --zg-silver-text: #E2E8F0;
-        --zg-silver-muted: #94A3B8;
-        --zg-silver-dim: #64748B;
+        /* Text Hierarchy */
+        --zg-text-primary: #F8FAFC;
+        --zg-text-secondary: #CBD5E1;
+        --zg-text-muted: #94A3B8;
+        --zg-text-dim: #64748B;
 
-        --zg-radius-sm: 6px;
-        --zg-radius-md: 10px;
-        --zg-radius-lg: 14px;
+        --zg-radius-sm: 4px;
+        --zg-radius-md: 6px;
+        --zg-radius-lg: 8px;
         --zg-radius-full: 9999px;
 
-        --zg-transition: all 240ms cubic-bezier(0.16, 1, 0.3, 1);
+        --zg-transition: all 160ms cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     html {
         scroll-behavior: smooth !important;
     }
 
-    /* Multi-Layered Cybernetic Grid + Neon Aurora Backdrop */
     html, body, [class*="css"], .stApp {
         font-family: var(--zg-font-sans) !important;
         background-color: var(--zg-canvas) !important;
-        background-image:
-            radial-gradient(ellipse 75% 45% at 50% -10%, rgba(0, 240, 255, 0.14), transparent 65%),
-            radial-gradient(ellipse 55% 40% at 92% 18%, rgba(99, 102, 241, 0.13), transparent 60%),
-            radial-gradient(ellipse 60% 40% at 8% 88%, rgba(16, 185, 129, 0.08), transparent 60%),
-            radial-gradient(ellipse 50% 35% at 85% 95%, rgba(12, 92, 171, 0.16), transparent 60%),
-            linear-gradient(rgba(56, 189, 248, 0.032) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(56, 189, 248, 0.032) 1px, transparent 1px) !important;
-        background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 48px 48px, 48px 48px !important;
-        background-attachment: fixed !important;
-        color: var(--zg-silver-text) !important;
+        background-image: none !important;
+        color: var(--zg-text-secondary) !important;
         letter-spacing: -0.01em;
     }
 
-    /* Transparent Slim Streamlit Top Header */
     header[data-testid="stHeader"] {
         background: transparent !important;
-        height: 2.4rem !important;
+        height: 2.2rem !important;
     }
 
-    /* Strict Rule: Never use italics in UI */
     i, em, span, p, div, b, strong, a, label, small, caption {
         font-style: normal !important;
     }
 
-    /* Typography Scale */
+    /* Restrained Enterprise Typography (No excessive bold or gradient fills) */
     h1, h2, h3, h4, h5, h6 {
         font-family: var(--zg-font-sans) !important;
         text-wrap: balance !important;
-        color: var(--zg-silver-pure) !important;
+        color: var(--zg-text-primary) !important;
         letter-spacing: -0.02em !important;
-        font-weight: 700 !important;
+        font-weight: 600 !important;
     }
     h1 {
-        font-size: 1.95rem !important;
-        background: linear-gradient(90deg, #FFFFFF 0%, #BAE6FD 70%, #38BDF8 100%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        text-shadow: 0 0 30px rgba(56, 189, 248, 0.15);
+        font-size: 1.65rem !important;
+        background: none !important;
+        -webkit-text-fill-color: var(--zg-text-primary) !important;
+        text-shadow: none !important;
+        margin-bottom: 0.25rem !important;
     }
-    h2 { font-size: 1.45rem !important; }
-    h3 { font-size: 1.2rem !important; }
+    h2 { font-size: 1.3rem !important; }
+    h3 { font-size: 1.1rem !important; }
+    h4 { font-size: 0.98rem !important; }
 
     p, [data-testid="stMarkdownContainer"] p {
         font-family: var(--zg-font-sans) !important;
         text-wrap: pretty !important;
         line-height: 1.55 !important;
-        font-size: 0.94rem !important;
+        font-size: 0.9rem !important;
+        font-weight: 400 !important;
     }
 
-    /* Tabular Numeric Rule */
     code, pre, [data-testid="stMetricValue"], .kpi-val, .glass-metric-val, .mono-num {
         font-family: var(--zg-font-mono) !important;
         font-feature-settings: 'tnum' on, 'zero' on !important;
     }
 
-    /* Neon Glass Back-To-Top Orb */
+    /* Minimal Back-To-Top Button */
     #btn-back-to-top {
         position: fixed;
         bottom: 24px;
         right: 24px;
         z-index: 999999;
-        background: rgba(10, 18, 36, 0.72);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        color: #00F0FF !important;
+        background: var(--zg-surface-elevated);
+        color: var(--zg-text-muted) !important;
         border-radius: var(--zg-radius-full);
-        width: 44px;
-        height: 44px;
+        width: 38px;
+        height: 38px;
         display: flex;
         align-items: center;
         justify-content: center;
         text-decoration: none !important;
-        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6), 0 0 16px rgba(0, 240, 255, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.22);
-        border: 1px solid rgba(0, 240, 255, 0.45);
+        border: var(--zg-border);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
         cursor: pointer;
         transition: var(--zg-transition);
     }
     #btn-back-to-top:hover {
-        transform: translateY(-3px) scale(1.06);
-        background: rgba(12, 92, 171, 0.45);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 24px rgba(0, 240, 255, 0.55);
+        color: var(--zg-active-cyan) !important;
+        border-color: rgba(56, 189, 248, 0.45);
+        background: var(--zg-surface-hover);
     }
 
-    /* Main Container Spacing */
     .main .block-container,
     [data-testid="stMainBlockContainer"] {
         padding-top: 0.75rem !important;
@@ -202,55 +385,45 @@ st.markdown("""
     }
 
     /* ====================================================================== */
-    /* QUANTUM GLASS SIDEBAR                                                  */
+    /* SIDEBAR (Linear / Vercel Hairline Surface)                             */
     /* ====================================================================== */
     [data-testid="stSidebar"] {
-        background: linear-gradient(180deg, rgba(5, 10, 20, 0.78) 0%, rgba(3, 6, 12, 0.85) 100%) !important;
-        backdrop-filter: blur(26px) saturate(200%) !important;
-        -webkit-backdrop-filter: blur(26px) saturate(200%) !important;
-        border-right: 1px solid rgba(0, 240, 255, 0.14) !important;
-        box-shadow: 8px 0 36px rgba(0, 0, 0, 0.65) !important;
+        background-color: var(--zg-sidebar) !important;
+        background-image: none !important;
+        border-right: var(--zg-border) !important;
+        box-shadow: none !important;
     }
     [data-testid="stSidebar"] hr {
-        border-color: rgba(56, 189, 248, 0.12) !important;
+        border-color: rgba(226, 232, 240, 0.08) !important;
         margin: 14px 0 !important;
     }
-
-    /* Hide collapsed widget labels strictly (fixes Navigation box bug) */
     [data-testid="stSidebar"] [data-testid="stRadio"] > label[data-testid="stWidgetLabel"] {
         display: none !important;
     }
-
-    /* Sidebar Navigation Cards: Target ONLY radiogroup option labels */
     [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] {
-        gap: 7px !important;
+        gap: 4px !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label {
-        background: rgba(14, 23, 42, 0.45) !important;
-        backdrop-filter: blur(14px) !important;
-        -webkit-backdrop-filter: blur(14px) !important;
-        border: 1px solid rgba(56, 189, 248, 0.12) !important;
+        background: transparent !important;
+        border: 1px solid transparent !important;
         border-radius: var(--zg-radius-md) !important;
-        padding: 10px 12px !important;
+        padding: 8px 10px !important;
         margin: 0 !important;
         transition: var(--zg-transition) !important;
         cursor: pointer !important;
         display: flex !important;
         align-items: center !important;
-        position: relative !important;
-        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+        box-shadow: none !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label:hover {
-        background: rgba(20, 34, 62, 0.65) !important;
-        border-color: rgba(0, 240, 255, 0.45) !important;
-        transform: translateX(3px) !important;
-        box-shadow: 0 4px 18px rgba(0, 240, 255, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+        background: var(--zg-surface) !important;
+        border: var(--zg-border) !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"],
     [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label:has(input:checked) {
-        background: linear-gradient(135deg, rgba(0, 240, 255, 0.14) 0%, rgba(12, 92, 171, 0.34) 100%) !important;
-        border: 1px solid rgba(0, 240, 255, 0.65) !important;
-        box-shadow: 0 0 22px rgba(0, 240, 255, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.25), inset 3px 0 0 #00F0FF !important;
+        background: var(--zg-surface-elevated) !important;
+        border: var(--zg-border-active) !important;
+        box-shadow: inset 2px 0 0 var(--zg-active-cyan) !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label p,
     [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label span,
@@ -260,15 +433,14 @@ st.markdown("""
         opacity: 1 !important;
         font-size: 12.5px !important;
         font-weight: 500 !important;
-        color: var(--zg-silver-text) !important;
+        color: var(--zg-text-muted) !important;
         letter-spacing: -0.01em !important;
-        line-height: 1.3 !important;
+        line-height: 1.35 !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label:has(input:checked) p,
     [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label:has(input:checked) span {
-        color: #FFFFFF !important;
+        color: var(--zg-text-primary) !important;
         font-weight: 600 !important;
-        text-shadow: 0 0 12px rgba(0, 240, 255, 0.35);
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] input[type="radio"],
     [data-testid="stSidebar"] [data-testid="stRadio"] div[data-baseweb="radio"] > div:first-child:not([data-testid="stMarkdownContainer"]) {
@@ -280,59 +452,44 @@ st.markdown("""
     }
 
     /* ====================================================================== */
-    /* TRANSLUCENT NEON KPI & METRIC GLASS CARDS                              */
+    /* ENTERPRISE KPI & METRIC CARDS                                          */
     /* ====================================================================== */
     .kpi-container,
     .glass-metric-card {
-        background: var(--zg-glass-surface) !important;
-        backdrop-filter: var(--zg-glass-blur) !important;
-        -webkit-backdrop-filter: var(--zg-glass-blur) !important;
-        border: var(--zg-glass-border) !important;
-        border-radius: var(--zg-radius-md) !important;
+        background: var(--zg-surface) !important;
+        border: var(--zg-border) !important;
+        border-radius: var(--zg-radius-lg) !important;
         padding: 14px 16px !important;
         transition: var(--zg-transition) !important;
-        box-shadow: var(--zg-glass-shadow) !important;
+        box-shadow: none !important;
         min-width: 0 !important;
         overflow: hidden !important;
         position: relative !important;
-        min-height: 118px !important;
+        min-height: 112px !important;
         display: flex !important;
         flex-direction: column !important;
         justify-content: space-between !important;
     }
-    .kpi-container::before,
-    .glass-metric-card::before {
-        content: "";
-        position: absolute;
-        top: 0;
-        left: 12%;
-        right: 12%;
-        height: 1px;
-        background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.55), transparent);
-        pointer-events: none;
-    }
     .kpi-container:hover,
     .glass-metric-card:hover {
-        transform: translateY(-2px) !important;
-        background: var(--zg-glass-elevated) !important;
-        border: var(--zg-glass-border-hover) !important;
-        box-shadow: var(--zg-glass-shadow-hover) !important;
+        background: var(--zg-surface-elevated) !important;
+        border: var(--zg-border-hover) !important;
     }
     .kpi-header {
-        font-size: 10.5px !important;
-        font-weight: 600 !important;
-        color: var(--zg-silver-muted) !important;
+        font-size: 11px !important;
+        font-weight: 500 !important;
+        color: var(--zg-text-muted) !important;
         text-transform: uppercase !important;
-        letter-spacing: 0.06em !important;
+        letter-spacing: 0.05em !important;
         margin-bottom: 4px !important;
         display: block !important;
-        line-height: 1.25 !important;
+        line-height: 1.3 !important;
     }
     .kpi-val {
-        font-size: 22px !important;
-        font-weight: 700 !important;
+        font-size: 21px !important;
+        font-weight: 600 !important;
         font-family: var(--zg-font-mono) !important;
-        color: var(--zg-silver-pure) !important;
+        color: var(--zg-text-primary) !important;
         letter-spacing: -0.02em !important;
         margin-bottom: 2px !important;
         display: block !important;
@@ -340,7 +497,7 @@ st.markdown("""
     }
     .kpi-sub {
         font-size: 11px !important;
-        font-weight: 500 !important;
+        font-weight: 400 !important;
         display: block !important;
     }
     .kpi-pos { color: var(--zg-accent-emerald) !important; }
@@ -348,288 +505,234 @@ st.markdown("""
     .kpi-neu { color: var(--zg-accent-amber) !important; }
 
     .glass-icon-box {
-        width: 32px;
-        height: 32px;
+        width: 30px;
+        height: 30px;
         border-radius: var(--zg-radius-sm);
-        background: rgba(0, 240, 255, 0.08);
-        border: 1px solid rgba(0, 240, 255, 0.25);
+        background: var(--zg-surface-elevated);
+        border: var(--zg-border);
         display: inline-flex;
         align-items: center;
         justify-content: center;
         margin-bottom: 6px;
-        box-shadow: 0 0 12px rgba(0, 240, 255, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.15);
     }
 
-    /* Native Streamlit Metrics */
     [data-testid="stMetric"] {
-        background: var(--zg-glass-surface) !important;
-        backdrop-filter: var(--zg-glass-blur) !important;
-        -webkit-backdrop-filter: var(--zg-glass-blur) !important;
-        border: var(--zg-glass-border) !important;
-        border-radius: var(--zg-radius-md) !important;
+        background: var(--zg-surface) !important;
+        border: var(--zg-border) !important;
+        border-radius: var(--zg-radius-lg) !important;
         padding: 12px 16px !important;
-        box-shadow: var(--zg-glass-shadow) !important;
+        box-shadow: none !important;
         transition: var(--zg-transition) !important;
     }
     [data-testid="stMetric"]:hover {
-        border: var(--zg-glass-border-hover) !important;
-        box-shadow: var(--zg-glass-shadow-hover) !important;
-        transform: translateY(-2px);
+        border: var(--zg-border-hover) !important;
     }
     [data-testid="stMetricLabel"] {
         font-size: 11px !important;
-        font-weight: 600 !important;
+        font-weight: 500 !important;
         text-transform: uppercase !important;
         letter-spacing: 0.05em !important;
-        color: var(--zg-silver-muted) !important;
+        color: var(--zg-text-muted) !important;
     }
     [data-testid="stMetricValue"] {
-        font-size: 22px !important;
-        font-weight: 700 !important;
-        color: var(--zg-silver-pure) !important;
+        font-size: 21px !important;
+        font-weight: 600 !important;
+        color: var(--zg-text-primary) !important;
     }
 
     /* ====================================================================== */
-    /* NEON GLASS BUTTONS, EXPANDERS, TABS, INPUTS & TABLES                   */
+    /* BUTTONS, EXPANDERS, TABS, INPUTS & TABLES                              */
     /* ====================================================================== */
     .stButton > button,
     .stDownloadButton > button,
     .stLinkButton > a {
-        background: rgba(14, 23, 42, 0.55) !important;
-        backdrop-filter: blur(14px) !important;
-        -webkit-backdrop-filter: blur(14px) !important;
-        color: var(--zg-silver-pure) !important;
-        border: 1px solid rgba(56, 189, 248, 0.24) !important;
-        border-radius: var(--zg-radius-sm) !important;
-        font-weight: 600 !important;
-        font-size: 13px !important;
-        padding: 7px 14px !important;
+        background: var(--zg-surface) !important;
+        color: var(--zg-text-secondary) !important;
+        border: var(--zg-border) !important;
+        border-radius: var(--zg-radius-md) !important;
+        font-weight: 500 !important;
+        font-size: 12.5px !important;
+        padding: 6px 12px !important;
         transition: var(--zg-transition) !important;
-        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+        box-shadow: none !important;
     }
     .stButton > button:hover,
     .stDownloadButton > button:hover,
     .stLinkButton > a:hover {
-        background: linear-gradient(135deg, rgba(0, 240, 255, 0.16) 0%, rgba(12, 92, 171, 0.42) 100%) !important;
-        border-color: rgba(0, 240, 255, 0.70) !important;
-        box-shadow: 0 0 22px rgba(0, 240, 255, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
-        transform: translateY(-1px) !important;
+        background: var(--zg-surface-elevated) !important;
+        border: var(--zg-border-hover) !important;
+        color: var(--zg-text-primary) !important;
     }
     .stButton > button[kind="primary"] {
-        background: linear-gradient(135deg, rgba(0, 240, 255, 0.22) 0%, rgba(12, 92, 171, 0.85) 100%) !important;
-        border: 1px solid rgba(0, 240, 255, 0.65) !important;
-        box-shadow: 0 0 20px rgba(0, 240, 255, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.30) !important;
+        background: var(--zg-primary) !important;
+        border: 1px solid rgba(56, 189, 248, 0.45) !important;
+        color: #FFFFFF !important;
+    }
+    .stButton > button[kind="primary"]:hover {
+        background: #116AC4 !important;
+        border-color: var(--zg-active-cyan) !important;
     }
 
-    /* Translucent Glass Expanders with Neon Edge */
     [data-testid="stExpander"] {
-        background: var(--zg-glass-surface) !important;
-        backdrop-filter: var(--zg-glass-blur) !important;
-        -webkit-backdrop-filter: var(--zg-glass-blur) !important;
-        border: 1px solid rgba(56, 189, 248, 0.18) !important;
-        border-radius: var(--zg-radius-md) !important;
-        box-shadow: var(--zg-glass-shadow) !important;
+        background: var(--zg-surface) !important;
+        border: var(--zg-border) !important;
+        border-radius: var(--zg-radius-lg) !important;
+        box-shadow: none !important;
         overflow: hidden !important;
         margin-bottom: 10px !important;
         transition: var(--zg-transition) !important;
     }
     [data-testid="stExpander"]:hover {
-        border-color: rgba(0, 240, 255, 0.42) !important;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55), 0 0 18px rgba(0, 240, 255, 0.12) !important;
+        border: var(--zg-border-hover) !important;
     }
     [data-testid="stExpander"] summary {
-        font-weight: 600 !important;
+        font-weight: 500 !important;
         font-size: 13px !important;
-        color: var(--zg-silver-pure) !important;
-        padding: 10px 16px !important;
+        color: var(--zg-text-primary) !important;
+        padding: 10px 14px !important;
     }
 
-    /* Plotly Charts Glass Container */
-    [data-testid="stPlotlyChart"] {
-        background: var(--zg-glass-surface) !important;
-        backdrop-filter: var(--zg-glass-blur) !important;
-        -webkit-backdrop-filter: var(--zg-glass-blur) !important;
-        border: var(--zg-glass-border) !important;
-        border-radius: var(--zg-radius-md) !important;
-        padding: 10px !important;
-        box-shadow: var(--zg-glass-shadow) !important;
-    }
-
-    /* DataFrames & Tables */
-    [data-testid="stDataFrame"] {
-        background: var(--zg-glass-surface) !important;
-        backdrop-filter: var(--zg-glass-blur) !important;
-        border: var(--zg-glass-border) !important;
-        border-radius: var(--zg-radius-md) !important;
-        box-shadow: var(--zg-glass-shadow) !important;
-    }
-
-    /* Forms */
+    [data-testid="stPlotlyChart"],
+    [data-testid="stDataFrame"],
     [data-testid="stForm"] {
-        background: var(--zg-glass-surface) !important;
-        backdrop-filter: var(--zg-glass-blur) !important;
-        border: var(--zg-glass-border) !important;
-        border-radius: var(--zg-radius-md) !important;
-        padding: 20px !important;
-        box-shadow: var(--zg-glass-shadow) !important;
+        background: var(--zg-surface) !important;
+        border: var(--zg-border) !important;
+        border-radius: var(--zg-radius-lg) !important;
+        box-shadow: none !important;
     }
+    [data-testid="stPlotlyChart"] { padding: 10px !important; }
+    [data-testid="stForm"] { padding: 18px !important; }
 
-    /* Inputs & Selectboxes: Translucent Bevel */
     div[data-baseweb="select"] > div,
     div[data-baseweb="input"] > div {
-        background: rgba(14, 23, 42, 0.55) !important;
-        backdrop-filter: blur(12px) !important;
-        border: 1px solid rgba(56, 189, 248, 0.20) !important;
-        border-radius: var(--zg-radius-sm) !important;
-        color: var(--zg-silver-pure) !important;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+        background: var(--zg-surface) !important;
+        border: var(--zg-border) !important;
+        border-radius: var(--zg-radius-md) !important;
+        color: var(--zg-text-primary) !important;
+        box-shadow: none !important;
         transition: var(--zg-transition) !important;
     }
     div[data-baseweb="select"] > div:hover,
     div[data-baseweb="input"] > div:hover {
-        border-color: rgba(0, 240, 255, 0.50) !important;
+        border: var(--zg-border-hover) !important;
     }
     div[data-baseweb="select"] > div:focus-within,
     div[data-baseweb="input"] > div:focus-within {
-        border-color: #00F0FF !important;
-        box-shadow: 0 0 18px rgba(0, 240, 255, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
+        border-color: var(--zg-active-cyan) !important;
     }
 
-    /* Neon Tabs */
     .stTabs [data-baseweb="tab-list"] {
-        gap: 6px !important;
-        background: rgba(10, 17, 32, 0.55) !important;
-        backdrop-filter: blur(16px) !important;
-        padding: 5px !important;
-        border-radius: var(--zg-radius-md) !important;
-        border: 1px solid rgba(56, 189, 248, 0.16) !important;
-        box-shadow: var(--zg-glass-shadow) !important;
+        gap: 4px !important;
+        background: var(--zg-sidebar) !important;
+        padding: 4px !important;
+        border-radius: var(--zg-radius-lg) !important;
+        border: var(--zg-border) !important;
+        box-shadow: none !important;
     }
     .stTabs [data-baseweb="tab"] {
         border-radius: var(--zg-radius-sm) !important;
-        padding: 6px 14px !important;
-        color: var(--zg-silver-muted) !important;
-        font-size: 13px !important;
+        padding: 6px 12px !important;
+        color: var(--zg-text-muted) !important;
+        font-size: 12.5px !important;
         font-weight: 500 !important;
         background: transparent !important;
         border: 1px solid transparent !important;
         transition: var(--zg-transition) !important;
     }
     .stTabs [data-baseweb="tab"]:hover {
-        color: var(--zg-silver-pure) !important;
-        background: rgba(0, 240, 255, 0.08) !important;
+        color: var(--zg-text-primary) !important;
+        background: var(--zg-surface) !important;
     }
     .stTabs [aria-selected="true"] {
-        background: linear-gradient(135deg, rgba(0, 240, 255, 0.18) 0%, rgba(12, 92, 171, 0.45) 100%) !important;
-        color: #FFFFFF !important;
-        border: 1px solid rgba(0, 240, 255, 0.55) !important;
+        background: var(--zg-surface-elevated) !important;
+        color: var(--zg-text-primary) !important;
+        border: var(--zg-border-active) !important;
         font-weight: 600 !important;
-        box-shadow: 0 0 16px rgba(0, 240, 255, 0.25) !important;
+        box-shadow: none !important;
     }
     .stTabs [data-baseweb="tab-highlight"] {
         background-color: transparent !important;
         height: 0px !important;
     }
 
-    /* Glass Section Header */
     .section-header-glass {
-        background: var(--zg-glass-surface) !important;
-        backdrop-filter: var(--zg-glass-blur) !important;
-        border: var(--zg-glass-border) !important;
-        border-left: 3px solid #00F0FF !important;
+        background: var(--zg-surface) !important;
+        border: var(--zg-border) !important;
+        border-left: 2px solid var(--zg-active-cyan) !important;
         border-radius: var(--zg-radius-md) !important;
-        padding: 12px 18px !important;
+        padding: 12px 16px !important;
         margin: 14px 0 !important;
-        box-shadow: var(--zg-glass-shadow) !important;
+        box-shadow: none !important;
     }
 
-    /* Semantic Glass Alert Banners */
     .alert-card-danger {
-        background: rgba(239, 68, 68, 0.10) !important;
-        backdrop-filter: blur(16px) !important;
-        border: 1px solid rgba(239, 68, 68, 0.35) !important;
-        border-left: 3px solid #EF4444 !important;
+        background: rgba(239, 68, 68, 0.06) !important;
+        border: 1px solid rgba(239, 68, 68, 0.25) !important;
+        border-left: 2px solid #EF4444 !important;
         border-radius: var(--zg-radius-md) !important;
         padding: 12px 16px !important;
         margin-bottom: 10px !important;
     }
     .alert-card-warn {
-        background: rgba(245, 158, 11, 0.10) !important;
-        backdrop-filter: blur(16px) !important;
-        border: 1px solid rgba(245, 158, 11, 0.35) !important;
-        border-left: 3px solid #F59E0B !important;
+        background: rgba(245, 158, 11, 0.06) !important;
+        border: 1px solid rgba(245, 158, 11, 0.25) !important;
+        border-left: 2px solid #F59E0B !important;
         border-radius: var(--zg-radius-md) !important;
         padding: 12px 16px !important;
         margin-bottom: 10px !important;
     }
     .alert-card-info {
-        background: rgba(0, 240, 255, 0.08) !important;
-        backdrop-filter: blur(16px) !important;
-        border: 1px solid rgba(0, 240, 255, 0.32) !important;
-        border-left: 3px solid #00F0FF !important;
+        background: rgba(56, 189, 248, 0.06) !important;
+        border: 1px solid rgba(56, 189, 248, 0.22) !important;
+        border-left: 2px solid #38BDF8 !important;
         border-radius: var(--zg-radius-md) !important;
         padding: 12px 16px !important;
         margin-bottom: 10px !important;
     }
 
-    /* Futuristic Telemetry Badges */
     .badge-enterprise-gold {
-        background: rgba(245, 158, 11, 0.14);
+        background: rgba(245, 158, 11, 0.10);
         color: #FBBF24;
-        border: 1px solid rgba(245, 158, 11, 0.40);
+        border: 1px solid rgba(245, 158, 11, 0.28);
         border-radius: 4px;
-        padding: 2px 8px;
-        font-size: 11px;
-        font-weight: 600;
+        padding: 2px 7px;
+        font-size: 10.5px;
+        font-weight: 500;
         font-family: var(--zg-font-mono);
     }
     .badge-enterprise-blue {
-        background: rgba(0, 240, 255, 0.12);
+        background: rgba(56, 189, 248, 0.10);
         color: #38BDF8;
-        border: 1px solid rgba(0, 240, 255, 0.38);
+        border: 1px solid rgba(56, 189, 248, 0.28);
         border-radius: 4px;
-        padding: 2px 8px;
-        font-size: 11px;
-        font-weight: 600;
+        padding: 2px 7px;
+        font-size: 10.5px;
+        font-weight: 500;
         font-family: var(--zg-font-mono);
     }
     .badge-enterprise-emerald {
-        background: rgba(16, 185, 129, 0.14);
+        background: rgba(16, 185, 129, 0.10);
         color: #34D399;
-        border: 1px solid rgba(16, 185, 129, 0.40);
+        border: 1px solid rgba(16, 185, 129, 0.28);
         border-radius: 4px;
-        padding: 2px 8px;
-        font-size: 11px;
-        font-weight: 600;
+        padding: 2px 7px;
+        font-size: 10.5px;
+        font-weight: 500;
         font-family: var(--zg-font-mono);
     }
 
-    /* Subtle Ambient Pulse */
-    @keyframes neonPulse {
-        0%, 100% { opacity: 1; box-shadow: 0 0 8px #10B981; }
-        50% { opacity: 0.45; box-shadow: 0 0 2px #10B981; }
-    }
-    .pulse-dot {
+    .status-dot-live {
         display: inline-block;
-        width: 7px;
-        height: 7px;
+        width: 6px;
+        height: 6px;
         border-radius: 50%;
         background: #10B981;
-        animation: neonPulse 2.2s ease-in-out infinite;
     }
 
-    /* Custom Scrollbar */
     ::-webkit-scrollbar { width: 6px; height: 6px; }
-    ::-webkit-scrollbar-track { background: #03060C; }
-    ::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.25); border-radius: 99px; }
-    ::-webkit-scrollbar-thumb:hover { background: rgba(0, 240, 255, 0.65); }
-
-    @media (prefers-reduced-motion: reduce) {
-        *, *::before, *::after {
-            animation-duration: 0.01ms !important;
-            transition-duration: 0.01ms !important;
-        }
-    }
+    ::-webkit-scrollbar-track { background: var(--zg-canvas); }
+    ::-webkit-scrollbar-thumb { background: rgba(148, 163, 184, 0.22); border-radius: 99px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(148, 163, 184, 0.42); }
 </style>
 """, unsafe_allow_html=True)
 
@@ -8896,8 +8999,8 @@ def render_back_to_top_button():
             box-shadow: 0 4px 16px rgba(0, 245, 255, 0.18);
             transition: all 0.25s ease;
         ">
-            <span style="font-size:15px;">⬆️</span>
-            <span>Sayfa Başına Dön (Yukarı Çık)</span>
+            ''' + lucide_icon("arrow-up", size=16, stroke_width=1.75, color=ICON_MUTED) + '''
+            <span>Sayfa Başına Dön</span>
         </a>
     </div>
     ''', unsafe_allow_html=True)
@@ -8917,7 +9020,7 @@ def render_login_gate():
             st.markdown("""
             <div style="text-align: center; margin-top: 36px; margin-bottom: 16px;">
                 <div style="display: inline-block; padding: 6px 16px; background: #0F172A; border: 1px solid rgba(12, 92, 171, 0.35); border-radius: 9999px; margin-bottom: 16px; box-shadow: 0 4px 14px rgba(0,0,0,0.3);">
-                    <span style="font-size: 12px; font-weight: 700; color: #FAFAFA; letter-spacing: 0.08em; text-transform: uppercase;">🔒 ZEUS BIOSCIENCE SECURE GATEWAY</span>
+                    <span style="display:inline-flex;align-items:center;gap:6px;font-size: 11px; font-weight: 600; color: #F8FAFC; letter-spacing: 0.08em; text-transform: uppercase;">ZEUS BIOSCIENCE SECURE GATEWAY</span>
                 </div>
             </div>
             """, unsafe_allow_html=True)
@@ -8939,7 +9042,7 @@ def render_login_gate():
                 inp_user = st.text_input("Kullanıcı Adı (Username):", value="sireen", placeholder="Kurumsal kullanıcı adınızı giriniz", key="inp_login_user")
                 inp_pass = st.text_input("Şifre (Password):", type="password", value="zeus2026", placeholder="••••••••", key="inp_login_pass")
                 st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
-                login_clicked = st.form_submit_button("🔐 Güvenli Giriş Yap (Sign In)", use_container_width=True, type="primary")
+                login_clicked = st.form_submit_button("Güvenli Giriş Yap (Sign In)", icon=MATERIAL_ICONS["terminal"], use_container_width=True, type="primary")
 
             if login_clicked or st.session_state.get("authenticated", False):
                 u_clean = inp_user.strip().lower()
@@ -8951,22 +9054,22 @@ def render_login_gate():
                     st.session_state["auth_name"] = USER_CREDENTIALS[target_u]["name"]
                     st.session_state["auth_role"] = USER_CREDENTIALS[target_u]["role"]
                     st.session_state["auth_badge"] = USER_CREDENTIALS[target_u]["badge"]
-                    st.success("✅ Giriş doğrulandı! Yönlendiriliyorsunuz...")
+                    st.success("Giriş doğrulandı! Yönlendiriliyorsunuz...")
                     st.rerun()
                 else:
-                    st.error("❌ Hatalı kullanıcı adı veya şifre! Lütfen bilgilerinizi kontrol ediniz.")
+                    st.error("Hatalı kullanıcı adı veya şifre! Lütfen bilgilerinizi kontrol ediniz.")
 
             sys_dt_login = get_system_datetime_display()
             st.markdown(f"""
             <div style="text-align: center; margin-top: 16px; margin-bottom: 8px;">
                 <span style="display: inline-flex; align-items: center; gap: 8px; background: #0F172A; border: 1px solid rgba(12, 92, 171, 0.35); padding: 6px 16px; border-radius: 9999px; font-size: 12px; color: #E2E8F0; font-family: 'IBM Plex Mono', monospace;">
-                    <span style="color: #94A3B8;">⏱️ Canlı Sistem Zamanı:</span>
+                    {lucide_icon("clock", size=16, stroke_width=1.5, color=ICON_MUTED)}<span style="color: #94A3B8;">Sistem Zamanı:</span>
                     <b style="color: #FAFAFA;">{sys_dt_login}</b>
                 </span>
             </div>
             <div style="text-align: center; margin-top: 8px; font-size: 12px; color: #64748B;">
                 <span style="display: inline-flex; align-items: center; gap: 6px; background: #0F172A; border: 1px solid rgba(226, 232, 240, 0.08); padding: 6px 16px; border-radius: 9999px;">
-                    <span style="color: #0C5CAB;">🛡️</span> 256-Bit SSL Uçtan Uca Şifreli Kurumsal Yetkili Oturum
+                    {lucide_icon("shield-check", size=16, stroke_width=1.65, color=ICON_MUTED)} 256-Bit SSL Uçtan Uca Şifreli Kurumsal Yetkili Oturum
                 </span>
             </div>
             <div style="text-align: center; margin-top: 24px; padding-top: 18px; border-top: 1px solid rgba(226, 232, 240, 0.08); font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;">
@@ -8984,7 +9087,7 @@ def render_login_gate():
 render_login_gate()
 
 # Top Anchor & Floating Back-To-Top Button
-st.markdown('''<div id="top_anchor" style="position:relative;top:-30px;height:0px;width:0px;"></div><a href="#top_anchor" id="btn-back-to-top" title="Sayfa Başına Dön" onclick="const el=document.getElementById('top_anchor');if(el){el.scrollIntoView({behavior:'smooth',block:'start'});}else{window.scrollTo({top:0,behavior:'smooth'});}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg></a>''', unsafe_allow_html=True)
+st.markdown(f'''<div id="top_anchor" style="position:relative;top:-30px;height:0px;width:0px;"></div><a href="#top_anchor" id="btn-back-to-top" title="Sayfa Başına Dön" onclick="const el=document.getElementById('top_anchor');if(el){{el.scrollIntoView({{behavior:'smooth',block:'start'}});}}else{{window.scrollTo({{top:0,behavior:'smooth'}});}}">{lucide_icon("arrow-up", size=16, stroke_width=1.75, color=ICON_MUTED)}</a>''', unsafe_allow_html=True)
 
 # ==============================================================================
 # 3. SIDEBAR NAVIGATION & GLOBAL CONTROLS
@@ -8993,43 +9096,41 @@ with st.sidebar:
     # Official ZEUS Bioscience Logo
     st.image("assets/zeus_logo_white.png")
     st.markdown('''
-    <div style="margin-top: -4px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid rgba(56, 189, 248, 0.16); text-align: center;">
-        <div style="font-size: 9.5px; font-weight: 700; color: #00F0FF; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 3px;">GLOBAL MARKET INTELLIGENCE</div>
-        <div style="font-size: 13px; font-weight: 700; color: #FAFAFA; letter-spacing: 0.02em;">Sireen Khemesh <span style="font-size:10px;color:#38BDF8;font-family:'IBM Plex Mono',monospace;font-weight:600;background:rgba(0,240,255,0.10);border:1px solid rgba(0,240,255,0.30);padding:1px 6px;border-radius:4px;margin-left:4px;">TIER-1</span></div>
+    <div style="margin-top: -4px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid rgba(226, 232, 240, 0.08); text-align: center;">
+        <div style="font-size: 9.5px; font-weight: 600; color: #94A3B8; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 3px;">GLOBAL MARKET INTELLIGENCE</div>
+        <div style="font-size: 12.5px; font-weight: 600; color: #F8FAFC; letter-spacing: 0.01em;">Sireen Khemesh <span style="font-size:10px;color:#38BDF8;font-family:'IBM Plex Mono',monospace;font-weight:500;background:rgba(56,189,248,0.10);border:1px solid rgba(56,189,248,0.28);padding:1px 6px;border-radius:4px;margin-left:4px;">TIER-1</span></div>
     </div>
     ''', unsafe_allow_html=True)
 
-    # Active Session Profile & Telemetry Card (Zero Primitive Emojis, SVG Vectors)
     auth_user_name = st.session_state.get("auth_name", "Sireen Khemesh")
     auth_user_role = st.session_state.get("auth_role", "Executive")
     auth_user_badge = st.session_state.get("auth_badge", "C-Level")
     sys_dt_side = get_system_datetime_display()
 
     st.markdown(f'''
-    <div style="background: linear-gradient(145deg, rgba(14, 23, 42, 0.58) 0%, rgba(7, 11, 22, 0.45) 100%); backdrop-filter: blur(18px); border: 1px solid rgba(56, 189, 248, 0.22); border-radius: 10px; padding: 12px 14px; margin-top: -4px; margin-bottom: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.12); position: relative; overflow: hidden;">
-        <div style="position:absolute;top:0;left:15%;right:15%;height:1px;background:linear-gradient(90deg,transparent,rgba(0,240,255,0.6),transparent);"></div>
+    <div style="background: #111622; border: 1px solid rgba(226, 232, 240, 0.09); border-radius: 6px; padding: 12px 14px; margin-top: -4px; margin-bottom: 12px;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
-            <span style="color: #94A3B8; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;">AKTİF OTURUM</span>
-            <span style="display:inline-flex;align-items:center;gap:5px;background: rgba(16, 185, 129, 0.14); color: #34D399; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; border: 1px solid rgba(16, 185, 129, 0.35); font-family: 'IBM Plex Mono', monospace;">
-                <span class="pulse-dot"></span>{auth_user_badge}
+            <span style="color: #64748B; font-size: 10px; font-weight: 500; letter-spacing: 0.06em; text-transform: uppercase;">AKTİF OTURUM</span>
+            <span style="display:inline-flex;align-items:center;gap:5px;background: rgba(16, 185, 129, 0.10); color: #34D399; font-size: 10px; font-weight: 500; padding: 2px 7px; border-radius: 4px; border: 1px solid rgba(16, 185, 129, 0.25); font-family: 'IBM Plex Mono', monospace;">
+                <span class="status-dot-live"></span>{auth_user_badge}
             </span>
         </div>
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px;">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00F0FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-            <span style="font-weight: 700; color: #FAFAFA; font-size: 13px;">{auth_user_name}</span>
+            {lucide_icon("user", size=16, stroke_width=1.65, color=ICON_MUTED)}
+            <span style="font-weight: 600; color: #F8FAFC; font-size: 12.5px;">{auth_user_name}</span>
         </div>
-        <div style="color: #94A3B8; font-size: 11px; font-weight: 500; padding-left: 22px;">{auth_user_role}</div>
-        <div style="border-top: 1px solid rgba(56, 189, 248, 0.12); margin-top: 9px; padding-top: 8px;">
-            <div style="display:flex;align-items:center;gap:6px;color:#94A3B8;font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:3px;">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                <span>CANLI SİSTEM SAATİ (TRT)</span>
+        <div style="color: #94A3B8; font-size: 11px; font-weight: 400; padding-left: 24px;">{auth_user_role}</div>
+        <div style="border-top: 1px solid rgba(226, 232, 240, 0.07); margin-top: 9px; padding-top: 8px;">
+            <div style="display:flex;align-items:center;gap:6px;color:#64748B;font-size:10px;font-weight:500;letter-spacing:0.05em;text-transform:uppercase;margin-bottom:3px;">
+                {lucide_icon("clock", size=16, stroke_width=1.5, color=ICON_MUTED)}
+                <span>SİSTEM SAATİ (TRT)</span>
             </div>
-            <div style="color: #00F0FF; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; font-weight: 600; letter-spacing: 0.02em;">{sys_dt_side}</div>
+            <div style="color: #CBD5E1; font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 500;">{sys_dt_side}</div>
         </div>
     </div>
     ''', unsafe_allow_html=True)
 
-    if st.button("Güvenli Çıkış · Sign Out", use_container_width=True, key="btn_signout_top"):
+    if st.button("Güvenli Çıkış", icon=MATERIAL_ICONS["logout"], use_container_width=True, key="btn_signout_top"):
         for k in ["authenticated", "auth_user", "auth_name", "auth_role", "auth_badge"]:
             if k in st.session_state:
                 del st.session_state[k]
@@ -9127,14 +9228,13 @@ with st.sidebar:
     if cur_nav_info:
         params_html = "".join([f"<li style='margin-bottom:4px;'>{p}</li>" for p in cur_nav_info.get("params", [])])
         st.markdown(f"""
-        <div style="background:linear-gradient(145deg, rgba(14, 23, 42, 0.56) 0%, rgba(7, 11, 22, 0.44) 100%);backdrop-filter:blur(18px);border:1px solid rgba(56, 189, 248, 0.22);border-radius:10px;padding:12px 14px;margin-top:8px;margin-bottom:12px;box-shadow:0 8px 28px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.12);position:relative;overflow:hidden;">
-            <div style="position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,{cur_nav_info.get('color', '#00F0FF')},transparent);"></div>
+        <div style="background:#111622;border:1px solid rgba(226,232,240,0.09);border-radius:6px;padding:12px 14px;margin-top:8px;margin-bottom:12px;">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:6px;">
-                <b style="color:{cur_nav_info.get('color', '#00F0FF')};font-size:12px;font-weight:700;letter-spacing:0.01em;">{cur_nav_info.get('title')}</b>
-                <span style="background:rgba(0,240,255,0.10);color:{cur_nav_info.get('color', '#00F0FF')};font-size:9.5px;padding:2px 6px;border-radius:4px;font-weight:700;border:1px solid rgba(0,240,255,0.28);font-family:'IBM Plex Mono',monospace;white-space:nowrap;">{cur_nav_info.get('badge')}</span>
+                <span style="color:#F8FAFC;font-size:12px;font-weight:600;letter-spacing:-0.01em;">{cur_nav_info.get('title')}</span>
+                <span style="background:rgba(56,189,248,0.10);color:#38BDF8;font-size:9.5px;padding:2px 6px;border-radius:4px;font-weight:500;border:1px solid rgba(56,189,248,0.25);font-family:'IBM Plex Mono',monospace;white-space:nowrap;">{cur_nav_info.get('badge')}</span>
             </div>
-            <div style="color:#94A3B8;font-size:9.5px;margin-bottom:6px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">AKTİF MODÜL PARAMETRELERİ</div>
-            <ul style="color:#CBD5E1;padding-left:15px;margin:0;font-size:11.5px;line-height:1.55;">
+            <div style="color:#64748B;font-size:10px;margin-bottom:6px;font-weight:500;letter-spacing:0.06em;text-transform:uppercase;">AKTİF MODÜL PARAMETRELERİ</div>
+            <ul style="color:#94A3B8;padding-left:15px;margin:0;font-size:11.5px;line-height:1.55;">
                 {params_html}
             </ul>
         </div>
@@ -9340,7 +9440,7 @@ def generate_zeus_expert_response(prompt_text, chat_history=None):
                 "  5. Doğrudan Klinik Satışı (Non-exclusive direct clinical placement).\n"
                 "- 59 Ülke Verisi, 874 İşlem, $693.9K konsolide fiili gelir.\n\n"
                 "Görevin: Üst yönetime (Sireen Khemesh ve yönetim kuruluna) derinlemesine, profesyonel, uygulanabilir stratejik öneriler, "
-                "sözleşme maddeleri, teknik kıyaslamalar ve finansal gerekçeler sunmak. Yanıtlarını net, kurumsal başlıklar, yönetici maddeleri ve zengin markdown ile ver."
+                "sözleşme maddeleri, teknik kıyaslamalar ve finansal gerekçeler sunmak. Yanıtlarını net, kurumsal başlıklar, yönetici maddeleri ve standart markdown ile ver. KESİNLİKLE hiçbir Unicode emoji veya dekoratif sembol kullanma."
             )
             
             hist_context = ""
@@ -9360,7 +9460,7 @@ def generate_zeus_expert_response(prompt_text, chat_history=None):
                 )
             )
             if resp and resp.text:
-                return resp.text.strip()
+                return sanitize_ui_text(resp.text.strip())
         except Exception:
             pass
 
@@ -9576,7 +9676,7 @@ def render_zeus_ai_chat_interface(key_suffix=""):
     """, unsafe_allow_html=True)
 
     # Preset Strategic Directive Action Chips
-    st.caption("◈ STRATEJİK İSTİŞARE DİREKTİFLERİ (ÖNCEDEN TANIMLI PROTOKOLLER):")
+    st.caption("STRATEJİK İSTİŞARE DİREKTİFLERİ (ÖNCEDEN TANIMLI PROTOKOLLER):")
     q_col1, q_col2, q_col3 = st.columns(3)
     preset_clicked = None
     with q_col1:
@@ -13787,7 +13887,7 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
                 ], key=f"sel_mgr_auth_{comp_select_edit}_{active_source}")
             with ed_c2:
                 st.markdown("<div style='height:28px;'></div>", unsafe_allow_html=True)
-                if st.button("💾 Notu Güncelle ve Kaydet", key=f"btn_save_row_note_{comp_select_edit}_{active_source}", type="primary", use_container_width=True):
+                if st.button("Notu Güncelle ve Kaydet", key=f"btn_save_row_note_{comp_select_edit}_{active_source}", type="primary", use_container_width=True):
                     c_notes[comp_select_edit]['manager_note'] = new_mgr_note.strip()
                     c_notes[comp_select_edit]['updated_by'] = new_mgr_author
                     c_notes[comp_select_edit]['updated_at'] = datetime.now().strftime("%Y-%m-%d %H:%M")
@@ -13909,7 +14009,7 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
                             "status": "Onaylandı & İcrada"
                         }
                         st.session_state['executive_competitor_decision_notes'].insert(0, new_note_entry)
-                        st.success(f"✓ {it1_country} pazarında {it1_comp} karşısındaki karar notu başarıyla kaydedildi ve Karar Merkezi değerlendirme masasına aktarıldı!")
+                        st.success(f"{it1_country} pazarında {it1_comp} karşısındaki karar notu başarıyla kaydedildi ve Karar Merkezi değerlendirme masasına aktarıldı!")
                         st.rerun()
                     else:
                         st.error("Lütfen karar notu içeriğini boş bırakmayınız.")
@@ -13963,14 +14063,14 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
                                 st.markdown(f"**[{n_item['id']}] Yönetici Notunu Düzenle**")
                                 ed_t1_memo = st.text_area("✍️ Yönetici Karar Tutanağı:", value=n_item.get('decision_note', ''), height=100, key=f"ed_t1_memo_{active_source}_{n_item['id']}_{idx_t1}")
                                 ed_t1_status = st.selectbox("Karar Statüsü:", ["Onaylandı & İcrada", "Şartlı Onay / İncelemede", "Revize Gerekli / Red", "İcrada & Görüşme Aşamasında"], index=["Onaylandı & İcrada", "Şartlı Onay / İncelemede", "Revize Gerekli / Red", "İcrada & Görüşme Aşamasında"].index(n_item.get('status', 'Onaylandı & İcrada')) if n_item.get('status') in ["Onaylandı & İcrada", "Şartlı Onay / İncelemede", "Revize Gerekli / Red", "İcrada & Görüşme Aşamasında"] else 0, key=f"ed_t1_status_{active_source}_{n_item['id']}_{idx_t1}")
-                                if st.button("💾 Değişiklikleri Kaydet", key=f"btn_save_t1_{active_source}_{n_item['id']}_{idx_t1}", type="primary", use_container_width=True):
+                                if st.button("Değişiklikleri Kaydet", key=f"btn_save_t1_{active_source}_{n_item['id']}_{idx_t1}", type="primary", use_container_width=True):
                                     st.session_state['executive_competitor_decision_notes'][idx_t1]['decision_note'] = ed_t1_memo.strip()
                                     st.session_state['executive_competitor_decision_notes'][idx_t1]['status'] = ed_t1_status
                                     st.session_state['executive_competitor_decision_notes'][idx_t1]['timestamp'] = datetime.now().strftime("%Y-%m-%d %H:%M")
                                     st.toast(f"✓ {n_item['id']} notu başarıyla güncellendi!", icon="✅")
                                     st.rerun()
                         with col_t1_b2:
-                            if st.button(f"🗑️ Notu Sil ({n_item['id']})", key=f"del_tab1_note_{active_source}_{n_item['id']}_{idx_t1}", use_container_width=True):
+                            if st.button(f"Notu Sil ({n_item['id']})", key=f"del_tab1_note_{active_source}_{n_item['id']}_{idx_t1}", use_container_width=True):
                                 st.session_state['executive_competitor_decision_notes'].pop(idx_t1)
                                 st.toast(f"✓ {n_item['id']} notu silindi.", icon="🗑️")
                                 st.rerun()
@@ -14264,7 +14364,7 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
                             "status": "Onaylandı & İcrada"
                         }
                         st.session_state['executive_competitor_decision_notes'].insert(0, new_note_entry)
-                        st.success(f"✓ {f_country} pazarında {f_comp} karşısındaki karar notu başarıyla kaydedildi ve Strategic Decision Center'a aktarıldı!")
+                        st.success(f"{f_country} pazarında {f_comp} karşısındaki karar notu başarıyla kaydedildi ve Strategic Decision Center'a aktarıldı!")
                         st.rerun()
                     else:
                         st.error("Lütfen karar notu içeriğini boş bırakmayınız.")
@@ -14309,14 +14409,14 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
                                 st.markdown(f"**[{n_item['id']}] Yönetici Notunu Düzenle**")
                                 ed_t4_memo = st.text_area("✍️ Yönetici Karar Tutanağı:", value=n_item.get('decision_note', ''), height=100, key=f"ed_t4_memo_{active_source}_{n_item['id']}_{idx_n}")
                                 ed_t4_status = st.selectbox("Karar Statüsü:", ["Onaylandı & İcrada", "Şartlı Onay / İncelemede", "Revize Gerekli / Red", "İcrada & Görüşme Aşamasında"], index=["Onaylandı & İcrada", "Şartlı Onay / İncelemede", "Revize Gerekli / Red", "İcrada & Görüşme Aşamasında"].index(n_item.get('status', 'Onaylandı & İcrada')) if n_item.get('status') in ["Onaylandı & İcrada", "Şartlı Onay / İncelemede", "Revize Gerekli / Red", "İcrada & Görüşme Aşamasında"] else 0, key=f"ed_t4_status_{active_source}_{n_item['id']}_{idx_n}")
-                                if st.button("💾 Değişiklikleri Kaydet", key=f"btn_save_t4_{active_source}_{n_item['id']}_{idx_n}", type="primary", use_container_width=True):
+                                if st.button("Değişiklikleri Kaydet", key=f"btn_save_t4_{active_source}_{n_item['id']}_{idx_n}", type="primary", use_container_width=True):
                                     st.session_state['executive_competitor_decision_notes'][idx_n]['decision_note'] = ed_t4_memo.strip()
                                     st.session_state['executive_competitor_decision_notes'][idx_n]['status'] = ed_t4_status
                                     st.session_state['executive_competitor_decision_notes'][idx_n]['timestamp'] = datetime.now().strftime("%Y-%m-%d %H:%M")
                                     st.toast(f"✓ {n_item['id']} notu başarıyla güncellendi!", icon="✅")
                                     st.rerun()
                         with col_t4_b2:
-                            if st.button(f"🗑️ Notu Sil ({n_item['id']})", key=f"del_note_{active_source}_{n_item['id']}_{idx_n}", use_container_width=True):
+                            if st.button(f"Notu Sil ({n_item['id']})", key=f"del_note_{active_source}_{n_item['id']}_{idx_n}", use_container_width=True):
                                 st.session_state['executive_competitor_decision_notes'].pop(idx_n)
                                 st.toast(f"✓ {n_item['id']} notu silindi.", icon="🗑️")
                                 st.rerun()
@@ -14607,14 +14707,14 @@ def render_quick_b2b_csv_uploader():
         try:
             raw_bytes = up_file.read()
             df = parse_and_sanitize_csv(raw_bytes)
-            st.success(f"✓ Dosya başarıyla okundu! Toplam {len(df)} satır tespit edildi.")
+            st.success(f"Dosya başarıyla okundu! Toplam {len(df)} satır tespit edildi.")
             
             # Preview top 3
             st.dataframe(df.head(3), use_container_width=True)
             
             col_b1, col_b2 = st.columns([1.5, 1])
             with col_b1:
-                if st.button("📥 Bu Kişileri Karar Verici Havuzuna Aktar", key="btn_apply_quick_b2b_csv", type="primary", use_container_width=True):
+                if st.button("Bu Kişileri Karar Verici Havuzuna Aktar", key="btn_apply_quick_b2b_csv", type="primary", use_container_width=True):
                     new_contacts = []
                     for _, r in df.iterrows():
                         c_dict = normalize_imported_prospect_row(dict(r))
@@ -14677,7 +14777,7 @@ def render_universal_csv_importer_hub():
         if b2b_file is not None:
             try:
                 b2b_df = parse_and_sanitize_csv(b2b_file.read())
-                st.success(f"✓ CSV başarıyla ayrıştırıldı: **{len(b2b_df)} Satır**, **{len(b2b_df.columns)} Sütun**")
+                st.success(f"CSV başarıyla ayrıştırıldı: **{len(b2b_df)} Satır**, **{len(b2b_df.columns)} Sütun**")
                 
                 # Column mapping preview
                 detected_cols = list(b2b_df.columns)
@@ -14698,7 +14798,7 @@ def render_universal_csv_importer_hub():
                 
                 col_imp_act1, col_imp_act2 = st.columns([1.5, 1])
                 with col_imp_act1:
-                    if st.button("📥 B2B Karar Verici Havuzuna Ekle & Aktar", key="btn_imp_b2b_hub_confirm", type="primary", use_container_width=True):
+                    if st.button("B2B Karar Verici Havuzuna Ekle & Aktar", key="btn_imp_b2b_hub_confirm", type="primary", use_container_width=True):
                         new_batch = []
                         for _, row_item in b2b_df.iterrows():
                             norm_item = normalize_imported_prospect_row(dict(row_item))
@@ -14706,7 +14806,7 @@ def render_universal_csv_importer_hub():
                         
                         st.session_state['imported_custom_prospects'].extend(new_batch)
                         st.toast(f"✅ {len(new_batch)} adet B2B karar verici başarıyla sisteme aktarıldı!", icon="✅")
-                        st.success(f"✓ {len(new_batch)} kişi eklendi. Artık Modül 4: B2B İletişim & Karar Verici Bulucu'da doğrudan arama ve e-posta gönderebilirsiniz.")
+                        st.success(f"{len(new_batch)} kişi eklendi. Artık Modül 4: B2B İletişim & Karar Verici Bulucu'da doğrudan arama ve e-posta gönderebilirsiniz.")
                         st.rerun()
                 with col_imp_act2:
                     sample_b2b_csv = "email,first_name,last_name,company_name,title,website,linkedin_url,industry,personalization,score,country\ncarlos.simon@ivirma.com,Carlos,Simon,IVI-RMA Global,Scientific Director,https://ivi-rma.com,https://linkedin.com/in/carlossimon,IVF / ART,Leading AOA and PGT-A clinic,98,Spain\nlaura.rienzi@generaglobal.it,Laura,Rienzi,GeneraLife Rome,Head of Embryology,https://generalife.com,https://linkedin.com/in/laurarienzi,Reproductive Medicine,High cycle volume clinic,96,Italy\nvolkan.baltaci@genart.com.tr,Volkan,Baltaci,Gen-Art IVF,Scientific Director,https://genart.com.tr,https://linkedin.com/in/volkanbaltaci,IVF / Genetics,Leading researcher in electrical AOA,99,Türkiye\n"
@@ -14728,14 +14828,14 @@ def render_universal_csv_importer_hub():
         if erp_file is not None:
             try:
                 erp_df = parse_and_sanitize_csv(erp_file.read())
-                st.success(f"✓ ERP Satış Kütüğü ayrıştırıldı: **{len(erp_df)} Satır Fatura**, **{len(erp_df.columns)} Sütun**")
+                st.success(f"ERP Satış Kütüğü ayrıştırıldı: **{len(erp_df)} Satır Fatura**, **{len(erp_df.columns)} Sütun**")
                 
                 # Check for critical columns
                 req_cols = ['Company', 'Country', 'Total_USD']
                 missing_cols = [c for c in req_cols if c not in erp_df.columns]
                 
                 if missing_cols:
-                    st.warning(f"⚠️ Dosyada şu zorunlu sütunlar eksik: {missing_cols}. Lütfen örnek şablonu inceleyin.")
+                    st.warning(f"Dosyada şu zorunlu sütunlar eksik: {missing_cols}. Lütfen örnek şablonu inceleyin.")
                 else:
                     tot_rev = erp_df['Total_USD'].sum() if 'Total_USD' in erp_df.columns else 0
                     comp_cnt = erp_df['Company'].nunique() if 'Company' in erp_df.columns else 0
@@ -14754,11 +14854,11 @@ def render_universal_csv_importer_hub():
                     
                     col_act_e1, col_act_e2 = st.columns([1.5, 1])
                     with col_act_e1:
-                        if st.button("📥 ERP Satış Kütüğünü Güncelle & Kaydet", key="btn_apply_erp_csv", type="primary", use_container_width=True):
+                        if st.button("ERP Satış Kütüğünü Güncelle & Kaydet", key="btn_apply_erp_csv", type="primary", use_container_width=True):
                             erp_df.to_csv("Zeus_Sales_Export_2026-11-03.csv", index=False, encoding='utf-8')
                             st.session_state['custom_imported_sales_df'] = erp_df
                             st.toast("✅ ERP Satış Kütüğü başarıyla güncellendi!", icon="✅")
-                            st.success("✓ Yeni fatura kütüğü kaydedildi. Dashboard ERP kokpiti güncellendi.")
+                            st.success("Yeni fatura kütüğü kaydedildi. Dashboard ERP kokpiti güncellendi.")
                             st.rerun()
                     with col_act_e2:
                         sample_erp_csv = "Invoice_No,Date,Company,Country,Product,Group,Quantity,Price_USD,Total_USD,Total_TL\nINV-2026-001,15.01.2026,PALEX MEDICAL,Spain,ZEUS Pulse Stimulator (ZPS 26),Device,2,8500.0,17000.0,612000.0\nINV-2026-002,22.01.2026,PALEX MEDICAL,Spain,Z-Dish 4-Pool (Kutu - 25 Adet),Consumable,50,165.0,8250.0,297000.0\nINV-2026-003,10.02.2026,SIRIUS PHARM COMPANY,Jordan-Iraq,Z-Dish 4-Pool (Kutu - 25 Adet),Consumable,75,165.0,12375.0,445500.0\n"
@@ -14778,13 +14878,13 @@ def render_universal_csv_importer_hub():
         if len(cur_imported) == 0:
             st.info("Sistemde şu anda harici yüklenmiş özel karar verici kaydı bulunmamaktadır. 1. Sekmeden Sellbird CSV yükleyebilirsiniz.")
         else:
-            st.success(f"✓ Sistemde şu an aktif **{len(cur_imported)} Adet** harici yüklenmiş karar verici profili mevcuttur.")
+            st.success(f"Sistemde şu an aktif **{len(cur_imported)} Adet** harici yüklenmiş karar verici profili mevcuttur.")
             df_cur_imp = pd.DataFrame(cur_imported)
             st.dataframe(df_cur_imp[['name', 'contact_person', 'email', 'country', 'category', 'score']], use_container_width=True)
             
             c_cl1, c_cl2 = st.columns(2)
             with c_cl1:
-                if st.button("🗑️ Tüm İçe Aktarılan Kayıtları Temizle", key="btn_clear_imported_prospects", use_container_width=True):
+                if st.button("Tüm İçe Aktarılan Kayıtları Temizle", key="btn_clear_imported_prospects", use_container_width=True):
                     st.session_state['imported_custom_prospects'] = []
                     st.toast("Tüm harici içe aktarılan kayıtlar temizlendi.", icon="🗑️")
                     st.rerun()
@@ -17295,7 +17395,7 @@ def render_tenders_hub():
             f_notes = st.text_area("Şartname Notları ve Özel Şartlar:", placeholder="Örn: MEA test sertifikası ve en az 2 kurulu referans merkezi aranmaktadır...")
             
             if st.form_submit_button("💾 İhaleyi Sisteme Kaydet & Bildirim Oluştur", type="primary"):
-                st.success("✅ Yeni ihale başarıyla kaydedildi! Stratejik karar merkezi ve dağıtıcı takip masasına iletildi.")
+                st.success("Yeni ihale başarıyla kaydedildi! Stratejik karar merkezi ve dağıtıcı takip masasına iletildi.")
 
 
 # ==============================================================================
@@ -17541,7 +17641,7 @@ def render_regulations_hub():
             r_title = st.text_input("Konu / Başlık:", placeholder="Örn: Yeni Embriyo Biyopsi Akreditasyon Tebliği")
             r_text = st.text_area("Tebliğ Metni / Özeti:", placeholder="Mevzuat içeriğini buraya giriniz...")
             if st.form_submit_button("💾 Mevzuat Kararını Sisteme Kaydet", type="primary"):
-                st.success("✅ Yeni mevzuat kararı başarıyla bilgi bankasına eklendi!")
+                st.success("Yeni mevzuat kararı başarıyla bilgi bankasına eklendi!")
 
 
 def render_risk_scenario_simulator_view():
@@ -17607,7 +17707,7 @@ def render_risk_scenario_simulator_view():
 
             # Ürün Maliyeti Girişi (Opsiyonel / Maliyet verisi kuralı)
             with st.expander("Kârlılık Hesabı İçin Ürün Maliyeti (COGS) Girişi", expanded=False):
-                st.caption("Ürün maliyeti girilene kadar brüt kâr ve marj alanlarında 'Maliyet verisi gerekli' yazacaktır.")
+                st.caption("Ürün maliyeti girilene kadar brüt kâr ve marj alanlarında 'Maliyet verisi gerekli'yazacaktır.")
                 user_cogs_pct = st.number_input("Ürün Maliyet Oranı (%)", min_value=0.0, max_value=90.0, value=0.0, step=5.0, help="Maliyet oranı girildiğinde brüt kâr ve marj otomatik hesaplanır.")
 
         # --------------------------------------------------------------------------
@@ -17709,7 +17809,7 @@ def render_risk_scenario_simulator_view():
             with p_in2:
                 wire_delay = st.slider("Banka Transfer Gecikmesi (Gün)", 0, 90, 0, 5)
             with p_in3:
-                st.info("ℹ️ Sevkiyat öncesi tam tutarın tahsil edilmesi esastır. Gecikme, banka akreditif veya SWIFT teyit süresini temsil eder.")
+                st.info("ℹ Sevkiyat öncesi tam tutarın tahsil edilmesi esastır. Gecikme, banka akreditif veya SWIFT teyit süresini temsil eder.")
 
             cf_30 = order_val if wire_delay <= 30 else 0.0
             cf_60 = order_val if wire_delay <= 60 else 0.0
@@ -17723,7 +17823,7 @@ def render_risk_scenario_simulator_view():
             with p_in2:
                 wire_delay = st.slider("Ödeme Gecikmesi (Gün)", 0, 90, 0, 5)
             with p_in3:
-                st.info("ℹ️ Yurtiçi klinikler için peşin faturalı sipariş modeli. Gecikme, fatura vadesinden sonraki ötelemedir.")
+                st.info("ℹ Yurtiçi klinikler için peşin faturalı sipariş modeli. Gecikme, fatura vadesinden sonraki ötelemedir.")
 
             cf_30 = order_val if wire_delay <= 30 else 0.0
             cf_60 = order_val if wire_delay <= 60 else 0.0
@@ -17840,13 +17940,13 @@ def render_risk_scenario_simulator_view():
                     - 30 Günlük Nakit Girişi: {cf_30:,.2f} USD, 60 Günlük: {cf_60:,.2f} USD, 90 Günlük: {cf_90:,.2f} USD
                     - 90 Gün Sonrası Kalan Alacak Bakiyesi: {rem_balance:,.2f} USD
                 
-                    Raporunu tamamen Türkçe, profesyonel, maddeler halinde ve somut 3 adet risk azaltma aksiyonu ile yaz.
+                    Raporunu tamamen Türkçe, profesyonel, maddeler halinde ve somut 3 adet risk azaltma aksiyonu ile yaz. Kesinlikle hiçbir Unicode emoji veya dekoratif sembol kullanma.
                     """
                     response = client.models.generate_content(
                         model='gemini-2.5-flash',
                         contents=risk_prompt,
                     )
-                    ai_risk_text = response.text
+                    ai_risk_text = sanitize_ui_text(response.text)
                 except Exception:
                     ai_risk_text = None
 
@@ -17927,7 +18027,7 @@ def render_churn_and_partner_performance_view():
             """, unsafe_allow_html=True)
         
         if eval_d.get('is_sister') or 'GEN-SA' in eval_d['name']:
-            st.info("🏢 **BİLGİLENDİRME (Kardeş Şirket):** GEN-SA GENEL SAĞLIK A.Ş., ZEUS Bioscience'ın **kardeş şirketidir**. Şirket içi direktif gereği üçüncü taraf distribütör/klinik performans cezalandırmasına, sözleşme kotalarına veya ihtar/churn değerlendirmesine tabi tutulmamaktadır. Aşağıdaki veriler grup içi konsolide satış hareketleri kapsamında salt bilgi amaçlı sunulmaktadır.")
+            st.info("**BİLGİLENDİRME (Kardeş Şirket):** GEN-SA GENEL SAĞLIK A.Ş., ZEUS Bioscience'ın **kardeş şirketidir**. Şirket içi direktif gereği üçüncü taraf distribütör/klinik performans cezalandırmasına, sözleşme kotalarına veya ihtar/churn değerlendirmesine tabi tutulmamaktadır. Aşağıdaki veriler grup içi konsolide satış hareketleri kapsamında salt bilgi amaçlı sunulmaktadır.")
 
         # --------------------------------------------------------------------------
         # 2. GERÇEK EXCEL VERİLERİNDEN YILLIK & ÇEYREKLİK ANALİZ
@@ -18178,16 +18278,16 @@ def render_churn_and_partner_performance_view():
                         </div>
                         """, unsafe_allow_html=True)
             else:
-                st.success("✅ Bu partner için çeyrekler arası keskin bir sipariş düşüşü tespit edilmemiştir; sipariş hacmi düzenli veya artış trendindedir.")
+                st.success("Bu partner için çeyrekler arası keskin bir sipariş düşüşü tespit edilmemiştir; sipariş hacmi düzenli veya artış trendindedir.")
 
         with c_dr2:
             st.markdown("##### Analitik Değerlendirme & Yorum")
             if tot_all_dev > 0 and y_df['Cihaz (Adet)'].iloc[-1] == 0:
-                st.info(f"ℹ️ **Cihaz vs Sarf Dönüşümü:** {eval_dist_name}, geçmiş yıllarda {tot_all_dev} adet Pulse Stimulator (AOA) cihazı alarak altyapısını kurmuştur. 2026'da cihaz alımının durması normal bir sermaye ekipmanı doyumudur; asıl takip edilmesi gereken metrik kurulu 5 cihazın oosit sarf tüketim sürekliliğidir.")
+                st.info(f"ℹ **Cihaz vs Sarf Dönüşümü:** {eval_dist_name}, geçmiş yıllarda {tot_all_dev} adet Pulse Stimulator (AOA) cihazı alarak altyapısını kurmuştur. 2026'da cihaz alımının durması normal bir sermaye ekipmanı doyumudur; asıl takip edilmesi gereken metrik kurulu 5 cihazın oosit sarf tüketim sürekliliğidir.")
             elif tot_all_dev == 0:
-                st.info(f"ℹ️ **Sadece Sarf Alan Müşteri:** Bu partner henüz Pulse Stimulator sermaye cihazı almamış olup yalnızca Electro Dish veya Solüsyon sarfı tüketmektedir.")
+                st.info(f"ℹ **Sadece Sarf Alan Müşteri:** Bu partner henüz Pulse Stimulator sermaye cihazı almamış olup yalnızca Electro Dish veya Solüsyon sarfı tüketmektedir.")
             else:
-                st.success(f"ℹ️ **Aktif Büyüme:** Partner hem yeni cihaz kurulumu yapmakta hem de sarf malzeme hacmini büyütmektedir.")
+                st.success(f"ℹ **Aktif Büyüme:** Partner hem yeni cihaz kurulumu yapmakta hem de sarf malzeme hacmini büyütmektedir.")
 
         st.markdown("---")
 
@@ -18591,7 +18691,7 @@ def render_decision_maker_finder_hub(country_df):
     with c_b2:
         st.link_button(f"Google X-Ray ile Şifresiz Profil Aç", live_gx_url, use_container_width=True)
     with c_b3:
-        st.link_button(f"🏢 Kurum Profilini Aç", company_lk_url, use_container_width=True)
+        st.link_button(f"Kurum Profilini Aç", company_lk_url, use_container_width=True)
 
     # --------------------------------------------------------------------------
     # CRITICAL: ANTI-BOUNCE EMAIL DELIVERABILITY SHIELD
@@ -18701,7 +18801,7 @@ def render_decision_maker_finder_hub(country_df):
                 with p_b2:
                     st.link_button(f"Google X-Ray", pr_gx_url, use_container_width=True)
                 with p_b3:
-                    st.link_button(f"📩 E-posta Gönder", direct_mail_url, use_container_width=True)
+                    st.link_button(f"E-posta Gönder", direct_mail_url, use_container_width=True)
 
     # Optional Expandable ERP Client Directory at bottom
     st.markdown("<div style='height:16px;'></div>", unsafe_allow_html=True)
@@ -18815,12 +18915,12 @@ def render_active_omni_search_hub(query_str):
 
     c_btn1, c_btn2 = st.columns([1.2, 4.0])
     with c_btn1:
-        if st.button("❌ Aramayı Temizle (Normale Dön)", key="btn_clear_omni_search_active", use_container_width=True):
+        if st.button("Aramayı Temizle (Normale Dön)", key="btn_clear_omni_search_active", use_container_width=True):
             st.session_state["omni_search_input"] = ""
             st.rerun()
 
     if tot_matches == 0:
-        st.warning(f"'{q_clean}' ifadesine uygun sonuç bulunamadı. Lütfen firma adı, ülke (örn: Saudi, Italy, Egypt), cihaz (ZPS 26, BioPSafe) veya anahtar kelime (yemek, ihale, sözleşme) ile tekrar deneyin.")
+        st.warning(f"'{q_clean}'ifadesine uygun sonuç bulunamadı. Lütfen firma adı, ülke (örn: Saudi, Italy, Egypt), cihaz (ZPS 26, BioPSafe) veya anahtar kelime (yemek, ihale, sözleşme) ile tekrar deneyin.")
         return
 
     # QUICK JUMP SHORTCUT BUTTONS (Doğrudan İlgili Masaya / Sekmeye Git)
@@ -18834,26 +18934,26 @@ def render_active_omni_search_hub(query_str):
     with jump_cols[0]:
         if len(matched_cultures) > 0:
             first_c = matched_cultures[0]['country']
-            if st.button(f"🌍 Kültür & Sözleşme ({len(matched_cultures)}) ➔", key="btn_jump_cult_hdr", use_container_width=True, type="primary"):
+            if st.button(f"Kültür & Sözleşme ({len(matched_cultures)}) ", key="btn_jump_cult_hdr", use_container_width=True, type="primary"):
                 st.session_state["main_nav_radio"] = "01 / Pazar İstihbaratı & Ülke Analizi"
                 st.session_state["c360_single_country_select"] = first_c
                 st.session_state["omni_search_input"] = ""
                 st.rerun()
     with jump_cols[1]:
         if len(matched_firms) > 0:
-            if st.button(f"🏢 Firmalar & CRM ({len(matched_firms)}) ➔", key="btn_jump_firm_hdr", use_container_width=True):
+            if st.button(f"Firmalar & CRM ({len(matched_firms)}) ", key="btn_jump_firm_hdr", use_container_width=True):
                 st.session_state["main_nav_radio"] = "04 / B2B & Medikal İletişim Ağı"
                 st.session_state["omni_search_input"] = ""
                 st.rerun()
     with jump_cols[2]:
         if len(matched_tenders) > 0:
-            if st.button(f"🏛️ Kamu İhaleleri ({len(matched_tenders)}) ➔", key="btn_jump_tend_hdr", use_container_width=True):
+            if st.button(f"Kamu İhaleleri ({len(matched_tenders)}) ", key="btn_jump_tend_hdr", use_container_width=True):
                 st.session_state["main_nav_radio"] = "01 / Pazar İstihbaratı & Ülke Analizi"
                 st.session_state["omni_search_input"] = ""
                 st.rerun()
     with jump_cols[3]:
         if len(matched_products) > 0:
-            if st.button(f"⚡ Cihaz & Mevzuat ({len(matched_products)}) ➔", key="btn_jump_prod_hdr", use_container_width=True):
+            if st.button(f"Cihaz & Mevzuat ({len(matched_products)}) ", key="btn_jump_prod_hdr", use_container_width=True):
                 st.session_state["main_nav_radio"] = "01 / Pazar İstihbaratı & Ülke Analizi"
                 st.session_state["omni_search_input"] = ""
                 st.rerun()
@@ -18905,7 +19005,7 @@ def render_active_omni_search_hub(query_str):
                             </div>
                         </div>
                         """, unsafe_allow_html=True)
-                        if st.button(f"👉 Bu Ülkenin Masasına Git ({c_name} — Pazar Analizi & Ülke 360°)", key=f"btn_go_cult_item_{c_name}_{idx_c}"):
+                        if st.button(f"Bu Ülkenin Masasına Git ({c_name} — Pazar Analizi & Ülke 360°)", key=f"btn_go_cult_item_{c_name}_{idx_c}"):
                             st.session_state["main_nav_radio"] = "01 / Pazar İstihbaratı & Ülke Analizi"
                             st.session_state["c360_single_country_select"] = c_name
                             st.session_state["omni_search_input"] = ""
@@ -18941,7 +19041,7 @@ def render_active_omni_search_hub(query_str):
                             {f'<div style="color:#94A3B8;font-size:11px;margin-top:4px;border-top:1px dashed rgba(255,255,255,0.08);padding-top:4px;">💡 <b>Stratejik Gerekçe:</b> {f_strat}</div>' if f_strat else ''}
                         </div>
                         """, unsafe_allow_html=True)
-                        if st.button(f"👉 Bu Kurumun Masasına Git ({f_name})", key=f"btn_go_firm_item_{idx_f}"):
+                        if st.button(f"Bu Kurumun Masasına Git ({f_name})", key=f"btn_go_firm_item_{idx_f}"):
                             st.session_state["main_nav_radio"] = "04 / B2B & Medikal İletişim Ağı"
                             st.session_state["omni_search_input"] = ""
                             st.rerun()
@@ -18976,7 +19076,7 @@ def render_active_omni_search_hub(query_str):
                                 p_url = '#'
                             st.markdown(f'<a href="{p_url}" target="_blank" style="display:inline-block;background:rgba(0,245,255,0.1);color:#00F5FF;border:1px solid rgba(0,245,255,0.3);padding:3px 8px;border-radius:4px;font-size:11px;text-decoration:none;">🔗 {p_name}</a>', unsafe_allow_html=True)
                         st.markdown("</div></div>", unsafe_allow_html=True)
-                        if st.button(f"👉 Bu İhalenin Masasına Git ({t_country})", key=f"btn_go_tender_item_{t_country}_{idx_t}"):
+                        if st.button(f"Bu İhalenin Masasına Git ({t_country})", key=f"btn_go_tender_item_{t_country}_{idx_t}"):
                             st.session_state["main_nav_radio"] = "01 / Pazar İstihbaratı & Ülke Analizi"
                             st.session_state["omni_search_input"] = ""
                             st.rerun()
@@ -18999,7 +19099,7 @@ def render_active_omni_search_hub(query_str):
                             </div>
                         </div>
                         """, unsafe_allow_html=True)
-                        if st.button(f"👉 Bu Ürünün Mevzuat Masasına Git ({pr['title']})", key=f"btn_go_prod_item_{idx_p}"):
+                        if st.button(f"Bu Ürünün Mevzuat Masasına Git ({pr['title']})", key=f"btn_go_prod_item_{idx_p}"):
                             st.session_state["main_nav_radio"] = "01 / Pazar İstihbaratı & Ülke Analizi"
                             st.session_state["omni_search_input"] = ""
                             st.rerun()
@@ -19018,40 +19118,37 @@ st.markdown("""
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
         margin-bottom: 14px !important;
     }
-    /* Circular Navigation Buttons - Neon Glass */
+    /* Circular Navigation Buttons */
     div[class*="st-key-btn_prev_"] button,
     div[class*="st-key-btn_next_"] button,
     div[class*="st-key-bot_prev_nav_"] button,
     div[class*="st-key-bot_next_nav_"] button {
         border-radius: 50% !important;
-        width: 36px !important;
-        height: 36px !important;
-        min-width: 36px !important;
-        max-width: 36px !important;
+        width: 34px !important;
+        height: 34px !important;
+        min-width: 34px !important;
+        max-width: 34px !important;
         padding: 0 !important;
         margin: 0 auto !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        background: rgba(14, 23, 42, 0.52) !important;
-        backdrop-filter: blur(14px) !important;
-        border: 1px solid rgba(56, 189, 248, 0.22) !important;
-        color: #E2E8F0 !important;
-        font-size: 16px !important;
-        font-weight: 700 !important;
+        background: #111622 !important;
+        border: 1px solid rgba(226, 232, 240, 0.09) !important;
+        color: #94A3B8 !important;
+        font-size: 15px !important;
+        font-weight: 500 !important;
         line-height: 1 !important;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
-        transition: all 240ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+        box-shadow: none !important;
+        transition: all 160ms cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
     div[class*="st-key-btn_prev_"] button:hover,
     div[class*="st-key-btn_next_"] button:hover,
     div[class*="st-key-bot_prev_nav_"] button:hover,
     div[class*="st-key-bot_next_nav_"] button:hover {
-        background: linear-gradient(135deg, rgba(0, 240, 255, 0.20), rgba(12, 92, 171, 0.55)) !important;
-        border-color: rgba(0, 240, 255, 0.70) !important;
-        color: #FFFFFF !important;
-        box-shadow: 0 0 18px rgba(0, 240, 255, 0.38) !important;
-        transform: scale(1.06) !important;
+        background: #161D2E !important;
+        border-color: rgba(56, 189, 248, 0.45) !important;
+        color: #38BDF8 !important;
     }
 
     /* Subview Pills Container */
@@ -19068,7 +19165,6 @@ st.markdown("""
         max-width: 100% !important;
     }
 
-    /* Pill Items: Translucent Neon Glass */
     div[data-testid="stButtonGroup"] button,
     div[data-testid="stButtonGroup"] [data-variant="pills"],
     div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stButtonGroup"] button,
@@ -19077,39 +19173,33 @@ st.markdown("""
         width: auto !important;
         min-width: max-content !important;
         max-width: none !important;
-        height: 36px !important;
-        border-radius: 8px !important;
-        background: rgba(14, 23, 42, 0.50) !important;
-        backdrop-filter: blur(14px) !important;
-        -webkit-backdrop-filter: blur(14px) !important;
-        border: 1px solid rgba(56, 189, 248, 0.18) !important;
-        color: #CBD5E1 !important;
+        height: 34px !important;
+        border-radius: 6px !important;
+        background: #111622 !important;
+        border: 1px solid rgba(226, 232, 240, 0.09) !important;
+        color: #94A3B8 !important;
         font-family: var(--zg-font-sans) !important;
         font-size: 12.5px !important;
         font-weight: 500 !important;
         letter-spacing: -0.01em !important;
-        padding: 6px 14px !important;
+        padding: 5px 12px !important;
         margin: 0 2px !important;
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
         white-space: nowrap !important;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
-        transition: all 240ms cubic-bezier(0.16, 1, 0.3, 1) !important;
-        box-sizing: border-box !important;
+        box-shadow: none !important;
+        transition: all 160ms cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
 
     div[data-testid="stButtonGroup"] button:hover,
     div[data-testid="stButtonGroup"] [data-variant="pills"]:hover,
     div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stButtonGroup"] button:hover {
-        background: rgba(20, 34, 62, 0.72) !important;
-        border-color: rgba(0, 240, 255, 0.55) !important;
-        color: #FFFFFF !important;
-        box-shadow: 0 0 18px rgba(0, 240, 255, 0.22) !important;
-        transform: translateY(-1px) !important;
+        background: #161D2E !important;
+        border-color: rgba(226, 232, 240, 0.22) !important;
+        color: #F8FAFC !important;
     }
 
-    /* Selected Pill: Electric Neon Cyan + Cobalt Glass */
     div[data-testid="stButtonGroup"] button[aria-selected="true"],
     div[data-testid="stButtonGroup"] button[data-selected="true"],
     div[data-testid="stButtonGroup"] [data-variant="pills"][data-selected="true"],
@@ -19120,17 +19210,16 @@ st.markdown("""
         width: auto !important;
         min-width: max-content !important;
         max-width: none !important;
-        height: 36px !important;
-        border-radius: 8px !important;
-        background: linear-gradient(135deg, rgba(0, 240, 255, 0.22) 0%, rgba(12, 92, 171, 0.78) 100%) !important;
-        border: 1px solid rgba(0, 240, 255, 0.75) !important;
-        color: #FFFFFF !important;
+        height: 34px !important;
+        border-radius: 6px !important;
+        background: #161D2E !important;
+        border: 1px solid rgba(56, 189, 248, 0.55) !important;
+        color: #F8FAFC !important;
         font-family: var(--zg-font-sans) !important;
         font-size: 12.5px !important;
         font-weight: 600 !important;
-        padding: 6px 16px !important;
-        box-shadow: 0 0 22px rgba(0, 240, 255, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.30) !important;
-        transform: translateY(-1px) !important;
+        padding: 5px 14px !important;
+        box-shadow: none !important;
         white-space: nowrap !important;
     }
 
@@ -19143,46 +19232,43 @@ st.markdown("""
         color: inherit !important;
     }
 
-    /* Omni-Search Capsule: Translucent Neon Glass */
     div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stTextInput"] div[data-baseweb="input"] {
-        border-radius: 8px !important;
-        background: rgba(14, 23, 42, 0.55) !important;
-        backdrop-filter: blur(14px) !important;
-        border: 1px solid rgba(56, 189, 248, 0.22) !important;
-        height: 36px !important;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
-        transition: all 240ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+        border-radius: 6px !important;
+        background: #111622 !important;
+        border: 1px solid rgba(226, 232, 240, 0.09) !important;
+        height: 34px !important;
+        box-shadow: none !important;
+        transition: all 160ms cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
     div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stTextInput"] div[data-baseweb="input"]:focus-within {
-        border-color: #00F0FF !important;
-        box-shadow: 0 0 20px rgba(0, 240, 255, 0.35) !important;
+        border-color: #38BDF8 !important;
     }
 </style>
 """, unsafe_allow_html=True)
 
 # OFFICIAL TOP STRIP: CE CERTIFIED & ISO 13485 / 14001 / 45001
-st.markdown('''
-<div style="background: linear-gradient(145deg, rgba(14, 23, 42, 0.54) 0%, rgba(7, 11, 22, 0.44) 100%); backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(56, 189, 248, 0.20); box-shadow: 0 8px 32px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.12); border-radius: 10px; padding: 9px 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; position: relative; overflow: hidden;">
-    <div style="position:absolute;top:0;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,rgba(0,240,255,0.55),transparent);"></div>
+st.markdown(f'''
+<div style="background: #111622; border: 1px solid rgba(226, 232, 240, 0.09); border-radius: 6px; padding: 8px 16px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
     <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-        <span style="display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;color:#00F0FF;letter-spacing:0.10em;text-transform:uppercase;margin-right:4px;">
-            <span class="pulse-dot"></span>KALİTE AKREDİTASYONU
+        <span style="display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:500;color:#94A3B8;letter-spacing:0.06em;text-transform:uppercase;margin-right:4px;">
+            {lucide_icon("shield-check", size=16, stroke_width=1.65, color=ICON_MUTED)}
+            <span>KALİTE AKREDİTASYONU</span>
         </span>
-        <span style="background:rgba(0,240,255,0.10);border:1px solid rgba(0,240,255,0.40);color:#FAFAFA;padding:3px 9px;border-radius:5px;font-size:10.5px;font-weight:600;font-family:'IBM Plex Mono',monospace;box-shadow:0 0 10px rgba(0,240,255,0.12);">CE MDR · Class IIa</span>
-        <span style="background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.38);color:#34D399;padding:3px 9px;border-radius:5px;font-size:10.5px;font-weight:600;font-family:'IBM Plex Mono',monospace;">ISO 13485:2016</span>
-        <span style="background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.38);color:#FBBF24;padding:3px 9px;border-radius:5px;font-size:10.5px;font-weight:600;font-family:'IBM Plex Mono',monospace;">ISO 14001:2015</span>
-        <span style="background:rgba(129,140,248,0.14);border:1px solid rgba(129,140,248,0.40);color:#A5B4FC;padding:3px 9px;border-radius:5px;font-size:10.5px;font-weight:600;font-family:'IBM Plex Mono',monospace;">ISO 45001:2018</span>
+        <span style="background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.25);color:#F8FAFC;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:500;font-family:'IBM Plex Mono',monospace;">CE MDR · Class IIa</span>
+        <span style="background:rgba(16,185,129,0.08);border:1px solid rgba(16,185,129,0.25);color:#34D399;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:500;font-family:'IBM Plex Mono',monospace;">ISO 13485:2016</span>
+        <span style="background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.25);color:#FBBF24;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:500;font-family:'IBM Plex Mono',monospace;">ISO 14001:2015</span>
+        <span style="background:rgba(148,163,184,0.08);border:1px solid rgba(148,163,184,0.25);color:#CBD5E1;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:500;font-family:'IBM Plex Mono',monospace;">ISO 45001:2018</span>
     </div>
-    <div style="font-size:11px;color:#CBD5E1;font-weight:500;display:flex;align-items:center;gap:8px;">
-        <span style="color:#38BDF8;font-weight:600;">Elektriksel Oosit Aktivasyonu (AOA)</span>
+    <div style="font-size:11px;color:#94A3B8;font-weight:400;display:flex;align-items:center;gap:8px;">
+        <span style="color:#CBD5E1;font-weight:500;">Elektriksel Oosit Aktivasyonu (AOA)</span>
         <span style="color:#475569;">|</span>
-        <span style="color:#34D399;font-weight:600;">Sıfır Termal / Mekanik Hasar</span>
+        <span style="color:#34D399;font-weight:500;">Sıfır Termal / Mekanik Hasar</span>
     </div>
 </div>
 ''', unsafe_allow_html=True)
 
 # 45-SECOND STRATEGIC VIDEO SIMULATION & PRODUCT TOUR (Pazar, Gümrük, İhale, Rakip & Karar Masası)
-with st.expander("ZEUS ZGMI · 45s İnteraktif Platform Simülasyonu & Stratejik Tur", expanded=False):
+with st.expander(":material/play_circle: ZEUS ZGMI · 45s İnteraktif Platform Simülasyonu & Stratejik Tur", expanded=False):
     sim_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "zgmi_video_simulation.html")
     if os.path.exists(sim_file_path):
         with open(sim_file_path, "r", encoding="utf-8") as f_sim:
@@ -19194,6 +19280,7 @@ with st.expander("ZEUS ZGMI · 45s İnteraktif Platform Simülasyonu & Stratejik
             with open(mp4_tr_path, "rb") as f_mp4:
                 st.download_button(
                     label="45 Saniyelik Tanıtım Videosunu İndir (.MP4 · 1080p)",
+                    icon=MATERIAL_ICONS["download"],
                     data=f_mp4.read(),
                     file_name="zeus_zgmi_45s_simulation_tr.mp4",
                     mime="video/mp4",
@@ -19204,7 +19291,7 @@ with st.expander("ZEUS ZGMI · 45s İnteraktif Platform Simülasyonu & Stratejik
         st.info("Video simülasyon bileşeni hazırlanıyor...")
 
 # OMNIPRESENT ZEUS AI COPILOT CHAT EXPANDER
-with st.expander("ZEUS Biyoistihbarat Terminalı · Stratejik Karar Destek Sistemi", expanded=False):
+with st.expander(":material/terminal: ZEUS Biyoistihbarat Terminalı · Stratejik Karar Destek Sistemi", expanded=False):
     render_zeus_ai_chat_interface(key_suffix="_quick_dock")
 
 with st.container(key="zgmi_top_control_dock"):
@@ -19269,29 +19356,30 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
     col_h1, col_h2 = st.columns([2.5, 1.5])
     with col_h1:
         st.markdown(
-            "<div style='margin-bottom:8px;'>"
-            "<span class='chip chip-info'>Executive Overview</span>"
-            "<span class='chip chip-ok'>? Canl? Do?rulanm?? Medikal Sat?? Verisi (1,280 Fatura)</span>"
-            "<span class='chip chip-wn'>AI Predictive Engine Active</span>"
+            "<div style='display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:8px;'>"
+            "<span class='badge-enterprise-blue'>EXECUTIVE OVERVIEW</span>"
+            "<span class='badge-enterprise-emerald'>Doğrulanmış Medikal Satış Verisi (1,280 Fatura)</span>"
+            "<span class='badge-enterprise-gold'>Predictive Engine Active</span>"
             "</div>"
-            "<h1 style='max-width:680px;font-size:36px;font-weight:700;line-height:1.15;letter-spacing:-0.02em;margin-top:4px;margin-bottom:8px;background:linear-gradient(90deg, #FFFFFF 0%, #94A3B8 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;text-wrap:balance;'>"
-            "Global Commercial & Distribution<br>Command Center</h1>"
-            "<p style='max-width:680px;color:#94A3B8;font-size:14px;line-height:1.55;margin-bottom:12px;text-wrap:pretty;'>"
-            "ZEUS ?reme Teknolojileri k?resel sat?? hacmi, klinik penetrasyon ve pazar yay?l?m paneli.</p>",
+            "<h1 style='max-width:680px;font-size:26px;font-weight:600;line-height:1.2;letter-spacing:-0.02em;margin-top:4px;margin-bottom:6px;color:#F8FAFC;'>"
+            "Global Commercial & Distribution Command Center</h1>"
+            "<p style='max-width:680px;color:#94A3B8;font-size:13.5px;line-height:1.5;margin-bottom:12px;'>"
+            "ZEUS Üreme Teknolojileri küresel satış hacmi, klinik penetrasyon ve pazar yayılım paneli.</p>",
             unsafe_allow_html=True
         )
     with col_h2:
         sys_dt_hdr = get_system_datetime_display()
         st.markdown(f'''
         <div style='text-align:right;padding-top:4px;'>
-            <div style="display:inline-flex;align-items:center;gap:8px;background:#0E1626;border:1px solid rgba(0,245,255,0.30);border-radius:9999px;padding:6px 16px;margin-bottom:6px;box-shadow:0 0 16px rgba(0,245,255,0.12);white-space:nowrap;">
-                <span style="display:inline-block;width:8px;height:8px;border-radius:50%;background:#00E676;box-shadow:0 0 8px #00E676;"></span>
-                <span style="color:#FFFFFF;font-weight:600;font-size:12px;letter-spacing:0.04em;">System Online</span>
-                <span style="color:rgba(0,245,255,0.35);">|</span>
-                <span style="color:#00F5FF;font-weight:600;font-size:12px;font-family:'Geist Mono',monospace;">?? {sys_dt_hdr}</span>
+            <div style="display:inline-flex;align-items:center;gap:8px;background:#111622;border:1px solid rgba(226,232,240,0.09);border-radius:6px;padding:6px 12px;margin-bottom:6px;white-space:nowrap;">
+                <span class="status-dot-live"></span>
+                <span style="color:#F8FAFC;font-weight:500;font-size:11.5px;">System Online</span>
+                <span style="color:#475569;">|</span>
+                {lucide_icon("clock", size=16, stroke_width=1.5, color=ICON_MUTED)}
+                <span style="color:#CBD5E1;font-weight:500;font-size:11.5px;font-family:'IBM Plex Mono',monospace;">{sys_dt_hdr}</span>
             </div>
             <br>
-            <small style='color:#94A3B8;font-size:12px;'>Se?ili D?nem: <b style="color:#F8FAFC;">{year_sel}</b></small>
+            <small style='color:#94A3B8;font-size:11.5px;'>Seçili Dönem: <b style="color:#F8FAFC;">{year_sel}</b></small>
         </div>
         ''', unsafe_allow_html=True)
 
@@ -19342,23 +19430,23 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
     all_time_tot_banner = sum(y_sums_banner.values())
 
     st.markdown(f'''
-    <div style="background:#0E1626;border:1px solid rgba(0,245,255,0.22);border-radius:12px;padding:14px 18px;margin-bottom:16px;box-shadow:0 4px 18px rgba(0,0,0,0.35);">
+    <div style="background:#111622;border:1px solid rgba(226,232,240,0.09);border-radius:6px;padding:14px 18px;margin-bottom:16px;">
         <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px;">
             <div>
-                <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(0,245,255,0.10);border:1px solid rgba(0,245,255,0.28);border-radius:6px;padding:3px 10px;font-size:12px;font-weight:700;color:#00F5FF;letter-spacing:0.04em;">?? RESM? VER? KAPSAMI & 7 YILLIK T?M D?NEMLER (2020 - 2026)</span>
+                <span style="display:inline-flex;align-items:center;gap:6px;background:rgba(56,189,248,0.08);border:1px solid rgba(56,189,248,0.25);border-radius:4px;padding:3px 8px;font-size:11px;font-weight:600;color:#38BDF8;letter-spacing:0.04em;">RESMİ VERİ KAPSAMI & 7 YILLIK TÜM DÖNEMLER (2020 - 2026)</span>
                 <div style="font-size:13px;color:#CBD5E1;margin-top:6px;line-height:1.5;">
-                    Se?ili Kapsam: <b style="color:#FFFFFF;">{year_sel}</b> ? Kapsam: <b style="color:#00E676;">HERKES DAH?LD?R</b> (6 Yetkili Distrib?t?r + 42 Do?rudan Klinik/Hastane + Karde? ?irket Gen-Sa).
+                    Seçili Kapsam: <b style="color:#F8FAFC;">{year_sel}</b> | Kapsam: <b style="color:#34D399;">HERKES DAHİLDİR</b> (6 Yetkili Distribütör + 42 Doğrudan Klinik/Hastane + Kardeş Şirket Gen-Sa).
                 </div>
             </div>
             <div style="display:flex;gap:8px;font-size:12px;font-family:'Geist Mono',monospace;background:#141E34;padding:6px 12px;border-radius:8px;border:1px solid rgba(255,255,255,0.08);flex-wrap:wrap;align-items:center;">
-                <div>?? 2020: <b>{format_curr(y_sums_banner[2020])}</b></div>
-                <div>?? 2021: <b>{format_curr(y_sums_banner[2021])}</b></div>
-                <div>?? 2022: <b>{format_curr(y_sums_banner[2022])}</b></div>
-                <div>?? 2023: <b>{format_curr(y_sums_banner[2023])}</b></div>
-                <div>?? 2024: <b>{format_curr(y_sums_banner[2024])}</b></div>
-                <div>?? 2025: <b>{format_curr(y_sums_banner[2025])}</b></div>
-                <div>?? 2026: <b style="color:#00F5FF;">{format_curr(y_sums_banner[2026])}</b></div>
-                <div style="border-left:1px solid rgba(255,255,255,0.20);padding-left:8px;">?? <b>T?m Zamanlar:</b> <b style="color:#10B981;">{format_curr(all_time_tot_banner)}</b></div>
+                <div>2020: <b>{format_curr(y_sums_banner[2020])}</b></div>
+                <div>2021: <b>{format_curr(y_sums_banner[2021])}</b></div>
+                <div>2022: <b>{format_curr(y_sums_banner[2022])}</b></div>
+                <div>2023: <b>{format_curr(y_sums_banner[2023])}</b></div>
+                <div>2024: <b>{format_curr(y_sums_banner[2024])}</b></div>
+                <div>2025: <b>{format_curr(y_sums_banner[2025])}</b></div>
+                <div>2026: <b style="color:#00F5FF;">{format_curr(y_sums_banner[2026])}</b></div>
+                <div style="border-left:1px solid rgba(255,255,255,0.20);padding-left:8px;"><b>Tüm Zamanlar:</b> <b style="color:#10B981;">{format_curr(all_time_tot_banner)}</b></div>
             </div>
         </div>
     </div>
@@ -20825,7 +20913,7 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
 
     # Active Executive Alerts (100% Verified Real Data & Actionable Recommendations)
     st.subheader("Executive Strategic Alerts (Gerçek Fatura Kanıtları & Stratejik Öneriler)")
-    st.caption("Her uyarı kartının altında yöneticiler değerlendirme yorumu ekleyebilir, stratejik eylem planı oluşturabilir. Kaydedilen planlar doğrudan 'Strategic Decision Center' ve 'Executive Reports' modüllerine aktarılır.")
+    st.caption("Her uyarı kartının altında yöneticiler değerlendirme yorumu ekleyebilir, stratejik eylem planı oluşturabilir. Kaydedilen planlar doğrudan 'Strategic Decision Center've 'Executive Reports'modüllerine aktarılır.")
 
     if 'executive_strategic_plans' not in st.session_state:
         st.session_state['executive_strategic_plans'] = get_default_strategic_plans()
@@ -20880,7 +20968,7 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
                     p_dict['kuwait_garanti']['target_date'] = c_date1.strip()
                     p_dict['kuwait_garanti']['action_steps'] = c_steps1.strip()
                     p_dict['kuwait_garanti']['status'] = 'Onaylandı & İcrada'
-                    st.success("✓ Kuveyt ATC & Garanti planı Karar Merkezi ve Raporlara aktarıldı!")
+                    st.success("Kuveyt ATC & Garanti planı Karar Merkezi ve Raporlara aktarıldı!")
                     st.rerun()
         
         st.markdown(f"""
@@ -20934,7 +21022,7 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
                     p_dict['sellco_uae']['target_date'] = c_date3.strip()
                     p_dict['sellco_uae']['action_steps'] = c_steps3.strip()
                     p_dict['sellco_uae']['status'] = 'Onaylandı & İcrada'
-                    st.success("✓ BAE Distribütörlük Planı Karar Merkezi ve Raporlara aktarıldı!")
+                    st.success("BAE Distribütörlük Planı Karar Merkezi ve Raporlara aktarıldı!")
                     st.rerun()
 
         st.markdown(f"""
@@ -20990,7 +21078,7 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
                     p_dict['sirius_itl']['target_date'] = c_date2.strip()
                     p_dict['sirius_itl']['action_steps'] = c_steps2.strip()
                     p_dict['sirius_itl']['status'] = 'Onaylandı & İcrada'
-                    st.success("✓ Sirius & ITL Katar Planı Karar Merkezi ve Raporlara aktarıldı!")
+                    st.success("Sirius & ITL Katar Planı Karar Merkezi ve Raporlara aktarıldı!")
                     st.rerun()
 
         st.markdown(f"""
@@ -21044,7 +21132,7 @@ if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & C
                     p_dict['dish_liquid_ratio']['target_date'] = c_date4.strip()
                     p_dict['dish_liquid_ratio']['action_steps'] = c_steps4.strip()
                     p_dict['dish_liquid_ratio']['status'] = 'Onaylandı & İcrada'
-                    st.success("✓ Ürün Rasyosu & Bundle Planı Karar Merkezi ve Raporlara aktarıldı!")
+                    st.success("Ürün Rasyosu & Bundle Planı Karar Merkezi ve Raporlara aktarıldı!")
                     st.rerun()
 
         st.markdown(f"""
@@ -21307,13 +21395,13 @@ elif active_view in ["2026 Q4 & 2027 Satış Projeksiyonu", "✦ Biyoistihbarat 
                     (3. stratejik ve ticari adım - HTML b etiketiyle başlık içersin)
 
                     ===REVIZE_MEKTUP===
-                    (İlgili kurumun Genel Müdürüne veya Baş Embriyoloğuna hitaben yazılmış, uzmanın getirdiği noktayı yapıcı ve ikna edici şekilde ele alan resmi yönetici mektubu)
+                    (İlgili kurumun Genel Müdürüne veya Baş Embriyoloğuna hitaben yazılmış, uzmanın getirdiği noktayı yapıcı ve ikna edici şekilde ele alan resmi yönetici mektubu) — Hiçbir emoji veya dekoratif sembol kullanma.
                     """
                     response = client.models.generate_content(
                         model='gemini-2.5-flash',
                         contents=prompt,
                     )
-                    gen_txt = response.text
+                    gen_txt = sanitize_ui_text(response.text)
                     
                     if "===REVIZE_TEHKIK===" in gen_txt and "===REVIZE_MEKTUP===" in gen_txt:
                         parts = gen_txt.split("===REVIZE_")
@@ -21493,7 +21581,7 @@ Immediate Resolution: ZEUS Bioscience is actively incorporating this high-level 
                     )
                 with exp_c2:
                     st.write("")
-                    st.caption(f"📅 Sistem Tarihi: {datetime.now().strftime('%d.%m.%Y')}")
+                    st.caption(f"Sistem Tarihi: {datetime.now().strftime('%d.%m.%Y')}")
                 
                 cur_note = reval_data['note'] if reval_data else ""
                 user_expert_note = st.text_area(
@@ -21515,7 +21603,7 @@ Immediate Resolution: ZEUS Bioscience is actively incorporating this high-level 
 
                 if do_reval:
                     if not user_expert_note or not user_expert_note.strip():
-                        st.warning("⚠️ Lütfen analizi güncellemek için uzman görüşü veya saha notunuzu yazın.")
+                        st.warning("Lütfen analizi güncellemek için uzman görüşü veya saha notunuzu yazın.")
                     else:
                         with st.spinner("🧠 ZEUS Cognitive AI uzman notunu analiz ediyor, klinik teşhis ve eylem planı güncelleniyor..."):
                             reval_res = reevaluate_case_with_expert_note(
@@ -22615,7 +22703,7 @@ ZEUS Bioscience Scientific Affairs""",
 
         with col_rg2:
             st.markdown("##### 6 Küresel Bölgenin Zayıflık & Fırsat Analizi")
-            st.caption("AI analitiği, tavsiye edilen ZEUS cihazları, yürütülen saha hamleleri ve uzman değerlendirmeleri. Kaydedilen tüm görüş ve hamleler doğrudan 'Strategic Decision Center' modülüne aktarılır.")
+            st.caption("AI analitiği, tavsiye edilen ZEUS cihazları, yürütülen saha hamleleri ve uzman değerlendirmeleri. Kaydedilen tüm görüş ve hamleler doğrudan 'Strategic Decision Center'modülüne aktarılır.")
 
             if 'regional_expert_assessments' not in st.session_state:
                 st.session_state['regional_expert_assessments'] = get_default_regional_expert_assessments()
@@ -22731,7 +22819,7 @@ ZEUS Bioscience Scientific Affairs""",
                             reg_dict[rk]['consensus_status'] = new_status
                             reg_dict[rk]['decision_priority'] = new_prio
                             reg_dict[rk]['status'] = 'Onaylandı & İcrada' if 'Tam' in new_status else 'İncelemede / Revize'
-                            st.success(f"✓ {r_item['name']} cihaz önerisi, saha hamleleri ve uzman notu kaydedildi; Strategic Decision Center masasına aktarıldı!")
+                            st.success(f"{r_item['name']} cihaz önerisi, saha hamleleri ve uzman notu kaydedildi; Strategic Decision Center masasına aktarıldı!")
                             st.rerun()
 
             st.markdown("<br>", unsafe_allow_html=True)
@@ -22750,7 +22838,7 @@ ZEUS Bioscience Scientific Affairs""",
     # TAB: 🚨 JEOPOLİTİK İSTİHBARAT, SAVAŞ RİSKİ & BAKANLIK RADARI (DETAYLI)
     # --------------------------------------------------------------------------
     with ai_tab_geo:
-        st.subheader("🚨 Jeopolitik Güvenlik, Bölgesel Savaş Riski ve Tedarik Zinciri İstihbarat Radarı")
+        st.subheader("Jeopolitik Güvenlik, Bölgesel Savaş Riski ve Tedarik Zinciri İstihbarat Radarı")
         st.caption("Tüm küresel pazarlar için çatışma senaryoları, canlı Google haberleri, T.C. ve ilgili ülke bakanlık tebliğleri ve tahsilat/lojistik gerçekleri.")
 
         if 'country_geopolitical_protocols' not in st.session_state:
@@ -22872,7 +22960,7 @@ ZEUS Bioscience Scientific Affairs""",
                     st.session_state['country_geopolitical_protocols'][sel_code]['expert_comment'] = new_geo_comm.strip()
                     st.session_state['country_geopolitical_protocols'][sel_code]['alert_level'] = new_alert
                     st.session_state['country_geopolitical_protocols'][sel_code]['status'] = new_geo_status
-                    st.success(f"✓ {geo_data['name']} jeopolitik değerlendirmesi kaydedildi ve Strategic Decision Center masasına iletildi!")
+                    st.success(f"{geo_data['name']} jeopolitik değerlendirmesi kaydedildi ve Strategic Decision Center masasına iletildi!")
                     st.rerun()
 
         st.markdown("<br>", unsafe_allow_html=True)
@@ -23333,21 +23421,21 @@ elif active_view in ["🤝 Yetkili Distribütör Karneleri & CRM", "🤝 Distrib
                 disp_neg.columns = ['Tarih', 'Fatura No', 'Kurum', 'Ürün', 'Grup', 'İade Adedi', 'Düşülen Tutar (USD)']
                 disp_neg['Düşülen Tutar (USD)'] = disp_neg['Düşülen Tutar (USD)'].apply(lambda v: f"${v:,.2f}")
                 st.dataframe(disp_neg, use_container_width=True, hide_index=True)
-                st.caption("ℹ️ Pınar Sağlık (1 cihaz -$8,000 ve sarflar), MLP Sağlık Ulus ve İstanbul Memorial iadeleri genel ciro ve sarf toplamlarında düşülerek hesaplanmıştır.")
+                st.caption("ℹ Pınar Sağlık (1 cihaz -$8,000 ve sarflar), MLP Sağlık Ulus ve İstanbul Memorial iadeleri genel ciro ve sarf toplamlarında düşülerek hesaplanmıştır.")
                 
             with tab_ret2:
                 st.markdown("**LIR (Lİste İade Raporu) Evrakları:**")
                 disp_lir = all_lir_df[['Date', 'Invoice', 'Company', 'Product', 'Group', 'Quantity', 'Amount (USD)']].copy()
                 disp_lir.columns = ['Tarih', 'İade Belge No', 'Kurum', 'Ürün', 'Grup', 'Adet', 'Tutar (USD)']
                 st.dataframe(disp_lir, use_container_width=True, hide_index=True)
-                st.info("💡 LIR belgeleri muhasebede $0 bedelli iade/iptal evrakı olarak düzenlenmiştir. Sistemimiz bu satırları yeni satış olarak toplamaz; Sellco'nun kurulu cihaz sayısını net 1 olarak gösterir.")
+                st.info("LIR belgeleri muhasebede $0 bedelli iade/iptal evrakı olarak düzenlenmiştir. Sistemimiz bu satırları yeni satış olarak toplamaz; Sellco'nun kurulu cihaz sayısını net 1 olarak gösterir.")
                 
             with tab_ret3:
                 st.markdown("**Bedelsiz Sevk Edilen Cihaz İrsaliyeleri (Konsinye, Numune veya Faturasız Sevk):**")
                 disp_zero_dev = raw_sales_df[(raw_sales_df['Group'] == 'Device') & (raw_sales_df['Amount (USD)'] == 0)][['Date', 'Invoice', 'Company', 'Product', 'Quantity', 'Amount (USD)']].copy()
                 disp_zero_dev.columns = ['Tarih', 'İrsaliye / Belge No', 'Kurum', 'Cihaz Modeli', 'Adet', 'Tutar']
                 st.dataframe(disp_zero_dev, use_container_width=True, hide_index=True)
-                st.caption("ℹ️ Acıbadem, CMC, Halil Ruso, Medipolitan, Seda Erdem ve Bisan'a yapılan $0 bedelli cihaz sevkleri klinik konsinye statüsünde izlenmektedir.")
+                st.caption("ℹ Acıbadem, CMC, Halil Ruso, Medipolitan, Seda Erdem ve Bisan'a yapılan $0 bedelli cihaz sevkleri klinik konsinye statüsünde izlenmektedir.")
 
 elif active_view in ["İhale Şartname Kilitleri & Sözleşmeler", "📄 İhale Şartname Kilitleri & Sözleşmeler", "📜 İhale Şartname Kilitleri & Sözleşmeler", "📜 Sözleşme Hükümleri & Hukuki Şartname", "📜 Agreements & Compliance"]:
     ihale_subtab1, ihale_subtab2 = st.tabs([
@@ -23460,7 +23548,7 @@ elif active_view in ["İhale Şartname Kilitleri & Sözleşmeler", "📄 İhale 
                 loa_sel = st.selectbox("LOA Yetki Belgesi Durumu", ["Geçerli (Valid)", "Yenilemede (In Renewal)", "📝 Taslak / Hazırlanıyor (Draft)"])
                 min_commitment = st.number_input("Yıllık Asgari Satış Taahhüdü ($ USD)", min_value=0, value=50000, step=5000)
             else:
-                st.info("ℹ️ Local ve International doğrudan müşteriler için LOA ve Münhasırlık aranmaz; standart müşteri tedarik sözleşmesi uygulanır.")
+                st.info("ℹ Local ve International doğrudan müşteriler için LOA ve Münhasırlık aranmaz; standart müşteri tedarik sözleşmesi uygulanır.")
                 excl_sel = "N/A (Müşteri)"
                 loa_sel = "N/A"
                 min_commitment = 0
@@ -23483,7 +23571,7 @@ elif active_view in ["İhale Şartname Kilitleri & Sözleşmeler", "📄 İhale 
                 'filename': uploaded_file.name if uploaded_file else f"{doc_ref_no}.pdf"
             }
             st.session_state.custom_documents.insert(0, new_doc_entry)
-            st.success(f"✅ '{final_company}' için '{selected_doc_type}' başarıyla kaydedildi ve arşive eklendi!")
+            st.success(f"'{final_company}'için '{selected_doc_type}'başarıyla kaydedildi ve arşive eklendi!")
 
     st.markdown("---")
 
@@ -23582,7 +23670,7 @@ elif active_view in ["İhale Şartname Kilitleri & Sözleşmeler", "📄 İhale 
                 'Hukuki Statü': d.get('compliance', '✅ Onaylı Uluslararası Müşteri')
             })
         st.dataframe(pd.DataFrame(intl_table), use_container_width=True, hide_index=True)
-        st.caption("ℹ️ Sellco Trading Intl (BAE) bir distribütör olmayıp sözleşmesiz spot ticari müşteridir (1 kurulu ZEUS Pulse Stimulator (AOA)). BAE pazarında henüz resmi bir distribütör atanmamış olup pazar açık beyaz boşluk statüsündedir.")
+        st.caption("ℹ Sellco Trading Intl (BAE) bir distribütör olmayıp sözleşmesiz spot ticari müşteridir (1 kurulu ZEUS Pulse Stimulator (AOA)). BAE pazarında henüz resmi bir distribütör atanmamış olup pazar açık beyaz boşluk statüsündedir.")
 
     # --------------------------------------------------------------------------
     # TAB 4: SÖZLEŞME VE DOKÜMAN ARŞİVİ
@@ -24590,7 +24678,7 @@ elif active_view in ["Cihaz vs Sarf Gelir Trendleri", "↗ Cihaz vs Sarf Gelir T
                         q_dict[q_id]['enforcement_clause'] = c_clause.strip()
                         q_dict[q_id]['status'] = 'Onaylandı & İcrada'
                         st.session_state['distributor_annual_quotas'] = q_dict
-                        st.success(f"✓ {q_data['name']} yıllık sipariş kotası ve yorumunuz başarıyla kaydedildi ve Strategic Decision Center'a aktarıldı!")
+                        st.success(f"{q_data['name']} yıllık sipariş kotası ve yorumunuz başarıyla kaydedildi ve Strategic Decision Center'a aktarıldı!")
                         st.rerun()
 
     # 2. International Direct Clients
@@ -25302,7 +25390,7 @@ elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyas
                         </div>
                         """, unsafe_allow_html=True)
         with comp_tab3:
-            st.subheader("🎯 AI Potansiyel Müşteri, Klinik Radarı & LinkedIn Outreach Masası")
+            st.subheader("AI Potansiyel Müşteri, Klinik Radarı & LinkedIn Outreach Masası")
             st.caption("Ülkenin klinik siklus kapasitesi, Dünya Bankası alım gücü ve medikal ithalat mevzuatına dayalı öncelikli IVF tüp bebek klinik zincirleri, medikal distribütörler ve doğrudan LinkedIn Karar Verici Bulma & B2B Outreach Masası.")
 
             prospect_main_tabs = st.tabs([
@@ -25668,7 +25756,7 @@ elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyas
                             # Row 1 of directive chips (including Whitepaper & ESHRE Guideline)
                             chip_r1_c1, chip_r1_c2, chip_r1_c3 = st.columns(3)
                             with chip_r1_c1:
-                                if st.button("📄 Klinik Whitepaper (Executive Brief)", key=f"chip_wp_{radar_country}_{idx}", use_container_width=True):
+                                if st.button("Klinik Whitepaper (Executive Brief)", key=f"chip_wp_{radar_country}_{idx}", use_container_width=True):
                                     target_wp_text = "you have to add the ESHRE guidline for the AOA and electrical activation. Also add the Klinik Whitepaper (Executive Scientific Brief)"
                                     st.session_state[user_note_key] = target_wp_text
                                     st.session_state[note_ver_key] = st.session_state.get(note_ver_key, 0) + 1
@@ -25678,7 +25766,7 @@ elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyas
                                     st.session_state[pitch_ver_key] = st.session_state.get(pitch_ver_key, 0) + 1
                                     st.rerun()
                             with chip_r1_c2:
-                                if st.button("📚 ESHRE Guideline & AOA Kanıtı", key=f"chip_eshre_guide_{radar_country}_{idx}", use_container_width=True):
+                                if st.button("ESHRE Guideline & AOA Kanıtı", key=f"chip_eshre_guide_{radar_country}_{idx}", use_container_width=True):
                                     target_eshre_text = "ESHRE Good Practice Guidelines uyumlu kimyasalsız elektriksel oosit aktivasyonu (AOA) ve TFF vakalarında %79.4 başarı kanıtlarımızı vurgula."
                                     st.session_state[user_note_key] = target_eshre_text
                                     st.session_state[note_ver_key] = st.session_state.get(note_ver_key, 0) + 1
@@ -25688,7 +25776,7 @@ elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyas
                                     st.session_state[pitch_ver_key] = st.session_state.get(pitch_ver_key, 0) + 1
                                     st.rerun()
                             with chip_r1_c3:
-                                if st.button("⚡ %10 Filo İndirimi & Konsinye", key=f"chip_disc_{radar_country}_{idx}", use_container_width=True):
+                                if st.button("%10 Filo İndirimi & Konsinye", key=f"chip_disc_{radar_country}_{idx}", use_container_width=True):
                                     target_disc_text = "Kurumunuza 3+ cihaz alımında %10 kurumsal filo indirimi ve yıllık 200 kutu Z-Dish sarf taahhüdü durumunda özel birim fiyat avantajı teklif ediyoruz."
                                     st.session_state[user_note_key] = target_disc_text
                                     st.session_state[note_ver_key] = st.session_state.get(note_ver_key, 0) + 1
@@ -25701,7 +25789,7 @@ elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyas
                             # Row 2 of directive chips
                             chip_r2_c1, chip_r2_c2, chip_r2_c3 = st.columns(3)
                             with chip_r2_c1:
-                                if st.button("🏛️ ESHRE Stand Daveti", key=f"chip_eshre_{radar_country}_{idx}", use_container_width=True):
+                                if st.button("ESHRE Stand Daveti", key=f"chip_eshre_{radar_country}_{idx}", use_container_width=True):
                                     target_cong_text = "2027 ESHRE kongresinde ZEUS standımızda kıdemli ekibinizi VIP olarak ağırlamaktan ve vaka çalıştayımızı birlikte gerçekleştirmekten onur duyarız."
                                     st.session_state[user_note_key] = target_cong_text
                                     st.session_state[note_ver_key] = st.session_state.get(note_ver_key, 0) + 1
@@ -25711,7 +25799,7 @@ elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyas
                                     st.session_state[pitch_ver_key] = st.session_state.get(pitch_ver_key, 0) + 1
                                     st.rerun()
                             with chip_r2_c2:
-                                if st.button("🔬 %79.4 TFF Başarı Verisi", key=f"chip_tff_{radar_country}_{idx}", use_container_width=True):
+                                if st.button("%79.4 TFF Başarı Verisi", key=f"chip_tff_{radar_country}_{idx}", use_container_width=True):
                                     target_tff_text = "TFF ve globozoospermi vakalarında %79.37 Grade I-II kaliteli embriyo gelişimini ve Tanaka et al. 90 ROSI bebeği klinik kanıtlarımızı özellikle vurgulamak istiyoruz."
                                     st.session_state[user_note_key] = target_tff_text
                                     st.session_state[note_ver_key] = st.session_state.get(note_ver_key, 0) + 1
@@ -25721,7 +25809,7 @@ elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyas
                                     st.session_state[pitch_ver_key] = st.session_state.get(pitch_ver_key, 0) + 1
                                     st.rerun()
                             with chip_r2_c3:
-                                if st.button("🧪 Non-Toksik AOA", key=f"chip_chem_{radar_country}_{idx}", use_container_width=True):
+                                if st.button("Non-Toksik AOA", key=f"chip_chem_{radar_country}_{idx}", use_container_width=True):
                                     target_chem_text = "Toksik kimyasal kalsiyum ionoforlarına (A23187) kıyasla tamamen kimyasalsız ve güvenli elektriksel oosit aktivasyonu sağladığımızı belirtiyoruz."
                                     st.session_state[user_note_key] = target_chem_text
                                     st.session_state[note_ver_key] = st.session_state.get(note_ver_key, 0) + 1
@@ -25734,7 +25822,7 @@ elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyas
                             # Row 3 of directive chips: VIP Dinner & Clinical Hospitality
                             chip_r3_c1, chip_r3_c2 = st.columns([1.5, 1.5])
                             with chip_r3_c1:
-                                if st.button("🍽️ VIP Akşam Yemeği & Kongre Daveti", key=f"chip_dinner_{radar_country}_{idx}", use_container_width=True):
+                                if st.button("VIP Akşam Yemeği & Kongre Daveti", key=f"chip_dinner_{radar_country}_{idx}", use_container_width=True):
                                     target_dinner_text = "Kongrede veya şehir ziyaretimiz vesilesiyle saygıdeğer direktörünüz ve embriyoloji heyetinizi özel bir akşam yemeğinde (VIP Business Dinner & Scientific Discussion) ağırlamak ve klinik iş birliğimizi masada değerlendirmek istiyoruz."
                                     st.session_state[user_note_key] = target_dinner_text
                                     st.session_state[note_ver_key] = st.session_state.get(note_ver_key, 0) + 1
@@ -25744,7 +25832,7 @@ elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyas
                                     st.session_state[pitch_ver_key] = st.session_state.get(pitch_ver_key, 0) + 1
                                     st.rerun()
                             with chip_r3_c2:
-                                if st.button("☕ Klinik İçi Kahve & Demo Ziyareti", key=f"chip_coffee_{radar_country}_{idx}", use_container_width=True):
+                                if st.button("Klinik İçi Kahve & Demo Ziyareti", key=f"chip_coffee_{radar_country}_{idx}", use_container_width=True):
                                     target_coffee_text = "Klinik direktörünüz ve baş embriyoloğunuzla merkezinizde kısa bir kahve eşliğinde tanışmak, 15 dakikalık kompakt ZPS 26 demo sunumunu gerçekleştirmek istiyoruz."
                                     st.session_state[user_note_key] = target_coffee_text
                                     st.session_state[note_ver_key] = st.session_state.get(note_ver_key, 0) + 1
@@ -25768,7 +25856,7 @@ elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyas
                                 st.session_state[user_note_key] = user_custom_note
                             with c_box_col2:
                                 st.write("")
-                                ai_gen_btn = st.button("🚀 Yorumuma Göre Maili Oluştur", key=f"ai_btn_{radar_country}_{idx}", type="primary", use_container_width=True)
+                                ai_gen_btn = st.button("Yorumuma Göre Maili Oluştur", key=f"ai_btn_{radar_country}_{idx}", type="primary", use_container_width=True)
 
                             # Auto-sync pitch if user edited their note in the text area
                             last_rendered_note_key = f"last_note_{radar_country}_{idx}_{strat_mode}_{eff_selected_lang}"
@@ -25827,7 +25915,7 @@ KRİTİK KURALLAR:
 - Pazarlık/İskonto Yaklaşımı: {resolve_country_buying_behavior(radar_country).get('bargaining_advice', 'Standart filo/peşin iskonto')}
 - İş Yemeği & Ağırlama Protokolü: {resolve_country_buying_behavior(radar_country).get('dining_hospitality_protocol', '')}
 - Kaçınılması Gereken Kırmızı Çizgi (Tabu): {resolve_country_buying_behavior(radar_country).get('cultural_taboos', 'Teknik servis güvencesi olmadan satış')}
-Mektubun tonunu ve teklif kurgusunu bu kültürel B2B satın alma davranışına tam olarak uyarla!
+Mektubun tonunu ve teklif kurgusunu bu kültürel B2B satın alma davranışına tam olarak uyarla! Mektupta ve konu başlığında kesinlikle hiçbir emoji veya dekoratif sembol kullanma.
 
 Çıktıyı tam olarak şu formatta ver:
 SUBJECT: [Konu başlığı]
@@ -25835,7 +25923,7 @@ BODY:
 [Hitap ve mektup metni]
 """
                                         g_resp = g_client.models.generate_content(model='gemini-2.5-flash', contents=prompt)
-                                        g_txt = g_resp.text
+                                        g_txt = sanitize_ui_text(g_resp.text)
                                         if "SUBJECT:" in g_txt and "BODY:" in g_txt:
                                             p_parts = g_txt.split("BODY:")
                                             p_subj = p_parts[0].replace("SUBJECT:", "").strip()
@@ -25928,7 +26016,7 @@ BODY:
                                     )
 
                             with card_out_tab2:
-                                st.info("ℹ️ **Doğrudan İletişim Tavsiyesi:** Kurumların genel `info@` e-posta adresleri güvenlik duvarları veya antispam (Outlook 550 Access Denied) nedeniyle harici soğuk mailleri reddedebilir. Şirket alan adınızı korumak için doğrudan **WhatsApp, Santral Hattı veya LinkedIn / Google X-Ray** üzerinden temas kurmanız önerilir.")
+                                st.info("ℹ **Doğrudan İletişim Tavsiyesi:** Kurumların genel `info@` e-posta adresleri güvenlik duvarları veya antispam (Outlook 550 Access Denied) nedeniyle harici soğuk mailleri reddedebilir. Şirket alan adınızı korumak için doğrudan **WhatsApp, Santral Hattı veya LinkedIn / Google X-Ray** üzerinden temas kurmanız önerilir.")
                                 lk_card_url = lk_bundle['person_url']
                                 gx_card_url = lk_bundle['gx_person_url']
                                 lk_clean_name = lk_bundle['clean_person']
@@ -26028,7 +26116,7 @@ BODY:
         # TAB 4: ZEUS KLİNİK CİHAZ & TEKNOLOJİ AI PORTFÖY TAVSİYE MASASI
         # --------------------------------------------------------------------------
         with comp_tab4:
-            st.subheader("🔬 ZEUS Akıllı Cihaz & Teknoloji Portföyü AI Değerlendirme Masası")
+            st.subheader("ZEUS Akıllı Cihaz & Teknoloji Portföyü AI Değerlendirme Masası")
             st.caption("2026 Resmi Ürün Kataloğu (52 Sayfa), Klinik Çalışmalar (Prof. Dr. Volkan Baltacı et al., Tanaka et al. PNAS ROSI, Mansour et al., Vanden Meerschaut et al.), CE Sertifikalı Sertifikasyonları ve Patentli Kriyomimari referans alınarak; hedef pazarın klinik siklus, PGT-A biyopsi, ICSI ve kriyodepolama dinamiklerine göre AI tarafından türetilmiş cihaz ve teknoloji tavsiyeleri.")
 
             # Top Strategic Callout with YouTube & Official 2026 Catalog References
@@ -26722,9 +26810,9 @@ BODY:
             # ------------------------------------------------------------------
             with gtm_sub_tabs[0]:
                 st.markdown("#### 📧 Sekreterlik Filtresini Aşan Çok Dilli E-Posta Şablonları")
-                st.info("💡 **Stratejik Kural:** E-postalar genel klinik kutularına (`info@`, `segreteria@`) atılsa dahi, sekreterin 'ticari spam' diye silmesini engelleyen resmi medikal ve regülatif dille kurgulanmıştır. Baş embriyolog veya laboratuvar direktörünün adı biliniyorsa başlığa eklenmelidir.")
+                st.info("**Stratejik Kural:** E-postalar genel klinik kutularına (`info@`, `segreteria@`) atılsa dahi, sekreterin 'ticari spam'diye silmesini engelleyen resmi medikal ve regülatif dille kurgulanmıştır. Baş embriyolog veya laboratuvar direktörünün adı biliniyorsa başlığa eklenmelidir.")
 
-                st.caption(f"🎯 Karşılaştırmadaki Seçili Pazarlarınız: **{sel_compare_str}** — Aşağıdan hedef pazarın resmi dilini seçerek sekreterlik filtresini aşan klinik e-posta taslağını kopyalayabilirsiniz.")
+                st.caption(f"Karşılaştırmadaki Seçili Pazarlarınız: **{sel_compare_str}** — Aşağıdan hedef pazarın resmi dilini seçerek sekreterlik filtresini aşan klinik e-posta taslağını kopyalayabilirsiniz.")
                 col_lang, col_opt = st.columns([1.5, 1])
                 with col_lang:
                     lang_sel = st.selectbox(
@@ -27471,7 +27559,7 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
                     clinics_num = c_row_cur['clinics'] if c_row_cur is not None else '—'
                     cycles_num = f"{c_row_cur['cycles']:,}" if c_row_cur is not None else '—'
                     phase_cur = classify_gtm_phase(sel_gtm_dir_country)
-                    st.info(f"📍 **{sel_gtm_dir_country} (Faz {phase_cur}) Pazar Özeti:** Toplam **{clinics_num} Klinik**, yıllık **{cycles_num} Siklus**. Yerel medikal cihaz dağıtım ağı ve öncü merkezler aşağıda listelenmiştir.")
+                    st.info(f"**{sel_gtm_dir_country} (Faz {phase_cur}) Pazar Özeti:** Toplam **{clinics_num} Klinik**, yıllık **{cycles_num} Siklus**. Yerel medikal cihaz dağıtım ağı ve öncü merkezler aşağıda listelenmiştir.")
 
                 dir_res = get_country_gtm_directory(sel_gtm_dir_country, c_row_cur)
 
@@ -28020,7 +28108,7 @@ Cihaz, tüp bebek (IVF/ICSI) laboratuvarlarında Total Döllenme Başarısızlı
                         'badge': f_note_type,
                         'is_custom': True
                     })
-                    st.success(f"✓ '{f_country}' için resmi karar / uzman notu bilgi bankasına başarıyla eklendi!")
+                    st.success(f"'{f_country}'için resmi karar / uzman notu bilgi bankasına başarıyla eklendi!")
                     st.rerun()
 
             # Country Live Stream
@@ -28418,7 +28506,7 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
             </div>
             """, unsafe_allow_html=True)
         else:
-            st.info(f"🌱 **{sel_country} Pazarı Henüz Bakir / Potansiyel Genişleme Bölgesidir:** Zeus ERP satış kayıtlarında bu ülke için geçmiş fatura bulunmamaktadır. Aşağıda 2027 giriş modeli, klinik pazar analizi ve distribütör ihale şartnamesi sunulmaktadır.")
+            st.info(f"**{sel_country} Pazarı Henüz Bakir / Potansiyel Genişleme Bölgesidir:** Zeus ERP satış kayıtlarında bu ülke için geçmiş fatura bulunmamaktadır. Aşağıda 2027 giriş modeli, klinik pazar analizi ve distribütör ihale şartnamesi sunulmaktadır.")
 
         st.markdown("<br>", unsafe_allow_html=True)
 
@@ -28680,15 +28768,15 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
         preset_price_key = f"c360_dev_price_{sel_country}"
         
         with ps_col1:
-            if st.button("⚡ Standart Distribütör Cihaz Fiyatı ($8,500 USD)", key=f"btn_set_8500_{sel_country}", use_container_width=True):
+            if st.button("Standart Distribütör Cihaz Fiyatı ($8,500 USD)", key=f"btn_set_8500_{sel_country}", use_container_width=True):
                 st.session_state[preset_price_key] = 8500.0
                 st.rerun()
         with ps_col2:
-            if st.button("🏢 Kurumsal Filo / İhale Paketi ($85,000 USD)", key=f"btn_set_85000_{sel_country}", use_container_width=True):
+            if st.button("Kurumsal Filo / İhale Paketi ($85,000 USD)", key=f"btn_set_85000_{sel_country}", use_container_width=True):
                 st.session_state[preset_price_key] = 85000.0
                 st.rerun()
         with ps_col3:
-            if st.button("🔄 Sıfırla (Manuel)", key=f"btn_reset_price_{sel_country}", use_container_width=True):
+            if st.button("Sıfırla (Manuel)", key=f"btn_reset_price_{sel_country}", use_container_width=True):
                 st.session_state[preset_price_key] = 0.0
                 st.rerun()
 
@@ -29118,7 +29206,7 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
                 key=f"c360_mgr_cov_{sel_country}"
             )
 
-        if st.button("💾 Yönetici Kararını & Planlamasını Bilgi Bankasına Kaydet", key=f"c360_save_btn_{sel_country}", use_container_width=True):
+        if st.button("Yönetici Kararını & Planlamasını Bilgi Bankasına Kaydet", key=f"c360_save_btn_{sel_country}", use_container_width=True):
             st.session_state.manager_dossier_notes[sel_country] = {
                 'opinion': mgr_opinion,
                 'verdict': mgr_verdict,
@@ -29128,7 +29216,7 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
                 'deal_margin': deal_blended_margin,
                 'timestamp': datetime.now().strftime("%Y-%m-%d %H:%M")
             }
-            st.success(f"✅ {sel_country} Yönetici Stratejik Kararı ve Operasyonel Planlaması başarıyla kaydedildi!")
+            st.success(f"{sel_country} Yönetici Stratejik Kararı ve Operasyonel Planlaması başarıyla kaydedildi!")
 
         # AUTOMATED STRATEGIC EVALUATION REPORT SYNTHESIS
         verdict_badge_color = "#00E676" if "Onaylandı" in mgr_verdict else ("#FFB800" if "Şartlı" in mgr_verdict else "#FF6B6B")
@@ -29926,7 +30014,7 @@ elif active_view in ["Fiyatlandırma, 4-Pool Dish & ROI", "⌬ Fiyatlandırma, 4
                 st.session_state['applied_ai_disc'] = cons['final_device_discount']
                 st.session_state['applied_ai_ship'] = cons['rec_freight']
                 st.session_state['sim_calc_partner'] = ai_dist_name
-                st.success(f"✓ AI & Uzman Konsensüs Kararı (%{cons['final_device_discount']:.1f} iskonto, ${cons['rec_freight']:.0f} lojistik) simülatöre başarıyla aktarıldı! 'Manuel İskonto & Marj Simülatörü' sekmesinden sonucu inceleyebilirsiniz.")
+                st.success(f"AI & Uzman Konsensüs Kararı (%{cons['final_device_discount']:.1f} iskonto, ${cons['rec_freight']:.0f} lojistik) simülatöre başarıyla aktarıldı! 'Manuel İskonto & Marj Simülatörü'sekmesinden sonucu inceleyebilirsiniz.")
 
     # --------------------------------------------------------------------------
     # TAB 3: GLOBAL IVF & TİCARİ KNOWLEDGE BASE (PAZAR & REGÜLASYON KÜTÜPHANESİ)
@@ -30192,7 +30280,7 @@ elif active_view in ["Fiyatlandırma, 4-Pool Dish & ROI", "⌬ Fiyatlandırma, 4
                     'badge': f_note_type,
                     'is_custom': True
                 })
-                st.success(f"✓ '{f_country}' için resmi karar / uzman notu bilgi bankasına başarıyla eklendi!")
+                st.success(f"'{f_country}'için resmi karar / uzman notu bilgi bankasına başarıyla eklendi!")
                 st.rerun()
 
         # ----------------------------------------------------------------------
@@ -30377,21 +30465,21 @@ elif active_view in ["Rakip Analizi & RFID Trap Breaker", "⬡ Rakip Kıyaslama 
         with btn_c1:
             is_cur_appr = (s_note.get('status') == 'Onaylandı & İcrada')
             btn_t1 = "primary" if is_cur_appr else "secondary"
-            if st.button(f"✅ Onayla ({s_note['id']})", key=f"btn_appr_sdc_note_{s_note['id']}_{idx_sn}", type=btn_t1, use_container_width=True):
+            if st.button(f"Onayla ({s_note['id']})", key=f"btn_appr_sdc_note_{s_note['id']}_{idx_sn}", type=btn_t1, use_container_width=True):
                 st.session_state['executive_competitor_decision_notes'][idx_sn]['status'] = 'Onaylandı & İcrada'
                 st.toast(f"✅ [{s_note['id']}] {s_note['country']} kararı Onaylandı & İcrada statüsüne alındı!", icon="✅")
                 st.rerun()
         with btn_c2:
             is_cur_cond = ('Şartlı' in s_note.get('status', ''))
             btn_t2 = "primary" if is_cur_cond else "secondary"
-            if st.button(f"⚠️ Şartlı ({s_note['id']})", key=f"btn_cond_sdc_note_{s_note['id']}_{idx_sn}", type=btn_t2, use_container_width=True):
+            if st.button(f"Şartlı ({s_note['id']})", key=f"btn_cond_sdc_note_{s_note['id']}_{idx_sn}", type=btn_t2, use_container_width=True):
                 st.session_state['executive_competitor_decision_notes'][idx_sn]['status'] = 'Şartlı Onay / İncelemede'
                 st.toast(f"⚠️ [{s_note['id']}] {s_note['country']} kararı Şartlı Onay / İncelemede statüsüne alındı!", icon="⚠️")
                 st.rerun()
         with btn_c3:
             is_cur_rej = ('Red' in s_note.get('status', ''))
             btn_t3 = "primary" if is_cur_rej else "secondary"
-            if st.button(f"❌ Reddet ({s_note['id']})", key=f"btn_rej_sdc_note_{s_note['id']}_{idx_sn}", type=btn_t3, use_container_width=True):
+            if st.button(f"Reddet ({s_note['id']})", key=f"btn_rej_sdc_note_{s_note['id']}_{idx_sn}", type=btn_t3, use_container_width=True):
                 st.session_state['executive_competitor_decision_notes'][idx_sn]['status'] = 'Revize Gerekli / Red'
                 st.toast(f"❌ [{s_note['id']}] {s_note['country']} kararı Reddedildi & Revize statüsüne alındı!", icon="❌")
                 st.rerun()
@@ -30399,7 +30487,7 @@ elif active_view in ["Rakip Analizi & RFID Trap Breaker", "⬡ Rakip Kıyaslama 
             with st.popover(f"✏️ Düzenle ({s_note['id']})", use_container_width=True):
                 st.markdown(f"**[{s_note['id']}] Yönetici Notunu Güncelle**")
                 pop_memo = st.text_area("✍️ Yönetici Karar Notu & Müzakere Tutanakları:", value=s_note.get('decision_note', ''), key=f"pop_memo_sdc_{s_note['id']}_{idx_sn}", height=90)
-                if st.button("💾 Notu Kaydet", key=f"btn_pop_save_{s_note['id']}_{idx_sn}", type="primary", use_container_width=True):
+                if st.button("Notu Kaydet", key=f"btn_pop_save_{s_note['id']}_{idx_sn}", type="primary", use_container_width=True):
                     st.session_state['executive_competitor_decision_notes'][idx_sn]['decision_note'] = pop_memo.strip()
                     st.session_state['executive_competitor_decision_notes'][idx_sn]['timestamp'] = datetime.now().strftime("%Y-%m-%d %H:%M")
                     st.toast(f"✓ [{s_note['id']}] notu başarıyla güncellendi!", icon="✅")
@@ -30457,16 +30545,16 @@ elif active_view in ["Rakip Analizi & RFID Trap Breaker", "⬡ Rakip Kıyaslama 
             )
             col_b1, col_b2 = st.columns(2)
             with col_b1:
-                if st.button("✕ İncelemeye Al & Yorumu Kaydet", key=f"btn_inc_save_{a_key}", use_container_width=True):
+                if st.button("İncelemeye Al & Yorumu Kaydet", key=f"btn_inc_save_{a_key}", use_container_width=True):
                     p_dict[a_key]['user_comment'] = rev_comm_val.strip() if rev_comm_val.strip() else p_dict[a_key].get('user_comment', '')
                     p_dict[a_key]['status'] = 'İncelemede / Revize'
-                    st.success("✓ Plan incelemeye alındı ve değerlendirme gerekçesi kaydedildi!")
+                    st.success("Plan incelemeye alındı ve değerlendirme gerekçesi kaydedildi!")
                     st.rerun()
             with col_b2:
-                if st.button("✅ Kararı Resmileştir & İcra Protokolüne Onayla", key=f"btn_appr_save_{a_key}", type="primary", use_container_width=True):
+                if st.button("Kararı Resmileştir & İcra Protokolüne Onayla", key=f"btn_appr_save_{a_key}", type="primary", use_container_width=True):
                     p_dict[a_key]['user_comment'] = rev_comm_val.strip() if rev_comm_val.strip() else p_dict[a_key].get('user_comment', '')
                     p_dict[a_key]['status'] = 'Onaylandı & İcrada'
-                    st.success("✓ Karar resmileştirildi ve icra protokolü onaylandı!")
+                    st.success("Karar resmileştirildi ve icra protokolü onaylandı!")
                     st.rerun()
 
     # --------------------------------------------------------------------------
@@ -30607,20 +30695,20 @@ elif active_view in ["Rakip Analizi & RFID Trap Breaker", "⬡ Rakip Kıyaslama 
         )
         col_gb1, col_gb2 = st.columns(2)
         with col_gb1:
-            if st.button(f"✕ {geo_p['name']} İncelemeye Al (Yorumu Kaydet)", key=f"btn_geo_inc_save_{sel_sdc_code}", use_container_width=True):
+            if st.button(f"{geo_p['name']} İncelemeye Al (Yorumu Kaydet)", key=f"btn_geo_inc_save_{sel_sdc_code}", use_container_width=True):
                 if sel_sdc_code not in st.session_state['country_geopolitical_protocols']:
                     st.session_state['country_geopolitical_protocols'][sel_sdc_code] = {}
                 st.session_state['country_geopolitical_protocols'][sel_sdc_code]['expert_comment'] = geo_comm_val.strip()
                 st.session_state['country_geopolitical_protocols'][sel_sdc_code]['status'] = 'İncelemede / Revize'
-                st.success(f"✓ {geo_p['name']} kriz protokolü incelemeye alındı ve gerekçe kaydedildi!")
+                st.success(f"{geo_p['name']} kriz protokolü incelemeye alındı ve gerekçe kaydedildi!")
                 st.rerun()
         with col_gb2:
-            if st.button(f"🛡️ {geo_p['flag']} {geo_p['name']} Protokolünü Onayla", key=f"btn_geo_appr_save_{sel_sdc_code}", type="primary", use_container_width=True):
+            if st.button(f"{geo_p['flag']} {geo_p['name']} Protokolünü Onayla", key=f"btn_geo_appr_save_{sel_sdc_code}", type="primary", use_container_width=True):
                 if sel_sdc_code not in st.session_state['country_geopolitical_protocols']:
                     st.session_state['country_geopolitical_protocols'][sel_sdc_code] = {}
                 st.session_state['country_geopolitical_protocols'][sel_sdc_code]['expert_comment'] = geo_comm_val.strip()
                 st.session_state['country_geopolitical_protocols'][sel_sdc_code]['status'] = 'Onaylandı & Yürürlükte'
-                st.success(f"✓ {geo_p['name']} protokolü onaylandı!")
+                st.success(f"{geo_p['name']} protokolü onaylandı!")
                 st.rerun()
 
     st.markdown("<hr style='border-color:rgba(255,255,255,0.1); margin:20px 0;'>", unsafe_allow_html=True)
@@ -30748,7 +30836,7 @@ elif active_view in ["Rakip Analizi & RFID Trap Breaker", "⬡ Rakip Kıyaslama 
                             reg_dict[rk]['recommended_devices'] = sdc_sel_devs
                             reg_dict[rk]['field_moves'] = sdc_moves.strip()
                             reg_dict[rk]['user_comment'] = sdc_note.strip()
-                            st.success(f"✓ {r_item['name']} güncellendi!")
+                            st.success(f"{r_item['name']} güncellendi!")
                             st.rerun()
 
     st.markdown("<hr style='border-color:rgba(255,255,255,0.1); margin:24px 0;'>", unsafe_allow_html=True)
@@ -30868,7 +30956,7 @@ elif active_view in ["Rakip Analizi & RFID Trap Breaker", "⬡ Rakip Kıyaslama 
         with rc3:
             sim_zeus_coin = st.slider("🛡️ ZEUS Mismatch Blocker Lisans Bedeli ($ / Siklus):", min_value=15, max_value=35, value=25, step=1, key="sim_zeus_coin_cost")
 
-        st.caption("ℹ️ **ZEUS Modeli:** Tüm 2D barkodlar **Tamamen Ücretsizdir (Free of Charge Barcodes)**. Yalnızca döngü başına **$25 USD** doğrulama lisansı ödenir.")
+        st.caption("ℹ **ZEUS Modeli:** Tüm 2D barkodlar **Tamamen Ücretsizdir (Free of Charge Barcodes)**. Yalnızca döngü başına **$25 USD** doğrulama lisansı ödenir.")
 
         curr_rfid_total = sim_cycles * sim_rfid_cost
         zeus_coin_total = sim_cycles * sim_zeus_coin
@@ -31017,10 +31105,10 @@ Web: www.zeusbioscience.com | Email: clinical@zeusbioscience.com"""
         
         col_ecopy, col_eact = st.columns([1.5, 2.5])
         with col_ecopy:
-            st.info("💡 Yukarıdaki metni kopyalayarak doğrudan hedef klinik direktörüne iletebilirsiniz.")
+            st.info("Yukarıdaki metni kopyalayarak doğrudan hedef klinik direktörüne iletebilirsiniz.")
         with col_eact:
-            if st.button("📋 Bu İkna Stratejisini Stratejik Karar Masasına Onaylı Olarak Kaydet", key="btn_save_rfid_pitch_strategy", type="primary"):
-                st.success("✅ RFID Dönüşüm ve Mismatch Blocker ikna protokolü yönetim kuruluna sunulmak üzere onaylandı!")
+            if st.button("Bu İkna Stratejisini Stratejik Karar Masasına Onaylı Olarak Kaydet", key="btn_save_rfid_pitch_strategy", type="primary"):
+                st.success("RFID Dönüşüm ve Mismatch Blocker ikna protokolü yönetim kuruluna sunulmak üzere onaylandı!")
 
     st.markdown("<hr style='border-color:rgba(255,255,255,0.1); margin:24px 0;'>", unsafe_allow_html=True)
 
@@ -31108,18 +31196,18 @@ Web: www.zeusbioscience.com | Email: clinical@zeusbioscience.com"""
             )
             col_qb1, col_qb2 = st.columns(2)
             with col_qb1:
-                if st.button("✕ İncelemeye Al (Yorumu Kaydet)", key=f"btn_inc_quota_save_{q_id}", use_container_width=True):
+                if st.button("İncelemeye Al (Yorumu Kaydet)", key=f"btn_inc_quota_save_{q_id}", use_container_width=True):
                     q_dict[q_id]['user_comment'] = q_comm_val.strip() if q_comm_val.strip() else q_dict[q_id].get('user_comment', '')
                     q_dict[q_id]['status'] = 'İncelemede / Revize'
                     st.session_state['distributor_annual_quotas'] = q_dict
-                    st.success(f"✓ {q_data['country_flag']} için kota incelemeye alındı ve gerekçe kaydedildi!")
+                    st.success(f"{q_data['country_flag']} için kota incelemeye alındı ve gerekçe kaydedildi!")
                     st.rerun()
             with col_qb2:
-                if st.button("✅ Yıllık Kotayı Resmileştir & Onayla", key=f"btn_appr_quota_save_{q_id}", type="primary", use_container_width=True):
+                if st.button("Yıllık Kotayı Resmileştir & Onayla", key=f"btn_appr_quota_save_{q_id}", type="primary", use_container_width=True):
                     q_dict[q_id]['user_comment'] = q_comm_val.strip() if q_comm_val.strip() else q_dict[q_id].get('user_comment', '')
                     q_dict[q_id]['status'] = 'Onaylandı & İcrada'
                     st.session_state['distributor_annual_quotas'] = q_dict
-                    st.success(f"✓ {q_data['country_flag']} yıllık kotası resmi olarak onaylandı!")
+                    st.success(f"{q_data['country_flag']} yıllık kotası resmi olarak onaylandı!")
                     st.rerun()
 
 
@@ -31328,7 +31416,7 @@ Web: www.zeusbioscience.com | Email: clinical@zeusbioscience.com"""
                 </div>
                 """, unsafe_allow_html=True)
         else:
-            st.success("✅ No critical operational or compliance deal-breakers detected for this candidate.")
+            st.success("No critical operational or compliance deal-breakers detected for this candidate.")
 
     with tab_audit2:
         st.markdown("##### Pre-Execution Verification Steps:")
