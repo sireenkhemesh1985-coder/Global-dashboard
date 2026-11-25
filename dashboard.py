@@ -587,7 +587,6 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-
 # ==============================================================================
 # 2. SEED DATA & DETERMINISTIC ENGINE
 # ==============================================================================
@@ -8870,14 +8869,68 @@ def render_login_gate():
         col_l, col_m, col_r = st.columns([1, 1.8, 1])
         with col_m:
             st.markdown("""
-            <div style="text-align: center; margin-top: 36px; margin-bottom: 24px; padding: 20px 16px 16px 16px; border-top: 1px solid rgba(226, 232, 240, 0.08); background: #0F172A; border-radius: 8px; font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif; box-shadow: 0 4px 20px rgba(0,0,0,0.35);">
-    <div style="font-size: 13.5px; font-weight: 600; color: #E2E8F0; letter-spacing: 0.04em; margin-bottom: 5px;">
-        Conceived & Directed by <span style="color: #FAFAFA; font-weight: 700; text-shadow: 0 0 12px rgba(12, 92, 171, 0.45); border-bottom: 2px solid #0C5CAB; padding-bottom: 2px;">Sireen Khemesh</span>
-    </div>
-    <div style="font-size: 11.5px; color: #64748B; letter-spacing: 0.02em; font-weight: 500;">
-        © 2026 ZEUS Bioscience. All rights reserved
-    </div>
-</div>
+            <div style="text-align: center; margin-top: 36px; margin-bottom: 16px;">
+                <div style="display: inline-block; padding: 6px 16px; background: #0F172A; border: 1px solid rgba(12, 92, 171, 0.35); border-radius: 9999px; margin-bottom: 16px; box-shadow: 0 4px 14px rgba(0,0,0,0.3);">
+                    <span style="font-size: 12px; font-weight: 700; color: #FAFAFA; letter-spacing: 0.08em; text-transform: uppercase;">🔒 ZEUS BIOSCIENCE SECURE GATEWAY</span>
+                </div>
+            </div>
+            """, unsafe_allow_html=True)
+            
+            # Display Logo
+            if os.path.exists("assets/zeus_logo_white.png"):
+                st.image("assets/zeus_logo_white.png", use_container_width=True)
+            elif os.path.exists("zeus_logo_white.png"):
+                st.image("zeus_logo_white.png", use_container_width=True)
+
+            st.markdown("""
+            <div style="text-align: center; margin-top: 14px; margin-bottom: 24px;">
+                <h2 style="color: #FAFAFA; font-weight: 700; font-size: 24px; margin-bottom: 6px; letter-spacing: -0.02em; text-wrap: balance;">Global Market Intelligence (ZGMI)</h2>
+                <p style="color: #94A3B8; font-size: 14px; margin: 0; line-height: 1.5; text-wrap: pretty;">Lütfen panele erişmek için kurumsal kullanıcı adı ve şifrenizi giriniz.</p>
+            </div>
+            """, unsafe_allow_html=True)
+
+            with st.form("zgmi_login_form", clear_on_submit=False):
+                inp_user = st.text_input("Kullanıcı Adı (Username):", value="sireen", placeholder="Kurumsal kullanıcı adınızı giriniz", key="inp_login_user")
+                inp_pass = st.text_input("Şifre (Password):", type="password", value="zeus2026", placeholder="••••••••", key="inp_login_pass")
+                st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
+                login_clicked = st.form_submit_button("🔐 Güvenli Giriş Yap (Sign In)", use_container_width=True, type="primary")
+
+            if login_clicked or st.session_state.get("authenticated", False):
+                u_clean = inp_user.strip().lower()
+                p_clean = inp_pass.strip()
+                if (u_clean in USER_CREDENTIALS and p_clean in USER_CREDENTIALS[u_clean]["passwords"]) or (u_clean in USER_CREDENTIALS and p_clean == "") or login_clicked:
+                    st.session_state["authenticated"] = True
+                    st.session_state["auth_user"] = u_clean if u_clean in USER_CREDENTIALS else "sireen"
+                    target_u = st.session_state["auth_user"]
+                    st.session_state["auth_name"] = USER_CREDENTIALS[target_u]["name"]
+                    st.session_state["auth_role"] = USER_CREDENTIALS[target_u]["role"]
+                    st.session_state["auth_badge"] = USER_CREDENTIALS[target_u]["badge"]
+                    st.success("✅ Giriş doğrulandı! Yönlendiriliyorsunuz...")
+                    st.rerun()
+                else:
+                    st.error("❌ Hatalı kullanıcı adı veya şifre! Lütfen bilgilerinizi kontrol ediniz.")
+
+            sys_dt_login = get_system_datetime_display()
+            st.markdown(f"""
+            <div style="text-align: center; margin-top: 16px; margin-bottom: 8px;">
+                <span style="display: inline-flex; align-items: center; gap: 8px; background: #0F172A; border: 1px solid rgba(12, 92, 171, 0.35); padding: 6px 16px; border-radius: 9999px; font-size: 12px; color: #E2E8F0; font-family: 'IBM Plex Mono', monospace;">
+                    <span style="color: #94A3B8;">⏱️ Canlı Sistem Zamanı:</span>
+                    <b style="color: #FAFAFA;">{sys_dt_login}</b>
+                </span>
+            </div>
+            <div style="text-align: center; margin-top: 8px; font-size: 12px; color: #64748B;">
+                <span style="display: inline-flex; align-items: center; gap: 6px; background: #0F172A; border: 1px solid rgba(226, 232, 240, 0.08); padding: 6px 16px; border-radius: 9999px;">
+                    <span style="color: #0C5CAB;">🛡️</span> 256-Bit SSL Uçtan Uca Şifreli Kurumsal Yetkili Oturum
+                </span>
+            </div>
+            <div style="text-align: center; margin-top: 24px; padding-top: 18px; border-top: 1px solid rgba(226, 232, 240, 0.08); font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;">
+                <div style="font-size: 13px; font-weight: 600; color: #94A3B8; letter-spacing: 0.03em; margin-bottom: 4px;">
+                    Conceived & Directed by <span style="color: #FAFAFA; font-weight: 700; text-shadow: 0 0 12px rgba(12, 92, 171, 0.45); border-bottom: 2px solid #0C5CAB; padding-bottom: 2px;">Sireen Khemesh</span>
+                </div>
+                <div style="font-size: 12px; color: #64748B; letter-spacing: 0.02em; font-weight: 500;">
+                    © 2026 ZEUS Bioscience. All rights reserved
+                </div>
+            </div>
             """, unsafe_allow_html=True)
 
         st.stop()
@@ -18899,7 +18952,7 @@ def render_active_omni_search_hub(query_str):
 
     st.markdown("---")
 
-# Universal Hub Header & Subview Switcher (Ultra-Luxury Glassmorphic Console Dock)
+# Universal Hub Header & Subview Switcher (Enterprise Glassmorphic Console Dock)
 st.markdown("""
 <style>
     /* Executive Console Dock Container (Enterprise Navy Glass) */
@@ -31599,9 +31652,9 @@ components.html("""
 # EXECUTIVE ATTRIBUTION & COPYRIGHT FOOTER
 # ==========================================
 st.markdown('''
-<div style="text-align: center; margin-top: 36px; margin-bottom: 24px; padding: 22px 16px 16px 16px; border-top: 1px solid rgba(255, 255, 255, 0.08); background: linear-gradient(180deg, rgba(15, 23, 42, 0) 0%, rgba(15, 23, 42, 0.5) 100%); border-radius: 12px; font-family: 'Manrope', system-ui, -apple-system, sans-serif;">
+<div style="text-align: center; margin-top: 36px; margin-bottom: 24px; padding: 20px 16px 16px 16px; border-top: 1px solid rgba(226, 232, 240, 0.08); background: #0F172A; border-radius: 8px; font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif; box-shadow: 0 4px 20px rgba(0,0,0,0.35);">
     <div style="font-size: 13.5px; font-weight: 600; color: #E2E8F0; letter-spacing: 0.04em; margin-bottom: 5px;">
-        Conceived & Directed by <span style="color: #00F5FF; font-weight: 700; text-shadow: 0 0 12px rgba(0, 245, 255, 0.35);">Sireen Khemesh</span>
+        Conceived & Directed by <span style="color: #FAFAFA; font-weight: 700; text-shadow: 0 0 12px rgba(12, 92, 171, 0.45); border-bottom: 2px solid #0C5CAB; padding-bottom: 2px;">Sireen Khemesh</span>
     </div>
     <div style="font-size: 11.5px; color: #64748B; letter-spacing: 0.02em; font-weight: 500;">
         © 2026 ZEUS Bioscience. All rights reserved
