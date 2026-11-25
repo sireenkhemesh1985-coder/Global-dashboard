@@ -9724,7 +9724,7 @@ def render_zeus_ai_chat_interface(key_suffix=""):
                     st.markdown(f"**⌬ BAŞ STRATEJİ VE KLİNİK İSTİHBARAT MASASI:**\n\n{msg['content']}")
 
     # Chat Input Handling
-    user_query = st.chat_input("Stratejik direktif, ihale mevzuatı veya pazar istişare sorgusu iletin...")
+    user_query = st.chat_input("Stratejik direktif, ihale mevzuatı veya pazar istişare sorgusu iletin...", key=f"zeus_chat_input{key_suffix or '_main'}")
     active_inquiry = preset_clicked or user_query
 
     if active_inquiry:
@@ -21184,7 +21184,7 @@ elif active_view in [
     "💬 Canlı AI MedTech Uzman Sohbeti & İstişare Masası",
     "🤖 Yapay Zeka Stratejik Danışman (AI Copilot)"
 ]:
-    render_zeus_ai_chat_interface()
+    render_zeus_ai_chat_interface(key_suffix="_hub_terminal")
 
 elif active_view in ["2026 Q4 & 2027 Satış Projeksiyonu", "✦ Biyoistihbarat Satış & Sarf Projeksiyonu (2026 Q4 & 2027)", "🔮 AI Satış & Sarf Projeksiyonu (2026 Q4 & 2027)", "🔮 AI Intelligence & Forecasting"]:
     st.title("Predictive Commercial Intelligence & Revenue Analytics")
@@ -28831,19 +28831,21 @@ elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzua
                 key=f"c360_dev_preset_{sel_country}"
             )
             
-            cur_preset_val = float(st.session_state.get(preset_price_key, 8500.0))
+            if preset_price_key not in st.session_state:
+                st.session_state[preset_price_key] = 8500.0
             dev_list_price = st.number_input(
                 "Cihaz Birim Fiyatı ($ USD — Elle Giriniz veya Butonla Seçiniz):", 
                 min_value=0.0, 
                 max_value=500000.0, 
-                value=cur_preset_val, 
                 step=100.0, 
                 placeholder="Örn: 8500.0 USD",
                 key=preset_price_key
             )
             rec_dev_max = float(pricing_fc.get('rec_device_discount', 8.0))
             dev_disc_pct = st.slider(f"Cihaz İskonto Oranı (%) — [Önerilen Tavan: %{rec_dev_max:.1f}]:", min_value=0.0, max_value=30.0, value=rec_dev_max, step=0.5, key=f"c360_dev_disc_{sel_country}")
-            dev_qty = st.number_input("Sipariş Cihaz Adedi:", min_value=1, max_value=200, value=int(st.session_state.get(f"c360_dev_qty_{sel_country}", 1)), step=1, key=f"c360_dev_qty_{sel_country}")
+            if f"c360_dev_qty_{sel_country}" not in st.session_state:
+                st.session_state[f"c360_dev_qty_{sel_country}"] = 1
+            dev_qty = st.number_input("Sipariş Cihaz Adedi:", min_value=1, max_value=200, step=1, key=f"c360_dev_qty_{sel_country}")
 
             # Dynamic Hardware Volume Tier Advice Inline
             if dev_qty == 1:
