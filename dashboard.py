@@ -414,29 +414,31 @@ st.markdown("""
         display: none !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] {
-        gap: 4px !important;
+        gap: 8px !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label {
-        background: transparent !important;
-        border: 1px solid transparent !important;
-        border-radius: var(--zg-radius-md) !important;
-        padding: 8px 10px !important;
+        background: rgba(15, 23, 42, 0.72) !important;
+        border: 1px solid rgba(0, 240, 255, 0.28) !important;
+        border-radius: 8px !important;
+        padding: 10px 12px !important;
         margin: 0 !important;
         transition: var(--zg-transition) !important;
         cursor: pointer !important;
         display: flex !important;
         align-items: center !important;
-        box-shadow: none !important;
+        box-shadow: 0 0 12px rgba(0, 240, 255, 0.08), inset 0 1px 0 rgba(0, 240, 255, 0.12) !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label:hover {
-        background: var(--zg-surface) !important;
-        border: var(--zg-border) !important;
+        background: rgba(12, 92, 171, 0.28) !important;
+        border: 1px solid rgba(0, 240, 255, 0.78) !important;
+        box-shadow: 0 0 18px rgba(0, 240, 255, 0.30), inset 0 0 10px rgba(0, 240, 255, 0.12) !important;
+        transform: translateX(2px) !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"],
     [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label:has(input:checked) {
-        background: var(--zg-surface-elevated) !important;
-        border: var(--zg-border-active) !important;
-        box-shadow: inset 2px 0 0 var(--zg-active-cyan) !important;
+        background: linear-gradient(135deg, rgba(0, 240, 255, 0.22) 0%, rgba(12, 92, 171, 0.52) 100%) !important;
+        border: 1px solid #00F0FF !important;
+        box-shadow: 0 0 22px rgba(0, 240, 255, 0.42), inset 3px 0 0 #00F0FF, inset 0 1px 0 rgba(255, 255, 255, 0.22) !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label p,
     [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label span,
@@ -446,14 +448,19 @@ st.markdown("""
         opacity: 1 !important;
         font-size: 12.5px !important;
         font-weight: 500 !important;
-        color: var(--zg-text-muted) !important;
+        color: #CBD5E1 !important;
         letter-spacing: -0.01em !important;
         line-height: 1.35 !important;
     }
+    [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label:hover p,
+    [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label:hover span {
+        color: #FFFFFF !important;
+    }
     [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label:has(input:checked) p,
     [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label:has(input:checked) span {
-        color: var(--zg-text-primary) !important;
+        color: #FFFFFF !important;
         font-weight: 600 !important;
+        text-shadow: 0 0 10px rgba(0, 240, 255, 0.55) !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] input[type="radio"],
     [data-testid="stSidebar"] [data-testid="stRadio"] div[data-baseweb="radio"] > div:first-child:not([data-testid="stMarkdownContainer"]) {
