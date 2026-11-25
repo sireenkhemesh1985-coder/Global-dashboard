@@ -47,62 +47,61 @@ def get_system_datetime_display():
     months_tr = ['', 'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık']
     return f"{now_dt.day} {months_tr[now_dt.month]} {now_dt.year} • {now_dt.strftime('%H:%M:%S')}"
 
-# Custom Styling (ZGMI Enterprise Theme - .agent/skills/enterprise/SKILL.md)
+# Custom Styling (ZGMI Futuristic Glassmorphism - Tier-1 MedTech Intelligence OS)
 st.markdown("""
 <style>
-    /* Google Fonts: Strict Enterprise Compliance (IBM Plex Sans + IBM Plex Mono) */
+    /* Google Fonts: IBM Plex Sans & IBM Plex Mono */
     @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
     
-    /* Design System Tokens (.agent/skills/enterprise/SKILL.md) */
+    /* Design Tokens: Futuristic Glassmorphism & Subtle Lighting */
     :root {
         --zg-font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         --zg-font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
         
-        /* 8pt Baseline Grid Spacing Tokens (SKILL.md sourceScale: "8pt baseline grid") */
-        --zg-space-0: 0px;
+        /* 8pt Grid */
         --zg-space-xs: 4px;
-        --zg-space-sm: 8px;   /* sm: 8px */
-        --zg-space-md: 16px;  /* md: 16px */
+        --zg-space-sm: 8px;
+        --zg-space-md: 16px;
         --zg-space-lg: 24px;
         --zg-space-xl: 32px;
         --zg-space-2xl: 40px;
         
-        /* Enterprise Obsidian & Navy Glass Surfaces (SKILL.md surface: "#09090b") */
-        --zg-surface-base: #09090B;
-        --zg-surface-card: #0F172A;
-        --zg-surface-elevated: #131E32;
-        --zg-surface-hover: #1A2844;
+        /* Deep Space Base Canvas */
+        --zg-canvas: #06090F;
         
-        /* Enterprise Accents & Identity Hierarchy (SKILL.md colors) */
-        --zg-primary: #0C5CAB;          /* primary: "#0C5CAB" */
-        --zg-primary-dark: #0A4A8A;     /* secondary: "#0a4a8a" */
-        --zg-primary-light: #1E70BF;
-        --zg-success: #10B981;          /* success: "#10b981" */
-        --zg-warning: #F59E0B;          /* warning: "#f59e0b" */
-        --zg-danger: #EF4444;           /* danger: "#ef4444" */
+        /* Translucent Glass Surfaces (Glassmorphism) */
+        --zg-glass-surface: rgba(15, 23, 42, 0.65);
+        --zg-glass-elevated: rgba(19, 30, 52, 0.75);
+        --zg-glass-hover: rgba(26, 42, 72, 0.85);
+        --zg-glass-blur: blur(16px) saturate(180%);
         
-        /* Metallic Silver Palette (SKILL.md text: "#fafafa") */
+        /* Specular Borders & Multi-Layer Depth */
+        --zg-glass-border: 1px solid rgba(226, 232, 240, 0.12);
+        --zg-glass-border-hover: 1px solid rgba(56, 189, 248, 0.45);
+        --zg-glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
+        --zg-glass-shadow-hover: 0 14px 42px 0 rgba(0, 0, 0, 0.55), 0 0 24px 0 rgba(12, 92, 171, 0.30), inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
+        
+        /* Refined Accents & Status */
+        --zg-primary: #0C5CAB;
+        --zg-primary-dark: #0A4A8A;
+        --zg-accent-cyan: #38BDF8;
+        --zg-accent-emerald: #10B981;
+        --zg-accent-amber: #F59E0B;
+        --zg-accent-rose: #EF4444;
+        
+        /* Metallic Silver Palette */
         --zg-silver-pure: #FAFAFA;
         --zg-silver-text: #E2E8F0;
         --zg-silver-muted: #94A3B8;
         --zg-silver-dim: #64748B;
         
-        /* Enterprise Perimeter Borders */
-        --zg-border-subtle: 1px solid rgba(226, 232, 240, 0.10);
-        --zg-border-medium: 1px solid rgba(12, 92, 171, 0.35);
-        --zg-border-active: 1px solid #0C5CAB;
-        --zg-border-muted: 1px solid rgba(255, 255, 255, 0.08);
-        
-        /* Enterprise Rounded Tokens (SKILL.md rounded: sm: 4px, md: 8px) */
+        /* Radii */
         --zg-radius-xs: 2px;
-        --zg-radius-sm: 4px;   /* rounded.sm: 4px */
-        --zg-radius-md: 8px;   /* rounded.md: 8px */
-        --zg-radius-lg: 8px;
-        --zg-radius-xl: 12px;
+        --zg-radius-sm: 4px;
+        --zg-radius-md: 8px;
+        --zg-radius-lg: 10px;
         --zg-radius-full: 9999px;
         
-        /* Hardware-Accelerated Deceleration Curves */
-        --zg-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
         --zg-transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1);
     }
 
@@ -111,10 +110,15 @@ st.markdown("""
         scroll-behavior: smooth !important;
     }
 
-    /* Global Background & Typography Hygiene */
+    /* Background Atmosphere: Subtle Lighting, Deep Space Atmosphere & Starfield Depth */
     html, body, [class*="css"], .stApp {
         font-family: var(--zg-font-sans) !important;
-        background-color: var(--zg-surface-base) !important;
+        background-color: var(--zg-canvas) !important;
+        background-image: 
+            radial-gradient(ellipse 90% 50% at 50% -12%, rgba(12, 92, 171, 0.24), transparent 70%),
+            radial-gradient(ellipse 70% 40% at 100% 100%, rgba(56, 189, 248, 0.09), transparent 60%),
+            radial-gradient(ellipse 50% 30% at 0% 50%, rgba(16, 185, 129, 0.05), transparent 50%) !important;
+        background-attachment: fixed !important;
         color: var(--zg-silver-text) !important;
         letter-spacing: -0.01em;
     }
@@ -124,7 +128,7 @@ st.markdown("""
         font-style: normal !important;
     }
 
-    /* Enterprise Typography Scale: 12/14/16/20/24/32 */
+    /* Typography Scale */
     h1, h2, h3, h4, h5, h6 {
         font-family: var(--zg-font-sans) !important;
         text-wrap: balance !important;
@@ -143,19 +147,19 @@ st.markdown("""
         font-size: 0.95rem !important;
     }
 
-    /* Monospace Numeric Rule: IBM Plex Mono with Tabular Numbers */
+    /* Tabular Numeric Rule */
     code, pre, [data-testid="stMetricValue"], .kpi-val, .glass-metric-val, .mono-num {
         font-family: var(--zg-font-mono) !important;
         font-feature-settings: 'tnum' on, 'zero' on !important;
     }
 
-    /* Floating Back-To-Top Button */
+    /* Floating Back-To-Top Tactile Button */
     #btn-back-to-top {
         position: fixed;
         bottom: 24px;
         right: 24px;
         z-index: 999999;
-        background: var(--zg-primary);
+        background: linear-gradient(135deg, #0C5CAB 0%, #0A4A8A 100%);
         color: var(--zg-silver-pure) !important;
         border-radius: var(--zg-radius-full);
         width: 42px;
@@ -163,18 +167,17 @@ st.markdown("""
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 17px;
+        font-size: 16px;
         font-weight: 700;
         text-decoration: none !important;
-        box-shadow: 0 4px 18px rgba(12, 92, 171, 0.45);
-        border: 1px solid rgba(226, 232, 240, 0.20);
+        box-shadow: 0 4px 18px rgba(12, 92, 171, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+        border: 1px solid rgba(56, 189, 248, 0.40);
         cursor: pointer;
-        transition: transform 250ms var(--zg-ease-out), box-shadow 250ms var(--zg-ease-out), background 250ms var(--zg-ease-out);
+        transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 250ms cubic-bezier(0.16, 1, 0.3, 1);
     }
     #btn-back-to-top:hover {
-        transform: translateY(-2px) scale(1.05);
-        background: var(--zg-primary-dark);
-        box-shadow: 0 8px 24px rgba(12, 92, 171, 0.65);
+        transform: translateY(-2px) scale(1.06);
+        box-shadow: 0 8px 24px rgba(12, 92, 171, 0.65), 0 0 16px rgba(56, 189, 248, 0.40);
     }
     #btn-back-to-top:active {
         transform: translateY(0) scale(0.98);
@@ -188,25 +191,28 @@ st.markdown("""
     }
 
     /* ====================================================================== */
-    /* EXECUTIVE SIDEBAR & NAVIGATION (Enterprise Navy Glass)                  */
+    /* GLASSMORPHIC SIDEBAR (Translucent Obsidian + Refined Glow)             */
     /* ====================================================================== */
     [data-testid="stSidebar"] {
-        background-color: var(--zg-surface-base) !important;
-        background-image: none !important;
-        border-right: var(--zg-border-subtle) !important;
-        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.50) !important;
+        background: rgba(6, 9, 15, 0.75) !important;
+        backdrop-filter: blur(20px) saturate(180%) !important;
+        -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
+        border-right: 1px solid rgba(226, 232, 240, 0.10) !important;
+        box-shadow: 6px 0 28px rgba(0, 0, 0, 0.60) !important;
     }
     [data-testid="stSidebar"] hr {
         border-color: rgba(226, 232, 240, 0.08) !important;
         margin: 16px 0 !important;
     }
 
-    /* Sidebar Navigation Cards */
+    /* Sidebar Navigation Cards: Translucent Glass with Specular Edge */
     [data-testid="stSidebar"] [data-testid="stRadio"] > div {
         gap: 8px !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] label {
-        background: var(--zg-surface-card) !important;
+        background: rgba(15, 23, 42, 0.55) !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
         border: 1px solid rgba(226, 232, 240, 0.08) !important;
         border-radius: var(--zg-radius-md) !important;
         padding: 9px 12px !important;
@@ -215,18 +221,19 @@ st.markdown("""
         cursor: pointer !important;
         display: flex !important;
         align-items: center !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] label:hover {
-        background: var(--zg-surface-elevated) !important;
-        border-color: rgba(12, 92, 171, 0.50) !important;
-        transform: translateX(2px) !important;
-        box-shadow: 0 2px 12px rgba(12, 92, 171, 0.15) !important;
+        background: rgba(19, 30, 52, 0.75) !important;
+        border-color: rgba(56, 189, 248, 0.40) !important;
+        transform: translateX(3px) !important;
+        box-shadow: 0 4px 16px rgba(12, 92, 171, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] label[data-checked="true"],
     [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) {
-        background: var(--zg-surface-elevated) !important;
-        border: var(--zg-border-active) !important;
-        box-shadow: 0 0 16px rgba(12, 92, 171, 0.25), inset 0 0 10px rgba(12, 92, 171, 0.10) !important;
+        background: rgba(19, 30, 52, 0.85) !important;
+        border: 1px solid #0C5CAB !important;
+        box-shadow: 0 0 20px rgba(12, 92, 171, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.20) !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] label p,
     [data-testid="stSidebar"] [data-testid="stRadio"] label span,
@@ -241,7 +248,7 @@ st.markdown("""
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) p,
     [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) span {
-        color: var(--zg-silver-pure) !important;
+        color: #FFFFFF !important;
         font-weight: 600 !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] input[type="radio"],
@@ -254,16 +261,17 @@ st.markdown("""
     }
 
     /* ====================================================================== */
-    /* COMPACT HIGH-DENSITY KPI CARDS (Enterprise Navy Glass + Metallic Silver)*/
+    /* GLASSMORPHIC HIGH-DENSITY KPI CARDS (Specular Highlight & Subtle Glow)  */
     /* ====================================================================== */
     .kpi-container {
-        background: var(--zg-surface-card) !important;
-        background-image: none !important;
-        border: var(--zg-border-subtle) !important;
+        background: var(--zg-glass-surface) !important;
+        backdrop-filter: var(--zg-glass-blur) !important;
+        -webkit-backdrop-filter: var(--zg-glass-blur) !important;
+        border: var(--zg-glass-border) !important;
         border-radius: var(--zg-radius-md) !important;
         padding: 12px 14px !important;
         transition: var(--zg-transition) !important;
-        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35) !important;
+        box-shadow: var(--zg-glass-shadow) !important;
         min-width: 0 !important;
         overflow: visible !important;
         position: relative !important;
@@ -273,9 +281,10 @@ st.markdown("""
         justify-content: space-between !important;
     }
     .kpi-container:hover {
-        transform: translateY(-1px) !important;
-        border-color: rgba(12, 92, 171, 0.50) !important;
-        box-shadow: 0 6px 20px -2px rgba(12, 92, 171, 0.20) !important;
+        transform: translateY(-2px) !important;
+        background: var(--zg-glass-elevated) !important;
+        border: var(--zg-glass-border-hover) !important;
+        box-shadow: var(--zg-glass-shadow-hover) !important;
     }
     .kpi-header {
         font-size: 11px !important;
@@ -302,18 +311,19 @@ st.markdown("""
         font-weight: 500 !important;
         display: block !important;
     }
-    .kpi-pos { color: var(--zg-success) !important; }
-    .kpi-neg { color: var(--zg-danger) !important; }
-    .kpi-neu { color: var(--zg-warning) !important; }
+    .kpi-pos { color: var(--zg-accent-emerald) !important; }
+    .kpi-neg { color: var(--zg-accent-rose) !important; }
+    .kpi-neu { color: var(--zg-accent-amber) !important; }
 
-    /* Glass Metric Card Grid */
+    /* Glass Metric Cards */
     .glass-metric-card {
-        background: var(--zg-surface-card) !important;
-        background-image: none !important;
-        border: var(--zg-border-subtle) !important;
+        background: var(--zg-glass-surface) !important;
+        backdrop-filter: var(--zg-glass-blur) !important;
+        -webkit-backdrop-filter: var(--zg-glass-blur) !important;
+        border: var(--zg-glass-border) !important;
         border-radius: var(--zg-radius-md) !important;
         padding: 12px 14px !important;
-        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35) !important;
+        box-shadow: var(--zg-glass-shadow) !important;
         transition: var(--zg-transition) !important;
         margin-bottom: 10px !important;
         min-height: 110px !important;
@@ -322,20 +332,22 @@ st.markdown("""
         justify-content: space-between !important;
     }
     .glass-metric-card:hover {
-        transform: translateY(-1px) !important;
-        border-color: rgba(12, 92, 171, 0.50) !important;
-        box-shadow: 0 6px 20px -2px rgba(12, 92, 171, 0.20) !important;
+        transform: translateY(-2px) !important;
+        background: var(--zg-glass-elevated) !important;
+        border: var(--zg-glass-border-hover) !important;
+        box-shadow: var(--zg-glass-shadow-hover) !important;
     }
     .glass-icon-box {
         width: 32px;
         height: 32px;
         border-radius: var(--zg-radius-sm);
-        background: var(--zg-surface-elevated);
-        border: var(--zg-border-subtle);
+        background: rgba(19, 30, 52, 0.70);
+        border: 1px solid rgba(226, 232, 240, 0.12);
         display: inline-flex;
         align-items: center;
         justify-content: center;
         margin-bottom: 6px;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
     }
     .glass-metric-header {
         font-size: 11px !important;
@@ -360,7 +372,7 @@ st.markdown("""
         color: var(--zg-silver-dim) !important;
     }
 
-    /* Badges & Status Chips (Enterprise Rounded Tokens) */
+    /* Badges & Status Chips: Frosted Glass */
     .chip {
         display: inline-flex !important;
         align-items: center !important;
@@ -371,51 +383,53 @@ st.markdown("""
         font-weight: 600 !important;
         letter-spacing: 0.02em !important;
         margin-right: 6px !important;
+        backdrop-filter: blur(8px) !important;
     }
-    .chip-ok { background: rgba(16, 185, 129, 0.12) !important; color: #34D399 !important; border: 1px solid rgba(16, 185, 129, 0.3) !important; }
-    .chip-wn { background: rgba(245, 158, 11, 0.12) !important; color: #FBBF24 !important; border: 1px solid rgba(245, 158, 11, 0.3) !important; }
-    .chip-err { background: rgba(239, 68, 68, 0.12) !important; color: #F87171 !important; border: 1px solid rgba(239, 68, 68, 0.3) !important; }
-    .chip-info { background: rgba(12, 92, 171, 0.15) !important; color: #60A5FA !important; border: 1px solid rgba(12, 92, 171, 0.40) !important; }
+    .chip-ok { background: rgba(16, 185, 129, 0.15) !important; color: #34D399 !important; border: 1px solid rgba(16, 185, 129, 0.35) !important; }
+    .chip-wn { background: rgba(245, 158, 11, 0.15) !important; color: #FBBF24 !important; border: 1px solid rgba(245, 158, 11, 0.35) !important; }
+    .chip-err { background: rgba(239, 68, 68, 0.15) !important; color: #F87171 !important; border: 1px solid rgba(239, 68, 68, 0.35) !important; }
+    .chip-info { background: rgba(12, 92, 171, 0.20) !important; color: #60A5FA !important; border: 1px solid rgba(56, 189, 248, 0.40) !important; }
 
     /* Alert Banner */
     .alert-card {
         border-radius: var(--zg-radius-md) !important;
         padding: 14px 16px !important;
         margin-bottom: 12px !important;
-        background: var(--zg-surface-card) !important;
-        background-image: none !important;
-        border: var(--zg-border-subtle) !important;
-        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.30) !important;
+        background: var(--zg-glass-surface) !important;
+        backdrop-filter: var(--zg-glass-blur) !important;
+        border: var(--zg-glass-border) !important;
+        box-shadow: var(--zg-glass-shadow) !important;
     }
 
     /* ====================================================================== */
-    /* STANDARDIZED BUTTONS (Enterprise Rounded: 4px, Padding 8px x 16px)     */
+    /* STANDARDIZED BUTTONS: FROSTED GLASS & SAPPHIRE SPECULAR ACCENTS        */
     /* ====================================================================== */
     .stButton > button,
     button[kind="secondary"],
     button[data-testid="baseButton-secondary"],
     button[data-testid="stBaseButton-secondary"],
     div[data-testid="stButton"] button {
-        background: var(--zg-surface-card) !important;
-        background-image: none !important;
-        border: 1px solid rgba(226, 232, 240, 0.12) !important;
+        background: rgba(15, 23, 42, 0.65) !important;
+        backdrop-filter: blur(12px) !important;
+        -webkit-backdrop-filter: blur(12px) !important;
+        border: 1px solid rgba(226, 232, 240, 0.14) !important;
         border-radius: var(--zg-radius-sm) !important;
         color: var(--zg-silver-text) !important;
         font-weight: 500 !important;
         font-size: 13.5px !important;
         letter-spacing: -0.01em !important;
-        padding: 7px 14px !important;
+        padding: 7px 15px !important;
         transition: var(--zg-transition) !important;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.10) !important;
         cursor: pointer !important;
     }
     .stButton > button:hover,
     button[kind="secondary"]:hover,
     div[data-testid="stButton"] button:hover {
-        background: var(--zg-surface-elevated) !important;
-        border-color: rgba(12, 92, 171, 0.60) !important;
+        background: rgba(26, 42, 72, 0.85) !important;
+        border-color: rgba(56, 189, 248, 0.50) !important;
         color: var(--zg-silver-pure) !important;
-        box-shadow: 0 2px 12px rgba(12, 92, 171, 0.25) !important;
+        box-shadow: 0 4px 16px rgba(12, 92, 171, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.20) !important;
         transform: translateY(-1px) !important;
     }
     .stButton > button:active,
@@ -424,29 +438,28 @@ st.markdown("""
         transform: scale(0.98) !important;
     }
 
-    /* Primary Buttons (Enterprise Sapphire: #0C5CAB) */
+    /* Primary Buttons: Glowing Sapphire Gradient */
     .stButton > button[kind="primary"],
     button[kind="primary"],
     button[data-testid="baseButton-primary"],
     button[data-testid="stBaseButton-primary"],
     div[data-testid="stButton"] button[kind="primary"] {
-        background: var(--zg-primary) !important;
-        background-image: none !important;
-        border: 1px solid var(--zg-primary) !important;
+        background: linear-gradient(135deg, #0C5CAB 0%, #0A4A8A 100%) !important;
+        border: 1px solid rgba(56, 189, 248, 0.40) !important;
         border-radius: var(--zg-radius-sm) !important;
-        color: var(--zg-silver-pure) !important;
+        color: #FFFFFF !important;
         font-weight: 600 !important;
         font-size: 13.5px !important;
         letter-spacing: -0.01em !important;
         padding: 7px 16px !important;
-        box-shadow: 0 2px 10px rgba(12, 92, 171, 0.35) !important;
+        box-shadow: 0 4px 18px rgba(12, 92, 171, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
         transition: var(--zg-transition) !important;
     }
     .stButton > button[kind="primary"]:hover,
     button[kind="primary"]:hover {
-        background: var(--zg-primary-dark) !important;
-        border-color: var(--zg-primary-dark) !important;
-        box-shadow: 0 4px 18px rgba(12, 92, 171, 0.50) !important;
+        background: linear-gradient(135deg, #126ec9 0%, #0C5CAB 100%) !important;
+        border-color: #38BDF8 !important;
+        box-shadow: 0 6px 24px rgba(12, 92, 171, 0.65), 0 0 18px rgba(56, 189, 248, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35) !important;
         transform: translateY(-1px) !important;
     }
     .stButton > button[kind="primary"]:active,
@@ -454,41 +467,46 @@ st.markdown("""
         transform: scale(0.98) !important;
     }
 
-    /* Executive Forms */
+    /* Executive Forms: Glass Container */
     [data-testid="stForm"] {
-        background: var(--zg-surface-card) !important;
-        border: var(--zg-border-subtle) !important;
+        background: var(--zg-glass-surface) !important;
+        backdrop-filter: var(--zg-glass-blur) !important;
+        border: var(--zg-glass-border) !important;
         border-radius: var(--zg-radius-md) !important;
         padding: 20px !important;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.40) !important;
+        box-shadow: var(--zg-glass-shadow) !important;
     }
 
-    /* Executive Inputs & Selectboxes */
+    /* Inputs & Selectboxes: Translucent Bevel */
     div[data-baseweb="select"] > div,
     div[data-baseweb="input"] > div {
-        background: var(--zg-surface-elevated) !important;
-        border: var(--zg-border-subtle) !important;
+        background: rgba(19, 30, 52, 0.75) !important;
+        backdrop-filter: blur(10px) !important;
+        border: 1px solid rgba(226, 232, 240, 0.14) !important;
         border-radius: var(--zg-radius-sm) !important;
         color: var(--zg-silver-pure) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
         transition: var(--zg-transition) !important;
     }
     div[data-baseweb="select"] > div:hover,
     div[data-baseweb="input"] > div:hover {
-        border-color: rgba(12, 92, 171, 0.50) !important;
+        border-color: rgba(56, 189, 248, 0.50) !important;
     }
     div[data-baseweb="select"] > div:focus-within,
     div[data-baseweb="input"] > div:focus-within {
-        border-color: var(--zg-primary) !important;
-        box-shadow: 0 0 14px rgba(12, 92, 171, 0.30) !important;
+        border-color: #38BDF8 !important;
+        box-shadow: 0 0 16px rgba(12, 92, 171, 0.40), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
     }
 
-    /* Executive Tabs */
+    /* Executive Tabs: Frosted Strip */
     .stTabs [data-baseweb="tab-list"] {
         gap: 6px !important;
-        background: var(--zg-surface-card) !important;
+        background: var(--zg-glass-surface) !important;
+        backdrop-filter: blur(14px) !important;
         padding: 5px !important;
         border-radius: var(--zg-radius-md) !important;
-        border: var(--zg-border-subtle) !important;
+        border: var(--zg-glass-border) !important;
+        box-shadow: var(--zg-glass-shadow) !important;
     }
     .stTabs [data-baseweb="tab"] {
         border-radius: var(--zg-radius-sm) !important;
@@ -502,44 +520,49 @@ st.markdown("""
     }
     .stTabs [data-baseweb="tab"]:hover {
         color: var(--zg-silver-text) !important;
-        background: var(--zg-surface-elevated) !important;
+        background: rgba(19, 30, 52, 0.65) !important;
     }
     .stTabs [aria-selected="true"] {
-        background: var(--zg-surface-elevated) !important;
-        border: var(--zg-border-active) !important;
+        background: rgba(19, 30, 52, 0.85) !important;
+        border: 1px solid #0C5CAB !important;
         color: var(--zg-silver-pure) !important;
         font-weight: 600 !important;
-        box-shadow: 0 0 12px rgba(12, 92, 171, 0.20) !important;
+        box-shadow: 0 0 14px rgba(12, 92, 171, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
     }
 
-    /* Interactive AI Chat Elements */
+    /* Strategic Terminal Elements: Frosted Glass Dialogue */
     [data-testid="stChatMessage"] {
-        background: var(--zg-surface-card) !important;
-        border: var(--zg-border-subtle) !important;
+        background: var(--zg-glass-surface) !important;
+        backdrop-filter: blur(14px) !important;
+        border: var(--zg-glass-border) !important;
         border-radius: var(--zg-radius-md) !important;
         padding: 12px 16px !important;
-        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25) !important;
+        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
         margin-bottom: 8px !important;
     }
     div[data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarAssistant"]) {
-        background: #0F172A !important;
-        border: 1px solid rgba(12, 92, 171, 0.35) !important;
-        border-left: 3px solid #0C5CAB !important;
+        background: rgba(12, 25, 45, 0.75) !important;
+        border: 1px solid rgba(12, 92, 171, 0.40) !important;
+        border-left: 3px solid #38BDF8 !important;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.40), 0 0 18px rgba(12, 92, 171, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
     }
     div[data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarUser"]) {
-        background: #131E32 !important;
-        border: 1px solid rgba(226, 232, 240, 0.12) !important;
+        background: rgba(19, 30, 50, 0.70) !important;
+        border: 1px solid rgba(226, 232, 240, 0.14) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10) !important;
     }
     [data-testid="stChatInput"] textarea {
-        background: var(--zg-surface-elevated) !important;
-        border: var(--zg-border-subtle) !important;
+        background: rgba(19, 30, 52, 0.80) !important;
+        backdrop-filter: blur(12px) !important;
+        border: 1px solid rgba(226, 232, 240, 0.14) !important;
         border-radius: var(--zg-radius-md) !important;
         color: var(--zg-silver-pure) !important;
         font-family: var(--zg-font-sans) !important;
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
     }
     [data-testid="stChatInput"] textarea:focus {
-        border-color: var(--zg-primary) !important;
-        box-shadow: 0 0 16px rgba(12, 92, 171, 0.35) !important;
+        border-color: #38BDF8 !important;
+        box-shadow: 0 0 18px rgba(12, 92, 171, 0.40), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
     }
 
     /* Custom Sleek Scrollbar */
@@ -548,26 +571,27 @@ st.markdown("""
         height: 6px;
     }
     ::-webkit-scrollbar-track {
-        background: var(--zg-surface-base);
+        background: rgba(6, 9, 15, 0.50);
     }
     ::-webkit-scrollbar-thumb {
-        background: rgba(12, 92, 171, 0.35);
+        background: rgba(12, 92, 171, 0.40);
         border-radius: var(--zg-radius-full);
     }
     ::-webkit-scrollbar-thumb:hover {
-        background: rgba(12, 92, 171, 0.65);
+        background: rgba(56, 189, 248, 0.65);
     }
 
-    /* Dataframes & Tables */
+    /* Dataframes & Tables: Frosted Glass */
     [data-testid="stDataFrame"], [data-testid="stTable"] {
-        background: var(--zg-surface-card) !important;
-        border: var(--zg-border-subtle) !important;
+        background: var(--zg-glass-surface) !important;
+        backdrop-filter: blur(16px) !important;
+        border: var(--zg-glass-border) !important;
         border-radius: var(--zg-radius-md) !important;
         padding: 4px !important;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.30) !important;
+        box-shadow: var(--zg-glass-shadow) !important;
     }
 
-    /* Mobile Responsive Optimizations */
+    /* Mobile Responsive */
     @media (max-width: 768px) {
         .main .block-container {
             padding-top: 1.0rem !important;
@@ -8947,9 +8971,9 @@ with st.sidebar:
     # Official ZEUS Bioscience Logo
     st.image("assets/zeus_logo_white.png")
     st.markdown('''
-    <div style="margin-top: -6px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid rgba(19, 166, 181, 0.25); text-align: center;">
-        <div style="font-size: 11px; font-weight: 700; color: #00F5FF; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 4px;">Global Market Intelligence</div>
-        <div style="font-size: 13px; font-weight: 600; color: #FFFFFF; letter-spacing: 0.04em;">Sireen Khemesh</div>
+    <div style="margin-top: -6px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid rgba(226, 232, 240, 0.10); text-align: center;">
+        <div style="font-size: 10px; font-weight: 700; color: #38BDF8; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 3px;">GLOBAL MARKET INTELLIGENCE</div>
+        <div style="font-size: 13.5px; font-weight: 700; color: #FAFAFA; letter-spacing: 0.03em;">Sireen Khemesh <span style="font-size:10px;color:#38BDF8;font-weight:600;">✦ Tier-1</span></div>
     </div>
     ''', unsafe_allow_html=True)
 
@@ -8974,18 +8998,18 @@ with st.sidebar:
     </div>
     ''', unsafe_allow_html=True)
     
-    if st.button("🚪 Çıkış Yap (Sign Out)", use_container_width=True, key="btn_signout_top"):
+    if st.button("⎋ Güvenli Çıkış (Sign Out)", use_container_width=True, key="btn_signout_top"):
         for k in ["authenticated", "auth_user", "auth_name", "auth_role", "auth_badge"]:
             if k in st.session_state:
                 del st.session_state[k]
         st.rerun()
 
     main_nav_opts = [
-        "🌍 1. Pazar İstihbaratı & Ülke Analizi (Market Analysis)",
-        "⚔️ 2. Stratejik Karar Merkezi & Uyarılar (Strategy & Alerts)",
-        "💰 3. Fiyatlandırma, Klinik ROI & AI Tahminleme (Pricing & AI)",
-        "📱 4. B2B İletişim, LinkedIn & Sosyal Medya (Outreach & Media)",
-        "📊 5. Global Satış Kokpiti & Raporlama (ERP & Reports)"
+        "◈ 01 · Pazar İstihbaratı & Ülke Analizi (Market Intel)",
+        "⬡ 02 · Stratejik Karar Masası & Risk Radarı (Strategy & Alerts)",
+        "⌬ 03 · Fiyatlandırma & Klinik ROI Projeksiyonu (Pricing & ROI)",
+        "⌖ 04 · Kurumsal B2B & Medikal İletişim Ağı (Outreach & Media)",
+        "⊞ 05 · Global Satış & Konsolide ERP Kokpiti (ERP & Reports)"
     ]
     if "main_nav_radio" not in st.session_state:
         st.session_state["main_nav_radio"] = main_nav_opts[0]
@@ -9003,10 +9027,10 @@ with st.sidebar:
     # CRITICAL PARAMETER BREAKDOWN CARD (HER SEKMEDEKİ DEĞERLİ PARAMETRELER)
     # --------------------------------------------------------------------------
     nav_param_meta = {
-        "🌍 1. Pazar İstihbaratı & Ülke Analizi (Market Analysis)": {
+        "◈ 01 · Pazar İstihbaratı & Ülke Analizi (Market Intel)": {
             "title": "Pazar Analizi & Ülke Masası",
             "badge": "48 Ülke + Çoklu Kıyaslama",
-            "color": "#00E676",
+            "color": "#10B981",
             "params": [
                 "Tekil Ülke 360° (WDI, ESHRE, Klinikler, 52K Siklus)",
                 "Çoklu Ülke Kıyaslama Masası (2-6 Ülke Yan Yana)",
@@ -9016,7 +9040,7 @@ with st.sidebar:
                 "Kültürel Müzakere Playbook & İş Yapış Protokolü"
             ]
         },
-        "⚔️ 2. Stratejik Karar Merkezi & Uyarılar (Strategy & Alerts)": {
+        "⬡ 02 · Stratejik Karar Masası & Risk Radarı (Strategy & Alerts)": {
             "title": "Strateji & Erken Uyarı Kokpiti",
             "badge": "Rekabet Masası & Risk Radarı",
             "color": "#38BDF8",
@@ -9024,28 +9048,28 @@ with st.sidebar:
                 "ZEUS vs Eppendorf, RI Witness, Vitrolife",
                 "RFID OPEX Kilidi Kırma ($15,000 Yıllık Tasarruf)",
                 "Komple Laboratuvar Filo Paketi ($45K-$50K vs $120K)",
-                "🚨 Kritik Atıl Cihaz & Churn Erken Uyarıları",
+                "Kritik Atıl Cihaz & Churn Erken Uyarıları",
                 "Jeopolitik & Döviz Riski Senaryoları",
                 "Kamu & Özel İhale Şartname Kilitleri (.txt)"
             ]
         },
-        "💰 3. Fiyatlandırma, Klinik ROI & AI Tahminleme (Pricing & AI)": {
-            "title": "Fiyatlandırma, ROI & AI Tahmin",
+        "⌬ 03 · Fiyatlandırma & Klinik ROI Projeksiyonu (Pricing & ROI)": {
+            "title": "Fiyatlandırma, ROI & Projeksiyon",
             "badge": "Canlı Simülatör & ML Tahmin",
-            "color": "#FFD700",
+            "color": "#F59E0B",
             "params": [
                 "Ülke Gelir Grubuna Göre Dinamik Fiyatlandırma",
                 "4 Pool Tek Dish (20 Oosit/Dish = 1 Siklus)",
                 "Vaka Başı $6.60 USD Sarf Maliyeti ($0.33/Oosit)",
                 "Klinik Yatırım Geri Dönüşü (%700+ Net ROI)",
-                "🔮 AI 2026 Q4 & 2027 Ciro/Sarf Projeksiyonu",
+                "Biyoistihbarat 2026 Q4 & 2027 Ciro/Sarf Projeksiyonu",
                 "Reagent-Based & Düzenli Sarf ARR Büyümesi (Dish & Solution-Powder)"
             ]
         },
-        "📱 4. B2B İletişim, LinkedIn & Sosyal Medya (Outreach & Media)": {
-            "title": "B2B Outreach & Sosyal Medya",
+        "⌖ 04 · Kurumsal B2B & Medikal İletişim Ağı (Outreach & Media)": {
+            "title": "B2B Outreach & Kurumsal Medya",
             "badge": "Doğrulanmış İletişim & GTM",
-            "color": "#EC4899",
+            "color": "#6366F1",
             "params": [
                 "Doğrulanmış Karar Verici LinkedIn Canlı Arama",
                 "Google X-Ray Arama Linkleri (Clean Syntax)",
@@ -9055,10 +9079,10 @@ with st.sidebar:
                 "Bilimsel AOA & Kongre İçerik Şablonları"
             ]
         },
-        "📊 5. Global Satış Kokpiti & Raporlama (ERP & Reports)": {
+        "⊞ 05 · Global Satış & Konsolide ERP Kokpiti (ERP & Reports)": {
             "title": "Global ERP Satış & Raporlama",
             "badge": "Canlı ERP ($936.5K / 76 Cihaz)",
-            "color": "#00F5FF",
+            "color": "#0C5CAB",
             "params": [
                 "3D İnteraktif Dünya Küresi & Küresel Satışlar",
                 "1,280 Doğrulanmış Fatura ($936,546 USD / 31.97M TL)",
@@ -9068,7 +9092,6 @@ with st.sidebar:
             ]
         }
     }
-
     cur_nav_info = nav_param_meta.get(nav_selection, {})
     if cur_nav_info:
         params_html = "".join([f"<li style='margin-bottom:4px;'>{p}</li>" for p in cur_nav_info.get("params", [])])
@@ -9480,7 +9503,7 @@ Sorgunuz: **"{prompt_text}"**
 
 def render_zeus_ai_chat_interface(key_suffix=""):
     """
-    Renders an executive interactive multi-turn Chat with AI Copilot interface.
+    Renders an executive interactive multi-turn Strategic & Clinical Decision Terminal.
     """
     hist_key = f"zeus_ai_chat_messages{key_suffix}"
     if hist_key not in st.session_state:
@@ -9488,56 +9511,57 @@ def render_zeus_ai_chat_interface(key_suffix=""):
             {
                 "role": "assistant",
                 "content": (
-                    "👋 **Merhaba Sayın Yönetici! Ben ZEUS Bioscience Baş MedTech ve Ticari İstihbarat Uzmanınız (Chief Commercial & AI Strategy Copilot).**\n\n"
-                    "59 ülkenin IVF pazar verileri, $693.9K / 874 işlem kaydı, AOA Elektriksel Oosit Aktivasyonu klinik üstünlükleri, "
-                    "ihaleler (tender), şartlı distribütörlük, bayi haklarını koruma protokolleri ve klinik ROI simülasyonları "
-                    "konusunda üst yönetime özel stratejik tavsiyeler üretmek için emrinizdeyim.\n\n"
-                    "💡 *Aşağıdaki hızlı stratejik sorgu butonlarından birine tıklayabilir veya sorunuzu doğrudan yazabilirsiniz:*"
+                    "**Sayın Yönetici,**\n\n"
+                    "ZEUS Global Market Intelligence Biyoistihbarat ve Stratejik Karar Masası devrededir. "
+                    "59 ülkenin IVF pazar dinamikleri, 874 teyitli finansal işlem, CE Class IIa sertifikalı AOA elektriksel stimülasyon protokolleri, "
+                    "uluslararası kamu ihale şartnameleri, şartlı distribütörlük LOA koşulları ve bayi koruma mekanizmaları "
+                    "üzerine derinlemesine stratejik değerlendirmeler sunmak üzere yetkilendirildiniz.\n\n"
+                    "*Aşağıdaki önceden tanımlanmış stratejik direktiflerden birini seçebilir veya sorunuzu terminale iletebilirsiniz:*"
                 )
             }
         ]
 
-    # Executive Status Banner
+    # Executive Status Banner (Glassmorphism & Depth)
     has_api_key = bool(get_gemini_api_key() or st.session_state.get("custom_gemini_api_key"))
     engine_badge = (
-        "⚡ Motor: Google Gemini 2.5 Live Multimodal" 
-        if has_api_key 
-        else "⚡ Motor: ZEUS MedTech Neural Knowledge Engine (Doğrulanmış 59 Ülke & Sözleşme Veritabanı)"
+        "● ÇEKİRDEK: Canlı LLM Medikal Biyoistihbarat Motoru"
+        if has_api_key
+        else "● ÇEKİRDEK: ZEUS MedTech Biyoistihbarat & Karar Matrisi v2.9"
     )
-    engine_color = "#10B981" if has_api_key else "#00F5FF"
+    engine_color = "#38BDF8"
 
     st.markdown(f"""
-    <div style="background:#0E1626;border:1px solid rgba(0,245,255,0.22);border-radius:12px;padding:12px 16px;margin-bottom:14px;box-shadow:0 4px 16px rgba(0,0,0,0.30);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">
-        <div style="display:flex;align-items:center;gap:10px;">
-            <span style="font-size:20px;color:#00F5FF;">🤖</span>
+    <div style="background: rgba(15, 23, 42, 0.70); backdrop-filter: blur(16px); border: 1px solid rgba(226, 232, 240, 0.12); box-shadow: 0 4px 20px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08); border-radius: 8px; padding: 12px 18px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+            <span style="font-size: 20px; color: #38BDF8;">◈</span>
             <div>
-                <b style="font-size:14px;color:#FFFFFF;letter-spacing:-0.01em;">ZEUS AI MedTech Expert & Commercial Copilot</b><br>
-                <span style="font-size:11.5px;color:#94A3B8;">Üst Yönetim Karar Destek, İhale Müzakeresi & Klinik Teknoloji Danışmanı</span>
+                <b style="font-size: 14.5px; color: #FAFAFA; letter-spacing: 0.02em;">ZEUS Stratejik İstihbarat & Danışman Masası</b>
+                <div style="font-size: 11.5px; color: #94A3B8; margin-top: 1px;">Kurumsal Karar Matrisi · Uluslararası İhale & Klinik Pazar İstişaresi</div>
             </div>
         </div>
-        <span style="background:rgba(0,245,255,0.12);color:{engine_color};border:1px solid {engine_color}55;padding:3px 10px;border-radius:9999px;font-size:11px;font-weight:700;font-family:'Geist Mono',monospace;">{engine_badge}</span>
+        <span style="background: rgba(12, 92, 171, 0.20); color: {engine_color}; border: 1px solid rgba(56, 189, 248, 0.35); padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; font-family: 'IBM Plex Mono', monospace;">{engine_badge}</span>
     </div>
     """, unsafe_allow_html=True)
 
-    # Preset Quick-Prompt Action Chips
-    st.caption("⚡ HIZLI STRATEJİK İSTİŞARE BUTONLARI (TIKLAYIP ANINDA CEVAP ALIN):")
+    # Preset Strategic Directive Action Chips
+    st.caption("◈ STRATEJİK İSTİŞARE DİREKTİFLERİ (ÖNCEDEN TANIMLI PROTOKOLLER):")
     q_col1, q_col2, q_col3 = st.columns(3)
     preset_clicked = None
     with q_col1:
-        if st.button("💼 Şartlı Distribütörlük (Tender)", key=f"btn_p1{key_suffix}", use_container_width=True, help="Tender için 3 cihaz almadan bayilik nasıl verilir?"):
-            preset_clicked = "Ülkelerin distribütör olurken 3 cihaz şartı varken ihale (tender) için şartlı distribütörlük nasıl yapılandırılmalı?"
-        if st.button("🔬 ZEUS AOA vs Piezo", key=f"btn_p2{key_suffix}", use_container_width=True, help="Klinisyene Piezo ve Lazer karşıtı bilimsel argümanlar"):
-            preset_clicked = "Klinik direktörüne karşı ZEUS AOA'nın Piezo ve Laser'a göre bilimsel ve klinik üstünlük argümanlarını açıkla"
+        if st.button("[ LOA ] Şartlı Distribütörlük (İhale Mektubu)", key=f"btn_p1{key_suffix}", use_container_width=True, help="3 cihaz kotası yerine ihale kazanma şartına bağlı LOA protokolü"):
+            preset_clicked = "Ülkelerin distribütör olurken 3 cihaz şartı varken ihale (tender) için şartlı distribütörlük ve LOA önerisi ver."
+        if st.button("[ KLİNİK ] ZEUS AOA vs Piezo (Ca2+ Üstünlüğü)", key=f"btn_p2{key_suffix}", use_container_width=True, help="Klinisyenlere karşı Piezo ve Lazere göre bilimsel farklar"):
+            preset_clicked = "Klinik direktörüne karşı ZEUS AOA'nın Piezo ve Laser'a göre bilimsel ve klinik üstünlüklerini açıkla."
     with q_col2:
-        if st.button("🛡️ Pazar Analizi & Emek Koruma", key=f"btn_p3{key_suffix}", use_container_width=True, help="Bayi adayının emeklerinin boşa gitmesini önleyen Deal Registration"):
-            preset_clicked = "Bayi adayı pazar analizi yaparken çalışmalarının başkasına gitmesinden korkuyor, hangi koruma ve anlaşma önerilir?"
-        if st.button("💰 4-Pool Sarf & Klinik ROI", key=f"btn_p4{key_suffix}", use_container_width=True, help="Vaka başı $6.60 sarf ve klinik amortisman hesabı"):
-            preset_clicked = "Klinikler için 4-Pool Single Dish ve solüsyon sarf maliyeti ile yıllık ROI analizini açıkla"
+        if st.button("[ ROFR ] 90 Günlük Pazar Analizi (Bayi Koruma)", key=f"btn_p3{key_suffix}", use_container_width=True, help="Pazar araştırması yapan bayinin emeğini koruma ve ROFR klozu"):
+            preset_clicked = "Bayi adayı pazar analizi yaparken çalışmalarının başkasına gitmesinden korkuyor, haklarını koruyacak ROFR ve Deal Registration önerisi ver."
+        if st.button("[ SARF ROI ] 4-Pool Single Dish Sarf Maliyeti", key=f"btn_p4{key_suffix}", use_container_width=True, help="Dish başı $6.60 vaka maliyeti ve klinik geri dönüş"):
+            preset_clicked = "Klinikler için 4-Pool Single Dish ve solüsyon sarf maliyeti ile yıllık ROI analizini sun."
     with q_col3:
-        if st.button("📜 İhale Teknik Şartname Kilitleri", key=f"btn_p5{key_suffix}", use_container_width=True, help="Rakipleri eleyen şartname teknik maddeleri"):
+        if st.button("[ ŞARTNAME ] İhale Teknik Kilit Parametreleri", key=f"btn_p5{key_suffix}", use_container_width=True, help="Kamu ihalelerinde ZEUS'u tek geçerli kılan teknik maddeler"):
             preset_clicked = "Kamu ihalelerinde şartnameye ZEUS lehine hangi teknik maddeler kilitlenmeli?"
-        if st.button("🌍 Körfez Genişleme Stratejisi", key=f"btn_p6{key_suffix}", use_container_width=True, help="Körfez (GCC) regülasyon ve distribütör seçimi"):
-            preset_clicked = "Körfez (GCC) ülkelerinde regülasyon ve distribütör seçim stratejisi öner"
+        if st.button("[ GCC ] Körfez Bölge Stratejisi & İthalat", key=f"btn_p6{key_suffix}", use_container_width=True, help="Umman, Kuveyt, BAE regülasyon ve distribütörlük haritası"):
+            preset_clicked = "Körfez (GCC) ülkelerinde regülasyon ve distribütör seçim stratejisi öner."
 
     # Render previous messages
     chat_container = st.container()
@@ -9545,59 +9569,59 @@ def render_zeus_ai_chat_interface(key_suffix=""):
         for msg in st.session_state[hist_key]:
             if msg["role"] == "user":
                 with st.chat_message("user"):
-                    st.markdown(f"**Yönetici:** {msg['content']}")
+                    st.markdown(f"**◈ DİREKTİF (Sireen Khemesh):**\n{msg['content']}")
             else:
                 with st.chat_message("assistant", avatar="assets/zeus_logo.png" if os.path.exists("assets/zeus_logo.png") else None):
-                    st.markdown(msg["content"])
+                    st.markdown(f"**⌬ BAŞ STRATEJİ VE KLİNİK İSTİHBARAT MASASI:**\n\n{msg['content']}")
 
     # Chat Input Handling
-    user_query = st.chat_input("ZEUS AI Uzmanına bir soru sorun, strateji veya öneri isteyin (Örn: Kazakistan için şartlı bayilik nasıl olmalı?)...", key=f"chat_inp{key_suffix}")
+    user_query = st.chat_input("Stratejik direktif, ihale mevzuatı veya pazar istişare sorgusu iletin...")
     active_inquiry = preset_clicked or user_query
 
     if active_inquiry:
         st.session_state[hist_key].append({"role": "user", "content": active_inquiry})
-        with st.spinner("⚡ ZEUS AI MedTech İstihbarat Motoru analiz ediyor..."):
+        with st.spinner("◈ Biyoistihbarat ve klinik mevzuat matrisi taranıyor..."):
             expert_reply = generate_zeus_expert_response(active_inquiry, st.session_state[hist_key])
-            st.session_state[hist_key].append({"role": "assistant", "content": expert_reply})
+        st.session_state[hist_key].append({"role": "assistant", "content": expert_reply})
         st.rerun()
 
     # Bottom Actions Bar
     st.markdown("<div style='height:12px;'></div>", unsafe_allow_html=True)
     c_act1, c_act2, c_act3 = st.columns([1.2, 1.6, 1.2])
     with c_act1:
-        if st.button("🗑️ Sohbeti Sıfırla (New Session)", key=f"btn_reset_chat{key_suffix}", use_container_width=True):
+        if st.button("⎋ Oturumu Temizle (Reset)", key=f"btn_reset_chat{key_suffix}", use_container_width=True):
             st.session_state[hist_key] = [
                 {
                     "role": "assistant",
-                    "content": "👋 **Sohbet sıfırlandı.** ZEUS Bioscience MedTech ve Ticari İstihbarat Uzmanınız hazır. Yeni bir soru veya strateji seçebilirsiniz."
+                    "content": "Yeni oturum başlatıldı. Direktif veya analiz sorgunuzu iletebilirsiniz."
                 }
             ]
             st.rerun()
     with c_act2:
         transcript_lines = [
-            f"# ZEUS Global Market Intelligence — AI İstişare Raporu",
+            f"# ZEUS Global Market Intelligence - Stratejik İstişare Raporu",
             f"**Tarih:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} (TRT)",
-            f"**Danışman Modeli:** {engine_badge}",
+            f"**Statü:** C-Level Executive Directive Matrix",
             "---",
             ""
         ]
         for m in st.session_state[hist_key]:
-            author = "Yönetici" if m["role"] == "user" else "ZEUS AI MedTech Uzmanı"
+            author = "Yönetici (Sireen Khemesh)" if m["role"] == "user" else "ZEUS Baş Strateji Masası"
             transcript_lines.append(f"### {author}\n{m['content']}\n\n---\n")
         
         full_transcript_md = "\n".join(transcript_lines)
         st.download_button(
-            label="📥 İstişare Raporunu İndir (.md)",
+            label="↓ Stratejik Raporu İndir (.md)",
             data=full_transcript_md,
-            file_name=f"ZEUS_AI_Consultation_{datetime.now().strftime('%Y%m%d_%H%M')}.md",
+            file_name=f"ZEUS_Strategic_Consultation_{datetime.now().strftime('%Y%m%d_%H%M')}.md",
             mime="text/markdown",
             key=f"btn_dl_chat{key_suffix}",
             use_container_width=True
         )
     with c_act3:
-        with st.popover("🔑 Gemini API Anahtarı"):
+        with st.popover("⚙ Sistem Çekirdeği (API Ayarı)"):
             st.markdown("<b>Canlı Google Gemini 2.5 Entegrasyonu</b>", unsafe_allow_html=True)
-            st.caption("Kendi Gemini API anahtarınızı girerek sınırsız canlı üretken AI zekasını bağlayabilirsiniz:")
+            st.caption("Kendi Gemini API anahtarınızı girerek canlı analitik modelini bağlayabilirsiniz:")
             user_key_input = st.text_input("GEMINI_API_KEY:", type="password", value=st.session_state.get("custom_gemini_api_key", ""), key=f"inp_key_{key_suffix}")
             if st.button("Kaydet & Bağlan", key=f"btn_save_key_{key_suffix}"):
                 if user_key_input.strip():
@@ -9608,7 +9632,6 @@ def render_zeus_ai_chat_interface(key_suffix=""):
                     st.session_state.pop("custom_gemini_api_key", None)
                     st.info("API Anahtarı temizlendi, yerel motor aktif.")
                     st.rerun()
-
 
 # ZEUS EXECUTIVE MEMO GENERATOR (COGNITIVE CORE FALLBACK & AUGMENTATION)
 # ------------------------------------------------------------------------------
@@ -18337,33 +18360,32 @@ def render_churn_and_partner_performance_view():
 
 
 ZEUS_HUB_SUBVIEWS = {
-    "🌍 1. Pazar İstihbaratı & Ülke Analizi (Market Analysis)": [
-        "🌐 Tekil Ülke 360° (Tüm Bilgiler, Mevzuat & İletişim)",
-        "⚖️ Çoklu Ülke Kıyaslama Masası (Multi-Country Matrix)",
-        "🏛️ Küresel Mevzuat & İhale Rehberi (Global Regulations & Tenders)"
+    "◈ 01 · Pazar İstihbaratı & Ülke Analizi (Market Intel)": [
+        "◈ Tekil Ülke 360° (Mevzuat, Pazar & Klinikler)",
+        "⬡ Çoklu Ülke Kıyaslama Matrisi (Multi-Country Matrix)",
+        "⌖ Küresel Mevzuat & İhale Rehberi (Global Regulations & Tenders)"
     ],
-    "⚔️ 2. Stratejik Karar Merkezi & Uyarılar (Strategy & Alerts)": [
-        "⚔️ Rakip Kıyaslama & RFID Trap Breaker",
-        "🚨 Kritik Atıl Cihaz, Churn & Risk Uyarıları",
-        "📜 İhale Şartname Kilitleri & Sözleşmeler",
-        "🤖 ZEUS AI MedTech Uzmanı & Danışman Masası (AI Chat)"
+    "⬡ 02 · Stratejik Karar Masası & Risk Radarı (Strategy & Alerts)": [
+        "⬡ Rakip Kıyaslama & RFID Trap Breaker",
+        "⚠ Kritik Atıl Cihaz, Churn & Risk Radarı",
+        "📄 İhale Şartname Kilitleri & Sözleşmeler",
+        "◈ Stratejik İstihbarat & Danışman Masası (Executive Terminal)"
     ],
-    "💰 3. Fiyatlandırma, Klinik ROI & AI Tahminleme (Pricing & AI)": [
-        "💰 Fiyatlandırma, 4-Pool Dish & Klinik ROI",
-        "🔮 AI Satış & Sarf Projeksiyonu (2026 Q4 & 2027)",
-        "🤖 ZEUS AI MedTech Uzmanı & Danışman Masası (AI Chat)"
+    "⌬ 03 · Fiyatlandırma & Klinik ROI Projeksiyonu (Pricing & ROI)": [
+        "⌬ Fiyatlandırma, 4-Pool Dish & Klinik ROI",
+        "✦ Biyoistihbarat Satış & Sarf Projeksiyonu (2026 Q4 & 2027)",
+        "◈ Stratejik İstihbarat & Danışman Masası (Executive Terminal)"
     ],
-    "📱 4. B2B İletişim, LinkedIn & Sosyal Medya (Outreach & Media)": [
-        "🤝 Doğrulanmış Karar Verici Bulucu (LinkedIn & E-posta)",
-        "📢 MedTech Sosyal Medya & İçerik Stüdyosu"
+    "⌖ 04 · Kurumsal B2B & Medikal İletişim Ağı (Outreach & Media)": [
+        "⌖ Doğrulanmış Karar Verici Bulucu (LinkedIn & Network)",
+        "📢 MedTech Kurumsal İletişim & İçerik Stüdyosu"
     ],
-    "📊 5. Global Satış Kokpiti & Raporlama (ERP & Reports)": [
-        "🌐 3D Dünya Küresi & Canlı ERP Kokpiti",
-        "📈 Cihaz vs Sarf Gelir Trendleri (2020–2026)",
-        "📑 Partner Karneleri, Raporlar & Excel/CSV İndirme"
+    "⊞ 05 · Global Satış & Konsolide ERP Kokpiti (ERP & Reports)": [
+        "⊞ 3D Dünya Küresi & Canlı ERP Kokpiti",
+        "↗ Cihaz vs Sarf Gelir Trendleri (2020–2026)",
+        "📋 Partner Karneleri, Raporlar & Excel/CSV Veri Masası"
     ]
 }
-
 active_subviews = ZEUS_HUB_SUBVIEWS.get(nav_selection, [
     "🧭 Executive Overview & 3D Globe",
     "🌍 Country 360° Performance & Report",
@@ -18781,26 +18803,26 @@ def render_active_omni_search_hub(query_str):
         if len(matched_cultures) > 0:
             first_c = matched_cultures[0]['country']
             if st.button(f"🌍 Kültür & Sözleşme ({len(matched_cultures)}) ➔", key="btn_jump_cult_hdr", use_container_width=True, type="primary"):
-                st.session_state["main_nav_radio"] = "🌍 1. Pazar İstihbaratı & Ülke Analizi (Market Analysis)"
+                st.session_state["main_nav_radio"] = "◈ 01 · Pazar İstihbaratı & Ülke Analizi (Market Intel)"
                 st.session_state["c360_single_country_select"] = first_c
                 st.session_state["omni_search_input"] = ""
                 st.rerun()
     with jump_cols[1]:
         if len(matched_firms) > 0:
             if st.button(f"🏢 Firmalar & CRM ({len(matched_firms)}) ➔", key="btn_jump_firm_hdr", use_container_width=True):
-                st.session_state["main_nav_radio"] = "📱 4. B2B İletişim, LinkedIn & Sosyal Medya (Outreach & Media)"
+                st.session_state["main_nav_radio"] = "⌖ 04 · Kurumsal B2B & Medikal İletişim Ağı (Outreach & Media)"
                 st.session_state["omni_search_input"] = ""
                 st.rerun()
     with jump_cols[2]:
         if len(matched_tenders) > 0:
             if st.button(f"🏛️ Kamu İhaleleri ({len(matched_tenders)}) ➔", key="btn_jump_tend_hdr", use_container_width=True):
-                st.session_state["main_nav_radio"] = "🌍 1. Pazar İstihbaratı & Ülke Analizi (Market Analysis)"
+                st.session_state["main_nav_radio"] = "◈ 01 · Pazar İstihbaratı & Ülke Analizi (Market Intel)"
                 st.session_state["omni_search_input"] = ""
                 st.rerun()
     with jump_cols[3]:
         if len(matched_products) > 0:
             if st.button(f"⚡ Cihaz & Mevzuat ({len(matched_products)}) ➔", key="btn_jump_prod_hdr", use_container_width=True):
-                st.session_state["main_nav_radio"] = "🌍 1. Pazar İstihbaratı & Ülke Analizi (Market Analysis)"
+                st.session_state["main_nav_radio"] = "◈ 01 · Pazar İstihbaratı & Ülke Analizi (Market Intel)"
                 st.session_state["omni_search_input"] = ""
                 st.rerun()
 
@@ -18852,7 +18874,7 @@ def render_active_omni_search_hub(query_str):
                         </div>
                         """, unsafe_allow_html=True)
                         if st.button(f"👉 Bu Ülkenin Masasına Git ({c_name} — Pazar Analizi & Ülke 360°)", key=f"btn_go_cult_item_{c_name}_{idx_c}"):
-                            st.session_state["main_nav_radio"] = "🌍 1. Pazar İstihbaratı & Ülke Analizi (Market Analysis)"
+                            st.session_state["main_nav_radio"] = "◈ 01 · Pazar İstihbaratı & Ülke Analizi (Market Intel)"
                             st.session_state["c360_single_country_select"] = c_name
                             st.session_state["omni_search_input"] = ""
                             st.rerun()
@@ -18888,7 +18910,7 @@ def render_active_omni_search_hub(query_str):
                         </div>
                         """, unsafe_allow_html=True)
                         if st.button(f"👉 Bu Kurumun Masasına Git ({f_name})", key=f"btn_go_firm_item_{idx_f}"):
-                            st.session_state["main_nav_radio"] = "📱 4. B2B İletişim, LinkedIn & Sosyal Medya (Outreach & Media)"
+                            st.session_state["main_nav_radio"] = "⌖ 04 · Kurumsal B2B & Medikal İletişim Ağı (Outreach & Media)"
                             st.session_state["omni_search_input"] = ""
                             st.rerun()
 
@@ -18923,7 +18945,7 @@ def render_active_omni_search_hub(query_str):
                             st.markdown(f'<a href="{p_url}" target="_blank" style="display:inline-block;background:rgba(0,245,255,0.1);color:#00F5FF;border:1px solid rgba(0,245,255,0.3);padding:3px 8px;border-radius:4px;font-size:11px;text-decoration:none;">🔗 {p_name}</a>', unsafe_allow_html=True)
                         st.markdown("</div></div>", unsafe_allow_html=True)
                         if st.button(f"👉 Bu İhalenin Masasına Git ({t_country})", key=f"btn_go_tender_item_{t_country}_{idx_t}"):
-                            st.session_state["main_nav_radio"] = "🌍 1. Pazar İstihbaratı & Ülke Analizi (Market Analysis)"
+                            st.session_state["main_nav_radio"] = "◈ 01 · Pazar İstihbaratı & Ülke Analizi (Market Intel)"
                             st.session_state["omni_search_input"] = ""
                             st.rerun()
 
@@ -18946,7 +18968,7 @@ def render_active_omni_search_hub(query_str):
                         </div>
                         """, unsafe_allow_html=True)
                         if st.button(f"👉 Bu Ürünün Mevzuat Masasına Git ({pr['title']})", key=f"btn_go_prod_item_{idx_p}"):
-                            st.session_state["main_nav_radio"] = "🌍 1. Pazar İstihbaratı & Ülke Analizi (Market Analysis)"
+                            st.session_state["main_nav_radio"] = "◈ 01 · Pazar İstihbaratı & Ülke Analizi (Market Intel)"
                             st.session_state["omni_search_input"] = ""
                             st.rerun()
 
@@ -19103,16 +19125,16 @@ st.markdown("""
 
 # OFFICIAL TOP STRIP: CE CERTIFIED & ISO 13485 / 14001 / 45001
 st.markdown('''
-<div style="background: #0F172A; border: 1px solid rgba(226, 232, 240, 0.10); border-radius: 8px; padding: 6px 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;">
+<div style="background: rgba(15, 23, 42, 0.70); backdrop-filter: blur(16px); border: 1px solid rgba(226, 232, 240, 0.12); box-shadow: 0 4px 20px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08); border-radius: 8px; padding: 7px 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
     <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-        <span style="font-size:10px;font-weight:700;color:#94A3B8;letter-spacing:0.5px;">🏛️ RESMİ KALİTE SERTİFİKASYONLARI:</span>
-        <span style="background:rgba(12,92,171,0.18);border:1px solid rgba(12,92,171,0.50);color:#FAFAFA;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:600;">🇪🇺 CE Certified (Class IIa)</span>
-        <span style="background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.40);color:#10B981;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:600;">🎖️ ISO 13485:2016</span>
-        <span style="background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.40);color:#F59E0B;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:600;">🌱 ISO 14001:2015</span>
-        <span style="background:rgba(148,163,184,0.15);border:1px solid rgba(148,163,184,0.40);color:#CBD5E1;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:600;">⚕️ ISO 45001:2018</span>
+        <span style="font-size:10px;font-weight:700;color:#94A3B8;letter-spacing:0.08em;text-transform:uppercase;">KALİTE AKREDİTASYONU:</span>
+        <span style="background:rgba(12,92,171,0.22);border:1px solid rgba(56,189,248,0.40);color:#FAFAFA;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:600;font-family:'IBM Plex Mono',monospace;">CE MDR · Class IIa</span>
+        <span style="background:rgba(16,185,129,0.18);border:1px solid rgba(16,185,129,0.40);color:#10B981;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:600;font-family:'IBM Plex Mono',monospace;">ISO 13485:2016</span>
+        <span style="background:rgba(245,158,11,0.18);border:1px solid rgba(245,158,11,0.40);color:#F59E0B;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:600;font-family:'IBM Plex Mono',monospace;">ISO 14001:2015</span>
+        <span style="background:rgba(99,102,241,0.18);border:1px solid rgba(99,102,241,0.40);color:#A5B4FC;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:600;font-family:'IBM Plex Mono',monospace;">ISO 45001:2018</span>
     </div>
-    <div style="font-size:10px;color:#94A3B8;font-weight:500;">
-        ⚡ <b style="color:#FAFAFA;">Elektriksel Oosit Aktivasyonu (AOA)</b> · <span style="color:#10B981;font-weight:600;">Sıfır Termal Hasar (Lazer İçermez)</span>
+    <div style="font-size:10.5px;color:#CBD5E1;font-weight:500;">
+        <span style="color:#38BDF8;font-weight:600;">Elektriksel Oosit Aktivasyonu (AOA)</span> · <span style="color:#10B981;font-weight:600;">Sıfır Termal / Mekanik Hasar</span>
     </div>
 </div>
 ''', unsafe_allow_html=True)
@@ -19140,7 +19162,7 @@ with st.expander("🎬 ZEUS ZGMI 45 Saniyelik Canlı Video Simülasyonu & Strate
         st.info("Video simülasyon bileşeni hazırlanıyor...")
 
 # OMNIPRESENT ZEUS AI COPILOT CHAT EXPANDER
-with st.expander("🤖 ZEUS AI MedTech Copilot — Canlı İstişare & Danışman Masası (Hızlı Görünüm)", expanded=False):
+with st.expander("◈ ZEUS Biyoistihbarat & Stratejik Danışman Masası (Terminal Görünümü)", expanded=False):
     render_zeus_ai_chat_interface(key_suffix="_quick_dock")
 
 with st.container(key="zgmi_top_control_dock"):
@@ -19200,7 +19222,7 @@ if not active_view:
 if omni_search_q and omni_search_q.strip():
     render_active_omni_search_hub(omni_search_q.strip())
 
-if active_view in ["🌐 3D Dünya Küresi & Canlı ERP Kokpiti", "🌐 3D Dünya Küresi & ERP Satışları", "🌐 Executive Overview & 3D Globe"]:
+if active_view in ["⊞ 3D Dünya Küresi & Canlı ERP Kokpiti", "🌐 3D Dünya Küresi & Canlı ERP Kokpiti", "🌐 3D Dünya Küresi & ERP Satışları", "🌐 Executive Overview & 3D Globe"]:
     # Header Banner
     col_h1, col_h2 = st.columns([2.5, 1.5])
     with col_h1:
@@ -20997,13 +21019,14 @@ if active_view in ["🌐 3D Dünya Küresi & Canlı ERP Kokpiti", "🌐 3D Düny
 
 
 elif active_view in [
+    "◈ Stratejik İstihbarat & Danışman Masası (Executive Terminal)",
     "🤖 ZEUS AI MedTech Uzmanı & Danışman Masası (AI Chat)",
     "💬 Canlı AI MedTech Uzman Sohbeti & İstişare Masası",
     "🤖 Yapay Zeka Stratejik Danışman (AI Copilot)"
 ]:
     render_zeus_ai_chat_interface()
 
-elif active_view in ["🔮 AI Satış & Sarf Projeksiyonu (2026 Q4 & 2027)", "🔮 AI Intelligence & Forecasting"]:
+elif active_view in ["✦ Biyoistihbarat Satış & Sarf Projeksiyonu (2026 Q4 & 2027)", "🔮 AI Satış & Sarf Projeksiyonu (2026 Q4 & 2027)", "🔮 AI Intelligence & Forecasting"]:
     st.title("AI Commercial Intelligence & Predictive Analytics")
     st.caption("Yapay zeka ve makine öğrenmesi destekli kurumsal satış projeksiyonu, anomali tespiti ve pazar optimizasyonu.")
 
@@ -22951,7 +22974,7 @@ ZEUS Bioscience Scientific Affairs""",
 # 5. VIEW: DISTRIBUTORS & CRM
 # ==============================================================================
 
-elif active_view in ["🤝 Doğrulanmış Karar Verici Bulucu (LinkedIn & E-posta)", "🤝 Karar Verici Bulucu", "🤝 B2B Outreach & Decision Maker"]:
+elif active_view in ["⌖ Doğrulanmış Karar Verici Bulucu (LinkedIn & Network)", "🤝 Doğrulanmış Karar Verici Bulucu (LinkedIn & E-posta)", "🤝 Karar Verici Bulucu", "🤝 B2B Outreach & Decision Maker"]:
     render_decision_maker_finder_hub(country_df)
 
 elif active_view in ["🤝 Yetkili Distribütör Karneleri & CRM", "🤝 Distributors & CRM"]:
@@ -23284,7 +23307,7 @@ elif active_view in ["🤝 Yetkili Distribütör Karneleri & CRM", "🤝 Distrib
                 st.dataframe(disp_zero_dev, use_container_width=True, hide_index=True)
                 st.caption("ℹ️ Acıbadem, CMC, Halil Ruso, Medipolitan, Seda Erdem ve Bisan'a yapılan $0 bedelli cihaz sevkleri klinik konsinye statüsünde izlenmektedir.")
 
-elif active_view in ["📜 İhale Şartname Kilitleri & Sözleşmeler", "📜 Sözleşme Hükümleri & Hukuki Şartname", "📜 Agreements & Compliance"]:
+elif active_view in ["📄 İhale Şartname Kilitleri & Sözleşmeler", "📜 İhale Şartname Kilitleri & Sözleşmeler", "📜 Sözleşme Hükümleri & Hukuki Şartname", "📜 Agreements & Compliance"]:
     ihale_subtab1, ihale_subtab2 = st.tabs([
         "🏛️ 1. Küresel Kamu İhaleleri, Şartnameler & Canlı Portallar (Tenders Hub)",
         "📜 2. Distribütörlük Sözleşmeleri, LOA & Hukuki Belgeler (Agreements & LOA)"
@@ -23552,7 +23575,7 @@ elif active_view in ["📜 İhale Şartname Kilitleri & Sözleşmeler", "📜 S�
 # ==============================================================================
 # 7. VIEW: SALES & PRODUCT ANALYTICS
 # ==============================================================================
-elif active_view in ["📈 Cihaz vs Sarf Gelir Trendleri (2020–2026)", "📊 Cihaz vs Sarf Gelir Trendleri", "📊 Sales & Product Analytics"]:
+elif active_view in ["↗ Cihaz vs Sarf Gelir Trendleri (2020–2026)", "📈 Cihaz vs Sarf Gelir Trendleri (2020–2026)", "📊 Cihaz vs Sarf Gelir Trendleri", "📊 Sales & Product Analytics"]:
     st.title("Multi-Dimensional Sales & Product Analytics")
     st.caption("Excel satış veri tabanındaki (1,280 fatura satırı) doğrulanmış cihaz/sarf dökümleri, ürün bazlı hasılat ve distribütör performans analitiği.")
 
@@ -24600,7 +24623,7 @@ elif active_view in ["📈 Cihaz vs Sarf Gelir Trendleri (2020–2026)", "📊 C
                 'Durum': 'Aktif' if d.get('status') == 'active' else 'Pasif'
             })
         st.dataframe(pd.DataFrame(all_table), use_container_width=True, hide_index=True)
-elif active_view in ["⚖️ Çoklu Ülke Kıyaslama Masası (Multi-Country Matrix)", "⚖️ Çok Boyutlu 22-Metrik Kıyaslama", "⚖️ Market Intelligence & Compare"]:
+elif active_view in ["⬡ Çoklu Ülke Kıyaslama Matrisi (Multi-Country Matrix)", "⚖️ Çoklu Ülke Kıyaslama Masası (Multi-Country Matrix)", "⚖️ Çok Boyutlu 22-Metrik Kıyaslama", "⚖️ Market Intelligence & Compare"]:
     st.title("Global IVF Market Intelligence & Country Comparison")
     st.caption("Resmi Dünya Bankası (WDI 2023/2024) ve uluslararası ESHRE/CDC tüp bebek kayıtlarına dayalı çok boyutlu pazar, ekonomik güç ve klinik teknoloji kıyaslama merkezi.")
 
@@ -28023,7 +28046,7 @@ Cihaz, tüp bebek (IVF/ICSI) laboratuvarlarında Total Döllenme Başarısızlı
 # ==============================================================================
 # VIEW: COUNTRY 360° PERFORMANCE & INTELLIGENCE REPORT
 # ==============================================================================
-elif active_view in ["🌐 Tekil Ülke 360° (Tüm Bilgiler, Mevzuat & İletişim)", "🌐 Tekil Ülke 360° (Tüm Bilgiler, Mevzuat, İhale & İletişim)", "🌍 Ülke 360° & Müşteri Radarı", "🌍 Country 360° Performance & Report"]:
+elif active_view in ["◈ Tekil Ülke 360° (Mevzuat, Pazar & Klinikler)", "🌐 Tekil Ülke 360° (Tüm Bilgiler, Mevzuat & İletişim)", "🌐 Tekil Ülke 360° (Tüm Bilgiler, Mevzuat, İhale & İletişim)", "🌍 Ülke 360° & Müşteri Radarı", "🌍 Country 360° Performance & Report"]:
     st.title("🌍 Country 360° Performance & Intelligence Dossier")
     st.caption("Tek ekranda bütünleşik ülke karnesi: Gerçekleşen satışlar ve filo büyüklüğü, makroekonomi, gümrük GTİP ve ithalat mevzuatı, yeni IVF & PGT biyoetik kuralları, iskonto-tahmin matrisleri, 5 kişilik uzman heyeti görüşleri ve satış stratejisi.")
 
@@ -29339,7 +29362,7 @@ SERTİFİKASYON: CE Device Certified (CE Sertifikalı Class IIa)
 # ==============================================================================
 # 9. VIEW: PRICING & DISCOUNT CALCULATOR
 # ==============================================================================
-elif active_view in ["💰 Fiyatlandırma, 4-Pool Dish & Klinik ROI", "💰 Pricing & Discount Calculator"]:
+elif active_view in ["⌬ Fiyatlandırma, 4-Pool Dish & Klinik ROI", "💰 Fiyatlandırma, 4-Pool Dish & Klinik ROI", "💰 Pricing & Discount Calculator"]:
     st.title("Commercial Discount & Margin Impact Calculator")
     st.caption("Çok Boyutlu Fiyatlandırma ve İskonto Karar Motoru: Ülke GSYİH (GDP), Yaşam Standardı, Ulusal IVF Destek Rejimi, AI Algoritmik Analitiği ve Uzman Görüşü / Bilgi Bankası (Knowledge Base) ile sentezlenmiş stratejik karar merkezi.")
 
@@ -30195,6 +30218,7 @@ elif active_view in ["💰 Fiyatlandırma, 4-Pool Dish & Klinik ROI", "💰 Pric
 # 10. VIEW: RISK & SCENARIO SIMULATOR
 # ==============================================================================
 elif active_view in [
+    "⚠ Kritik Atıl Cihaz, Churn & Risk Radarı",
     "🚨 Kritik Atıl Cihaz, Churn & Risk Uyarıları",
     "🚨 Atıl Cihaz, Churn & Re-Aktivasyon",
     "🔍 Risk & Jeopolitik Senaryolar",
@@ -30210,7 +30234,7 @@ elif active_view in [
     with al_tab2:
         render_risk_scenario_simulator_view()
 
-elif active_view in ["⚔️ Rakip Kıyaslama & RFID Trap Breaker", "⚔️ Stratejik Karar Masası (RFID Trap Breaker)", "⚖️ Strategic Decision Center"]:
+elif active_view in ["⬡ Rakip Kıyaslama & RFID Trap Breaker", "⚔️ Rakip Kıyaslama & RFID Trap Breaker", "⚔️ Stratejik Karar Masası (RFID Trap Breaker)", "⚖️ Strategic Decision Center"]:
     st.title("Strategic Decision Center & Executive Board Room")
     st.caption("Configurable weighted multi-criteria assessment framework for critical corporate authorizations, competitor displacement and commercial expansion.")
 
@@ -31295,7 +31319,7 @@ Web: www.zeusbioscience.com | Email: clinical@zeusbioscience.com"""
 # ==============================================================================
 # 13. VIEW: EXECUTIVE REPORTS & EXPORT
 # ==============================================================================
-elif active_view in ["📑 Partner Karneleri, Raporlar & Excel/CSV İndirme", "📑 Yönetici Raporları & Veri İndirme", "📄 Executive Reports & Export"]:
+elif active_view in ["📋 Partner Karneleri, Raporlar & Excel/CSV Veri Masası", "📑 Partner Karneleri, Raporlar & Excel/CSV İndirme", "📑 Yönetici Raporları & Veri İndirme", "📄 Executive Reports & Export"]:
     st.title("Executive Governance Reports & Export Center")
     st.caption("Generate formal distribution audit briefings and export certified commercial datasets.")
 
@@ -31515,10 +31539,11 @@ elif active_view in ["📑 Partner Karneleri, Raporlar & Excel/CSV İndirme", "�
 # ==============================================================================
 # 14. VIEW: GLOBAL SOCIAL MEDIA & B2B MARKETING
 # ==============================================================================
-elif active_view in ["📢 MedTech Sosyal Medya & İçerik Stüdyosu", "📱 MedTech Sosyal Medya & B2B İletişim", "📱 Global Social Media & B2B Marketing"]:
+elif active_view in ["📢 MedTech Kurumsal İletişim & İçerik Stüdyosu", "📢 MedTech Sosyal Medya & İçerik Stüdyosu", "📱 MedTech Sosyal Medya & B2B İletişim", "📱 Global Social Media & B2B Marketing"]:
     render_social_media_hub()
 
 elif active_view in [
+    "⌖ Küresel Mevzuat & İhale Rehberi (Global Regulations & Tenders)",
     "🏛️ Küresel Mevzuat & İhale Rehberi (Global Regulations & Tenders)",
     "🏛️ Kamu İhaleleri & Şartnameler",
     "🏛️ Küresel & Kamu İhaleleri Masası (Tenders Hub)",
