@@ -47,53 +47,63 @@ def get_system_datetime_display():
     months_tr = ['', 'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık']
     return f"{now_dt.day} {months_tr[now_dt.month]} {now_dt.year} • {now_dt.strftime('%H:%M:%S')}"
 
-# Custom Styling (ZGMI Executive Theme)
+# Custom Styling (ZGMI Enterprise Theme - .agent/skills/enterprise/SKILL.md)
 st.markdown("""
 <style>
-    /* Google Fonts: Strict Rule B1 Compliance (Manrope + Geist Mono) */
-    @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600;700&display=swap');
+    /* Google Fonts: Strict Enterprise Compliance (IBM Plex Sans + IBM Plex Mono) */
+    @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
     
-    /* Design System Tokens (Rules B1, B2, B3, B4, B7) */
+    /* Design System Tokens (.agent/skills/enterprise/SKILL.md) */
     :root {
-        --zg-font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-        --zg-font-mono: 'Geist Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+        --zg-font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        --zg-font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
         
-        /* Fixed 12-Step Spacing Tokens (Rule B2) */
+        /* 8pt Baseline Grid Spacing Tokens (SKILL.md sourceScale: "8pt baseline grid") */
         --zg-space-0: 0px;
-        --zg-space-1: 2px;
-        --zg-space-2: 4px;
-        --zg-space-3: 8px;
-        --zg-space-4: 12px;
-        --zg-space-5: 16px;
-        --zg-space-6: 24px;
-        --zg-space-7: 32px;
-        --zg-space-8: 40px;
-        --zg-space-9: 48px;
-        --zg-space-10: 64px;
+        --zg-space-xs: 4px;
+        --zg-space-sm: 8px;   /* sm: 8px */
+        --zg-space-md: 16px;  /* md: 16px */
+        --zg-space-lg: 24px;
+        --zg-space-xl: 32px;
+        --zg-space-2xl: 40px;
         
-        /* High-Contrast Flat Surfaces (Rule B4) */
-        --zg-surface-base: #070B14;
-        --zg-surface-card: #0E1626;
-        --zg-surface-elevated: #141E34;
-        --zg-surface-hover: #1A2640;
+        /* Enterprise Obsidian & Navy Glass Surfaces (SKILL.md surface: "#09090b") */
+        --zg-surface-base: #09090B;
+        --zg-surface-card: #0F172A;
+        --zg-surface-elevated: #131E32;
+        --zg-surface-hover: #1A2844;
         
-        /* Full Perimeter Borders (Rule B4) */
-        --zg-border-subtle: 1px solid rgba(0, 245, 255, 0.16);
-        --zg-border-medium: 1px solid rgba(0, 245, 255, 0.28);
-        --zg-border-active: 1px solid #00F5FF;
+        /* Enterprise Accents & Identity Hierarchy (SKILL.md colors) */
+        --zg-primary: #0C5CAB;          /* primary: "#0C5CAB" */
+        --zg-primary-dark: #0A4A8A;     /* secondary: "#0a4a8a" */
+        --zg-primary-light: #1E70BF;
+        --zg-success: #10B981;          /* success: "#10b981" */
+        --zg-warning: #F59E0B;          /* warning: "#f59e0b" */
+        --zg-danger: #EF4444;           /* danger: "#ef4444" */
+        
+        /* Metallic Silver Palette (SKILL.md text: "#fafafa") */
+        --zg-silver-pure: #FAFAFA;
+        --zg-silver-text: #E2E8F0;
+        --zg-silver-muted: #94A3B8;
+        --zg-silver-dim: #64748B;
+        
+        /* Enterprise Perimeter Borders */
+        --zg-border-subtle: 1px solid rgba(226, 232, 240, 0.10);
+        --zg-border-medium: 1px solid rgba(12, 92, 171, 0.35);
+        --zg-border-active: 1px solid #0C5CAB;
         --zg-border-muted: 1px solid rgba(255, 255, 255, 0.08);
         
-        /* Concentric Nested Radii (Rule B3: r_inner = r_outer - gap) */
-        --zg-radius-xs: 4px;
-        --zg-radius-sm: 6px;
-        --zg-radius-md: 8px;
-        --zg-radius-lg: 12px;
-        --zg-radius-xl: 16px;
+        /* Enterprise Rounded Tokens (SKILL.md rounded: sm: 4px, md: 8px) */
+        --zg-radius-xs: 2px;
+        --zg-radius-sm: 4px;   /* rounded.sm: 4px */
+        --zg-radius-md: 8px;   /* rounded.md: 8px */
+        --zg-radius-lg: 8px;
+        --zg-radius-xl: 12px;
         --zg-radius-full: 9999px;
         
-        /* Weighted Physical Deceleration (Rule B7) */
-        --zg-ease-out: cubic-bezier(0.22, 1, 0.36, 1);
-        --zg-transition: all 300ms cubic-bezier(0.22, 1, 0.36, 1);
+        /* Hardware-Accelerated Deceleration Curves */
+        --zg-ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+        --zg-transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     /* Global Smooth Scrolling */
@@ -101,64 +111,70 @@ st.markdown("""
         scroll-behavior: smooth !important;
     }
 
-    /* Global Background & Typography Hygiene (Rule B1) */
+    /* Global Background & Typography Hygiene */
     html, body, [class*="css"], .stApp {
         font-family: var(--zg-font-sans) !important;
         background-color: var(--zg-surface-base) !important;
-        color: #E2E8F0 !important;
+        color: var(--zg-silver-text) !important;
         letter-spacing: -0.01em;
     }
 
-    /* Strict Rule B1: Never use italics anywhere in UI */
+    /* Strict Rule: Never use italics in UI */
     i, em, span, p, div, b, strong, a, label, small, caption {
         font-style: normal !important;
     }
 
-    /* Strict Rule B1: Text-wrap balance for headings & pretty for paragraphs */
+    /* Enterprise Typography Scale: 12/14/16/20/24/32 */
     h1, h2, h3, h4, h5, h6 {
         font-family: var(--zg-font-sans) !important;
         text-wrap: balance !important;
-        color: #FFFFFF !important;
-        letter-spacing: -0.02em !important;
+        color: var(--zg-silver-pure) !important;
+        letter-spacing: -0.015em !important;
         font-weight: 700 !important;
     }
+    h1 { font-size: 2.0rem !important; }
+    h2 { font-size: 1.5rem !important; }
+    h3 { font-size: 1.25rem !important; }
+
     p, [data-testid="stMarkdownContainer"] p {
         font-family: var(--zg-font-sans) !important;
         text-wrap: pretty !important;
         line-height: 1.55 !important;
+        font-size: 0.95rem !important;
     }
 
-    /* Monospace Numeric Rule B1: Geist Mono with Tabular Numbers */
+    /* Monospace Numeric Rule: IBM Plex Mono with Tabular Numbers */
     code, pre, [data-testid="stMetricValue"], .kpi-val, .glass-metric-val, .mono-num {
         font-family: var(--zg-font-mono) !important;
         font-feature-settings: 'tnum' on, 'zero' on !important;
     }
 
-    /* Floating Back-To-Top Tactile Button */
+    /* Floating Back-To-Top Button */
     #btn-back-to-top {
         position: fixed;
         bottom: 24px;
         right: 24px;
         z-index: 999999;
-        background: #00F5FF;
-        color: #070B14 !important;
+        background: var(--zg-primary);
+        color: var(--zg-silver-pure) !important;
         border-radius: var(--zg-radius-full);
-        width: 44px;
-        height: 44px;
+        width: 42px;
+        height: 42px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 18px;
+        font-size: 17px;
         font-weight: 700;
         text-decoration: none !important;
-        box-shadow: 0 4px 18px rgba(0, 245, 255, 0.40);
-        border: 1px solid rgba(255, 255, 255, 0.6);
+        box-shadow: 0 4px 18px rgba(12, 92, 171, 0.45);
+        border: 1px solid rgba(226, 232, 240, 0.20);
         cursor: pointer;
-        transition: transform 300ms var(--zg-ease-out), box-shadow 300ms var(--zg-ease-out);
+        transition: transform 250ms var(--zg-ease-out), box-shadow 250ms var(--zg-ease-out), background 250ms var(--zg-ease-out);
     }
     #btn-back-to-top:hover {
-        transform: translateY(-2px) scale(1.06);
-        box-shadow: 0 8px 24px rgba(0, 245, 255, 0.65);
+        transform: translateY(-2px) scale(1.05);
+        background: var(--zg-primary-dark);
+        box-shadow: 0 8px 24px rgba(12, 92, 171, 0.65);
     }
     #btn-back-to-top:active {
         transform: translateY(0) scale(0.98);
@@ -172,28 +188,28 @@ st.markdown("""
     }
 
     /* ====================================================================== */
-    /* EXECUTIVE SIDEBAR & NAVIGATION (Rule B4 Flat Obsidian Surfaces)         */
+    /* EXECUTIVE SIDEBAR & NAVIGATION (Enterprise Navy Glass)                  */
     /* ====================================================================== */
     [data-testid="stSidebar"] {
         background-color: var(--zg-surface-base) !important;
         background-image: none !important;
         border-right: var(--zg-border-subtle) !important;
-        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.45) !important;
+        box-shadow: 4px 0 24px rgba(0, 0, 0, 0.50) !important;
     }
     [data-testid="stSidebar"] hr {
-        border-color: rgba(0, 245, 255, 0.12) !important;
+        border-color: rgba(226, 232, 240, 0.08) !important;
         margin: 16px 0 !important;
     }
 
-    /* Sidebar Navigation Cards (Strict Rule B4: Full 4-Sided Borders) */
+    /* Sidebar Navigation Cards */
     [data-testid="stSidebar"] [data-testid="stRadio"] > div {
         gap: 8px !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] label {
         background: var(--zg-surface-card) !important;
-        border: var(--zg-border-muted) !important;
+        border: 1px solid rgba(226, 232, 240, 0.08) !important;
         border-radius: var(--zg-radius-md) !important;
-        padding: 10px 14px !important;
+        padding: 9px 12px !important;
         margin: 0 !important;
         transition: var(--zg-transition) !important;
         cursor: pointer !important;
@@ -202,15 +218,15 @@ st.markdown("""
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] label:hover {
         background: var(--zg-surface-elevated) !important;
-        border-color: rgba(0, 245, 255, 0.45) !important;
-        transform: translateX(3px) !important;
-        box-shadow: 0 4px 16px rgba(0, 245, 255, 0.12) !important;
+        border-color: rgba(12, 92, 171, 0.50) !important;
+        transform: translateX(2px) !important;
+        box-shadow: 0 2px 12px rgba(12, 92, 171, 0.15) !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] label[data-checked="true"],
     [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) {
         background: var(--zg-surface-elevated) !important;
         border: var(--zg-border-active) !important;
-        box-shadow: 0 0 20px rgba(0, 245, 255, 0.20), inset 0 0 12px rgba(0, 245, 255, 0.08) !important;
+        box-shadow: 0 0 16px rgba(12, 92, 171, 0.25), inset 0 0 10px rgba(12, 92, 171, 0.10) !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] label p,
     [data-testid="stSidebar"] [data-testid="stRadio"] label span,
@@ -218,14 +234,14 @@ st.markdown("""
         display: block !important;
         visibility: visible !important;
         opacity: 1 !important;
-        font-size: 13.5px !important;
+        font-size: 13px !important;
         font-weight: 500 !important;
-        color: #E2E8F0 !important;
+        color: var(--zg-silver-text) !important;
         letter-spacing: -0.01em !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) p,
     [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) span {
-        color: #00F5FF !important;
+        color: var(--zg-silver-pure) !important;
         font-weight: 600 !important;
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] input[type="radio"],
@@ -238,133 +254,133 @@ st.markdown("""
     }
 
     /* ====================================================================== */
-    /* EXECUTIVE METRIC CARDS (Strict Rule B4: Solid Flat Backgrounds)         */
+    /* COMPACT HIGH-DENSITY KPI CARDS (Enterprise Navy Glass + Metallic Silver)*/
     /* ====================================================================== */
     .kpi-container {
         background: var(--zg-surface-card) !important;
         background-image: none !important;
         border: var(--zg-border-subtle) !important;
-        border-radius: var(--zg-radius-lg) !important;
-        padding: 16px !important;
+        border-radius: var(--zg-radius-md) !important;
+        padding: 12px 14px !important;
         transition: var(--zg-transition) !important;
         box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35) !important;
         min-width: 0 !important;
         overflow: visible !important;
         position: relative !important;
-        min-height: 190px !important;
+        min-height: 120px !important;
         display: flex !important;
         flex-direction: column !important;
         justify-content: space-between !important;
     }
     .kpi-container:hover {
-        transform: translateY(-2px) !important;
-        border-color: rgba(0, 245, 255, 0.50) !important;
-        box-shadow: 0 8px 24px rgba(0, 245, 255, 0.16) !important;
+        transform: translateY(-1px) !important;
+        border-color: rgba(12, 92, 171, 0.50) !important;
+        box-shadow: 0 6px 20px -2px rgba(12, 92, 171, 0.20) !important;
     }
     .kpi-header {
-        font-size: 12px !important;
+        font-size: 11px !important;
         font-weight: 600 !important;
-        color: #94A3B8 !important;
+        color: var(--zg-silver-muted) !important;
         text-transform: uppercase !important;
         letter-spacing: 0.05em !important;
-        margin-bottom: 4px !important;
+        margin-bottom: 2px !important;
         display: block !important;
-        line-height: 1.3 !important;
+        line-height: 1.25 !important;
     }
     .kpi-val {
-        font-size: 24px !important;
+        font-size: 21px !important;
         font-weight: 700 !important;
         font-family: var(--zg-font-mono) !important;
-        color: #FFFFFF !important;
+        color: var(--zg-silver-pure) !important;
         letter-spacing: -0.02em !important;
-        margin-bottom: 4px !important;
+        margin-bottom: 2px !important;
         display: block !important;
         line-height: 1.2 !important;
     }
     .kpi-sub {
-        font-size: 12px !important;
+        font-size: 11px !important;
         font-weight: 500 !important;
         display: block !important;
     }
-    .kpi-pos { color: #10B981 !important; }
-    .kpi-neg { color: #F43F5E !important; }
-    .kpi-neu { color: #F59E0B !important; }
+    .kpi-pos { color: var(--zg-success) !important; }
+    .kpi-neg { color: var(--zg-danger) !important; }
+    .kpi-neu { color: var(--zg-warning) !important; }
 
-    /* Glass Metric Card Grid (Rule B4 Flat Surfaces + Rule B3 Nested Radii) */
+    /* Glass Metric Card Grid */
     .glass-metric-card {
         background: var(--zg-surface-card) !important;
         background-image: none !important;
         border: var(--zg-border-subtle) !important;
-        border-radius: var(--zg-radius-lg) !important;
-        padding: 16px !important;
+        border-radius: var(--zg-radius-md) !important;
+        padding: 12px 14px !important;
         box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35) !important;
         transition: var(--zg-transition) !important;
-        margin-bottom: 12px !important;
-        min-height: 136px !important;
+        margin-bottom: 10px !important;
+        min-height: 110px !important;
         display: flex !important;
         flex-direction: column !important;
         justify-content: space-between !important;
     }
     .glass-metric-card:hover {
-        transform: translateY(-2px) !important;
-        border-color: rgba(0, 245, 255, 0.50) !important;
-        box-shadow: 0 8px 24px rgba(0, 245, 255, 0.16) !important;
+        transform: translateY(-1px) !important;
+        border-color: rgba(12, 92, 171, 0.50) !important;
+        box-shadow: 0 6px 20px -2px rgba(12, 92, 171, 0.20) !important;
     }
     .glass-icon-box {
-        width: 36px;
-        height: 36px;
-        border-radius: var(--zg-radius-md);
+        width: 32px;
+        height: 32px;
+        border-radius: var(--zg-radius-sm);
         background: var(--zg-surface-elevated);
         border: var(--zg-border-subtle);
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        margin-bottom: 8px;
+        margin-bottom: 6px;
     }
     .glass-metric-header {
-        font-size: 12px !important;
+        font-size: 11px !important;
         font-weight: 600 !important;
-        color: #94A3B8 !important;
+        color: var(--zg-silver-muted) !important;
         text-transform: uppercase !important;
         letter-spacing: 0.05em !important;
-        margin-bottom: 4px !important;
+        margin-bottom: 2px !important;
     }
     .glass-metric-val {
-        font-size: 22px !important;
+        font-size: 20px !important;
         font-weight: 700 !important;
         font-family: var(--zg-font-mono) !important;
-        color: #FFFFFF !important;
+        color: var(--zg-silver-pure) !important;
         letter-spacing: -0.02em !important;
         margin-bottom: 2px !important;
         line-height: 1.2 !important;
     }
     .glass-metric-sub {
-        font-size: 12px !important;
+        font-size: 11px !important;
         font-weight: 500 !important;
-        color: #64748B !important;
+        color: var(--zg-silver-dim) !important;
     }
 
-    /* Badges & Status Chips (Rule B3: r_inner = r_outer - gap) */
+    /* Badges & Status Chips (Enterprise Rounded Tokens) */
     .chip {
         display: inline-flex !important;
         align-items: center !important;
         gap: 6px !important;
-        padding: 4px 10px !important;
-        border-radius: var(--zg-radius-full) !important;
-        font-size: 12px !important;
+        padding: 3px 8px !important;
+        border-radius: var(--zg-radius-sm) !important;
+        font-size: 11.5px !important;
         font-weight: 600 !important;
         letter-spacing: 0.02em !important;
         margin-right: 6px !important;
     }
     .chip-ok { background: rgba(16, 185, 129, 0.12) !important; color: #34D399 !important; border: 1px solid rgba(16, 185, 129, 0.3) !important; }
     .chip-wn { background: rgba(245, 158, 11, 0.12) !important; color: #FBBF24 !important; border: 1px solid rgba(245, 158, 11, 0.3) !important; }
-    .chip-err { background: rgba(244, 63, 94, 0.12) !important; color: #FB7185 !important; border: 1px solid rgba(244, 63, 94, 0.3) !important; }
-    .chip-info { background: rgba(0, 245, 255, 0.10) !important; color: #00F5FF !important; border: 1px solid rgba(0, 245, 255, 0.28) !important; }
+    .chip-err { background: rgba(239, 68, 68, 0.12) !important; color: #F87171 !important; border: 1px solid rgba(239, 68, 68, 0.3) !important; }
+    .chip-info { background: rgba(12, 92, 171, 0.15) !important; color: #60A5FA !important; border: 1px solid rgba(12, 92, 171, 0.40) !important; }
 
-    /* Alert Banner (Rule B4: Full 4-Sided Perimeter Border, No border-left) */
+    /* Alert Banner */
     .alert-card {
-        border-radius: var(--zg-radius-lg) !important;
-        padding: 16px !important;
+        border-radius: var(--zg-radius-md) !important;
+        padding: 14px 16px !important;
         margin-bottom: 12px !important;
         background: var(--zg-surface-card) !important;
         background-image: none !important;
@@ -373,7 +389,7 @@ st.markdown("""
     }
 
     /* ====================================================================== */
-    /* STANDARDIZED BUTTONS (Rule B2: 8px x 12px Padding, 14px Font, Bold 600)*/
+    /* STANDARDIZED BUTTONS (Enterprise Rounded: 4px, Padding 8px x 16px)     */
     /* ====================================================================== */
     .stButton > button,
     button[kind="secondary"],
@@ -382,24 +398,24 @@ st.markdown("""
     div[data-testid="stButton"] button {
         background: var(--zg-surface-card) !important;
         background-image: none !important;
-        border: var(--zg-border-medium) !important;
-        border-radius: var(--zg-radius-md) !important;
-        color: #F1F5F9 !important;
-        font-weight: 600 !important;
-        font-size: 14px !important;
+        border: 1px solid rgba(226, 232, 240, 0.12) !important;
+        border-radius: var(--zg-radius-sm) !important;
+        color: var(--zg-silver-text) !important;
+        font-weight: 500 !important;
+        font-size: 13.5px !important;
         letter-spacing: -0.01em !important;
-        padding: 8px 14px !important;
+        padding: 7px 14px !important;
         transition: var(--zg-transition) !important;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important;
         cursor: pointer !important;
     }
     .stButton > button:hover,
     button[kind="secondary"]:hover,
     div[data-testid="stButton"] button:hover {
         background: var(--zg-surface-elevated) !important;
-        border-color: #00F5FF !important;
-        color: #00F5FF !important;
-        box-shadow: 0 0 16px rgba(0, 245, 255, 0.30) !important;
+        border-color: rgba(12, 92, 171, 0.60) !important;
+        color: var(--zg-silver-pure) !important;
+        box-shadow: 0 2px 12px rgba(12, 92, 171, 0.25) !important;
         transform: translateY(-1px) !important;
     }
     .stButton > button:active,
@@ -408,29 +424,29 @@ st.markdown("""
         transform: scale(0.98) !important;
     }
 
-    /* Primary Buttons (Rule B2 / B4 Contrast) */
+    /* Primary Buttons (Enterprise Sapphire: #0C5CAB) */
     .stButton > button[kind="primary"],
     button[kind="primary"],
     button[data-testid="baseButton-primary"],
     button[data-testid="stBaseButton-primary"],
     div[data-testid="stButton"] button[kind="primary"] {
-        background: #00F5FF !important;
+        background: var(--zg-primary) !important;
         background-image: none !important;
-        border: 1px solid #00F5FF !important;
-        border-radius: var(--zg-radius-md) !important;
-        color: #070B14 !important;
-        font-weight: 700 !important;
-        font-size: 14px !important;
+        border: 1px solid var(--zg-primary) !important;
+        border-radius: var(--zg-radius-sm) !important;
+        color: var(--zg-silver-pure) !important;
+        font-weight: 600 !important;
+        font-size: 13.5px !important;
         letter-spacing: -0.01em !important;
-        padding: 8px 16px !important;
-        box-shadow: 0 4px 18px rgba(0, 245, 255, 0.40) !important;
+        padding: 7px 16px !important;
+        box-shadow: 0 2px 10px rgba(12, 92, 171, 0.35) !important;
         transition: var(--zg-transition) !important;
     }
     .stButton > button[kind="primary"]:hover,
     button[kind="primary"]:hover {
-        background: #38BDF8 !important;
-        border-color: #38BDF8 !important;
-        box-shadow: 0 6px 24px rgba(0, 245, 255, 0.60) !important;
+        background: var(--zg-primary-dark) !important;
+        border-color: var(--zg-primary-dark) !important;
+        box-shadow: 0 4px 18px rgba(12, 92, 171, 0.50) !important;
         transform: translateY(-1px) !important;
     }
     .stButton > button[kind="primary"]:active,
@@ -438,12 +454,12 @@ st.markdown("""
         transform: scale(0.98) !important;
     }
 
-    /* Executive Forms (Rule B4 Flat Obsidian Surface) */
+    /* Executive Forms */
     [data-testid="stForm"] {
         background: var(--zg-surface-card) !important;
         border: var(--zg-border-subtle) !important;
-        border-radius: var(--zg-radius-lg) !important;
-        padding: 24px !important;
+        border-radius: var(--zg-radius-md) !important;
+        padding: 20px !important;
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.40) !important;
     }
 
@@ -452,48 +468,78 @@ st.markdown("""
     div[data-baseweb="input"] > div {
         background: var(--zg-surface-elevated) !important;
         border: var(--zg-border-subtle) !important;
-        border-radius: var(--zg-radius-md) !important;
-        color: #F8FAFC !important;
+        border-radius: var(--zg-radius-sm) !important;
+        color: var(--zg-silver-pure) !important;
         transition: var(--zg-transition) !important;
     }
     div[data-baseweb="select"] > div:hover,
     div[data-baseweb="input"] > div:hover {
-        border-color: rgba(0, 245, 255, 0.50) !important;
+        border-color: rgba(12, 92, 171, 0.50) !important;
     }
     div[data-baseweb="select"] > div:focus-within,
     div[data-baseweb="input"] > div:focus-within {
-        border-color: #00F5FF !important;
-        box-shadow: 0 0 16px rgba(0, 245, 255, 0.30) !important;
+        border-color: var(--zg-primary) !important;
+        box-shadow: 0 0 14px rgba(12, 92, 171, 0.30) !important;
     }
 
-    /* Executive Tabs (Rule B4 Flat Surfaces) */
+    /* Executive Tabs */
     .stTabs [data-baseweb="tab-list"] {
         gap: 6px !important;
         background: var(--zg-surface-card) !important;
-        padding: 6px !important;
-        border-radius: var(--zg-radius-lg) !important;
+        padding: 5px !important;
+        border-radius: var(--zg-radius-md) !important;
         border: var(--zg-border-subtle) !important;
     }
     .stTabs [data-baseweb="tab"] {
-        border-radius: var(--zg-radius-md) !important;
-        padding: 8px 16px !important;
-        color: #94A3B8 !important;
-        font-size: 14px !important;
+        border-radius: var(--zg-radius-sm) !important;
+        padding: 6px 14px !important;
+        color: var(--zg-silver-muted) !important;
+        font-size: 13.5px !important;
         font-weight: 500 !important;
         background: transparent !important;
         border: 1px solid transparent !important;
         transition: var(--zg-transition) !important;
     }
     .stTabs [data-baseweb="tab"]:hover {
-        color: #E2E8F0 !important;
+        color: var(--zg-silver-text) !important;
         background: var(--zg-surface-elevated) !important;
     }
     .stTabs [aria-selected="true"] {
         background: var(--zg-surface-elevated) !important;
         border: var(--zg-border-active) !important;
-        color: #00F5FF !important;
+        color: var(--zg-silver-pure) !important;
         font-weight: 600 !important;
-        box-shadow: 0 0 14px rgba(0, 245, 255, 0.16) !important;
+        box-shadow: 0 0 12px rgba(12, 92, 171, 0.20) !important;
+    }
+
+    /* Interactive AI Chat Elements */
+    [data-testid="stChatMessage"] {
+        background: var(--zg-surface-card) !important;
+        border: var(--zg-border-subtle) !important;
+        border-radius: var(--zg-radius-md) !important;
+        padding: 12px 16px !important;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.25) !important;
+        margin-bottom: 8px !important;
+    }
+    div[data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarAssistant"]) {
+        background: #0F172A !important;
+        border: 1px solid rgba(12, 92, 171, 0.35) !important;
+        border-left: 3px solid #0C5CAB !important;
+    }
+    div[data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarUser"]) {
+        background: #131E32 !important;
+        border: 1px solid rgba(226, 232, 240, 0.12) !important;
+    }
+    [data-testid="stChatInput"] textarea {
+        background: var(--zg-surface-elevated) !important;
+        border: var(--zg-border-subtle) !important;
+        border-radius: var(--zg-radius-md) !important;
+        color: var(--zg-silver-pure) !important;
+        font-family: var(--zg-font-sans) !important;
+    }
+    [data-testid="stChatInput"] textarea:focus {
+        border-color: var(--zg-primary) !important;
+        box-shadow: 0 0 16px rgba(12, 92, 171, 0.35) !important;
     }
 
     /* Custom Sleek Scrollbar */
@@ -505,18 +551,18 @@ st.markdown("""
         background: var(--zg-surface-base);
     }
     ::-webkit-scrollbar-thumb {
-        background: rgba(0, 245, 255, 0.22);
+        background: rgba(12, 92, 171, 0.35);
         border-radius: var(--zg-radius-full);
     }
     ::-webkit-scrollbar-thumb:hover {
-        background: rgba(0, 245, 255, 0.50);
+        background: rgba(12, 92, 171, 0.65);
     }
 
     /* Dataframes & Tables */
     [data-testid="stDataFrame"], [data-testid="stTable"] {
         background: var(--zg-surface-card) !important;
         border: var(--zg-border-subtle) !important;
-        border-radius: var(--zg-radius-lg) !important;
+        border-radius: var(--zg-radius-md) !important;
         padding: 4px !important;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.30) !important;
     }
@@ -534,8 +580,8 @@ st.markdown("""
             max-width: 320px !important;
         }
         .stButton > button, div[data-testid="stButton"] button {
-            min-height: 44px !important;
-            font-size: 14px !important;
+            min-height: 40px !important;
+            font-size: 13.5px !important;
         }
     }
 </style>
@@ -8824,67 +8870,14 @@ def render_login_gate():
         col_l, col_m, col_r = st.columns([1, 1.8, 1])
         with col_m:
             st.markdown("""
-            <div style="text-align: center; margin-top: 36px; margin-bottom: 16px;">
-                <div style="display: inline-block; padding: 6px 16px; background: #141E34; border: 1px solid rgba(0, 245, 255, 0.28); border-radius: 9999px; margin-bottom: 16px; box-shadow: 0 4px 14px rgba(0,0,0,0.3);">
-                    <span style="font-size: 12px; font-weight: 700; color: #00F5FF; letter-spacing: 0.08em; text-transform: uppercase;">?? ZEUS BIOSCIENCE SECURE GATEWAY</span>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-            
-            # Display Logo
-            if os.path.exists("assets/zeus_logo_white.png"):
-                st.image("assets/zeus_logo_white.png", use_container_width=True)
-            elif os.path.exists("zeus_logo_white.png"):
-                st.image("zeus_logo_white.png", use_container_width=True)
-
-            st.markdown("""
-            <div style="text-align: center; margin-top: 14px; margin-bottom: 24px;">
-                <h2 style="color: #FFFFFF; font-weight: 700; font-size: 24px; margin-bottom: 6px; letter-spacing: -0.02em; text-wrap: balance;">Global Market Intelligence (ZGMI)</h2>
-                <p style="color: #94A3B8; font-size: 14px; margin: 0; line-height: 1.5; text-wrap: pretty;">L?tfen panele eri?mek i?in kurumsal kullan?c? ad? ve ?ifrenizi giriniz.</p>
-            </div>
-            """, unsafe_allow_html=True)
-
-            with st.form("zgmi_login_form", clear_on_submit=False):
-                inp_user = st.text_input("Kullan?c? Ad? (Username):", placeholder="Kurumsal kullan?c? ad?n?z? giriniz", key="inp_login_user")
-                inp_pass = st.text_input("?ifre (Password):", type="password", placeholder="????????", key="inp_login_pass")
-                st.markdown("<div style='height: 8px;'></div>", unsafe_allow_html=True)
-                login_clicked = st.form_submit_button("?? G?venli Giri? Yap (Sign In)", use_container_width=True)
-
-            if login_clicked:
-                u_clean = inp_user.strip().lower()
-                p_clean = inp_pass.strip()
-                if u_clean in USER_CREDENTIALS and p_clean in USER_CREDENTIALS[u_clean]["passwords"]:
-                    st.session_state["authenticated"] = True
-                    st.session_state["auth_user"] = u_clean
-                    st.session_state["auth_name"] = USER_CREDENTIALS[u_clean]["name"]
-                    st.session_state["auth_role"] = USER_CREDENTIALS[u_clean]["role"]
-                    st.session_state["auth_badge"] = USER_CREDENTIALS[u_clean]["badge"]
-                    st.success("? Giri? do?ruland?! Y?nlendiriliyorsunuz...")
-                    st.rerun()
-                else:
-                    st.error("? Hatal? kullan?c? ad? veya ?ifre! L?tfen bilgilerinizi kontrol ediniz.")
-
-            sys_dt_login = get_system_datetime_display()
-            st.markdown(f"""
-            <div style="text-align: center; margin-top: 16px; margin-bottom: 8px;">
-                <span style="display: inline-flex; align-items: center; gap: 8px; background: #0E1626; border: 1px solid rgba(0, 245, 255, 0.25); padding: 6px 16px; border-radius: 9999px; font-size: 12px; color: #CBD5E1; font-family: 'Geist Mono', monospace;">
-                    <span style="color: #94A3B8;">?? Canl? Sistem Zaman?:</span>
-                    <b style="color: #00F5FF;">{sys_dt_login}</b>
-                </span>
-            </div>
-            <div style="text-align: center; margin-top: 8px; font-size: 12px; color: #64748B;">
-                <span style="display: inline-flex; align-items: center; gap: 6px; background: #0E1626; border: 1px solid rgba(255, 255, 255, 0.08); padding: 6px 16px; border-radius: 9999px;">
-                    <span style="color: #00F5FF;">???</span> 256-Bit SSL U?tan Uca ?ifreli Kurumsal Yetkili Oturum
-                </span>
-            </div>
-            <div style="text-align: center; margin-top: 24px; padding-top: 18px; border-top: 1px solid rgba(255, 255, 255, 0.08); font-family: 'Manrope', system-ui, -apple-system, sans-serif;">
-                <div style="font-size: 13px; font-weight: 600; color: #94A3B8; letter-spacing: 0.03em; margin-bottom: 4px;">
-                    Conceived & Directed by <span style="color: #00F5FF; font-weight: 700; text-shadow: 0 0 12px rgba(0, 245, 255, 0.35);">Sireen Khemesh</span>
-                </div>
-                <div style="font-size: 12px; color: #64748B; letter-spacing: 0.02em; font-weight: 500;">
-                    ? 2026 ZEUS Bioscience. All rights reserved
-                </div>
-            </div>
+            <div style="text-align: center; margin-top: 36px; margin-bottom: 24px; padding: 20px 16px 16px 16px; border-top: 1px solid rgba(226, 232, 240, 0.08); background: #0F172A; border-radius: 8px; font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif; box-shadow: 0 4px 20px rgba(0,0,0,0.35);">
+    <div style="font-size: 13.5px; font-weight: 600; color: #E2E8F0; letter-spacing: 0.04em; margin-bottom: 5px;">
+        Conceived & Directed by <span style="color: #FAFAFA; font-weight: 700; text-shadow: 0 0 12px rgba(12, 92, 171, 0.45); border-bottom: 2px solid #0C5CAB; padding-bottom: 2px;">Sireen Khemesh</span>
+    </div>
+    <div style="font-size: 11.5px; color: #64748B; letter-spacing: 0.02em; font-weight: 500;">
+        © 2026 ZEUS Bioscience. All rights reserved
+    </div>
+</div>
             """, unsafe_allow_html=True)
 
         st.stop()
@@ -8914,16 +8907,16 @@ with st.sidebar:
     
     sys_dt_side = get_system_datetime_display()
     st.markdown(f'''
-    <div style="background: #0E1626; border: 1px solid rgba(0, 245, 255, 0.22); border-radius: 12px; padding: 12px 14px; margin-top: -6px; margin-bottom: 12px; font-size: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.3);">
+    <div style="background: #0F172A; border: 1px solid rgba(226, 232, 240, 0.10); border-radius: 8px; padding: 12px 14px; margin-top: -6px; margin-bottom: 12px; font-size: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.4);">
         <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span style="color: #94A3B8; font-size: 11px; font-weight: 500;">Oturum A??k:</span>
-            <span style="background: rgba(0, 230, 118, 0.15); color: #00E676; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 6px; border: 1px solid rgba(0, 230, 118, 0.3);">? {auth_user_badge}</span>
+            <span style="color: #94A3B8; font-size: 11px; font-weight: 500;">Oturum Açık:</span>
+            <span style="background: rgba(16, 185, 129, 0.15); color: #10B981; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; border: 1px solid rgba(16, 185, 129, 0.3);">● {auth_user_badge}</span>
         </div>
-        <div style="font-weight: 700; color: #FFFFFF; font-size: 13px; margin-top: 4px;">?? {auth_user_name}</div>
-        <div style="color: #00F5FF; font-size: 11px; font-weight: 500;">{auth_user_role}</div>
-        <div style="border-top: 1px solid rgba(255,255,255,0.08); margin-top: 8px; padding-top: 8px; color: #94A3B8; font-size: 11px; display: flex; justify-content: space-between; align-items: center;">
-            <span>?? Canl? Sistem Saati:</span>
-            <b style="color: #00F5FF; font-family: 'Geist Mono', monospace; font-size: 11px;">{sys_dt_side}</b>
+        <div style="font-weight: 700; color: #FAFAFA; font-size: 13px; margin-top: 4px;">👤 {auth_user_name}</div>
+        <div style="color: #94A3B8; font-size: 11px; font-weight: 500;">{auth_user_role}</div>
+        <div style="border-top: 1px solid rgba(226,232,240,0.08); margin-top: 8px; padding-top: 8px; color: #94A3B8; font-size: 11px; display: flex; justify-content: space-between; align-items: center;">
+            <span>⏱️ Canlı Sistem Saati:</span>
+            <b style="color: #FAFAFA; font-family: 'IBM Plex Mono', monospace; font-size: 11px;">{sys_dt_side}</b>
         </div>
     </div>
     ''', unsafe_allow_html=True)
@@ -18909,11 +18902,11 @@ def render_active_omni_search_hub(query_str):
 # Universal Hub Header & Subview Switcher (Ultra-Luxury Glassmorphic Console Dock)
 st.markdown("""
 <style>
-    /* Executive Console Dock Container (Rule B4 Flat Surface) */
+    /* Executive Console Dock Container (Enterprise Navy Glass) */
     div[class*="st-key-zgmi_top_control_dock"] {
-        background: #0E1626 !important;
-        border: 1px solid rgba(0, 245, 255, 0.22) !important;
-        border-radius: 12px !important;
+        background: #0F172A !important;
+        border: 1px solid rgba(226, 232, 240, 0.10) !important;
+        border-radius: 8px !important;
         padding: 6px 12px !important;
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
         margin-bottom: 14px !important;
@@ -18924,50 +18917,50 @@ st.markdown("""
     div[class*="st-key-bot_prev_nav_"] button,
     div[class*="st-key-bot_next_nav_"] button {
         border-radius: 50% !important;
-        width: 36px !important;
-        height: 36px !important;
-        min-width: 36px !important;
-        max-width: 36px !important;
+        width: 34px !important;
+        height: 34px !important;
+        min-width: 34px !important;
+        max-width: 34px !important;
         padding: 0 !important;
         margin: 0 auto !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        background: #141E34 !important;
-        border: 1px solid rgba(0, 245, 255, 0.30) !important;
-        color: #00F5FF !important;
-        font-size: 18px !important;
+        background: #131E32 !important;
+        border: 1px solid rgba(226, 232, 240, 0.12) !important;
+        color: #E2E8F0 !important;
+        font-size: 16px !important;
         font-weight: 700 !important;
         line-height: 1 !important;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3) !important;
-        transition: all 300ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
+        transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
     div[class*="st-key-btn_prev_"] button:hover,
     div[class*="st-key-btn_next_"] button:hover,
     div[class*="st-key-bot_prev_nav_"] button:hover,
     div[class*="st-key-bot_next_nav_"] button:hover {
-        background: rgba(0, 245, 255, 0.20) !important;
-        border-color: #00F5FF !important;
-        color: #FFFFFF !important;
-        box-shadow: 0 0 16px rgba(0, 245, 255, 0.5) !important;
-        transform: scale(1.08) !important;
+        background: #0C5CAB !important;
+        border-color: #0C5CAB !important;
+        color: #FAFAFA !important;
+        box-shadow: 0 0 14px rgba(12, 92, 171, 0.45) !important;
+        transform: scale(1.06) !important;
     }
 
-    /* Subview Pills - Always Full Width, High-Contrast & Beautifully Legible */
+    /* Subview Pills - Enterprise High-Contrast Design */
     div[data-testid="stButtonGroup"],
     div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stButtonGroup"] {
         background: transparent !important;
         border: none !important;
         box-shadow: none !important;
         padding: 0 !important;
-        gap: 8px !important;
+        gap: 6px !important;
         display: inline-flex !important;
         align-items: center !important;
         flex-wrap: nowrap !important;
         max-width: 100% !important;
     }
 
-    /* Pill Items: Rounded Full, High Contrast (Rule B3 & B4) */
+    /* Pill Items: Enterprise Rounded (rounded.sm: 4px) */
     div[data-testid="stButtonGroup"] button,
     div[data-testid="stButtonGroup"] [data-variant="pills"],
     div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stButtonGroup"] button,
@@ -18976,37 +18969,37 @@ st.markdown("""
         width: auto !important;
         min-width: max-content !important;
         max-width: none !important;
-        height: 36px !important;
-        border-radius: 9999px !important;
-        background: #141E34 !important;
-        border: 1px solid rgba(0, 245, 255, 0.22) !important;
-        color: #E2E8F0 !important;
+        height: 34px !important;
+        border-radius: 4px !important;
+        background: #131E32 !important;
+        border: 1px solid rgba(226, 232, 240, 0.10) !important;
+        color: #CBD5E1 !important;
         font-family: var(--zg-font-sans) !important;
         font-size: 13px !important;
-        font-weight: 600 !important;
+        font-weight: 500 !important;
         letter-spacing: -0.01em !important;
-        padding: 6px 16px !important;
+        padding: 6px 14px !important;
         margin: 0 2px !important;
         display: inline-flex !important;
         align-items: center !important;
         justify-content: center !important;
         white-space: nowrap !important;
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important;
-        transition: all 300ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+        transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1) !important;
         box-sizing: border-box !important;
     }
 
     div[data-testid="stButtonGroup"] button:hover,
     div[data-testid="stButtonGroup"] [data-variant="pills"]:hover,
     div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stButtonGroup"] button:hover {
-        background: rgba(0, 245, 255, 0.12) !important;
-        border-color: rgba(0, 245, 255, 0.50) !important;
-        color: #FFFFFF !important;
-        box-shadow: 0 0 14px rgba(0, 245, 255, 0.28) !important;
+        background: #1A2844 !important;
+        border-color: rgba(12, 92, 171, 0.50) !important;
+        color: #FAFAFA !important;
+        box-shadow: 0 0 12px rgba(12, 92, 171, 0.25) !important;
         transform: translateY(-1px) !important;
     }
 
-    /* Selected Pill - Executive Neon Accent */
+    /* Selected Pill - Enterprise Sapphire (#0C5CAB) */
     div[data-testid="stButtonGroup"] button[aria-selected="true"],
     div[data-testid="stButtonGroup"] button[data-selected="true"],
     div[data-testid="stButtonGroup"] [data-variant="pills"][data-selected="true"],
@@ -19017,16 +19010,16 @@ st.markdown("""
         width: auto !important;
         min-width: max-content !important;
         max-width: none !important;
-        height: 36px !important;
-        border-radius: 9999px !important;
-        background: #00F5FF !important;
-        border: 1px solid #00F5FF !important;
-        color: #070B14 !important;
+        height: 34px !important;
+        border-radius: 4px !important;
+        background: #0C5CAB !important;
+        border: 1px solid #0C5CAB !important;
+        color: #FAFAFA !important;
         font-family: var(--zg-font-sans) !important;
         font-size: 13px !important;
-        font-weight: 700 !important;
-        padding: 6px 18px !important;
-        box-shadow: 0 0 20px rgba(0, 245, 255, 0.45) !important;
+        font-weight: 600 !important;
+        padding: 6px 16px !important;
+        box-shadow: 0 0 16px rgba(12, 92, 171, 0.40) !important;
         transform: translateY(-1px) !important;
         white-space: nowrap !important;
     }
@@ -19041,32 +19034,32 @@ st.markdown("""
     }
     /* Omni-Search Capsule */
     div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stTextInput"] div[data-baseweb="input"] {
-        border-radius: 9999px !important;
-        background: #141E34 !important;
-        border: 1px solid rgba(0, 245, 255, 0.25) !important;
-        height: 36px !important;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25) !important;
-        transition: all 300ms cubic-bezier(0.22, 1, 0.36, 1) !important;
+        border-radius: 4px !important;
+        background: #131E32 !important;
+        border: 1px solid rgba(226, 232, 240, 0.12) !important;
+        height: 34px !important;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important;
+        transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
     div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stTextInput"] div[data-baseweb="input"]:focus-within {
-        border-color: #00F5FF !important;
-        box-shadow: 0 0 16px rgba(0, 245, 255, 0.35) !important;
+        border-color: #0C5CAB !important;
+        box-shadow: 0 0 14px rgba(12, 92, 171, 0.35) !important;
     }
 </style>
 """, unsafe_allow_html=True)
 
 # OFFICIAL TOP STRIP: CE CERTIFIED & ISO 13485 / 14001 / 45001
 st.markdown('''
-<div style="background:linear-gradient(90deg, rgba(15,23,42,0.90) 0%, rgba(30,41,59,0.85) 100%);border:1px solid rgba(0,245,255,0.25);border-radius:8px;padding:5px 12px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:6px;">
+<div style="background: #0F172A; border: 1px solid rgba(226, 232, 240, 0.10); border-radius: 8px; padding: 6px 14px; margin-bottom: 10px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px;">
     <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-        <span style="font-size:10px;font-weight:800;color:#00F5FF;letter-spacing:0.5px;">🏛️ RESMİ KALİTE SERTİFİKASYONLARI:</span>
-        <span style="background:rgba(0,245,255,0.12);border:1px solid #00F5FF;color:#00F5FF;padding:1.5px 7px;border-radius:4px;font-size:10px;font-weight:800;">🇪🇺 CE Certified (Class IIa)</span>
-        <span style="background:rgba(0,230,118,0.12);border:1px solid #00E676;color:#00E676;padding:1.5px 7px;border-radius:4px;font-size:10px;font-weight:800;">🎖️ ISO 13485:2016</span>
-        <span style="background:rgba(245,158,11,0.12);border:1px solid #F59E0B;color:#FBBF24;padding:1.5px 7px;border-radius:4px;font-size:10px;font-weight:800;">🌱 ISO 14001:2015</span>
-        <span style="background:rgba(168,85,247,0.12);border:1px solid #A855F7;color:#C084FC;padding:1.5px 7px;border-radius:4px;font-size:10px;font-weight:800;">⚕️ ISO 45001:2018</span>
+        <span style="font-size:10px;font-weight:700;color:#94A3B8;letter-spacing:0.5px;">🏛️ RESMİ KALİTE SERTİFİKASYONLARI:</span>
+        <span style="background:rgba(12,92,171,0.18);border:1px solid rgba(12,92,171,0.50);color:#FAFAFA;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:600;">🇪🇺 CE Certified (Class IIa)</span>
+        <span style="background:rgba(16,185,129,0.15);border:1px solid rgba(16,185,129,0.40);color:#10B981;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:600;">🎖️ ISO 13485:2016</span>
+        <span style="background:rgba(245,158,11,0.15);border:1px solid rgba(245,158,11,0.40);color:#F59E0B;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:600;">🌱 ISO 14001:2015</span>
+        <span style="background:rgba(148,163,184,0.15);border:1px solid rgba(148,163,184,0.40);color:#CBD5E1;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:600;">⚕️ ISO 45001:2018</span>
     </div>
-    <div style="font-size:9.5px;color:#CBD5E1;font-weight:600;">
-        ⚡ <b>Elektriksel Oosit Aktivasyonu (AOA)</b> · <span style="color:#00E676;">Sıfır Termal Hasar (Lazer İçermez)</span>
+    <div style="font-size:10px;color:#94A3B8;font-weight:500;">
+        ⚡ <b style="color:#FAFAFA;">Elektriksel Oosit Aktivasyonu (AOA)</b> · <span style="color:#10B981;font-weight:600;">Sıfır Termal Hasar (Lazer İçermez)</span>
     </div>
 </div>
 ''', unsafe_allow_html=True)
@@ -24688,8 +24681,8 @@ elif active_view in ["⚖️ Çoklu Ülke Kıyaslama Masası (Multi-Country Matr
                 )
                 fig_tech.update_layout(
                     template='plotly_dark',
-                    paper_bgcolor='#0E1626',
-                    plot_bgcolor='#0E1626',
+                    paper_bgcolor='#0F172A',
+                    plot_bgcolor='#0F172A',
                     font=dict(family='Manrope, sans-serif'),
                     height=380,
                     margin=dict(t=65, b=75, l=15, r=15),
@@ -24724,8 +24717,8 @@ elif active_view in ["⚖️ Çoklu Ülke Kıyaslama Masası (Multi-Country Matr
                 fig_dens.update_traces(texttemplate='%{text:.2f} klinik/M', textposition='outside')
                 fig_dens.update_layout(
                     template='plotly_dark',
-                    paper_bgcolor='#0E1626',
-                    plot_bgcolor='#0E1626',
+                    paper_bgcolor='#0F172A',
+                    plot_bgcolor='#0F172A',
                     font=dict(family='Manrope, sans-serif'),
                     showlegend=False,
                     height=380,
