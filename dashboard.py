@@ -293,7 +293,20 @@ st.markdown("""
         --zg-radius-lg: 8px;
         --zg-radius-full: 9999px;
 
+        --zg-secondary: #0A4A8A;
+        --zg-space-sm: 8px;
+        --zg-space-md: 16px;
+        --zg-space-lg: 24px;
         --zg-transition: all 160ms cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            animation-iteration-count: 1 !important;
+            transition-duration: 0.01ms !important;
+            scroll-behavior: auto !important;
+        }
     }
 
     html {
@@ -470,10 +483,24 @@ st.markdown("""
         flex-direction: column !important;
         justify-content: space-between !important;
     }
+    .kpi-container::after,
+    .glass-metric-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: radial-gradient(280px circle at 50% 0%, rgba(12, 92, 171, 0.14), transparent 70%);
+        opacity: 0;
+        transition: opacity 200ms ease;
+        pointer-events: none;
+    }
     .kpi-container:hover,
     .glass-metric-card:hover {
         background: var(--zg-surface-elevated) !important;
-        border: var(--zg-border-hover) !important;
+        border: 1px solid rgba(12, 92, 171, 0.45) !important;
+    }
+    .kpi-container:hover::after,
+    .glass-metric-card:hover::after {
+        opacity: 1;
     }
     .kpi-header {
         font-size: 11px !important;
@@ -9074,7 +9101,7 @@ def render_login_gate():
             </div>
             <div style="text-align: center; margin-top: 24px; padding-top: 18px; border-top: 1px solid rgba(226, 232, 240, 0.08); font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;">
                 <div style="font-size: 13px; font-weight: 600; color: #94A3B8; letter-spacing: 0.03em; margin-bottom: 4px;">
-                    Conceived & Directed by <span style="color: #FAFAFA; font-weight: 700; text-shadow: 0 0 12px rgba(12, 92, 171, 0.45); border-bottom: 2px solid #0C5CAB; padding-bottom: 2px;">Sireen Khemesh</span>
+                    Conceived & Directed by <span style="color: #FAFAFA; font-weight: 700; border-bottom: 1px solid #0C5CAB; padding-bottom: 2px;">Sireen Khemesh</span>
                 </div>
                 <div style="font-size: 12px; color: #64748B; letter-spacing: 0.02em; font-weight: 500;">
                     © 2026 ZEUS Bioscience. All rights reserved
@@ -17909,17 +17936,31 @@ def render_risk_scenario_simulator_view():
             ai_risk_placeholder = st.empty()
             with ai_risk_placeholder.container():
                 components.html("""
-                    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 160px; font-family: sans-serif; background: #0b1426; border-radius: 12px; border: 1px solid #13A6B5; box-shadow: 0 0 20px rgba(19, 166, 181, 0.2);">
-                        <div id="risk-orb" style="width: 45px; height: 45px; background: radial-gradient(circle, #00F5FF 0%, #13A6B5 70%, #0B6F85 100%); border-radius: 50%; box-shadow: 0 0 25px #00F5FF; margin-bottom: 15px;"></div>
-                        <div style="color: #4FD1DE; font-weight: bold; font-size: 14px; letter-spacing: 1px; text-transform: uppercase;">
-                            ZEUS AI FİNANSAL RİSK ANALİZİ YAPIYOR...
+                    <div id="risk-loader-card" style="display:flex;flex-direction:column;justify-content:center;gap:12px;height:132px;padding:20px 24px;font-family:'IBM Plex Sans',sans-serif;background:#0F172A;border-radius:8px;border:1px solid rgba(226,232,240,0.10);box-sizing:border-box;">
+                        <div style="display:flex;align-items:center;justify-content:space-between;">
+                            <div style="display:flex;align-items:center;gap:10px;">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                                <span style="color:#FAFAFA;font-weight:600;font-size:13px;letter-spacing:-0.01em;">Finansal Risk & Likidite Analizi Hesaplanıyor</span>
+                            </div>
+                            <span style="color:#94A3B8;font-family:'IBM Plex Mono',monospace;font-size:11px;">MODEL: ZGMI-RISK</span>
+                        </div>
+                        <div style="width:100%;height:4px;background:rgba(226,232,240,0.08);border-radius:4px;overflow:hidden;">
+                            <div id="risk-progress-fill" style="width:0%;height:100%;background:#0C5CAB;border-radius:4px;"></div>
                         </div>
                     </div>
                     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
                     <script>
-                        gsap.to("#risk-orb", { y: -12, scale: 1.15, duration: 1.0, yoyo: true, repeat: -1, ease: "sine.inOut" });
+                        (function() {
+                            var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                            if (reduced) {
+                                document.getElementById('risk-progress-fill').style.width = '100%';
+                            } else {
+                                gsap.fromTo('#risk-loader-card', { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.3, ease: 'power2.out' });
+                                gsap.to('#risk-progress-fill', { width: '100%', duration: 0.55, ease: 'power2.out' });
+                            }
+                        })();
                     </script>
-                """, height=180)
+                """, height=148)
 
             ai_risk_text = None
             api_key = get_gemini_api_key()
@@ -31706,7 +31747,7 @@ if len(active_subviews) > 1:
                 st.session_state[b_pills_key] = active_subviews[b_prev_idx]
                 st.rerun()
         with b_nav2:
-            st.markdown(f"<div style='text-align:center;color:#8FA3C0;font-size:12px;'>🧭 Görünüm <b>{b_curr_idx + 1} / {len(active_subviews)}</b> · <span style='color:#00F5FF;font-weight:600;'>{active_subviews[b_curr_idx].split('(')[0].strip()}</span></div>", unsafe_allow_html=True)
+            st.markdown(f"<div style='text-align:center;color:#94A3B8;font-size:12px;'>Görünüm <b style='color:#FAFAFA;'>{b_curr_idx + 1} / {len(active_subviews)}</b> · <span style='color:#38BDF8;font-weight:500;'>{active_subviews[b_curr_idx].split('(')[0].strip()}</span></div>", unsafe_allow_html=True)
         with b_nav3:
             next_sub_label = active_subviews[b_next_idx].split('(')[0].strip()
             if st.button(f"Sonraki: {next_sub_label} ›", key=f"bot_next_nav_{b_pills_key}", use_container_width=True):
@@ -31716,100 +31757,145 @@ if len(active_subviews) > 1:
 # Universal Bottom 'Back to Top' Button (Every Page)
 render_back_to_top_button()
 
-# Modern Glass GSAP AI Telemetry Status Banner
+# Enterprise Telemetry & Architecture Status Strip (21st.dev + React Bits Spotlight/CountUp + GSAP)
 components.html("""
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-    
+
     <div id="zeus-engine-box" style="
-        background: linear-gradient(145deg, rgba(16, 26, 46, 0.75) 0%, rgba(9, 16, 30, 0.88) 100%);
-        border: 1px solid rgba(0, 245, 255, 0.22);
-        border-top: 1px solid rgba(0, 245, 255, 0.45);
-        border-radius: 16px;
-        padding: 20px 26px;
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4), inset 0 0 20px rgba(0, 245, 255, 0.04);
+        position: relative;
+        overflow: hidden;
+        background: #0F172A;
+        border: 1px solid rgba(226, 232, 240, 0.10);
+        border-radius: 8px;
+        padding: 16px 22px;
         display: flex;
         align-items: center;
         justify-content: space-between;
-        font-family: 'Manrope', system-ui, -apple-system, sans-serif;
-        color: #F8FAFC;
-        margin: 10px 0;
+        gap: 16px;
+        flex-wrap: wrap;
+        font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+        color: #FAFAFA;
+        margin: 8px 0;
         box-sizing: border-box;
     ">
-        <div style="display: flex; align-items: center; gap: 16px;">
+        <div id="zeus-spotlight" style="
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 200ms ease;
+            background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 50%), rgba(12, 92, 171, 0.18), transparent 70%);
+        "></div>
+
+        <div style="display: flex; align-items: center; gap: 14px; position: relative; z-index: 1;">
             <div style="
-                width: 44px;
-                height: 44px;
-                border-radius: 12px;
-                background: linear-gradient(135deg, rgba(0, 245, 255, 0.15) 0%, rgba(19, 166, 181, 0.3) 100%);
-                border: 1px solid rgba(0, 245, 255, 0.4);
-                box-shadow: 0 0 16px rgba(0, 245, 255, 0.25);
+                width: 36px;
+                height: 36px;
+                border-radius: 6px;
+                background: #131E32;
+                border: 1px solid rgba(226, 232, 240, 0.10);
                 display: flex;
                 align-items: center;
                 justify-content: center;
                 flex-shrink: 0;
             ">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#00F5FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <circle cx="12" cy="12" r="3"></circle>
-                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="16" height="16" x="4" y="4" rx="2"/><rect width="6" height="6" x="9" y="9" rx="1"/>
+                    <path d="M15 2v2"/><path d="M15 20v2"/><path d="M2 15h2"/><path d="M2 9h2"/>
+                    <path d="M20 15h2"/><path d="M20 9h2"/><path d="M9 2v2"/><path d="M9 20v2"/>
                 </svg>
             </div>
             <div>
-                <div style="font-size: 10px; font-weight: 700; color: #00F5FF; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 2px;">
-                    AI TELEMETRY & STRATEGIC COPILOT
+                <div style="font-size: 10px; font-weight: 600; color: #94A3B8; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 2px;">
+                    MEDTECH INTELLIGENCE ARCHITECTURE
                 </div>
-                <div style="font-size: 15px; font-weight: 700; color: #FFFFFF; letter-spacing: -0.01em;">
+                <div style="font-size: 14px; font-weight: 600; color: #FAFAFA; letter-spacing: -0.01em;">
                     ZEUS Commercial Intelligence Engine
                 </div>
                 <div style="font-size: 12px; color: #94A3B8; margin-top: 2px;">
-                    Predictive Sales ML Corridors & Clinical IVF Benchmarking Active (48 Countries)
+                    Predictive Commercial Modeling & Clinical IVF Benchmarking
                 </div>
             </div>
         </div>
-        <div style="
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            padding: 6px 14px;
-            border-radius: 999px;
-            background: rgba(16, 185, 129, 0.12);
-            border: 1px solid rgba(16, 185, 129, 0.3);
-            color: #34D399;
-            font-size: 11px;
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            box-shadow: 0 0 14px rgba(16, 185, 129, 0.15);
-            flex-shrink: 0;
-        ">
-            <span style="width: 7px; height: 7px; border-radius: 50%; background: #10B981; box-shadow: 0 0 8px #10B981; display: inline-block;"></span>
-            ENGINE ONLINE
+
+        <div style="display: flex; align-items: center; gap: 20px; position: relative; z-index: 1; flex-wrap: wrap;">
+            <div style="display: flex; gap: 16px; border-right: 1px solid rgba(226, 232, 240, 0.08); padding-right: 18px;">
+                <div>
+                    <div style="font-size: 10px; color: #64748B; text-transform: uppercase; letter-spacing: 0.06em;">Pazarlar</div>
+                    <div class="cu-num" data-target="48" style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 600; color: #FAFAFA;">48</div>
+                </div>
+                <div>
+                    <div style="font-size: 10px; color: #64748B; text-transform: uppercase; letter-spacing: 0.06em;">Fatura</div>
+                    <div class="cu-num" data-target="1280" style="font-family: 'IBM Plex Mono', monospace; font-size: 14px; font-weight: 600; color: #FAFAFA;">1,280</div>
+                </div>
+            </div>
+
+            <div style="
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+                padding: 4px 10px;
+                border-radius: 4px;
+                background: rgba(16, 185, 129, 0.10);
+                border: 1px solid rgba(16, 185, 129, 0.28);
+                color: #34D399;
+                font-family: 'IBM Plex Mono', monospace;
+                font-size: 11px;
+                font-weight: 500;
+                letter-spacing: 0.04em;
+                flex-shrink: 0;
+            ">
+                <span style="width: 6px; height: 6px; border-radius: 50%; background: #10B981; display: inline-block;"></span>
+                ENGINE ONLINE
+            </div>
         </div>
     </div>
 
     <script>
-        gsap.fromTo("#zeus-engine-box", 
-            { y: 20, opacity: 0 }, 
-            { y: 0, opacity: 1, duration: 1.2, ease: "power3.out" }
-        );
-        gsap.to("#zeus-engine-box", {
-            y: -5,
-            repeat: -1,
-            yoyo: true,
-            duration: 2.2,
-            ease: "sine.inOut",
-            delay: 1.2
-        });
+        (function() {
+            var box = document.getElementById('zeus-engine-box');
+            var spot = document.getElementById('zeus-spotlight');
+            var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+            if (box && spot && !reduced) {
+                box.addEventListener('mousemove', function(e) {
+                    var rect = box.getBoundingClientRect();
+                    spot.style.setProperty('--mx', (e.clientX - rect.left) + 'px');
+                    spot.style.setProperty('--my', (e.clientY - rect.top) + 'px');
+                    spot.style.opacity = '1';
+                });
+                box.addEventListener('mouseleave', function() {
+                    spot.style.opacity = '0';
+                });
+            }
+
+            if (!reduced && typeof gsap !== 'undefined') {
+                gsap.fromTo('#zeus-engine-box', { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.4, ease: 'power2.out' });
+                document.querySelectorAll('.cu-num').forEach(function(el) {
+                    var target = parseInt(el.getAttribute('data-target'), 10);
+                    var obj = { val: Math.floor(target * 0.65) };
+                    gsap.to(obj, {
+                        val: target,
+                        duration: 0.55,
+                        ease: 'power2.out',
+                        onUpdate: function() {
+                            el.textContent = Math.round(obj.val).toLocaleString('en-US');
+                        }
+                    });
+                });
+            }
+        })();
     </script>
-""", height=110)
+""", height=96)
 
 # ==========================================
 # EXECUTIVE ATTRIBUTION & COPYRIGHT FOOTER
 # ==========================================
 st.markdown('''
-<div style="text-align: center; margin-top: 36px; margin-bottom: 24px; padding: 20px 16px 16px 16px; border-top: 1px solid rgba(226, 232, 240, 0.08); background: #0F172A; border-radius: 8px; font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif; box-shadow: 0 4px 20px rgba(0,0,0,0.35);">
+<div style="text-align: center; margin-top: 36px; margin-bottom: 24px; padding: 20px 16px 16px 16px; border-top: 1px solid rgba(226, 232, 240, 0.08); background: #0F172A; border: 1px solid rgba(226, 232, 240, 0.08); border-radius: 8px; font-family: 'IBM Plex Sans', system-ui, -apple-system, sans-serif;">
     <div style="font-size: 13.5px; font-weight: 600; color: #E2E8F0; letter-spacing: 0.04em; margin-bottom: 5px;">
-        Conceived & Directed by <span style="color: #FAFAFA; font-weight: 700; text-shadow: 0 0 12px rgba(12, 92, 171, 0.45); border-bottom: 2px solid #0C5CAB; padding-bottom: 2px;">Sireen Khemesh</span>
+        Conceived & Directed by <span style="color: #FAFAFA; font-weight: 700; border-bottom: 1px solid #0C5CAB; padding-bottom: 2px;">Sireen Khemesh</span>
     </div>
     <div style="font-size: 11.5px; color: #64748B; letter-spacing: 0.02em; font-weight: 500;">
         © 2026 ZEUS Bioscience. All rights reserved
