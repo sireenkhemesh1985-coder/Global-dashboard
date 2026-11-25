@@ -47,80 +47,84 @@ def get_system_datetime_display():
     months_tr = ['', 'Ocak', 'Şubat', 'Mart', 'Nisan', 'Mayıs', 'Haziran', 'Temmuz', 'Ağustos', 'Eylül', 'Ekim', 'Kasım', 'Aralık']
     return f"{now_dt.day} {months_tr[now_dt.month]} {now_dt.year} • {now_dt.strftime('%H:%M:%S')}"
 
-# Custom Styling (ZGMI Futuristic Glassmorphism - Tier-1 MedTech Intelligence OS)
+# Custom Styling (ZGMI Quantum Neon Glassmorphism - Tier-1 MedTech OS)
 st.markdown("""
 <style>
     /* Google Fonts: IBM Plex Sans & IBM Plex Mono */
     @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap');
-    
-    /* Design Tokens: Futuristic Glassmorphism & Subtle Lighting */
+
     :root {
         --zg-font-sans: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
         --zg-font-mono: 'IBM Plex Mono', ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
-        
-        /* 8pt Grid */
+
         --zg-space-xs: 4px;
         --zg-space-sm: 8px;
         --zg-space-md: 16px;
         --zg-space-lg: 24px;
         --zg-space-xl: 32px;
-        --zg-space-2xl: 40px;
-        
-        /* Deep Space Base Canvas */
-        --zg-canvas: #06090F;
-        
-        /* Translucent Glass Surfaces (Glassmorphism) */
-        --zg-glass-surface: rgba(15, 23, 42, 0.65);
-        --zg-glass-elevated: rgba(19, 30, 52, 0.75);
-        --zg-glass-hover: rgba(26, 42, 72, 0.85);
-        --zg-glass-blur: blur(16px) saturate(180%);
-        
-        /* Specular Borders & Multi-Layer Depth */
-        --zg-glass-border: 1px solid rgba(226, 232, 240, 0.12);
-        --zg-glass-border-hover: 1px solid rgba(56, 189, 248, 0.45);
-        --zg-glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.45), inset 0 1px 0 0 rgba(255, 255, 255, 0.12);
-        --zg-glass-shadow-hover: 0 14px 42px 0 rgba(0, 0, 0, 0.55), 0 0 24px 0 rgba(12, 92, 171, 0.30), inset 0 1px 0 0 rgba(255, 255, 255, 0.25);
-        
-        /* Refined Accents & Status */
-        --zg-primary: #0C5CAB;
-        --zg-primary-dark: #0A4A8A;
+
+        /* Deep Space Obsidian Canvas */
+        --zg-canvas: #03060C;
+
+        /* True Translucent Frosted Glass (Refracts Grid + Neon Aurora Behind) */
+        --zg-glass-surface: linear-gradient(145deg, rgba(14, 23, 42, 0.52) 0%, rgba(7, 11, 22, 0.42) 100%);
+        --zg-glass-elevated: linear-gradient(145deg, rgba(20, 34, 60, 0.65) 0%, rgba(10, 17, 32, 0.55) 100%);
+        --zg-glass-blur: blur(22px) saturate(190%);
+
+        /* Neon Specular Borders & Depth Shadows */
+        --zg-glass-border: 1px solid rgba(56, 189, 248, 0.18);
+        --zg-glass-border-hover: 1px solid rgba(0, 240, 255, 0.55);
+        --zg-glass-shadow: 0 10px 36px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.14), 0 0 20px rgba(0, 240, 255, 0.04);
+        --zg-glass-shadow-hover: 0 16px 46px rgba(0, 0, 0, 0.65), 0 0 28px rgba(0, 240, 255, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+
+        /* Neon & MedTech Accents */
+        --zg-neon-cyan: #00F0FF;
         --zg-accent-cyan: #38BDF8;
+        --zg-primary: #0C5CAB;
         --zg-accent-emerald: #10B981;
         --zg-accent-amber: #F59E0B;
         --zg-accent-rose: #EF4444;
-        
-        /* Metallic Silver Palette */
+        --zg-accent-indigo: #818CF8;
+
+        /* Metallic Silver Typography */
         --zg-silver-pure: #FAFAFA;
         --zg-silver-text: #E2E8F0;
         --zg-silver-muted: #94A3B8;
         --zg-silver-dim: #64748B;
-        
-        /* Radii */
-        --zg-radius-xs: 2px;
-        --zg-radius-sm: 4px;
-        --zg-radius-md: 8px;
-        --zg-radius-lg: 10px;
+
+        --zg-radius-sm: 6px;
+        --zg-radius-md: 10px;
+        --zg-radius-lg: 14px;
         --zg-radius-full: 9999px;
-        
-        --zg-transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1);
+
+        --zg-transition: all 240ms cubic-bezier(0.16, 1, 0.3, 1);
     }
 
-    /* Global Smooth Scrolling */
     html {
         scroll-behavior: smooth !important;
     }
 
-    /* Background Atmosphere: Subtle Lighting, Deep Space Atmosphere & Starfield Depth */
+    /* Multi-Layered Cybernetic Grid + Neon Aurora Backdrop */
     html, body, [class*="css"], .stApp {
         font-family: var(--zg-font-sans) !important;
         background-color: var(--zg-canvas) !important;
-        background-image: 
-            radial-gradient(ellipse 90% 50% at 50% -12%, rgba(12, 92, 171, 0.24), transparent 70%),
-            radial-gradient(ellipse 70% 40% at 100% 100%, rgba(56, 189, 248, 0.09), transparent 60%),
-            radial-gradient(ellipse 50% 30% at 0% 50%, rgba(16, 185, 129, 0.05), transparent 50%) !important;
+        background-image:
+            radial-gradient(ellipse 75% 45% at 50% -10%, rgba(0, 240, 255, 0.14), transparent 65%),
+            radial-gradient(ellipse 55% 40% at 92% 18%, rgba(99, 102, 241, 0.13), transparent 60%),
+            radial-gradient(ellipse 60% 40% at 8% 88%, rgba(16, 185, 129, 0.08), transparent 60%),
+            radial-gradient(ellipse 50% 35% at 85% 95%, rgba(12, 92, 171, 0.16), transparent 60%),
+            linear-gradient(rgba(56, 189, 248, 0.032) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(56, 189, 248, 0.032) 1px, transparent 1px) !important;
+        background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 48px 48px, 48px 48px !important;
         background-attachment: fixed !important;
         color: var(--zg-silver-text) !important;
         letter-spacing: -0.01em;
+    }
+
+    /* Transparent Slim Streamlit Top Header */
+    header[data-testid="stHeader"] {
+        background: transparent !important;
+        height: 2.4rem !important;
     }
 
     /* Strict Rule: Never use italics in UI */
@@ -133,18 +137,24 @@ st.markdown("""
         font-family: var(--zg-font-sans) !important;
         text-wrap: balance !important;
         color: var(--zg-silver-pure) !important;
-        letter-spacing: -0.015em !important;
+        letter-spacing: -0.02em !important;
         font-weight: 700 !important;
     }
-    h1 { font-size: 2.0rem !important; }
-    h2 { font-size: 1.5rem !important; }
-    h3 { font-size: 1.25rem !important; }
+    h1 {
+        font-size: 1.95rem !important;
+        background: linear-gradient(90deg, #FFFFFF 0%, #BAE6FD 70%, #38BDF8 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        text-shadow: 0 0 30px rgba(56, 189, 248, 0.15);
+    }
+    h2 { font-size: 1.45rem !important; }
+    h3 { font-size: 1.2rem !important; }
 
     p, [data-testid="stMarkdownContainer"] p {
         font-family: var(--zg-font-sans) !important;
         text-wrap: pretty !important;
         line-height: 1.55 !important;
-        font-size: 0.95rem !important;
+        font-size: 0.94rem !important;
     }
 
     /* Tabular Numeric Rule */
@@ -153,103 +163,112 @@ st.markdown("""
         font-feature-settings: 'tnum' on, 'zero' on !important;
     }
 
-    /* Floating Back-To-Top Tactile Button */
+    /* Neon Glass Back-To-Top Orb */
     #btn-back-to-top {
         position: fixed;
         bottom: 24px;
         right: 24px;
         z-index: 999999;
-        background: linear-gradient(135deg, #0C5CAB 0%, #0A4A8A 100%);
-        color: var(--zg-silver-pure) !important;
+        background: rgba(10, 18, 36, 0.72);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        color: #00F0FF !important;
         border-radius: var(--zg-radius-full);
-        width: 42px;
-        height: 42px;
+        width: 44px;
+        height: 44px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 16px;
-        font-weight: 700;
         text-decoration: none !important;
-        box-shadow: 0 4px 18px rgba(12, 92, 171, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25);
-        border: 1px solid rgba(56, 189, 248, 0.40);
+        box-shadow: 0 6px 24px rgba(0, 0, 0, 0.6), 0 0 16px rgba(0, 240, 255, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.22);
+        border: 1px solid rgba(0, 240, 255, 0.45);
         cursor: pointer;
-        transition: transform 250ms cubic-bezier(0.16, 1, 0.3, 1), box-shadow 250ms cubic-bezier(0.16, 1, 0.3, 1);
+        transition: var(--zg-transition);
     }
     #btn-back-to-top:hover {
-        transform: translateY(-2px) scale(1.06);
-        box-shadow: 0 8px 24px rgba(12, 92, 171, 0.65), 0 0 16px rgba(56, 189, 248, 0.40);
-    }
-    #btn-back-to-top:active {
-        transform: translateY(0) scale(0.98);
+        transform: translateY(-3px) scale(1.06);
+        background: rgba(12, 92, 171, 0.45);
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7), 0 0 24px rgba(0, 240, 255, 0.55);
     }
 
     /* Main Container Spacing */
-    .main .block-container {
-        padding-top: 1.5rem !important;
+    .main .block-container,
+    [data-testid="stMainBlockContainer"] {
+        padding-top: 0.75rem !important;
         padding-bottom: 3rem !important;
-        max-width: 96% !important;
+        padding-left: 2rem !important;
+        padding-right: 2rem !important;
+        max-width: 100% !important;
     }
 
     /* ====================================================================== */
-    /* GLASSMORPHIC SIDEBAR (Translucent Obsidian + Refined Glow)             */
+    /* QUANTUM GLASS SIDEBAR                                                  */
     /* ====================================================================== */
     [data-testid="stSidebar"] {
-        background: rgba(6, 9, 15, 0.75) !important;
-        backdrop-filter: blur(20px) saturate(180%) !important;
-        -webkit-backdrop-filter: blur(20px) saturate(180%) !important;
-        border-right: 1px solid rgba(226, 232, 240, 0.10) !important;
-        box-shadow: 6px 0 28px rgba(0, 0, 0, 0.60) !important;
+        background: linear-gradient(180deg, rgba(5, 10, 20, 0.78) 0%, rgba(3, 6, 12, 0.85) 100%) !important;
+        backdrop-filter: blur(26px) saturate(200%) !important;
+        -webkit-backdrop-filter: blur(26px) saturate(200%) !important;
+        border-right: 1px solid rgba(0, 240, 255, 0.14) !important;
+        box-shadow: 8px 0 36px rgba(0, 0, 0, 0.65) !important;
     }
     [data-testid="stSidebar"] hr {
-        border-color: rgba(226, 232, 240, 0.08) !important;
-        margin: 16px 0 !important;
+        border-color: rgba(56, 189, 248, 0.12) !important;
+        margin: 14px 0 !important;
     }
 
-    /* Sidebar Navigation Cards: Translucent Glass with Specular Edge */
-    [data-testid="stSidebar"] [data-testid="stRadio"] > div {
-        gap: 8px !important;
+    /* Hide collapsed widget labels strictly (fixes Navigation box bug) */
+    [data-testid="stSidebar"] [data-testid="stRadio"] > label[data-testid="stWidgetLabel"] {
+        display: none !important;
     }
-    [data-testid="stSidebar"] [data-testid="stRadio"] label {
-        background: rgba(15, 23, 42, 0.55) !important;
-        backdrop-filter: blur(12px) !important;
-        -webkit-backdrop-filter: blur(12px) !important;
-        border: 1px solid rgba(226, 232, 240, 0.08) !important;
+
+    /* Sidebar Navigation Cards: Target ONLY radiogroup option labels */
+    [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] {
+        gap: 7px !important;
+    }
+    [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label {
+        background: rgba(14, 23, 42, 0.45) !important;
+        backdrop-filter: blur(14px) !important;
+        -webkit-backdrop-filter: blur(14px) !important;
+        border: 1px solid rgba(56, 189, 248, 0.12) !important;
         border-radius: var(--zg-radius-md) !important;
-        padding: 9px 12px !important;
+        padding: 10px 12px !important;
         margin: 0 !important;
         transition: var(--zg-transition) !important;
         cursor: pointer !important;
         display: flex !important;
         align-items: center !important;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+        position: relative !important;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
     }
-    [data-testid="stSidebar"] [data-testid="stRadio"] label:hover {
-        background: rgba(19, 30, 52, 0.75) !important;
-        border-color: rgba(56, 189, 248, 0.40) !important;
+    [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label:hover {
+        background: rgba(20, 34, 62, 0.65) !important;
+        border-color: rgba(0, 240, 255, 0.45) !important;
         transform: translateX(3px) !important;
-        box-shadow: 0 4px 16px rgba(12, 92, 171, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+        box-shadow: 0 4px 18px rgba(0, 240, 255, 0.16), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
     }
-    [data-testid="stSidebar"] [data-testid="stRadio"] label[data-checked="true"],
-    [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) {
-        background: rgba(19, 30, 52, 0.85) !important;
-        border: 1px solid #0C5CAB !important;
-        box-shadow: 0 0 20px rgba(12, 92, 171, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.20) !important;
+    [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label[data-checked="true"],
+    [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label:has(input:checked) {
+        background: linear-gradient(135deg, rgba(0, 240, 255, 0.14) 0%, rgba(12, 92, 171, 0.34) 100%) !important;
+        border: 1px solid rgba(0, 240, 255, 0.65) !important;
+        box-shadow: 0 0 22px rgba(0, 240, 255, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.25), inset 3px 0 0 #00F0FF !important;
     }
-    [data-testid="stSidebar"] [data-testid="stRadio"] label p,
-    [data-testid="stSidebar"] [data-testid="stRadio"] label span,
-    [data-testid="stSidebar"] [data-testid="stRadio"] [data-testid="stMarkdownContainer"] {
+    [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label p,
+    [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label span,
+    [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] [data-testid="stMarkdownContainer"] {
         display: block !important;
         visibility: visible !important;
         opacity: 1 !important;
-        font-size: 13px !important;
+        font-size: 12.5px !important;
         font-weight: 500 !important;
         color: var(--zg-silver-text) !important;
         letter-spacing: -0.01em !important;
+        line-height: 1.3 !important;
     }
-    [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) p,
-    [data-testid="stSidebar"] [data-testid="stRadio"] label:has(input:checked) span {
+    [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label:has(input:checked) p,
+    [data-testid="stSidebar"] [data-testid="stRadio"] div[role="radiogroup"] label:has(input:checked) span {
         color: #FFFFFF !important;
         font-weight: 600 !important;
+        text-shadow: 0 0 12px rgba(0, 240, 255, 0.35);
     }
     [data-testid="stSidebar"] [data-testid="stRadio"] input[type="radio"],
     [data-testid="stSidebar"] [data-testid="stRadio"] div[data-baseweb="radio"] > div:first-child:not([data-testid="stMarkdownContainer"]) {
@@ -261,43 +280,56 @@ st.markdown("""
     }
 
     /* ====================================================================== */
-    /* GLASSMORPHIC HIGH-DENSITY KPI CARDS (Specular Highlight & Subtle Glow)  */
+    /* TRANSLUCENT NEON KPI & METRIC GLASS CARDS                              */
     /* ====================================================================== */
-    .kpi-container {
+    .kpi-container,
+    .glass-metric-card {
         background: var(--zg-glass-surface) !important;
         backdrop-filter: var(--zg-glass-blur) !important;
         -webkit-backdrop-filter: var(--zg-glass-blur) !important;
         border: var(--zg-glass-border) !important;
         border-radius: var(--zg-radius-md) !important;
-        padding: 12px 14px !important;
+        padding: 14px 16px !important;
         transition: var(--zg-transition) !important;
         box-shadow: var(--zg-glass-shadow) !important;
         min-width: 0 !important;
-        overflow: visible !important;
+        overflow: hidden !important;
         position: relative !important;
-        min-height: 120px !important;
+        min-height: 118px !important;
         display: flex !important;
         flex-direction: column !important;
         justify-content: space-between !important;
     }
-    .kpi-container:hover {
+    .kpi-container::before,
+    .glass-metric-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 12%;
+        right: 12%;
+        height: 1px;
+        background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.55), transparent);
+        pointer-events: none;
+    }
+    .kpi-container:hover,
+    .glass-metric-card:hover {
         transform: translateY(-2px) !important;
         background: var(--zg-glass-elevated) !important;
         border: var(--zg-glass-border-hover) !important;
         box-shadow: var(--zg-glass-shadow-hover) !important;
     }
     .kpi-header {
-        font-size: 11px !important;
+        font-size: 10.5px !important;
         font-weight: 600 !important;
         color: var(--zg-silver-muted) !important;
         text-transform: uppercase !important;
-        letter-spacing: 0.05em !important;
-        margin-bottom: 2px !important;
+        letter-spacing: 0.06em !important;
+        margin-bottom: 4px !important;
         display: block !important;
         line-height: 1.25 !important;
     }
     .kpi-val {
-        font-size: 21px !important;
+        font-size: 22px !important;
         font-weight: 700 !important;
         font-family: var(--zg-font-mono) !important;
         color: var(--zg-silver-pure) !important;
@@ -315,159 +347,124 @@ st.markdown("""
     .kpi-neg { color: var(--zg-accent-rose) !important; }
     .kpi-neu { color: var(--zg-accent-amber) !important; }
 
-    /* Glass Metric Cards */
-    .glass-metric-card {
+    .glass-icon-box {
+        width: 32px;
+        height: 32px;
+        border-radius: var(--zg-radius-sm);
+        background: rgba(0, 240, 255, 0.08);
+        border: 1px solid rgba(0, 240, 255, 0.25);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 6px;
+        box-shadow: 0 0 12px rgba(0, 240, 255, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+    }
+
+    /* Native Streamlit Metrics */
+    [data-testid="stMetric"] {
         background: var(--zg-glass-surface) !important;
         backdrop-filter: var(--zg-glass-blur) !important;
         -webkit-backdrop-filter: var(--zg-glass-blur) !important;
         border: var(--zg-glass-border) !important;
         border-radius: var(--zg-radius-md) !important;
-        padding: 12px 14px !important;
+        padding: 12px 16px !important;
         box-shadow: var(--zg-glass-shadow) !important;
         transition: var(--zg-transition) !important;
-        margin-bottom: 10px !important;
-        min-height: 110px !important;
-        display: flex !important;
-        flex-direction: column !important;
-        justify-content: space-between !important;
     }
-    .glass-metric-card:hover {
-        transform: translateY(-2px) !important;
-        background: var(--zg-glass-elevated) !important;
+    [data-testid="stMetric"]:hover {
         border: var(--zg-glass-border-hover) !important;
         box-shadow: var(--zg-glass-shadow-hover) !important;
+        transform: translateY(-2px);
     }
-    .glass-icon-box {
-        width: 32px;
-        height: 32px;
-        border-radius: var(--zg-radius-sm);
-        background: rgba(19, 30, 52, 0.70);
-        border: 1px solid rgba(226, 232, 240, 0.12);
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        margin-bottom: 6px;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.15);
-    }
-    .glass-metric-header {
+    [data-testid="stMetricLabel"] {
         font-size: 11px !important;
         font-weight: 600 !important;
-        color: var(--zg-silver-muted) !important;
         text-transform: uppercase !important;
         letter-spacing: 0.05em !important;
-        margin-bottom: 2px !important;
+        color: var(--zg-silver-muted) !important;
     }
-    .glass-metric-val {
-        font-size: 20px !important;
+    [data-testid="stMetricValue"] {
+        font-size: 22px !important;
         font-weight: 700 !important;
-        font-family: var(--zg-font-mono) !important;
         color: var(--zg-silver-pure) !important;
-        letter-spacing: -0.02em !important;
-        margin-bottom: 2px !important;
-        line-height: 1.2 !important;
-    }
-    .glass-metric-sub {
-        font-size: 11px !important;
-        font-weight: 500 !important;
-        color: var(--zg-silver-dim) !important;
     }
 
-    /* Badges & Status Chips: Frosted Glass */
-    .chip {
-        display: inline-flex !important;
-        align-items: center !important;
-        gap: 6px !important;
-        padding: 3px 8px !important;
+    /* ====================================================================== */
+    /* NEON GLASS BUTTONS, EXPANDERS, TABS, INPUTS & TABLES                   */
+    /* ====================================================================== */
+    .stButton > button,
+    .stDownloadButton > button,
+    .stLinkButton > a {
+        background: rgba(14, 23, 42, 0.55) !important;
+        backdrop-filter: blur(14px) !important;
+        -webkit-backdrop-filter: blur(14px) !important;
+        color: var(--zg-silver-pure) !important;
+        border: 1px solid rgba(56, 189, 248, 0.24) !important;
         border-radius: var(--zg-radius-sm) !important;
-        font-size: 11.5px !important;
         font-weight: 600 !important;
-        letter-spacing: 0.02em !important;
-        margin-right: 6px !important;
-        backdrop-filter: blur(8px) !important;
+        font-size: 13px !important;
+        padding: 7px 14px !important;
+        transition: var(--zg-transition) !important;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
     }
-    .chip-ok { background: rgba(16, 185, 129, 0.15) !important; color: #34D399 !important; border: 1px solid rgba(16, 185, 129, 0.35) !important; }
-    .chip-wn { background: rgba(245, 158, 11, 0.15) !important; color: #FBBF24 !important; border: 1px solid rgba(245, 158, 11, 0.35) !important; }
-    .chip-err { background: rgba(239, 68, 68, 0.15) !important; color: #F87171 !important; border: 1px solid rgba(239, 68, 68, 0.35) !important; }
-    .chip-info { background: rgba(12, 92, 171, 0.20) !important; color: #60A5FA !important; border: 1px solid rgba(56, 189, 248, 0.40) !important; }
+    .stButton > button:hover,
+    .stDownloadButton > button:hover,
+    .stLinkButton > a:hover {
+        background: linear-gradient(135deg, rgba(0, 240, 255, 0.16) 0%, rgba(12, 92, 171, 0.42) 100%) !important;
+        border-color: rgba(0, 240, 255, 0.70) !important;
+        box-shadow: 0 0 22px rgba(0, 240, 255, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
+        transform: translateY(-1px) !important;
+    }
+    .stButton > button[kind="primary"] {
+        background: linear-gradient(135deg, rgba(0, 240, 255, 0.22) 0%, rgba(12, 92, 171, 0.85) 100%) !important;
+        border: 1px solid rgba(0, 240, 255, 0.65) !important;
+        box-shadow: 0 0 20px rgba(0, 240, 255, 0.25), inset 0 1px 0 rgba(255, 255, 255, 0.30) !important;
+    }
 
-    /* Alert Banner */
-    .alert-card {
+    /* Translucent Glass Expanders with Neon Edge */
+    [data-testid="stExpander"] {
+        background: var(--zg-glass-surface) !important;
+        backdrop-filter: var(--zg-glass-blur) !important;
+        -webkit-backdrop-filter: var(--zg-glass-blur) !important;
+        border: 1px solid rgba(56, 189, 248, 0.18) !important;
         border-radius: var(--zg-radius-md) !important;
-        padding: 14px 16px !important;
-        margin-bottom: 12px !important;
+        box-shadow: var(--zg-glass-shadow) !important;
+        overflow: hidden !important;
+        margin-bottom: 10px !important;
+        transition: var(--zg-transition) !important;
+    }
+    [data-testid="stExpander"]:hover {
+        border-color: rgba(0, 240, 255, 0.42) !important;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.55), 0 0 18px rgba(0, 240, 255, 0.12) !important;
+    }
+    [data-testid="stExpander"] summary {
+        font-weight: 600 !important;
+        font-size: 13px !important;
+        color: var(--zg-silver-pure) !important;
+        padding: 10px 16px !important;
+    }
+
+    /* Plotly Charts Glass Container */
+    [data-testid="stPlotlyChart"] {
+        background: var(--zg-glass-surface) !important;
+        backdrop-filter: var(--zg-glass-blur) !important;
+        -webkit-backdrop-filter: var(--zg-glass-blur) !important;
+        border: var(--zg-glass-border) !important;
+        border-radius: var(--zg-radius-md) !important;
+        padding: 10px !important;
+        box-shadow: var(--zg-glass-shadow) !important;
+    }
+
+    /* DataFrames & Tables */
+    [data-testid="stDataFrame"] {
         background: var(--zg-glass-surface) !important;
         backdrop-filter: var(--zg-glass-blur) !important;
         border: var(--zg-glass-border) !important;
+        border-radius: var(--zg-radius-md) !important;
         box-shadow: var(--zg-glass-shadow) !important;
     }
 
-    /* ====================================================================== */
-    /* STANDARDIZED BUTTONS: FROSTED GLASS & SAPPHIRE SPECULAR ACCENTS        */
-    /* ====================================================================== */
-    .stButton > button,
-    button[kind="secondary"],
-    button[data-testid="baseButton-secondary"],
-    button[data-testid="stBaseButton-secondary"],
-    div[data-testid="stButton"] button {
-        background: rgba(15, 23, 42, 0.65) !important;
-        backdrop-filter: blur(12px) !important;
-        -webkit-backdrop-filter: blur(12px) !important;
-        border: 1px solid rgba(226, 232, 240, 0.14) !important;
-        border-radius: var(--zg-radius-sm) !important;
-        color: var(--zg-silver-text) !important;
-        font-weight: 500 !important;
-        font-size: 13.5px !important;
-        letter-spacing: -0.01em !important;
-        padding: 7px 15px !important;
-        transition: var(--zg-transition) !important;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.10) !important;
-        cursor: pointer !important;
-    }
-    .stButton > button:hover,
-    button[kind="secondary"]:hover,
-    div[data-testid="stButton"] button:hover {
-        background: rgba(26, 42, 72, 0.85) !important;
-        border-color: rgba(56, 189, 248, 0.50) !important;
-        color: var(--zg-silver-pure) !important;
-        box-shadow: 0 4px 16px rgba(12, 92, 171, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.20) !important;
-        transform: translateY(-1px) !important;
-    }
-    .stButton > button:active,
-    button[kind="secondary"]:active,
-    div[data-testid="stButton"] button:active {
-        transform: scale(0.98) !important;
-    }
-
-    /* Primary Buttons: Glowing Sapphire Gradient */
-    .stButton > button[kind="primary"],
-    button[kind="primary"],
-    button[data-testid="baseButton-primary"],
-    button[data-testid="stBaseButton-primary"],
-    div[data-testid="stButton"] button[kind="primary"] {
-        background: linear-gradient(135deg, #0C5CAB 0%, #0A4A8A 100%) !important;
-        border: 1px solid rgba(56, 189, 248, 0.40) !important;
-        border-radius: var(--zg-radius-sm) !important;
-        color: #FFFFFF !important;
-        font-weight: 600 !important;
-        font-size: 13.5px !important;
-        letter-spacing: -0.01em !important;
-        padding: 7px 16px !important;
-        box-shadow: 0 4px 18px rgba(12, 92, 171, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.25) !important;
-        transition: var(--zg-transition) !important;
-    }
-    .stButton > button[kind="primary"]:hover,
-    button[kind="primary"]:hover {
-        background: linear-gradient(135deg, #126ec9 0%, #0C5CAB 100%) !important;
-        border-color: #38BDF8 !important;
-        box-shadow: 0 6px 24px rgba(12, 92, 171, 0.65), 0 0 18px rgba(56, 189, 248, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.35) !important;
-        transform: translateY(-1px) !important;
-    }
-    .stButton > button[kind="primary"]:active,
-    button[kind="primary"]:active {
-        transform: scale(0.98) !important;
-    }
-
-    /* Executive Forms: Glass Container */
+    /* Forms */
     [data-testid="stForm"] {
         background: var(--zg-glass-surface) !important;
         backdrop-filter: var(--zg-glass-blur) !important;
@@ -480,9 +477,9 @@ st.markdown("""
     /* Inputs & Selectboxes: Translucent Bevel */
     div[data-baseweb="select"] > div,
     div[data-baseweb="input"] > div {
-        background: rgba(19, 30, 52, 0.75) !important;
-        backdrop-filter: blur(10px) !important;
-        border: 1px solid rgba(226, 232, 240, 0.14) !important;
+        background: rgba(14, 23, 42, 0.55) !important;
+        backdrop-filter: blur(12px) !important;
+        border: 1px solid rgba(56, 189, 248, 0.20) !important;
         border-radius: var(--zg-radius-sm) !important;
         color: var(--zg-silver-pure) !important;
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
@@ -490,122 +487,147 @@ st.markdown("""
     }
     div[data-baseweb="select"] > div:hover,
     div[data-baseweb="input"] > div:hover {
-        border-color: rgba(56, 189, 248, 0.50) !important;
+        border-color: rgba(0, 240, 255, 0.50) !important;
     }
     div[data-baseweb="select"] > div:focus-within,
     div[data-baseweb="input"] > div:focus-within {
-        border-color: #38BDF8 !important;
-        box-shadow: 0 0 16px rgba(12, 92, 171, 0.40), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+        border-color: #00F0FF !important;
+        box-shadow: 0 0 18px rgba(0, 240, 255, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
     }
 
-    /* Executive Tabs: Frosted Strip */
+    /* Neon Tabs */
     .stTabs [data-baseweb="tab-list"] {
         gap: 6px !important;
-        background: var(--zg-glass-surface) !important;
-        backdrop-filter: blur(14px) !important;
+        background: rgba(10, 17, 32, 0.55) !important;
+        backdrop-filter: blur(16px) !important;
         padding: 5px !important;
         border-radius: var(--zg-radius-md) !important;
-        border: var(--zg-glass-border) !important;
+        border: 1px solid rgba(56, 189, 248, 0.16) !important;
         box-shadow: var(--zg-glass-shadow) !important;
     }
     .stTabs [data-baseweb="tab"] {
         border-radius: var(--zg-radius-sm) !important;
         padding: 6px 14px !important;
         color: var(--zg-silver-muted) !important;
-        font-size: 13.5px !important;
+        font-size: 13px !important;
         font-weight: 500 !important;
         background: transparent !important;
         border: 1px solid transparent !important;
         transition: var(--zg-transition) !important;
     }
     .stTabs [data-baseweb="tab"]:hover {
-        color: var(--zg-silver-text) !important;
-        background: rgba(19, 30, 52, 0.65) !important;
+        color: var(--zg-silver-pure) !important;
+        background: rgba(0, 240, 255, 0.08) !important;
     }
     .stTabs [aria-selected="true"] {
-        background: rgba(19, 30, 52, 0.85) !important;
-        border: 1px solid #0C5CAB !important;
-        color: var(--zg-silver-pure) !important;
+        background: linear-gradient(135deg, rgba(0, 240, 255, 0.18) 0%, rgba(12, 92, 171, 0.45) 100%) !important;
+        color: #FFFFFF !important;
+        border: 1px solid rgba(0, 240, 255, 0.55) !important;
         font-weight: 600 !important;
-        box-shadow: 0 0 14px rgba(12, 92, 171, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.15) !important;
+        box-shadow: 0 0 16px rgba(0, 240, 255, 0.25) !important;
+    }
+    .stTabs [data-baseweb="tab-highlight"] {
+        background-color: transparent !important;
+        height: 0px !important;
     }
 
-    /* Strategic Terminal Elements: Frosted Glass Dialogue */
-    [data-testid="stChatMessage"] {
+    /* Glass Section Header */
+    .section-header-glass {
         background: var(--zg-glass-surface) !important;
-        backdrop-filter: blur(14px) !important;
+        backdrop-filter: var(--zg-glass-blur) !important;
         border: var(--zg-glass-border) !important;
+        border-left: 3px solid #00F0FF !important;
         border-radius: var(--zg-radius-md) !important;
-        padding: 12px 16px !important;
-        box-shadow: 0 4px 18px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
-        margin-bottom: 8px !important;
-    }
-    div[data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarAssistant"]) {
-        background: rgba(12, 25, 45, 0.75) !important;
-        border: 1px solid rgba(12, 92, 171, 0.40) !important;
-        border-left: 3px solid #38BDF8 !important;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.40), 0 0 18px rgba(12, 92, 171, 0.20), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
-    }
-    div[data-testid="stChatMessage"]:has([data-testid="stChatMessageAvatarUser"]) {
-        background: rgba(19, 30, 50, 0.70) !important;
-        border: 1px solid rgba(226, 232, 240, 0.14) !important;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.10) !important;
-    }
-    [data-testid="stChatInput"] textarea {
-        background: rgba(19, 30, 52, 0.80) !important;
-        backdrop-filter: blur(12px) !important;
-        border: 1px solid rgba(226, 232, 240, 0.14) !important;
-        border-radius: var(--zg-radius-md) !important;
-        color: var(--zg-silver-pure) !important;
-        font-family: var(--zg-font-sans) !important;
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
-    }
-    [data-testid="stChatInput"] textarea:focus {
-        border-color: #38BDF8 !important;
-        box-shadow: 0 0 18px rgba(12, 92, 171, 0.40), inset 0 1px 0 rgba(255, 255, 255, 0.18) !important;
-    }
-
-    /* Custom Sleek Scrollbar */
-    ::-webkit-scrollbar {
-        width: 6px;
-        height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-        background: rgba(6, 9, 15, 0.50);
-    }
-    ::-webkit-scrollbar-thumb {
-        background: rgba(12, 92, 171, 0.40);
-        border-radius: var(--zg-radius-full);
-    }
-    ::-webkit-scrollbar-thumb:hover {
-        background: rgba(56, 189, 248, 0.65);
-    }
-
-    /* Dataframes & Tables: Frosted Glass */
-    [data-testid="stDataFrame"], [data-testid="stTable"] {
-        background: var(--zg-glass-surface) !important;
-        backdrop-filter: blur(16px) !important;
-        border: var(--zg-glass-border) !important;
-        border-radius: var(--zg-radius-md) !important;
-        padding: 4px !important;
+        padding: 12px 18px !important;
+        margin: 14px 0 !important;
         box-shadow: var(--zg-glass-shadow) !important;
     }
 
-    /* Mobile Responsive */
-    @media (max-width: 768px) {
-        .main .block-container {
-            padding-top: 1.0rem !important;
-            padding-left: 0.6rem !important;
-            padding-right: 0.6rem !important;
-            max-width: 100% !important;
-        }
-        [data-testid="stSidebar"] {
-            width: 88vw !important;
-            max-width: 320px !important;
-        }
-        .stButton > button, div[data-testid="stButton"] button {
-            min-height: 40px !important;
-            font-size: 13.5px !important;
+    /* Semantic Glass Alert Banners */
+    .alert-card-danger {
+        background: rgba(239, 68, 68, 0.10) !important;
+        backdrop-filter: blur(16px) !important;
+        border: 1px solid rgba(239, 68, 68, 0.35) !important;
+        border-left: 3px solid #EF4444 !important;
+        border-radius: var(--zg-radius-md) !important;
+        padding: 12px 16px !important;
+        margin-bottom: 10px !important;
+    }
+    .alert-card-warn {
+        background: rgba(245, 158, 11, 0.10) !important;
+        backdrop-filter: blur(16px) !important;
+        border: 1px solid rgba(245, 158, 11, 0.35) !important;
+        border-left: 3px solid #F59E0B !important;
+        border-radius: var(--zg-radius-md) !important;
+        padding: 12px 16px !important;
+        margin-bottom: 10px !important;
+    }
+    .alert-card-info {
+        background: rgba(0, 240, 255, 0.08) !important;
+        backdrop-filter: blur(16px) !important;
+        border: 1px solid rgba(0, 240, 255, 0.32) !important;
+        border-left: 3px solid #00F0FF !important;
+        border-radius: var(--zg-radius-md) !important;
+        padding: 12px 16px !important;
+        margin-bottom: 10px !important;
+    }
+
+    /* Futuristic Telemetry Badges */
+    .badge-enterprise-gold {
+        background: rgba(245, 158, 11, 0.14);
+        color: #FBBF24;
+        border: 1px solid rgba(245, 158, 11, 0.40);
+        border-radius: 4px;
+        padding: 2px 8px;
+        font-size: 11px;
+        font-weight: 600;
+        font-family: var(--zg-font-mono);
+    }
+    .badge-enterprise-blue {
+        background: rgba(0, 240, 255, 0.12);
+        color: #38BDF8;
+        border: 1px solid rgba(0, 240, 255, 0.38);
+        border-radius: 4px;
+        padding: 2px 8px;
+        font-size: 11px;
+        font-weight: 600;
+        font-family: var(--zg-font-mono);
+    }
+    .badge-enterprise-emerald {
+        background: rgba(16, 185, 129, 0.14);
+        color: #34D399;
+        border: 1px solid rgba(16, 185, 129, 0.40);
+        border-radius: 4px;
+        padding: 2px 8px;
+        font-size: 11px;
+        font-weight: 600;
+        font-family: var(--zg-font-mono);
+    }
+
+    /* Subtle Ambient Pulse */
+    @keyframes neonPulse {
+        0%, 100% { opacity: 1; box-shadow: 0 0 8px #10B981; }
+        50% { opacity: 0.45; box-shadow: 0 0 2px #10B981; }
+    }
+    .pulse-dot {
+        display: inline-block;
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: #10B981;
+        animation: neonPulse 2.2s ease-in-out infinite;
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: #03060C; }
+    ::-webkit-scrollbar-thumb { background: rgba(56, 189, 248, 0.25); border-radius: 99px; }
+    ::-webkit-scrollbar-thumb:hover { background: rgba(0, 240, 255, 0.65); }
+
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+            animation-duration: 0.01ms !important;
+            transition-duration: 0.01ms !important;
         }
     }
 </style>
@@ -8962,7 +8984,7 @@ def render_login_gate():
 render_login_gate()
 
 # Top Anchor & Floating Back-To-Top Button
-st.markdown('''<div id="top_anchor" style="position:relative;top:-30px;height:0px;width:0px;"></div><a href="#top_anchor" id="btn-back-to-top" title="Sayfa Başına Dön (Yukarı Çık)" onclick="const el=document.getElementById('top_anchor');if(el){el.scrollIntoView({behavior:'smooth',block:'start'});}else{window.scrollTo({top:0,behavior:'smooth'});}">⬆️</a>''', unsafe_allow_html=True)
+st.markdown('''<div id="top_anchor" style="position:relative;top:-30px;height:0px;width:0px;"></div><a href="#top_anchor" id="btn-back-to-top" title="Sayfa Başına Dön" onclick="const el=document.getElementById('top_anchor');if(el){el.scrollIntoView({behavior:'smooth',block:'start'});}else{window.scrollTo({top:0,behavior:'smooth'});}"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="18 15 12 9 6 15"></polyline></svg></a>''', unsafe_allow_html=True)
 
 # ==============================================================================
 # 3. SIDEBAR NAVIGATION & GLOBAL CONTROLS
@@ -8971,45 +8993,54 @@ with st.sidebar:
     # Official ZEUS Bioscience Logo
     st.image("assets/zeus_logo_white.png")
     st.markdown('''
-    <div style="margin-top: -6px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid rgba(226, 232, 240, 0.10); text-align: center;">
-        <div style="font-size: 10px; font-weight: 700; color: #38BDF8; letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 3px;">GLOBAL MARKET INTELLIGENCE</div>
-        <div style="font-size: 13.5px; font-weight: 700; color: #FAFAFA; letter-spacing: 0.03em;">Sireen Khemesh <span style="font-size:10px;color:#38BDF8;font-weight:600;">✦ Tier-1</span></div>
+    <div style="margin-top: -4px; margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid rgba(56, 189, 248, 0.16); text-align: center;">
+        <div style="font-size: 9.5px; font-weight: 700; color: #00F0FF; letter-spacing: 0.16em; text-transform: uppercase; margin-bottom: 3px;">GLOBAL MARKET INTELLIGENCE</div>
+        <div style="font-size: 13px; font-weight: 700; color: #FAFAFA; letter-spacing: 0.02em;">Sireen Khemesh <span style="font-size:10px;color:#38BDF8;font-family:'IBM Plex Mono',monospace;font-weight:600;background:rgba(0,240,255,0.10);border:1px solid rgba(0,240,255,0.30);padding:1px 6px;border-radius:4px;margin-left:4px;">TIER-1</span></div>
     </div>
     ''', unsafe_allow_html=True)
 
-    # Active Session Profile & Sign Out Button
+    # Active Session Profile & Telemetry Card (Zero Primitive Emojis, SVG Vectors)
     auth_user_name = st.session_state.get("auth_name", "Sireen Khemesh")
     auth_user_role = st.session_state.get("auth_role", "Executive")
     auth_user_badge = st.session_state.get("auth_badge", "C-Level")
-    
     sys_dt_side = get_system_datetime_display()
+
     st.markdown(f'''
-    <div style="background: #0F172A; border: 1px solid rgba(226, 232, 240, 0.10); border-radius: 8px; padding: 12px 14px; margin-top: -6px; margin-bottom: 12px; font-size: 12px; box-shadow: 0 4px 16px rgba(0,0,0,0.4);">
-        <div style="display: flex; justify-content: space-between; align-items: center;">
-            <span style="color: #94A3B8; font-size: 11px; font-weight: 500;">Oturum Açık:</span>
-            <span style="background: rgba(16, 185, 129, 0.15); color: #10B981; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; border: 1px solid rgba(16, 185, 129, 0.3);">● {auth_user_badge}</span>
+    <div style="background: linear-gradient(145deg, rgba(14, 23, 42, 0.58) 0%, rgba(7, 11, 22, 0.45) 100%); backdrop-filter: blur(18px); border: 1px solid rgba(56, 189, 248, 0.22); border-radius: 10px; padding: 12px 14px; margin-top: -4px; margin-bottom: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.12); position: relative; overflow: hidden;">
+        <div style="position:absolute;top:0;left:15%;right:15%;height:1px;background:linear-gradient(90deg,transparent,rgba(0,240,255,0.6),transparent);"></div>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span style="color: #94A3B8; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;">AKTİF OTURUM</span>
+            <span style="display:inline-flex;align-items:center;gap:5px;background: rgba(16, 185, 129, 0.14); color: #34D399; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; border: 1px solid rgba(16, 185, 129, 0.35); font-family: 'IBM Plex Mono', monospace;">
+                <span class="pulse-dot"></span>{auth_user_badge}
+            </span>
         </div>
-        <div style="font-weight: 700; color: #FAFAFA; font-size: 13px; margin-top: 4px;">👤 {auth_user_name}</div>
-        <div style="color: #94A3B8; font-size: 11px; font-weight: 500;">{auth_user_role}</div>
-        <div style="border-top: 1px solid rgba(226,232,240,0.08); margin-top: 8px; padding-top: 8px; color: #94A3B8; font-size: 11px; display: flex; justify-content: space-between; align-items: center;">
-            <span>⏱️ Canlı Sistem Saati:</span>
-            <b style="color: #FAFAFA; font-family: 'IBM Plex Mono', monospace; font-size: 11px;">{sys_dt_side}</b>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:2px;">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#00F0FF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+            <span style="font-weight: 700; color: #FAFAFA; font-size: 13px;">{auth_user_name}</span>
+        </div>
+        <div style="color: #94A3B8; font-size: 11px; font-weight: 500; padding-left: 22px;">{auth_user_role}</div>
+        <div style="border-top: 1px solid rgba(56, 189, 248, 0.12); margin-top: 9px; padding-top: 8px;">
+            <div style="display:flex;align-items:center;gap:6px;color:#94A3B8;font-size:10px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;margin-bottom:3px;">
+                <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#38BDF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                <span>CANLI SİSTEM SAATİ (TRT)</span>
+            </div>
+            <div style="color: #00F0FF; font-family: 'IBM Plex Mono', monospace; font-size: 11.5px; font-weight: 600; letter-spacing: 0.02em;">{sys_dt_side}</div>
         </div>
     </div>
     ''', unsafe_allow_html=True)
-    
-    if st.button("⎋ Güvenli Çıkış (Sign Out)", use_container_width=True, key="btn_signout_top"):
+
+    if st.button("Güvenli Çıkış · Sign Out", use_container_width=True, key="btn_signout_top"):
         for k in ["authenticated", "auth_user", "auth_name", "auth_role", "auth_badge"]:
             if k in st.session_state:
                 del st.session_state[k]
         st.rerun()
 
     main_nav_opts = [
-        "◈ 01 · Pazar İstihbaratı & Ülke Analizi (Market Intel)",
-        "⬡ 02 · Stratejik Karar Masası & Risk Radarı (Strategy & Alerts)",
-        "⌬ 03 · Fiyatlandırma & Klinik ROI Projeksiyonu (Pricing & ROI)",
-        "⌖ 04 · Kurumsal B2B & Medikal İletişim Ağı (Outreach & Media)",
-        "⊞ 05 · Global Satış & Konsolide ERP Kokpiti (ERP & Reports)"
+        "01 / Pazar İstihbaratı & Ülke Analizi",
+        "02 / Stratejik Karar Masası & Risk",
+        "03 / Fiyatlandırma & Klinik ROI",
+        "04 / B2B & Medikal İletişim Ağı",
+        "05 / Global Satış & ERP Kokpiti"
     ]
     if "main_nav_radio" not in st.session_state:
         st.session_state["main_nav_radio"] = main_nav_opts[0]
@@ -9027,66 +9058,66 @@ with st.sidebar:
     # CRITICAL PARAMETER BREAKDOWN CARD (HER SEKMEDEKİ DEĞERLİ PARAMETRELER)
     # --------------------------------------------------------------------------
     nav_param_meta = {
-        "◈ 01 · Pazar İstihbaratı & Ülke Analizi (Market Intel)": {
+        "01 / Pazar İstihbaratı & Ülke Analizi": {
             "title": "Pazar Analizi & Ülke Masası",
-            "badge": "48 Ülke + Çoklu Kıyaslama",
+            "badge": "48 ÜLKE · MATRİS",
             "color": "#10B981",
             "params": [
                 "Tekil Ülke 360° (WDI, ESHRE, Klinikler, 52K Siklus)",
-                "Çoklu Ülke Kıyaslama Masası (2-6 Ülke Yan Yana)",
+                "Çoklu Ülke Kıyaslama Masası (2–6 Ülke Yan Yana)",
                 "Doğrulanmış Karar Verici & Müşteri Radarı",
                 "Gümrük, İthalat & Biyoetik Mevzuat Haritası",
                 "Kamu İhaleleri & Şartnameler (14 İhale, $3.85M)",
                 "Kültürel Müzakere Playbook & İş Yapış Protokolü"
             ]
         },
-        "⬡ 02 · Stratejik Karar Masası & Risk Radarı (Strategy & Alerts)": {
+        "02 / Stratejik Karar Masası & Risk": {
             "title": "Strateji & Erken Uyarı Kokpiti",
-            "badge": "Rekabet Masası & Risk Radarı",
-            "color": "#38BDF8",
+            "badge": "REKABET · RİSK",
+            "color": "#00F0FF",
             "params": [
                 "ZEUS vs Eppendorf, RI Witness, Vitrolife",
                 "RFID OPEX Kilidi Kırma ($15,000 Yıllık Tasarruf)",
-                "Komple Laboratuvar Filo Paketi ($45K-$50K vs $120K)",
+                "Komple Laboratuvar Filo Paketi ($45K–$50K vs $120K)",
                 "Kritik Atıl Cihaz & Churn Erken Uyarıları",
                 "Jeopolitik & Döviz Riski Senaryoları",
                 "Kamu & Özel İhale Şartname Kilitleri (.txt)"
             ]
         },
-        "⌬ 03 · Fiyatlandırma & Klinik ROI Projeksiyonu (Pricing & ROI)": {
+        "03 / Fiyatlandırma & Klinik ROI": {
             "title": "Fiyatlandırma, ROI & Projeksiyon",
-            "badge": "Canlı Simülatör & ML Tahmin",
+            "badge": "ROI · PROJEKSİYON",
             "color": "#F59E0B",
             "params": [
                 "Ülke Gelir Grubuna Göre Dinamik Fiyatlandırma",
                 "4 Pool Tek Dish (20 Oosit/Dish = 1 Siklus)",
                 "Vaka Başı $6.60 USD Sarf Maliyeti ($0.33/Oosit)",
                 "Klinik Yatırım Geri Dönüşü (%700+ Net ROI)",
-                "Biyoistihbarat 2026 Q4 & 2027 Ciro/Sarf Projeksiyonu",
-                "Reagent-Based & Düzenli Sarf ARR Büyümesi (Dish & Solution-Powder)"
+                "2026 Q4 & 2027 Ciro/Sarf Büyüme Projeksiyonu",
+                "Reagent-Based & Düzenli Sarf ARR Büyümesi"
             ]
         },
-        "⌖ 04 · Kurumsal B2B & Medikal İletişim Ağı (Outreach & Media)": {
+        "04 / B2B & Medikal İletişim Ağı": {
             "title": "B2B Outreach & Kurumsal Medya",
-            "badge": "Doğrulanmış İletişim & GTM",
-            "color": "#6366F1",
+            "badge": "OUTREACH · GTM",
+            "color": "#818CF8",
             "params": [
                 "Doğrulanmış Karar Verici LinkedIn Canlı Arama",
                 "Google X-Ray Arama Linkleri (Clean Syntax)",
                 "6 Dilde Kişiselleştirilmiş B2B Pitch Mektubu",
                 "Güvenlik Uyarısı (info@ Bounced Mail Koruması)",
-                "MedTech Sosyal Medya Stüdyosu (LinkedIn & Reels)",
+                "MedTech Kurumsal İletişim Stüdyosu (LinkedIn & Reels)",
                 "Bilimsel AOA & Kongre İçerik Şablonları"
             ]
         },
-        "⊞ 05 · Global Satış & Konsolide ERP Kokpiti (ERP & Reports)": {
+        "05 / Global Satış & ERP Kokpiti": {
             "title": "Global ERP Satış & Raporlama",
-            "badge": "Canlı ERP ($936.5K / 76 Cihaz)",
-            "color": "#0C5CAB",
+            "badge": "ERP · $936.5K",
+            "color": "#38BDF8",
             "params": [
                 "3D İnteraktif Dünya Küresi & Küresel Satışlar",
                 "1,280 Doğrulanmış Fatura ($936,546 USD / 31.97M TL)",
-                "2020-2026 7 Yıllık Gelir & Sarf Evrimi",
+                "2020–2026 7 Yıllık Gelir & Sarf Evrimi",
                 "49 Distribütörün Performans Karneleri",
                 "Resmi Satış Veritabanı Excel (.xlsx) & CSV İndirme"
             ]
@@ -9096,18 +9127,19 @@ with st.sidebar:
     if cur_nav_info:
         params_html = "".join([f"<li style='margin-bottom:4px;'>{p}</li>" for p in cur_nav_info.get("params", [])])
         st.markdown(f"""
-        <div style="background:#0E1626;border:1px solid {cur_nav_info.get('color', '#00F5FF')}44;border-radius:12px;padding:12px 14px;margin-top:8px;margin-bottom:12px;box-shadow:0 4px 16px rgba(0,0,0,0.30);">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
-                <b style="color:{cur_nav_info.get('color', '#00F5FF')};font-size:13px;font-weight:700;">{cur_nav_info.get('title')}</b>
-                <span style="background:{cur_nav_info.get('color', '#00F5FF')}22;color:{cur_nav_info.get('color', '#00F5FF')};font-size:11px;padding:2px 8px;border-radius:6px;font-weight:700;border:1px solid {cur_nav_info.get('color', '#00F5FF')}55;">{cur_nav_info.get('badge')}</span>
+        <div style="background:linear-gradient(145deg, rgba(14, 23, 42, 0.56) 0%, rgba(7, 11, 22, 0.44) 100%);backdrop-filter:blur(18px);border:1px solid rgba(56, 189, 248, 0.22);border-radius:10px;padding:12px 14px;margin-top:8px;margin-bottom:12px;box-shadow:0 8px 28px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.12);position:relative;overflow:hidden;">
+            <div style="position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,{cur_nav_info.get('color', '#00F0FF')},transparent);"></div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;gap:6px;">
+                <b style="color:{cur_nav_info.get('color', '#00F0FF')};font-size:12px;font-weight:700;letter-spacing:0.01em;">{cur_nav_info.get('title')}</b>
+                <span style="background:rgba(0,240,255,0.10);color:{cur_nav_info.get('color', '#00F0FF')};font-size:9.5px;padding:2px 6px;border-radius:4px;font-weight:700;border:1px solid rgba(0,240,255,0.28);font-family:'IBM Plex Mono',monospace;white-space:nowrap;">{cur_nav_info.get('badge')}</span>
             </div>
-            <div style="color:#94A3B8;font-size:11px;margin-bottom:6px;font-weight:600;letter-spacing:0.4px;">??ERD??? KR?T?K PARAMETRELER:</div>
-            <ul style="color:#CBD5E1;padding-left:16px;margin:0;font-size:12px;line-height:1.6;">
+            <div style="color:#94A3B8;font-size:9.5px;margin-bottom:6px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;">AKTİF MODÜL PARAMETRELERİ</div>
+            <ul style="color:#CBD5E1;padding-left:15px;margin:0;font-size:11.5px;line-height:1.55;">
                 {params_html}
             </ul>
         </div>
         """, unsafe_allow_html=True)
-    
+
     st.markdown("---")
     st.caption("GLOBAL PARAMETERS")
     
@@ -9524,7 +9556,7 @@ def render_zeus_ai_chat_interface(key_suffix=""):
     # Executive Status Banner (Glassmorphism & Depth)
     has_api_key = bool(get_gemini_api_key() or st.session_state.get("custom_gemini_api_key"))
     engine_badge = (
-        "● ÇEKİRDEK: Canlı LLM Medikal Biyoistihbarat Motoru"
+        "MOTOR: Canlı Biyoistihbarat & Klinik Karar Çekirdeği"
         if has_api_key
         else "● ÇEKİRDEK: ZEUS MedTech Biyoistihbarat & Karar Matrisi v2.9"
     )
@@ -9589,7 +9621,7 @@ def render_zeus_ai_chat_interface(key_suffix=""):
     st.markdown("<div style='height:12px;'></div>", unsafe_allow_html=True)
     c_act1, c_act2, c_act3 = st.columns([1.2, 1.6, 1.2])
     with c_act1:
-        if st.button("⎋ Oturumu Temizle (Reset)", key=f"btn_reset_chat{key_suffix}", use_container_width=True):
+        if st.button("Oturumu Temizle (Reset)", key=f"btn_reset_chat{key_suffix}", use_container_width=True):
             st.session_state[hist_key] = [
                 {
                     "role": "assistant",
@@ -13717,7 +13749,7 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
         st.markdown(comp_table_html, unsafe_allow_html=True)
 
         # Interactive Competitor Row Note Editor Expander
-        with st.expander("✍️ Tablodaki Rakipler İçin Yönetici Saha Notlarını Düzenle & Güncelle (Her Satıra Not Yaz)", expanded=False):
+        with st.expander("Tablodaki Rakipler İçin Yönetici Saha Notlarını Düzenle & Güncelle (Her Satıra Not Yaz)", expanded=False):
             st.caption("Aşağıdan istediğiniz rakibi seçerek sahada uygulayacağınız özel yönetici / saha notunu güncelleyebilirsiniz. Güncelleme anında tablonun 7. sütununa yansır.")
             comp_select_edit = st.selectbox(
                 "Notunu Düzenlemek İstediğiniz Rakip:",
@@ -13807,7 +13839,7 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
         st.markdown("#### ✍️ Buraya Yeni Karar Notu Ekle & Karar Merkezinde Değerlendir")
         st.caption("Bu kıyaslama masasındaki rakipler karşısında sahada alınan kararları veya klinik taleplerini buraya yazabilirsiniz. Not anında kaydedilir ve Karar Masası Değerlendirme Motoru tarafından otomatik puanlanır.")
 
-        with st.expander("➕ Yeni Stratejik Karar / Müzakere Notu Girişi (Buradan Ekle)", expanded=False):
+        with st.expander("Yeni Stratejik Karar / Müzakere Notu Girişi (Buradan Ekle)", expanded=False):
             with st.form(f"form_inline_tab1_decision_note_{active_source}", clear_on_submit=True):
                 it1_c1, it1_c2 = st.columns(2)
                 with it1_c1:
@@ -13891,7 +13923,7 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
         else:
             for idx_t1, n_item in enumerate(t1_notes):
                 eval_res = evaluate_decision_note(n_item)
-                with st.expander(f"📌 [{n_item['id']}] {n_item['country']} — {n_item['clinic_or_dist']} | Skoru: %{eval_res['score']} ({n_item['status']})", expanded=(idx_t1 == 0)):
+                with st.expander(f"[{n_item['id']}] {n_item['country']} — {n_item['clinic_or_dist']} | Skoru: %{eval_res['score']} ({n_item['status']})", expanded=(idx_t1 == 0)):
                     ev_c1, ev_c2 = st.columns([1.6, 1.4])
                     with ev_c1:
                         st.markdown(f"""
@@ -14246,7 +14278,7 @@ def render_competitor_intelligence_and_deal_desk(selected_markets=None, country_
             else:
                 for idx_n, n_item in enumerate(all_saved_notes):
                     ev_info = evaluate_decision_note(n_item)
-                    with st.expander(f"📌 [{n_item['id']}] {n_item['country']} — {n_item['clinic_or_dist']} | Skoru: %{ev_info['score']} ({n_item['status']})", expanded=(idx_n == 0)):
+                    with st.expander(f"[{n_item['id']}] {n_item['country']} — {n_item['clinic_or_dist']} | Skoru: %{ev_info['score']} ({n_item['status']})", expanded=(idx_n == 0)):
                         st.markdown(f"""
                         <div style="font-size:11.5px;color:#CCD7E6;line-height:1.5;">
                             <b>⚔️ Rakip Firma:</b> <span style="color:#FFB800;">{n_item['target_competitor']}</span><br>
@@ -17574,7 +17606,7 @@ def render_risk_scenario_simulator_view():
             sim_delay = st.slider("Sevkiyat Gecikmesi (Gün)", 0, 90, int(p_delay), 5, help="Teslimatın kaç gün ötelenebileceğini gösterir.")
 
             # Ürün Maliyeti Girişi (Opsiyonel / Maliyet verisi kuralı)
-            with st.expander("💼 Kârlılık Hesabı İçin Ürün Maliyeti (COGS) Girişi", expanded=False):
+            with st.expander("Kârlılık Hesabı İçin Ürün Maliyeti (COGS) Girişi", expanded=False):
                 st.caption("Ürün maliyeti girilene kadar brüt kâr ve marj alanlarında 'Maliyet verisi gerekli' yazacaktır.")
                 user_cogs_pct = st.number_input("Ürün Maliyet Oranı (%)", min_value=0.0, max_value=90.0, value=0.0, step=5.0, help="Maliyet oranı girildiğinde brüt kâr ve marj otomatik hesaplanır.")
 
@@ -18314,7 +18346,7 @@ def render_churn_and_partner_performance_view():
                 st.write(f"**{item['Factor']}** ({item['Weight']}) — `{item['Detail']}`")
                 st.progress(item['Score'] / 100.0, text=f"{item['Score']} / 100")
 
-        with st.expander("🔍 Skorlama Metodolojisi & Ülke Şartları Kalibrasyon Rehberi"):
+        with st.expander("Skorlama Metodolojisi & Ülke Şartları Kalibrasyon Rehberi"):
             st.markdown(f"""
             <div style="font-size:12px;line-height:1.7;color:#C4D1D9;">
                 <b>1. Kurulu Cihaz Tabanı & Penetrasyon (%25):</b> Maktuf cihaz adedi yerine ülkedeki toplam lisanslı IVF klinik sayısına oranlanır. Örneğin 14 klinikli Filistin'de 5 cihaz (%35.7 penetrasyon) pazar liderliği skoru (90+) alırken, 150 klinikli Güney Kore'de 7 cihaz (%4.7 penetrasyon) büyüme aşaması skoru (44) alır.<br>
@@ -18360,30 +18392,30 @@ def render_churn_and_partner_performance_view():
 
 
 ZEUS_HUB_SUBVIEWS = {
-    "◈ 01 · Pazar İstihbaratı & Ülke Analizi (Market Intel)": [
-        "◈ Tekil Ülke 360° (Mevzuat, Pazar & Klinikler)",
-        "⬡ Çoklu Ülke Kıyaslama Matrisi (Multi-Country Matrix)",
-        "⌖ Küresel Mevzuat & İhale Rehberi (Global Regulations & Tenders)"
+    "01 / Pazar İstihbaratı & Ülke Analizi": [
+        "Tekil Ülke 360° Dossier",
+        "Çoklu Ülke Kıyaslama Matrisi",
+        "Küresel Mevzuat & İhale Rehberi"
     ],
-    "⬡ 02 · Stratejik Karar Masası & Risk Radarı (Strategy & Alerts)": [
-        "⬡ Rakip Kıyaslama & RFID Trap Breaker",
-        "⚠ Kritik Atıl Cihaz, Churn & Risk Radarı",
-        "📄 İhale Şartname Kilitleri & Sözleşmeler",
-        "◈ Stratejik İstihbarat & Danışman Masası (Executive Terminal)"
+    "02 / Stratejik Karar Masası & Risk": [
+        "Rakip Analizi & RFID Trap Breaker",
+        "Atıl Cihaz, Churn & Risk Radarı",
+        "İhale Şartname Kilitleri & Sözleşmeler",
+        "Biyoistihbarat Karar Terminali"
     ],
-    "⌬ 03 · Fiyatlandırma & Klinik ROI Projeksiyonu (Pricing & ROI)": [
-        "⌬ Fiyatlandırma, 4-Pool Dish & Klinik ROI",
-        "✦ Biyoistihbarat Satış & Sarf Projeksiyonu (2026 Q4 & 2027)",
-        "◈ Stratejik İstihbarat & Danışman Masası (Executive Terminal)"
+    "03 / Fiyatlandırma & Klinik ROI": [
+        "Fiyatlandırma, 4-Pool Dish & ROI",
+        "2026 Q4 & 2027 Satış Projeksiyonu",
+        "Biyoistihbarat Karar Terminali"
     ],
-    "⌖ 04 · Kurumsal B2B & Medikal İletişim Ağı (Outreach & Media)": [
-        "⌖ Doğrulanmış Karar Verici Bulucu (LinkedIn & Network)",
-        "📢 MedTech Kurumsal İletişim & İçerik Stüdyosu"
+    "04 / B2B & Medikal İletişim Ağı": [
+        "Karar Verici Bulucu (LinkedIn)",
+        "Kurumsal Medikal İletişim Stüdyosu"
     ],
-    "⊞ 05 · Global Satış & Konsolide ERP Kokpiti (ERP & Reports)": [
-        "⊞ 3D Dünya Küresi & Canlı ERP Kokpiti",
-        "↗ Cihaz vs Sarf Gelir Trendleri (2020–2026)",
-        "📋 Partner Karneleri, Raporlar & Excel/CSV Veri Masası"
+    "05 / Global Satış & ERP Kokpiti": [
+        "3D Dünya Küresi & ERP Kokpiti",
+        "Cihaz vs Sarf Gelir Trendleri",
+        "Partner Karneleri & Veri Masası"
     ]
 }
 active_subviews = ZEUS_HUB_SUBVIEWS.get(nav_selection, [
@@ -18464,7 +18496,7 @@ def render_decision_maker_finder_hub(country_df):
     st.markdown("<div style='height:14px;'></div>", unsafe_allow_html=True)
 
     # Inline Quick Sellbird CSV Ingestion Expander
-    with st.expander("📥 Sellbird / Dış Kaynaklı B2B Karar Verici CSV Dosyası İçe Aktar (Hızlı Yükleme)", expanded=False):
+    with st.expander("Sellbird / Dış Kaynaklı B2B Karar Verici CSV Dosyası İçe Aktar (Hızlı Yükleme)", expanded=False):
         render_quick_b2b_csv_uploader()
 
     # Country & Institution Selector
@@ -18555,9 +18587,9 @@ def render_decision_maker_finder_hub(country_df):
 
     c_b1, c_b2, c_b3 = st.columns([1.5, 1.5, 1.2])
     with c_b1:
-        st.link_button(f"🚀 LinkedIn'de Canlı Karar Verici Ara", live_lk_url, use_container_width=True)
+        st.link_button(f"LinkedIn'de Canlı Karar Verici Ara", live_lk_url, use_container_width=True)
     with c_b2:
-        st.link_button(f"⚡ Google X-Ray ile Şifresiz Profil Aç", live_gx_url, use_container_width=True)
+        st.link_button(f"Google X-Ray ile Şifresiz Profil Aç", live_gx_url, use_container_width=True)
     with c_b3:
         st.link_button(f"🏢 Kurum Profilini Aç", company_lk_url, use_container_width=True)
 
@@ -18642,7 +18674,7 @@ def render_decision_maker_finder_hub(country_df):
 
             is_info_mail = pr.get('email', '').strip().lower().startswith('info@')
 
-            with st.expander(f"📍 {pr['name']} — {pr.get('city', sel_c)} [{pr.get('category', 'IVF Merkezi')}]", expanded=(idx_p < 2)):
+            with st.expander(f"{pr['name']} — {pr.get('city', sel_c)} [{pr.get('category', 'IVF Merkezi')}]", expanded=(idx_p < 2)):
                 pc1, pc2 = st.columns([1.6, 1.4])
                 with pc1:
                     st.markdown(f"""
@@ -18665,15 +18697,15 @@ def render_decision_maker_finder_hub(country_df):
 
                 p_b1, p_b2, p_b3 = st.columns(3)
                 with p_b1:
-                    st.link_button(f"🚀 LinkedIn'de Ara", pr_lk_url, use_container_width=True)
+                    st.link_button(f"LinkedIn'de Ara", pr_lk_url, use_container_width=True)
                 with p_b2:
-                    st.link_button(f"⚡ Google X-Ray", pr_gx_url, use_container_width=True)
+                    st.link_button(f"Google X-Ray", pr_gx_url, use_container_width=True)
                 with p_b3:
                     st.link_button(f"📩 E-posta Gönder", direct_mail_url, use_container_width=True)
 
     # Optional Expandable ERP Client Directory at bottom
     st.markdown("<div style='height:16px;'></div>", unsafe_allow_html=True)
-    with st.expander("📊 Mevcut ERP Kayıtlı 49 Müşteri ve Partner Dizini (Commercial Accounts)", expanded=False):
+    with st.expander("Mevcut ERP Kayıtlı 49 Müşteri ve Partner Dizini (Commercial Accounts)", expanded=False):
         st.caption("Excel satış arşivindeki 49 resmi faturalı partnerin dökümü.")
         df_crm_preview = pd.DataFrame([
             {
@@ -18803,26 +18835,26 @@ def render_active_omni_search_hub(query_str):
         if len(matched_cultures) > 0:
             first_c = matched_cultures[0]['country']
             if st.button(f"🌍 Kültür & Sözleşme ({len(matched_cultures)}) ➔", key="btn_jump_cult_hdr", use_container_width=True, type="primary"):
-                st.session_state["main_nav_radio"] = "◈ 01 · Pazar İstihbaratı & Ülke Analizi (Market Intel)"
+                st.session_state["main_nav_radio"] = "01 / Pazar İstihbaratı & Ülke Analizi"
                 st.session_state["c360_single_country_select"] = first_c
                 st.session_state["omni_search_input"] = ""
                 st.rerun()
     with jump_cols[1]:
         if len(matched_firms) > 0:
             if st.button(f"🏢 Firmalar & CRM ({len(matched_firms)}) ➔", key="btn_jump_firm_hdr", use_container_width=True):
-                st.session_state["main_nav_radio"] = "⌖ 04 · Kurumsal B2B & Medikal İletişim Ağı (Outreach & Media)"
+                st.session_state["main_nav_radio"] = "04 / B2B & Medikal İletişim Ağı"
                 st.session_state["omni_search_input"] = ""
                 st.rerun()
     with jump_cols[2]:
         if len(matched_tenders) > 0:
             if st.button(f"🏛️ Kamu İhaleleri ({len(matched_tenders)}) ➔", key="btn_jump_tend_hdr", use_container_width=True):
-                st.session_state["main_nav_radio"] = "◈ 01 · Pazar İstihbaratı & Ülke Analizi (Market Intel)"
+                st.session_state["main_nav_radio"] = "01 / Pazar İstihbaratı & Ülke Analizi"
                 st.session_state["omni_search_input"] = ""
                 st.rerun()
     with jump_cols[3]:
         if len(matched_products) > 0:
             if st.button(f"⚡ Cihaz & Mevzuat ({len(matched_products)}) ➔", key="btn_jump_prod_hdr", use_container_width=True):
-                st.session_state["main_nav_radio"] = "◈ 01 · Pazar İstihbaratı & Ülke Analizi (Market Intel)"
+                st.session_state["main_nav_radio"] = "01 / Pazar İstihbaratı & Ülke Analizi"
                 st.session_state["omni_search_input"] = ""
                 st.rerun()
 
@@ -18874,7 +18906,7 @@ def render_active_omni_search_hub(query_str):
                         </div>
                         """, unsafe_allow_html=True)
                         if st.button(f"👉 Bu Ülkenin Masasına Git ({c_name} — Pazar Analizi & Ülke 360°)", key=f"btn_go_cult_item_{c_name}_{idx_c}"):
-                            st.session_state["main_nav_radio"] = "◈ 01 · Pazar İstihbaratı & Ülke Analizi (Market Intel)"
+                            st.session_state["main_nav_radio"] = "01 / Pazar İstihbaratı & Ülke Analizi"
                             st.session_state["c360_single_country_select"] = c_name
                             st.session_state["omni_search_input"] = ""
                             st.rerun()
@@ -18910,7 +18942,7 @@ def render_active_omni_search_hub(query_str):
                         </div>
                         """, unsafe_allow_html=True)
                         if st.button(f"👉 Bu Kurumun Masasına Git ({f_name})", key=f"btn_go_firm_item_{idx_f}"):
-                            st.session_state["main_nav_radio"] = "⌖ 04 · Kurumsal B2B & Medikal İletişim Ağı (Outreach & Media)"
+                            st.session_state["main_nav_radio"] = "04 / B2B & Medikal İletişim Ağı"
                             st.session_state["omni_search_input"] = ""
                             st.rerun()
 
@@ -18945,7 +18977,7 @@ def render_active_omni_search_hub(query_str):
                             st.markdown(f'<a href="{p_url}" target="_blank" style="display:inline-block;background:rgba(0,245,255,0.1);color:#00F5FF;border:1px solid rgba(0,245,255,0.3);padding:3px 8px;border-radius:4px;font-size:11px;text-decoration:none;">🔗 {p_name}</a>', unsafe_allow_html=True)
                         st.markdown("</div></div>", unsafe_allow_html=True)
                         if st.button(f"👉 Bu İhalenin Masasına Git ({t_country})", key=f"btn_go_tender_item_{t_country}_{idx_t}"):
-                            st.session_state["main_nav_radio"] = "◈ 01 · Pazar İstihbaratı & Ülke Analizi (Market Intel)"
+                            st.session_state["main_nav_radio"] = "01 / Pazar İstihbaratı & Ülke Analizi"
                             st.session_state["omni_search_input"] = ""
                             st.rerun()
 
@@ -18968,7 +19000,7 @@ def render_active_omni_search_hub(query_str):
                         </div>
                         """, unsafe_allow_html=True)
                         if st.button(f"👉 Bu Ürünün Mevzuat Masasına Git ({pr['title']})", key=f"btn_go_prod_item_{idx_p}"):
-                            st.session_state["main_nav_radio"] = "◈ 01 · Pazar İstihbaratı & Ülke Analizi (Market Intel)"
+                            st.session_state["main_nav_radio"] = "01 / Pazar İstihbaratı & Ülke Analizi"
                             st.session_state["omni_search_input"] = ""
                             st.rerun()
 
@@ -18986,42 +19018,43 @@ st.markdown("""
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
         margin-bottom: 14px !important;
     }
-    /* Circular Navigation Buttons */
+    /* Circular Navigation Buttons - Neon Glass */
     div[class*="st-key-btn_prev_"] button,
     div[class*="st-key-btn_next_"] button,
     div[class*="st-key-bot_prev_nav_"] button,
     div[class*="st-key-bot_next_nav_"] button {
         border-radius: 50% !important;
-        width: 34px !important;
-        height: 34px !important;
-        min-width: 34px !important;
-        max-width: 34px !important;
+        width: 36px !important;
+        height: 36px !important;
+        min-width: 36px !important;
+        max-width: 36px !important;
         padding: 0 !important;
         margin: 0 auto !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        background: #131E32 !important;
-        border: 1px solid rgba(226, 232, 240, 0.12) !important;
+        background: rgba(14, 23, 42, 0.52) !important;
+        backdrop-filter: blur(14px) !important;
+        border: 1px solid rgba(56, 189, 248, 0.22) !important;
         color: #E2E8F0 !important;
         font-size: 16px !important;
         font-weight: 700 !important;
         line-height: 1 !important;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3) !important;
-        transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+        transition: all 240ms cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
     div[class*="st-key-btn_prev_"] button:hover,
     div[class*="st-key-btn_next_"] button:hover,
     div[class*="st-key-bot_prev_nav_"] button:hover,
     div[class*="st-key-bot_next_nav_"] button:hover {
-        background: #0C5CAB !important;
-        border-color: #0C5CAB !important;
-        color: #FAFAFA !important;
-        box-shadow: 0 0 14px rgba(12, 92, 171, 0.45) !important;
+        background: linear-gradient(135deg, rgba(0, 240, 255, 0.20), rgba(12, 92, 171, 0.55)) !important;
+        border-color: rgba(0, 240, 255, 0.70) !important;
+        color: #FFFFFF !important;
+        box-shadow: 0 0 18px rgba(0, 240, 255, 0.38) !important;
         transform: scale(1.06) !important;
     }
 
-    /* Subview Pills - Enterprise High-Contrast Design */
+    /* Subview Pills Container */
     div[data-testid="stButtonGroup"],
     div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stButtonGroup"] {
         background: transparent !important;
@@ -19035,7 +19068,7 @@ st.markdown("""
         max-width: 100% !important;
     }
 
-    /* Pill Items: Enterprise Rounded (rounded.sm: 4px) */
+    /* Pill Items: Translucent Neon Glass */
     div[data-testid="stButtonGroup"] button,
     div[data-testid="stButtonGroup"] [data-variant="pills"],
     div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stButtonGroup"] button,
@@ -19044,13 +19077,15 @@ st.markdown("""
         width: auto !important;
         min-width: max-content !important;
         max-width: none !important;
-        height: 34px !important;
-        border-radius: 4px !important;
-        background: #131E32 !important;
-        border: 1px solid rgba(226, 232, 240, 0.10) !important;
+        height: 36px !important;
+        border-radius: 8px !important;
+        background: rgba(14, 23, 42, 0.50) !important;
+        backdrop-filter: blur(14px) !important;
+        -webkit-backdrop-filter: blur(14px) !important;
+        border: 1px solid rgba(56, 189, 248, 0.18) !important;
         color: #CBD5E1 !important;
         font-family: var(--zg-font-sans) !important;
-        font-size: 13px !important;
+        font-size: 12.5px !important;
         font-weight: 500 !important;
         letter-spacing: -0.01em !important;
         padding: 6px 14px !important;
@@ -19059,22 +19094,22 @@ st.markdown("""
         align-items: center !important;
         justify-content: center !important;
         white-space: nowrap !important;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important;
-        transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+        transition: all 240ms cubic-bezier(0.16, 1, 0.3, 1) !important;
         box-sizing: border-box !important;
     }
 
     div[data-testid="stButtonGroup"] button:hover,
     div[data-testid="stButtonGroup"] [data-variant="pills"]:hover,
     div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stButtonGroup"] button:hover {
-        background: #1A2844 !important;
-        border-color: rgba(12, 92, 171, 0.50) !important;
-        color: #FAFAFA !important;
-        box-shadow: 0 0 12px rgba(12, 92, 171, 0.25) !important;
+        background: rgba(20, 34, 62, 0.72) !important;
+        border-color: rgba(0, 240, 255, 0.55) !important;
+        color: #FFFFFF !important;
+        box-shadow: 0 0 18px rgba(0, 240, 255, 0.22) !important;
         transform: translateY(-1px) !important;
     }
 
-    /* Selected Pill - Enterprise Sapphire (#0C5CAB) */
+    /* Selected Pill: Electric Neon Cyan + Cobalt Glass */
     div[data-testid="stButtonGroup"] button[aria-selected="true"],
     div[data-testid="stButtonGroup"] button[data-selected="true"],
     div[data-testid="stButtonGroup"] [data-variant="pills"][data-selected="true"],
@@ -19085,16 +19120,16 @@ st.markdown("""
         width: auto !important;
         min-width: max-content !important;
         max-width: none !important;
-        height: 34px !important;
-        border-radius: 4px !important;
-        background: #0C5CAB !important;
-        border: 1px solid #0C5CAB !important;
-        color: #FAFAFA !important;
+        height: 36px !important;
+        border-radius: 8px !important;
+        background: linear-gradient(135deg, rgba(0, 240, 255, 0.22) 0%, rgba(12, 92, 171, 0.78) 100%) !important;
+        border: 1px solid rgba(0, 240, 255, 0.75) !important;
+        color: #FFFFFF !important;
         font-family: var(--zg-font-sans) !important;
-        font-size: 13px !important;
+        font-size: 12.5px !important;
         font-weight: 600 !important;
         padding: 6px 16px !important;
-        box-shadow: 0 0 16px rgba(12, 92, 171, 0.40) !important;
+        box-shadow: 0 0 22px rgba(0, 240, 255, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.30) !important;
         transform: translateY(-1px) !important;
         white-space: nowrap !important;
     }
@@ -19104,43 +19139,50 @@ st.markdown("""
         white-space: nowrap !important;
         overflow: visible !important;
         text-overflow: clip !important;
-        font-size: 13px !important;
+        font-size: 12.5px !important;
         color: inherit !important;
     }
-    /* Omni-Search Capsule */
+
+    /* Omni-Search Capsule: Translucent Neon Glass */
     div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stTextInput"] div[data-baseweb="input"] {
-        border-radius: 4px !important;
-        background: #131E32 !important;
-        border: 1px solid rgba(226, 232, 240, 0.12) !important;
-        height: 34px !important;
-        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25) !important;
-        transition: all 250ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+        border-radius: 8px !important;
+        background: rgba(14, 23, 42, 0.55) !important;
+        backdrop-filter: blur(14px) !important;
+        border: 1px solid rgba(56, 189, 248, 0.22) !important;
+        height: 36px !important;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.28), inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
+        transition: all 240ms cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
     div[class*="st-key-zgmi_top_control_dock"] div[data-testid="stTextInput"] div[data-baseweb="input"]:focus-within {
-        border-color: #0C5CAB !important;
-        box-shadow: 0 0 14px rgba(12, 92, 171, 0.35) !important;
+        border-color: #00F0FF !important;
+        box-shadow: 0 0 20px rgba(0, 240, 255, 0.35) !important;
     }
 </style>
 """, unsafe_allow_html=True)
 
 # OFFICIAL TOP STRIP: CE CERTIFIED & ISO 13485 / 14001 / 45001
 st.markdown('''
-<div style="background: rgba(15, 23, 42, 0.70); backdrop-filter: blur(16px); border: 1px solid rgba(226, 232, 240, 0.12); box-shadow: 0 4px 20px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08); border-radius: 8px; padding: 7px 16px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+<div style="background: linear-gradient(145deg, rgba(14, 23, 42, 0.54) 0%, rgba(7, 11, 22, 0.44) 100%); backdrop-filter: blur(20px) saturate(180%); border: 1px solid rgba(56, 189, 248, 0.20); box-shadow: 0 8px 32px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.12); border-radius: 10px; padding: 9px 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; position: relative; overflow: hidden;">
+    <div style="position:absolute;top:0;left:8%;right:8%;height:1px;background:linear-gradient(90deg,transparent,rgba(0,240,255,0.55),transparent);"></div>
     <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-        <span style="font-size:10px;font-weight:700;color:#94A3B8;letter-spacing:0.08em;text-transform:uppercase;">KALİTE AKREDİTASYONU:</span>
-        <span style="background:rgba(12,92,171,0.22);border:1px solid rgba(56,189,248,0.40);color:#FAFAFA;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:600;font-family:'IBM Plex Mono',monospace;">CE MDR · Class IIa</span>
-        <span style="background:rgba(16,185,129,0.18);border:1px solid rgba(16,185,129,0.40);color:#10B981;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:600;font-family:'IBM Plex Mono',monospace;">ISO 13485:2016</span>
-        <span style="background:rgba(245,158,11,0.18);border:1px solid rgba(245,158,11,0.40);color:#F59E0B;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:600;font-family:'IBM Plex Mono',monospace;">ISO 14001:2015</span>
-        <span style="background:rgba(99,102,241,0.18);border:1px solid rgba(99,102,241,0.40);color:#A5B4FC;padding:2px 8px;border-radius:4px;font-size:10.5px;font-weight:600;font-family:'IBM Plex Mono',monospace;">ISO 45001:2018</span>
+        <span style="display:inline-flex;align-items:center;gap:6px;font-size:10px;font-weight:700;color:#00F0FF;letter-spacing:0.10em;text-transform:uppercase;margin-right:4px;">
+            <span class="pulse-dot"></span>KALİTE AKREDİTASYONU
+        </span>
+        <span style="background:rgba(0,240,255,0.10);border:1px solid rgba(0,240,255,0.40);color:#FAFAFA;padding:3px 9px;border-radius:5px;font-size:10.5px;font-weight:600;font-family:'IBM Plex Mono',monospace;box-shadow:0 0 10px rgba(0,240,255,0.12);">CE MDR · Class IIa</span>
+        <span style="background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.38);color:#34D399;padding:3px 9px;border-radius:5px;font-size:10.5px;font-weight:600;font-family:'IBM Plex Mono',monospace;">ISO 13485:2016</span>
+        <span style="background:rgba(245,158,11,0.12);border:1px solid rgba(245,158,11,0.38);color:#FBBF24;padding:3px 9px;border-radius:5px;font-size:10.5px;font-weight:600;font-family:'IBM Plex Mono',monospace;">ISO 14001:2015</span>
+        <span style="background:rgba(129,140,248,0.14);border:1px solid rgba(129,140,248,0.40);color:#A5B4FC;padding:3px 9px;border-radius:5px;font-size:10.5px;font-weight:600;font-family:'IBM Plex Mono',monospace;">ISO 45001:2018</span>
     </div>
-    <div style="font-size:10.5px;color:#CBD5E1;font-weight:500;">
-        <span style="color:#38BDF8;font-weight:600;">Elektriksel Oosit Aktivasyonu (AOA)</span> · <span style="color:#10B981;font-weight:600;">Sıfır Termal / Mekanik Hasar</span>
+    <div style="font-size:11px;color:#CBD5E1;font-weight:500;display:flex;align-items:center;gap:8px;">
+        <span style="color:#38BDF8;font-weight:600;">Elektriksel Oosit Aktivasyonu (AOA)</span>
+        <span style="color:#475569;">|</span>
+        <span style="color:#34D399;font-weight:600;">Sıfır Termal / Mekanik Hasar</span>
     </div>
 </div>
 ''', unsafe_allow_html=True)
 
 # 45-SECOND STRATEGIC VIDEO SIMULATION & PRODUCT TOUR (Pazar, Gümrük, İhale, Rakip & Karar Masası)
-with st.expander("🎬 ZEUS ZGMI 45 Saniyelik Canlı Video Simülasyonu & Stratejik Tur (Pazar, Gümrük, İhaleler, Rakipler & Karar Masası)", expanded=False):
+with st.expander("ZEUS ZGMI · 45s İnteraktif Platform Simülasyonu & Stratejik Tur", expanded=False):
     sim_file_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "assets", "zgmi_video_simulation.html")
     if os.path.exists(sim_file_path):
         with open(sim_file_path, "r", encoding="utf-8") as f_sim:
@@ -19151,7 +19193,7 @@ with st.expander("🎬 ZEUS ZGMI 45 Saniyelik Canlı Video Simülasyonu & Strate
         if os.path.exists(mp4_tr_path):
             with open(mp4_tr_path, "rb") as f_mp4:
                 st.download_button(
-                    label="📥 45 Saniyelik Tanıtım Videosunu İndir (.MP4 — 1080p Full HD)",
+                    label="45 Saniyelik Tanıtım Videosunu İndir (.MP4 · 1080p)",
                     data=f_mp4.read(),
                     file_name="zeus_zgmi_45s_simulation_tr.mp4",
                     mime="video/mp4",
@@ -19162,7 +19204,7 @@ with st.expander("🎬 ZEUS ZGMI 45 Saniyelik Canlı Video Simülasyonu & Strate
         st.info("Video simülasyon bileşeni hazırlanıyor...")
 
 # OMNIPRESENT ZEUS AI COPILOT CHAT EXPANDER
-with st.expander("◈ ZEUS Biyoistihbarat & Stratejik Danışman Masası (Terminal Görünümü)", expanded=False):
+with st.expander("ZEUS Biyoistihbarat Terminalı · Stratejik Karar Destek Sistemi", expanded=False):
     render_zeus_ai_chat_interface(key_suffix="_quick_dock")
 
 with st.container(key="zgmi_top_control_dock"):
@@ -19210,7 +19252,7 @@ with st.container(key="zgmi_top_control_dock"):
     with col_hub_hdr2:
         omni_search_q = st.text_input(
             "Omni-Search",
-            placeholder="🔍 Firma, Ülke veya Cihaz...",
+            placeholder="Ara: Firma, Ülke, Cihaz veya GTİP...",
             label_visibility="collapsed",
             key="omni_search_input"
         )
@@ -19222,7 +19264,7 @@ if not active_view:
 if omni_search_q and omni_search_q.strip():
     render_active_omni_search_hub(omni_search_q.strip())
 
-if active_view in ["⊞ 3D Dünya Küresi & Canlı ERP Kokpiti", "🌐 3D Dünya Küresi & Canlı ERP Kokpiti", "🌐 3D Dünya Küresi & ERP Satışları", "🌐 Executive Overview & 3D Globe"]:
+if active_view in ["3D Dünya Küresi & ERP Kokpiti", "⊞ 3D Dünya Küresi & Canlı ERP Kokpiti", "🌐 3D Dünya Küresi & Canlı ERP Kokpiti", "🌐 3D Dünya Küresi & ERP Satışları", "🌐 Executive Overview & 3D Globe"]:
     # Header Banner
     col_h1, col_h2 = st.columns([2.5, 1.5])
     with col_h1:
@@ -20809,7 +20851,7 @@ if active_view in ["⊞ 3D Dünya Küresi & Canlı ERP Kokpiti", "🌐 3D Dünya
         </div>
         """, unsafe_allow_html=True)
         
-        with st.expander("✍️ Değerlendirme Yorumu & Eylem Planı Oluştur", expanded=False):
+        with st.expander("Değerlendirme Yorumu & Eylem Planı Oluştur", expanded=False):
             with st.form("form_alert_kuwait"):
                 c_comm1 = st.text_area("Yönetici Değerlendirmesi / Saha Yorumu:", value=p1['user_comment'], key="c_comm_kuwait")
                 f_c1a, f_c1b = st.columns(2)
@@ -20863,7 +20905,7 @@ if active_view in ["⊞ 3D Dünya Küresi & Canlı ERP Kokpiti", "🌐 3D Dünya
         </div>
         """, unsafe_allow_html=True)
         
-        with st.expander("✍️ Değerlendirme Yorumu & Eylem Planı Oluştur", expanded=False):
+        with st.expander("Değerlendirme Yorumu & Eylem Planı Oluştur", expanded=False):
             with st.form("form_alert_sellco"):
                 c_comm3 = st.text_area("Yönetici Değerlendirmesi / Saha Yorumu:", value=p3['user_comment'], key="c_comm_sellco")
                 f_c3a, f_c3b = st.columns(2)
@@ -20919,7 +20961,7 @@ if active_view in ["⊞ 3D Dünya Küresi & Canlı ERP Kokpiti", "🌐 3D Dünya
         </div>
         """, unsafe_allow_html=True)
         
-        with st.expander("✍️ Değerlendirme Yorumu & Eylem Planı Oluştur", expanded=False):
+        with st.expander("Değerlendirme Yorumu & Eylem Planı Oluştur", expanded=False):
             with st.form("form_alert_sirius"):
                 c_comm2 = st.text_area("Yönetici Değerlendirmesi / Saha Yorumu:", value=p2['user_comment'], key="c_comm_sirius")
                 f_c2a, f_c2b = st.columns(2)
@@ -20973,7 +21015,7 @@ if active_view in ["⊞ 3D Dünya Küresi & Canlı ERP Kokpiti", "🌐 3D Dünya
         </div>
         """, unsafe_allow_html=True)
         
-        with st.expander("✍️ Değerlendirme Yorumu & Eylem Planı Oluştur", expanded=False):
+        with st.expander("Değerlendirme Yorumu & Eylem Planı Oluştur", expanded=False):
             with st.form("form_alert_ratio"):
                 c_comm4 = st.text_area("Yönetici Değerlendirmesi / Saha Yorumu:", value=p4['user_comment'], key="c_comm_ratio")
                 f_c4a, f_c4b = st.columns(2)
@@ -21019,15 +21061,15 @@ if active_view in ["⊞ 3D Dünya Küresi & Canlı ERP Kokpiti", "🌐 3D Dünya
 
 
 elif active_view in [
-    "◈ Stratejik İstihbarat & Danışman Masası (Executive Terminal)",
+    "Biyoistihbarat Karar Terminali", "◈ Stratejik İstihbarat & Danışman Masası (Executive Terminal)",
     "🤖 ZEUS AI MedTech Uzmanı & Danışman Masası (AI Chat)",
     "💬 Canlı AI MedTech Uzman Sohbeti & İstişare Masası",
     "🤖 Yapay Zeka Stratejik Danışman (AI Copilot)"
 ]:
     render_zeus_ai_chat_interface()
 
-elif active_view in ["✦ Biyoistihbarat Satış & Sarf Projeksiyonu (2026 Q4 & 2027)", "🔮 AI Satış & Sarf Projeksiyonu (2026 Q4 & 2027)", "🔮 AI Intelligence & Forecasting"]:
-    st.title("AI Commercial Intelligence & Predictive Analytics")
+elif active_view in ["2026 Q4 & 2027 Satış Projeksiyonu", "✦ Biyoistihbarat Satış & Sarf Projeksiyonu (2026 Q4 & 2027)", "🔮 AI Satış & Sarf Projeksiyonu (2026 Q4 & 2027)", "🔮 AI Intelligence & Forecasting"]:
+    st.title("Predictive Commercial Intelligence & Revenue Analytics")
     st.caption("Yapay zeka ve makine öğrenmesi destekli kurumsal satış projeksiyonu, anomali tespiti ve pazar optimizasyonu.")
 
     st.markdown("""
@@ -21429,7 +21471,7 @@ Immediate Resolution: ZEUS Bioscience is actively incorporating this high-level 
             # Interactive Expert Review & Field Intelligence Panel
             # ------------------------------------------------------------------
 
-            with st.expander(f"🩺 Uzman Değerlendirme & Saha Notu Ekle (AI ile Yeniden Değerlendir)", expanded=bool(reval_data)):
+            with st.expander(f"Uzman Değerlendirme & Saha Notu Ekle (AI ile Yeniden Değerlendir)", expanded=bool(reval_data)):
                 st.markdown("""
                 <div style="font-size:12.5px; color:#A0AEC0; margin-bottom:8px;">
                     Genel Müdür, Uluslararası İlişkiler Müdürü, Satın Alma Sorumlusu, Finans Müdürü veya Kıdemli Klinik Embriyolog sahadaki ve yönetimdeki en son stratejik, klinik ve ticari gözlemleri (bütçe kararı, sözleşme müzakeresi, rakip hamlesi, sarf tüketimi vb.) not olarak ekleyebilir. <b>Yapay zeka motoru bu notu doğrudan analize entegre ederek teşhisi, eylem reçetesini ve resmi mektubu günceller.</b>
@@ -21489,12 +21531,12 @@ Immediate Resolution: ZEUS Bioscience is actively incorporating this high-level 
                             st.session_state[f'expert_reval_{case_id}'] = reval_res
                             st.rerun()
 
-            with st.expander(f"📨 {letter_title} (Kopyalamaya Hazır Resmi İletişim Taslağı)"):
+            with st.expander(f"{letter_title} (Kopyalamaya Hazır Resmi İletişim Taslağı)"):
                 st.text_area("Yönetici Mektubu Taslağı", active_letter, height=180, key=f"txt_{case_id}")
                 st.caption("Bu taslağı kopyalayarak doğrudan ilgili distribütörün Genel Müdürüne veya Baş Embriyoloğuna e-posta/resmi yazı olarak gönderebilirsiniz.")
 
             # Live AI Strategic Execution Block
-            with st.expander(f"⚡ {case_id.upper()} İçin Canlı Yapay Zeka Stratejik Raporu Çalıştır"):
+            with st.expander(f"{case_id.upper()} İçin Canlı Yapay Zeka Stratejik Raporu Çalıştır"):
                 c_tone, c_btn = st.columns([2, 1])
                 with c_tone:
                     tone_sel = st.selectbox(
@@ -22622,7 +22664,7 @@ ZEUS Bioscience Scientific Affairs""",
                 )
                 st.markdown(card_html, unsafe_allow_html=True)
 
-                with st.expander(f"✍️ {r_item['name']} - Cihaz Önerisi, Saha Hamlesi ve Uzman Yorumunu Düzenle", expanded=False):
+                with st.expander(f"{r_item['name']} - Cihaz Önerisi, Saha Hamlesi ve Uzman Yorumunu Düzenle", expanded=False):
                     with st.form(f"form_reg_expert_{rk}"):
                         all_devices = [
                             '⚡ ZEUS Pulse Stimulator (ZPS 26)',
@@ -22808,7 +22850,7 @@ ZEUS Bioscience Scientific Affairs""",
         """, unsafe_allow_html=True)
 
         # Uzman Yorumunu / Saha Notunu Düzenleme Expander
-        with st.expander(f"✍️ {geo_data['flag']} {geo_data['name']} - Uzman Yorumunu & Karar Notunu Düzenle", expanded=False):
+        with st.expander(f"{geo_data['flag']} {geo_data['name']} - Uzman Yorumunu & Karar Notunu Düzenle", expanded=False):
             with st.form(f"form_edit_geo_{sel_code}"):
                 new_geo_comm = st.text_area("Saha / Finans Uzmanı Değerlendirme Notu:", value=geo_data['expert_comment'], height=80)
                 gc1, gc2 = st.columns(2)
@@ -22974,7 +23016,7 @@ ZEUS Bioscience Scientific Affairs""",
 # 5. VIEW: DISTRIBUTORS & CRM
 # ==============================================================================
 
-elif active_view in ["⌖ Doğrulanmış Karar Verici Bulucu (LinkedIn & Network)", "🤝 Doğrulanmış Karar Verici Bulucu (LinkedIn & E-posta)", "🤝 Karar Verici Bulucu", "🤝 B2B Outreach & Decision Maker"]:
+elif active_view in ["Karar Verici Bulucu (LinkedIn)", "⌖ Doğrulanmış Karar Verici Bulucu (LinkedIn & Network)", "🤝 Doğrulanmış Karar Verici Bulucu (LinkedIn & E-posta)", "🤝 Karar Verici Bulucu", "🤝 B2B Outreach & Decision Maker"]:
     render_decision_maker_finder_hub(country_df)
 
 elif active_view in ["🤝 Yetkili Distribütör Karneleri & CRM", "🤝 Distributors & CRM"]:
@@ -23228,7 +23270,7 @@ elif active_view in ["🤝 Yetkili Distribütör Karneleri & CRM", "🤝 Distrib
     if raw_sales_df is not None and len(raw_sales_df) > 0:
         c_invoices_df = raw_sales_df[raw_sales_df['Company'] == sel_acc['name']].sort_values('Date_dt', ascending=False)
         if len(c_invoices_df) > 0:
-            with st.expander(f"📑 {sel_acc['name']} — Tarihsel Fatura ve Satın Alma Kalemleri ({len(c_invoices_df)} Kalem Kaydı)", expanded=True):
+            with st.expander(f"{sel_acc['name']} — Tarihsel Fatura ve Satın Alma Kalemleri ({len(c_invoices_df)} Kalem Kaydı)", expanded=True):
                 disp_inv = c_invoices_df[['Date', 'Invoice', 'Product', 'Group', 'Quantity', 'Unit', 'Amount (USD)']].copy()
                 disp_inv.columns = ['Fatura Tarihi', 'Fatura No', 'Ürün Adı', 'Grup', 'Adet', 'Birim', 'Tutar (USD)']
                 disp_inv['Tutar (USD)'] = disp_inv['Tutar (USD)'].apply(lambda v: f"${v:,.2f}")
@@ -23261,7 +23303,7 @@ elif active_view in ["🤝 Yetkili Distribütör Karneleri & CRM", "🤝 Distrib
     # GLOBAL RETURNS, LIR VOUCHERS & INVOICE REVERSAL AUDIT DESK
     # --------------------------------------------------------------------------
     if raw_sales_df is not None and len(raw_sales_df) > 0:
-        with st.expander("🔍 Tüm Kurumsal İadeler, LIR Evrakları & Fatura Düzeltme Denetim Masası (Global Returns Audit Desk)", expanded=False):
+        with st.expander("Tüm Kurumsal İadeler, LIR Evrakları & Fatura Düzeltme Denetim Masası (Global Returns Audit Desk)", expanded=False):
             st.markdown("##### Şirket Genelindeki Tüm İadeler, LIR İade İrsaliyeleri ve Bedelsiz Sevklerin Denetim Raporu")
             st.caption("Veri tabanında yer alan tüm eksi bakiyeli iade faturaları, LIR (Lİste İade Raporu) evrakları ve $0 bedelli numune/konsinye irsaliyeleri şeffaf olarak listelenmiştir.")
             
@@ -23307,7 +23349,7 @@ elif active_view in ["🤝 Yetkili Distribütör Karneleri & CRM", "🤝 Distrib
                 st.dataframe(disp_zero_dev, use_container_width=True, hide_index=True)
                 st.caption("ℹ️ Acıbadem, CMC, Halil Ruso, Medipolitan, Seda Erdem ve Bisan'a yapılan $0 bedelli cihaz sevkleri klinik konsinye statüsünde izlenmektedir.")
 
-elif active_view in ["📄 İhale Şartname Kilitleri & Sözleşmeler", "📜 İhale Şartname Kilitleri & Sözleşmeler", "📜 Sözleşme Hükümleri & Hukuki Şartname", "📜 Agreements & Compliance"]:
+elif active_view in ["İhale Şartname Kilitleri & Sözleşmeler", "📄 İhale Şartname Kilitleri & Sözleşmeler", "📜 İhale Şartname Kilitleri & Sözleşmeler", "📜 Sözleşme Hükümleri & Hukuki Şartname", "📜 Agreements & Compliance"]:
     ihale_subtab1, ihale_subtab2 = st.tabs([
         "🏛️ 1. Küresel Kamu İhaleleri, Şartnameler & Canlı Portallar (Tenders Hub)",
         "📜 2. Distribütörlük Sözleşmeleri, LOA & Hukuki Belgeler (Agreements & LOA)"
@@ -23346,7 +23388,7 @@ elif active_view in ["📄 İhale Şartname Kilitleri & Sözleşmeler", "📜 İ
     # --------------------------------------------------------------------------
     # ACTION: YENİ SÖZLEŞME VE DOKÜMAN EKLEME FORMU
     # --------------------------------------------------------------------------
-    with st.expander("➕ Yeni Sözleşme / Doküman Ekle (Add Agreement & Document)", expanded=False):
+    with st.expander("Yeni Sözleşme / Doküman Ekle (Add Agreement & Document)", expanded=False):
         st.markdown("##### Yeni Sözleşme, LOA veya Tedarik Protokolü Tanımlama")
         
         f_c1, f_c2 = st.columns(2)
@@ -23575,7 +23617,7 @@ elif active_view in ["📄 İhale Şartname Kilitleri & Sözleşmeler", "📜 İ
 # ==============================================================================
 # 7. VIEW: SALES & PRODUCT ANALYTICS
 # ==============================================================================
-elif active_view in ["↗ Cihaz vs Sarf Gelir Trendleri (2020–2026)", "📈 Cihaz vs Sarf Gelir Trendleri (2020–2026)", "📊 Cihaz vs Sarf Gelir Trendleri", "📊 Sales & Product Analytics"]:
+elif active_view in ["Cihaz vs Sarf Gelir Trendleri", "↗ Cihaz vs Sarf Gelir Trendleri (2020–2026)", "📈 Cihaz vs Sarf Gelir Trendleri (2020–2026)", "📊 Cihaz vs Sarf Gelir Trendleri", "📊 Sales & Product Analytics"]:
     st.title("Multi-Dimensional Sales & Product Analytics")
     st.caption("Excel satış veri tabanındaki (1,280 fatura satırı) doğrulanmış cihaz/sarf dökümleri, ürün bazlı hasılat ve distribütör performans analitiği.")
 
@@ -24527,7 +24569,7 @@ elif active_view in ["↗ Cihaz vs Sarf Gelir Trendleri (2020–2026)", "📈 Ci
 </div>"""
             st.markdown(quota_card_html, unsafe_allow_html=True)
 
-            with st.expander(f"✍️ Yönetici Değerlendirmesi & 2027 Resmi Sipariş Kotası Belirle ({q_data['name']})", expanded=False):
+            with st.expander(f"Yönetici Değerlendirmesi & 2027 Resmi Sipariş Kotası Belirle ({q_data['name']})", expanded=False):
                 with st.form(f"form_quota_{q_id}"):
                     c_comm = st.text_area("Yönetici Değerlendirme Yorumu & Saha Stratejisi:", value=q_data.get('user_comment', ''), key=f"qcomm_{q_id}")
                     col_q1, col_q2, col_q3 = st.columns(3)
@@ -24623,7 +24665,7 @@ elif active_view in ["↗ Cihaz vs Sarf Gelir Trendleri (2020–2026)", "📈 Ci
                 'Durum': 'Aktif' if d.get('status') == 'active' else 'Pasif'
             })
         st.dataframe(pd.DataFrame(all_table), use_container_width=True, hide_index=True)
-elif active_view in ["⬡ Çoklu Ülke Kıyaslama Matrisi (Multi-Country Matrix)", "⚖️ Çoklu Ülke Kıyaslama Masası (Multi-Country Matrix)", "⚖️ Çok Boyutlu 22-Metrik Kıyaslama", "⚖️ Market Intelligence & Compare"]:
+elif active_view in ["Çoklu Ülke Kıyaslama Matrisi", "⬡ Çoklu Ülke Kıyaslama Matrisi (Multi-Country Matrix)", "⚖️ Çoklu Ülke Kıyaslama Masası (Multi-Country Matrix)", "⚖️ Çok Boyutlu 22-Metrik Kıyaslama", "⚖️ Market Intelligence & Compare"]:
     st.title("Global IVF Market Intelligence & Country Comparison")
     st.caption("Resmi Dünya Bankası (WDI 2023/2024) ve uluslararası ESHRE/CDC tüp bebek kayıtlarına dayalı çok boyutlu pazar, ekonomik güç ve klinik teknoloji kıyaslama merkezi.")
 
@@ -25551,7 +25593,7 @@ elif active_view in ["⬡ Çoklu Ülke Kıyaslama Matrisi (Multi-Country Matrix)
                         st.markdown(card_html, unsafe_allow_html=True)
                         
                         # AI Pitch Draft Studio with Strategy Personas & Multilingual AI Co-pilot
-                        with st.expander(f"📨 AI B2B İletişim & İlk Temas Stüdyosu ({p['name']})"):
+                        with st.expander(f"AI B2B İletişim & İlk Temas Stüdyosu ({p['name']})"):
                             st.caption(f"Hedef Muhatap: **{c_person}** | Resmi E-posta: `{c_email}` | Santral: `{c_phone}`")
                             
                             is_dist_cat = ("Distribütör" in p.get('category', '') or "Distributor" in p.get('category', ''))
@@ -25861,7 +25903,7 @@ BODY:
                             dyn_mailto_url = f"mailto:{c_email}?subject={mail_subj_enc}&body={mail_body_enc}"
                             
                             st.markdown("---")
-                            card_out_tab1, card_out_tab2 = st.tabs(["📧 1. Resmi E-Posta & Santral Çağrısı", "💼 2. LinkedIn InMail & Bağlantı Notu"])
+                            card_out_tab1, card_out_tab2 = st.tabs(["1. Resmi E-Posta & Santral Çağrısı", "2. LinkedIn InMail & Bağlantı Notu"])
 
                             with card_out_tab1:
                                 b_col1, b_col2, b_col3 = st.columns([1.5, 1, 1])
@@ -27139,11 +27181,11 @@ Web: www.zeusbioscience.com""", language="markdown")
                             
                             c_btn1, c_btn2, c_btn3 = st.columns([1.1, 1.1, 1.8])
                             with c_btn1:
-                                st.link_button(f"💼 LinkedIn: {person_clean[:15]}", p_linkedin_url, use_container_width=True)
+                                st.link_button(f"LinkedIn: {person_clean[:15]}", p_linkedin_url, use_container_width=True)
                             with c_btn2:
-                                st.link_button(f"⚡ Google X-Ray", p_gx_url, use_container_width=True)
+                                st.link_button(f"Google X-Ray", p_gx_url, use_container_width=True)
                             with c_btn3:
-                                with st.expander(f"📋 {person_clean[:18]} Davet Notu", expanded=False):
+                                with st.expander(f"{person_clean[:18]} Davet Notu", expanded=False):
                                     st.code(conn_msg, language="text")
 
                 st.markdown("<br>", unsafe_allow_html=True)
@@ -27151,7 +27193,7 @@ Web: www.zeusbioscience.com""", language="markdown")
                 # --------------------------------------------------------------
                 # PERSISTENT EXACT BOOLEAN CODES & OUTREACH TEMPLATES ACCORDION
                 # --------------------------------------------------------------
-                with st.expander("📚 Ülke Bazlı Exact Boolean Arama Kodları & Hazır Mesaj Şablonları Kütüphanesi", expanded=False):
+                with st.expander("Ülke Bazlı Exact Boolean Arama Kodları & Hazır Mesaj Şablonları Kütüphanesi", expanded=False):
                     lk_c1, lk_c2 = st.columns(2)
                     with lk_c1:
                         st.markdown("##### 🔎 Ülke Bazlı Exact Arama Kodları (Boolean Search)")
@@ -27269,7 +27311,7 @@ I would welcome the opportunity to coordinate a brief 10-minute scientific brief
 </div>""", unsafe_allow_html=True)
 
                 # Bilimsel Kaynaklar ve Hakemli Literatür Künyesi
-                with st.expander("📚 Bilimsel Referanslar & Hakemli Literatür Dayanağı (Peer-Reviewed References & Source Data)", expanded=True):
+                with st.expander("Bilimsel Referanslar & Hakemli Literatür Dayanağı (Peer-Reviewed References & Source Data)", expanded=True):
                     st.markdown("""
                     Bu Whitepaper'da özetlenen parametrik klinik veriler, **Yardımla Oosit Aktivasyonu (AOA)** ve **Elektriksel Oosit Aktivasyon (AOA) Pulse Stimülasyonu** alanında uluslararası indeksli dergilerde (ESHRE / ASRM standartlarında) yayımlanmış çok merkezli kohort ve klinik benchmark çalışmalarından derlenmiştir:
 
@@ -27446,7 +27488,7 @@ ZEUS Bioscience Applied Embryology Team | scientific@zeusbioscience.com | www.ze
 </div>""", unsafe_allow_html=True)
 
                 st.markdown("<div style='height: 12px;'></div>", unsafe_allow_html=True)
-                with st.expander(f"📋 Tüm Seçili Pazarların ({len(selected_compare)} Ülke) Hızlı Distribütör & Karar Verici Konsolide Özeti", expanded=False):
+                with st.expander(f"Tüm Seçili Pazarların ({len(selected_compare)} Ülke) Hızlı Distribütör & Karar Verici Konsolide Özeti", expanded=False):
                     summary_dir_rows = []
                     for c_name in selected_compare:
                         c_code = country_df.loc[country_df['name']==c_name, 'code'].values[0] if len(country_df.loc[country_df['name']==c_name])>0 else ''
@@ -28046,8 +28088,8 @@ Cihaz, tüp bebek (IVF/ICSI) laboratuvarlarında Total Döllenme Başarısızlı
 # ==============================================================================
 # VIEW: COUNTRY 360° PERFORMANCE & INTELLIGENCE REPORT
 # ==============================================================================
-elif active_view in ["◈ Tekil Ülke 360° (Mevzuat, Pazar & Klinikler)", "🌐 Tekil Ülke 360° (Tüm Bilgiler, Mevzuat & İletişim)", "🌐 Tekil Ülke 360° (Tüm Bilgiler, Mevzuat, İhale & İletişim)", "🌍 Ülke 360° & Müşteri Radarı", "🌍 Country 360° Performance & Report"]:
-    st.title("🌍 Country 360° Performance & Intelligence Dossier")
+elif active_view in ["Tekil Ülke 360° Dossier", "◈ Tekil Ülke 360° (Mevzuat, Pazar & Klinikler)", "🌐 Tekil Ülke 360° (Tüm Bilgiler, Mevzuat & İletişim)", "🌐 Tekil Ülke 360° (Tüm Bilgiler, Mevzuat, İhale & İletişim)", "🌍 Ülke 360° & Müşteri Radarı", "🌍 Country 360° Performance & Report"]:
+    st.title("Country 360° Performance & Intelligence Dossier")
     st.caption("Tek ekranda bütünleşik ülke karnesi: Gerçekleşen satışlar ve filo büyüklüğü, makroekonomi, gümrük GTİP ve ithalat mevzuatı, yeni IVF & PGT biyoetik kuralları, iskonto-tahmin matrisleri, 5 kişilik uzman heyeti görüşleri ve satış stratejisi.")
 
     # Prioritized Country Ordering (Oman & Full GCC Included)
@@ -28404,7 +28446,7 @@ elif active_view in ["◈ Tekil Ülke 360° (Mevzuat, Pazar & Klinikler)", "🌐
         # ----------------------------------------------------------------------
         # 22 SEÇİLİ MAKRO & KLİNİK PARAMETRE KARNESİ (MASTER SCORECARD)
         # ----------------------------------------------------------------------
-        with st.expander(f"📋 {sel_country} İçin Seçili 22 Temel Pazar, Klinik & Regülasyon Parametresi (Master Intelligence Matrix)", expanded=True):
+        with st.expander(f"{sel_country} İçin Seçili 22 Temel Pazar, Klinik & Regülasyon Parametresi (Master Intelligence Matrix)", expanded=True):
             st.caption(f"Dünya Bankası (WDI), ESHRE/CDC ve ulusal sağlık bakanlığı tescil kayıtlarına dayalı 22 kritik gösterge:")
             
             c_gdp_ppp = c_macro.get('gdp_ppp', int(c_macro['gdp_pc'] * 2.2))
@@ -28555,7 +28597,7 @@ elif active_view in ["◈ Tekil Ülke 360° (Mevzuat, Pazar & Klinikler)", "🌐
         tp_c360 = tender_c360.get("key_tender_parameters", {})
         ts_c360 = tender_c360.get("technical_specifications", {})
         
-        with st.expander(f"🏛️ {tender_c360['flag']} {sel_country} Resmi Medikal İhaleleri, Satın Alma Kanalları & Teknik Şartname", expanded=False):
+        with st.expander(f"{tender_c360['flag']} {sel_country} Resmi Medikal İhaleleri, Satın Alma Kanalları & Teknik Şartname", expanded=False):
             t_col1, t_col2 = st.columns([1.1, 1.2])
             with t_col1:
                 st.markdown(f"""
@@ -29362,7 +29404,7 @@ SERTİFİKASYON: CE Device Certified (CE Sertifikalı Class IIa)
 # ==============================================================================
 # 9. VIEW: PRICING & DISCOUNT CALCULATOR
 # ==============================================================================
-elif active_view in ["⌬ Fiyatlandırma, 4-Pool Dish & Klinik ROI", "💰 Fiyatlandırma, 4-Pool Dish & Klinik ROI", "💰 Pricing & Discount Calculator"]:
+elif active_view in ["Fiyatlandırma, 4-Pool Dish & ROI", "⌬ Fiyatlandırma, 4-Pool Dish & Klinik ROI", "💰 Fiyatlandırma, 4-Pool Dish & Klinik ROI", "💰 Pricing & Discount Calculator"]:
     st.title("Commercial Discount & Margin Impact Calculator")
     st.caption("Çok Boyutlu Fiyatlandırma ve İskonto Karar Motoru: Ülke GSYİH (GDP), Yaşam Standardı, Ulusal IVF Destek Rejimi, AI Algoritmik Analitiği ve Uzman Görüşü / Bilgi Bankası (Knowledge Base) ile sentezlenmiş stratejik karar merkezi.")
 
@@ -29576,7 +29618,7 @@ elif active_view in ["⌬ Fiyatlandırma, 4-Pool Dish & Klinik ROI", "💰 Fiyat
             calc_rep = st.slider("Distribütör Temsilci Primi (Rep Commission - %)", min_value=0.0, max_value=15.0, value=3.0, step=0.5)
             calc_min_gm = st.slider("Kurumsal Taban Brüt Marj Eşiği (Min Gross Margin - %)", min_value=20.0, max_value=60.0, value=35.0, step=1.0)
             
-            with st.expander("⚙️ Yönetim Özel Yetki & İhale İstisna Esnekliği"):
+            with st.expander("Yönetim Özel Yetki & İhale İstisna Esnekliği"):
                 exec_override = st.slider("Özel Stratejik Esneklik Payı (Board/CEO Strategic Override - %)", min_value=0.0, max_value=10.0, value=0.0, step=0.5,
                                          help="Pazara giriş, kamu ihalesi veya rakip blokajı durumunda yönetim kurulu tarafından tanınan ek iskonto tavanı.")
 
@@ -30218,7 +30260,7 @@ elif active_view in ["⌬ Fiyatlandırma, 4-Pool Dish & Klinik ROI", "💰 Fiyat
 # 10. VIEW: RISK & SCENARIO SIMULATOR
 # ==============================================================================
 elif active_view in [
-    "⚠ Kritik Atıl Cihaz, Churn & Risk Radarı",
+    "Atıl Cihaz, Churn & Risk Radarı", "⚠ Kritik Atıl Cihaz, Churn & Risk Radarı",
     "🚨 Kritik Atıl Cihaz, Churn & Risk Uyarıları",
     "🚨 Atıl Cihaz, Churn & Re-Aktivasyon",
     "🔍 Risk & Jeopolitik Senaryolar",
@@ -30234,7 +30276,7 @@ elif active_view in [
     with al_tab2:
         render_risk_scenario_simulator_view()
 
-elif active_view in ["⬡ Rakip Kıyaslama & RFID Trap Breaker", "⚔️ Rakip Kıyaslama & RFID Trap Breaker", "⚔️ Stratejik Karar Masası (RFID Trap Breaker)", "⚖️ Strategic Decision Center"]:
+elif active_view in ["Rakip Analizi & RFID Trap Breaker", "⬡ Rakip Kıyaslama & RFID Trap Breaker", "⚔️ Rakip Kıyaslama & RFID Trap Breaker", "⚔️ Stratejik Karar Masası (RFID Trap Breaker)", "⚖️ Strategic Decision Center"]:
     st.title("Strategic Decision Center & Executive Board Room")
     st.caption("Configurable weighted multi-criteria assessment framework for critical corporate authorizations, competitor displacement and commercial expansion.")
 
@@ -30242,7 +30284,7 @@ elif active_view in ["⬡ Rakip Kıyaslama & RFID Trap Breaker", "⚔️ Rakip K
         st.session_state['executive_strategic_plans'] = get_default_strategic_plans()
 
     # Dedicated Competitor Intelligence & Deal Desk in Strategic Decision Center
-    with st.expander("⚔️ Küresel Rakip İstihbaratı, Satış Kazanma Stratejisi & Yönetici Karar Notları Masası", expanded=True):
+    with st.expander("Küresel Rakip İstihbaratı, Satış Kazanma Stratejisi & Yönetici Karar Notları Masası", expanded=True):
         render_competitor_intelligence_and_deal_desk(None, country_df, active_source="sdc")
 
     st.markdown("---")
@@ -30405,7 +30447,7 @@ elif active_view in ["⬡ Rakip Kıyaslama & RFID Trap Breaker", "⚔️ Rakip K
         st.markdown(plan_card_html, unsafe_allow_html=True)
 
         # Interactive Review Comment & Status Action
-        with st.expander(f"✍️ {a_plan['title'][:32]}... Değerlendirme Yorumu & İnceleme Notu", expanded=(not is_approved)):
+        with st.expander(f"{a_plan['title'][:32]}... Değerlendirme Yorumu & İnceleme Notu", expanded=(not is_approved)):
             rev_comm_val = st.text_area(
                 "Yönetici Değerlendirme Yorumu / İncelemeye Alma Gerekçesi:",
                 value=a_plan.get('user_comment', ''),
@@ -30555,7 +30597,7 @@ elif active_view in ["⬡ Rakip Kıyaslama & RFID Trap Breaker", "⚔️ Rakip K
     """, unsafe_allow_html=True)
 
     # Interactive Geopolitical Review Comment & Action
-    with st.expander(f"✍️ {geo_p['flag']} {geo_p['name']} Kriz Protokolü Yorumu & İnceleme Gerekçesi", expanded=(not is_geo_appr)):
+    with st.expander(f"{geo_p['flag']} {geo_p['name']} Kriz Protokolü Yorumu & İnceleme Gerekçesi", expanded=(not is_geo_appr)):
         geo_comm_val = st.text_area(
             "Yönetici Kriz Masası Saha Yorumu:",
             value=geo_p.get('expert_comment', ''),
@@ -31056,7 +31098,7 @@ Web: www.zeusbioscience.com | Email: clinical@zeusbioscience.com"""
         st.markdown(card_quota_html, unsafe_allow_html=True)
 
         # Interactive Distributor Quota Review Comment & Action
-        with st.expander(f"✍️ {q_data['country_flag']} Kota Değerlendirme Yorumu & İnceleme Notu", expanded=(not is_appr)):
+        with st.expander(f"{q_data['country_flag']} Kota Değerlendirme Yorumu & İnceleme Notu", expanded=(not is_appr)):
             q_comm_val = st.text_area(
                 "İnceleme Gerekçesi / Kota Değerlendirme Yorumu:",
                 value=q_data.get('user_comment', ''),
@@ -31319,7 +31361,7 @@ Web: www.zeusbioscience.com | Email: clinical@zeusbioscience.com"""
 # ==============================================================================
 # 13. VIEW: EXECUTIVE REPORTS & EXPORT
 # ==============================================================================
-elif active_view in ["📋 Partner Karneleri, Raporlar & Excel/CSV Veri Masası", "📑 Partner Karneleri, Raporlar & Excel/CSV İndirme", "📑 Yönetici Raporları & Veri İndirme", "📄 Executive Reports & Export"]:
+elif active_view in ["Partner Karneleri & Veri Masası", "📋 Partner Karneleri, Raporlar & Excel/CSV Veri Masası", "📑 Partner Karneleri, Raporlar & Excel/CSV İndirme", "📑 Yönetici Raporları & Veri İndirme", "📄 Executive Reports & Export"]:
     st.title("Executive Governance Reports & Export Center")
     st.caption("Generate formal distribution audit briefings and export certified commercial datasets.")
 
@@ -31539,11 +31581,11 @@ elif active_view in ["📋 Partner Karneleri, Raporlar & Excel/CSV Veri Masası"
 # ==============================================================================
 # 14. VIEW: GLOBAL SOCIAL MEDIA & B2B MARKETING
 # ==============================================================================
-elif active_view in ["📢 MedTech Kurumsal İletişim & İçerik Stüdyosu", "📢 MedTech Sosyal Medya & İçerik Stüdyosu", "📱 MedTech Sosyal Medya & B2B İletişim", "📱 Global Social Media & B2B Marketing"]:
+elif active_view in ["Kurumsal Medikal İletişim Stüdyosu", "📢 MedTech Kurumsal İletişim & İçerik Stüdyosu", "📢 MedTech Sosyal Medya & İçerik Stüdyosu", "📱 MedTech Sosyal Medya & B2B İletişim", "📱 Global Social Media & B2B Marketing"]:
     render_social_media_hub()
 
 elif active_view in [
-    "⌖ Küresel Mevzuat & İhale Rehberi (Global Regulations & Tenders)",
+    "Küresel Mevzuat & İhale Rehberi", "⌖ Küresel Mevzuat & İhale Rehberi (Global Regulations & Tenders)",
     "🏛️ Küresel Mevzuat & İhale Rehberi (Global Regulations & Tenders)",
     "🏛️ Kamu İhaleleri & Şartnameler",
     "🏛️ Küresel & Kamu İhaleleri Masası (Tenders Hub)",
