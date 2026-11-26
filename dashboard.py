@@ -19732,11 +19732,9 @@ st.markdown("""
         box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35) !important;
         margin-bottom: 14px !important;
     }
-    /* Circular Navigation Buttons */
+    /* Circular Top Arrow Navigation Buttons */
     div[class*="st-key-btn_prev_"] button,
-    div[class*="st-key-btn_next_"] button,
-    div[class*="st-key-bot_prev_nav_"] button,
-    div[class*="st-key-bot_next_nav_"] button {
+    div[class*="st-key-btn_next_"] button {
         border-radius: 50% !important;
         width: 32px !important;
         height: 32px !important;
@@ -19757,7 +19755,33 @@ st.markdown("""
         transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1) !important;
     }
     div[class*="st-key-btn_prev_"] button:hover,
-    div[class*="st-key-btn_next_"] button:hover,
+    div[class*="st-key-btn_next_"] button:hover {
+        background: #162235 !important;
+        border-color: #7DA8DF !important;
+        color: #7DA8DF !important;
+    }
+    /* Full-Width Horizontal Bottom Navigation Buttons */
+    div[class*="st-key-bot_prev_nav_"] button,
+    div[class*="st-key-bot_next_nav_"] button {
+        border-radius: 8px !important;
+        width: 100% !important;
+        min-height: 38px !important;
+        height: auto !important;
+        padding: 8px 14px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        background: #121C2B !important;
+        border: 1px solid #263347 !important;
+        color: #CBD5E1 !important;
+        font-size: 12.5px !important;
+        font-weight: 600 !important;
+        line-height: 1.35 !important;
+        white-space: normal !important;
+        text-align: center !important;
+        box-shadow: none !important;
+        transition: all 150ms cubic-bezier(0.16, 1, 0.3, 1) !important;
+    }
     div[class*="st-key-bot_prev_nav_"] button:hover,
     div[class*="st-key-bot_next_nav_"] button:hover {
         background: #162235 !important;
@@ -32342,7 +32366,7 @@ if len(active_subviews) > 1:
 
     st.markdown("<hr style='border-color:rgba(255,255,255,0.08);margin:32px 0 16px 0;'>", unsafe_allow_html=True)
     with st.container(key="zgmi_bottom_nav_dock"):
-        b_nav1, b_nav2, b_nav3 = st.columns([1.5, 2.2, 1.5], vertical_alignment="center")
+        b_nav1, b_nav2, b_nav3 = st.columns([1.85, 1.3, 1.85], vertical_alignment="center")
         with b_nav1:
             prev_sub_label = active_subviews[b_prev_idx].split('(')[0].strip()
             if st.button(f"‹ Önceki: {prev_sub_label}", key=f"bot_prev_nav_{b_pills_key}", use_container_width=True):
@@ -32489,7 +32513,7 @@ components.html("""
             }
         })();
     </script>
-""", height=96)
+""", height=150)
 
 # ==========================================
 # EXECUTIVE ATTRIBUTION & COPYRIGHT FOOTER
