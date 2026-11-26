@@ -70,12 +70,12 @@
     }
   ],
   "last_scan": {
-    "scan_time": "2026-11-26 11:46:32",
+    "scan_time": "2026-11-26 12:03:10",
     "youtube": {
       "status": "Online (200 OK)",
       "subscribers": "24",
       "video_count": 9,
-      "shorts_count": 9,
+      "shorts_count": 10,
       "playlists_count": 5,
       "playlist_names": [
         "Start Here: ZEUS IVF Lab Solutions",
@@ -105,6 +105,64 @@
           "id": "uwp9t6tVkbA",
           "length_sec": 119,
           "desc_len": 1917
+        }
+      ],
+      "video_details": [
+        {
+          "id": "kQGTmk2E894",
+          "title": "ZEUS Mismatch Blocker | Electronic Witnessing for IVF Labs",
+          "length_sec": 0,
+          "desc_len": 0,
+          "url": "https://www.youtube.com/watch?v=kQGTmk2E894"
+        },
+        {
+          "id": "5cSW8Tze_nQ",
+          "title": "Zeus BioPSafe – Embryo Biopsy & PCR Tube Traceability for IVF Labs",
+          "length_sec": 216,
+          "desc_len": 1335,
+          "url": "https://www.youtube.com/watch?v=5cSW8Tze_nQ"
+        },
+        {
+          "id": "uwp9t6tVkbA",
+          "title": "Zeus Bioscience",
+          "length_sec": 119,
+          "desc_len": 1917,
+          "url": "https://www.youtube.com/watch?v=uwp9t6tVkbA"
+        },
+        {
+          "id": "lEA4tqaQ648",
+          "title": "Zeus Pulse Stimulator – Complete Overview",
+          "length_sec": 2940,
+          "desc_len": 0,
+          "url": "https://www.youtube.com/watch?v=lEA4tqaQ648"
+        },
+        {
+          "id": "2DRHuDSn4Xo",
+          "title": "Piezo Pulse Stimulator - Electro Liquid Lyophilized Solution Protocol",
+          "length_sec": 828,
+          "desc_len": 960,
+          "url": "https://www.youtube.com/watch?v=2DRHuDSn4Xo"
+        },
+        {
+          "id": "iTsbVCh55HU",
+          "title": "ZEUS PIEZO ELECTRIC PULSE STIMULATOR: Advanced Oocyte Activation for IVF Success",
+          "length_sec": 183,
+          "desc_len": 292,
+          "url": "https://www.youtube.com/watch?v=iTsbVCh55HU"
+        },
+        {
+          "id": "TrdkZzqcA9w",
+          "title": "Zeus Mismatch Blocker: Zero Error IVF through Total Traceability and Digital Safety",
+          "length_sec": 0,
+          "desc_len": 0,
+          "url": "https://www.youtube.com/watch?v=TrdkZzqcA9w"
+        },
+        {
+          "id": "wxqiWOD5u8E",
+          "title": "Preventing IVF Mix-ups: The Digital Guardian for Your Future Family",
+          "length_sec": 0,
+          "desc_len": 0,
+          "url": "https://www.youtube.com/watch?v=wxqiWOD5u8E"
         }
       ],
       "has_generic_49min": false,
@@ -166,6 +224,12 @@
     ]
   },
   "score_history": [
+    {
+      "time": "2026-11-26 12:03:10",
+      "total": 56,
+      "yt": 28,
+      "li": 28
+    },
     {
       "time": "2026-11-26 11:46:32",
       "total": 56,
