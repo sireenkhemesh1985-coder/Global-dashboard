@@ -2,71 +2,71 @@
   "checklist": [
     {
       "id": "yt_49min",
-      "text": "49 Dakikalık masterclass videosunun başlığı ve açıklaması (Timestamps/Chapters) güncellendi",
+      "text": "Updated 49-minute masterclass video title and description (Timestamps/Chapters)",
       "done": false,
       "platform": "YouTube"
     },
     {
       "id": "yt_playlists",
-      "text": "YouTube'da 4+ stratejik oynatma listesi (AOA, Mismatch Blocker, BioPSafe, Smart CryoTools, Testimonials) oluşturuldu",
+      "text": "Created 4+ strategic YouTube playlists (AOA, Mismatch Blocker, BioPSafe, Smart CryoTools, Testimonials)",
       "done": true,
       "platform": "YouTube"
     },
     {
       "id": "yt_thumbnails",
-      "text": "Video küçük resimlerine (Thumbnails) yüksek kontrastlı hücre kancaları (Hook) eklendi",
+      "text": "Added high-contrast cellular hooks to video thumbnails",
       "done": false,
       "platform": "YouTube"
     },
     {
       "id": "yt_b2b_funnel",
-      "text": "YouTube video açıklamalarına B2B Satış Hunisi ve Klinik Protokol İndirme linki eklendi",
+      "text": "Added B2B sales funnel CTA and Clinical Protocol download link to YouTube video descriptions",
       "done": false,
       "platform": "YouTube"
     },
     {
       "id": "li_bio_fix",
-      "text": "LinkedIn biyografisindeki 'ZEUS Bioscience' çift tekrarı dilbilgisi hatası düzeltildi",
+      "text": "Fixed duplicate 'ZEUS Bioscience' grammar repetition in LinkedIn bio",
       "done": true,
       "platform": "LinkedIn"
     },
     {
       "id": "li_tagline",
-      "text": "LinkedIn sloganı (Tagline) 'Biotechnology Research' yerine CE Sertifikalı MedTech değer önerisiyle güncellendi",
+      "text": "Updated LinkedIn tagline from 'Biotechnology Research' to a CE-Certified MedTech value proposition",
       "done": false,
       "platform": "LinkedIn"
     },
     {
       "id": "li_custom_btn",
-      "text": "LinkedIn özel butonu 'İletişime Geçin' veya 'Daha Fazla Bilgi Edinin' olarak ayarlandı",
+      "text": "Configured LinkedIn custom CTA button to 'Contact Us' or 'Learn More'",
       "done": false,
       "platform": "LinkedIn"
     },
     {
       "id": "li_carousel",
-      "text": "İlk 6-8 slaytlık PDF Carousel gönderisi paylaşıldı (TFF & Elektriksel AOA Konulu)",
+      "text": "Published first 6–8 slide PDF Carousel post (focused on TFF & Electrical AOA)",
       "done": false,
       "platform": "LinkedIn"
     },
     {
       "id": "li_lead_loop",
-      "text": "Yorumlarda 'PROTOKOL' yazma lead toplama ve DM gönderme döngüsü başlatıldı",
+      "text": "Launched comment 'PROTOCOL' lead capture and DM follow-up loop",
       "done": false,
       "platform": "LinkedIn"
     },
     {
       "id": "li_personal_brand",
-      "text": "Yönetici profilleri (Personal Branding) şirket postunu ilk 60 dakikada (Golden Hour) paylaştı",
+      "text": "Executive profiles amplified the company post within the first 60 minutes (Golden Hour)",
       "done": false,
       "platform": "LinkedIn"
     }
   ],
   "comments": [
     {
-      "author": "Yönetici Heyeti",
-      "platform": "Genel",
+      "author": "Executive Board",
+      "platform": "General",
       "date": "2026-11-26 11:40",
-      "note": "YouTube'da 5 oynatma listesi oluşturuldu, 49 dakikalık video başlığı güncellendi ve LinkedIn Hakkında/Biyografi metni düzeltildi. Canlı yeniden değerlendirme motoru aktif."
+      "note": "Created 5 YouTube playlists, updated the 49-minute video title, and fixed the LinkedIn About/Bio text. Live re-audit engine is active."
     }
   ],
   "last_scan": {
@@ -189,38 +189,38 @@
       {
         "platform": "YouTube",
         "type": "success",
-        "msg": "Oynatma Listeleri TAMAM: 5 adet oynatma listesi yayında (Start Here: ZEUS IVF Lab Solutions, Embryologist & Clinic Stories - AOA Results & Feedbacks, IVF Witnessing & Mix-up Prevention - ZEUS Mismatch Blocker...)."
+        "msg": "Playlists COMPLETE: 5 strategic playlists are live (Start Here: ZEUS IVF Lab Solutions, Embryologist & Clinic Stories - AOA Results & Feedbacks, IVF Witnessing & Mix-up Prevention - ZEUS Mismatch Blocker...)."
       },
       {
         "platform": "YouTube",
         "type": "warning",
-        "msg": "49 dk'lık videonun başlığı 'Zeus Pulse Stimulator – Complete Overview' olarak güncellenmiş ✅; ancak açıklaması (0 karakter) ve zaman damgaları (Chapters) hala boş! Açıklama ve Chapters eklendiğinde SEO puanı artacaktır."
+        "msg": "49-min video title was updated to 'Zeus Pulse Stimulator – Complete Overview' ✅; however, the description (0 chars) and timestamps (Chapters) are still empty! Adding Description + Chapters will boost your SEO score."
       },
       {
         "platform": "YouTube",
         "type": "warning",
-        "msg": "1 dk 59 sn'lik video (uwp9t6tVkbA) 1,959 karakterlik BioPSafe açıklamasına sahip olmasına rağmen başlığı hala genel 'Zeus Bioscience' olarak görünüyor — 'Zeus BioPSafe' olarak güncellenmeli."
+        "msg": "The 1m 59s video (uwp9t6tVkbA) has a 1,917-character BioPSafe description, yet its title still reads generic 'Zeus Bioscience' — rename it to 'Zeus BioPSafe – Embryo Biopsy & PCR Tube Traceability for IVF Labs'."
       },
       {
         "platform": "YouTube",
         "type": "warning",
-        "msg": "Terminoloji Notu: 7 başlık/listede hala 'Piezo' kelimesi geçiyor (Örn: 'Piezo Pulse Stimulator - Electro Liquid Lyophilized Sol'). ZEUS bir AOA Pulse Stimulator olduğu için 'Piezo' ibaresinin temizlenmesi önerilir."
+        "msg": "Terminology Note: 7 titles/playlists still contain the word 'Piezo' (e.g. 'Piezo Pulse Stimulator - Electro Liquid Lyophilized Sol'). Because ZEUS is an AOA Pulse Stimulator, replacing 'Piezo' with 'Electrical AOA Pulse Stimulator' is recommended."
       },
       {
         "platform": "LinkedIn",
         "type": "success",
-        "msg": "LinkedIn Hakkında/Biyografi bölümü düzeltildi ve profesyonel ürün kapsamıyla (1225 karakter) güncellendi!"
+        "msg": "LinkedIn About/Bio section has been fixed and updated with complete product coverage (1,225 characters)!"
       },
       {
         "platform": "LinkedIn",
         "type": "warning",
-        "msg": "LinkedIn Sloganı (Tagline) şu an varsayılan 'Biotechnology Research' olarak görünüyor. 'CE-Certified Electrical AOA & IVF Lab Biosafety' gibi SEO odaklı sloganla +7 puan kazanabilirsiniz."
+        "msg": "LinkedIn Tagline currently displays the default 'Biotechnology Research'. Switching to an SEO-focused tagline such as 'CE-Certified Electrical AOA & IVF Lab Biosafety' unlocks +7 points."
       }
     ],
     "completed_highlights": [
-      "YouTube Oynatma Listeleri: 5 stratejik oynatma listesi oluşturuldu.",
-      "49 Dk Video Başlığı Güncellendi: 'Zeus Pulse Stimulator – Complete Overview'.",
-      "LinkedIn Biyografi & Hakkında Metni Temizlendi (Çift İsim Tekrarı Giderildi)."
+      "YouTube Playlists: 5 strategic playlists created.",
+      "49-Min Video Title Updated: 'Zeus Pulse Stimulator – Complete Overview'.",
+      "LinkedIn Bio & About Text Cleaned (Duplicate brand name repetition removed)."
     ]
   },
   "score_history": [
