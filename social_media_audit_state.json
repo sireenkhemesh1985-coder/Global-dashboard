@@ -2,14 +2,14 @@
   "checklist": [
     {
       "id": "yt_49min",
-      "text": "49 Dakikalık 'Zeus Bioscience' videosunun başlığı ve açıklaması güncellendi (Timestamps/Chapters eklendi)",
+      "text": "49 Dakikalık masterclass videosunun başlığı ve açıklaması (Timestamps/Chapters) güncellendi",
       "done": false,
       "platform": "YouTube"
     },
     {
       "id": "yt_playlists",
-      "text": "YouTube'da 4 stratejik oynatma listesi (AOA, Mismatch Blocker, BioPSafe, Testimonials) oluşturuldu",
-      "done": false,
+      "text": "YouTube'da 4+ stratejik oynatma listesi (AOA, Mismatch Blocker, BioPSafe, Smart CryoTools, Testimonials) oluşturuldu",
+      "done": true,
       "platform": "YouTube"
     },
     {
@@ -27,12 +27,12 @@
     {
       "id": "li_bio_fix",
       "text": "LinkedIn biyografisindeki 'ZEUS Bioscience' çift tekrarı dilbilgisi hatası düzeltildi",
-      "done": false,
+      "done": true,
       "platform": "LinkedIn"
     },
     {
       "id": "li_tagline",
-      "text": "LinkedIn sloganı (Tagline) teknoloji ve CE Sertifikalı (Class IIa) odaklı olarak güncellendi",
+      "text": "LinkedIn sloganı (Tagline) 'Biotechnology Research' yerine CE Sertifikalı MedTech değer önerisiyle güncellendi",
       "done": false,
       "platform": "LinkedIn"
     },
@@ -63,7 +63,120 @@
   ],
   "comments": [
     {
-      "author": "",
-      "platform": "YouTube",
-      "date": "2026-11-18 17:44",
-      "note": 
+      "author": "Yönetici Heyeti",
+      "platform": "Genel",
+      "date": "2026-11-26 11:40",
+      "note": "YouTube'da 5 oynatma listesi oluşturuldu, 49 dakikalık video başlığı güncellendi ve LinkedIn Hakkında/Biyografi metni düzeltildi. Canlı yeniden değerlendirme motoru aktif."
+    }
+  ],
+  "last_scan": {
+    "scan_time": "2026-11-26 11:46:32",
+    "youtube": {
+      "status": "Online (200 OK)",
+      "subscribers": "24",
+      "video_count": 9,
+      "shorts_count": 9,
+      "playlists_count": 5,
+      "playlist_names": [
+        "Start Here: ZEUS IVF Lab Solutions",
+        "Embryologist & Clinic Stories - AOA Results & Feedbacks",
+        "IVF Witnessing & Mix-up Prevention - ZEUS Mismatch Blocker",
+        "Vitrification - ZEUS Smart CryoTools",
+        "Assisted Oocyte Activation (AOA) - ZEUS Piezo Pulse Stimulator"
+      ],
+      "titles": [
+        "Zeus Smart CryoTools",
+        "ZEUS Mismatch Blocker | Electronic Witnessing for IVF Labs",
+        "Zeus BioPSafe – Embryo Biopsy & PCR Tube Traceability for IVF Labs",
+        "Zeus Bioscience",
+        "Zeus Pulse Stimulator – Complete Overview",
+        "Piezo Pulse Stimulator - Electro Liquid Lyophilized Solution Protocol",
+        "ZEUS PIEZO ELECTRIC PULSE STIMULATOR: Advanced Oocyte Activation for IVF Success",
+        "Zeus Mismatch Blocker: Zero Error IVF through Total Traceability and Digital Safety",
+        "Preventing IVF Mix-ups: The Digital Guardian for Your Future Family"
+      ],
+      "long_49_title": "Zeus Pulse Stimulator – Complete Overview",
+      "long_49_renamed": true,
+      "long_49_desc_len": 0,
+      "long_49_has_chapters": false,
+      "long_49_has_cta": false,
+      "generic_videos": [
+        {
+          "id": "uwp9t6tVkbA",
+          "length_sec": 119,
+          "desc_len": 1917
+        }
+      ],
+      "has_generic_49min": false,
+      "piezo_hits": [
+        "Piezo Pulse Stimulator - Electro Liquid Lyophilized Solution Protocol",
+        "ZEUS PIEZO ELECTRIC PULSE STIMULATOR: Advanced Oocyte Activation for IVF Success",
+        "Assisted Oocyte Activation (AOA) - ZEUS Piezo Pulse Stimulator",
+        "The Final Answer to Failed IVF: Transforming Fertilization with Zeus Piezo Pulse Stimulator",
+        "From Hopelessness to Pregnancy: A Miracle IVF Success with Zeus Piezo Pulse",
+        "Overcoming Recurrent IVF Failure: Success Stories with Zeus Piezo Pulse Stimulator",
+        "Improving Fertilization Success: Dr. Muhammed Alhalabi on the Zeus Piezo Pulse Stimulator"
+      ]
+    },
+    "linkedin": {
+      "status": "Online (200 OK)",
+      "followers": "374",
+      "has_bio_duplicate": false,
+      "about_length": 1225,
+      "about_preview": "Founded in 2020 in Türkiye, ZEUS Bioscience develops innovative medical technologies, advanced automation, and integrated biosafety solutions for Assisted Reproductive Technology, and IVF laboratories. Engineered in collaboration with leading clinical embryolo...",
+      "tagline": "Biotechnology Research",
+      "is_generic_tagline": true
+    },
+    "gap_summary": [
+      {
+        "platform": "YouTube",
+        "type": "success",
+        "msg": "Oynatma Listeleri TAMAM: 5 adet oynatma listesi yayında (Start Here: ZEUS IVF Lab Solutions, Embryologist & Clinic Stories - AOA Results & Feedbacks, IVF Witnessing & Mix-up Prevention - ZEUS Mismatch Blocker...)."
+      },
+      {
+        "platform": "YouTube",
+        "type": "warning",
+        "msg": "49 dk'lık videonun başlığı 'Zeus Pulse Stimulator – Complete Overview' olarak güncellenmiş ✅; ancak açıklaması (0 karakter) ve zaman damgaları (Chapters) hala boş! Açıklama ve Chapters eklendiğinde SEO puanı artacaktır."
+      },
+      {
+        "platform": "YouTube",
+        "type": "warning",
+        "msg": "1 dk 59 sn'lik video (uwp9t6tVkbA) 1,959 karakterlik BioPSafe açıklamasına sahip olmasına rağmen başlığı hala genel 'Zeus Bioscience' olarak görünüyor — 'Zeus BioPSafe' olarak güncellenmeli."
+      },
+      {
+        "platform": "YouTube",
+        "type": "warning",
+        "msg": "Terminoloji Notu: 7 başlık/listede hala 'Piezo' kelimesi geçiyor (Örn: 'Piezo Pulse Stimulator - Electro Liquid Lyophilized Sol'). ZEUS bir AOA Pulse Stimulator olduğu için 'Piezo' ibaresinin temizlenmesi önerilir."
+      },
+      {
+        "platform": "LinkedIn",
+        "type": "success",
+        "msg": "LinkedIn Hakkında/Biyografi bölümü düzeltildi ve profesyonel ürün kapsamıyla (1225 karakter) güncellendi!"
+      },
+      {
+        "platform": "LinkedIn",
+        "type": "warning",
+        "msg": "LinkedIn Sloganı (Tagline) şu an varsayılan 'Biotechnology Research' olarak görünüyor. 'CE-Certified Electrical AOA & IVF Lab Biosafety' gibi SEO odaklı sloganla +7 puan kazanabilirsiniz."
+      }
+    ],
+    "completed_highlights": [
+      "YouTube Oynatma Listeleri: 5 stratejik oynatma listesi oluşturuldu.",
+      "49 Dk Video Başlığı Güncellendi: 'Zeus Pulse Stimulator – Complete Overview'.",
+      "LinkedIn Biyografi & Hakkında Metni Temizlendi (Çift İsim Tekrarı Giderildi)."
+    ]
+  },
+  "score_history": [
+    {
+      "time": "2026-11-26 11:46:32",
+      "total": 56,
+      "yt": 28,
+      "li": 28
+    },
+    {
+      "time": "2026-11-26 11:45:24",
+      "total": 56,
+      "yt": 28,
+      "li": 28
+    }
+  ]
+}
