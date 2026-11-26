@@ -8147,6 +8147,124 @@ def render_responsive_script_table(data_list, font_size_str="14px (Standart)", v
         with st.expander("📋 Tek Tıkla Kopyalanabilir Düz Metin (VO Raw Text)", expanded=False):
             st.text_area("Seslendirme Akışı (Tümünü Seç ve Kopyala):", "\n\n".join(full_vo_paragraphs), height=180)
 
+def _strip_html_tags(s):
+    return re.sub(r'<[^>]+>', ' ', str(s or '')).replace('&nbsp;', ' ').strip()
+
+def render_recommendation_with_ai_comment(
+    item_id,
+    title,
+    body_html,
+    border_col,
+    audit_state,
+    platform="YouTube",
+    page_ctx=None,
+    card_bg="rgba(10, 25, 47, 0.75)"
+):
+    """
+    Renders a recommendation card on the left and a dedicated live 'Yorum Ekle & AI Değerlendir / Konuş'
+    interactive conversation box right beside it on the right.
+    Persists per-recommendation threads in audit_state['item_threads'] and supports 1-click SDC push.
+    """
+    if "item_threads" not in audit_state or not isinstance(audit_state["item_threads"], dict):
+        audit_state["item_threads"] = {}
+    thread = audit_state["item_threads"].get(item_id, [])
+
+    col_card, col_ai = st.columns([1.42, 1.0], vertical_alignment="top")
+    with col_card:
+        st.markdown(f"""
+        <div style="background: {card_bg}; border: 1px solid rgba(255,255,255,0.08); border-left: 4px solid {border_col}; border-radius: 0 10px 10px 0; padding: 14px 16px; font-size: 12px; line-height: 1.6; height: 100%;">
+            <b style="color: {border_col}; font-size: 13px;">{title}</b><br>
+            <div style="color: #CBD5E1; margin-top: 6px;">{body_html}</div>
+        </div>
+        """, unsafe_allow_html=True)
+
+    with col_ai:
+        has_msgs = len(thread) > 0
+        msg_cnt_badge = f"<span style='background:rgba(0,240,255,0.14);color:#00F0FF;padding:1px 7px;border-radius:10px;font-size:10px;font-weight:700;'>{len(thread)//2} Yanıt</span>" if has_msgs else "<span style='color:#64748B;font-size:10px;'>Yorum / Soru Bekliyor</span>"
+        st.markdown(f"""
+        <div style="background: rgba(15, 23, 42, 0.85); border: 1px solid rgba(125, 168, 223, 0.25); border-radius: 8px; padding: 8px 12px; margin-bottom: 6px; display:flex; justify-content:space-between; align-items:center;">
+            <span style="color:#7DA8DF; font-size:11.5px; font-weight:700;">💬 Yorum & AI İstişaresi</span>
+            {msg_cnt_badge}
+        </div>
+        """, unsafe_allow_html=True)
+
+        if has_msgs:
+            for t_msg in thread[-4:]:
+                if t_msg.get("role") == "user":
+                    st.markdown(
+                        f"<div style='background:rgba(255,255,255,0.04);border-left:2px solid #7DA8DF;padding:6px 10px;border-radius:4px;margin-bottom:4px;font-size:11.5px;color:#F8FAFC;'>"
+                        f"<b style='color:#7DA8DF;'>👤 Yorumunuz:</b> {t_msg.get('content', '')}</div>",
+                        unsafe_allow_html=True
+                    )
+                else:
+                    st.markdown(
+                        f"<div style='background:rgba(16,185,129,0.06);border-left:2px solid #10B981;padding:6px 10px;border-radius:4px;margin-bottom:6px;font-size:11.5px;color:#E2E8F0;line-height:1.5;'>"
+                        f"<b style='color:#34D399;'>🤖 AI Değerlendirmesi:</b><br>{t_msg.get('content', '')}</div>",
+                        unsafe_allow_html=True
+                    )
+
+        with st.form(key=f"form_sm_card_ai_{item_id}", clear_on_submit=True):
+            user_note = st.text_area(
+                "Yorum / Soru:",
+                placeholder="Bu öneri hakkında görüşünüzü veya sorunuzu yazın (AI değerlendirip cevaplasın)...",
+                height=64,
+                label_visibility="collapsed",
+                key=f"inp_sm_card_ai_{item_id}"
+            )
+            sub_col1, sub_col2 = st.columns([1.3, 1.0])
+            with sub_col1:
+                send_card_ai = st.form_submit_button("💬 AI Değerlendir & Konuş", type="primary", use_container_width=True)
+            with sub_col2:
+                eval_card_btn = st.form_submit_button("🔎 AI Detay Açıkla", use_container_width=True)
+
+        active_card_q = None
+        if send_card_ai and user_note and user_note.strip():
+            active_card_q = user_note.strip()
+        elif eval_card_btn:
+            active_card_q = f"Bu öneriyi ({_strip_html_tags(title)}) canlı kanaldaki somut verilerle değerlendir, neden önemli olduğunu ve ilk adımımı açıkla."
+
+        if active_card_q:
+            clean_title = _strip_html_tags(title)
+            clean_body = _strip_html_tags(body_html)
+            focused_prompt = (
+                f"[ODAK ÖNERİ ({platform}): {clean_title} | Detay: {clean_body[:350]}]\n\n"
+                f"Yönetici Yorumu / Sorusu: {active_card_q}"
+            )
+            ai_ans = generate_zeus_expert_response(focused_prompt, chat_history=thread, page_context=page_ctx)
+            thread.append({"role": "user", "content": active_card_q, "time": datetime.now().strftime("%H:%M")})
+            thread.append({"role": "assistant", "content": ai_ans, "time": datetime.now().strftime("%H:%M")})
+            audit_state["item_threads"][item_id] = thread[-10:]
+            save_audit_state(audit_state)
+            st.rerun()
+
+        if has_msgs:
+            ac1, ac2 = st.columns([1.4, 0.8])
+            with ac1:
+                if st.button("⚖️ Karar Merkezine Aktar", key=f"btn_sdc_card_{item_id}", use_container_width=True):
+                    u_last = [m["content"] for m in thread if m["role"] == "user"][-1]
+                    a_last = [m["content"] for m in thread if m["role"] == "assistant"][-1]
+                    new_id = add_decision_to_sdc(
+                        title=f"[{platform}] {_strip_html_tags(title)[:70]}",
+                        user_opinion=u_last,
+                        ai_recommendation=_strip_html_tags(a_last)[:600],
+                        plan_type=f"{platform} Sosyal Medya & B2B Büyüme Kararı",
+                        responsible_unit="Pazarlama & Dijital Büyüme Masası",
+                        priority="P1 - Acil (1-15 Gün)",
+                        roi_projection=f"{platform} görünürlük, SEO skoru ve B2B lead artışı",
+                        action_steps=f"1. {_strip_html_tags(title)}\n2. Yönetici Notu: {u_last}",
+                        status="Onaylandı & İcrada",
+                        page_context=f"04 / B2B & Medikal İletişim Ağı ({platform})"
+                    )
+                    st.toast(f"✅ Karar [{new_id}] Strategic Decision Center'a eklendi!", icon="✅")
+                    st.rerun()
+            with ac2:
+                if st.button("Temizle", key=f"btn_clr_card_{item_id}", use_container_width=True):
+                    audit_state["item_threads"].pop(item_id, None)
+                    save_audit_state(audit_state)
+                    st.rerun()
+
+    st.markdown("<div style='height:8px;'></div>", unsafe_allow_html=True)
+
 def render_social_media_hub():
     st.title("📱 Global MedTech Social Media & B2B Content Marketing Hub")
     st.caption("ZEUS Bioscience Uluslararası Tüp Bebek (IVF/ICSI/PGT) Pazarı İçin Canlı Sayfa Denetimi, Anlık Skor Motoru, YouTube & LinkedIn Büyüme Stratejisi.")
@@ -8540,13 +8658,17 @@ def render_social_media_hub():
                 "#7DA8DF"
             )
         ]
-        for e_title, e_desc, e_col in yt_eval_cards:
-            st.markdown(f"""
-            <div style="background: rgba(10, 25, 47, 0.72); border-left: 4px solid {e_col}; border-radius: 0 8px 8px 0; padding: 12px 16px; margin-bottom: 10px; font-size: 12px; line-height: 1.6;">
-                <b style="color: {e_col}; font-size: 13px;">{e_title}</b><br>
-                <span style="color: #CBD5E1;">{e_desc}</span>
-            </div>
-            """, unsafe_allow_html=True)
+        _sm_page_ctx = build_current_page_ai_context("04 / B2B & Medikal İletişim Ağı", "Kurumsal Medikal İletişim Stüdyosu")
+        for idx_ec, (e_title, e_desc, e_col) in enumerate(yt_eval_cards):
+            render_recommendation_with_ai_comment(
+                item_id=f"yt_eval_{idx_ec}",
+                title=e_title,
+                body_html=e_desc,
+                border_col=e_col,
+                audit_state=audit_state,
+                platform="YouTube",
+                page_ctx=_sm_page_ctx
+            )
 
         with st.expander("📋 Hemen Kopyala & Yapıştır: 49 Dk Video (lEA4tqaQ648) Hazır Açıklama + Zaman Damgaları (Chapters) [+7 Puan]", expanded=False):
             st.code("""Full Clinical Masterclass on Electrical Assisted Oocyte Activation (AOA), Embryo Biopsy Safety & 7-Station Electronic Witnessing for IVF Laboratories by ZEUS Bioscience (CE Class IIa Certified).
@@ -8582,13 +8704,16 @@ def render_social_media_hub():
             ("5. Adım: Her Videonun Altına Standart B2B Satış Açıklaması Ekleyin",
              "Protokol indirme linki, WhatsApp iletişim numarası, LinkedIn profil linki ve kurumsal web sitesi çağrılarını her video açıklamasına sabitleyin.")
         ]
-        for s_title, s_desc in yt_steps:
-            st.markdown(f"""
-            <div style="background: rgba(10, 25, 47, 0.7); border-left: 4px solid #10B981; border-radius: 0 8px 8px 0; padding: 12px 16px; margin-bottom: 10px; font-size: 12px; line-height: 1.6;">
-                <b style="color: #34D399; font-size: 13px;">{s_title}</b><br>
-                <span style="color: #CBD5E1;">{s_desc}</span>
-            </div>
-            """, unsafe_allow_html=True)
+        for idx_st, (s_title, s_desc) in enumerate(yt_steps):
+            render_recommendation_with_ai_comment(
+                item_id=f"yt_step_{idx_st}",
+                title=s_title,
+                body_html=s_desc,
+                border_col="#34D399",
+                audit_state=audit_state,
+                platform="YouTube",
+                page_ctx=_sm_page_ctx
+            )
 
         st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
 
@@ -8704,67 +8829,59 @@ def render_social_media_hub():
         </div>
         """, unsafe_allow_html=True)
 
-        col_li1, col_li2 = st.columns(2)
-        with col_li1:
-            bio_badge_html = "<span style='color:#34D399;font-weight:800;'>✅ TAMAMLANDI (Çift Tekrar Temizlendi!)</span>" if not li_dup_v else "<span style='color:#F87171;font-weight:800;'>🔴 Hala Düzeltilmedi</span>"
-            tag_badge_html = f"<span style='color:#FBBF24;font-weight:800;'>🟡 Varsayılan: '{li_tag_v}' (+7 Puan Fırsatı)</span>" if li_gen_tag_v else f"<span style='color:#34D399;font-weight:800;'>✅ Güncel: '{li_tag_v}'</span>"
-            st.markdown(f"""
-            <div style="background: rgba(10, 25, 47, 0.75); border: 1px solid rgba(14, 165, 233, 0.3); border-radius: 12px; padding: 16px 20px; height: 100%;">
-                <b style="color: #7DA8DF; font-size: 14px;">🔧 Canlı Profil Röntgeni (Güncel Durum & Kalan Adımlar)</b>
-                <div style="font-size: 12px; color: #CBD5E1; margin-top: 10px; line-height: 1.6;">
-                    <b style="color: #F8FAFC;">1. Biyografi / Hakkında Metni:</b> {bio_badge_html}<br>
-                    <span style="color: #94A3B8; font-size:11px;">Canlı Önizleme: <i>"{li_about_v}"</i></span><br><br>
-                    <b style="color: #F8FAFC;">2. Slogan (Tagline) Durumu:</b> {tag_badge_html}<br>
-                    <b style="color: #34D399;">Önerilen Yeni Slogan (+7 Puan):</b> <i>"CE-Certified Electrical AOA Pulse Stimulator, Zero-Error Electronic Witnessing & PGT-A Biopsy Safety | IVF Lab Automation"</i><br><br>
-                    <b style="color: #F8FAFC;">3. Özel Buton:</b> Sayfa aksiyon butonunu "İletişime Geçin" (Contact Us) olarak ayarlayın.
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+        _li_page_ctx = build_current_page_ai_context("04 / B2B & Medikal İletişim Ağı", "Kurumsal Medikal İletişim Stüdyosu")
+        bio_badge_html = "<span style='color:#34D399;font-weight:800;'>✅ TAMAMLANDI (Çift Tekrar Temizlendi!)</span>" if not li_dup_v else "<span style='color:#F87171;font-weight:800;'>🔴 Hala Düzeltilmedi</span>"
+        tag_badge_html = f"<span style='color:#FBBF24;font-weight:800;'>🟡 Varsayılan: '{li_tag_v}' (+7 Puan Fırsatı)</span>" if li_gen_tag_v else f"<span style='color:#34D399;font-weight:800;'>✅ Güncel: '{li_tag_v}'</span>"
 
-        with col_li2:
-            st.markdown("""
-            <div style="background: rgba(10, 25, 47, 0.75); border: 1px solid rgba(245, 158, 11, 0.3); border-radius: 12px; padding: 16px 20px; height: 100%;">
-                <b style="color: #FBBF24; font-size: 14px;">🧠 LinkedIn Algoritması Nasıl Çalışıyor? (Neden Standart Postlar Tütmüyor?)</b>
-                <div style="font-size: 12px; color: #CBD5E1; margin-top: 10px; line-height: 1.6;">
-                    <b style="color: #EF4444;">1. Dış Link Cezası (Outbound Link Penalty):</b><br>
-                    Gönderi metnine web sitesi linki koyarsanız, LinkedIn kullanıcıyı platform dışına çıkarmak istemediği için erişimi <b>%50-%60 oranında kısar</b>! Linkler daima <b>ilk yoruma</b> konmalı veya DM ile gönderilmelidir.<br><br>
-                    <b style="color: #F8FAFC;">2. Tek Resimli Postların Düşüşü:</b><br>
-                    Cihazın tek bir fotoğrafı altına uzun yazı yazmak algoritmada neredeyse sıfır etkileşim alır.<br><br>
-                    <b style="color: #34D399;">3. Dwell Time (Ekranda Kalma Süresi):</b><br>
-                    Algoritmanın en büyük puanı: Bir kullanıcının gönderi üzerinde geçirdiği süredir. Bu yüzden 6-8 sayfalık PDF dökümanları (Carousel) tek görsele göre <b>3.8x daha fazla erişim</b> üretir!
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-
-        st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
-
-        # 4 Formats & Growth Loop
-        col_f1, col_f2 = st.columns(2)
-        with col_f1:
-            st.markdown("""
-            <div style="background: rgba(10, 25, 47, 0.75); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 12px; padding: 16px 20px; height: 100%;">
-                <b style="color: #34D399; font-size: 14px;">💎 LinkedIn'de En Çok Tutan 4 İçerik Formatı</b>
-                <div style="font-size: 12px; color: #CBD5E1; margin-top: 10px; line-height: 1.6;">
-                    • <b>Format 1: 6-8 Slaytlık PDF Carousel (Kaydırmalı Döküman):</b> Sağa kaydırıldıkça dwell-time tavan yapar. <i>Şablon:</i> 1. Kanca -> 2. Klinik Problem -> 3. Kimyasal İyonofor Çıkmazı -> 4. ZEUS Pulse Stimulator Çözümü -> 5. PubMed Verisi -> 6. Protokol CTA.<br>
-                    • <b>Format 2: Mikroskop Altı 45-60 sn Video (Satisfying Science):</b> Z-Dish elektrot havuzunda kontrollü DC elektriksel darbe ile kalsiyum dalgasının (The Spark of Life) yayıldığı an.<br>
-                    • <b>Format 3: Sosyal Kanıt & Vaka Başarısı (Case of the Month):</b> Hastane teslimatları (Jordan Hospital gibi) ve hekim referansları.<br>
-                    • <b>Format 4: Hukuki & Güvenlik Düşünce Liderliği (Thought Leadership):</b> Malpraktis davaları ve 7 istasyonlu RFID şahitlik güvencesi.
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-
-        with col_f2:
-            st.markdown("""
-            <div style="background: rgba(10, 25, 47, 0.75); border: 1px solid rgba(236, 72, 153, 0.3); border-radius: 12px; padding: 16px 20px; height: 100%;">
-                <b style="color: #F472B6; font-size: 14px;">🔄 Sıcak Satışa Dönüştüren 'Yorum & Lead Döngüsü' (Growth Hack)</b>
-                <div style="font-size: 12px; color: #CBD5E1; margin-top: 10px; line-height: 1.6;">
-                    ❌ <b>Klasik Verimsiz Yol:</b> <i>'Daha fazla bilgi için sitemizi ziyaret edin: www.zeusbioscience.com'</i> (Erişim düşer, çok az kişi tıklar).<br><br>
-                    ✅ <b>Dönüşümü 10x Artıran Yol:</b><br>
-                    <i style="color: #F8FAFC;">'Total Döllenme Başarısızlığı için hazırladığımız 6 sayfalık Elektriksel AOA Klinik Protokol Kılavuzunu incelemek isterseniz, yoruma <b>PROTOKOL</b> yazmanız yeterlidir. Dosyayı doğrudan mesaj (DM) ile iletelim.'</i><br><br>
-                    <b>Neden Çalışır?</b> Yoruma 30-40 hekim 'PROTOKOL' yazdığında algoritma gönderiyi viral yapar + Yoruma yazan her embriyolog sıcak bir kurumsal müşteri adayına (B2B Lead) dönüşür!
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
+        li_rec_cards = [
+            (
+                "li_profile_xray",
+                "🔧 Canlı Profil Röntgeni (Güncel Durum & Kalan Adımlar)",
+                (
+                    f"<b style='color: #F8FAFC;'>1. Biyografi / Hakkında Metni:</b> {bio_badge_html}<br>"
+                    f"<span style='color: #94A3B8; font-size:11px;'>Canlı Önizleme: <i>&ldquo;{li_about_v}&rdquo;</i></span><br><br>"
+                    f"<b style='color: #F8FAFC;'>2. Slogan (Tagline) Durumu:</b> {tag_badge_html}<br>"
+                    f"<b style='color: #34D399;'>Önerilen Yeni Slogan (+7 Puan):</b> <i>&ldquo;CE-Certified Electrical AOA Pulse Stimulator, Zero-Error Electronic Witnessing &amp; PGT-A Biopsy Safety | IVF Lab Automation&rdquo;</i><br><br>"
+                    f"<b style='color: #F8FAFC;'>3. Özel Buton:</b> Sayfa aksiyon butonunu &ldquo;İletişime Geçin&rdquo; (Contact Us) olarak ayarlayın."
+                ),
+                "#7DA8DF"
+            ),
+            (
+                "li_algo_rules",
+                "🧠 LinkedIn Algoritması & Erişim Kuralları",
+                "<b style='color: #EF4444;'>1. Dış Link Cezası (Outbound Link Penalty):</b> Gönderi metnine web sitesi linki koyarsanız erişim <b>%50-%60 düşer</b>; linki daima <b>ilk yoruma</b> koyun.<br>"
+                "<b style='color: #F8FAFC;'>2. Tek Resimli Postların Düşüşü:</b> Tek cihaz fotoğrafı düşük etkileşim alır.<br>"
+                "<b style='color: #34D399;'>3. Dwell Time:</b> 6-8 sayfalık PDF Carousel dökümanları tek görsele göre <b>3.8x daha fazla erişim</b> üretir!",
+                "#FBBF24"
+            ),
+            (
+                "li_formats",
+                "💎 LinkedIn'de En Çok Tutan 4 İçerik Formatı",
+                "• <b>Format 1: 6-8 Slaytlık PDF Carousel:</b> 1. Kanca -> 2. Klinik Problem -> 3. İyonofor Riski -> 4. ZEUS Pulse Stimulator -> 5. PubMed -> 6. Protokol CTA.<br>"
+                "• <b>Format 2: Mikroskop Altı 45-60 sn Video:</b> Z-Dish havuzunda kontrollü DC elektriksel darbe ile Ca2+ dalgası.<br>"
+                "• <b>Format 3: Sosyal Kanıt & Vaka Başarısı:</b> Hastane teslimatları ve hekim referansları.<br>"
+                "• <b>Format 4: Hukuki & Güvenlik Düşünce Liderliği:</b> 7 istasyonlu RFID şahitlik güvencesi.",
+                "#34D399"
+            ),
+            (
+                "li_lead_loop",
+                "🔄 Sıcak Satışa Dönüştüren 'Yorum & Lead Döngüsü' (Growth Hack)",
+                "❌ <b>Klasik Verimsiz Yol:</b> <i>'Daha fazla bilgi için sitemizi ziyaret edin...'</i><br>"
+                "✅ <b>Dönüşümü 10x Artıran Yol:</b> <i style='color: #F8FAFC;'>'TFF için 6 sayfalık Elektriksel AOA Klinik Protokol Kılavuzu için yoruma <b>PROTOKOL</b> yazmanız yeterlidir; DM ile iletelim.'</i><br>"
+                "<b>Neden Çalışır?</b> Algoritma gönderiyi öne çıkarır ve yorum yapan her embriyolog sıcak B2B lead olur!",
+                "#F472B6"
+            )
+        ]
+        for l_id, l_title, l_body, l_col in li_rec_cards:
+            render_recommendation_with_ai_comment(
+                item_id=l_id,
+                title=l_title,
+                body_html=l_body,
+                border_col=l_col,
+                audit_state=audit_state,
+                platform="LinkedIn",
+                page_ctx=_li_page_ctx
+            )
 
         st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
 
@@ -10025,6 +10142,16 @@ Yaptığınız son değişiklikler (5 YouTube Oynatma Listesi + 49 dk video baş
 1. 49 dk videoya (`lEA4tqaQ648`) açıklama & 7 chapter ekleyin (**+7 puan**).
 2. LinkedIn'de `"Biotechnology Research"` olan sloganı (Tagline) CE Class IIa / Electrical AOA değer önerisiyle değiştirin (**+7 puan**)."""
 
+        # Specific Sub-Case 3b: Piezo terminology list in YouTube/Playlists
+        elif "piezo" in prompt_norm and any(k in prompt_norm for k in ["hangileri", "liste", "baslik", "video", "temizle", "odak oneri", "terminoloji"]):
+            hits_bullets = "\n".join([f"- `{h}`" for h in _piezo_hits]) if _piezo_hits else "- Canlı başlıklar temiz görünüyor."
+            return f"""### 🔎 'Piezo' İfadesi Geçen Canlı YouTube Başlık & Listeleri ({len(_piezo_hits)} Adet)
+
+ZEUS cihazı mekanik Piezo-ICSI değil, elektriksel **AOA Pulse Stimulator** cihazıdır. Canlı taramada tespit edilen ve güncellenmesi gereken {len(_piezo_hits)} öğe:
+{hits_bullets}
+
+**Öneri:** YouTube Studio'dan bu başlıklardaki `Piezo` kelimesini çıkarıp **`ZEUS Pulse Stimulator (Electrical AOA)`** olarak güncelleyin."""
+
         # Specific Sub-Case 4: LinkedIn / Tagline / Bio
         elif any(k in prompt_norm for k in ["linkedin", "tagline", "slogan", "biyografi", "bio"]):
             return f"""### 💼 LinkedIn (`zeusbioscience`) Canlı Profil Yanıtı
@@ -10035,6 +10162,23 @@ Yaptığınız son değişiklikler (5 YouTube Oynatma Listesi + 49 dk video baş
 
 #### 💡 Önerilen Hemen Uygulanabilir Tagline Metni
 `CE-Certified Electrical AOA Pulse Stimulator, Zero-Error Electronic Witnessing & PGT-A Biopsy Safety | IVF Lab Automation`"""
+
+        # If user is commenting directly on a focused recommendation card ([ODAK ÖNERİ ...])
+        elif "[odak oneri" in prompt_norm:
+            odak_m = re.search(r'\[ODAK ÖNERİ \((.*?)\): (.*?) \|', str(prompt_text))
+            user_q_m = re.search(r'Yönetici Yorumu / Sorusu:\s*(.*)', str(prompt_text), re.S)
+            odak_plat = odak_m.group(1) if odak_m else "Sosyal Medya"
+            odak_title = odak_m.group(2) if odak_m else "Seçili Öneri"
+            u_comment = user_q_m.group(1).strip() if user_q_m else prompt_text
+            return f"""### 🤖 AI Değerlendirmesi — [{odak_plat}] {odak_title}
+
+**Yorumunuz / Sorunuz:** *"{u_comment}"*
+
+* **Canlı Durum Bağlamı:** Güncel skorunuz **{_sc['total_score']}/100** (YouTube **{_sc['yt_score']}/50**, LinkedIn **{_sc['li_score']}/50**).
+* **Değerlendirme & Tavsiye:**
+  * Paylaştığınız yaklaşım bu maddenin uygulama hızını ve dönüşüm etkisini doğrudan güçlendiriyor.
+  * Eğer YouTube/LinkedIn üzerinde bu değişikliği tamamladıysanız sayfanın üstündeki **`🔄 Güncel Skor Hesapla`** butonuna basarak puan artışını canlı doğrulayabilirsiniz.
+  * Bu yaklaşımı ekip görevine dönüştürmek için hemen sağdaki **`⚖️ Karar Merkezine Aktar`** butonuna basarak doğrudan **Strategic Decision Center**'a ekleyebilirsiniz."""
 
         # General Social Media Answer covering playlists, piezo cleanup & next steps
         else:
