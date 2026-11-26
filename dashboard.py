@@ -9160,6 +9160,15 @@ with st.sidebar:
         "04 / B2B & Medikal İletişim Ağı",
         "05 / Global Satış & ERP Kokpiti"
     ]
+    pending_nav = st.session_state.pop("_pending_nav_target", None)
+    if pending_nav and pending_nav in main_nav_opts:
+        st.session_state["main_nav_radio"] = pending_nav
+    pending_sub = st.session_state.pop("_pending_subview_target", None)
+    if pending_sub and isinstance(pending_sub, tuple) and len(pending_sub) == 2:
+        _t_nav, _t_sub = pending_sub
+        _t_pkey = f"pills_hub_{abs(hash(_t_nav)) % 100000}"
+        st.session_state[_t_pkey] = _t_sub
+
     if "main_nav_radio" not in st.session_state:
         st.session_state["main_nav_radio"] = main_nav_opts[0]
     elif st.session_state["main_nav_radio"] not in main_nav_opts:
@@ -9428,14 +9437,71 @@ def normalize_text_for_intent(text):
     tr_map = str.maketrans("çğıöşüİIĞÖŞÜÇ", "cgiosuIIGOSUc")
     return text.translate(tr_map).lower()
 
-def generate_zeus_expert_response(prompt_text, chat_history=None):
+def _sanitize_ai_ctx_val(val):
+    return str(val).strip() if val is not None else ""
+
+def build_current_page_ai_context(nav_sel="", subview="", extra=None):
+    """Builds a structured context dictionary describing the active page, country, and live metrics."""
+    nav_str = _sanitize_ai_ctx_val(nav_sel or st.session_state.get("main_nav_radio", "01 / Pazar İstihbaratı & Ülke Analizi"))
+    sub_str = _sanitize_ai_ctx_val(subview)
+    slug = "global"
+    cat_default = "Genel Stratejik Karar"
+    if nav_str.startswith("01"):
+        slug = "01_market"
+        cat_default = "Pazar & Ülke Giriş Stratejisi"
+    elif nav_str.startswith("02"):
+        slug = "02_strategy"
+        cat_default = "Risk, Rakip & Sözleşme Kararı"
+    elif nav_str.startswith("03"):
+        slug = "03_pricing"
+        cat_default = "Fiyatlandırma, İskonto & Klinik ROI Kararı"
+    elif nav_str.startswith("04"):
+        slug = "04_outreach"
+        cat_default = "B2B Karar Verici & Distribütör Ağı Kararı"
+    elif nav_str.startswith("05"):
+        slug = "05_erp"
+        cat_default = "Global Satış, Filo & ERP Kota Kararı"
+
+    sel_country_ctx = (
+        st.session_state.get("sel_country")
+        or st.session_state.get("radar_country")
+        or st.session_state.get("sel_country_pricing")
+        or ""
+    )
+    ctx = {
+        "page_slug": slug,
+        "nav_selection": nav_str,
+        "active_view": sub_str,
+        "selected_country": _sanitize_ai_ctx_val(sel_country_ctx),
+        "default_category": cat_default,
+    }
+    if isinstance(extra, dict):
+        ctx.update(extra)
+    return ctx
+
+
+def generate_zeus_expert_response(prompt_text, chat_history=None, page_context=None):
     """
     High-authority ZEUS MedTech & Commercial Intelligence Expert.
     Uses Google Gemini 2.5 Live if GEMINI_API_KEY is available;
     otherwise executes the comprehensive ZEUS Domain Neural Cognitive Engine.
+    Supports interactive manager opinions, page-contextual recommendations, and SDC decision drafting.
     """
     prompt_norm = normalize_text_for_intent(prompt_text)
     api_key = get_gemini_api_key() or st.session_state.get("custom_gemini_api_key")
+    ctx = page_context or {}
+    nav_lbl = ctx.get("nav_selection", "ZEUS Global Market Intelligence")
+    sub_lbl = ctx.get("active_view", "")
+    country_lbl = ctx.get("selected_country", "")
+    extra_metrics = ctx.get("metrics_summary", "")
+
+    ctx_summary_line = f"Aktif Sayfa: {nav_lbl}"
+    if sub_lbl:
+        ctx_summary_line += f" | Görünüm: {sub_lbl}"
+    if country_lbl:
+        ctx_summary_line += f" | İncelenen Ülke: {country_lbl}"
+    if extra_metrics:
+        ctx_summary_line += f" | Canlı Veriler: {extra_metrics}"
 
     # 1. LIVE GEMINI 2.5 INFERENCE (If API Key Available)
     if api_key:
@@ -9445,29 +9511,28 @@ def generate_zeus_expert_response(prompt_text, chat_history=None):
             system_prompt = (
                 "Sen ZEUS Bioscience Baş MedTech ve Ticari İstihbarat Uzmanısın (Chief Commercial & AI Strategy Officer).\n"
                 "Kurumsal Kimlik ve Bilgi Tabanı:\n"
-                "- Temel Cihaz: ZEUS AOA Pulse Stimulator (Elektriksel Oosit Aktivasyon Cihazı). CE Class IIa (EU MDR) ve ISO 13485 sertifikalıdır.\n"
+                "- Temel Cihaz: ZEUS AOA Pulse Stimulator (ZPS 26 - Elektriksel Oosit Aktivasyon Cihazı). CE Class IIa ve ISO 13485 sertifikalıdır.\n"
                 "- Bilimsel Üstünlük: Mikrosaniye düzeyinde kontrollü kare dalga elektriksel pulslar ile intraselüler Ca2+ salınımını aktive eder. "
-                "ASLA mekanik Piezo-ICSI veya Eppendorf piezo mikromanipülatörü DEĞİLDİR (sıfır mekanik yırtılma). ASLA fototermal lazer DEĞİLDİR (sıfır termal hasar).\n"
-                "- Sarf Malzeme: 4-Pool Single Dish (1 dish içinde 4 ayrı aktivasyon havuzu = 20 oosit/dish = 1 tam siklus). Vaka başı sarf maliyeti yalnızca $6.60 USD ($0.33/oosit).\n"
-                "- Distribütörlük & Sözleşme Modelleri:\n"
-                "  1. Standart Yetkili Distribütörlük: Yıllık kota + 3 cihaz ön alım taahhüdü.\n"
-                "  2. Şartlı Distribütörlük & İhale LOA: İhale (tender) süresince bağlayıcı olmayan yetki mektubu; kazanılırsa 30 gün içinde cihaz alım zorunluluğu; kaybedilirse sıfır ceza.\n"
-                "  3. 90 Günlük Pazar Analizi LOI & 60 Günlük ROFR: Bayi adayı bölgeyi analiz ederken 60 gün ilk red hakkı; başka bayi teklifi gelirse 14 gün içinde eşleştirme hakkı.\n"
-                "  4. Fırsat Kaydı (Deal Registration): Bayinin kayıt altına aldığı klinikler 6 ay korunur; başka bayi atansa dahi %10-15 komisyon güvencesi verilir.\n"
-                "  5. Doğrudan Klinik Satışı (Non-exclusive direct clinical placement).\n"
-                "- 59 Ülke Verisi, 874 İşlem, $693.9K konsolide fiili gelir.\n\n"
-                "Görevin: Üst yönetime (Sireen Khemesh ve yönetim kuruluna) derinlemesine, profesyonel, uygulanabilir stratejik öneriler, "
-                "sözleşme maddeleri, teknik kıyaslamalar ve finansal gerekçeler sunmak. Yanıtlarını net, kurumsal başlıklar, yönetici maddeleri ve standart markdown ile ver. KESİNLİKLE hiçbir Unicode emoji veya dekoratif sembol kullanma."
+                "ASLA mekanik Piezo-ICSI veya Eppendorf piezo mikromanipülatörü DEĞİLDİR (sıfır mekanik yırtılma). ASLA fototermal lazer DEĞİLDİR.\n"
+                "- Sarf Malzeme: 4-Pool Single Dish (1 kutu = 2 dish; her dish 4 havuz = 20 oosite kadar kapasite) + Solution-Powder (1 kutu = 2 ml, 1 yıl raf ömrü). Vaka başı maliyet ~$6.60 USD.\n"
+                "- Distribütör Politikası: Asgari 3 cihaz zorunludur (Pulse Stimulator alınacaksa en az 2 cihaz: 1. Direct Sale + 1 kutu dish & solution-powder hediye; 2. Reagent-Based + 60 kutu dish & 20 kutu solution-powder; 3. serbest seçim — veya 3 farklı portföy cihazı: BioPSafe, Mismatch Blocker, Smart Cryo-Tools).\n"
+                "- Diğer Modeller: İhale Bazlı Şartlı Distribütörlük (Tender LOA), 90 Günlük Pazar Analizi LOI + 60 Günlük ROFR + 6 Aylık Deal Registration.\n"
+                f"Şu Anki Portal Bağlamı: {ctx_summary_line}\n\n"
+                "Görevin:\n"
+                "1. Kullanıcı (Sireen Khemesh / Yönetim) kendi görüşünü paylaşırsa önce o görüşü yapıcı ve eleştirel biçimde değerlendir (güçlü yanlar + finansal/regülasyon/sözleşme riskleri).\n"
+                "2. Kullanıcının sorusuna ve aktif sayfanın verilerine göre somut, uygulanabilir AI Tavsiyeleri (Recommendations) ver.\n"
+                "3. Yanıtın sonunda, kullanıcının tek tıkla Strategic Decision Center (SDC)'a gönderebileceği net bir 'Önerilen Karar Özeti' (Başlık, Sorumlu Birim, Öncelik, İcra Adımları, Beklenen Etki) sun.\n"
+                "Kullanıcının dili İngilizce ise yanıtı profesyonel İngilizce; Türkçe ise Türkçe ver. Kesinlikle Unicode emoji kullanma."
             )
-            
+
             hist_context = ""
             if chat_history:
-                for h in chat_history[-4:]:
+                for h in chat_history[-6:]:
                     role_lbl = "Yönetici" if h["role"] == "user" else "ZEUS AI Uzmanı"
                     hist_context += f"{role_lbl}: {h['content']}\n\n"
 
-            full_query = f"{hist_context}Yönetici: {prompt_text}\n\nZEUS AI Uzmanı (Derinlemesine Stratejik Cevap):"
-            
+            full_query = f"[{ctx_summary_line}]\n\n{hist_context}Yönetici: {prompt_text}\n\nZEUS AI Uzmanı (Görüş Değerlendirmesi, Tavsiye & Karar Taslağı):"
+
             resp = client.models.generate_content(
                 model='gemini-2.5-flash',
                 contents=full_query,
@@ -9482,304 +9547,418 @@ def generate_zeus_expert_response(prompt_text, chat_history=None):
             pass
 
     # 2. DETERMINISTIC ZEUS DOMAIN EXPERT ENGINE (Always Active & Grounded)
+    is_english = (
+        any(w in prompt_norm for w in ["opinion", "recommend", "suggest", "should we", "what do you think", "decision", "this page", "strategy", "pricing", "market"])
+        and not any(w in prompt_norm for w in ["bence", "gorusum", "tavsiye", "oneri", "karar", "sayfa", "fiyat", "ihale", "ulkeler", "nasil"])
+    )
+
     if any(k in prompt_norm for k in ["tender", "ihale", "sartli", "3 cihaz", "kota", "baglayici"]):
-        return """### 🎯 ZEUS Stratejik Karar Masası: Şartlı Distribütörlük & İhale (Tender LOA) Modeli
+        return """### ZEUS Stratejik Karar Masası: Şartlı Distribütörlük & İhale (Tender LOA) Modeli
 
 **Sayın Yönetici,**  
-Ülkelerde standart distribütörlük sözleşmelerimizde yer alan **"Minimum 3 Cihaz Ön Alım Şartı"**, kamu veya büyük hastane zinciri ihalelerine giren distribütör adayları için ciddi bir nakit ve stok riski oluşturur. İhalenin kazanılıp kazanılmayacağı belli olmadan 3 cihaz satın almayı zorunlu kılmak, güçlü yerel ihale oyuncularını kaçırabilir.
+Ülkelerde standart distribütörlük sözleşmelerimizde yer alan **"Minimum 3 Cihaz Ön Alım Şartı"** (Pulse Stimulator dahilse en az 2 cihaz: 1 Direct Sale + 1 Reagent-Based; veya 3 farklı portföy cihazı), kamu veya büyük hastane zinciri ihalelerine giren distribütör adayları için nakit akışı riski yaratabilir.
 
-Bu durum için geliştirdiğimiz **"ZEUS Kademeli Şartlı Distribütörlük & İhale Yetki Mektubu (Tender LOA)"** çerçevesi tavsiye edilir:
+#### 1. Uygulanacak Sözleşme Mimarisi: "Tender-Bound LOA"
+1. **Bağlayıcı Olmayan İhale Yetki Mektubu (Non-Binding Tender LOA):** Sadece ilgili ihale numarası için geçerli resmi *Manufacturer Authorization Form (MAF / LOA)* verilir; genel münhasırlık içermez.
+2. **Kazanma Şartına Bağlı 3 Cihaz Taahhüdü:** İhale kazanıldığı tarihten itibaren 30 gün içinde asgari 3 cihaz + Reagent-Based sarf (60 kutu Dish + 20 kutu Solution-Powder) siparişi zorunlu hale gelir.
+3. **Kaybetme Durumunda Sıfır Ceza:** İhale kazanılamazsa LOA hükümsüz kalır; ZEUS başka bir ortakla ilerlemekte serbest kalır.
 
----
+#### 2. Strategic Decision Center (SDC) İçin Önerilen Karar Özeti
+* **Karar Başlığı:** Şartlı İhale Yetki Mektubu (Tender-Bound LOA) ile Pazara Giriş Protokolü
+* **Sorumlu Birim:** Hukuk & İhale Masası / Global Satış
+* **Öncelik:** P1 - Acil (1-15 Gün)
+* **Tavsiye:** Aşağıdaki *Add Decision to Strategic Decision Center* panelinden bu kararı doğrudan SDC'ye ekleyebilirsiniz."""
 
-#### 1. 📋 Uygulanacak Sözleşme Mimarisi: "Tender-Bound LOA"
-1. **Bağlayıcı Olmayan İhale Yetki Mektubu (Non-Binding Tender LOA):**
-   * Aday bayiye, ilgili ülkedeki **sadece bahse konu ihale numarası ve şartnamesi için geçerli** resmi bir *Manufacturer Authorization Form (MAF / LOA)* verilir.
-   * Bu mektup genel münhasırlık (territory exclusivity) içermez; sadece bahsi geçen ihale süresince geçerlidir.
-2. **Kazanma Şartına Bağlı Alım Taahhüdü (Conditional Purchase Commitment):**
-   * Sözleşmeye şu madde eklenir: *"İhale resmi olarak bayi tarafından kazanıldığı ve idare ile sözleşme imzalandığı tarihten itibaren en geç 30 takvim günü içinde bayi, ZEUS Bioscience'a asgari 3 (üç) adet ZEUS AOA Pulse Stimulator ve ilk 6 aylık sarf malzeme (4-Pool Dish & Reagents) siparişini kesin olarak geçmekle yükümlüdür."*
-3. **Kaybetme Durumunda Sıfır Risk & Tam Serbestlik:**
-   * İhale kaybedilirse LOA kendiliğinden hükümsüz kalır. Bayiye herhangi bir cezai şart uygulanmaz, ZEUS Bioscience da o ülkede dilediği başka bir partnerle masaya oturmakta serbest kalır.
-
----
-
-#### 2. 🛡️ ZEUS Çıkarlarını Koruma Maddeleri (Risk Azaltma)
-* **İptal Klozu:** Bayi ihale teklifini idareye sunmaz veya şartname gerekliliklerini 15 gün içinde karşılayamazsa, yetki mektubu tek taraflı feshedilir.
-* **Fiyat Sabitleme Tavanı:** İhale için bayiye özel bir transfer fiyatı (Transfer Price) tanımlanır, ancak bu fiyat 90 gün boyunca geçerlidir; döviz kuru dalgalanmalarına karşı hedging klozu içerir.
-
----
-
-#### 3. 💼 Yönetici Tavsiyesi (Immediate Action)
-> **Öneri:** Bayi adayına `Model 2: Şartlı İhale LOA` sözleşme şablonumuzu gönderin. Kendisinden ihale şartnamesini, idare kayıt kodunu ve son teklif verme tarihini talep edin. İhaleyi kazanması durumunda 3 cihazlık placement garantisini sözleşmeye bağlayarak hem bayinin çekincesini giderin hem de ZEUS'un $75K+ ciro hacmini güvenceye alın."""
-
-    elif any(k in prompt_norm for k in ["bosa", "korku", "analiz", "koruma", "deal reg", "firsat", "emek", "baskasi"]):
-        return """### 🛡️ ZEUS Stratejik Karar Masası: Pazar Analizi Yapan Bayi Adayını Koruma & Deal Registration Protokolü
+    elif any(k in prompt_norm for k in ["bosa", "korku", "analiz", "koruma", "deal reg", "firsat", "emek", "baskasi", "rofr"]):
+        return """### ZEUS Stratejik Karar Masası: Pazar Analizi Yapan Bayi Adayını Koruma & Deal Registration
 
 **Sayın Yönetici,**  
-Bir bayinin distribütör olmadan önce sahada klinik taraması yapması, hekimlerle görüşmesi, kamu ve özel laboratuvar envanterini çıkarması **büyük bir emek ve zaman yatırımıdır**. Bayi adaylarının *"Ben sahayı hazırlarım, doktorları ikna ederim; sonra ZEUS başka bir büyük distribütörle anlaşıp benim emeklerimin üzerine konar"* endişesi son derece meşru bir ticari kaygıdır.
+Sahada klinik taraması yapan bayi adaylarının *"Ben sahayı hazırlarım, sonra ZEUS başka bir distribütörle anlaşır"* kaygısını ortadan kaldırmak için **3 Aşamalı Güvence Protokolü** uygulanmalıdır:
 
-Bu kaygıyı ortadan kaldırmak ve bayiyi şevkle sahaya sürmek için uygulayacağımız **3 Aşamalı Güvence Protokolü**:
+1. **90 Günlük Pazar Analizi LOI:** Bayiye resmi tanıtım kiti ve CE Class IIa dokümantasyonu sağlanır; ZEUS bu klinikleri doğrudan bypass etmez.
+2. **6 Aylık Fırsat Kaydı (Deal Registration):** Bayinin kaydettiği kliniklerden gelecek ilk siparişlerde %12-%15 koruma komisyonu güvencesi tanımlanır.
+3. **60 Günlük İlk Red Hakkı (ROFR):** Başka bir teklif gelirse mevcut bayiye 14 iş günü içinde eşleştirme önceliği tanınır.
 
----
-
-#### 1. 📜 90 Günlük Pazar Analizi LOI (Pre-Distribution Assessment LOI)
-* Bayiye 90 günlük resmi bir niyet mektubu verilir.
-* Bu süre boyunca bayiye sahada hekimlere göstermesi için **resmi klinik tanıtım kitleri, 4-Pool Single Dish numune protokolleri ve CE Class IIa dokümantasyonu** sağlanır.
-* Bu 90 gün boyunca ZEUS, bayinin çalıştığı bilinen kliniklere doğrudan satış yapmayacağını taahhüt eder.
-
----
-
-#### 2. 🔐 Fırsat Kaydı (Deal Registration Protection Clause)
-* **Klinik Listesi Kilidi:** Bayi adayı, temasa geçtiği kliniklerin ve temas kişisi hekimlerin isimlerini ZEUS'un resmi portalına kaydeder (Deal Registration).
-* **6 Aylık Koruma Kalkanı:** Bayi resmi distribütör olamasa veya o ülkeye 6 ay içinde başka bir ana distribütör atansa dahi, **kayıtlı kliniklerden gelecek ilk siparişlerin %12-%15 komisyonu analiz yapan bayiye ödenir** veya o kliniklere ürün tedarik hakkı bu bayide saklı tutulur.
-* Bu sayede bayinin hiçbir teması ve emeği boşa gitmez!
-
----
-
-#### 3. ⚖️ 60 Günlük İlk Red Hakkı (Right of First Refusal - ROFR)
-* Bayi analiz sürecindeyken o ülkeden başka bir distribütör adayı ZEUS'a başvurursa:
-* ZEUS, sahada çalışan mevcut bayiye derhal resmi bildirimde bulunur ve **14 iş günü içinde** teklifi eşleştirme ve standart distribütörlüğe geçme önceliği tanır.
-* Bayi bu hakkı kullanırsa bölge derhal kendisine verilir.
-
----
-
-#### 4. 💼 Yönetici Tavsiyesi (Immediate Action)
-> **Öneri:** Bayi adayına açıkça şunu belirtin: *"Emekleriniz ZEUS kurumsal etiğinin ve Deal Registration protokolümüzün teminatı altındadır. Size 90 günlük Pazar Değerlendirme LOI'si imzalayalım ve ziyaret edeceğiniz ilk 10 kliniği portalımızda adınıza bloke edelim."* Bu teklif, bayinin güvenini %100 tesis edecek ve sahaya derhal inmesini sağlayacaktır."""
+#### Strategic Decision Center (SDC) İçin Önerilen Karar Özeti
+* **Karar Başlığı:** 90 Günlük LOI + Deal Registration Bayi Koruma Protokolü
+* **Sorumlu Birim:** Global Satış & Distribütör Masası
+* **Öncelik:** P2 - Yüksek (30 Gün)"""
 
     elif any(k in prompt_norm for k in ["piezo", "eppendorf", "lazer", "laser", "aoa", "bilimsel", "ustunluk", "fark"]):
-        return """### 🔬 ZEUS AOA vs Piezo-ICSI & Laser: Bilimsel & Klinik Üstünlük Kıyaslaması
+        return """### ZEUS Pulse Stimulator (AOA) vs Piezo-ICSI & RUO Elektroporatörler
 
 **Sayın Yönetici,**  
-Klinik direktörleri ve embriyologlarla yapılan görüşmelerde **ZEUS AOA Pulse Stimulator**'ın piezo-elektrik mikromanipülatörler (Eppendorf PiezoXpert / PrimeTech) veya lazer sistemleriyle karıştırılması kritik bir terminoloji hatasıdır.
+**ZEUS ZPS 26**, mekanik mikroenjeksiyon delici iğne (**Piezo-ICSI / Eppendorf PiezoXpert**) veya CE onaysız genel araştırma elektroporatörü (**RUO**) DEĞİLDİR; insan IVF laboratuvarlarına özel tıbbi CE Class IIa sertifikalı **Elektriksel Oosit Aktivasyon (AOA) Pulse Stimulator** cihazıdır.
 
-Hekim ve embriyoloji laboratuvar direktörlerine sunulacak **resmi bilimsel argümantasyon seti**:
-
----
-
-#### 1. ⚡ Temel Biyofiziksel Ayrım: Elektriksel Aktivasyon vs Mekanik Delme
-| Parametre | ZEUS AOA Pulse Stimulator | Piezo-ICSI (Eppendorf / PrimeTech) | Lazer Sistemleri (Octax / Hamilton) |
+| Parametre | ZEUS AOA Pulse Stimulator (ZPS 26) | Mekanik Piezo-ICSI (Eppendorf / PrimeTech) | RUO Araştırma Elektroporatörleri |
 | :--- | :--- | :--- | :--- |
-| **Çalışma Prensibi** | **Mikrosaniye Kontrollü Kare Dalga Elektrik Pulsu** | Yüksek frekanslı mekanik piezo-kristal titreşimi | Kızılötesi fototermal ışık atımı |
-| **Klinik Amacı** | **Oosit Aktivasyon Yetmezliğini (AOA) Çözme** ($Ca^{2+}$ Salınımı) | Oosit membranını mikropipetle mekanik delme | Zona pellucida inceltme / biyopsi |
-| **Membran Hasarı** | **SIFIR Mekanik Yırtılma** (Doğal por açılımı ve kapanması) | Yüksek mekanik yırtılma & sitoplazma deformasyonu | Lokalize termal nekroz riski |
-| **Spindle (İğ İpliği) Güvenliği**| **SIFIR Termal Hasar** (Isı üretmez) | Titreşimden kaynaklı spindle bozulma riski | Isı yayılımı nedeniyle spindle hasar riski |
-| **Toksisite / Reaktif** | **Kimyasal İyonofor (Ionomycin) İçermez** (Toksik kalıntı yok) | Cıva/Florosilikon sızıntı riski (bazı piezo modelleri) | Reaktif kullanılmaz |
-| **Regülasyon** | **CE Class IIa Tıbbi Cihaz (EU MDR 2017/745)** | Laboratuvar Enstrümanı | Medikal Lazer |
+| **Klinik Amaç** | **Elektriksel Oosit Aktivasyonu (Ca2+ Salınımı)** | Yalnızca zona/oolemma mekanik delme | Tıbbi CE'siz genel araştırma amaçlı |
+| **Hasar & Toksisite** | **Sub-%1.2 Lizis / Sıfır Kimyasal İyonofor** | Mekanik zar yırtılma riski (AOA yapmaz) | Klinik güvenlik validasyonu yok ($24,500+) |
+| **Kapasite & Sarf** | **1 Dish = 20 Oosit (~$6.60 / Vaka)** | Tekil mekanik müdahale | Yüksek sarf ve kalibrasyon maliyeti |
 
----
+> **Yönetici Tavsiyesi:** Sahada "Bizde zaten Piezo var" diyen kliniklere *"Piezo mekanik delme yapar; döllenmeyen TFF vakalarında Ca2+ sinyalini başlatan tek CE Class IIa AOA çözümü ZEUS Pulse Stimulator'dır"* mesajı verilmelidir."""
 
-#### 2. 🧬 Klinisyene Verilecek Vurucu Mesajlar
-1. *"ZEUS bir enjeksiyon veya delme iğnesi değildir; embriyoda doğal döllenmeyi taklit eden intraselüler kalsiyum dalgalanmasını ($Ca^{2+}$ oscillations) başlatan biyofiziksel bir aktivatördür."*
-2. *"Klasik kimyasal aktivasyonda kullanılan kalsiyum iyonofor banyoları (A23187 / Ionomycin) sitotoksiktir ve yıkanması zordur. ZEUS elektriksel darbesi oosite kimyasal yabancı madde sokmadan %85+ fertilizasyon sağlar."*
-3. *"Piezo cihazı yalnızca zona delmeye yarar, oositin döllenme kaskadını tetikleyemez. Döllenmeyen oositlerde çözüm piezo değil, ZEUS AOA'dır."*
-
----
-
-#### 3. 💼 Yönetici Tavsiyesi (Immediate Action)
-> **Öneri:** Klinikteki hekime doğrudan [Teknik Broşür & CE Sertifikasyon Dosyamızı] iletin ve 5 dakikalık demo videosunu gösterin. "Piezo fiziksel delme yapar, ZEUS ise hücresel yaşam sinyalini başlatır" ayrımını vurgulayın."""
-
-    elif any(k in prompt_norm for k in ["sarf", "dish", "pool", "roi", "maliyet", "fiyat", "reagent"]):
-        return """### 💰 ZEUS 4-Pool Single Dish & Sarf Ekonomisi: Klinik ROI ve Yıllık ARR Analizi
+    elif any(k in prompt_norm for k in ["sarf", "dish", "pool", "roi", "maliyet", "reagent", "solution", "powder"]):
+        return """### ZEUS 4-Pool Single Dish & Liyofilize Solution-Powder ROI Analizi
 
 **Sayın Yönetici,**  
-ZEUS Bioscience ticari modelinin kalbi, klinikler için son derece ekonomik, şirketimiz için ise yüksek marjlı ve düzenli tekrarlayan **4-Pool Single Dish & Electro-Liquid ARR (Yıllık Tekrarlayan Gelir)** mimarisidir.
+* **Ambalaj & Kapasite Standardı:**
+  * **1 Kutu Dish = 2 Dish** (Her bir dish içinde 4 bağımsız mikro-havuz bulunur ve **20 oosite kadar** yüklenebilir -> 1 Dish = 1 tam IVF siklüsü).
+  * **1 Kutu Solution-Powder = 2 ml** (Mart 2026 itibarıyla **1 yıl raf ömürlü liyofilize toz formül**, soğuk zincir bozulma riskini ortadan kaldırır).
+* **Klinik Ekonomisi:** Vaka başı maliyet yalnızca **~$6.60 USD** ($0.33/oosit); kimyasal iyonofor kitlerine göre **%85+ tasarruf** ve 8–10 vakada cihaz amortismanı sağlar.
+* **Klinik Ek Geliri:** Yılda 300 TFF/male-factor vakasında döllenme %35'ten %78'e yükseldiğinde ~120 ek transfer × $2,500 USD = **+$300,000 USD ek klinik hasılatı**.
 
-Klinik direktörlerine ve finans yöneticilerine sunulacak **resmi birim maliyet & geri dönüş (ROI) hesabı**:
-
----
-
-#### 1. 🧪 4-Pool Single Dish Sarf Mimarisi
-* **1 Dish = 4 Ayrı Aktivasyon Havuzu (Pools):**
-  * Her havuz 5 oosit alır $
-ightarrow$ **1 Dish = 20 Oosit Kapasitesi**.
-  * Ortalama bir IVF siklusunda toplanan 12-18 oosit için **yalnızca 1 adet ZEUS Dish** yeterlidir!
-* **Vaka Başı Sarf Maliyeti:**
-  * Dish + Electro-Liquid solüsyon toplam sarf maliyeti: **~$6.60 USD / Vaka**.
-  * Oosit başına maliyet: **~$0.33 USD / Oosit**.
-  * Rakip kimyasal kitlerin vaka başı maliyeti ($45-$85 USD) ile kıyaslandığında kliniğe **%85+ sarf tasarrufu** sağlar!
-
----
-
-#### 2. 📈 Kliniğin Finansal Geri Dönüşü (ROI Simülasyonu)
-* **Klinik Parametreleri:** Yılda 300 başarısız fertilizasyon geçmişi olan vaka (Failed Fertilization / TESE / Azospermi).
-* **ZEUS Öncesi:** 300 vakanın %60'ı blastokiste gidemeden iptal $
-ightarrow$ Klinik için hasta ve gelir kaybı.
-* **ZEUS Sonrası:** Fertilizasyon oranı %35'ten %78'e yükselir $
-ightarrow$ Ek 120 başarılı siklus / transfer.
-* **Kliniğin Ek Geliri:** 120 başarılı transfer $	imes$ $2,500 USD = **$300,000 USD Ek Hasılat**.
-* **ZEUS Cihaz + Yıllık Sarf Yatırımı:** ~$28,000 USD.
-* **Net Klinik ROI:** **%970+ Yatırım Geri Dönüşü (6 aydan kısa sürede amorti)!**
-
----
-
-#### 3. 💼 Yönetici Tavsiyesi (Immediate Action)
-> **Öneri:** Fiyat teklifi verirken cihazı tek başına satmak yerine, *"1 Yıllık 4-Pool Sarf Paketi Dahil Komple Tedarik Paketi"* olarak sunun. Bu yaklaşım kliniğin birim vaka maliyetini $6.60 seviyesinde sabitlerken, şirketimize 2026-2027 bandında kesintisiz düzenli sarf nakit akışı sağlar."""
+#### Strategic Decision Center (SDC) İçin Önerilen Karar Özeti
+* **Karar Başlığı:** Siklüs Bazlı 4-Pool Dish + 1 Yıl Raf Ömürlü Liyofilize Solution-Powder Paket Kampanyası
+* **Sorumlu Birim:** CFO & Fiyatlandırma Kurulu
+* **Öncelik:** P2 - Yüksek (30 Gün)"""
 
     elif any(k in prompt_norm for k in ["sartname", "kilit", "teknik sartname", "kamu"]):
-        return """### 📜 ZEUS İhale Teknik Şartname Kilitleri: Rakipleri Eleme Stratejisi
+        return """### ZEUS İhale Teknik Şartname Kilitleri: Rakipleri Eleme Stratejisi
 
 **Sayın Yönetici,**  
-Kamu ve üniversite hastaneleri ihalelerinde şartnameye yazdırılacak **3 kritik teknik parametre**, rakipleri (standart laboratuvar elektroporatörleri veya RUO cihazları) teknik değerlendirme aşamasında doğrudan diskalifiye eder:
+Kamu ve üniversite ihalelerinde şartnameye eklenecek 3 kritik madde, CE onaysız RUO elektroporatörleri teknik aşamada eler:
+1. **CE Class IIa Tıbbi Cihaz Sertifikası** (İnsan oosit aktivasyonu amaçlı; RUO cihazlar kabul edilmez).
+2. **Mikro-Puls Hassasiyeti** (0.1–9.9 ms ayarlanabilir kare dalga elektrik pulsu, 1.0–5.0 kV/cm dijital doğrulama).
+3. **Steril 4-Pool Polistiren Aktivasyon Dishi** (20 oosit kapasiteli, gama irradyasyonlu tek kullanımlık tasarım)."""
 
-1. **Tıbbi Cihaz Sertifikasyon Kilidi:**
-   * *"Teklif edilecek sistem, insan oosit aktivasyonu amacıyla üretilmiş olup, Avrupa Birliği Tıbbi Cihaz Yönetmeliği (EU MDR 2017/745) kapsamında **Class IIa Tıbbi Cihaz CE Uygunluk Belgesi'ne** sahip olmalıdır. Araştırma amaçlı (Research Use Only - RUO) laboratuvar cihazları kabul edilmeyecektir."*
-2. **Hücresel Mikro-Puls Hassasiyeti Kilidi:**
-   * *"Cihaz, 0.1 milisaniye ile 9.9 milisaniye aralığında ayarlanabilir mikrosaniye kare dalga elektrik pulsu üretebilmeli ve çıkış voltajı 1.0 - 5.0 kV/cm aralığında dijital LCD üzerinden anlık doğrulanabilmelidir."*
-3. **Biouyumlu Çoklu Havuz (4-Pool) Kilidi:**
-   * *"Sistem ile birlikte teklif edilecek aktivasyon kapları (dish), tek kullanımlık steril ambalajda, gama irradyasyonlu ve en az 4 bağımsız mikro aktivasyon havuzu içeren polistiren malzemeden imal edilmiş olmalıdır."*
+    elif any(k in prompt_norm for k in ["bence", "gorusum", "opinion", "think", "recommend", "oneri", "tavsiye", "decision", "karar", "sayfa", "page", "evaluate", "draft"]):
+        c_tag = f" ({country_lbl})" if country_lbl else ""
+        if is_english:
+            return f"""### Strategic AI Evaluation & Recommendations [{nav_lbl}{c_tag}]
 
-> **Sonuç:** Bu üç madde şartnameye girdiği anda ihaleyi ZEUS dışında hiçbir rakip karşılayamaz ve distribütörümüz tek geçerli teklif sahibi haline gelir."""
+**Executive Review of Your Input:**
+* **Your Prompt / Opinion:** *"{prompt_text}"*
+* **Active Page Context:** `{nav_lbl}`{f' / `{sub_lbl}`' if sub_lbl else ''}{f' · Target Market: `{country_lbl}`' if country_lbl else ''}
+
+#### 1. Critical Assessment of Your Perspective
+* **Strategic Alignment:** Your focus aligns strongly with expanding ZEUS recurring consumable ARR (4-Pool Dish [2 dishes/box, up to 20 oocytes/dish] + 1-year shelf-life Solution-Powder [2 ml/box]) while enforcing the **mandatory 3-device distributor entry baseline** (2x Pulse Stimulator + 1 portfolio device, or 3 distinct portfolio units).
+* **Risk Guardrails to Verify:**
+  * Ensure clinical messaging clearly distinguishes **ZEUS AOA Pulse Stimulator (CE Class IIa)** from mechanical Piezo-ICSI or non-CE RUO electroporators.
+  * Protect transfer pricing floors ($8,500 USD distributor benchmark) and require FX pegging (USD/EUR) or confirmed LC in high-volatility territories.
+
+#### 2. AI Strategic Recommendations for This Page
+1. **Immediate Commercial Action:** Convert this discussion into a concrete KPI-backed mandate with a 15–30 day execution target tailored to `{country_lbl or 'priority target markets'}`.
+2. **Package & Margin Optimization:** Pair hardware placement with annual consumable lock-in commitments tied to actual clinic IVF cycle volume.
+3. **Governance Formalization:** Push the synthesized decision directly to the **Strategic Decision Center (SDC)** below so the executive board can track ownership and ROI.
+
+#### 3. Ready-to-Push Decision Proposal (Strategic Decision Center)
+* **Suggested Title:** `{country_lbl or nav_lbl.split('/')[-1].strip()} — Strategic Action & Commercial Protocol`
+* **Responsible Unit:** Global Sales & Clinical Strategy Desk
+* **Priority:** P1 / P2 (15–30 Days)
+* **Next Step:** Review the auto-filled **Add Decision to Strategic Decision Center** panel directly below and click submit."""
+        else:
+            return f"""### Yapay Zeka Stratejik Değerlendirme & Tavsiye Raporu [{nav_lbl}{c_tag}]
+
+**Paylaştığınız Görüş / İstişare Konusu:**
+* *"{prompt_text}"*
+* **Aktif Sayfa Bağlamı:** `{nav_lbl}`{f' / `{sub_lbl}`' if sub_lbl else ''}{f' · İncelenen Ülke: `{country_lbl}`' if country_lbl else ''}
+
+#### 1. Görüşünüzün Güçlü Yönleri & Risk Denetimi
+* **Politika Uyumu:** Yaklaşımınız, distribütörlerde **asgari 3 cihaz giriş şartı** (Pulse Stimulator alınacaksa 1 Direct Sale + 1 Reagent-Based [60 Dish + 20 Sol-Powder] + 1 portföy cihazı; veya 3 farklı portföy cihazı) ve **yüksek marjlı tekrarlayan sarf geliri (Dish & 1 yıl raf ömürlü Liyofilize Solution-Powder)** hedefiyle uyumludur.
+* **Dikkat Edilmesi Gereken Kırmızı Çizgiler:**
+  * ZEUS cihazı her zaman **CE Class IIa AOA Pulse Stimulator** olarak konumlandırılmalı (Piezo-ICSI veya RUO elektroporatör değildir).
+  * Kur oynaklığı olan pazarlarda USD/EUR endeksli fiyat koruması ve asgari sarf kotası sözleşmeye bağlanmalıdır.
+
+#### 2. Bu Sayfa İçin AI Stratejik Tavsiyeleri
+1. **Somut Aksiyon:** `{country_lbl or nav_lbl}` özelinde hedef kliniklerin yıllık siklüs hacmine göre (1 kutu = 2 dish, 20 oosit/dish; 1 kutu Solution-Powder = 2 ml) net cihaz + sarf paketi teklifini çıkarın.
+2. **İcra ve Takip:** Görüşünüzü ve AI tavsiyelerini hemen aşağıdaki **Strategic Decision Center (SDC) Karar Ekleme Paneli** üzerinden resmi bir karara dönüştürün.
+
+#### 3. Strategic Decision Center (SDC) İçin Hazır Karar Taslağı
+* **Önerilen Başlık:** `{country_lbl or nav_lbl.split('/')[-1].strip()} Stratejik Aksiyon & Ticari Karar Protokolü`
+* **Öncelik:** P1 - Acil (1-15 Gün) / P2 - Yüksek (30 Gün)
+* **Sonraki Adım:** Hemen aşağıdaki **"⚖️ Add Decision to Strategic Decision Center"** bölümünden başlık ve sorumlu birimi kontrol ederek tek tıkla Karar Merkezine ekleyin."""
 
     else:
-        return """### 💡 ZEUS MedTech & Ticari İstihbarat Değerlendirmesi
+        c_tag = f" ({country_lbl})" if country_lbl else ""
+        return f"""### ZEUS MedTech & Ticari İstihbarat Değerlendirmesi [{nav_lbl}{c_tag}]
 
 **Sayın Yönetici,**  
 Sorgunuz: **"{prompt_text}"**
 
-59 ülkelik pazar istihbarat matrisimiz, $693.9K uzlaştırılmış satış veritabanımız ve CE Class IIa klinik AOA portföyümüz ışığında stratejik analizim:
+59 ülkelik pazar istihbarat matrisimiz, $936.5K uzlaştırılmış ERP satış veritabanımız ve CE Class IIa Pulse Stimulator (AOA) portföyümüz ışığında analizim:
 
-1. **Pazar & Talep Dinamiği:**
-   * Global IVF sektöründe kadın yaş ortalamasının yükselmesi ve sperm anomalilerinin artması sebebiyle **Oosit Aktivasyon Yetmezliği (Failed Fertilization)** vakaları yıllık %14.2 bileşik büyüme göstermektedir.
-   * Kimyasal iyonoforların embriyotoksik riskleri sebebiyle Avrupa ve Körfez kliniklerinde **fiziksel/elektriksel AOA (ZEUS)** regülatörler ve hekimler nezdinde standart tedavi protokolü haline gelmektedir.
-
-2. **Ticari Tavsiye & Fırsat:**
-   * Gelişmekte olan pazarlarda doğrudan satış yerine **"Şartlı Distribütörlük + 90 Günlük Pazar Analizi LOI"** modelimizle pazar giriş bariyerlerini düşürün.
-   * Cihaz satışından ziyade klinikleri 4-Pool Single Dish ve Reagent aboneliğine bağlayan **ARR (Yıllık Tekrarlayan Gelir)** sözleşmelerine öncelik verin.
-
-3. **Sonraki Adım:**
-   * Konuyla ilgili detaylı bir sözleşme taslağı, ülke bazlı pazar kıyaslaması veya klinisyen sunumu hazırlamamı ister misiniz? Aşağıdaki alandan detayları iletebilirsiniz."""
+1. **Aktif Sayfa Perspektifi ({nav_lbl}):**
+   * Global IVF sektöründe oosit aktivasyon yetmezliği vakaları artarken **ZEUS AOA Pulse Stimulator**, kimyasal iyonofor toksisitesi olmadan sub-%1.2 lizis ve %82.3+ döllenme başarısı sunar.
+   * **Sarf Mimarisi:** 1 kutu Dish = 2 Dish (20 oosit/dish), 1 kutu Solution-Powder = 2 ml (1 yıl raf ömrü). Vaka başı maliyet yalnızca ~$6.60 USD'dir.
+2. **Ticari Tavsiye:**
+   * Distribütör anlaşmalarında **asgari 3 cihaz kuralını** koruyun; büyük ihaleler için *Şartlı İhale LOA* ve bayi koruması için *90 Günlük LOI + Deal Registration* uygulayın.
+3. **Strategic Decision Center Entegrasyonu:**
+   * Bu değerlendirmeyle birlikte kendi yönetici görüşünüzü birleştirip hemen aşağıdaki **Add Decision to Strategic Decision Center** panelinden resmi karar olarak kaydedebilirsiniz."""
 
 
-def render_zeus_ai_chat_interface(key_suffix=""):
+def render_zeus_ai_chat_interface(key_suffix="", page_context=None, show_sdc_bridge=True, inline_mode=False):
     """
-    Renders an executive interactive multi-turn Strategic & Clinical Decision Terminal.
+    Renders an executive interactive multi-turn Strategic & Clinical Decision Chat ('Chat with AI').
+    Supports sharing executive opinions, asking AI for page-contextual recommendations,
+    and pushing finalized decisions directly into the Strategic Decision Center (SDC).
     """
-    hist_key = f"zeus_ai_chat_messages{key_suffix}"
+    ctx = page_context or build_current_page_ai_context()
+    page_slug = ctx.get("page_slug", "global")
+    nav_lbl = ctx.get("nav_selection", "ZEUS Portal")
+    sub_lbl = ctx.get("active_view", "")
+    country_lbl = ctx.get("selected_country", "")
+
+    # Shared per-page conversation history so top dock & bottom section stay synced
+    hist_key = f"zeus_ai_chat_messages_{page_slug}"
     if hist_key not in st.session_state:
+        ctx_intro = f"**{nav_lbl}**" + (f" (`{sub_lbl}`)" if sub_lbl else "") + (f" — *{country_lbl}*" if country_lbl else "")
         st.session_state[hist_key] = [
             {
                 "role": "assistant",
                 "content": (
-                    "**Sayın Yönetici,**\n\n"
-                    "ZEUS Global Market Intelligence Biyoistihbarat ve Stratejik Karar Masası devrededir. "
-                    "59 ülkenin IVF pazar dinamikleri, 874 teyitli finansal işlem, CE Class IIa sertifikalı AOA elektriksel stimülasyon protokolleri, "
-                    "uluslararası kamu ihale şartnameleri, şartlı distribütörlük LOA koşulları ve bayi koruma mekanizmaları "
-                    "üzerine derinlemesine stratejik değerlendirmeler sunmak üzere yetkilendirildiniz.\n\n"
-                    "*Aşağıdaki önceden tanımlanmış stratejik direktiflerden birini seçebilir veya sorunuzu terminale iletebilirsiniz:*"
+                    f"**Welcome to ZEUS Chat with AI ({ctx_intro})**\n\n"
+                    "You can **share your executive opinion** on this page's strategy, pricing, country market, or B2B partners, "
+                    "and **ask AI for strategic recommendations**. Once aligned, use the **Add Decision to Strategic Decision Center** "
+                    "panel directly below to log your official decision into the Strategic Decision Center (SDC)."
                 )
             }
         ]
 
-    # Executive Status Banner (Glassmorphism & Depth)
     has_api_key = bool(get_gemini_api_key() or st.session_state.get("custom_gemini_api_key"))
     engine_badge = (
-        "MOTOR: Canlı Biyoistihbarat & Klinik Karar Çekirdeği"
+        "LIVE: Gemini 2.5 + ZEUS Core"
         if has_api_key
-        else "● ÇEKİRDEK: ZEUS MedTech Biyoistihbarat & Karar Matrisi v2.9"
+        else "ENGINE: ZEUS MedTech Intelligence v2.9"
     )
-    engine_color = "#7DA8DF"
+    ctx_pill = nav_lbl + (f" · {country_lbl}" if country_lbl else "")
 
     st.markdown(f"""
-    <div style="background: rgba(15, 23, 42, 0.70); border: 1px solid rgba(226, 232, 240, 0.12); box-shadow: 0 4px 20px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08); border-radius: 8px; padding: 12px 18px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
+    <div style="background: rgba(15, 23, 42, 0.78); border: 1px solid rgba(0, 240, 255, 0.28); box-shadow: 0 4px 20px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.08); border-radius: 8px; padding: 12px 18px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px;">
         <div style="display: flex; align-items: center; gap: 12px;">
-            <span style="font-size: 20px; color: #7DA8DF;">◈</span>
+            <span style="font-size: 20px; color: #00F0FF;">◈</span>
             <div>
-                <b style="font-size: 14.5px; color: #FAFAFA; letter-spacing: 0.02em;">ZEUS Stratejik İstihbarat & Danışman Masası</b>
-                <div style="font-size: 11.5px; color: #94A3B8; margin-top: 1px;">Kurumsal Karar Matrisi · Uluslararası İhale & Klinik Pazar İstişaresi</div>
+                <b style="font-size: 14.5px; color: #FAFAFA; letter-spacing: 0.02em;">Chat with AI — Executive Opinion, Recommendations & Decision Center</b>
+                <div style="font-size: 11.5px; color: #94A3B8; margin-top: 2px;">Active Context: <span style="color:#7DA8DF;font-weight:600;">{ctx_pill}</span></div>
             </div>
         </div>
-        <span style="background: rgba(12, 92, 171, 0.20); color: {engine_color}; border: 1px solid rgba(56, 189, 248, 0.35); padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; font-family: 'Geist Mono', monospace;">{engine_badge}</span>
+        <span style="background: rgba(0, 240, 255, 0.12); color: #00F0FF; border: 1px solid rgba(0, 240, 255, 0.35); padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 600; font-family: 'Geist Mono', monospace;">{engine_badge}</span>
     </div>
     """, unsafe_allow_html=True)
 
-    # Preset Strategic Directive Action Chips
-    st.caption("STRATEJİK İSTİŞARE DİREKTİFLERİ (ÖNCEDEN TANIMLI PROTOKOLLER):")
+    # Contextual + Core Action Starters
+    st.caption("QUICK ACTIONS (ASK AI FOR RECOMMENDATIONS, EVALUATE OPINION, OR DRAFT SDC DECISION):")
     q_col1, q_col2, q_col3 = st.columns(3)
     preset_clicked = None
     with q_col1:
-        if st.button("[ LOA ] Şartlı Distribütörlük (İhale Mektubu)", key=f"btn_p1{key_suffix}", use_container_width=True, help="3 cihaz kotası yerine ihale kazanma şartına bağlı LOA protokolü"):
+        if st.button("🎯 Ask AI Recommendations (This Page)", key=f"btn_ctx_rec{key_suffix}", use_container_width=True):
+            preset_clicked = f"Give me your top strategic recommendations for {nav_lbl}" + (f" focused on {country_lbl}" if country_lbl else "") + ", including concrete actions and risks."
+        if st.button("[ LOA ] Tender Conditional LOA", key=f"btn_p1{key_suffix}", use_container_width=True):
             preset_clicked = "Ülkelerin distribütör olurken 3 cihaz şartı varken ihale (tender) için şartlı distribütörlük ve LOA önerisi ver."
-        if st.button("[ KLİNİK ] ZEUS AOA vs Piezo (Ca2+ Üstünlüğü)", key=f"btn_p2{key_suffix}", use_container_width=True, help="Klinisyenlere karşı Piezo ve Lazere göre bilimsel farklar"):
-            preset_clicked = "Klinik direktörüne karşı ZEUS AOA'nın Piezo ve Laser'a göre bilimsel ve klinik üstünlüklerini açıkla."
     with q_col2:
-        if st.button("[ ROFR ] 90 Günlük Pazar Analizi (Bayi Koruma)", key=f"btn_p3{key_suffix}", use_container_width=True, help="Pazar araştırması yapan bayinin emeğini koruma ve ROFR klozu"):
-            preset_clicked = "Bayi adayı pazar analizi yaparken çalışmalarının başkasına gitmesinden korkuyor, haklarını koruyacak ROFR ve Deal Registration önerisi ver."
-        if st.button("[ SARF ROI ] 4-Pool Single Dish Sarf Maliyeti", key=f"btn_p4{key_suffix}", use_container_width=True, help="Dish başı $6.60 vaka maliyeti ve klinik geri dönüş"):
-            preset_clicked = "Klinikler için 4-Pool Single Dish ve solüsyon sarf maliyeti ile yıllık ROI analizini sun."
+        if st.button("💡 Evaluate Strategy & Risks", key=f"btn_ctx_eval{key_suffix}", use_container_width=True):
+            preset_clicked = f"Evaluate our current commercial strategy on {nav_lbl}" + (f" for {country_lbl}" if country_lbl else "") + " — what are the strengths, bottlenecks, and recommended changes?"
+        if st.button("[ KLİNİK ] Pulse Stimulator vs Piezo", key=f"btn_p2{key_suffix}", use_container_width=True):
+            preset_clicked = "Klinik direktörüne karşı ZEUS AOA Pulse Stimulator'ın Piezo ve Laser'a göre bilimsel ve klinik üstünlüklerini açıkla."
     with q_col3:
-        if st.button("[ ŞARTNAME ] İhale Teknik Kilit Parametreleri", key=f"btn_p5{key_suffix}", use_container_width=True, help="Kamu ihalelerinde ZEUS'u tek geçerli kılan teknik maddeler"):
-            preset_clicked = "Kamu ihalelerinde şartnameye ZEUS lehine hangi teknik maddeler kilitlenmeli?"
-        if st.button("[ GCC ] Körfez Bölge Stratejisi & İthalat", key=f"btn_p6{key_suffix}", use_container_width=True, help="Umman, Kuveyt, BAE regülasyon ve distribütörlük haritası"):
-            preset_clicked = "Körfez (GCC) ülkelerinde regülasyon ve distribütör seçim stratejisi öner."
+        if st.button("⚖️ Draft Decision for SDC", key=f"btn_ctx_sdc{key_suffix}", use_container_width=True):
+            preset_clicked = f"Synthesize our discussion and current data on {nav_lbl}" + (f" ({country_lbl})" if country_lbl else "") + " into a formal decision proposal ready to add to the Strategic Decision Center."
+        if st.button("[ SARF ROI ] 4-Pool Dish & Solution", key=f"btn_p4{key_suffix}", use_container_width=True):
+            preset_clicked = "Klinikler için 4-Pool Single Dish ve 1 yıl raf ömürlü liyofilize solüsyon sarf maliyeti ile yıllık ROI analizini sun."
 
-    # Render previous messages
+    # Render conversation history
     chat_container = st.container()
     with chat_container:
         for msg in st.session_state[hist_key]:
             if msg["role"] == "user":
                 with st.chat_message("user"):
-                    st.markdown(f"**◈ DİREKTİF (Sireen Khemesh):**\n{msg['content']}")
+                    st.markdown(f"**◈ EXECUTIVE INPUT (Sireen Khemesh):**\n{msg['content']}")
             else:
                 with st.chat_message("assistant", avatar="assets/zeus_logo.png" if os.path.exists("assets/zeus_logo.png") else None):
-                    st.markdown(f"**⌬ BAŞ STRATEJİ VE KLİNİK İSTİHBARAT MASASI:**\n\n{msg['content']}")
+                    st.markdown(f"**⌬ ZEUS AI ADVISOR:**\n\n{msg['content']}")
 
-    # Chat Input Handling
-    user_query = st.chat_input("Stratejik direktif, ihale mevzuatı veya pazar istişare sorgusu iletin...", key=f"zeus_chat_input{key_suffix or '_main'}")
-    active_inquiry = preset_clicked or user_query
+    # Input Bar: Inline multi-line form for per-page docks/expanders, st.chat_input for full-screen terminal
+    submitted_query = None
+    if inline_mode:
+        with st.form(key=f"zeus_inline_chat_form{key_suffix}", clear_on_submit=True):
+            inline_txt = st.text_area(
+                "💬 Talk to AI (Give your opinion, ask a question, or request a recommendation):",
+                placeholder=f"Type your opinion or question about {nav_lbl}" + (f" ({country_lbl})" if country_lbl else "") + "...",
+                height=78,
+                key=f"zeus_inline_txt{key_suffix}"
+            )
+            sub_col1, sub_col2 = st.columns([1.4, 2.6])
+            with sub_col1:
+                send_btn = st.form_submit_button("💬 Send to AI", type="primary", use_container_width=True)
+            with sub_col2:
+                st.caption("Share your view or ask AI for recommendations — then log the decision to Strategic Decision Center below.")
+            if send_btn and inline_txt and inline_txt.strip():
+                submitted_query = inline_txt.strip()
+    else:
+        user_query = st.chat_input(
+            "Share your opinion, ask for AI recommendations, or request an SDC decision draft...",
+            key=f"zeus_chat_input{key_suffix or '_main'}"
+        )
+        if user_query and user_query.strip():
+            submitted_query = user_query.strip()
 
+    active_inquiry = preset_clicked or submitted_query
     if active_inquiry:
         st.session_state[hist_key].append({"role": "user", "content": active_inquiry})
-        with st.spinner("◈ Biyoistihbarat ve klinik mevzuat matrisi taranıyor..."):
-            expert_reply = generate_zeus_expert_response(active_inquiry, st.session_state[hist_key])
+        with st.spinner("◈ Analyzing your opinion & page context..."):
+            expert_reply = generate_zeus_expert_response(active_inquiry, st.session_state[hist_key], page_context=ctx)
         st.session_state[hist_key].append({"role": "assistant", "content": expert_reply})
         st.rerun()
 
+    # --------------------------------------------------------------------------
+    # INTEGRATED STRATEGIC DECISION CENTER (SDC) BRIDGE
+    # --------------------------------------------------------------------------
+    if show_sdc_bridge:
+        user_msgs = [m["content"] for m in st.session_state[hist_key] if m["role"] == "user"]
+        ai_msgs = [m["content"] for m in st.session_state[hist_key] if m["role"] == "assistant"]
+        latest_user_opinion = user_msgs[-1] if user_msgs else ""
+        latest_ai_rec = ai_msgs[-1] if len(ai_msgs) > 1 else (ai_msgs[0] if ai_msgs else "")
+        latest_ai_summary = latest_ai_rec[:700] + ("..." if len(latest_ai_rec) > 700 else "")
+
+        default_title = (
+            f"{country_lbl + ' — ' if country_lbl else ''}"
+            f"{latest_user_opinion[:65].strip() if latest_user_opinion else nav_lbl.split('/')[-1].strip() + ' Stratejik Karar'}"
+        )
+        sdc_success_key = f"sdc_added_banner_{page_slug}{key_suffix}"
+
+        with st.expander("⚖️ Add Necessary Decision to Strategic Decision Center (SDC)", expanded=(len(user_msgs) > 0)):
+            st.caption("Turn your executive opinion and AI's recommendations into a formal trackable decision in **02 / Stratejik Karar Masası & Risk (Strategic Decision Center)**.")
+            with st.form(key=f"form_push_sdc{key_suffix}"):
+                d_title = st.text_input(
+                    "Decision Title (Karar Başlığı):",
+                    value=default_title,
+                    key=f"sdc_title{key_suffix}"
+                )
+                d_col1, d_col2 = st.columns(2)
+                with d_col1:
+                    d_plan_type = st.text_input(
+                        "Strategy / Decision Category (Strateji Türü):",
+                        value=ctx.get("default_category", "Stratejik Yönetim Kararı"),
+                        key=f"sdc_ptype{key_suffix}"
+                    )
+                    d_resp = st.selectbox(
+                        "Responsible Unit (Sorumlu Birim):",
+                        [
+                            "Global Satış & Distribütör Masası",
+                            "Yönetim Kurulu & CEO",
+                            "Klinik Aplikasyon & Eğitim Masası",
+                            "CFO & Fiyatlandırma Kurulu",
+                            "Hukuk, Mevzuat & İhale Masası",
+                            "Bölge Ticari Direktörlüğü"
+                        ],
+                        key=f"sdc_resp{key_suffix}"
+                    )
+                with d_col2:
+                    d_prio = st.selectbox(
+                        "Priority (Öncelik):",
+                        ["P1 - Acil (1-15 Gün)", "P2 - Yüksek (30 Gün)", "P3 - Stratejik (Q1)"],
+                        key=f"sdc_prio{key_suffix}"
+                    )
+                    d_status = st.selectbox(
+                        "Initial Status (Karar Statüsü):",
+                        ["Onaylandı & İcrada", "İncelemede / Revize"],
+                        key=f"sdc_status{key_suffix}"
+                    )
+
+                d_opinion = st.text_area(
+                    "Your Executive Opinion & Rationale (Yönetici Görüşünüz):",
+                    value=latest_user_opinion,
+                    placeholder="Write your decision rationale or conclusion from the AI discussion...",
+                    height=75,
+                    key=f"sdc_opinion{key_suffix}"
+                )
+                d_ai_rec = st.text_area(
+                    "AI Recommendation Summary (AI Tavsiyesi):",
+                    value=latest_ai_summary,
+                    height=85,
+                    key=f"sdc_airec{key_suffix}"
+                )
+                d_c3, d_c4 = st.columns(2)
+                with d_c3:
+                    d_steps = st.text_area(
+                        "Concrete Action Steps (İcra Adımları):",
+                        value=f"1. {nav_lbl} kapsamında alınan kararın ilgili ekibe iletilmesi.\n2. Uygulama takvimi ve KPI takibinin başlatılması.",
+                        height=75,
+                        key=f"sdc_steps{key_suffix}"
+                    )
+                with d_c4:
+                    d_roi = st.text_input(
+                        "Expected Financial / Strategic Impact (Tahmini Etki / ROI):",
+                        value="Bölgesel büyüme, sarf ARR artışı & risk optimizasyonu",
+                        key=f"sdc_roi{key_suffix}"
+                    )
+
+                push_submitted = st.form_submit_button("⚖️ Add Decision to Strategic Decision Center", type="primary", use_container_width=True)
+                if push_submitted:
+                    if not d_title.strip() and not d_opinion.strip():
+                        st.error("Please enter at least a Decision Title or your Executive Opinion before adding to SDC.")
+                    else:
+                        new_sdc_id = add_decision_to_sdc(
+                            title=d_title.strip() or "AI & Yönetici Stratejik Kararı",
+                            user_opinion=d_opinion.strip() or "Chat with AI oturumunda yönetici tarafından onaylanan karar.",
+                            ai_recommendation=d_ai_rec.strip() or "AI analizi ile uyumlu stratejik aksiyon.",
+                            plan_type=d_plan_type.strip() or "Stratejik Yönetim Kararı",
+                            responsible_unit=d_resp,
+                            priority=d_prio,
+                            roi_projection=d_roi.strip() or "Stratejik Etki Değerlendirmesi",
+                            action_steps=d_steps.strip() or "1. İcra takibine alınması.",
+                            status=d_status,
+                            page_context=ctx_pill
+                        )
+                        st.session_state[sdc_success_key] = new_sdc_id
+                        st.toast(f"✅ Decision [{new_sdc_id}] added to Strategic Decision Center!", icon="✅")
+                        st.rerun()
+
+            if st.session_state.get(sdc_success_key):
+                added_id = st.session_state[sdc_success_key]
+                st.success(f"✅ Decision `{added_id}` has been added to the **Strategic Decision Center** and saved permanently!")
+                if st.button("⚖️ Open Strategic Decision Center (View & Manage Decision) →", key=f"btn_jump_sdc{key_suffix}", use_container_width=True):
+                    st.session_state.pop(sdc_success_key, None)
+                    st.session_state["_pending_nav_target"] = "02 / Stratejik Karar Masası & Risk"
+                    st.session_state["_pending_subview_target"] = ("02 / Stratejik Karar Masası & Risk", "Rakip Analizi & RFID Trap Breaker")
+                    st.rerun()
+
     # Bottom Actions Bar
-    st.markdown("<div style='height:12px;'></div>", unsafe_allow_html=True)
+    st.markdown("<div style='height:8px;'></div>", unsafe_allow_html=True)
     c_act1, c_act2, c_act3 = st.columns([1.2, 1.6, 1.2])
     with c_act1:
-        if st.button("Oturumu Temizle (Reset)", key=f"btn_reset_chat{key_suffix}", use_container_width=True):
+        if st.button("Reset Chat (This Page)", key=f"btn_reset_chat{key_suffix}", use_container_width=True):
             st.session_state[hist_key] = [
                 {
                     "role": "assistant",
-                    "content": "Yeni oturum başlatıldı. Direktif veya analiz sorgunuzu iletebilirsiniz."
+                    "content": f"New session started for **{nav_lbl}**. Share your opinion or ask for AI recommendations."
                 }
             ]
             st.rerun()
     with c_act2:
         transcript_lines = [
-            f"# ZEUS Global Market Intelligence - Stratejik İstişare Raporu",
-            f"**Tarih:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} (TRT)",
-            f"**Statü:** C-Level Executive Directive Matrix",
+            "# ZEUS Global Market Intelligence - Chat with AI Consultation Report",
+            f"**Date:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')} (TRT)",
+            f"**Page Context:** {ctx_pill}",
             "---",
             ""
         ]
         for m in st.session_state[hist_key]:
-            author = "Yönetici (Sireen Khemesh)" if m["role"] == "user" else "ZEUS Baş Strateji Masası"
+            author = "Executive (Sireen Khemesh)" if m["role"] == "user" else "ZEUS AI Advisor"
             transcript_lines.append(f"### {author}\n{m['content']}\n\n---\n")
-        
+
         full_transcript_md = "\n".join(transcript_lines)
         st.download_button(
-            label="↓ Stratejik Raporu İndir (.md)",
+            label="↓ Export Chat Report (.md)",
             data=full_transcript_md,
-            file_name=f"ZEUS_Strategic_Consultation_{datetime.now().strftime('%Y%m%d_%H%M')}.md",
+            file_name=f"ZEUS_AI_Chat_{page_slug}_{datetime.now().strftime('%Y%m%d_%H%M')}.md",
             mime="text/markdown",
             key=f"btn_dl_chat{key_suffix}",
             use_container_width=True
         )
     with c_act3:
-        with st.popover("⚙ Sistem Çekirdeği (API Ayarı)"):
-            st.markdown("<b>Canlı Google Gemini 2.5 Entegrasyonu</b>", unsafe_allow_html=True)
-            st.caption("Kendi Gemini API anahtarınızı girerek canlı analitik modelini bağlayabilirsiniz:")
+        with st.popover("⚙ AI Engine (API Key)"):
+            st.markdown("<b>Live Google Gemini 2.5 Integration</b>", unsafe_allow_html=True)
+            st.caption("Connect your own Gemini API key for live dynamic LLM inference:")
             user_key_input = st.text_input("GEMINI_API_KEY:", type="password", value=st.session_state.get("custom_gemini_api_key", ""), key=f"inp_key_{key_suffix}")
-            if st.button("Kaydet & Bağlan", key=f"btn_save_key_{key_suffix}"):
+            if st.button("Save & Connect", key=f"btn_save_key_{key_suffix}"):
                 if user_key_input.strip():
                     st.session_state["custom_gemini_api_key"] = user_key_input.strip()
-                    st.success("API Anahtarı oturuma kaydedildi!")
+                    st.success("API key saved for session!")
                     st.rerun()
                 else:
                     st.session_state.pop("custom_gemini_api_key", None)
-                    st.info("API Anahtarı temizlendi, yerel motor aktif.")
+                    st.info("API key cleared; local domain engine active.")
                     st.rerun()
 
 # ZEUS EXECUTIVE MEMO GENERATOR (COGNITIVE CORE FALLBACK & AUGMENTATION)
@@ -15386,8 +15565,64 @@ def get_default_distributor_quotas():
         }
     }
 
+AI_SDC_DECISIONS_FILE = os.path.join("data", "ai_sdc_decisions.json")
+
+def load_persisted_ai_sdc_decisions():
+    try:
+        if os.path.exists(AI_SDC_DECISIONS_FILE):
+            with open(AI_SDC_DECISIONS_FILE, "r", encoding="utf-8") as f:
+                loaded = json.load(f)
+                if isinstance(loaded, dict):
+                    return loaded
+    except Exception:
+        pass
+    return {}
+
+def save_persisted_ai_sdc_decisions(plans_dict):
+    try:
+        custom_only = {k: v for k, v in (plans_dict or {}).items() if str(k).startswith("ai_sdc_")}
+        os.makedirs(os.path.dirname(AI_SDC_DECISIONS_FILE), exist_ok=True)
+        with open(AI_SDC_DECISIONS_FILE, "w", encoding="utf-8") as f:
+            json.dump(custom_only, f, ensure_ascii=False, indent=2)
+    except Exception:
+        pass
+
+def add_decision_to_sdc(title, user_opinion, ai_recommendation, plan_type, responsible_unit, priority, roi_projection, action_steps, status="İncelemede / Revize", page_context=""):
+    if 'executive_strategic_plans' not in st.session_state:
+        st.session_state['executive_strategic_plans'] = get_default_strategic_plans()
+
+    now_dt = datetime.now()
+    new_id = f"ai_sdc_{now_dt.strftime('%Y%m%d_%H%M%S')}_{len(st.session_state['executive_strategic_plans']) + 1:02d}"
+    is_appr = ("Onaylandı" in status)
+    new_entry = {
+        'alert_id': new_id,
+        'title': title,
+        'badge': f"AI + YÖNETİCİ KARARI ({page_context})" if page_context else "AI + YÖNETİCİ KARARI",
+        'badge_color': '#10B981' if is_appr else '#00F0FF',
+        'evidence': f"Kaynak Modül: {page_context or 'Chat with AI'} | Tarih: {now_dt.strftime('%Y-%m-%d %H:%M')}",
+        'ai_recommendation': ai_recommendation,
+        'user_comment': user_opinion,
+        'plan_type': plan_type,
+        'responsible_unit': responsible_unit,
+        'priority': priority,
+        'target_date': now_dt.strftime('%B %Y'),
+        'action_steps': action_steps,
+        'roi_projection': roi_projection,
+        'feasibility_score': '%92 (AI & Yönetici Konsensüsü)',
+        'status': status,
+        'decision_date': now_dt.strftime('%Y-%m-%d'),
+        'source_page': page_context
+    }
+    st.session_state['executive_strategic_plans'] = {
+        new_id: new_entry,
+        **st.session_state['executive_strategic_plans']
+    }
+    save_persisted_ai_sdc_decisions(st.session_state['executive_strategic_plans'])
+    return new_id
+
 def get_default_strategic_plans():
-    return {
+    persisted_ai = load_persisted_ai_sdc_decisions()
+    defaults = {
         'kuwait_garanti': {
             'alert_id': 'kuwait_garanti',
             'title': "Kritik Atıl Cihaz Alarmı: Kuveyt ATC & Garanti Leasing (2026'da $0 Sarf)",
@@ -15461,6 +15696,7 @@ def get_default_strategic_plans():
             'decision_date': '2026-11-05'
         }
     }
+    return {**persisted_ai, **defaults}
 
 def get_default_regional_expert_assessments():
     return {
@@ -15476,7 +15712,7 @@ def get_default_regional_expert_assessments():
             'recommended_devices': ['⚡ ZEUS Pulse Stimulator (ZPS 26)', '❄️ Smart Cryo-Tools (ZCT25)'],
             'device_rationale': "Doğu Asya'da Tanaka ROSI protokolü (90+ canlı doğum) ve Japonya/Kore yüksek yoğunluklu kriyobankaları için ZPS 26 ve Smart Cryo-Tools 4X tank optimizasyonu önceliklidir.",
             'expert_title': 'Kıdemli Medikal Direktör & APAC Pazar Danışmanı',
-            'expert_opinion': "Japonya'da Kato Ladies Clinic (KLC) ekolü Elektriksel stimülasyon (AOA)una son derece yatkın ancak yerel PMDA onayı olmadan doğrudan donanım satışı yavaş ilerler. Kitazato ile OEM sarf partnerliği kurulursa Kore'deki SJNU başarısı doğrudan Tokyo ve Osaka'ya replike edilebilir. Hindistan pazarı ise yüksek volümlü düşük maliyetli sarf talep ediyor; piezo cihazı konsinye verilip dish ve aktivasyon solüsyonu üzerinden 3 yıllık kontrat bağlanmalı.",
+            'expert_opinion': "Japonya'da Kato Ladies Clinic (KLC) ekolü Elektriksel stimülasyon (AOA)una son derece yatkın ancak yerel PMDA onayı olmadan doğrudan donanım satışı yavaş ilerler. Kitazato ile OEM sarf partnerliği kurulursa Kore'deki SJNU başarısı doğrudan Tokyo ve Osaka'ya replike edilebilir. Hindistan pazarı ise yüksek volümlü düşük maliyetli sarf talep ediyor; ZEUS Pulse Stimulator konsinye verilip dish ve aktivasyon solüsyonu üzerinden 3 yıllık kontrat bağlanmalı.",
             'field_moves': "1) G. Kore SJNU üzerinden Seul Maria Hospital referans ziyareti yapıldı. 2) Kitazato Ar-Ge ekibine validasyon Pulse Stimulator ünitesi teslim edildi. 3) Hindistan Apollo Fertility zincirine konsinye cihaz + 3 yıllık sarf teklifi sunuldu.",
             'user_comment': "SJNU Seul ekibi ile görüşüldü; Kitazato Ar-Ge direktörüne klinik validasyon ünitesi gönderildi. Hindistan için Apollo Fertility zinciriyle pilot çalışma planlanıyor.",
             'consensus_status': 'Tam Konsensüs (Uyumlu)',
@@ -19320,9 +19556,10 @@ with st.expander(":material/play_circle: ZEUS ZGMI · 45s İnteraktif Platform S
     else:
         st.info("Video simülasyon bileşeni hazırlanıyor...")
 
-# OMNIPRESENT ZEUS AI COPILOT CHAT EXPANDER
-with st.expander(":material/terminal: ZEUS Biyoistihbarat Terminalı · Stratejik Karar Destek Sistemi", expanded=False):
-    render_zeus_ai_chat_interface(key_suffix="_quick_dock")
+# OMNIPRESENT ZEUS CHAT WITH AI QUICK DOCK (SYNCED PER PAGE)
+_top_ai_ctx = build_current_page_ai_context(nav_selection, ", ".join(active_subviews) if active_subviews else "")
+with st.expander(f":material/chat: Chat with AI ({nav_selection}) · Share Opinion, Ask Recommendations & Push to Strategic Decision Center", expanded=False):
+    render_zeus_ai_chat_interface(key_suffix=f"_quick_dock_{_top_ai_ctx['page_slug']}", page_context=_top_ai_ctx, show_sdc_bridge=True, inline_mode=True)
 
 with st.container(key="zgmi_top_control_dock"):
     col_hub_hdr1, col_hub_hdr2 = st.columns([3.35, 1.05], vertical_alignment="center")
@@ -21184,7 +21421,7 @@ elif active_view in [
     "💬 Canlı AI MedTech Uzman Sohbeti & İstişare Masası",
     "🤖 Yapay Zeka Stratejik Danışman (AI Copilot)"
 ]:
-    render_zeus_ai_chat_interface(key_suffix="_hub_terminal")
+    render_zeus_ai_chat_interface(key_suffix=f"_hub_terminal_{build_current_page_ai_context(nav_selection, active_view)['page_slug']}", page_context=build_current_page_ai_context(nav_selection, active_view), show_sdc_bridge=True, inline_mode=False)
 
 elif active_view in ["2026 Q4 & 2027 Satış Projeksiyonu", "✦ Biyoistihbarat Satış & Sarf Projeksiyonu (2026 Q4 & 2027)", "🔮 AI Satış & Sarf Projeksiyonu (2026 Q4 & 2027)", "🔮 AI Intelligence & Forecasting"]:
     st.title("Predictive Commercial Intelligence & Revenue Analytics")
@@ -23121,7 +23358,7 @@ ZEUS Bioscience Scientific Affairs""",
     # TAB 4: YAPAY ZEKA STRATEJİK DANIŞMAN (AI EXECUTIVE COPILOT)
     # --------------------------------------------------------------------------
     with ai_tab4:
-        render_zeus_ai_chat_interface(key_suffix="_aitab")
+        render_zeus_ai_chat_interface(key_suffix="_aitab", page_context=build_current_page_ai_context(nav_selection, active_view), show_sdc_bridge=True, inline_mode=True)
 
 
 
@@ -30569,19 +30806,32 @@ elif active_view in ["Rakip Analizi & RFID Trap Breaker", "⬡ Rakip Kıyaslama 
                 height=75,
                 placeholder="İncelemeye alma gerekçesi, distribütörden istenecek taahhütler ve somut eylem kararları..."
             )
-            col_b1, col_b2 = st.columns(2)
+            is_custom_ai_sdc = str(a_key).startswith("ai_sdc_")
+            if is_custom_ai_sdc:
+                col_b1, col_b2, col_b3 = st.columns([1.2, 1.4, 0.7])
+            else:
+                col_b1, col_b2 = st.columns(2)
             with col_b1:
                 if st.button("İncelemeye Al & Yorumu Kaydet", key=f"btn_inc_save_{a_key}", use_container_width=True):
                     p_dict[a_key]['user_comment'] = rev_comm_val.strip() if rev_comm_val.strip() else p_dict[a_key].get('user_comment', '')
                     p_dict[a_key]['status'] = 'İncelemede / Revize'
+                    save_persisted_ai_sdc_decisions(p_dict)
                     st.success("Plan incelemeye alındı ve değerlendirme gerekçesi kaydedildi!")
                     st.rerun()
             with col_b2:
                 if st.button("Kararı Resmileştir & İcra Protokolüne Onayla", key=f"btn_appr_save_{a_key}", type="primary", use_container_width=True):
                     p_dict[a_key]['user_comment'] = rev_comm_val.strip() if rev_comm_val.strip() else p_dict[a_key].get('user_comment', '')
                     p_dict[a_key]['status'] = 'Onaylandı & İcrada'
+                    save_persisted_ai_sdc_decisions(p_dict)
                     st.success("Karar resmileştirildi ve icra protokolü onaylandı!")
                     st.rerun()
+            if is_custom_ai_sdc:
+                with col_b3:
+                    if st.button("🗑️ Sil", key=f"btn_del_sdc_{a_key}", use_container_width=True, help="AI ile eklenen bu özel kararı kaldır"):
+                        p_dict.pop(a_key, None)
+                        save_persisted_ai_sdc_decisions(p_dict)
+                        st.toast("Karar Strategic Decision Center'dan kaldırıldı.")
+                        st.rerun()
 
     # --------------------------------------------------------------------------
     # GEOPOLITICAL & WAR CRISIS CONTINGENCY DESK (CONCISE EXECUTIVE FORMAT)
@@ -31714,6 +31964,26 @@ elif active_view in [
         render_tenders_hub()
     with t_tab2:
         render_regulations_hub()
+
+# ==============================================================================
+# UNIVERSAL PER-PAGE 'CHAT WITH AI' & STRATEGIC DECISION CENTER BRIDGE
+# ==============================================================================
+if active_view not in [
+    "Biyoistihbarat Karar Terminali",
+    "◈ Stratejik İstihbarat & Danışman Masası (Executive Terminal)",
+    "🤖 ZEUS AI MedTech Uzmanı & Danışman Masası (AI Chat)",
+    "💬 Canlı AI MedTech Uzman Sohbeti & İstişare Masası",
+    "🤖 Yapay Zeka Stratejik Danışman (AI Copilot)"
+]:
+    _page_ai_ctx = build_current_page_ai_context(nav_selection, active_view)
+    st.markdown("<div id='chat-with-ai' style='margin-top:28px;'></div>", unsafe_allow_html=True)
+    with st.expander(f"💬 Chat with AI — {nav_selection} · Share Opinion, Get Recommendations & Add to Strategic Decision Center", expanded=True):
+        render_zeus_ai_chat_interface(
+            key_suffix=f"_page_bottom_{_page_ai_ctx['page_slug']}_{abs(hash(active_view)) % 10000}",
+            page_context=_page_ai_ctx,
+            show_sdc_bridge=True,
+            inline_mode=True
+        )
 
 # Universal Subview Bottom Navigation Bar
 if len(active_subviews) > 1:
