@@ -3209,6 +3209,75 @@ def resolve_country_tender_intel(country_name):
         }
     }
 
+# ==============================================================================
+# DHL MEDICAL EXPRESS & GLOBAL COLD CHAIN LOGISTICS INTELLIGENCE DATABASE
+# ==============================================================================
+DHL_GLOBAL_LOGISTICS_INTEL = {
+    "network_overview": {
+        "countries_covered": "220+ Countries & Autonomous Territories",
+        "service_name": "DHL Medical Express (WMX) & Express Worldwide",
+        "cold_chain_spec": "+2°C to +8°C (Liquid Media / Test Dishes) & -20°C (Dry Ice/Cryo)",
+        "ambient_spec": "Lyophilized Solution-Powder (March 2026 formulation: 1-Year Ambient/Refrigerated Shelf Life)",
+        "global_superhubs": [
+            {"hub": "Leipzig/Halle (LEJ), Germany", "role": "Global Superhub & Central European Life Sciences Hub"},
+            {"hub": "Dubai World Central / DXB (DWC), UAE", "role": "Middle East, Gulf & South Asia Dedicated Pharma Vault Hub (+2°C/+8°C)"},
+            {"hub": "Brussels Airport (BRU), Belgium", "role": "EU Certified GDP Life Sciences Cold Chain Gateway"},
+            {"hub": "East Midlands (EMA) / Heathrow (LHR), UK", "role": "UK & Northern European Fast-Track Medical Air Gateway"},
+            {"hub": "Cincinnati / Northern Kentucky (CVG), USA", "role": "Americas Superhub with 24/7 FDA In-House Inspection"},
+            {"hub": "Incheon International (ICN), South Korea", "role": "Asia-Pacific Biomedical Bonded Express Terminal"}
+        ],
+        "restricted_destinations": ["North Korea", "Iran", "Syria", "Cuba", "Crimea/Donbas (Active OFAC/UN Sanctions)"]
+    },
+    "country_transit_matrix": {
+        "Germany": {"flag": "🇩🇪", "zone": "Zone 1 (EU)", "transit_days": "1 Business Day (Next-Day by 12:00)", "gateway": "Leipzig (LEJ) / Frankfurt (FRA)", "cold_chain": "+2°C to +8°C Credo Cube / VIP Shipper with TempTale", "docs": "Intra-EU Free Movement, EUDAMED UDI, 0% Duty, CE Declaration"},
+        "Italy": {"flag": "🇮🇹", "zone": "Zone 2 (EU)", "transit_days": "1-2 Business Days", "gateway": "Milan Malpensa (MXP) / Rome (FCO)", "cold_chain": "+2°C to +8°C Insulated Thermal Packaging + Data Logger", "docs": "Intra-EU Free Movement, Ministero della Salute RDM Registration, 0% Duty"},
+        "Spain": {"flag": "🇪🇸", "zone": "Zone 2 (EU)", "transit_days": "1-2 Business Days", "gateway": "Madrid Barajas (MAD) / Barcelona (BCN)", "cold_chain": "+2°C to +8°C Temperature-Controlled Courier Box", "docs": "Intra-EU Free Movement, AEMPS Notification, Spanish IFU, 0% Duty"},
+        "France": {"flag": "🇫🇷", "zone": "Zone 1 (EU)", "transit_days": "1-2 Business Days", "gateway": "Paris CDG / Lyon (LYS)", "cold_chain": "+2°C to +8°C Insulated Box with Calibration Certificate", "docs": "Intra-EU Free Movement, ANSM Notification, French IFU, 0% Duty"},
+        "United Kingdom": {"flag": "🇬🇧", "zone": "Zone 3 (Europe)", "transit_days": "1-2 Business Days", "gateway": "East Midlands (EMA) / London Heathrow (LHR)", "cold_chain": "+2°C to +8°C Dedicated Medical Cargo with TempTale", "docs": "MHRA Registration, UKCA/CE, Commercial Invoice (HS 9018.90 / 3822.00)"},
+        "Belgium": {"flag": "🇧🇪", "zone": "Zone 1 (EU)", "transit_days": "1 Business Day", "gateway": "Brussels Airport BRUcargo Pharma Hub", "cold_chain": "+2°C to +8°C Certified GDP Pharma Courier", "docs": "Intra-EU Free Movement, FAMHP Registration, 0% Duty"},
+        "Netherlands": {"flag": "🇳🇱", "zone": "Zone 1 (EU)", "transit_days": "1 Business Day", "gateway": "Amsterdam Schiphol (AMS) / Rotterdam Hub", "cold_chain": "+2°C to +8°C Thermal VIP Shipper with TempTale", "docs": "Intra-EU Free Movement, CIBG Notification, 0% Duty"},
+        "Switzerland": {"flag": "🇨🇭", "zone": "Zone 3 (Europe)", "transit_days": "1-2 Business Days", "gateway": "Zurich (ZRH) / Basel (BSL)", "cold_chain": "+2°C to +8°C Thermal Packaging with Data-Logger", "docs": "Swissmedic Notification, CH-REP Declaration, Commercial Invoice"},
+        "United Arab Emirates": {"flag": "🇦🇪", "zone": "Zone 7 (Middle East)", "transit_days": "1-2 Business Days", "gateway": "Dubai DWC / DXB Cargo Gateway", "cold_chain": "Active +2°C to +8°C Medical Pharma Vault Transfer", "docs": "MOHAP Medical Device Import Permit, 0% Free Zone / 5% Mainland Duty"},
+        "Saudi Arabia": {"flag": "🇸🇦", "zone": "Zone 7 (Middle East)", "transit_days": "2-3 Business Days", "gateway": "Riyadh King Khalid (RUH) / Dammam (DMM)", "cold_chain": "Pre-conditioned VIP Shipper + Active USB Data Logger", "docs": "SFDA MDMA / Medical Device Listing, Saber / FASAH Pre-Clearance"},
+        "Qatar": {"flag": "🇶🇦", "zone": "Zone 7 (Middle East)", "transit_days": "1-2 Business Days", "gateway": "Doha Hamad International (DOH)", "cold_chain": "Doha VIP Pharma Bonded Cold Storage (+2°C/+8°C)", "docs": "MOPH Prior Approval, Consulate-Legalized COO & FSC, 5% Tariff"},
+        "Kuwait": {"flag": "🇰🇼", "zone": "Zone 7 (Middle East)", "transit_days": "2-3 Business Days", "gateway": "Kuwait International (KWI)", "cold_chain": "+2°C to +8°C Refrigerated Vault + Data Logger Inspection", "docs": "MoH KMMD Medical Device Clearance, Commercial Invoice, 5% Duty"},
+        "Oman": {"flag": "🇴🇲", "zone": "Zone 7 (Middle East)", "transit_days": "2-3 Business Days", "gateway": "Muscat International (MCT)", "cold_chain": "+2°C to +8°C Insulated Box with BLE Logger", "docs": "MoH DGPA&DC Medical Import Permit, 5% GCC Customs Duty"},
+        "Bahrain": {"flag": "🇧🇭", "zone": "Zone 7 (Middle East)", "transit_days": "1-2 Business Days", "gateway": "Bahrain International (BAH Regional Hub)", "cold_chain": "+2°C to +8°C Active Temperature Control", "docs": "NHRA Medical Device License, 5% Customs Duty, Legalized COO"},
+        "Egypt": {"flag": "🇪🇬", "zone": "Zone 8 (North Africa)", "transit_days": "2-3 Business Days", "gateway": "Cairo International (CAI Cargo Hub)", "cold_chain": "Cairo Airport Refrigerated Pharma Warehouse (+2°C/+8°C)", "docs": "Nafeza ACI ACID Number mandatory prior to loading; EDA Approval"},
+        "Jordan": {"flag": "🇯🇴", "zone": "Zone 7 (Middle East)", "transit_days": "2-3 Business Days", "gateway": "Amman Queen Alia (AMM)", "cold_chain": "+2°C to +8°C VIP Box; 45-day buffer stock recommended", "docs": "JFDA Import Clearance, Consular-Legalized COO & FSC, 5% Duty"},
+        "Iraq": {"flag": "🇮🇶", "zone": "Zone 8 (Middle East)", "transit_days": "3-4 Business Days", "gateway": "Baghdad (BGW) / Erbil (EBL)", "cold_chain": "+2°C to +8°C Insulated Shipper with Dual Temperature Loggers", "docs": "KIMADIA / Ministry of Health Inspection, Security Border Checks"},
+        "Algeria": {"flag": "🇩🇿", "zone": "Zone 8 (North Africa)", "transit_days": "3-4 Business Days", "gateway": "Algiers Houari Boumediene (ALG)", "cold_chain": "+2°C to +8°C Refrigerated Courier Terminal", "docs": "Domiciliation Bancaire & Ministry of Health Homologation Visa"},
+        "Morocco": {"flag": "🇲🇦", "zone": "Zone 8 (North Africa)", "transit_days": "2-4 Business Days", "gateway": "Casablanca Mohammed V (CMN)", "cold_chain": "+2°C to +8°C Certified Cold Chain Shipper", "docs": "DMP Enregistrement Dossier, Portnet Clearance, French IFU"},
+        "Turkey": {"flag": "🇹🇷", "zone": "Origin / Domestic", "transit_days": "Same-Day / Next-Day (Ankara/IST Express)", "gateway": "Ankara Esenboğa (ESB) / Istanbul (IST/SAW)", "cold_chain": "+2°C to +8°C Data-Logger Monitored Refrigerated Courier", "docs": "Domestic ÜTS Barcode Notification, TITCK Compliant"},
+        "United States": {"flag": "🇺🇸", "zone": "Zone 5 (Americas)", "transit_days": "2-3 Business Days", "gateway": "Cincinnati (CVG) / New York (JFK)", "cold_chain": "Cryo dry-ice / +2°C to +8°C Credo Thermal Shipper", "docs": "FDA Prior Notice, 510(k) or Investigational/Research Declaration"},
+        "Canada": {"flag": "🇨🇦", "zone": "Zone 5 (Americas)", "transit_days": "2-3 Business Days", "gateway": "Toronto Pearson (YYZ) / Montreal (YUL)", "cold_chain": "+2°C to +8°C Insulated Thermal Packaging", "docs": "Health Canada MDL License, Commercial Invoice, COO"},
+        "South Korea": {"flag": "🇰🇷", "zone": "Zone 9 (Asia-Pacific)", "transit_days": "2-3 Business Days", "gateway": "Incheon International (ICN)", "cold_chain": "Incheon High-Tech Biomedical Bonded Cold-Storage", "docs": "Korea-TR FTA (0% Duty), MFDS Medical Device Notification"},
+        "Japan": {"flag": "🇯🇵", "zone": "Zone 9 (Asia-Pacific)", "transit_days": "2-4 Business Days", "gateway": "Tokyo Narita (NRT) / Haneda (HND)", "cold_chain": "+2°C to +8°C Precision Pharma Packaging with TempTale", "docs": "PMDA / MHLW Shonin Approval, Marketing Authorization Holder (MAH)"},
+        "Australia": {"flag": "🇦🇺", "zone": "Zone 9 (Oceania)", "transit_days": "3-5 Business Days", "gateway": "Sydney (SYD) / Melbourne (MEL)", "cold_chain": "+2°C to +8°C Multi-day Holdover VIP Shipper (96h+)", "docs": "TGA ARTG Inclusion, Quarantine/Biosecurity Declaration"},
+        "Brazil": {"flag": "🇧🇷", "zone": "Zone 8 (South America)", "transit_days": "3-5 Business Days", "gateway": "São Paulo Viracopos (VCP) / Guarulhos (GRU)", "cold_chain": "+2°C to +8°C Passive VIP Container with Long Holdover (120h)", "docs": "ANVISA Import License (LI), RADAR System Registration"}
+    }
+}
+
+def resolve_country_dhl_logistics(c_name):
+    c = str(c_name or "").strip()
+    matrix = DHL_GLOBAL_LOGISTICS_INTEL["country_transit_matrix"]
+    if c in matrix:
+        return matrix[c]
+    # Regional heuristics
+    for k, v in matrix.items():
+        if k.lower() in c.lower() or c.lower() in k.lower():
+            return v
+    # Default global tier
+    return {
+        "flag": "🌐",
+        "zone": "Zone 6-8 (Global Express)",
+        "transit_days": "2-4 Business Days",
+        "gateway": "DHL International Medical Express Airport Gateway",
+        "cold_chain": "+2°C to +8°C Validated Credo VIP Shipper with TempTale USB Data-Logger",
+        "docs": "Commercial Invoice (HS 9018.90 / 3822.00), Certificate of Origin (COO), CE Class IIa Declaration"
+    }
+
+
 COUNTRY_DEEP_INTELLIGENCE = {
     'Oman': {
         'customs_regulatory': {
@@ -9964,6 +10033,70 @@ Feel free to ask directly for details on any of these topics (e.g., video link, 
 
     elif any(k in prompt_norm for k in ['consumables', "dish", "pool", "roi", "maliyet", "reagent", "solution", "powder"]):
         return '### ZEUS 4-Pool Single Dish & Lyophilized Solution-Powder ROI Analysis\n\n**Dear Executive,**  \n* **Packaging & Capacity Standard:**\n  * **1 Box Dish = 2 Dishes** (Each dish features 4 independent micro-pools and can be loaded with **up to 20 oocytes** -> 1 Dish = 1 full IVF cycle).\n  * **1 Box Solution-Powder = 2 ml** (As of March 2026, **lyophilized powder formula with a 1-year shelf life**, eliminating cold-chain spoilage risk).\n* **Clinical Economics:** Cost per case is only **~$6.60 USD** ($0.33/oocyte); providing **85%+ savings** over chemical ionophore kits and full device payback within 8–10 cases.\n* **Incremental Clinic Revenue:** In 300 annual TFF/male-factor cases, raising fertilization from 35% to 78% yields ~120 additional transfers × $2,500 USD = **+$300,000 USD in additional clinic revenue**.'
+
+    # DHL MEDICAL EXPRESS, GLOBAL FREIGHT & COLD CHAIN DIRECT Q&A
+    elif any(k in prompt_norm for k in ["dhl", "kargo", "cargo", "sevkiyat", "nakliye", "shipping", "freight", "transit time", "teslimat", "cold chain", "soguk zincir", "lojistik", "logistics"]):
+        dhl_matrix = DHL_GLOBAL_LOGISTICS_INTEL["country_transit_matrix"]
+        c_req = None
+        for c_k in dhl_matrix:
+            if c_k.lower() in prompt_norm or c_k.lower() in prompt_low:
+                c_req = c_k
+                break
+        if not c_req and country_lbl:
+            c_req = country_lbl
+
+        c_info = resolve_country_dhl_logistics(c_req) if c_req else None
+        c_focus_str = f" for **{c_req}** ({c_info['transit_days']} via {c_info['gateway']})" if (c_req and c_info) else ""
+
+        return f"""### ✈️ DHL Medical Express & Global Freight Intelligence{c_focus_str}
+
+**Dear Executive,**  
+ZEUS Bioscience utilizes **DHL Express Worldwide** (for ZPS 26 devices and hardware) and **DHL Medical Express (WMX)** (for +2°C to +8°C temperature-controlled IVF activation media and test dishes) across its global distribution network.
+
+---
+
+#### 1. 🌍 Which Countries Does DHL Ship To?
+* **Global Footprint:** Over **220 countries and autonomous territories** worldwide are within DHL's active express air cargo network.
+* **ZEUS Target Markets (100% Active Coverage):**
+  * **Western & Central Europe:** Germany, Italy, Spain, France, Belgium, Netherlands, UK, Switzerland, Austria, Ireland, etc.
+  * **Middle East & GCC:** UAE (Dubai), Saudi Arabia (Riyadh, Dammam, Jeddah), Qatar, Kuwait, Bahrain, Oman, Jordan, Iraq (Baghdad/Erbil).
+  * **North Africa:** Egypt (Cairo), Morocco (Casablanca), Algeria (Algiers).
+  * **Americas:** USA, Canada, Brazil (São Paulo), Colombia, Mexico.
+  * **Asia-Pacific:** South Korea (Incheon), Japan (Narita/Haneda), Singapore, Australia (Sydney/Melbourne).
+* **Restricted / Sanctioned Destinations (OFAC / UN Compliance):** Commercial express service is suspended to North Korea, Iran, Syria, Cuba, and Russian-occupied Ukrainian regions (Crimea, Donbas, Zaporizhzhia, Kherson).
+
+---
+
+#### 2. ⏱️ Transit Times from Turkey (Ankara ESB / Istanbul IST Hubs)
+| Region / Destination | Average Transit Duration | Service Level | Primary Destination Hub |
+| :--- | :--- | :--- | :--- |
+| **Western & Central Europe** | **1 – 2 Business Days** | DHL Next-Day by 12:00 | Leipzig (LEJ), Frankfurt, Milan, Madrid |
+| **Middle East & GCC (UAE, Qatar, Bahrain)** | **1 – 2 Business Days** | Express Priority Medical | Dubai (DXB/DWC), Doha (DOH), Bahrain (BAH) |
+| **Saudi Arabia, Kuwait, Oman, Jordan** | **2 – 3 Business Days** | Medical Express Door-to-Door | Riyadh (RUH), Kuwait (KWI), Amman (AMM) |
+| **Egypt & North Africa** | **2 – 3 Business Days** (with ACID) | Express ACI Pre-Cleared | Cairo International (CAI), Casablanca |
+| **Iraq & Levant** | **3 – 4 Business Days** | Security Cleared Medical Cargo | Baghdad (BGW), Erbil (EBL) |
+| **North America (USA & Canada)** | **2 – 3 Business Days** | Transatlantic Medical Express | Cincinnati (CVG), New York (JFK), Toronto |
+| **Asia-Pacific (Korea, Japan, Singapore)** | **2 – 4 Business Days** | Asia-Pacific Express | Incheon (ICN), Tokyo (NRT), Singapore |
+| **Latin America (Brazil, Colombia)** | **3 – 5 Business Days** | VIP Cold Chain (120h holdover) | São Paulo (VCP/GRU), Bogotá (BOG) |
+
+---
+
+#### 3. 📦 5-Stage Cold Chain Shipping Process (SOP)
+1. **Pre-Booking & Service Selection:** Consumables shipments are booked via **DHL Medical Express (WMX)** with temperature-controlled priority flag; hardware (ZPS 26) is dispatched via **DHL Express Worldwide**.
+2. **Validated Thermal Packaging (Credo Cube / VIP):** Liquids and activation dishes are packed in pre-conditioned vacuum-insulated panel (VIP) containers with Phase Change Materials (PCM) maintaining **+2°C to +8°C for up to 96–120 hours**. *(Note: ZEUS Lyophilized Solution-Powder features a 1-year shelf life, eliminating thermal degradation risk during unexpected dwell times!)*
+3. **Continuous Temperature Data-Logging:** A calibrated **TempTale USB/BLE digital data-logger** is sealed inside every parcel. The outer box is marked with the mandatory **IATA Time & Temperature Sensitive** cargo label.
+4. **Priority Air Corridor & Intermediate Hub Re-Icing:** Packages transit through dedicated pharma gateways (**Leipzig LEJ** or **Dubai DWC**) with +2°C to +8°C holding rooms and dry-ice replenishment capabilities if flight re-routing occurs.
+5. **Customs Pre-Clearance & Lab Handover:** Clearance documents are transmitted via **Paperless Trade (PLT EDI)** while in flight. In-country DHL couriers perform white-glove delivery directly to the clinic embryology laboratory; the embryologist verifies the temperature graph before sign-off.
+
+---
+
+#### 4. 📑 Mandatory Export Documentation
+* **Commercial Invoice (3 Copies):** Specifying **HS Code `9018.90`** (Medical Devices) and **HS Code `3822.00`** (Cell Culture Disposables/Reagents).
+* **Certificate of Origin (COO) & CE Declaration of Conformity:** Confirming Class IIa medical device accreditation under ISO 13485:2016.
+* **Country-Specific Health Import Permits:** SFDA approval for Saudi Arabia, Nafeza ACI (ACID number) for Egypt, TITCK ÜTS for Turkey, EUDAMED notification for EU member states.
+
+*You can review the interactive DHL matrix in **Module 01: Global Regulatory & Tender Guide (Tab 4)** or under **Single-Country 360° (Pillar 3)**.*"""
+
 
     elif any(k in prompt_norm for k in ["sartname", "kilit", "teknik sartname", "kamu"]):
         return '### ZEUS Tender Technical Specification Locks: Strategy to Disqualify Competitors\n\n**Dear Executive,**  \nThree critical clauses added to public and university tender specifications eliminate non-CE RUO electroporators at the technical stage:\n1. **CE Class IIa Medical Device Certification** (Intended for human oocyte activation; RUO devices are not accepted).\n2. **Micro-Pulse Precision** (0.1–9.9 ms adjustable square-wave electrical pulse, 1.0–5.0 kV/cm digital verification).\n3. **Sterile 4-Pool Polystyrene Activation Dish** (20-oocyte capacity, gamma-irradiated single-use design).'
@@ -17764,13 +17897,14 @@ def render_regulations_hub():
     ivf_pgt = deep_intel.get("ivf_pgt_regulatory", {})
     auth_name = cust_reg.get("authority_full", kb_info.get("authority_name", 'Ministry of Health & Medical Registration Authority'))
 
-    # 5 Strategic Regulatory Tabs
-    reg_tab1, reg_tab2, reg_tab3, reg_tab4, reg_tab5 = st.tabs([
+    # 6 Strategic Regulatory & Global Logistics Tabs
+    reg_tab1, reg_tab2, reg_tab3, reg_tab_dhl, reg_tab4, reg_tab5 = st.tabs([
         '📦 1. Customs & HS Codes',
         '🏛️ 2. Ministries of Health & Registration',
-        "⚖️ 3. IVF, PGT & Biyoetik",
-        '📜 4. Official Decrees',
-        '➕ 5. Add New Decree'
+        "⚖️ 3. IVF, PGT & Bioethics",
+        '✈️ 4. DHL Medical Express & Global Logistics',
+        '📜 5. Official Decrees',
+        '➕ 6. Add New Decree'
     ])
 
     with reg_tab1:
@@ -17870,6 +18004,184 @@ def render_regulations_hub():
             </div>
         </div>
         """, unsafe_allow_html=True)
+
+    with reg_tab_dhl:
+        st.markdown(f"#### ✈️ DHL Medical Express & Global Cold Chain Logistics Repertoire")
+        st.caption('Comprehensive international air logistics guide, DHL Medical Express (WMX) routes, country transit lead times, and cold-chain protocols for ZEUS Medical Devices and IVF Consumables.')
+
+        # Top Logistics KPI Metrics
+        d_kpi1, d_kpi2, d_kpi3, d_kpi4, d_kpi5 = st.columns(5)
+        with d_kpi1:
+            st.markdown("""
+            <div class="glass-metric-card">
+                <div class="glass-icon-box" style="border-color:#FFCC00;color:#FFCC00;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FFCC00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                </div>
+                <div class="glass-metric-header">Global Network Coverage</div>
+                <div class="glass-metric-val" style="color:#FFCC00;font-size:16px;">220+ Countries</div>
+                <div class="glass-metric-sub">58/58 ZEUS Markets Active</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with d_kpi2:
+            st.markdown("""
+            <div class="glass-metric-card">
+                <div class="glass-icon-box" style="border-color:#10B981;color:#10B981;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                </div>
+                <div class="glass-metric-header">EU & GCC Express Transit</div>
+                <div class="glass-metric-val" style="color:#10B981;font-size:16px;">1 – 2 Days</div>
+                <div class="glass-metric-sub">Next-Day by 12:00 Priority</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with d_kpi3:
+            st.markdown("""
+            <div class="glass-metric-card">
+                <div class="glass-icon-box" style="border-color:#7DA8DF;color:#7DA8DF;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#7DA8DF" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+                </div>
+                <div class="glass-metric-header">Validated Cold Chain</div>
+                <div class="glass-metric-val" style="color:#7DA8DF;font-size:16px;">+2°C to +8°C</div>
+                <div class="glass-metric-sub">TempTale USB/BLE Logger</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with d_kpi4:
+            st.markdown("""
+            <div class="glass-metric-card">
+                <div class="glass-icon-box" style="border-color:#EC4899;color:#EC4899;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#EC4899" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+                </div>
+                <div class="glass-metric-header">Electronic Customs (EDI)</div>
+                <div class="glass-metric-val" style="color:#EC4899;font-size:16px;">PLT Paperless</div>
+                <div class="glass-metric-sub">Pre-Clearance in the Air</div>
+            </div>
+            """, unsafe_allow_html=True)
+        with d_kpi5:
+            st.markdown("""
+            <div class="glass-metric-card">
+                <div class="glass-icon-box" style="border-color:#F59E0B;color:#F59E0B;">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+                </div>
+                <div class="glass-metric-header">Lyophilized Stability</div>
+                <div class="glass-metric-val" style="color:#F59E0B;font-size:16px;">1-Year Shelf Life</div>
+                <div class="glass-metric-sub">Zero Spoilage Risk</div>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("<div style='height: 14px;'></div>", unsafe_allow_html=True)
+
+        # Country Routing Spotlight
+        cur_dhl = resolve_country_dhl_logistics(sel_reg_country)
+        st.markdown(f"""
+        <div style="background:rgba(15,23,42,0.85);border:1.5px solid #FFCC00;border-radius:10px;padding:16px 20px;margin-bottom:18px;box-shadow:0 4px 16px rgba(0,0,0,0.35);">
+            <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:10px;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+                <div>
+                    <span style="font-size:15px;font-weight:800;color:#FFCC00;">✈️ {cur_dhl.get('flag','🌐')} {sel_reg_country} DHL Medical Express Route & Cold Chain Dossier</span>
+                    <div style="font-size:11px;color:#94A3B8;margin-top:2px;">Direct Air Freight & Door-to-Clinic Delivery Protocol from Ankara Esenboğa (ESB) / Istanbul (IST) Hub</div>
+                </div>
+                <span style="background:rgba(255,204,0,0.15);color:#FFCC00;border:1px solid rgba(255,204,0,0.4);padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;">
+                    {cur_dhl.get('zone','Express Zone')}
+                </span>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(220px, 1fr));gap:12px;font-size:12px;">
+                <div style="background:rgba(255,255,255,0.02);padding:10px 12px;border-radius:6px;border-left:3px solid #10B981;">
+                    <b style="color:#10B981;">⏱️ Estimated Door-to-Clinic Transit:</b><br>
+                    <span style="font-size:13px;font-weight:700;color:#FFFFFF;">{cur_dhl.get('transit_days','2-3 Business Days')}</span>
+                </div>
+                <div style="background:rgba(255,255,255,0.02);padding:10px 12px;border-radius:6px;border-left:3px solid #7DA8DF;">
+                    <b style="color:#7DA8DF;">🛫 Destination Airport Gateway:</b><br>
+                    <span style="font-size:12px;color:#E2E8F0;">{cur_dhl.get('gateway','International Medical Express Gateway')}</span>
+                </div>
+                <div style="background:rgba(255,255,255,0.02);padding:10px 12px;border-radius:6px;border-left:3px solid #EC4899;">
+                    <b style="color:#EC4899;">❄️ Thermal Packaging Standard:</b><br>
+                    <span style="font-size:11.5px;color:#E2E8F0;">{cur_dhl.get('cold_chain','+2°C to +8°C VIP Shipper with TempTale')}</span>
+                </div>
+                <div style="background:rgba(255,255,255,0.02);padding:10px 12px;border-radius:6px;border-left:3px solid #F59E0B;">
+                    <b style="color:#F59E0B;">📑 Clearance Prerequisites:</b><br>
+                    <span style="font-size:11.5px;color:#E2E8F0;">{cur_dhl.get('docs','Commercial Invoice, COO, CE Class IIa')}</span>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+        # 5-Stage Standard Operating Procedure (SOP)
+        st.markdown("##### 📦 5-Stage Cold Chain Shipping Standard Operating Procedure (SOP)")
+        sop1, sop2, sop3, sop4, sop5 = st.columns(5)
+        with sop1:
+            st.markdown("""
+            <div style="background:#0F192E;border:1px solid rgba(125,168,223,0.3);border-radius:8px;padding:12px;height:100%;">
+                <div style="color:#FFCC00;font-weight:700;font-size:11.5px;">STAGE 1</div>
+                <b style="color:#FFFFFF;font-size:12px;">Booking & Service Classification</b>
+                <p style="color:#CCD7E6;font-size:11px;margin-top:6px;line-height:1.45;">
+                    Consumables booked via DHL Medical Express (WMX); ZPS 26 hardware booked via DHL Express Worldwide.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+        with sop2:
+            st.markdown("""
+            <div style="background:#0F192E;border:1px solid rgba(125,168,223,0.3);border-radius:8px;padding:12px;height:100%;">
+                <div style="color:#FFCC00;font-weight:700;font-size:11.5px;">STAGE 2</div>
+                <b style="color:#FFFFFF;font-size:12px;">Validated VIP Packaging</b>
+                <p style="color:#CCD7E6;font-size:11px;margin-top:6px;line-height:1.45;">
+                    Pre-conditioned Credo Cube vacuum-insulated panels (PCM) maintain +2°C to +8°C for 96–120 hours holdover.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+        with sop3:
+            st.markdown("""
+            <div style="background:#0F192E;border:1px solid rgba(125,168,223,0.3);border-radius:8px;padding:12px;height:100%;">
+                <div style="color:#FFCC00;font-weight:700;font-size:11.5px;">STAGE 3</div>
+                <b style="color:#FFFFFF;font-size:12px;">Data-Logger & IATA Labels</b>
+                <p style="color:#CCD7E6;font-size:11px;margin-top:6px;line-height:1.45;">
+                    TempTale USB/BLE digital data-logger sealed inside payload. Outer box carries IATA Time & Temp Sensitive label.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+        with sop4:
+            st.markdown("""
+            <div style="background:#0F192E;border:1px solid rgba(125,168,223,0.3);border-radius:8px;padding:12px;height:100%;">
+                <div style="color:#FFCC00;font-weight:700;font-size:11.5px;">STAGE 4</div>
+                <b style="color:#FFFFFF;font-size:12px;">Hub Monitoring & Re-Icing</b>
+                <p style="color:#CCD7E6;font-size:11px;margin-top:6px;line-height:1.45;">
+                    Priority ramp handling at Leipzig (LEJ) / Dubai (DXB) hubs with cold-room storage and dry-ice replenishment.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+        with sop5:
+            st.markdown("""
+            <div style="background:#0F192E;border:1px solid rgba(125,168,223,0.3);border-radius:8px;padding:12px;height:100%;">
+                <div style="color:#FFCC00;font-weight:700;font-size:11.5px;">STAGE 5</div>
+                <b style="color:#FFFFFF;font-size:12px;">Lab Handover & Data Sign-Off</b>
+                <p style="color:#CCD7E6;font-size:11px;margin-top:6px;line-height:1.45;">
+                    Direct delivery to clinic embryology lab. Data-logger downloaded and approved before opening sterile packs.
+                </p>
+            </div>
+            """, unsafe_allow_html=True)
+
+        st.markdown("<div style='height: 16px;'></div>", unsafe_allow_html=True)
+
+        # Full Global DHL Matrix Table
+        st.markdown("##### 🌐 Global Markets Comparative DHL Transit Time & Routing Matrix (22 Key Jurisdictions)")
+        dhl_rows = []
+        for c_k, c_v in DHL_GLOBAL_LOGISTICS_INTEL["country_transit_matrix"].items():
+            dhl_rows.append({
+                "Country": f"{c_v['flag']} {c_k}",
+                "DHL Express Zone": c_v["zone"],
+                "Average Transit Days": c_v["transit_days"],
+                "Destination Gateway Hub": c_v["gateway"],
+                "Cold Chain & Sensor Standard": c_v["cold_chain"],
+                "Required Customs Paperwork": c_v["docs"]
+            })
+        df_dhl_all = pd.DataFrame(dhl_rows)
+        st.dataframe(df_dhl_all, use_container_width=True, hide_index=True)
+
+        csv_dhl = df_dhl_all.to_csv(index=False).encode('utf-8')
+        st.download_button(
+            label="📥 Download Global DHL Medical Logistics Matrix (CSV)",
+            data=csv_dhl,
+            file_name="ZEUS_DHL_Medical_Express_Global_Logistics_Matrix.csv",
+            mime="text/csv",
+            key="btn_dl_dhl_matrix_csv"
+        )
 
     with reg_tab4:
         st.markdown(f"#### 📜 {sel_reg_country} Official Ministry of Health Decrees & Executive Guidelines")
@@ -28586,7 +28898,46 @@ elif active_view in ['Single-Country 360° Dossier', '◈ Single Country 360° (
         </div>
         """, unsafe_allow_html=True)
 
-        # Cihaz Resmi İhaleleri, Satın Alma Kanalları & Teknik Şartname Card
+
+        # DHL Medical Express Logistics Spotlight for Selected Country
+        dhl_c360 = resolve_country_dhl_logistics(sel_country)
+        st.markdown(f"""
+        <div style="background:rgba(15,23,42,0.85);border:1.5px solid #FFCC00;border-radius:10px;padding:16px;margin-top:14px;box-shadow:0 4px 16px rgba(0,0,0,0.35);">
+            <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid rgba(255,255,255,0.08);padding-bottom:10px;margin-bottom:12px;flex-wrap:wrap;gap:8px;">
+                <div>
+                    <span style="font-size:14.5px;font-weight:800;color:#FFCC00;">✈️ {dhl_c360.get('flag', '🌐')} {sel_country} DHL Medical Express & Air Logistics Profile</span>
+                    <div style="font-size:11px;color:#94A3B8;margin-top:2px;">Validated +2°C to +8°C Cold Chain & Medical Hardware Delivery Protocol from Ankara/Istanbul</div>
+                </div>
+                <span style="background:rgba(255,204,0,0.15);color:#FFCC00;border:1px solid rgba(255,204,0,0.35);padding:4px 10px;border-radius:6px;font-size:11px;font-weight:700;">
+                    {dhl_c360.get('zone', 'Express Zone')}
+                </span>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));gap:12px;font-size:12px;">
+                <div style="background:rgba(255,255,255,0.03);padding:10px 12px;border-radius:8px;border-left:3px solid #10B981;">
+                    <div style="font-size:10.5px;color:#8FA3C0;text-transform:uppercase;">⏱️ Transit Duration</div>
+                    <div style="font-size:13px;font-weight:800;color:#10B981;margin-top:2px;">{dhl_c360.get('transit_days', '2-3 Business Days')}</div>
+                    <div style="font-size:10.5px;color:#CBD5E1;margin-top:2px;">Door-to-Clinic Delivery</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.03);padding:10px 12px;border-radius:8px;border-left:3px solid #7DA8DF;">
+                    <div style="font-size:10.5px;color:#8FA3C0;text-transform:uppercase;">🛫 Medical Airport Gateway</div>
+                    <div style="font-size:12.5px;font-weight:700;color:#FFFFFF;margin-top:2px;">{dhl_c360.get('gateway', 'International Airport Gateway')}</div>
+                    <div style="font-size:10.5px;color:#7DA8DF;margin-top:2px;">Priority Ramp Handling</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.03);padding:10px 12px;border-radius:8px;border-left:3px solid #EC4899;">
+                    <div style="font-size:10.5px;color:#8FA3C0;text-transform:uppercase;">❄️ Cold Chain Standard</div>
+                    <div style="font-size:12px;font-weight:600;color:#E2E8F0;margin-top:2px;">{dhl_c360.get('cold_chain', '+2°C to +8°C VIP Shipper')}</div>
+                    <div style="font-size:10.5px;color:#94A3B8;margin-top:2px;">TempTale USB/BLE Logger</div>
+                </div>
+                <div style="background:rgba(255,255,255,0.03);padding:10px 12px;border-radius:8px;border-left:3px solid #F59E0B;">
+                    <div style="font-size:10.5px;color:#8FA3C0;text-transform:uppercase;">📑 Customs Prerequisites</div>
+                    <div style="font-size:11.5px;color:#E2E8F0;margin-top:2px;">{dhl_c360.get('docs', 'COO, FSC, CE Class IIa, Invoice')}</div>
+                    <div style="font-size:10.5px;color:#F59E0B;margin-top:2px;">Electronic Pre-Clearance (PLT)</div>
+                </div>
+            </div>
+        </div>
+        """, unsafe_allow_html=True)
+
+                # Cihaz Resmi İhaleleri, Satın Alma Kanalları & Teknik Şartname Card
         tender_c360 = resolve_country_tender_intel(sel_country)
         tp_c360 = tender_c360.get("key_tender_parameters", {})
         ts_c360 = tender_c360.get("technical_specifications", {})
