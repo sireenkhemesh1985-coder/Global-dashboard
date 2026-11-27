@@ -768,6 +768,24 @@ def get_gemini_api_key():
     return api_key
 
 COUNTRY_MACRO_IVF = {
+    'Russia': {
+        'gdp_pc': 14050,
+        'gdp_tier': 'Upper-Middle Income (Eurasia / EAEU)',
+        'living_standard': 'High (HDI: 0.821)',
+        'living_standard_code': 'High',
+        'clinics': 290,
+        'pop_m': 143.8,
+        'customs_tariff_pct': 5.0,
+        'customs_clearance_days': 14,
+        'import_difficulty': 'High (Roszdravnadzor RU Registration & Local Lab Testing Mandatory)',
+        'ivf_support': 'State OMS (Mandatory Health Insurance) Coverage (1–2 Free Cycles/Year)',
+        'ivf_support_code': 'Public OMS Coverage + Private Sector',
+        'ivf_support_desc': 'Under Russian OMS (Mandatory Health Insurance), citizens receive 1–2 fully funded IVF cycles annually at both public perinatal centers and OMS-accredited private clinics (~60% of total market volume).',
+        'price_sensitivity': 'Moderate (EU/Western Alternative Demand High; Local Registration & Rubles/USD Settlement Key)',
+        'macro_discount_allowance': 1.5,
+        'ivf_discount_allowance': 1.0,
+        'total_annual_cycles': 175000
+    },
     'Oman': {
         'gdp_pc': 23300,
         'gdp_tier': 'High Income (GCC)',
@@ -1288,6 +1306,7 @@ def get_market_customs_intelligence(c_code, c_name):
     name = str(c_name).strip()
 
     CUSTOMS_BARRIER_DB = {
+        'RU': {'tariff': 5.0, 'days': 14, 'doc_score': 8.5, 'doc_label': 'High / Roszdravnadzor RU Mandatory', 'cond': 'Roszdravnadzor State Registration Certificate (RU / РУ) Mandatory; 0% VAT Exemption Available with Valid RU; Local Accredited Testing Required'},
         'OM': {'tariff': 5.0, 'days': 9, 'doc_score': 4.5, 'doc_label': 'Medium / MoH Oman DGPA&DC', 'cond': 'Oman Ministry of Health (MoH) DGPA&DC Import Permit, CE/ISO 13485 Certificate, Muscat Cargo & Sohar Fast-Track Customs Clearance'},
         'BH': {'tariff': 5.0, 'days': 6, 'doc_score': 4.0, 'doc_label': 'Moderate / NHRA License', 'cond': 'Bahrain NHRA Medical Device Registration, CE Certificate, FSC & Khalifa Bin Salman Port Fast Lane'},
         'ES': {'tariff': 0.0, 'days': 3, 'doc_score': 2.0, 'doc_label': 'Low / CE Compliant', 'cond': 'Intra-EU Free Movement (CE Certificate Sufficient; 0% Customs Duty)'},
@@ -2311,6 +2330,31 @@ MARKET_KNOWLEDGE_BASE = {
 # (Class IIa Medical Device Registration Authority, Required Dossier & Ministry Fees)
 # ==============================================================================
 GLOBAL_DEVICE_REGISTRATION_FEES = {
+    "Russia": {
+        "country_tr": "Russia (Russian Federation)",
+        "flag": "🇷🇺",
+        "authority_name": "Federal Service for Surveillance in Healthcare (Roszdravnadzor)",
+        "department_portal": "Roszdravnadzor State Register of Medical Devices (GRMI / ГРМИ) & EAEU Registry",
+        "device_classification": "Class 2a (Active Electrical Oocyte Activation Medical Device — GOST / Roszdravnadzor Risk Class 2a)",
+        "required_documents": [
+            "Application for Roszdravnadzor State Registration Certificate (RU / РУ — Регистрационное удостоверение)",
+            "Notarized & Apostilled Power of Attorney (PoA) to a Russian Legal Entity (Authorized Representative)",
+            "CE Certificate (Class IIa), ISO 13485:2016 Certificate & Free Sale Certificate (FSC) — Apostilled with Certified Russian Translation",
+            "Technical File & Russian-Language Operational Manual (Руководство по эксплуатации) + Label Drafts",
+            "Mandatory Local Russian Accredited Lab Testing: Technical & Electrical Safety (GOST R MEK 60601-1), EMC, and Toxicological/Biocompatibility Tests (GOST ISO 10993)",
+            "Clinical Evaluation Report (Clinical Data Assessment by Accredited Russian Medical Institution for Class 2a)",
+            "Quality Management System (QMS) Manufacturing Inspection Dossier (ISO 13485 Audit Compliance)"
+        ],
+        "official_filing_fee": "115,000 – 145,000 RUB (State Duty + Class 2a Expertise Fee)",
+        "official_filing_fee_usd": "$1,250 – $1,600 USD",
+        "consular_stamp_fee_usd": "$1,200 – $2,200 USD (Apostille, Notarization & Certified Russian Technical Translation)",
+        "local_agent_fee_usd": "$11,500 – $21,000 USD (Local Accredited Lab Testing $6.5K–$11.5K + Regulatory Consultant/AR $5K–$9.5K)",
+        "total_device_cost_usd": "$14,000 – $24,800 USD",
+        "approval_timeline": "9 – 14 Months (3–4 Months Local Testing + 6–10 Months Roszdravnadzor 2-Stage Expertise)",
+        "validity_period": "Indefinite / Unlimited (Бессрочно — No Periodic Renewal Fee for National RU)",
+        "fast_track_available": "Decree No. 552 Accelerated Route (4–6 Months for Eligible Shortage Medical Devices)",
+        "special_notes": "CE/FDA certificates alone do NOT permit import into Russia. Roszdravnadzor RU registration and in-country accredited technical/toxicological testing (e.g., VNIIIMT) are mandatory. Once issued, the national RU is valid indefinitely and unlocks 0% VAT medical exemption. Verify cross-border banking/compliance rails and Turkey–EAEU logistics routing prior to contracting."
+    },
     "Türkiye": {
         "country_tr": 'Türkiye',
         "flag": "🇹🇷",
@@ -2693,6 +2737,7 @@ def resolve_device_registration_info(country_name):
         'United Kingdom': 'United Kingdom', 'UK': 'United Kingdom', 'GB': 'United Kingdom', 'Birleşik Krallık': 'United Kingdom', 'İngiltere': 'United Kingdom',
         'India': 'India', 'IN': 'India', 'Hindistan': 'India',
         'United States': 'United States', 'USA': 'United States', 'US': 'United States', 'Amerika': 'United States', 'ABD': 'United States'
+        ,'Russia': 'Russia', 'RU': 'Russia', 'Rusya': 'Russia', 'Russian Federation': 'Russia'
     }
     target_key = alias_map.get(c, c)
     if target_key in GLOBAL_DEVICE_REGISTRATION_FEES:
@@ -2730,6 +2775,36 @@ def resolve_device_registration_info(country_name):
 # (Public Tenders, Technical Specifications, Action Plan & Procurement Parameters)
 # ==============================================================================
 GLOBAL_TENDER_PROCUREMENT_INTEL = {
+    "Russia": {
+        "country_tr": "Russia (Russian Federation)",
+        "flag": "🇷🇺",
+        "tender_authority": "Unified Information System in Procurement (EIS / zakupki.gov.ru — 44-FZ & 223-FZ) & Regional MoH Perinatal Centers",
+        "procurement_portals": [
+            "EIS Unified State Procurement Portal (zakupki.gov.ru — Federal Laws 44-FZ & 223-FZ)",
+            "Sberbank-AST & RTS-Tender Electronic Trading Platforms",
+            "National Medical Research Center for Obstetrics, Gynecology & Perinatology (Kulakov Center)"
+        ],
+        "active_tender_types": [
+            "Federal & Regional Perinatal Center IVF Lab Modernization Tenders (44-FZ)",
+            "OMS-Accredited Public & University Hospital Embryology Equipment & Consumables Framework Tenders (223-FZ)",
+            "Private IVF Network Direct Procurement (Mother & Child / MD Medical Group, Ava-Peter, NGC)"
+        ],
+        "typical_budget_range": "3,500,000 – 18,000,000 RUB (~$38,000 – $195,000 USD)",
+        "procurement_schedule": "Q1–Q2 Regional OMS Budget Allocation & Auctions | Q3–Q4 Year-End Equipment Delivery",
+        "technical_specifications": {
+            "device_title": "Electrical Oocyte Activation (AOA) Pulse Stimulator & Embryology Culture System",
+            "core_specs": [
+                "Valid Roszdravnadzor State Registration Certificate (RU / РУ) mandatory for all 44-FZ public tenders.",
+                "Non-chemical electrical micro-pulse oocyte activation with validated biocompatibility & Russian IFU.",
+                "4-Pool single-dish consumables with lot-level MEA & endotoxin certificates."
+            ],
+            "mandatory_certifications": ["Roszdravnadzor RU Certificate (Mandatory)", "GOST R / ISO 13485:2016", "EU CE Mark (Class IIa)", "Russian Operational Manual"]
+        },
+        "tender_links": [
+            {"title": "EIS Official Russian State Procurement Portal (zakupki.gov.ru)", "url": "https://zakupki.gov.ru"},
+            {"title": "Roszdravnadzor Medical Device Registry (GRMI)", "url": "https://roszdravnadzor.gov.ru"}
+        ]
+    },
     "Oman": {
         "country_tr": "Umman (Sultanate of Oman)",
         "flag": "🇴🇲",
@@ -3255,6 +3330,7 @@ DHL_GLOBAL_LOGISTICS_INTEL = {
         "Japan": {"flag": "🇯🇵", "zone": "Zone 9 (Asia-Pacific)", "transit_days": "2-4 Business Days", "gateway": "Tokyo Narita (NRT) / Haneda (HND)", "cold_chain": "+2°C to +8°C Precision Pharma Packaging with TempTale", "docs": "PMDA / MHLW Shonin Approval, Marketing Authorization Holder (MAH)"},
         "Australia": {"flag": "🇦🇺", "zone": "Zone 9 (Oceania)", "transit_days": "3-5 Business Days", "gateway": "Sydney (SYD) / Melbourne (MEL)", "cold_chain": "+2°C to +8°C Multi-day Holdover VIP Shipper (96h+)", "docs": "TGA ARTG Inclusion, Quarantine/Biosecurity Declaration"},
         "Brazil": {"flag": "🇧🇷", "zone": "Zone 8 (South America)", "transit_days": "3-5 Business Days", "gateway": "São Paulo Viracopos (VCP) / Guarulhos (GRU)", "cold_chain": "+2°C to +8°C Passive VIP Container with Long Holdover (120h)", "docs": "ANVISA Import License (LI), RADAR System Registration"}
+        ,"Russia": {"flag": "🇷🇺", "zone": "Specialized Carrier Corridor (DHL Suspended)", "transit_days": "4-7 Business Days (via Turkey–Russia Medical Air/Cold-Chain Forwarder)", "gateway": "Moscow Sheremetyevo (SVO) / Vnukovo (VKO) via Istanbul (IST)", "cold_chain": "+2°C to +8°C Validated Credo VIP Shipper (120h Holdover) + TempTale Logger", "docs": "DHL Express suspended to RU; use specialized medical forwarder + Roszdravnadzor RU Certificate, Russian Invoice, COO, Compliance Screening"}
     }
 }
 
@@ -6761,6 +6837,7 @@ def rnd_val(s, k):
     return ((x ^ (x >> 16)) & 0xFFFFFFFF) / 4294967296.0
 
 COUNTRIES_RAW = [
+    ('RU','Russia',10,1,'Europe','RUS'),
     ('CA','Canada',2,0,'North America','CAN'),
     ('US','United States',2,1,'North America','USA'),
     ('MX','Mexico',2,2,'Latin America','MEX'),
@@ -7137,6 +7214,7 @@ MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec
 
 # Real World Bank (WDI 2023/2024) and ESHRE/CDC/WHO IVF Registries
 REAL_WORLD_BANK_IVF_DATA = {
+    'RU': {'pop': 143.8, 'gdp': 2020, 'gdp_pc': 14050, 'clinics': 290, 'cycles': 175000, 'health_pct': 7.4, 'icsi_pct': 64, 'pgt_pct': 24, 'cryo_pct': 72, 'risk': 'High', 'reg': 'Strict', 'imp': 'Restricted'},
     'OM': {'pop': 4.65, 'gdp': 108.3, 'gdp_pc': 23300, 'clinics': 11, 'cycles': 4800, 'health_pct': 4.8, 'icsi_pct': 92, 'pgt_pct': 26, 'cryo_pct': 72, 'risk': 'Low', 'reg': 'Strict', 'imp': 'Licensing required'},
     'BH': {'pop': 1.55, 'gdp': 44.5, 'gdp_pc': 28700, 'clinics': 8, 'cycles': 3200, 'health_pct': 5.2, 'icsi_pct': 90, 'pgt_pct': 24, 'cryo_pct': 70, 'risk': 'Low', 'reg': 'Strict', 'imp': 'Licensing required'},
     'US': {'pop': 335.0, 'gdp': 27360, 'gdp_pc': 81600, 'clinics': 460, 'cycles': 390000, 'health_pct': 16.6, 'icsi_pct': 75, 'pgt_pct': 38, 'cryo_pct': 78, 'risk': 'Low', 'reg': 'Moderate', 'imp': 'Licensing required'},
@@ -7206,6 +7284,7 @@ print("Total countries defined:", len(REAL_WORLD_BANK_IVF_DATA))
 def get_country_intelligence():
     # Specific IVF & PGT Health Expenditure and State Reimbursement Benchmark Database
     SPECIFIC_IVF_REIMBURSEMENT = {
+        'RU': {'ivf_gdp_pct': 0.08, 'state_support_pct': 60.0, 'reimbursement': 'State OMS (Mandatory Health Insurance) Covers 1–2 Free IVF Cycles/Year at Public & Accredited Private Clinics'},
         'OM': {'ivf_gdp_pct': 0.06, 'state_support_pct': 50.0, 'reimbursement': 'Free for Omani Citizens at Royal & Public Hospitals (Royal Hospital) (1–2 Cycles); Out-of-Pocket in Private'},
         'BH': {'ivf_gdp_pct': 0.07, 'state_support_pct': 55.0, 'reimbursement': 'Free for Citizens at BDF Royal & Salmaniya Public Hospitals; Out-of-Pocket in Private'},
         'TR': {'ivf_gdp_pct': 0.07, 'state_support_pct': 40.0, 'reimbursement': 'SGK Partial Coverage (3 Cycles Co-Pay Medication/Procedure + Medical PGT)'},
@@ -7319,6 +7398,7 @@ def get_country_intelligence():
     return pd.DataFrame(records)
 
 country_to_region = {
+    'Russia': 'Europe', 'Rusya': 'Europe',
     'Oman': 'MENA', 'Umman': 'MENA', 'Bahrain': 'MENA', 'Bahreyn': 'MENA',
     'Turkey': 'Europe', 'Belgium': 'Europe', 'Albania-Slovakia': 'Europe',
     'Bulgaria': 'Europe', 'Azerbaijan': 'Europe', 'United Kingdom': 'Europe',
@@ -7330,6 +7410,7 @@ country_to_region = {
 }
 
 country_codes = {
+    'Russia': 'RU', 'Rusya': 'RU',
     'Turkey': 'TR', 'Jordan & Iraq': 'IQ', 'Jordan & Iraq': 'IQ', 'Jordan-Iraq': 'IQ', 'Jordan': 'JO', 'Iraq': 'IQ', 'Qatar': 'QA',
     'South Korea': 'KR', 'Palestine': 'PS', 'Saudi Arabia': 'SA',
     'Kuwait': 'KW', 'United Arab Emirates': 'AE', 'Albania-Slovakia': 'AL',
@@ -16119,6 +16200,7 @@ def get_default_regional_expert_assessments():
 
 
 COUNTRY_FLAG_MAP = {
+    'RU': '🇷🇺',
     'OM': '🇴🇲', 'BH': '🇧🇭',
     'IQ': '🇮🇶', 'JO': '🇯🇴', 'TR': '🇹🇷', 'AE': '🇦🇪', 'SA': '🇸🇦', 'QA': '🇶🇦',
     'KW': '🇰🇼', 'EG': '🇪🇬', 'KR': '🇰🇷', 'DE': '🇩🇪', 'ES': '🇪🇸', 'US': '🇺🇸',
@@ -16532,6 +16614,26 @@ import urllib.parse
 
 # Define the dictionary of comprehensive official tender portal links
 GLOBAL_COUNTRY_TENDER_PORTALS = {
+    "Russia": [
+        {
+            "name": "EIS Unified Information System (zakupki.gov.ru)",
+            "url": "https://zakupki.gov.ru",
+            "domain": "zakupki.gov.ru",
+            "desc": "Official Federal Public Procurement Portal (44-FZ & 223-FZ) for Regional MoH & Perinatal IVF Centers",
+            "search_query": "site:zakupki.gov.ru ЭКО OR эмбриология OR медицинское оборудование",
+            "status": "Official State e-Procurement",
+            "status_color": "#10B981"
+        },
+        {
+            "name": "Roszdravnadzor State Register of Medical Devices (GRMI)",
+            "url": "https://roszdravnadzor.gov.ru",
+            "domain": "roszdravnadzor.gov.ru",
+            "desc": "Federal Regulatory Registry for RU Medical Device Registration Verification & Compliance",
+            "search_query": "site:roszdravnadzor.gov.ru регистрационное удостоверение",
+            "status": "National Regulatory Authority",
+            "status_color": "#38BDF8"
+        }
+    ],
     "Egypt": [
         {
             "name": "UPA Medical Procurement e-Portal (El-Shiraa El-Mowahed)",
@@ -16939,6 +17041,28 @@ def render_country_tender_portals_html(country_name, raw_portals=None):
 
 
 GLOBAL_COUNTRY_TENDER_SCHEDULES = {
+    "Russia": {
+        "quarterly_cycle": "Q1: Regional MoH OMS Quota Planning | Q2: 44-FZ / 223-FZ Electronic Auctions on EIS | Q3: Roszdravnadzor RU Verification & Award | Q4: Commissioning & Annual Consumables Delivery",
+        "milestones": [
+            {"step": "1", "name": "OMS Annual Budget & Spec Publication", "date": "February 2026", "icon": "📢"},
+            {"step": "2", "name": "Roszdravnadzor RU Certificate Check", "date": "March 2026", "icon": "📋"},
+            {"step": "3", "name": "EIS Electronic Auction Deadline", "date": "May 2026", "icon": "⏳", "highlight": True},
+            {"step": "4", "name": "Contract Award & Logistics Clearance", "date": "June – July 2026", "icon": "✍️"},
+            {"step": "5", "name": "Installation & Lab Commissioning", "date": "Q3 2026", "icon": "🚚"}
+        ],
+        "tenders": [
+            {
+                "id": "RU-EIS-2026-IVF-04",
+                "title": "Regional Perinatal Centers & Federal ART Clinics Embryology Equipment Procurement (44-FZ)",
+                "authority": "Regional Ministries of Health / Federal Perinatal Network (EIS)",
+                "scope": "Active IVF laboratory equipment & sterile consumables (Roszdravnadzor RU mandatory)",
+                "est_budget": "$95,000 – $195,000 USD",
+                "deadline": "Q2–Q3 2026 (Rolling Regional Auctions)",
+                "status": "RU Registration Prerequisite",
+                "url": "https://zakupki.gov.ru"
+            }
+        ]
+    },
     "Egypt": {
         "quarterly_cycle": 'Q1: Needs Assessment & UPA Budget Allocation | Q2: UPA Tender Notice & Bid Collection | Q3: Technical Committee & Letter of Credit (L/C) | Q4: Delivery & Clinical Commissioning',
         "milestones": [
@@ -17661,7 +17785,7 @@ def render_tenders_hub():
         "Algeria", "Morocco", "Palestine", "Syria", "Germany", "Spain", "Italy", "France", 
         "United Kingdom", "Belgium", "Netherlands", "Sweden", "Norway", "Denmark", "Finland", 
         "Switzerland", "Austria", "Greece", "Poland", "Portugal", "Ireland", "Czechia", "Romania", 
-        "Bulgaria", "Azerbaijan", "Albania-Slovakia", "United States", "Canada", "Mexico", 
+        "Bulgaria", "Azerbaijan", "Albania-Slovakia", "Russia", "United States", "Canada", "Mexico", 
         "Brazil", "Colombia", "Peru", "Chile", "Argentina", "India", "Pakistan", "Bangladesh", 
         "South Korea", "Japan", "China", "Taiwan", "Vietnam", "Thailand", "Philippines", 
         "Malaysia", "Indonesia", "Australia", "New Zealand", "South Africa", "Nigeria", "Kenya"
